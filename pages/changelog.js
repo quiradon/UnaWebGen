@@ -1,8 +1,8 @@
-const {nav, footer} = require('../../components/navbar')
-const scripts = require('../../components/bootscripts')
-const {head} = require('../../components/head')
+const {nav, footer} = require('../components/navbar')
+const scripts = require('../components/bootscripts')
+const {head} = require('../components/head')
 
-let updates = require('../../data/updates.json')
+let updates = require('../data/updates.json')
 //transforme o json em um array de objetos
 updates = updates.v
 function generateCard(version, text, image) {

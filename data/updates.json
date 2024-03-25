@@ -1,0 +1,462 @@
+{   
+    "v" : [
+        {
+            "version" : "3.23.0",
+            "text" : {
+                "pt-BR" : "# Petch \n- Adição de Novos sobrenomes\n- Adição do novo comando /gerar npc\n- Adição do comando /emoji Info\n- Melhoria do sistema de divulgação de mesas de RPG.\n- Correção de BUG na geração dos sobrenomes.\n- /gerar imagem computador\n- Melhoria no /iniciativa\nCRIS Colab Skins\nAdicionado aliase ! para dados explosivos\nMelhoria nas traduções dos erros.",
+                "en" : "# Petch \n- Addition of New surnames\n- Addition of the new /generate npc command\n- Addition of the /emoji Info command\n- Improvement of the RPG table disclosure system.\n- BUG fix in the generation of surnames.\n- /generate computer image\n- Improvement in /initiative"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.22.0",
+            "text" : {
+                "pt-BR" : "- `Loja Dados` (Skins de Dados de RPG)\nLançamento da coleção almoço de dados família",
+                "en" : "- `Dice Store` (RPG Dice Skins)\nLaunch of the family dice lunch collection"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.21.0",
+            "text" : {
+                "pt-BR" : "**Adição de 2 Novos Comandos**\n- `/Baralho WYRT` (Baralho de um jogo de cartas que existe em Tormenta20)\n- `/Novidades` (Comando que exibe todas as atualizações do Bot)\n - /config (Não spama mais o chat, agora ele edita a mensagem)",
+                "en" : "**Addition of 2 New Commands**\n- `/Deck WYRT` (Deck of a card game that exists in Tormenta20)\n- `/changelog` (Command that displays all Bot updates)\n - /config (No longer spams the chat, now it edits the message)"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.20.2",
+            "text" : {
+                "pt-BR" : "- Correção bug na rolagem de dados matematicos \n- Correção de bug rolagem com # Muito longas\n- Dobrado o limite de caracteres permitidos na embed de 1024 para 2048\n- Melhoria no /gerar atributos\n[REINICIALIZAÇÃO PARA ATUALIZAR]",
+                "en" : "- Fixed bug in mathematical data roll\n- Fixed bug rolling with # Very long\n- Doubled the limit of characters allowed in the embed from 1024 to 2048\n- Improvement in /generate attributes\n[RESTART TO UPDATE]"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.20.1",
+            "text" : {
+                "pt-BR" : "# Malditos Bugs\n- Correção de bug na rolagem de dados que não resultava o total em rolagem grandes.\n- Correção de mensagem de erro no /enviar campanha para que apareça apenas para quem digitou o comando.\n- Correção do Undefined no /enviar campanha.",
+                "en" : "# Damn Bugs\n- Fixed bug in data roll that did not result in the total in large rolls.\n- Fixed error message in /enviar campanha so that it only appears to those who typed the command.\n- Fixed Undefined in /enviar campanha."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.20.0",
+            "text" : {
+                "pt-BR" : "- Significados do Tarot\n- Virar Cartas de Tarot\n- adicionar carta do Louco\n- Criptografar Binario e Morse `/encript` `/uncript`\n- Atalhos Rolagem de Atributos `/gerar atributos` \n- O Botão de voltar só aparece em menus vindos do /ficha\n- /enviar campanha re-feito, agora retorna o motivo da campanha ser negada.",
+                "en" : "- Tarot Meanings\n- Turn Tarot Cards\n- add Fool card\n- Encrypt Binary and Morse `/encript` `/uncript`\n- Attribute Roll Shortcuts `/generate attributes`\n- The Back button only appears in menus from /sheet\n- /enviar campanha re-done, now returns the reason the campaign was denied."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.19.0",
+            "text" : {
+                "pt-BR" : "- Otimização da embed de rolagem\n- Upgrade no sistema de traduções adicionado Espanhol para America Latina e Italiano\n- Implementar # para múltiplas rolagens de dados\n- Sistema de notificar Banco de Dados OFF ao invés de essa interação falhou aperecera um aviso de banco de dados indisponível.",
+                "en" : "- Optimization of the roll embed\n- Upgrade in the translation system added Spanish for Latin America and Italian\n- Implement # for multiple data rolls\n- System to notify Database OFF instead of this interaction failed a database unavailable warning will appear."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.18.0",
+            "text" : {
+                "pt-BR" : "Atualização Pequena da magrugas\n- Alteração do Icone do dado\n- Adição do comando /daily para coletar recompensas diárias",
+                "en" : "Small update of the magrugas\n- Change of the dice icon\n- Addition of the /daily command to collect daily rewards"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.17.3 - Pathfinder",
+            "text" : {
+                "pt-BR" : "- Algumas Verificações aqui e ali\n- Otimização\n- Um pouco mais de otimização\n- Alguém para esse menino ele não sabe o que tá fazendo.",
+                "en" : "- Some Checks here and there\n- Optimization\n- A little more optimization\n- Someone for this"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.17.2 - Eggs",
+            "text" : {
+                "pt-BR" : "- Otimização do tamanho da embed de rolagem\n- Incrementado velocidade de rolagem\n- Implementação total do novo sistema de traduções\n- Painel de configuração de personagem (ainda sem utilidade porém é uma previa do que será possivel em 2024)\n- Implementado EasterEggs no projeto. (será que consegue achar todos?)\n@:newspaper: Notificar Novidades \n- Vagas para tradutores para francês e japonês",
+                "en" : "- Optimization of the size of the roll embed\n- Increased rolling speed\n- Total implementation of the new translation system\n- Character configuration panel (still useless but it is a preview of what will be possible in 2024)\n- Implemented EasterEggs in the project. (can you find them all?)\n@:newspaper: Notify News \n- Vacancies for translators for French and Japanese"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.17.1 - Pathfinder",
+            "text" : {
+                "pt-BR" : "- Novo sistema Pathfinder\n- Alteração do ícone do 3DEt",
+                "en" : "- New Pathfinder system\n- Change of the 3DEt icon"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.17.0 - Tori Update",
+            "text" : {
+                "pt-BR" : "- Correção de bug ao salvar dados (Espero que tenha funcionado)\n- Correção de erros no sistema de rolagem de dados no privado do bot\n- Agora o dado macro aparece no /d e no /dh nativamente para facilitar rolagem\n- Melhoria nas Traduções do bot\n- Incremento na ficha de D&D (Nível, Classe de Armadura e Deslocamento) agradecimentos a @tori_9999 pela sugestão.",
+                "en" : "Fixed bug in /edit attributes that did not allow saving attribute 0 (I don't know how I never noticed, it was there since the day the command was released)\n- Removed bug in /di that negative attributes caused an error in the dice"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.16.0 - UwU",
+            "text" : {
+                "pt-BR" : "- Correção de bug ao salvar dados (Espero que tenha funcionado)\n- Correção de erros no sistema de rolagem de dados no privado do bot\n- Agora o dado macro aparece no /d e no /dh nativamente para facilitar rolagem\n- Melhoria nas Traduções do bot\n- Incremento na ficha de D&D (Nível, Classe de Armadura e Deslocamento) agradecimentos a @tori_9999 pela sugestão.",
+                "en" : "- Bug fix when saving data (I hope it worked)\n- Bug fixes in the dice rolling system in the bot's private\n- Now the macro data appears in /d and /dh natively to facilitate rolling\n- Improvement in bot translations\n- Increment in the D&D sheet (Level, Armor Class and Displacement) thanks to @tori_9999 for the suggestion."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.15.0 - Christmas Update",
+            "text" : {
+                "pt-BR" : "- Adição de anotações na ficha a pedido de @alice2469 \n- Adição da configuração fichas publicas & privadas a pedido de @sferrarin \n- Adição do comando /editar anotações \n- Adição do comando /editar status\n- Melhoria nas traduções\n",
+                "en" : "- Addition of notes in the sheet at the request of @alice2469\n- Addition of the public & private sheets configuration at the request of @sferrarin\n- Addition of the /edit notes command\n- Addition of the /edit status command\n- Improvement in translations\n"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.14.1 | 3.14.2",
+            "text" : {
+                "pt-BR" : "Adicionado o comando /timer que cria um cronometro no chat para fazer pressão para aquele player lento\nAlteração no sistema de traduções no comando /d\nCorreção de erros pequenos.\nOptimização do tempo de resposta.\nEm breve as traduções da @Fortuna se tornarão publicas caso tenha interesse em ajudar na tradução entrar em contato para atribuição do cargo de tradutor.\nCorreção de bugs no /config e fichas de personagens.",
+                "en": "Added the /timer command that creates a timer in the chat to put pressure on that slow player\nChanges in the translation system in the /d command\nCorrection of small errors.\nResponse time optimization.\nSoon the translations of @Fortuna will become public if you are interested in helping with the translation, contact us to assign the translator role.\nBug fixes in /config and character sheets."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.14.0 - 3DET System",
+            "text" : {
+                "pt-BR" : "Nova versão Disponível trazendo algumas novidades.\n- Adição do Sistema [3DET](https://site.jamboeditora.com.br/3det/)\n- Correção de Bugs nas Fichas\n- Melhoria das Traduções\n- Traduções em 78% (Português, Inglês, Espanhol, Russo)\n- Melhoria no Sistema de cachê\n- Oficialização da nova infraestrutura própria onde a Una está Hospedada\n- Reativação do sistema de Voto\nLegal:\nLembrando que não somos donos de nem um dos sistemas que o bot possui, estamos aqui apenas para trazer mais praticidade as mesas e não temos relação alguma com a editora que possui todos os direitos do mesmo.\nDedicatória a @alice2469 por ter indicado e ajudado na adaptação do novo sistema.",
+                "en" : "New version Available bringing some new features.\n- Addition of [3DET](https://site.jamboeditora.com.br/3det/) System\n- Bug Fixes in Tokens\n- Improved Translations\n- Translations in 78% (Portuguese, English, Spanish, Russian)\n- Improvement in the Caching System\n- Officialization of the new infrastructure where Una is hosted\n- Reactivation of the Voting system\nLegal:\nRemembering that we do not own any of the systems that the bot has, we are only here to bring more practicality to the tables and we have no relationship with the publisher that owns all the rights to it.\nDedication to @alice2469 for having indicated and helped in the adaptation of the new system."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.13.0 - New Spells",
+            "text" : {
+                "pt-BR" : "- Adição de Novas Magias em D&D\n- Implementação de Novo Sistema de Tradução\n- Alterado Comunicação com o Banco de Dados respostas mais rápidas.",
+                "en" : "- Addition of New Spells in D&D\n- Implementation of New Translation System\n- Changed Communication with the Database faster responses."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.12.0 - Russian and Gaia",
+            "text" : {
+                "pt-BR": "Correção bugs em Tormenta\nAdição do Sistema Gaia\nMigração de Host do Bot\nMigração do Banco de Dados @Rinne te amamos.\nCorreção de bug no /di\nOtimização do codigo.\nAdição de novo shard.\nMelhora do ping para 40ms de resposta.\nAdição de novo Idioma ao BOT Russo\nNovo comando /sugerir\nAdição de 3 novas magias ao grimorio de D&D\nCorreção de 8 bugs\nOtimização do Bot\nAdicionado novos 500 Nomes no /gerar nome obrigado @almofadinhas",
+                "en" : "Fixed bugs in Tormenta\nAddition of the Gaia System\nBot Host Migration\nDatabase Migration @Rinne we love you.\nBug fix in /di\nCode optimization.\nAddition of new shard.\nPing improvement to 40ms response.\nAddition of new Language to the BOT Russian\nNew command /suggest\nAddition of 3 new spells to the D&D grimorio\nCorrection of 8 bugs\nBot Optimization\nAdded new 500 Names in /generate name thank you @almofadinhas"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.11.0",
+            "text" : {
+                "pt-BR": "Adicionado /grimorio Ordem\nEste comando permite que pesquisem entre os rituais do livro e tenha em tempo real o que eles fazem",
+                "en" : "Added /grimorio Ordem\nThis command allows you to search among the rituals of the book and have in real time what they do"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.10.1",
+            "text" : {
+                "pt-BR" : "Quir No Mundo do Javascript Parte 2\nRedução da embed de rolagem de dados que está 10% menor\nO /ficha não spama mais a DM\no /grimorio ganhou 3 novas magias. (cada atualização agora trara novidades ao grimorio, de pouco em pouco chega tudo relaxem!)\nTentativa de correção de bug no /editar que parou de funcionar\nPorque nada funciona de primeira nem da segunda vez\nCorrigido erros no /editar (eu espero)",
+                "en" : "Quir In The World of Javascript Part 2\nReduction of the data roll embed that is 10% smaller\nThe /sheet no longer spams the DM\nthe /grimorio gained 3 new spells. (each update now brings news to the grimorio, little by little everything arrives relax!)\nAttempt to fix bug in /edit that stopped working\nBecause nothing works the first time or the second time\nFixed errors in /edit (I hope)"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.10.0",
+            "text" : {
+                "pt-BR" : "O dado macro do /dh não funcionava foi arrumado\nA atividade do bot exibia Universes 🪐 ao invés da quantidade correta\n/ficha dava erro em alguns sistemas em inglês\narrumado [Object object] no /grimório.\n/enviar campanha agora envia pra avaliação por webhook por causa dos shards\narrumados vários erros com sistemas customizados.\narrumado erro no botão de deletar iniciativa caso a mensagem fosse apagada.\narrumado erro que não permitia setar o cargo de mestre.\nordem paranormal: removida perícia de prestidigitação e colocada adestramento no lugar \nAdicionado o comando /grimorio que permite pesquisar mágias de d&d (atualmente se limita aos truques)\ncomando /resgatar finalizado\nImplementado sistema de Shards\nImplementado sistema de poder ter sistemas personalizados (homebrew) em seus servidores\nImplementação de sistema de cache, comandos estão respondendo mais rápido e dependendo menos do banco de dados.\nOtimização do código de maneira geral\nCorreção de mais de 26 bugs\nSistema de Incremento no /editar status\nAdição do /server Icon\nPreparativos para o Mini Kraken Gen2\nAdicionado o Sistema de RPG Carbon 2185 (Sistema de RPG de Cyberpunk)",
+                "en" : "The /dh macro data didn't work was fixed\nThe bot's activity displayed Universes 🪐 instead of the correct amount\n/ficha gave an error in some English systems\nfixed [Object object] in /grimório.\n/enviar campanha now sends for evaluation by webhook because of the shards\nfixed several errors with custom systems.\nfixed error in the delete initiative button if the message was deleted.\nfixed error that did not allow setting the master role.\nparanormal order: removed sleight of hand skill and put training in place\nAdded the /grimorio command that allows you to search for d&d spells (currently limited to tricks)\n/resgatar command finished\nImplemented Shards system\nImplemented system to have custom systems (homebrew) on your servers\nImplementation of a cache system, commands are responding faster and depending less on the database.\nCode optimization in general\nCorrection of more than 26 bugs\nIncrement system in /edit status\nAddition of /server Icon\nPreparations for Mini Kraken Gen2\nAdded the Carbon 2185 RPG System (Cyberpunk RPG System)"
+            },
+            "img" : "https://rpg.arkanus.app/assets/img/geral/pages/changelog/clipboard-image.png"
+        },
+        {
+            "version" : "3.9.0",
+            "text" : {
+                "pt-BR" : "+ Rolagem de dados sem slash, basta digitar 1d20 ou qualquer expressão em qualquer chat, que o Mini Kraken vai responder, caso queira desativar, basta remover a permissão da Una ler o chat.\n+ Comando de Ship \n+ Mudança da Host, mais FPS no Bot!",
+                "en" : "+ Data roll without slash, just type 1d20 or any expression in any chat, that Mini Kraken will respond, if you want to deactivate, just remove the permission of Una to read the chat.\n+ Ship Command\n+ Host Change, more FPS in Bot!"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.8.0",
+            "text" : {
+                "pt-BR" : "Já procurou alguma vez RPG na internet? Você reparou a quantidade de mesas diferente que o mesmo mestre pode ter? Em vez de perder horas procurando, deixe que o Mini Kraken facilite a sua busca pela Mesa ideal com o melhor Sistema. Mini Kraken compara as mesas de RPG, é só acessar o Chat de mesas e pesquisar.\n+ Adicionado \"/enviar campanha\" comando para divulgação de mesas de RPG através de Webhooks\nMudanças no gerador de nomes agora está usando o mesmo script e base de dados do site.\nCorreção de Bugs e Otimização dos códigos.\nCorrigidos alguns bugs e erros em alguns sistemas.\nAlteração e correção da tradução de alguns comandos.",
+                "en" : "Have you ever searched for RPG on the internet? Have you noticed the number of different tables that the same master can have? Instead of wasting hours looking, let Mini Kraken facilitate your search for the ideal Table with the best System. Mini Kraken compares RPG tables, just access the Table Chat and search.\n+ Added \"/enviar campanha\" command for RPG table disclosure through Webhooks\nChanges in the name generator now using the same script and database as the site.\nBug Fixes and Code Optimization.\nFixed some bugs and errors in some systems.\nChange and correction of the translation of some commands."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.7.0 - Vegas Mania",
+            "text" : {
+                "pt-BR" : "Alteração nos comandos de baralho:\n+ /baralho Poker+ /baralho Tarot\nAlterações nos sistemas:\n+ Adição de Pericias de Ordem (Crime, Sobrevivência, Investigação, Artes)\nGeral:\n+ Adição de mensagem de erro no /resgatar (/reedem)+ Otimização da gif no /ajuda (ainda trava porém menos, é um problema no app mobile do discord, não acontece na versão IOS)\n- Removido bugs nos sistemas T20 algumas pericias estavam trocadas\nApós alteração na API a Una havia quebrado a partir das 19:00, o problema foi corrigido com a atualização",
+                "en" : "Changes in deck commands:\n+ /deck Poker+ /deck Tarot\nChanges in systems:\n+ Addition of Order Skills (Crime, Survival, Investigation, Arts)\nGeneral:\n+ Addition of error message in /resgatar (/reedem)+ Optimization of the gif in /ajuda (still crashes but less, it's a problem in the discord mobile app, it doesn't happen in the IOS version)\n- Removed bugs in T20 systems some skills were swapped\nAfter changes in the API Una had broken from 19:00, the problem was fixed with the update"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.6.0 - The Z generation",
+            "text" : {
+                "pt-BR" : "Adição dos novos comando de geração.\n/gerar cidade - Gera aleatoriamente o nome de uma cidade e algumas informações.\n/gerar nome - Gera o nome de um personagem aléatorio.\nAlteração no comando /ficha - antigamente era usado /card para acessar a ficha em inglês agora é /sheet.\nMecanismo de Ticket Feito.",
+                "en" : "Addition of the new generation commands.\n/gerar cidade - Randomly generates the name of a city and some information.\n/gerar nome - Generates the name of a random character.\nChange in the /ficha command - formerly /card was used to access the sheet in English now it is /sheet.\nTicket Mechanism Done."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.5.0 - Tormenta20",
+            "text" : {
+                "pt-BR" : " + Tormenta finalmente adicionado aos sistemas!!!\n+ /votar agora dá mais KC (ajustado de acordo com a inflação)\n+ Agora o /kc atm te avisa para votar se você não votou nas últimas 12 horas\n- Removidos bugs no /iniciativa e no /kc atm\n- Corrigidos erros de digitação em certos comandos",
+                "en" : " + Tormenta finally added to the systems!!!\n+ /vote now gives more KC (adjusted according to inflation)\n+ Now /kc atm warns you to vote if you haven't voted in the last 12 hours\n- Removed bugs in /initiative and /kc atm\n- Fixed typos in certain commands"
+            },
+            "img" : null
+        },
+        {
+          "version" : "3.4.1 - Small Changes",
+            "text" : {
+                "pt-BR" : "Adicionado comandos para ver informações de usuários.\n/user info | /user avatar | /user banne",
+                "en" : "Added commands to view user information.\n/user info | /user avatar | /user banne"
+            },  
+            "img" : null
+        },
+        {
+            "version" : "3.4.0 - Death of Jujuba",
+            "text" : {
+                "pt-BR" : "A Una ganhou a primeira previa dos comandos de economia, agora você poderá usar os comandos: \"/kc atm\", \"/kc top\" \"/kc pay\" atualmente os comandos \"/daily\" e vote não estão funcionando",
+                "en" : "Una won the first preview of the economy commands, now you can use the commands: \"/kc atm\", \"/kc top\" \"/kc pay\" currently the commands \"/daily\" and vote are not working"
+            },
+            "img" : null
+        },
+        {
+           "version" : "3.3.0 - Quir in .JS",
+           "text" : {
+            "pt-BR" : "Quir fez várias alterações no codigo para otimiza-lo porém ele não sabe ao certo como ele fez isso",
+            "en" : "Quir made several changes to the code to optimize it but he's not sure how he did it"
+           },
+              "img" : null
+        },
+        {
+            "version" : "3.2.0 - Yes 2 Minnors in one day",
+            "text" : {
+                "pt-BR" : "- Corrigido bug em que nenhum /editar funcionava\n+ Adicionado /editar pericias\n+ Adicionado comando /iniciativa (agora oficialmente), um comando para rolagem de iniciativa",
+                "en" : "- Fixed bug where no /edit worked\n+ Added /edit skills\n+ Added /initiative command (now officially), a command for rolling initiative"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.1.1 - Fixing the Fixing the Fixing",
+            "text":{
+                "pt-BR" : "- Resolvido bug no /di que não permitia a rolagem de atributos.\n- Erro no editar pericias em Espanhol.\nAdicionadas perícias \"Artes\" e \"Investigação\"\n- Resolvido bug em que quando rolando com vantagem as perícias não somavam os bônus",
+                "en" : "- Fixed bug in /di that did not allow the rolling of attributes.\n- Error in editing skills in Spanish.\nAdded skills \"Arts\" and \"Investigation\"\n- Fixed bug where when rolling with advantage the skills did not add the bonuses"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.1.0",
+            "text" : {
+                "pt-BR": "O bot finalmente foi 100% adaptado para JS, e de forma que todos os sistemas agora são configurados 100% por JSON.\nOk, mas o que isso muda?\nBem, agora o bot está quase pronto para receber sistemas customizados, apenas alguns ajustes e usuários premium poderão criar sistemas customizados, enviar e usar.\nNo momento, o maior desafio é criar uma interface gráfica para isso, mas quem souber programação, se quiser pode vir falar com @Rinne para mostrar a estrutura do JSON. Estamos oferecendo Premium Server por 1 mês para quem ajudar a adaptar um sistema oficial que não foi feito ainda (como Tormenta20 e Call of Cthulhu)!\n/ficha agora está completamente funcional, e foram adicionadas perícias nela, das quais o /di puxa direto, não mais precisando ver quais perícias você tem",
+                "en" : "The bot has finally been 100% adapted to JS, and in a way that all systems are now configured 100% by JSON.\nOk, but what does that change?\nWell, now the bot is almost ready to receive custom systems, just a few adjustments and premium users will be able to create, send and use custom systems.\nAt the moment, the biggest challenge is to create a graphical interface for this, but anyone who knows programming, if you want you can come talk to @Rinne to show the JSON structure. We are offering Premium Server for 1 month to anyone who helps adapt an official system that has not been made yet (like Tormenta20 and Call of Cthulhu)!\n/sheet is now fully functional, and skills have been added to it, from which /di pulls directly, no longer needing to see which skills you have"
+            },
+            "img" : null
+
+        },
+        {
+            "version" : "3.0.2",
+            "text" : {
+                "pt-BR" : "Adicionado o Comando /deck que retorna uma carta aleatória de um baralho de 52 cartas (sem coringas), agradecemos a apreciamos as sugestões.\n- Uma pequena correção de Bugs e otimização do código, as respostas estão significativamente mais rápidas.\n- Correção do bug do botão de editar Vida, demais botões do /ficha ainda não funcionais.\n- Correção do bug do botão de editar Vida, demais botões do /ficha ainda não funcionais.",
+                "en" : "Added the /deck command that returns a random card from a 52-card deck (no jokers), we appreciate the suggestions.\n- A small bug fix and code optimization, the responses are significantly faster.\n- Fixed the bug of the life edit button, other buttons in /sheet are still not functional.\n- Fixed the bug of the life edit button, other buttons in /sheet are still not functional."
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.0.1 - Fixing the Fixing",
+            "text" : {
+                "pt-BR" : "#Patch 1\nCorreção dos Links de Suporte\nCorreção da Mensagem de dado macro não definido.\n#Patch 2\nAgora os comandos como /config, /editar dados, /ficha & /di estão funcionando porém o /editar atributos ainda não. e deve chegar no final de semana.\n#Patch 3\nSistema Anti-Crash adicionado ao bot, caso ocorra um grande erro, ele vai ignorar e seguir. ao invés do bot inteiro morrer, apenas o comando vai dar erro.\n#Patch 4\nO Comando /editar atributos está disponível novamente, assim como o botão de editar os atributos no /ficha entretanto os demais botões do /ficha ainda não estão disponível como o controle de vida que chegará no próximo patch",
+                "en" : "#Patch 1\nFixed Support Links\nFixed the undefined data macro message.\n#Patch 2\nNow commands like /config, /edit data, /sheet & /di are working but /edit attributes is still not. and should arrive at the end of the week.\n#Patch 3\nAnti-Crash System added to the bot, if a major error occurs, it will ignore and continue. instead of the entire bot dying, only the command will fail.\n#Patch 4\nThe /edit attributes command is available again, as well as the edit attributes button in /sheet however the other buttons in /sheet are still not available like the life control that will arrive in the next patch"
+            },
+            "img" : null
+        },
+        {
+            "version" : "3.0.0 - The New Era",
+            "text" : {
+                "pt-BR" : "Eita BBs, estamos rodando em javascript agora, tá nem tudo está 100% algumas funções estão desativadas, mas estamos rodando em javascript.\n/d - agora possui sistema de auto completar com os dados macros\n/editar dados - permite que você defina os dados macros\n/di está desativado temporariamente\n/ficha - está desativado temporariamente\n/config - reformulado adicionado novas opções.\nNovo sistema de traduções.\nTeve bem mais coisa, quando eu acordar eu faço um patch decente.",
+                "en" : "Eita BBs, we are running in javascript now, okay not everything is 100% some functions are disabled, but we are running in javascript.\n/d - now has an auto complete system with data macros\n/editar dados - allows you to set data macros\n/di is temporarily disabled\n/ficha - is temporarily disabled\n/config - reformulated added new options.\nNew translation system.\nThere was a lot more, when I wake up I'll make a decent patch."
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.4.3",
+            "text" : {
+                "pt-BR" : "Olá amores, acabei de sofrer uma leve alteração, aparentemente espaçamentos no seu nome me deixavam maluquinha da cabeça.\n- Bug do /ficha corrigido no sistema DnD",
+                "en" : "Hello loves, I just suffered a slight change, apparently spacings in your name made me crazy.\n- Bug of /ficha fixed in the DnD system"
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.4.2",
+            "text" : {
+                "pt-BR" : "+ Correção de Bugs nos Logs\n+ Agora tem um botão novo no /ficha que permite editar o dinheiro.\n",
+                "en" : "+ Bug Fixes in Logs\n+ Now there is a new button in /ficha that allows you to edit the money.\n"
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.4.1 - Game Master Atack",
+            "text" : {
+                "pt-BR" : "+ Adicionar o comando de dados secretos o /dh onde apenas que o digita consegue ver o resultado\n+ Reformulada a Interface do /enviar campanha\n+ exporte sua ficha de rpg",
+                "en" : "+ Add the secret dice command /dh where only the one who types can see the result\n+ Overhauled the /enviar campanha interface\n+ export your rpg sheet"
+            },
+            "img" : null
+
+        },
+        {
+            "version" : "2.4.0 - The Money Age",
+            "text" : {
+                "pt-BR" : "+ Adicionado sistema de economia local de RPG, utilize /coin para modificar seu dinheiro, e /ficha para ver\n# Comando /coins antigo foi renomeado para /kc, para evitar confusões\n- Corrigidos alguns erros de grafia --causados por QuirDon analfabeto--\nEm breve será possível alterar o símbolo do dinheiro da mesa, como de $ para R$",
+                "en" : "+ Added local RPG economy system, use /coin to modify your money, and /ficha to see\n# Old /coins command was renamed to /kc, to avoid confusion\n- Fixed some spelling errors --caused by illiterate QuirDon--\nSoon it will be possible to change the money symbol of the table, such as from $ to R$"
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.3.1 - Bug Fixes",
+            "text" : {
+                "pt-BR" : "Lançamos uma pequena alteração, o /di de ordem paranormal aparece apenas para o user, parando de poluir o chat.\nnossas infraestrutura ficaram sobrecarregadas devido os novos usuarios, que fez com que seja necessário alterações em alguns sistemas para que o bot tenha a melhor eficiência possível e elas foram feitas.\nAlteração da NavBar no site na aba de lista de comandos\nDemos inicio ao desenvolvimento de novos sistemas ligados a ordem paranormal que vão chegar em um update futuro como pontos de sanidade na ficha.\nAtualização de sistema agora o sistema de ordem paranormal teve o seu sistema de rolagem automática atualizado para o sistema do livro. ou seja caso eu tenho 1 de força eu rolo 1d20 anteriormente ele estava rolando 1 dado a mais sempre",
+                "en" : "We released a small change, the /di of paranormal order appears only to the user, stopping polluting the chat.\nour infrastructure was overloaded due to the new users, which made it necessary to make changes in some systems so that the bot has the best possible efficiency and they were made.\nNavBar change on the site in the command list tab\nWe started the development of new systems linked to the paranormal order that will arrive in a future update such as sanity points on the sheet.\nSystem update now the paranormal order system had its automatic rolling system updated to the book system. that is, if I have 1 strength I roll 1d20 previously it was rolling 1 more die always"
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.3.0 - Ordem Paranormal ☝️🤓",
+            "text" : {
+                "pt-BR" : "Sejam bem vindos ao mundo de ordem paranormal, a pedido de vocês desenvolvemos um auxiliador de rolagem para ordem na Una, além disso reformulamos vários comandos que já existiam.\n+ Adição da opção de escolher sistema no /config que conta com as opções ordem e DnD\n+ Reconstrução de todos os sistemas que envolvem rolagem para se adaptar aos novos sistemas\n/ficha; /di ; /edit atributes estão de cara nova e mais intuitivos \n+ Criação de um /di novo com foco em ordem paranormal\n+ Criação de fichas de ordem paranormal\n+ Mudanças Técnicas no código\n+ Agora mais comandos ganham suporte ao sistema de tradução automática\n[Aviso] O Update será implementado as 19:00 onde todos os sistemas do bot vão entrar em manutenção para sua implementação.\n[Alerta] por enquanto o /di de ordem está apenas em português entretanto em breve ele será traduzido para inglês.",
+                "en" : "Welcome to the world of paranormal order, at your request we developed a roller helper for order in Una, in addition we reformulated several commands that already existed.\n+ Addition of the option to choose system in /config that has the options order and DnD\n+ Reconstruction of all systems involving rolling to adapt to new systems\n/ficha; /di ; /edit atributes are new and more intuitive \n+ Creation of a new /di focused on paranormal order\n+ Creation of paranormal order sheets\n+ Technical changes in the code\n+ Now more commands gain support for the automatic translation system\n[Warning] The Update will be implemented at 19:00 where all the bot's systems will enter maintenance for its implementation.\n[Alert] for now the /di of order is only in Portuguese however soon it will be translated into English."
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.2.0 - Fate Dice",
+            "text" : {
+                "pt-BR" : "O update que o QuirDon não sabia era pra ser esse (só que naquela versão tava tudo bugado pq eu esqueci de testar)\n+ Fate dices foram de fato adicionados (FINALMENTE), sugestão do Alec de uns meses atrás que eu tava sem tempo pra fazer\n+ Refatorada validação de dados, porque tava literalmente IMPOSSÍVEL mexer naquilo\n+ Preparativos iniciados do sistema de ordem, /di do sistema quase pronto\n+ Adicionado comando /dm, é a parte de dados macro do /di\n- Removidos dados macro do /di para serem movidos para o /dm\n- Removido bug no /edit attributes que não permitia salvar o atributo 0 (não sei como eu nunca percebi, tava aí desde o dia do lançamento do comando)\n- Removido bug no /di que atributos negativos causavam erro no dado",
+                "en" : "The update that QuirDon didn't know was supposed to be this (only in that version everything was buggy because I forgot to test)\n+ Fate dices were actually added (FINALLY), Alec's suggestion from a few months ago that I was too busy to do\n+ Refactored data validation, because it was literally IMPOSSIBLE to mess with that\n+ Preparations started for the order system, /di of the system almost ready\n+ Added /dm command, it's the macro data part of /di\n- Removed /di macro data to be moved to /dm\n- Removed bug in /edit attributes that did not allow saving attribute 0 (I don't know how I never noticed, it was there since the day the command was released)\n- Removed bug in /di that negative attributes caused an error in the dice"
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.1.3 - Bugs and Fixes",
+            "text" : {
+                "pt-BR" : "- Finalmente Implementado o Sistema de KC (Kraken Coins)\n- Os Votos Finalmente Trazem Recompensas, Agora ao votar no bot no top.gg você ganha uma quantia aleatória de KC (Em Breve os membros premium terão Multiplicador nesse valor)\n- Correção de Bugs e Alterações no sistema de tradução\nCorreção de Bugs no /hp (ele está funcionando porém provavelmente irei refazê-lo durante a semana, por ser um comando antigo não está tão eficiente quanto poderia.)\nAgradecimentos ao - Izou.#0838 por ter reportado o bug.\n2.1.3.2 - Correção de bug\nCorreção de Bugs um bug no /wiki itens fazia o bot Morrer\nAgora não é mais necessário que o bot seja reiniciado para lançar novos comandos. \nAlteração no Sistema de Dados com novidades.\nQuais as novidades Quir? boa pergunta o Semanual fez e não falou nada\n# Aparentemente só criou bugs porém hoje a noite tem update",
+                "en" : "- Finally Implemented the KC (Kraken Coins) System\n- The Votes Finally Bring Rewards, Now when voting on the bot on top.gg you earn a random amount of KC (Soon premium members will have a Multiplier in this value)\n- Bug Fixes and Changes in the translation system\nBug Fixes in /hp (it is working but I will probably redo it during the week, as it is an old command it is not as efficient as it could be.)\nThanks to - Izou.#0838 for reporting the bug.\n2.1.3.2 - Bug Fix\nBug Fixes a bug in /wiki items made the bot Die\nNow it is no longer necessary for the bot to be restarted to launch new commands. \nChange in the Data System with news.\nWhat's new Quir? good question the Semanual did and didn't say anything\n# Apparently only created bugs but tonight has an update"
+            } ,
+            "img" : null
+        },
+        {
+            "version" : "2.1.2 - First Steps from new World",
+            "text" : {
+                "pt-BR" : "+ O comando /di foi totalmente refeito para suportar o novo sistema de tradução\n+ As alterações do /di irão proporcionar em um futuro próximo suporte a novos sistemas de rpg entretanto, vamos precisar da ajuda de mestres para introduzir então caso tenham interesse em ter o sistema de rpg que você normalmente usa abra um ticket.",
+                "en" : "+ The /di command has been completely redone to support the new translation system\n+ The changes in /di will provide in the near future support for new RPG systems however, we will need the help of masters to introduce so if you are interested in having the RPG system that you normally use open a ticket."
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.1.1 - Mind Flayer",
+            "text" : {
+                "pt-BR" : "+ Agora A una ganhou alterações no comando /help que leva para lista de comandos no site\n+ Ler Pensamentos, agora consigo saber em qual idioma você pensa e falo no seu idioma dentre os que conheço\n+ Alteração no /config adicionado a função Global\n+ Correção no /enviar campanha",
+                "en" : "+ Now Una has changes in the /help command that leads to the list of commands on the site\n+ Reading Thoughts, now I can know in which language you think and speak in your language among those I know\n+ Change in /config added the Global function\n+ Correction in /enviar campanha"
+            },
+            "img" : "https://rpg.arkanus.app/assets/img/geral/pages/changelog/2_1_1.webp"
+        },
+        {
+            "version" : "2.0.1 - Voices in my head",
+            "text" : {
+                "pt-BR" : "Agora o bot da suporte aos chats de texto em voz.",
+                "en" : "Now the bot supports voice text chats."
+            },
+            "img" : null
+        },
+        {
+            "version" : "2.0.0 - Waifu Beam",
+            "text" : {
+                "pt-BR" : "Ara Ara Update, oh não o Raio Japonês acertou o Mini Kraken e agora é uma gostosa 2D.\nConheça Inanimalia Fortuna Tenebris Verteri\n(Una) para os mais íntimos, Uma das primeiras Promessas do /donate foi finalmente realizada.\n#Comandos de Minecraft\n/Mc Skin\n/Mc Head\n#Coisas_Novas_de_RPG\nSistema de HP (/hp)\nAdição do /wiki comando de biblioteca da comunidade.\n#Rolagem_de_Dados\nCorreção de bugs no /d\nUpdate do /d com o ++\nOtimização do /d (70% mais rapido)\nDocumentação reformulada.\n#Geral\nQuase todos os comandos estão traduzidos (exceto o /bater /analise e /wiki items)\nAtualização do /help\nCorreção e adição de embed em /Analise e /bater\nAlteração no /config\nAdição do /vote (Em breve terão de recompensas por votar)\nAdição do /server info \n#Coisas_Técnicas\nAgora ao remover o bot do servidor ele apaga o servidor do banco de dados.\nAgora o Premium está com o sistema de Tempo Organização e desativa só.\n#Waifu_UwU\nMudança no Visual e foto de perfil do bot\nAlterações no sobre min e nos status automatícos",
+                "en" : "Ara Ara Update, oh no the Japanese Ray hit the Mini Kraken and now it's a 2D hottie.\nMeet Inanimalia Fortuna Tenebris Verteri\n(Una) for the closest, One of the first Promises of /donate has finally been fulfilled.\n#Minecraft_Commands\n/Mc Skin\n/Mc Head\n#New_RPG_Things\nHP System (/hp)\nAddition of the /wiki community library command.\n#Dice_Rolling\nBug fixes in /d\nUpdate of /d with ++\nOptimization of /d (70% faster)\nDocumentation reformulated.\n#General\nAlmost all commands are translated (except /bater /analise and /wiki items)\nUpdate of /help\nCorrection and addition of embed in /Analise and /bater\nChange in /config\nAddition of /vote (Soon there will be rewards for voting)\nAddition of /server info \n#Technical_Things\nNow when removing the bot from the server it deletes the server from the database.\nNow the Premium is with the Time Organization system and deactivates only.\n#Waifu_UwU\nChange in the Visual and profile picture of the bot\nChanges in about me and in automatic statuses"
+            },
+            "img" : "https://rpg.arkanus.app/assets/img/geral/pages/changelog/2_0.webp"
+        },
+        {
+            "version" : "1.11.2",
+            "text" : {
+                "pt-BR" : "+ Super Otimização do /d agora ele está 900% mais rapido",
+                "en" : "+ Super Optimization of /d now it is 900% faster"
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.11.1",
+            "text" : {
+                "pt-BR" : "- Removido bug que tornava possível RCE a partir do /dice\n+ Adicionados dados com operadores matemáticos que afetam todas as rolagens ao invés de apenas os resultados (iríamos lançar só no próximo update, mas já que já tá feito...)",
+                "en" : "- Removed bug that made RCE possible from /dice\n+ Added dice with mathematical operators that affect all rolls instead of just the results (we were going to release only in the next update, but since it's already done...)"
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.11.0",
+            "text" : {
+                "pt-BR" : "+ Adição do Comando /mc skin (Sei lá pq a gente adicionou isso mas agora tem)\n+ Comandos de /room criar salas privadas nunca foi tão facil. (Função Removida)\n+ Adição do Comando /ping que retorna o ping do bot.\n+ Correção de bug na hora de editar /ficha /edit atributes\n+ Migração do banco de dados\n+ Nova Host agora mais Rapido. \n+ Correção de bug na hora de rolar os dados macros no /di\n+ Comando /gerar atributes adicionado",
+                "en" : "+ Addition of the /mc skin Command (I don't know why we added this but now it has)\n+ /room commands create private rooms has never been so easy. (Function Removed)\n+ Addition of the /ping command that returns the bot's ping.\n+ Bug fix when editing /ficha /edit atributes\n+ Database migration\n+ New Host now faster. \n+ Bug fix when rolling the data macros in /di\n+ /gerar atributes command added"
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.10.0",
+            "text" : {
+                "pt-BR" : "+ Adicionado modificadores de dado << e >>\nEles tem como objetivo manter apenas os números menores ou iguais (<<) ou maiores ou iguais (>>) que o número à sua direita\nEx.: 10d20<<10 => irá rodar 10 dados de 20 lados e manter apenas os rolls menores ou iguais a 10\n+ Agora os modificadores de dado k e km funcionam juntos\nEx.: 10d20 k3 km5 => manterá os 5 menores e os 3 maiores, o resto será descartado\n+ O bot foi migrado para uma host nova, com mais espaço, processamento e um banco de dados MySQL\n+ Aproveitamos a host nova e migramos todo o save do bot (que era um arquivo .json) para este banco de dados\n+ Servers premium estão finalmente funcionando, e membros premium agora não precisam mais necessariamente estar neste servidor. Atualizamos o /donate para passar as novas informações.\n+ Os comandos /di e /ficha (que agora tem um alias em inglês, /card) foram praticamente refeitos do zero, agora preparados para receber o update de sistemas de RPG diferentes (provavelmente sairá no próximo update)\n+ Adicionado o comando /update, que envia o último update do bot\n+ Foi feito um site para o bot, com algumas informações sobre ele, como um tutorial de como usar, os termos de uso, apresentação da equipe e informações de como doar. O link do site é [https://sites.google.com/view/minikraken](Sim, é google sites porque não temos dinheiro para um domínio próprio) (o site antigo não antigo não existe mais, afinal esse aqui é muito melhor)\n- Comando /lang removido\nO comando /config a partir de agora servirá para configurar tudo relacionado ao bot em seu servidor. Atualmente apenas a língua pode ser modificada, mas ainda adicionaremos mais coisas no futuro",
+                "en" : "+ Added dice modifiers << and >>\nThey aim to keep only the numbers less than or equal (<<) or greater than or equal (>>) than the number to their right\nEx.: 10d20<<10 => will roll 10 dice of 20 sides and keep only the rolls less than or equal to 10\n+ Now the dice modifiers k and km work together\nEx.: 10d20 k3 km5 => will keep the 5 lowest and the 3 highest, the rest will be discarded\n+ The bot was migrated to a new host, with more space, processing and a MySQL database\n+ We took advantage of the new host and migrated all the bot's save (which was a .json file) to this database\n+ Premium servers are finally working, and premium members no longer need to necessarily be in this server. We updated /donate to pass the new information.\n+ The /di and /ficha commands (which now has an alias in English, /card) were practically redone from scratch, now prepared to receive the update of different RPG systems (it will probably come out in the next update)\n+ Added the /update command, which sends the last update of the bot\n+ A website was made for the bot, with some information about it, such as a tutorial on how to use, the terms of use, presentation of the team and information on how to donate. The link to the site is [https://sites.google.com/view/minikraken](Yes, it's google sites because we don't have money for our own domain) (the old site no longer exists, after all this one is much better)\n- Command /lang removed\nThe /config command from now on will serve to configure everything related to the bot in your server. Currently only the language can be modified, but we will still add more things in the future"
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.9.1",
+            "text" : {
+                "pt-BR" : "- Removido bug em que dados com resultados não-inteiros não eram arredondado de forma correta.\n- Corrigido bug em que expressões numéricas não eram calculadas.\n- Corrigido bug em que qualquer um podia usar comandos que apenas o dono do bot deveria poder.",
+                "en" : "- Removed bug where dice with non-integer results were not rounded correctly.\n- Fixed bug where numerical expressions were not calculated.\n- Fixed bug where anyone could use commands that only the bot owner should be able to."
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.9.0",
+            "text" : {
+                "pt-BR" : "+ Adicionados dados \"keep minimum\" (km):\n5d20km2 => Rolará 5 dados de 20 lados e mantém os dois menores valores.\n+ Adicionados dados explosivos\nd10e10 => Rolará um dado de 10 lados, e rolará de novo caso o resultado seja maior ou igual a 10.\n+ Adicionados dados explosivos indefinidamente\nd10ei10 => Rola um dado de 10 lados, explode em 10 e caso o valor seja de novo maior ou igual a 10, ele explode novamente. Ele continuará explodindo até o valor ser menor que 10.\n(Limitado a 200 explosões por comando para prevenir abusos.)\nOBS: Você não pode usar dados explosivos e dados \"keep\" ao mesmo tempo.\n+ Adicionado suporte a expressões matemáticas\nAgora você pode escrever d20+6 / (4d20 + d20k2) por exemplo. (Limitado a soma, subtração, multiplicação, divisão e resto)\n+ Adicionados alguns atalhos de escrita\nd = 1d20: Um dado sem o número de lados será entendido como um dado de 20 lados;\n3dk = 3d20k1: Um dado keep sem número na frente será entendido como \"mantenha um\" (o mesmo se aplica aos dados km);\n5d10e = 5d10e10: Um dado explosivo sem número de explosão será entendido como \"exploda no valor mais alto do dado\" (o mesmo se aplica ao ei).",
+                "en" : "+ Added \"keep minimum\" (km) dice:\n5d20km2 => Rolls 5 dice of 20 sides and keeps the two lowest values.\n+ Added explosive dice\nd10e10 => Rolls a 10-sided die, and rolls again if the result is greater than or equal to 10.\n+ Added dice that explode indefinitely\nd10ei10 => Rolls a 10-sided die, explodes at 10 and if the value is again greater than or equal to 10, it explodes again. It will continue to explode until the value is less than 10.\n(Limited to 200 explosions per command to prevent abuse.)\nNOTE: You cannot use explosive dice and \"keep\" dice at the same time.\n+ Added support for mathematical expressions\nNow you can write d20+6 / (4d20 + d20k2) for example. (Limited to addition, subtraction, multiplication, division and remainder)\n+ Added some writing shortcuts\nd = 1d20: A die without the number of sides will be understood as a 20-sided die;\n3dk = 3d20k1: A keep die without a number in front will be understood as \"keep one\" (the same applies to km dice);\n5d10e = 5d10e10: An explosive die without an explosion number will be understood as \"explode at the highest value of the die\" (the same applies to ei)."
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.8.0",
+            "text" : {
+                "pt-BR" : "Agora o mestre e os jogadores podem salvar dados usando /edit_dices isso vai facilitar para seu amiguinho que joga como paladino e tem 100d3+5d6+9d8+52 na hora do combo.\nPara executar os dados salvos, um novo menu foi adicionado em /di",
+                "en" : "Now the master and the players can save data using /edit_dices this will make it easier for your friend who plays as a paladin and has 100d3+5d6+9d8+52 at the time of the combo.\nTo execute the saved data, a new menu has been added in /di"
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.7.0",
+            "text" : {
+                "pt-BR" : "O Novo Update do Bot Acaba de Chegar!!!\nTá Quirdon mas o que caralhos tem de novo??\nAgora você pode usar um /editdices e salvar aquele teu combo maroto que vc preparou pro boss tipo 8d6+9d3+1d2+5+9\nE Pra rodar ele basta usar o /di e selecionar o slot que vc salvou o dado.\nComo eu tenho que bancar a host do Bot você pode liberar 5 slots extras pra guardar dados fazendo uma doação, você vai ganhar o cargo de @Apoiadores quando fizer isso.",
+                "en" : "A New Update of the Bot Just Arrived!!!\nIt's Quirdon but what the hell is new??\nNow you can use a /editdices and save that naughty combo you prepared for the boss like 8d6+9d3+1d2+5+9\nAnd to run it just use the /di and select the slot you saved the dice.\nAs I have to host the Bot you can release 5 extra slots to save data by making a donation, you will earn the @Apoiadores role when you do."
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.6.2",
+            "text" : {
+                "pt-BR" : "Manutenção de Emergência, o bot passou por um probleminha meio complicado no /d caso vc tentasse rolar um d1000 ele ficava spamando acredito que o bug foi corrigido. Como a API do discord é lenta vai levar um tempo até os slashs voltarem a funcionar.",
+                "en" : "Emergency Maintenance, the bot went through a little complicated problem in /d if you tried to roll a d1000 it was spamming I believe the bug was fixed. As the discord API is slow it will take some time for the slashes to work again."
+            },
+            "img" : null
+        },
+        {
+            "version" : "1.6",
+            "text" : {
+                "pt-BR" : "Upgrade no /d agora é possível manter uma quantidade de dados exemplo 4d6k3 roda 4 dados de 6 lados e mantem o maior valor.\nAdicionado novas formas de Doação no /donate\nCorreção Nas Traduções tanto português quanto em Inglês.\nDados Macros o Sistema ainda não está finalizado e chegara na próxima atualização, ele vai chegar junto com os benefícios de doador \nNEW Deisgn\n/support\n/help\nDevido a API do discord pode levar até 3 horas para as funções chegarem no seu servidor",
+                "en" : "Upgrade in /d now it is possible to keep a quantity of data example 4d6k3 runs 4 dice of 6 sides and keeps the highest value.\nAdded new forms of Donation in /donate\nCorrection In Translations both Portuguese and English.\nData Macros The System is not yet finalized and will arrive in the next update, it will arrive along with the benefits of donor \nNEW Deisgn\n/support\n/help\nDue to the discord API it may take up to 3 hours for the functions to arrive on your server"
+            },
+            "img" : null
+        }
+    ]
+}

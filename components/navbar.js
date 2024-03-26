@@ -1,18 +1,13 @@
-const botlink = "https://discord.com/api/oauth2/authorize?client_id=899421595125288961&amp;permissions=8&amp;scope=bot%20applications.commands"
-const invite = "https://discord.com/invite/Nm3CypkQaq"
+const {discord_invite, bot_invite} = require('../config.json')
+const {idiomaR, roteador} = require('../caminho')
 function nav(t,rota) {
 
-    if (rota == '/index') {
-        rota = '/'
-    }
-    rota = rota.replace('/pt','')
-
-    //crie uma variavel que contem o caminho necessario para obter a rota do idioma atual lembrando que en = root
-    let lang = t && t.lang ? (t.lang == 'en' ? '' : `/${t.lang}`) : '';
+    let lang = idiomaR(t)
+    rota = roteador(rota)
 
     return `
     <nav class="navbar navbar-expand-lg sticky-top bg-dark shadow">
-    <div class="container-fluid"><a class="navbar-brand d-flex align-items-center" href="${lang}"><img class="img-fluid pe-1" src="/static/img/icons/logo.svg" alt="Mini Kraken Bot" width="30px" height="30px" /><span class="m-1">Mini Kraken</span></a><button class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#navcol"><span class="visually-hidden"></span><span class="navbar-toggler-icon text-primary"></span></button>
+    <div class="container-fluid"><a class="navbar-brand d-flex align-items-center" href="${lang}/"><img class="img-fluid pe-1" src="/static/img/icons/logo.svg" alt="Mini Kraken Bot" width="30px" height="30px" /><span class="m-1">Mini Kraken</span></a><button class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#navcol"><span class="visually-hidden"></span><span class="navbar-toggler-icon text-primary"></span></button>
         <div id="navcol" class="collapse navbar-collapse justify-content-between">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="${lang}#premium"><svg class="m-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -61,7 +56,7 @@ function nav(t,rota) {
                                 <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-6">${t.nav.docs.cmds.title}</span><span class="text-white nav-drop-text">${t.nav.docs.cmds.docs}</span></div>
                             </div>
                         </a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/changelog.html">
+                        <div class="dropdown-divider"></div><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/changelog">
                             <div class="d-flex justify-content-center align-items-center"><svg class="bg-primary border rounded border-0 p-2 fs-2 me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                     <path d="M96 96c0-35.3 28.7-64 64-64H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H80c-44.2 0-80-35.8-80-80V128c0-17.7 14.3-32 32-32s32 14.3 32 32V400c0 8.8 7.2 16 16 16s16-7.2 16-16V96zm64 24v80c0 13.3 10.7 24 24 24H296c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24H184c-13.3 0-24 10.7-24 24zm208-8c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zM160 304c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"></path>
                                 </svg>
@@ -73,7 +68,7 @@ function nav(t,rota) {
                 <li class="nav-item d-none"><a class="nav-link" href="#"><svg class="m-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                             <path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"></path>
                         </svg>Blog</a></li>
-                <li class="nav-item"><a class="nav-link" href="${invite}" target="_blank" rel="external"><svg class="m-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor">
+                <li class="nav-item"><a class="nav-link" href="${discord_invite}" target="_blank" rel="external"><svg class="m-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor">
                             <path d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"></path>
                         </svg>Discord</a></li>
             </ul>
@@ -86,44 +81,47 @@ function nav(t,rota) {
                     <a class="dropdown-item" href="/pt${rota}" rel="alternate"><img class="img-fluid m-1 me-2" src="/static/img/flags/br.svg" width="25px" />Português</a>
                     </div>
                 </li>
-                <li class="nav-item"><a class="btn btn-primary link-light border-0" role="button" href="${botlink}" target="_blank" rel="external">${t.nav.add}</a></li>
+                <li class="nav-item"><a class="btn btn-primary link-light border-0" role="button" href="${bot_invite}" target="_blank" rel="external">${t.nav.add}</a></li>
             </ul>
         </div>
     </div>
 </nav>`
 }
 
-function footer(t) {
+function footer(t, rota) {
+    
+    let lang = idiomaR(t)
+    rota = roteador(rota)
     return `<footer>
     <div class="container py-4 py-lg-5">
         <div class="row justify-content-center">
             <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-                <h3 class="fs-6">Utilitário </h3>
+                <h3 class="fs-6">${t.footer.util} </h3>
                 <ul class="list-unstyled">
-                    <li><a href="/">Página Inicial</a></li>
-                    <li><a href="#">Mapa do Site</a></li>
+                    <li><a href="https://rpg.arkanus.app">${t.footer.start}</a></li>
+                    <li><a href="#">${t.footer.map}</a></li>
                     <li></li>
                 </ul>
             </div>
             <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-                <h3 class="fs-6">Sobre</h3>
+                <h3 class="fs-6">${t.footer.about}</h3>
                 <ul class="list-unstyled">
-                    <li><a href="https://arkanus.app/team">Equipe</a></li>
-                    <li><a href="#">Objetivo</a></li>
+                    <li><a href="https://arkanus.app/team">${t.footer.team}</a></li>
+                    <li><a href="#">${t.footer.quest}</a></li>
                     <li></li>
                 </ul>
-            </div>
+            </div> 
             <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-                <h3 class="fs-6">Legal</h3>
+                <h3 class="fs-6">${t.footer.legal}</h3>
                 <ul class="list-unstyled">
-                    <li><a href="/pt/posts/tos.html">Termos de Uso</a></li>
-                    <li><a href="/pt/posts/privacy.html">Politica de Privacidade</a></li>
+                    <li><a href="/pt/posts/tos.html">${t.footer.tos}</a></li>
+                    <li><a href="/pt/posts/privacy.html">${t.footer.priv}</a></li>
                     <li></li>
                 </ul>
             </div>
             <div class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last item social">
                 <div class="fw-bold d-flex align-items-center"><img width="30" height="30" src="/static/img/icons/arkanus.svg" /><span class="ms-2">Powered by Arkanus</span></div>
-                <p class="text-muted copyright">Transformando seus sonhos em realidade com várias linhas de codigo.</p>
+                <p class="text-muted copyright">${t.footer.arkanus.desc}</p>
             </div>
         </div>
         <hr class="text-primary" />

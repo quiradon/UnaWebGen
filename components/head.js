@@ -6,7 +6,9 @@ function head(rota,title,desc,pictureURL) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>${title}</title>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <meta name="theme-color" content="#f80752">
     <link rel="stylesheet" href="/static/css/bs-theme-overrides.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="icon" type="image/png" sizes="512x512" href='/static/img/icons/android-chrome-512x512.png'>
     <link rel="icon" type="image/png" sizes="192x192" href='/static/img/icons/android-chrome-192x192.png'>

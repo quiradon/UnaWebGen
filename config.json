@@ -1,3 +1,5 @@
 {
-    "url" : "https://rpg.arkanus.app"
+    "url" : "https://rpg.arkanus.app",
+    "discord_invite" : "https://discord.com/invite/Nm3CypkQaq",
+    "bot_invite" : "https://discord.com/api/oauth2/authorize?client_id=899421595125288961&amp;permissions=8&amp;scope=bot%20applications.commands"
 }

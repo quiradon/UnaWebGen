@@ -26,7 +26,7 @@ function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`,`${t.index.name}`)}
+${head(`${t.lang}${rota}`,`${t.changelogs.title}`)}
 <body>
     ${nav(t, rota)}
 
@@ -35,7 +35,7 @@ ${head(`${t.lang}${rota}`,`${t.index.name}`)}
     ${updates.map(update => generateCard(update.version, update.text[idiomaUpdates], update.img)).join('')}
     </div>
 </div>
-    ${footer(t)}
+    ${footer(t,rota)}
     ${scripts}
 </body>
 </html>

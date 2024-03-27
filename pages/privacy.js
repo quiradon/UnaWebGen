@@ -16,6 +16,9 @@ ${head(`${t.lang}${rota}`,`${t.privacy.title}`)}
     ${PlaceParagraphs(t.tos[0].title,t.tos[0].desc)}
     ${PlaceParagraphs(t.privacy.title,t.privacy[0].desc)}
     ${PlaceParagraphs(t.privacy[1].title,t.privacy[1].desc)}
+    ${PlaceParagraphs(t.privacy[2].title,t.privacy[2].desc)}
+    ${PlaceParagraphs(t.privacy[3].title,t.privacy[3].desc)}
+    ${PlaceParagraphs(t.privacy[4].title,t.privacy[4].desc)}
 
     `)}
 

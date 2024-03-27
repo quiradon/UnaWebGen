@@ -12,7 +12,11 @@
 }
 
 .bgImg1 {
-  background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%), url("../img/backgrounds/red_vibes.webp") center / cover repeat-x;
+  background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%), url("../img/bg/red_vibes.webp") center / cover repeat-x;
+}
+
+.bgImg2 {
+  background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%), url('../img/bg/dnd.webp') center / cover repeat-x;
 }
 
 .cardBonito {

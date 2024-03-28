@@ -6,6 +6,10 @@ let updates = require('../data/updates.json')
 //transforme o json em um array de objetos
 updates = updates.v
 function generateCard(version, text, image) {
+    text = text.replace(/\n/g, '<br />');
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/@(\w+)/g, '<span class="text-primary">@$1</span>');
+    text = text.replace(/`(.*?)`/g, '<span class="text-bg-primary">$1</span>');
     return `<div class="col">
         <div class="border rounded border-1 border-primary-subtle px-4 py-1 m-2 my-4">
             <h2 class="text-center text-primary">${version}</h2>

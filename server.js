@@ -7,7 +7,11 @@ app.use('/static', express.static('static', { extensions: ['html'] }));
 
 // Adicione este middleware no final da cadeia de middleware
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'export', '404.html'));
+    if (req.url.startsWith('/pt/')) {
+        res.status(404).sendFile(path.join(__dirname, 'export', 'pt', '404.html'));
+    } else {
+        res.status(404).sendFile(path.join(__dirname, 'export', '404.html'));
+    }
 });
 
 app.listen(3000, () => {

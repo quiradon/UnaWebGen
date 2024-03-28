@@ -4,7 +4,7 @@ function head(rota,title,desc,pictureURL) {
     return `<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>${title}</title>
+    <title>${title} | Mini Kraken</title>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <meta name="theme-color" content="#f80752">
     <link rel="stylesheet" href="/static/css/bs-theme-overrides.css">

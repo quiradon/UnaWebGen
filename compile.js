@@ -45,3 +45,5 @@ languages.forEach(language => {
         }
     })
 })
+
+console.log('Compilação concluída!')

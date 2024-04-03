@@ -33,7 +33,24 @@ function PlaceParagraphs(title, text) {
     `
 }
 
+function PlaceSmallParagraphs(title, text) {
+    //faça a quebra de linhas com um /n
+    text = text.split('\n').map(paragraph => `<p class="text-light">${paragraph}</p>`).join('');
+    return `
+    <div class="col">
+            <h4 class="text-primary mt-3 mb-0">${title}</h4>
+            <div>
+                ${text}
+            </div>
+        </div>`
+}
+
+
+
+
+
 module.exports = {
     blog,
-    PlaceParagraphs
+    PlaceParagraphs,
+    PlaceSmallParagraphs
 }

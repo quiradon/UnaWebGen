@@ -1,6 +1,4 @@
-//apague todos os itens da pasta export
-
-// execute compile.js
-
-//inicie o servidor
-
+const {compilePages} = require('./compile.js');
+const {start} = require('./server.js');
+compilePages();
+start();

@@ -2,6 +2,38 @@
   transform: rotate(90deg);
 }
 
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.fade-in {
+  animation: fadeIn 1s;
+  animation-fill-mode: both;
+}
+
+.fade-in.delay-1 {animation-delay: 0.2s;}
+.fade-in.delay-2 {animation-delay: 0.4s;}
+.fade-in.delay-3 {animation-delay: 0.6s;}
+.fade-in.delay-4 {animation-delay: 0.8s;}
+.fade-in.delay-5 {animation-delay: 1s;}
+
+@keyframes flip {
+  0% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.CardPoker {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+.flip {
+  animation: flip 1s linear;
+}
+
 .nav-drop-text {
   font-size: 14px;
 }

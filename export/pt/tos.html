@@ -10,18 +10,21 @@
     <link rel="stylesheet" href="/static/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="/static/css/animate.min.css">
     <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="icon" type="image/png" sizes="512x512" href='/static/img/icons/android-chrome-512x512.png'>
-    <link rel="icon" type="image/png" sizes="192x192" href='/static/img/icons/android-chrome-192x192.png'>
-    <link rel="icon" type="image/png" sizes="180x180" href='/static/img/icons/apple-touch-icon.png'>
-    <link rel="icon" type="image/png" sizes="32x32" href='/static/img/icons/favicon-32x32.png'>
-    <link rel="icon" type="image/png" sizes="16x16" href='/static/img/icons/favicon-16x16.png'>
+    <link rel="icon" type="image/png" sizes="512x512" href='/static/img/icons/logo.svg'>
+    <link rel="icon" type="image/png" sizes="192x192" href='/static/img/icons/logo.svg'>
+    <link rel="icon" type="image/png" sizes="180x180" href='/static/img/icons/logo.svg'>
+    <link rel="icon" type="image/png" sizes="32x32" href='/static/img/icons/logo.svg'>
+    <link rel="icon" type="image/png" sizes="16x16" href='/static/img/icons/logo.svg'>
     <link rel="canonical" href="https://rpg.arkanus.app/pt/tos">
+    <link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/tos">
+    <link rel="alternate" hreflang="en" href="https://rpg.arkanus.app/tos">
+    <link rel="alternate" hreflang="x-default" href="https://rpg.arkanus.app/tos">
     <meta property="og:url" content="https://rpg.arkanus.app/pt/tos"">
 </head>
 <body>
     
     <nav class="navbar navbar-expand-lg sticky-top bg-dark shadow">
-    <div class="container-fluid"><a class="navbar-brand d-flex align-items-center" href="/pt/"><img class="img-fluid pe-1" src="/static/img/icons/logo.svg" alt="Mini Kraken Bot" width="30px" height="30px" /><span class="m-1">Mini Kraken</span></a><button class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#navcol"><span class="visually-hidden"></span><span class="navbar-toggler-icon text-primary"></span></button>
+    <div class="container-fluid"><a class="navbar-brand d-flex align-items-center" href="/pt/"><img class="img-fluid pe-1" src="/static/img/icons/logo.svg" alt="Mini Kraken Bot" width="30px" height="30px" /><span class="m-1">Mini Kraken</span></a><button title="Open Dropdown" class="navbar-toggler border-0" data-bs-toggle="collapse" data-bs-target="#navcol"><span class="visually-hidden"></span><span class="navbar-toggler-icon text-primary"></span></button>
         <div id="navcol" class="collapse navbar-collapse justify-content-between">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/pt#premium"><svg class="m-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -95,7 +98,7 @@
                     <a class="dropdown-item" href="/pt/tos" rel="alternate"><img class="img-fluid m-1 me-2" src="/static/img/flags/br.svg" width="25px" />Português</a>
                     </div>
                 </li>
-                <li class="nav-item"><a class="btn btn-primary link-light border-0" role="button" href="https://discord.com/api/oauth2/authorize?client_id=899421595125288961&amp;permissions=8&amp;scope=bot%20applications.commands" target="_blank" rel="external">Adicionar Bot</a></li>
+                <li class="nav-item"><a class="btn btn-primary fw-bold link-light border-0" role="button" href="https://discord.com/api/oauth2/authorize?client_id=899421595125288961&amp;permissions=8&amp;scope=bot%20applications.commands" target="_blank" rel="external">Adicionar Bot</a></li>
             </ul>
         </div>
     </div>
@@ -171,7 +174,7 @@
     <div class="container py-4 py-lg-5">
         <div class="row justify-content-center">
             <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-                <h3 class="fs-6">Utilitário </h3>
+                <b class="fs-6 mb-0 pb-0">Utilitário </b>
                 <ul class="list-unstyled">
                     <li><a href="https://rpg.arkanus.app">Página Inicial</a></li>
                     <li><a href="#">Mapa do Site</a></li>
@@ -179,7 +182,7 @@
                 </ul>
             </div>
             <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-                <h3 class="fs-6">Sobre</h3>
+                <b class="fs-6 mb-0 pb-0">Sobre</b>
                 <ul class="list-unstyled">
                     <li><a href="https://arkanus.app/team">Equipe</a></li>
                     <li><a href="#">Objetivo</a></li>
@@ -187,7 +190,7 @@
                 </ul>
             </div> 
             <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-                <h3 class="fs-6">Legal</h3>
+                <b class="fs-6 mb-0 pb-0">Legal</b>
                 <ul class="list-unstyled">
                     <li><a href="/pt/tos">Termos de Uso</a></li>
                     <li><a href="/pt/privacy">Politica de Privacidade</a></li>
@@ -195,7 +198,7 @@
                 </ul>
             </div>
             <div class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last item social">
-                <div class="fw-bold d-flex align-items-center"><img width="30" height="30" src="/static/img/icons/arkanus.svg" /><span class="ms-2">Powered by Arkanus</span></div>
+                <div class="fw-bold d-flex align-items-center"><img alt="Logo From Arkanus in White Color" width="30" height="30" src="/static/img/icons/arkanus.svg" /><span class="ms-2">Powered by Arkanus</span></div>
                 <p class="text-muted copyright">Transformando seus sonhos em realidade com várias linhas de codigo.</p>
             </div>
         </div>
@@ -203,13 +206,13 @@
         <div class="d-flex justify-content-between align-items-center pt-3">
             <p class="text-muted mb-0">Made by comunity for comunity</p>
             <ul class="list-inline mb-0">
-                <li class="list-inline-item"><a href="https://twitter.com/MiniKrakenBOT"><svg class="text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
+                <li class="list-inline-item"><a aria-label="Fortuna Twitter Icon"  href="https://twitter.com/MiniKrakenBOT"><svg class="text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                             <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path>
                         </svg></a></li>
-                <li class="list-inline-item"><a href="https://www.tiktok.com/@minikrakenbot"><svg class="text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+                <li class="list-inline-item"><a aria-label="Fortuna Tiktok Link" href="https://www.tiktok.com/@minikrakenbot"><svg class="text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
                             <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"></path>
                         </svg></a></li>
-                <li class="list-inline-item"><a href="https://www.instagram.com/una_rpg/"><svg class="text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+                <li class="list-inline-item"><a aria-label="Fortuna Instagram link" href="https://www.instagram.com/una_rpg/"><svg class="text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
                             <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
                         </svg></a></li>
             </ul>
@@ -217,9 +220,8 @@
     </div>
 </footer>
     
-<script src='/static/js/jquery.min.js'></script>
-<script src='/static/bootstrap/js/bootstrap.min.js'></script>
-<script src='/static/js/bs-init.js'></script>
+<script src='/static/bootstrap/js/bootstrap.min.js' async></script>
+<script src='/static/js/bs-init.js' async></script>
 
 </body>
 </html>

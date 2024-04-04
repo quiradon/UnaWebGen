@@ -22,7 +22,7 @@ function inicio(idioma) {
                 <a data-bss-hover-animate="pulse" class="btn btn-primary btn-lg link-light px-4 mt-2 mb-2" role="button" href="${bot_invite}" target="_blank">${t.index.start.btn1}</a>
                 <a data-bss-hover-animate="pulse" class="btn btn-outline-light btn-lg d-flex align-items-center px-4 m-2" data-bss-hover-animate="pulse" role="button" href="${lang}/dices" rel="help">${t.nav.docs.title}</a></div>
             </div>
-            <div class="col align-self-center"><img class="rounded img-fluid d-md-inline" src="/static/img/misc/una_hero_logo.webp" loading="auto" alt="Inanimalia Fortuna Tenebris Verteri" /></div>
+            <div class="col align-self-center"><img class="rounded img-fluid d-md-inline" width="auto" height="auto" src="/static/img/misc/una_hero_logo.webp" loading="auto" alt="Inanimalia Fortuna Tenebris Verteri" /></div>
         </div>
     </div>
 </section>`
@@ -165,7 +165,7 @@ function plans(t) {
                         ${listItem(`2 ${t.premium.feat[4]}`,icons.coin)} 
                         ${listItem(`${t.premium.feat[6]} ${t.premium.feat[7]}`,icons.key)}
                         ${listItem(t.premium.feat[5], icons.msg)}
-                        <hr></hr>
+                        <li><hr></li>
                         ${listItem(t.premium.feat[0],icons.dice)}
                         ${listItem(t.premium.feat[1],icons.tags)}
                         ${listItem(t.premium.feat[2], icons.text)}
@@ -182,11 +182,12 @@ function plans(t) {
                     ${listItem(`4 ${t.premium.feat[4]}`,icons.coin)} 
                     ${listItem(`${t.premium.feat[6]} ${t.premium.feat[8]}`,icons.key)}
                     ${listItem(t.premium.feat[5], icons.msg)}
-                    <hr></hr>
+                    <li><hr></li>
                     ${listItem(t.premium.feat[0],icons.dice)}
                     ${listItem(t.premium.feat[1],icons.tags)}
                     ${listItem(t.premium.feat[2], icons.text)}
                     ${listItem(t.premium.feat[3], icons.palet)}
+                    </ul>
                     <h3 id="price-1" class="mt-3">R$7/mês</h3><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
                 </div>
             </div>
@@ -202,7 +203,7 @@ function plans(t) {
                     ${listItem(t.premium.feat[9],icons.xadrez)}
                     ${listItem(t.premium.feat[98],icons.picture)}
                     ${listItem(t.premium.feat[99],icons.blocks)}
-                    <hr></hr>
+                    <li><hr></li>
                             ${listItem(t.premium.feat[0],icons.dice)}
                             ${listItem(t.premium.feat[1],icons.tags)}
                             ${listItem(t.premium.feat[2], icons.text)}
@@ -224,7 +225,7 @@ return `
                         <div class="d-flex justify-content-center align-items-center align-content-center">
                             <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">${svg}</div>
                         </div>
-                        <h4 class="text-center text-white card-title">${title}</h4>
+                        <h3 class="text-center text-white card-title">${title}</h3>
                         <p class="text-start text-light card-text">${text}</p>
                     </div>
                 </div>
@@ -259,6 +260,15 @@ function page(idioma, rota) {
 <html lang="${t.lang}" data-bs-theme="dark">
 ${head(`${t.lang}${rota}`,`${t.index.name}`)}
 <body>
+    <style>
+    .bgImg1 {
+        background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%), url("/static/img/bg/red_vibes.webp") center / cover repeat-x;
+      }
+
+      .bgImg2 {
+        background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%), url('/static/img/bg/dnd.webp') center / cover repeat-x;
+      }  
+      </style>
     ${nav(t, rota)}
     ${inicio(t)}
     ${section2(t)}
@@ -268,7 +278,7 @@ ${head(`${t.lang}${rota}`,`${t.index.name}`)}
     ${footer(t,rota)}
     ${scripts}
     <script>
-    fetch("https://api.github.com/gists/5696808013548492a67fb21c32759479").then(a=>a.json()).then(a=>{a=JSON.parse(a.files["botstatus.json"].content),document.getElementById("version").innerHTML=a.version;let b=0;const c=document.getElementById("userAmount"),d=document.getElementById("serverAmount"),e=document.getElementById("commandAmount"),f=Math.max(a.userAmount,a.serverAmount,a.commandAmount),g=f/100;console.log(a);const h={members(){return b+=g,b>=a.userAmount?(c.innerHTML=a.userAmount,void(h.members=()=>{})):void(c.innerHTML=Math.round(b))},server_amount(){return b+=g,b>=a.serverAmount?(d.innerHTML=a.serverAmount,void(h.server_amount=()=>{})):void(d.innerHTML=Math.round(b))},commands(){return b+=g,b>=a.commandAmount?(e.innerHTML=a.commandAmount,void(h.commands=()=>{})):void(e.innerHTML=Math.round(b))},update(a,c){h.members(),h.server_amount(),h.commands(),b>=a&&clearInterval(c)}},j=setInterval(()=>{h.update(f,j)},50)});
+    fetch("https://api.github.com/gists/5696808013548492a67fb21c32759479").then(a=>a.json()).then(a=>{a=JSON.parse(a.files["botstatus.json"].content),document.getElementById("version").innerHTML=a.version;let b=0;const c=document.getElementById("userAmount"),d=document.getElementById("serverAmount"),e=document.getElementById("commandAmount"),f=Math.max(a.userAmount,a.serverAmount,a.commandAmount),g=f/100;const h={members(){return b+=g,b>=a.userAmount?(c.innerHTML=a.userAmount,void(h.members=()=>{})):void(c.innerHTML=Math.round(b))},server_amount(){return b+=g,b>=a.serverAmount?(d.innerHTML=a.serverAmount,void(h.server_amount=()=>{})):void(d.innerHTML=Math.round(b))},commands(){return b+=g,b>=a.commandAmount?(e.innerHTML=a.commandAmount,void(h.commands=()=>{})):void(e.innerHTML=Math.round(b))},update(a,c){h.members(),h.server_amount(),h.commands(),b>=a&&clearInterval(c)}},j=setInterval(()=>{h.update(f,j)},50)});
     </script>
 </body>
 </html>

@@ -11,6 +11,21 @@ function page(idioma, rota) {
 <html lang="${t.lang}" data-bs-theme="dark">
 ${head(`${t.lang}${rota}`,`${t.poker.title}`)}
 <body>
+    <style>
+    .fade-in.delay-1 {animation-delay: 0.2s;}
+    .fade-in.delay-2 {animation-delay: 0.4s;}
+    .fade-in.delay-3 {animation-delay: 0.6s;}
+    .fade-in.delay-4 {animation-delay: 0.8s;}
+    .fade-in.delay-5 {animation-delay: 1s;}
+    @keyframes fadeIn {
+        0% {opacity: 0;}
+        100% {opacity: 1;}
+      }
+      .fade-in {
+        animation: fadeIn 1s;
+        animation-fill-mode: both;
+      }
+    </style>
     ${nav(t, rota)}
     <section class="py-4 py-xl-5">
     <div class="container">

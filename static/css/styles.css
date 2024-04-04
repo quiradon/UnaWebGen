@@ -1,29 +1,12 @@
-.dropdown:focus, .dropdown-item:hover .transition-nav-hover-right {
-  transform: rotate(90deg);
+html {
+  scroll-behavior: smooth;
 }
-
-@keyframes fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
-}
-
-.fade-in {
-  animation: fadeIn 1s;
-  animation-fill-mode: both;
-}
-
-.fade-in.delay-1 {animation-delay: 0.2s;}
-.fade-in.delay-2 {animation-delay: 0.4s;}
-.fade-in.delay-3 {animation-delay: 0.6s;}
-.fade-in.delay-4 {animation-delay: 0.8s;}
-.fade-in.delay-5 {animation-delay: 1s;}
 
 @keyframes flip {
   0% { transform: rotateY(0deg); }
   50% { transform: rotateY(180deg); }
   100% { transform: rotateY(360deg); }
 }
-
 .CardPoker {
   perspective: 1000px;
   transform-style: preserve-3d;
@@ -43,37 +26,11 @@
   text-decoration: inherit!important;
 }
 
-.bgImg1 {
-  background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%), url("../img/bg/red_vibes.webp") center / cover repeat-x;
-}
-
-.bgImg2 {
-  background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)), linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%), url('../img/bg/dnd.webp') center / cover repeat-x;
-}
-
 .cardBonito {
   background: rgba(29,26,45,0.5);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: 42px;
-}
-
-.MsgA {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 3px;
-}
-
-.MsgB {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 15px;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 .bs-icon {
@@ -238,10 +195,6 @@ html {
   transition: 0.35s;
 }
 
-.custom-tooltip {
-  --bs-tooltip-bg: var(--bs-primary);
-}
-
 .bs-icon {
   --bs-icon-size: .75rem;
   display: flex;
@@ -279,16 +232,6 @@ html {
 .bs-icon.bs-icon-primary {
   color: var(--bs-white);
   background: var(--bs-primary);
-}
-
-.bs-icon.bs-icon-primary-light {
-  color: var(--bs-primary);
-  background: rgba(var(--bs-primary-rgb), .2);
-}
-
-.bs-icon.bs-icon-semi-white {
-  color: var(--bs-primary);
-  background: rgba(255, 255, 255, .5);
 }
 
 .bs-icon.bs-icon-rounded {

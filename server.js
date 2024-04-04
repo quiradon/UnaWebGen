@@ -16,6 +16,11 @@ app.use((req, res) => {
     }
 });
 
+//rotear sitemap.xml
+app.get('/sitemap.xml', (req, res) =>
+    res.sendFile(path.join(__dirname, '/sitemap.xml'))
+);
+
 app.listen(3001, () => {
     console.log('Servidor rodando na porta 3001');
 });

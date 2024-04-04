@@ -64,7 +64,7 @@ function section2(t) {
                 ${Object.keys(t.posts.sistemas).map((key) => {
                     
                     const sistema = t.posts.sistemas[key];
-                    return systemCards(sistema.card.title, sistema.card.desc, sistema.icon, `${lang}/posts/${sistema.path}`, sistema.card.btn)
+                    return systemCards(sistema.card.title, sistema.card.desc, sistema.icon, `${lang}/systems/${sistema.path}`, sistema.card.btn)
                 }).join('')}
 
              </div>                 

@@ -13,7 +13,9 @@ function extrairRotaSemIdioma(rota) {
 
 function head(rota,title,desc,pictureURL) {
     let rotaRoot = extrairRotaSemIdioma(rota)
-
+    if (!desc){
+        desc = "Mini Kraken é um site de RPG que oferece ferramentas, artigos e conteúdo para jogadores e mestres de RPG. Aqui você encontra informações sobre Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling, e outros sistemas de RPG."
+    }
     return `<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -33,6 +35,12 @@ function head(rota,title,desc,pictureURL) {
     <link rel="alternate" hreflang="en" href="${url}${rotaRoot}">
     <link rel="alternate" hreflang="x-default" href="${url}${rotaRoot}">
     <meta property="og:url" content="${url}/${rota}"">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="${title}">
+    <meta property="og:description" content="${desc}">
+    <meta name="description" content="${desc}">
+    <meta name="twitter:title" content="${title}">
+    <meta name="twitter:description" content="${desc}">
 </head>`
 }
 

@@ -3,9 +3,9 @@ function blog(title, categories, img, content) {
 
     return `
         <div class="col m-md-3">
-            <div class="container border rounded border-0 p-0"">
+            <div class="container border rounded border-0 p-0 shadow-lg shadow">
                 <div class="p-5 mb-3 img-fluid rounded-top" style="background: url('${img}') center / cover;">${tags}
-                    <h1 class="text-light pb-5 pt-2">${title}</h1>
+                    <h1 class="text-light pb-5 pt-2 border-2 text-shadow-l">${title}</h1>
                 </div>
                 <div class="px-3 pb-3">
                     <div>

@@ -33,6 +33,7 @@ function head(rota,title,desc,pictureURL) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>${title} | Mini Kraken</title>
+    <meta name="description" content="${desc}">
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
     <meta name="theme-color" content="#f80752">
     <link rel="stylesheet" href="/static/css/bs-theme-overrides.css">
@@ -47,16 +48,19 @@ function head(rota,title,desc,pictureURL) {
     <link rel="alternate" hreflang="pt" href="${url}/pt${rotaRoot}">
     <link rel="alternate" hreflang="en" href="${url}${rotaRoot}">
     <link rel="alternate" hreflang="x-default" href="${url}${rotaRoot}">
-    <meta property="og:url" content="${url}${rotaRoot}"">
+    <meta property="og:url" content="${url}${rotaRoot}">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="${title}">
-    <meta property="og:description" content="${desc}">
-    <meta name="description" content="${desc}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@MiniKrakenBOT">
+    <meta name="twitter:creator" content="@MiniKrakenBOT">
     <meta name="twitter:title" content="${title}">
     <meta name="twitter:description" content="${desc}">
-    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="${pictureURL}">
+    <meta property="og:url" content="URL_da_sua_página">
+    <meta property="og:title" content="${title}">
+    <meta property="og:description" content="${desc}">
     <meta property="og:image" content="${pictureURL}">
+
 </head>`
 }
 

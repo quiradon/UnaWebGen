@@ -26,7 +26,7 @@ function head(rota,title,desc,pictureURL) {
         desc = t.default.desc
     }
     if (!pictureURL){
-        pictureURL = `/static/img/bg/dnd.webp`
+        pictureURL = `${url}/static/img/bg/space.webp`
     }
 
     return `<head>

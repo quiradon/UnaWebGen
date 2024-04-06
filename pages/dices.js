@@ -61,7 +61,7 @@ ${head(`${t.lang}${rota}`,`${t.dices.title}`)}
 <body>
     ${nav(t, rota)}
 
-    ${blog(t.dices.title,t.dices.tags,"/static/img/bg/bg_1.webp",`
+    ${blog(t.dices.title,t.dices.tags,"/static/img/bg/space.webp",`
     ${PlaceParagraphs(t.tos[0].title,Formatador(t.dices.guide[0].desc))}
     <div class="row row-cols-1 row-cols-lg-2">
         ${PlaceParagraphs(t.dices.guide[1].title,Formatador(t.dices.guide[1].desc))}

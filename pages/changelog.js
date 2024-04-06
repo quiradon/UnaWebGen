@@ -35,6 +35,9 @@ ${head(`${t.lang}${rota}`,`${t.changelogs.title}`)}
     ${nav(t, rota)}
 
     <div class="container">
+    <div class="col-12 text-center mb-2 mt-4">
+    <h1>${t.changelogs.title}</h1>
+</div>
     <div class="row row-cols-1" id="updates"><div class="col">
     ${updates.map(update => generateCard(update.version, update.text[idiomaUpdates], update.img)).join('')}
     </div>

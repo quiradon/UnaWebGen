@@ -83,16 +83,19 @@ ${head(`${t.lang}${rota}`,`${t.cmds.title}`)}
 <body>
     ${nav(t, rota)}
     <section>
-    <div class="container-fluid pt-5">
-        <div class="row flex-column justify-content-center align-items-center">
-            <div class="col-9 col-sm-10 col-md-10 col-lg-10 col-xl-11 col-xxl-10 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-0 d-block">
-                <div id="cards" class="row g-0 row-cols-1">
-                ${GenerateCards(OrdenarComandosOrdemAlfabetica(commands,idiomaUpdates), idiomaUpdates)}
+        <div class="container-fluid pt-5">
+            <div class="row flex-column justify-content-center align-items-center">
+                <div class="col-12 text-center mb-4">
+                    <h1>${t.cmds.title}</h1>
+                </div>
+                <div class="col-9 col-sm-10 col-md-10 col-lg-10 col-xl-11 col-xxl-10 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-0 d-block">
+                    <div id="cards" class="row g-0 row-cols-1">
+                    ${GenerateCards(OrdenarComandosOrdemAlfabetica(commands,idiomaUpdates), idiomaUpdates)}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
     ${footer(t,rota)}
     ${scripts}
 </body>

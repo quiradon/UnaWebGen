@@ -45,6 +45,21 @@ function PlaceSmallParagraphs(title, text) {
         </div>`
 }
 
+function TextAndImage(title,text,img,alt){
+    return `
+    <div class="row mb-2">
+        <div class="col-md-6 col-lg-6 col-xl-6">
+            <div>
+                <h4 class="text-primary">${title}</h4>
+                <p class="text-light lead">${text}</p> 
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6 text-center mb-3">
+            <img class="img-fluid" src="${img}" alt="${alt}" loading="auto" />
+        </div>
+    </div>
+    `
+}
 
 
 
@@ -52,5 +67,6 @@ function PlaceSmallParagraphs(title, text) {
 module.exports = {
     blog,
     PlaceParagraphs,
-    PlaceSmallParagraphs
+    PlaceSmallParagraphs,
+    TextAndImage
 }

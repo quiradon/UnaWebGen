@@ -35,13 +35,17 @@ ${head(`${t.lang}${rota}`,`${t.poker.title}`)}
     ${scripts}
     <script>
     document.getElementById("cardsrun").onclick = card;
-
+    //de play no audio da carta
+    let audio = "/static/audio/play-card.mp3"
     function card() {
         let cardTypes = ["hearts", "diamonds", "clubs", "spades"];
         let a = document.getElementById("cardstype").value ?? 0;
         if (a === "random") {
             a = Math.floor(4 * Math.random());
         }
+        var audioElement = new Audio(audio);
+        audioElement.volume = 0.5
+        audioElement.play();
         var cardNumber = Math.floor(13 * Math.random()) + 1;
         var cardimg = \`https://apis.arkanus.app/poker-card/\${a}/\${cardNumber}.webp\`;
         var cardElement = document.getElementById("cardshow");

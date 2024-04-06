@@ -28,9 +28,13 @@ ${head(`${t.lang}${rota}`,`${t.tarot.title}`)}
     ${footer(t,rota)}
     ${scripts}
     <script>
+    const audio = "/static/audio/play-card.mp3"
         const cardsrun = document.getElementById('cardsrun');
         const cardshow = document.getElementById('cardshow');
         cardsrun.addEventListener('click', async () => {
+            let audioElement = new Audio(audio);
+            audioElement.volume = 0.5
+            audioElement.play();
             const randomCard = Math.floor(Math.random() * 22);
             cardshow.src = 'https://apis.arkanus.app/tarot-card/' + randomCard + '.webp';
             cardshow.classList.add('flip');

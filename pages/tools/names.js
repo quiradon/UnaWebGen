@@ -9,7 +9,7 @@ function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`,`${t.poker.title}`)}
+${head(`${t.lang}${rota}`,`${t.names.article.title}`)}
 <body>
     <style>
     .fade-in.delay-1 {animation-delay: 0.2s;}

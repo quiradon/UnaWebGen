@@ -82,7 +82,7 @@ function botStatus(t) {
             <div class="row h-100">
                 <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
                     <div>
-                        <h2 class="fw-bold text-white mb-3">${t.index.status.title}</h2>
+                        <h3 class="fw-bold text-white mb-3">${t.index.status.title}</h3>
                         <p class="text-light mb-4">${t.index.status.desc}</p>
                     </div>
                 </div>
@@ -170,7 +170,7 @@ function plans(t) {
                         ${listItem(t.premium.feat[1],icons.tags)}
                         ${listItem(t.premium.feat[2], icons.text)}
                     </ul>
-                    <h3 id="price-3" class="mt-3">R$5/mês</h3><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
+                    <h4 id="price-3" class="mt-3">R$5/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
                 </div>
             </div>
             <div class="col-xxl-12 box pb-0 mb-5">
@@ -188,7 +188,7 @@ function plans(t) {
                     ${listItem(t.premium.feat[2], icons.text)}
                     ${listItem(t.premium.feat[3], icons.palet)}
                     </ul>
-                    <h3 id="price-1" class="mt-3">R$7/mês</h3><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
+                    <h4 id="price-1" class="mt-3">R$7/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
                 </div>
             </div>
             <div class="col-xxl-12 box pb-0 mb-5">
@@ -209,7 +209,7 @@ function plans(t) {
                             ${listItem(t.premium.feat[2], icons.text)}
                             ${listItem(t.premium.feat[3], icons.palet)}
                     </ul>
-                    <h3 id="price-2" class="mt-3">R$15/mês</h3><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
+                    <h4 id="price-2" class="mt-3">R$15/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
                 </div>
             </div>
         </div>

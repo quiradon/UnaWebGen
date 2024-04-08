@@ -1,6 +1,13 @@
 {   
     "v" : [
         {
+          "version" : "2.24.0 - Local Economy",
+          "text" : {
+            "pt-BR" : "Adicionado sistema de economia e moedas locais o /lc agora é um comando de economia, o /lc atm mostra o seu saldo e o /lc top mostra o top 10 de moedas locais.\nAlém disso comandos como /mod_lc add, /mod_lc remove e /mod_lc set permitem que você modifique o saldo de qualquer usuário. por padrão apenas administradores podem usar tais comandos, contudo as permissoes podem ser alteradas no painel de configuração de permissões do discord, além disso o nome da moeda local pode ser alterado no painel do /config.",
+            "en" : "Added local economy and currency system the /lc is now an economy command, the /lc atm shows your balance and the /lc top shows the top 10 of local coins.\nIn addition commands like /mod_lc add, /mod_lc remove and /mod_lc set allow you to modify the balance of any user. by default only administrators can use such commands, however permissions can be changed in the discord permissions configuration panel, in addition the name of the local currency can be changed in the /config panel."
+          }  
+        },
+        {
             "version" : "3.23.0",
             "text" : {
                 "pt-BR" : "# Petch \n- Adição de Novos sobrenomes\n- Adição do novo comando /gerar npc\n- Adição do comando /emoji Info\n- Melhoria do sistema de divulgação de mesas de RPG.\n- Correção de BUG na geração dos sobrenomes.\n- /gerar imagem computador\n- Melhoria no /iniciativa\nCRIS Colab Skins\nAdicionado aliase ! para dados explosivos\nMelhoria nas traduções dos erros.",

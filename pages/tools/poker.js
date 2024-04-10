@@ -14,7 +14,7 @@ ${head(`${t.lang}${rota}`,`${t.poker.title}`)}
     <section class="d-lg-flex justify-content-lg-center my-5">
         <div class="container">
             <div class="row g-0">
-                <div class="col-md-6 order-first order-md-last p-5 pt-2 pb-0"><img class="rounded img-fluid w-100 h-100 fit-cover CardPoker" id="cardshow" src="https://apis.arkanus.app/poker-card/2/10.webp" loading="auto" alt="Carta de baralho aleatoria"></div>
+                <div class="col-md-6 order-first order-md-last p-5 pt-2 pb-0"><img class="rounded img-fluid w-100 h-100 fit-cover CardPoker" id="cardshow" src="/static/api/poker-card/2/10.webp" loading="auto" alt="Carta de baralho aleatoria"></div>
                 <div class="col d-flex justify-content-center align-items-center align-content-center order-last">
                     <div class="text-white">
                         <h1 class="fw-bold text-white">${t.poker.article.title}</h1>
@@ -47,13 +47,13 @@ ${head(`${t.lang}${rota}`,`${t.poker.title}`)}
         audioElement.volume = 0.5
         audioElement.play();
         var cardNumber = Math.floor(13 * Math.random()) + 1;
-        var cardimg = \`https://apis.arkanus.app/poker-card/\${a}/\${cardNumber}.webp\`;
+        var cardimg = \`/static/api/poker-card/\${a}/\${cardNumber}.webp\`;
         var cardElement = document.getElementById("cardshow");
         cardElement.src = cardimg;
         cardElement.classList.add('flip');
         setTimeout(() => {
             cardElement.classList.remove('flip');
-        }, 1000);
+        }, 500);
     }
     </script>
 </body>

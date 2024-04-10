@@ -56,7 +56,7 @@ function head(rota,title,desc,pictureURL) {
     <meta name="twitter:title" content="${title}">
     <meta name="twitter:description" content="${desc}">
     <meta name="twitter:image" content="${pictureURL}">
-    <meta property="og:url" content="URL_da_sua_página">
+    <meta property="og:url" content="${url}${rotaRoot}">
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${desc}">
     <meta property="og:image" content="${pictureURL}">

@@ -2,6 +2,11 @@ html {
   scroll-behavior: smooth;
 }
 
+.mouse-click-icon:hover {
+  cursor: pointer;
+}
+
+
 @keyframes flip {
   0% { transform: rotateY(0deg); }
   50% { transform: rotateY(180deg); }
@@ -10,11 +15,11 @@ html {
 .CardPoker {
   perspective: 1000px;
   transform-style: preserve-3d;
-  transition: transform 1s;
+  transition: transform 90s;
 }
 
 .flip {
-  animation: flip 1s linear;
+  animation: flip 0.5s linear;
 }
 
 .nav-drop-text {

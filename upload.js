@@ -45,4 +45,6 @@ copyFolderRecursive(exportPath, uploadPath);
 const staticPath = path.join(uploadPath, 'static');
 fs.mkdirSync(staticPath);
 copyFolderRecursive(path.join(__dirname, 'static'), staticPath);
-
+//copie robots.txt para a pasta upload
+fs.copyFileSync(path.join(__dirname, 'robots.txt'), path.join(uploadPath, 'robots.txt'));
+console.log('[Upload realizado com sucesso!]');

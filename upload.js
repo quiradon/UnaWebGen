@@ -45,3 +45,4 @@ copyFolderRecursive(exportPath, uploadPath);
 const staticPath = path.join(uploadPath, 'static');
 fs.mkdirSync(staticPath);
 copyFolderRecursive(path.join(__dirname, 'static'), staticPath);
+

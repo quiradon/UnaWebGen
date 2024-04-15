@@ -22,7 +22,7 @@ function inicio(idioma) {
                 <a data-bss-hover-animate="pulse" class="btn btn-primary btn-lg link-light px-4 mt-2 mb-2" role="button" href="${bot_invite}" target="_blank">${t.index.start.btn1}</a>
                 <a data-bss-hover-animate="pulse" class="btn btn-outline-light btn-lg d-flex align-items-center px-4 m-2" data-bss-hover-animate="pulse" role="button" href="${lang}/dices" rel="help">${t.nav.docs.title}</a></div>
             </div>
-            <div class="col align-self-center"><img class="rounded img-fluid d-md-inline" width="auto" height="auto" src="/static/img/misc/una_hero_logo.webp" loading="auto" alt="Inanimalia Fortuna Tenebris Verteri" /></div>
+            <div class="col align-self-center"><img class="rounded img-fluid d-md-inline" width="auto" height="auto" src="/static/img/misc/blobs/una_hero_logo.webp" loading="auto" alt="Inanimalia Fortuna Tenebris Verteri" /></div>
         </div>
     </div>
 </section>`

@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile" : "node compile.js",
+    "upload" : "node upload",
+    "cf_run" : "npx wrangler pages dev upload/ --compatibility-flags=\"nodejs_compat\""
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +17,7 @@
     "html-minifier": "^4.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.0",
+    "wrangler": "^3.51.2"
   }
 }

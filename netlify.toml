@@ -1,9 +1,0 @@
-[[redirects]]
-from = "/pt/*"
-to = "/pt/404"
-status = 404
-
-[[redirects]]
-from = "/*"
-to = "/404"
-status = 404

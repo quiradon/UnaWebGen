@@ -1,0 +1,6 @@
+compatibility_flags = [ "nodejs_compat" ]
+
+[[d1_databases]]
+binding = "una_db"
+database_name = "fortuna"
+database_id = "2aa4da4e-a3de-41a8-8735-7bde34f0bdf6"

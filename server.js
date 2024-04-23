@@ -27,6 +27,7 @@ app.listen(3001, () => {
 
 }
 
+start()
 
 module.exports = {  
     start

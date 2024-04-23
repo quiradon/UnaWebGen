@@ -49,8 +49,6 @@ function compilePages() {
     })
 }
 
-
-
 // Chame a função para executar a compilação das páginas
 compilePages()
 console.log('[Páginas compiladas com sucesso!]')

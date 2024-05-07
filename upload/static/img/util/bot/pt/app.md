@@ -25,25 +25,25 @@ Personalize seus dados, escolha entre `25+` skins disponíveis no `/store dices`
 
 
 **Sistemas de RPG adaptados:**
-![Sistemas de RPG suportados e disponíveis](https://images-ext-1.discordapp.net/external/HFw_yU4a81Mwd19tkkmNDLSgCAl3N58IhoLRqmcLLfk/https/images-ext-1.discordapp.net/external/Q1IUa12MS8GkrsxTHuvKYPImt36ovuuscoSYRPfIT0I/https/images-ext-1.discordapp.net/external/3TmgPkWXiSAxYXZOjlK77E_UC31Qv3oDKG39Bz-LOJ4/https/apis.arkanus.app/img/app/pt/Systems.webp)
+![Sistemas de RPG suportados e disponíveis](https://apis.arkanus.app/img/app/pt/Systems.webp)
 
 Um companheiro para sua jornada de RPG. Confira abaixo a lista de sistemas de RPG que possuem suporte as fichas automáticas. Se o seu sistema preferido não estiver listado, o envie como sugestão em nosso  [servidor de suporte](https://discord.com/invite/Nm3CypkQaq) ou usando o comando `/suggest`.
 
 | Sistemas RPG Suportados | Ícones | Grimórios | Tags do sistema |
 | ------------------------- | -------------------------------------------------- | -------- | ------------------- |
 | **[Dungeons e Dragões (DnD)](https://rpg.arkanus.app/pt/systems/dnd)** | ![Logotipo de Dungeons and Dragons](https://rpg.arkanus.app/static/img/util/bot/icons/DnD.webp) | 🏗️ | `Medieval`, `Fantasia` |
-| **[Ordem Paranormal ](https://rpg.arkanus.app/pt/systems/ordem)**| ![Logotipo da Ordem Paranormal](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) | ✅ | `Moderno`, `Investigação` |
-| **[Tormenta20](https://rpg.arkanus.app/pt/systems/tormenta)** | ![Logotipo do Tormenta RPG](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) | ✅ | `Medieval`, `Fantasia` |
-| **[Carbon2185](https://rpg.arkanus.app/pt/systems/carbon)** | ![Carbon2185 - RPG de mesa Cyberpunk](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) | ❌ | `Cyberpunk`, `Futurista` |
-| **[Gaia: O Prelúdio](https://rpg.arkanus.app/pt/systems/gaia)** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) | ❌ | `Medieval`, `Fantasia` |
-| **[3DET](https://rpg.arkanus.app/pt/systems/3det)** | ![3DET - RPG de fantasia](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) | ❌ | `Tudo`, `Dinâmico` |
-| **[Pathfinder](https://rpg.arkanus.app/pt/systems/pathfinder)** | ![RPG Pathfinder](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) | ❌ | `Fantasia` |
-| **[Feiticeiros e Maldições](https://rpg.arkanus.app/pt/systems/feiticeiros)** | ![RPG Jujutsu Kaisen](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | ❌ | `Jujutsu`, `Escola` |
+| **[Ordem Paranormal ](https://rpg.arkanus.app/pt/systems/ordem)**| ![Logotipo da Ordem Paranormal](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) | 🏗️ | `Moderno`, `Investigação` |
+| **[Tormenta20](https://rpg.arkanus.app/pt/systems/tormenta)** | ![Logotipo do Tormenta RPG](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) | 🏗️ | `Medieval`, `Fantasia` |
+| **[Carbon2185](https://rpg.arkanus.app/pt/systems/carbon)** | ![Carbon2185 - RPG de mesa Cyberpunk](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) | 🏗️ | `Cyberpunk`, `Futurista` |
+| **[Gaia: O Prelúdio](https://rpg.arkanus.app/pt/systems/gaia)** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) | 🏗️ | `Medieval`, `Fantasia` |
+| **[3DET](https://rpg.arkanus.app/pt/systems/3det)** | ![3DET - RPG de fantasia](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) | 🏗️ | `Tudo`, `Dinâmico` |
+| **[Pathfinder](https://rpg.arkanus.app/pt/systems/pathfinder)** | ![RPG Pathfinder](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) | 🏗️ | `Fantasia` |
+| **[Feiticeiros e Maldições](https://rpg.arkanus.app/pt/systems/feiticeiros)** | ![RPG Jujutsu Kaisen](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 🏗️ | `Jujutsu`, `Escola` |
 
 O Bot é feito por fãs para fãs, auxiliando na experiência de RPG. Não reivindicamos ou possuimos direitos sobre os jogos, livros e sistemas. E não somos afiliados ou possuimos vinculo com a maioria editoras e escritores dos jogos. 
 
 
-![Melhor comunidade de RPG](https://images-ext-1.discordapp.net/external/eng56ZoBMa4dPCyD8bf6gZp-5-p1jIIsl6GVvT9W6XI/https/images-ext-1.discordapp.net/external/b8OhbYM1QflZO_TqsZTCXT4Dwq5MrTbF89kLqLpz2eM/https/images-ext-1.discordapp.net/external/T-m9TZ1u-74w-Bj_qAG-czLvaCLA7ACHcqzulxDUysw/https/apis.arkanus.app/img/app/pt/Comunity.webp)
+![Melhore sua Comunidade de RPG](https://rpg.arkanus.app/static/img/util/bot/pt/comunity.webp)
 
 **Comunidades de RPG:**
 Funções feitas para comunidades, Sistema de economia local e galerias da comunidade onde os jogadores de RPG podem compartilhar itens, magias, NPCs, e muitos outros conteúdos globalmente. promovendo toda uma experiência. 
@@ -52,8 +52,7 @@ Funções feitas para comunidades, Sistema de economia local e galerias da comun
 
 ---
 
-**Mais Informações:**
-Mini Kraken é a escolha ideal para jogadores de RPG de mesa, agilizando as sessões, proporcionando uma experiência de jogo mais tranquila e oferecendo uma variedade de recursos para Game Masters e jogadores. A instalação é fácil:
+A Mini Kraken é a escolha ideal para jogadores de RPG de mesa, agilizando as sessões, proporcionando uma experiência de jogo mais tranquila e oferecendo uma variedade de recursos para GMs (Mestres) e Players (jogadores). 
 
 **Instalação e Configurações:**
 Segue abaixo um pequeno guia de como instalar e configurar a Mini Kraken em seu servidor.

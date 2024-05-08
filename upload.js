@@ -47,7 +47,9 @@ fs.mkdirSync(staticPath);
 copyFolderRecursive(path.join(__dirname, 'static'), staticPath);
 //copie robots.txt para a pasta upload
 fs.copyFileSync(path.join(__dirname, 'robots.txt'), path.join(uploadPath, 'robots.txt'));
-
+fs.copyFileSync(path.join(__dirname, 'sitemap.xml'), path.join(uploadPath, 'sitemap.xml'));
 //copie _redirects para a pasta upload
 fs.copyFileSync(path.join(__dirname, '_redirects'), path.join(uploadPath, '_redirects'));
+
+
 console.log('[Upload realizado com sucesso!]');

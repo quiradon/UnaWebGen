@@ -1,6 +1,6 @@
 Melhore suas sessões de **RPG de mesa**. Tenha suporte a diversos sistemas como [DnD](https://rpg.arkanus.app/pt/systems/dnd), [Ordem](https://rpg.arkanus.app/pt/systems/ordem), [Tormenta](https://rpg.arkanus.app/pt/systems/tormenta) , [Gaia](https://rpg.arkanus.app/pt/systems/gaia) e [vários outros](https://rpg.arkanus.app/pt/), Além de recursos como fichas de personagem automáticas, gerenciamento de iniciativa, rolagem de dados, grimórios de magia e muito mais. Confira a [lista completa de comandos disponíveis!](https://rpg.arkanus.app/pt/commands)
 
-![Mini Kraken - A ferramenta definitiva para RPG de mesa e lançamento de dados](https://images-ext-1.discordapp.net/external/nWs2dm_tM7D91k0-M3vGezYRHXKl4sGWJ7Dur29Q2K0/https/images-ext-1.discordapp.net/external/rL31WvaDS0VgqaRADQoAcdTmPbik9AtgxIiBHUD45FU/https/images-ext-1.discordapp.net/external/VN2Or2kGsXLkYAdF1ScHKd_NXaVcDo7lOalr-EET3UE/https/apis.arkanus.app/img/app/en/FortunaBanner.webp)
+![A ferramenta definitiva para RPG de mesa e rolagem de dados](https://images-ext-1.discordapp.net/external/nWs2dm_tM7D91k0-M3vGezYRHXKl4sGWJ7Dur29Q2K0/https/images-ext-1.discordapp.net/external/rL31WvaDS0VgqaRADQoAcdTmPbik9AtgxIiBHUD45FU/https/images-ext-1.discordapp.net/external/VN2Or2kGsXLkYAdF1ScHKd_NXaVcDo7lOalr-EET3UE/https/apis.arkanus.app/img/app/en/FortunaBanner.webp)
 
 
 **Recursos e funções:**
@@ -24,8 +24,9 @@ Utilize a sintaxe RPG para rolar dados com um número específico de lados e qua
 Personalize seus dados, escolha entre `25+` skins disponíveis no `/store dices`
 
 
+
+![Sistemas de RPG suportados e disponíveis](https://rpg.arkanus.app/static/img/util/bot/pt/system.webp)
 **Sistemas de RPG adaptados:**
-![Sistemas de RPG suportados e disponíveis](https://apis.arkanus.app/img/app/pt/Systems.webp)
 
 Um companheiro para sua jornada de RPG. Confira abaixo a lista de sistemas de RPG que possuem suporte as fichas automáticas. Se o seu sistema preferido não estiver listado, o envie como sugestão em nosso  [servidor de suporte](https://discord.com/invite/Nm3CypkQaq) ou usando o comando `/suggest`.
 
@@ -60,4 +61,4 @@ Segue abaixo um pequeno guia de como instalar e configurar a Mini Kraken em seu 
 1. Acesse o [Diretório de Apps](https://discord.com/application-directory/899421595125288961) ou [Site Oficial da Mini Kraken](https://rpg.arkanus.app).
 2. Clique em "Adicionar ao servidor".
 3. Use o comando `/config` para definir o `Sistema de RPG`, `Cargo do mestre` e demais configurações.
-4. Pronto! Comece a usar a Mini Kraken em suas sessões de RPG e **divirta-se**.
+4. Pronto! Comece a usar a Mini Kraken em suas sessões de RPG e não se esqueça de se **divertir**.

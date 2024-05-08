@@ -12,7 +12,7 @@ function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`,`${t.changelogs.title}`)}
+${head(`${t.lang}${rota}`,`${t.PageNotFound.title}`,t.PageNotFound.desc)}
 <body>
     ${nav(t, rota)}
 

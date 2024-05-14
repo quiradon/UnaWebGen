@@ -21,12 +21,15 @@ function extrairIdioma(rota) {
 function head(rota,title,desc,pictureURL) {
     let rotaRoot = extrairRotaSemIdioma(rota)
     const t = traduz(extrairIdioma(rota))
-
+    let imgData = ''
     if (!desc){
         desc = t.default.desc
     }
-    if (!pictureURL){
-        pictureURL = `${url}/static/img/bg/space.webp`
+    if (pictureURL){
+        imgData = `
+        <meta name="twitter:image" content="${pictureURL}">
+        <meta property="og:image" content="${pictureURL}">
+        `
     }
 
     return `<head>
@@ -55,11 +58,10 @@ function head(rota,title,desc,pictureURL) {
     <meta name="twitter:creator" content="@MiniKrakenBOT">
     <meta name="twitter:title" content="${title}">
     <meta name="twitter:description" content="${desc}">
-    <meta name="twitter:image" content="${pictureURL}">
     <meta property="og:url" content="${url}${rotaRoot}">
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${desc}">
-    <meta property="og:image" content="${pictureURL}">
+    ${imgData}
 
 </head>`
 }

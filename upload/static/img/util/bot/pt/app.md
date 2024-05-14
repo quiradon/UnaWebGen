@@ -1,6 +1,6 @@
 Melhore suas sessões de **RPG de mesa**. Tenha suporte a diversos sistemas como [DnD](https://rpg.arkanus.app/pt/systems/dnd), [Ordem](https://rpg.arkanus.app/pt/systems/ordem), [Tormenta](https://rpg.arkanus.app/pt/systems/tormenta) , [Gaia](https://rpg.arkanus.app/pt/systems/gaia) e [vários outros](https://rpg.arkanus.app/pt/), Além de recursos como fichas de personagem automáticas, gerenciamento de iniciativa, rolagem de dados, grimórios de magia e muito mais. Confira a [lista completa de comandos disponíveis!](https://rpg.arkanus.app/pt/commands)
 
-![A ferramenta definitiva para RPG de mesa e rolagem de dados](https://images-ext-1.discordapp.net/external/nWs2dm_tM7D91k0-M3vGezYRHXKl4sGWJ7Dur29Q2K0/https/images-ext-1.discordapp.net/external/rL31WvaDS0VgqaRADQoAcdTmPbik9AtgxIiBHUD45FU/https/images-ext-1.discordapp.net/external/VN2Or2kGsXLkYAdF1ScHKd_NXaVcDo7lOalr-EET3UE/https/apis.arkanus.app/img/app/en/FortunaBanner.webp)
+![A ferramenta definitiva para RPG de mesa e rolagem de dados](https://rpg.arkanus.app/static/img/util/bot/pt/index.webp)
 
 
 **Recursos e funções:**

@@ -22,7 +22,7 @@ Use RPG syntax to roll dice with a specific number of sides and quantity. For ex
 
 Customize your dice, choose from `25+` available skins in `/store dices`
 
-![Supported and available RPG systems](https://rpg.arkanus.app/static/img/util/bot/pt/system.webp)
+![Supported and available RPG systems](https://rpg.arkanus.app/static/img/util/bot/en/system.webp)
 **Supported RPG Systems:**
 
 A companion for your RPG journey. Below is a list of RPG systems that support automatic character sheets. If your preferred system is not listed, suggest it in our [support server](https://discord.com/invite/Nm3CypkQaq) or use the `/suggest` command.

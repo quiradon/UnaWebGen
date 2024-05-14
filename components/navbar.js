@@ -107,7 +107,7 @@ function footer(t, rota) {
                 <b class="fs-6 mb-0 pb-0">${t.footer.about}</b>
                 <ul class="list-unstyled">
                     <li><a href="https://arkanus.app/team">${t.footer.team}</a></li>
-                    <li><a href="https://arkanus.app/team#quest">${t.footer.quest}</a></li>
+                    <li><a href="https://arkanus.app/quest">${t.footer.quest}</a></li>
                     <li></li>
                 </ul>
             </div> 

@@ -4,17 +4,16 @@
   "description": "A Static HTML page generator",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compile" : "node compile.js",
-    "upload" : "node upload",
-    "cf_run" : "npx wrangler pages dev upload/ --compatibility-flags=\"nodejs_compat\""
+    "start": "npx wrangler pages dev upload/ --compatibility-flags=\"nodejs_compat\"",
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
-    "html-minifier": "^4.0.0"
+    "html-minifier": "^4.0.0",
+    "http": "^0.0.1-security"
   },
   "devDependencies": {
     "nodemon": "^3.1.0",

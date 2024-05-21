@@ -5,6 +5,7 @@ compatibility_flags = [ "nodejs_compat" ]
 [build]
 command = "npm run build"
 
+
 [[d1_databases]]
 binding = "una_db"
 database_name = "fortuna"

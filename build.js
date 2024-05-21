@@ -75,7 +75,7 @@ function copyStaticFiles() {
 
 function copyExtraFiles() {
     //copie robots.txt, sitemap.xml e _redirects para out
-    const extraFiles = ['robots.txt', 'sitemap.xml', '_redirects']
+    const extraFiles = ['robots.txt', 'sitemap.xml', '_redirects','manifest.json']
     extraFiles.forEach(file => {
         const filePath = path.join(__dirname, file )
         const exportFilePath = path.join(exportFolder, file)

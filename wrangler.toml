@@ -1,12 +1,12 @@
 name = "fortuna_website"
-
 compatibility_flags = [ "nodejs_compat" ]
+[dev]
+port = 3000
 
 [build]
 command = "npm run build"
 
-
 [[d1_databases]]
-binding = "una_db"
+binding = "db"
 database_name = "fortuna"
 database_id = "2aa4da4e-a3de-41a8-8735-7bde34f0bdf6"

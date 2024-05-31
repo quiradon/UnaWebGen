@@ -4,7 +4,7 @@
   "description": "A Static HTML page generator",
   "main": "index.js",
   "scripts": {
-    "start": "npx wrangler pages dev dist/ --compatibility-flags=\"nodejs_compat\"",
+    "start": "npx wrangler pages dev dist/ d1 create",
     "build": "node build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -17,13 +17,13 @@ function blog(title, categories, img, content) {
     `
 }
 
-function PlaceParagraphs(title, text) {
+function PlaceParagraphs(title, text,color) {
     //faça a quebra de linhas com um /n
     text = text.split('\n').map(paragraph => `<p class="text-light">${paragraph}</p>`).join('');
 
     return `
     <div>
-        <h2 class="text-primary mt-3 mb-0">${title}</h2>
+        <h2 class="text-${color ?? 'primary'} mt-3 mb-0">${title}</h2>
             <div>
                 <article class="p-1 pb-0">
                     ${text}
@@ -61,12 +61,20 @@ function TextAndImage(title,text,img,alt){
     `
 }
 
+function CodeBlock(code) {
+    return `
+    <div class="code-block">
+        <code>${code}</code>
+    </div>
+    `
 
+}
 
 
 module.exports = {
     blog,
     PlaceParagraphs,
     PlaceSmallParagraphs,
+    CodeBlock,
     TextAndImage
 }

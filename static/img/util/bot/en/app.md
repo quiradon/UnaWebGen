@@ -25,18 +25,18 @@ Customize your dice, choose from `25+` available skins in `/store dices`
 ![Supported and available RPG systems](https://rpg.arkanus.app/static/img/util/bot/en/system.webp)
 **Supported RPG Systems:**
 
-A companion for your RPG journey. Below is a list of RPG systems that support automatic character sheets. If your preferred system is not listed, suggest it in our [support server](https://discord.com/invite/Nm3CypkQaq) or use the `/suggest` command.
+A companion for your RPG journey. Below is a list of RPG systems that support automatic character sheets. If your preferred system is not listed, suggest use the `/suggest` command.
 
 | Supported RPG Systems | Icons | Grimoires | System Tags |
 | ---------------------- | -------------------------------------------------- | -------- | ------------------- |
-| **[Dungeons & Dragons (DnD)](https://rpg.arkanus.app/en/systems/dnd)** | ![Dungeons and Dragons Logo](https://rpg.arkanus.app/static/img/util/bot/icons/DnD.webp) | 🏗️ | `Medieval`, `Fantasy` |
-| **[Ordem Paranormal](https://rpg.arkanus.app/en/systems/ordem)** | ![Ordem Paranormal Logo](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) | 🏗️ | `Modern`, `Investigation` |
-| **[Tormenta20](https://rpg.arkanus.app/en/systems/tormenta)** | ![Tormenta RPG Logo](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) | 🏗️ | `Medieval`, `Fantasy` |
-| **[Carbon2185](https://rpg.arkanus.app/en/systems/carbon)** | ![Carbon2185 - Cyberpunk RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) | 🏗️ | `Cyberpunk`, `Futuristic` |
-| **[Gaia: The Prelude](https://rpg.arkanus.app/en/systems/gaia)** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) | 🏗️ | `Medieval`, `Fantasy` |
-| **[3DET](https://rpg.arkanus.app/en/systems/3det)** | ![3DET - Fantasy RPG](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) | 🏗️ | `Everything`, `Dynamic` |
-| **[Pathfinder](https://rpg.arkanus.app/en/systems/pathfinder)** | ![Pathfinder RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) | 🏗️ | `Fantasy` |
-| **[Wizards and Curses](https://rpg.arkanus.app/en/systems/feiticeiros)** | ![Jujutsu Kaisen RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 🏗️ | `Jujutsu`, `School` |
+| **Dungeons & Dragons (DnD)** | ![Dungeons and Dragons Logo](https://rpg.arkanus.app/static/img/util/bot/icons/DnD.webp) | 🏗️ | `Medieval`, `Fantasy` |
+| **Ordem Paranormal** | ![Ordem Paranormal Logo](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) | 🏗️ | `Modern`, `Investigation` |
+| **Tormenta20** | ![Tormenta RPG Logo](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) | 🏗️ | `Medieval`, `Fantasy` |
+| **Carbon2185** | ![Carbon2185 - Cyberpunk RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) | 🏗️ | `Cyberpunk`, `Futuristic` |
+| **Gaia: The Prelude** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) | 🏗️ | `Medieval`, `Fantasy` |
+| **3DET** | ![3DET - Fantasy RPG](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) | 🏗️ | `Everything`, `Dynamic` |
+| **Pathfinder** | ![Pathfinder RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) | 🏗️ | `Fantasy` |
+| **Wizards and Curses** | ![Jujutsu Kaisen RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 🏗️ | `Jujutsu`, `School` |
 
 The bot is made by fans for fans, enhancing the RPG experience. We do not claim ownership of games, books, or systems. We are not affiliated with most game publishers and writers.
 
@@ -54,7 +54,6 @@ The Mini Kraken is the ideal choice for tabletop RPG players, streamlining sessi
 **Installation and Configuration:**
 Here's a quick guide on how to install and configure Mini Kraken on your server.
 
-1. Access the [Apps Directory](https://discord.com/application-directory/899421595125288961) or [Official Mini Kraken Website](https://rpg.arkanus.app).
-2. Click on "Add to server."
-3. Use the `/config` command to set the `RPG System`, `GM Role`, and other configurations.
-4. Ready! Start using Mini Kraken in your RPG sessions and don't forget to have **fun**.
+1. Click on "Add to server or Install"
+2. Use the `/config` command to set the `RPG System`, `GM Role`, and other configurations.
+3. Ready! Start using Mini Kraken in your RPG sessions and don't forget to have **fun**.

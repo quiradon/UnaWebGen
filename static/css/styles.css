@@ -6,6 +6,14 @@ html {
   cursor: pointer;
 }
 
+.code-block {
+  background-color: #0000007c;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+
 
 @keyframes flip {
   0% { transform: rotateY(0deg); }

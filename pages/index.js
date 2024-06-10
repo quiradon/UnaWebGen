@@ -4,11 +4,31 @@ const {head} = require('../components/head')
 const {idiomaR} = require('../caminho')
 const {bot_invite} = require('../config.json')
 const icons = require('../components/icons')
+const config = require('../config.json')
 /**
  * 
  * @param {*} idioma 
  * @returns 
  */
+
+
+function modal(t) {
+    return `<div id="premium_modal" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h4 class="modal-title">${t.index.donate.btn}</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body d-inline-flex d-xl-flex flex-column justify-content-xl-center align-items-xl-center">
+                <p class="mt-2">${t.donate_text}</p>
+            </div>
+            <div class="modal-footer border-0"><a class="btn btn-primary fw-bold link-light" type="link" href="${config.discord_invite}">${t.join_server_btn}</a></div>
+        </div>
+    </div>
+</div>`
+}
+
+
 function inicio(idioma) {
     const t = idioma
     let lang = idiomaR(t)
@@ -170,7 +190,7 @@ function plans(t) {
                         ${listItem(t.premium.feat[1],icons.tags)}
                         ${listItem(t.premium.feat[2], icons.text)}
                     </ul>
-                    <h4 id="price-3" class="mt-3">R$5/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
+                    <h4 id="price-3" class="mt-3">R$5/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" data-bs-target="#premium_modal" data-bs-toggle="modal">${t.index.donate.btn}</a>
                 </div>
             </div>
             <div class="col-xxl-12 box pb-0 mb-5">
@@ -188,7 +208,7 @@ function plans(t) {
                     ${listItem(t.premium.feat[2], icons.text)}
                     ${listItem(t.premium.feat[3], icons.palet)}
                     </ul>
-                    <h4 id="price-1" class="mt-3">R$7/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
+                    <h4 id="price-1" class="mt-3">R$7/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" data-bs-target="#premium_modal" data-bs-toggle="modal" >${t.index.donate.btn}</a>
                 </div>
             </div>
             <div class="col-xxl-12 box pb-0 mb-5">
@@ -209,7 +229,7 @@ function plans(t) {
                             ${listItem(t.premium.feat[2], icons.text)}
                             ${listItem(t.premium.feat[3], icons.palet)}
                     </ul>
-                    <h4 id="price-2" class="mt-3">R$15/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#">${t.index.donate.btn}</a>
+                    <h4 id="price-2" class="mt-3">R$15/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" >${t.index.donate.btn}</a>
                 </div>
             </div>
         </div>
@@ -270,6 +290,7 @@ ${head(`${t.lang}${rota}`,`${t.index.name}`)}
       }  
       </style>
     ${nav(t, rota)}
+    ${modal(t)}
     ${inicio(t)}
     ${section2(t)}
     ${botStatus(t)}

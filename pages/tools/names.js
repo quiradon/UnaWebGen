@@ -35,9 +35,9 @@ ${head(`${t.lang}${rota}`,`${t.names.article.title}`)}
                 <div class="text-white">
                     <h1 class="fw-bold text-white mb-3">${t.names.article.title}</h1>
                     <p class="mb-4">${t.names.article.desc}</p>
-                    <div class="custom-control custom-radio"><input id="customRadio1" class="custom-control-input form-check-input" type="radio" name="config" checked /><label class="form-label custom-control-label ms-1" for="customRadio1">Todos</label></div>
-                    <div class="custom-control custom-radio"><input id="customRadio2" class="custom-control-input form-check-input" type="radio" name="config" xml:id="m" /><label class="form-label custom-control-label ms-1" for="customRadio2">Masculino</label></div>
-                    <div class="custom-control custom-radio"><input id="customRadio3" class="custom-control-input form-check-input" type="radio" name="config" xml:id="f" /><label class="form-label custom-control-label ms-1" for="customRadio3">Feminino</label></div>
+                    <div class="custom-control custom-radio"><input id="customRadio1" class="custom-control-input form-check-input" type="radio" name="config" checked /><label class="form-label custom-control-label ms-1" for="customRadio1">${t.misc.gen.all}</label></div>
+                    <div class="custom-control custom-radio"><input id="customRadio2" class="custom-control-input form-check-input" type="radio" name="config" xml:id="m" /><label class="form-label custom-control-label ms-1" for="customRadio2">${t.misc.gen.male}</label></div>
+                    <div class="custom-control custom-radio"><input id="customRadio3" class="custom-control-input form-check-input" type="radio" name="config" xml:id="f" /><label class="form-label custom-control-label ms-1" for="customRadio3">${t.misc.gen.fem}</label></div>
                 </div>
                 <div><button id="gerar" class="btn btn-primary link-light mt-2 mb-2" type="button">${t.names.article.btn}</button></div>
             </div>

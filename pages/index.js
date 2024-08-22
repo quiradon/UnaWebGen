@@ -190,7 +190,7 @@ function plans(t) {
                         ${listItem(t.premium.feat[1],icons.tags)}
                         ${listItem(t.premium.feat[2], icons.text)}
                     </ul>
-                    <h4 id="price-3" class="mt-3">R$5/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" data-bs-target="#premium_modal" data-bs-toggle="modal">${t.index.donate.btn}</a>
+                    <h4 id="price-3" class="mt-3">${t.price[0]}</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" data-bs-target="#premium_modal" data-bs-toggle="modal">${t.index.donate.btn}</a>
                 </div>
             </div>
             <div class="col-xxl-12 box pb-0 mb-5">
@@ -208,7 +208,7 @@ function plans(t) {
                     ${listItem(t.premium.feat[2], icons.text)}
                     ${listItem(t.premium.feat[3], icons.palet)}
                     </ul>
-                    <h4 id="price-1" class="mt-3">R$7/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" data-bs-target="#premium_modal" data-bs-toggle="modal" >${t.index.donate.btn}</a>
+                    <h4 id="price-1" class="mt-3">${t.price[1]}</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" data-bs-target="#premium_modal" data-bs-toggle="modal" >${t.index.donate.btn}</a>
                 </div>
             </div>
             <div class="col-xxl-12 box pb-0 mb-5">
@@ -229,7 +229,7 @@ function plans(t) {
                             ${listItem(t.premium.feat[2], icons.text)}
                             ${listItem(t.premium.feat[3], icons.palet)}
                     </ul>
-                    <h4 id="price-2" class="mt-3">R$15/mês</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" >${t.index.donate.btn}</a>
+                    <h4 id="price-2" class="mt-3">${t.price[2]}</h4><a class="d-flex d-md-flex d-lg-flex d-xxl-flex justify-content-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xxl-center align-items-xxl-center mt-3" href="#" >${t.index.donate.btn}</a>
                 </div>
             </div>
         </div>

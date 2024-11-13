@@ -1,6 +1,57 @@
 html {
   scroll-behavior: smooth;
+
 }
+
+#auto-scroll {
+  overflow: auto;
+  scrollbar-width: none; /* Para navegadores Firefox */
+  scroll-behavior: smooth; /* Scroll suave */
+  cursor: grab
+}
+
+.auto-scroll::-webkit-scrollbar {
+  display: none; /* Para navegadores Webkit (Chrome, Safari) */
+}
+
+
+
+.auto-scroll {
+  width: 100%;
+  overflow: auto;
+  scrollbar-width: none; /* Para navegadores Firefox */
+  scroll-behavior: smooth; /* Scroll suave */
+  cursor: grab
+}
+
+
+  .dropdown-menu {
+    display: block; /* Mantém o bloco para permitir a transformação */
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.2s ease-out;
+    transform-origin: top;
+    overflow: hidden;
+    max-height: 0;
+  }
+
+  .dropdown-menu.show {
+    transform: scale(1);
+    opacity: 1;
+    max-height: 700px;
+  }
+
+
+.navbar {
+  border-radius: 8px;
+  border: 1px solid rgba(103,125,181,0.18);
+  backdrop-filter: opacity(1) blur(10px) saturate(100%) sepia(0%);
+  background: rgba(11,9,16,0.85);
+  max-width: 2000px;
+  padding: auto;
+}
+
+
 
 .mouse-click-icon:hover {
   cursor: pointer;
@@ -39,40 +90,26 @@ html {
   text-decoration: inherit!important;
 }
 
+.system_card {
+  overflow: hidden; /* Evita que o conteúdo seja cortado */
+  transition: transform 0.3s ease; /* Transição suave */
+}
+
+.system_card:hover {
+  transform: scale(1.03); /* Suaviza a escala */
+}
+
+@media (max-width: 768px) {
+  .system_card:hover {
+    transform: scale(1.02); /* Escala menor para dispositivos móveis */
+  }
+}
+
 .cardBonito {
   background: rgba(29,26,45,0.5);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-radius: 42px;
-}
-
-.bs-icon {
-  --bs-icon-size: .75rem;
-  display: flex;
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  font-size: var(--bs-icon-size);
-  width: calc(var(--bs-icon-size) * 2);
-  height: calc(var(--bs-icon-size) * 2);
-  color: var(--bs-primary);
-}
-
-.bs-icon-md {
-  --bs-icon-size: 1.5rem;
-}
-
-.bs-icon-xl {
-  --bs-icon-size: 2.5rem;
-}
-
-.bs-icon.bs-icon-primary {
-  color: var(--bs-white);
-  background: var(--bs-primary);
-}
-
-.bs-icon.bs-icon-circle {
-  border-radius: 50%;
 }
 
 .row .box {

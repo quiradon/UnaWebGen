@@ -1,16 +1,40 @@
-const {nav, footer} = require('../components/navbar')
+const {footer, nav} = require('../components/navbar')
 const scripts = require('../components/bootscripts')
 const {head} = require('../components/head')
 const {idiomaR} = require('../caminho')
 const {bot_invite} = require('../config.json')
 const icons = require('../components/icons')
 const config = require('../config.json')
-/**
- * 
- * @param {*} idioma 
- * @returns 
- */
 
+function TitleAndSubtitle(title,subtitle,paragraph) {
+    paragraph = paragraph || ''
+    paragraph = paragraph.replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1</span>')
+    return `
+            <div class="mb-3">
+            <h4 class="fw-semibold text-primary mb-0">${subtitle}</h4>
+            <h1 class="display-5 fw-bold mt-0">${title}</h1>
+            <p class="lead text-secondary -3">${paragraph}</p>
+        </div>
+        `
+}
+
+function dice(t) {
+    return `
+<section>
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-lg-6 col-xl-6 d-lg-flex align-items-lg-center">
+                <div class="mb-5">
+                    <h4 class="fw-semibold text-primary mb-0">${t.index.dices.subtitle}</h4>
+                    <h1 class="display-5 fw-bold mt-0">${t.index.dices.title}</h1>
+                    <p class="lead text-secondary">${t.index.dices.desc}</p><button class="btn btn-outline-primary btn-lg border-2 border-primary px-5" type="button">Ler Documentação</button>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-6"><img class="img-fluid" src="/static/img/misc/blobs/dices.webp" /></div>
+        </div>
+    </div>
+</section>`
+}
 
 function modal(t) {
     return `<div id="premium_modal" class="modal fade" role="dialog" tabindex="-1">
@@ -28,71 +52,61 @@ function modal(t) {
 </div>`
 }
 
-
-function inicio(idioma) {
-    const t = idioma
-    let lang = idiomaR(t)
-    return `<section id="inicio">
-    <div class="container py-4 py-xl-5">
-        <div class="row row-cols-1 row-cols-lg-2">
-            <div class="col align-self-center">
-                <h1 class="display-5 fw-bold lh-1 mb-3">Fortuna</h1>
-                <p class="text-white lead">${t.index.start.desc}</p>
-                <div class="d-flex justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-start">
-                <a data-bss-hover-animate="pulse" class="btn btn-primary btn-lg link-light px-4 mt-2 mb-2" role="button" href="${bot_invite}" target="_blank">${t.index.start.btn1}</a>
-                <a data-bss-hover-animate="pulse" class="btn btn-outline-light btn-lg d-flex align-items-center px-4 m-2" data-bss-hover-animate="pulse" role="button" href="${lang}/dices" rel="help">${t.nav.docs.title}</a></div>
+function systemCard(title, description, img, url) {
+    return `
+        <div class="col-10 col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
+            <div class="card d-flex flex-grow-1 ">
+                <div class="card-body d-flex flex-column py-2 px-3">
+                    <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-1 bs-icon">
+                        <img class="img-fluid user-select-none" src="${img}" />
+                    </div>
+                    <h4 class="card-title user-select-none text-primary">
+                        <a href="${url}" class="link-unstyled">${title}</a>
+                    </h4>
+                    <p class="card-text user-select-none flex-grow-1">${description}</p>
+                </div>
             </div>
-            <div class="col align-self-center"><img class="rounded img-fluid d-md-inline" width="auto" height="auto" src="/static/img/misc/blobs/una_hero_logo.webp" loading="auto" alt="Inanimalia Fortuna Tenebris Verteri" /></div>
+        </div>
+    `;
+}
+
+function sistemList(t) {
+    return `<section class="py-3">
+    <div class="container">
+        ${TitleAndSubtitle(t.index.system.subtitle,
+        t.index.system.title,
+        t.index.system.desc)}
+        <div class="d-inline-flex flex-row flex-grow-1 flex-fill py-3 px-2 overflow-scroll" id="auto-scroll" style="width: 100%;">
+
+                    ${Object.keys(t.posts.sistemas).map((key) => {
+                    const sistema = t.posts.sistemas[key];
+                    return systemCard(sistema.card.title, sistema.card.desc, sistema.icon, `./systems/${sistema.path}`)
+                }).join('')}
+
+
         </div>
     </div>
 </section>`
 }
 
-function systemCards(title, desc, img, link, btn) {
+function inicio2(t) {
+    text = t.index.landing.text.replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1</span>')
     return `
-    <div class="col d-flex mt-1 mb-3 item">
-                    <div class="card border-white border-0 shadow glass-container cardBonito">
-                        <div class="card-body d-flex flex-grow-1 p-4">
-                            <div class="row row-cols-1 align-items-stretch">
-                                <div class="col">
-                                    <div class="d-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center mb-2"><img class="img-fluid" src="${img}" width="125px" alt="${title}"></div>
-                                </div>
-                                <div class="col">
-                                    <h3 class="text-center text-white">${title}</h3>
-                                </div>
-                                <div class="col">
-                                    <p class="text-start text-light">${desc}</p>
-                                </div>
-                                <div class="col text-center d-lg-flex justify-content-lg-center align-items-lg-end"><a class="btn btn-primary link-light border rounded-pill border-0" data-bss-hover-animate="pulse" href="${link}" role="button">${btn}</a></div>
-                            </div>
-                        </div>
-                    </div>
+    <section id="inicio" style="background: url('/static/img/bg/pattern-square.svg') top / auto repeat-x;">
+    <div class="container d-lg-flex align-items-lg-center py-4 py-xl-5">
+        <div class="row gy-2 gy-md-0 row-cols-1 row-cols-lg-2 my-3 py-5">
+            <div class="col-auto col-xl-7 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                <div class="mb-5">
+                    <h1 class="display-1 fw-bold" >${text}</h1>
+                    <p class="text-secondary -3">${t.index.start.desc}</p><button class="btn btn-primary btn-lg border-2 px-5" type="button" style="font-weight: bold;">${t.nav.add}</button>
                 </div>
+            </div>
+            <div class="col-lg-5 col-xl-5 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid p-2" src="/static/img/misc/blobs/place.webp" /></div>
+        </div>
+    </div>
+</section>
 `
 }
-
-
-function section2(t) {
-    let lang = idiomaR(t)
-    return `
-    <section class="bgImg1">
-        <div class="container py-4 py-xl-5">
-            <h2 class="text-center text-light mb-1 bt-1">${t.index.sec2.title}</h2>
-            <p class="text-center text-light m-1 mb-5">${t.index.sec2.desc}</p>
-             <div class="row row-cols-1 row-cols-lg-3 d-flex owl-carousel" id="carousel">
-
-                ${Object.keys(t.posts.sistemas).map((key) => {
-                    
-                    const sistema = t.posts.sistemas[key];
-                    return systemCards(sistema.card.title, sistema.card.desc, sistema.icon, `${lang}/systems/${sistema.path}`, sistema.card.btn)
-                }).join('')}
-
-             </div>                 
-            </div>
-        </div>
-    </section>`
-}
-
 
 function botStatus(t) {
     return `<section>
@@ -291,8 +305,9 @@ ${head(`${t.lang}${rota}`,`${t.index.name}`)}
       </style>
     ${nav(t, rota)}
     ${modal(t)}
-    ${inicio(t)}
-    ${section2(t)}
+    ${inicio2(t)}
+    ${sistemList(t)}
+    ${dice(t)}
     ${botStatus(t)}
     ${cards(t)}
     ${plans(t)}

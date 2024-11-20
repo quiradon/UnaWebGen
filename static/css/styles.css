@@ -99,6 +99,13 @@ html {
   transform: scale(1.03); /* Suaviza a escala */
 }
 
+.card_system_card {
+  border-radius: 8px; /* Borda arredondada */
+  border-color: #3a3a3b3d !important;
+  background: linear-gradient(50deg, var(--bs-body-bg),#21041078 );
+  transition: background 0.3s ease;
+}
+
 @media (max-width: 768px) {
   .system_card:hover {
     transform: scale(1.02); /* Escala menor para dispositivos móveis */

@@ -38,10 +38,11 @@ function head(rota,title,desc,pictureURL) {
     <title>${title} | Mini Kraken</title>
     <meta name="description" content="${desc}">
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-    <meta name="theme-color" content="#f80752">
     <link rel="stylesheet" href="/static/css/bs-theme-overrides.css">
-    <link rel="stylesheet" href="/static/css/animate.min.css">
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preload" href="/static/css/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/static/css/animate.min.css"></noscript>
+    <meta name="theme-color" content="#f80752">
     <link rel="icon" type="image/png" sizes="512x512" href='/static/img/icons/logo.svg'>
     <link rel="icon" type="image/png" sizes="192x192" href='/static/img/icons/logo.svg'>
     <link rel="icon" type="image/png" sizes="180x180" href='/static/img/icons/logo.svg'>

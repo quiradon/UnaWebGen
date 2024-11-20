@@ -55,7 +55,7 @@ function modal(t) {
 function systemCard(title, description, img, url) {
     return `
         <div class="col-10 col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
-            <div class="card d-flex flex-grow-1 ">
+            <div class="card d-flex flex-grow-1 card_system_card border-1">
                 <div class="card-body d-flex flex-column py-2 px-3">
                     <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-1 bs-icon">
                         <img class="img-fluid user-select-none" src="${img}" />
@@ -113,14 +113,7 @@ function botStatus(t) {
     <div class="mb-2">
         <div class="container py-4 py-xl-5">
             <div class="text-nowrap d-flex justify-content-center align-items-center animated-text noSelect"></div>
-            <div class="row h-100">
-                <div class="col-md-10 col-xl-8 text-center d-flex d-sm-flex d-md-flex justify-content-center align-items-center mx-auto justify-content-md-start align-items-md-center justify-content-xl-center">
-                    <div>
-                        <h3 class="fw-bold text-white mb-3">${t.index.status.title}</h3>
-                        <p class="text-light mb-4">${t.index.status.desc}</p>
-                    </div>
-                </div>
-            </div>
+            ${TitleAndSubtitle(t.index.status.title, t.index.status.subtitle, t.index.status.desc)}
             <div class="row gy-4 row-cols-2 row-cols-md-4 justify-content-center align-items-center">
                 <div class="col">
                     <div class="text-center d-flex flex-column justify-content-center align-items-center py-3 mb-3" data-bss-hover-animate="pulse">

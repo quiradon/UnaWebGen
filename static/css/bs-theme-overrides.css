@@ -1,36 +1,3 @@
-:root, [data-bs-theme=light] {
-  --bs-primary: #f80752;
-  --bs-primary-rgb: 248,7,82;
-  --bs-primary-text-emphasis: #630321;
-  --bs-primary-bg-subtle: #FECDDC;
-  --bs-primary-border-subtle: #FC9CBA;
-  --bs-secondary: #454545;
-  --bs-secondary-rgb: 69,69,69;
-  --bs-secondary-text-emphasis: #1C1C1C;
-  --bs-secondary-bg-subtle: #DADADA;
-  --bs-secondary-border-subtle: #B5B5B5;
-  --bs-success: #01ff87;
-  --bs-success-rgb: 1,255,135;
-  --bs-success-text-emphasis: #006636;
-  --bs-success-bg-subtle: #CCFFE7;
-  --bs-success-border-subtle: #99FFCF;
-  --bs-danger: #f80752;
-  --bs-danger-rgb: 248,7,82;
-  --bs-danger-text-emphasis: #630321;
-  --bs-danger-bg-subtle: #FECDDC;
-  --bs-danger-border-subtle: #FC9CBA;
-  --bs-light: #ffffff;
-  --bs-light-rgb: 255,255,255;
-  --bs-light-text-emphasis: #666666;
-  --bs-light-bg-subtle: #FFFFFF;
-  --bs-light-border-subtle: #FFFFFF;
-  --bs-body-bg: #ffffff;
-  --bs-body-bg-rgb: 255,255,255;
-  --bs-body-font-family:  "PT Sans",sans-serif;
-  --bs-link-color: #5100FF;
-  --bs-link-color-rgb: 81,0,255;
-}
-
 .btn-primary {
   --bs-btn-color: #000000;
   --bs-btn-bg: #f80752;
@@ -220,8 +187,8 @@
   --bs-body-bg: #0b0910;
   --bs-body-bg-rgb: 11,9,16;
   --bs-body-font-family: "PT Sans",sans-serif;
-  --bs-link-color: #5100FF;
-  --bs-link-color-rgb: 81,0,255;
+  --bs-link-color: #f80752;
+  --bs-link-color-rgb: 248, 7, 82;
 }
 
 [data-bs-theme=dark] .btn-primary, .btn-primary[data-bs-theme=dark] {

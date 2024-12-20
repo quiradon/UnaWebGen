@@ -157,11 +157,11 @@ function nav(t,rota){
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Lore &amp; Universo</span><span class="text-secondary lh-0">Um pouco sobre nossas aventuras</span></div>
                                 </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="https://nutri.arkanus.app" rel="help" data-bs-target="https://nutri.arkanus.app">
+                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/changelog" rel="help" data-bs-target="https://nutri.arkanus.app">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M96 96c0-35.3 28.7-64 64-64H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H80c-44.2 0-80-35.8-80-80V128c0-17.7 14.3-32 32-32s32 14.3 32 32V400c0 8.8 7.2 16 16 16s16-7.2 16-16V96zm64 24v80c0 13.3 10.7 24 24 24H296c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24H184c-13.3 0-24 10.7-24 24zm208-8c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zM160 304c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"></path>
                                     </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Atualizações</span><span class="text-secondary lh-0">Veja o histórico de atualizações do projeto</span></div>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.docs.changelogs.name}</span><span class="text-secondary lh-0">${t.nav.docs.changelogs.desc}</span></div>
                                 </div>
                             </a></div>
                     </li>
@@ -170,11 +170,11 @@ function nav(t,rota){
                             </svg>${t.nav.tools.title}<svg class="mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"></path>
                             </svg></a>
-                        <div class="dropdown-menu shadow"><a class="dropdown-item d-flex justify-content-sm-start" href="https://rpg.arkanus.app" rel="help" data-bs-target="https://rpg.arkanus.app">
+                        <div class="dropdown-menu shadow"><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/dices" rel="help" data-bs-target="https://rpg.arkanus.app">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-danger border rounded border-0 p-2 fme-2 d-none d-md-flex nav_icon_background me-2" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M201 10.3c14.3-7.8 31.6-7.8 46 0L422.3 106c5.1 2.8 8.3 8.2 8.3 14s-3.2 11.2-8.3 14L231.7 238c-4.8 2.6-10.5 2.6-15.3 0L25.7 134c-5.1-2.8-8.3-8.2-8.3-14s3.2-11.2 8.3-14L201 10.3zM23.7 170l176 96c5.1 2.8 8.3 8.2 8.3 14V496c0 5.6-3 10.9-7.8 13.8s-10.9 3-15.8 .3L25 423.1C9.6 414.7 0 398.6 0 381V184c0-5.6 3-10.9 7.8-13.8s10.9-3 15.8-.3zm400.7 0c5-2.7 11-2.6 15.8 .3s7.8 8.1 7.8 13.8V381c0 17.6-9.6 33.7-25 42.1L263.7 510c-5 2.7-11 2.6-15.8-.3s-7.8-8.1-7.8-13.8V280c0-5.9 3.2-11.2 8.3-14l176-96z"></path>
                                     </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Rolagem de Dados</span><span class="text-secondary lh-0">Ferramenta auxiliadora de RPG de mesa.</span></div>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.dices.title}</span><span class="text-secondary lh-0">${t.nav.dices.desc}</span></div>
                                 </div>
                             </a><a class="dropdown-item d-flex justify-content-sm-start" href="https://etheris.arkanus.app" rel="help" data-bs-target="https://rpg.arkanus.app">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -182,13 +182,13 @@ function nav(t,rota){
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Geração de Assets</span><span class="text-secondary lh-0">Prepare assets para sua mesa em instantes</span></div>
                                 </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="https://etheris.arkanus.app" rel="help" data-bs-target="https://rpg.arkanus.app">
+                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/names" rel="help" data-bs-target="${lang}/tools/names">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor">
                                         <path d="M368 32c41.7 0 75.9 31.8 79.7 72.5l85.6 26.3c25.4 7.8 42.8 31.3 42.8 57.9c0 21.8-11.7 41.9-30.7 52.7L400.8 323.5 493.3 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H480c-8.5 0-16.6-3.4-22.6-9.4L346.9 360.2c11.7-36 3.2-77.1-25.4-105.7c-40.6-40.6-106.3-40.6-146.9-.1L101 324.4c-6.4 6.1-6.7 16.2-.6 22.6s16.2 6.6 22.6 .6l73.8-70.2 .1-.1 .1-.1c3.5-3.5 7.3-6.6 11.3-9.2c27.9-18.5 65.9-15.4 90.5 9.2c24.7 24.7 27.7 62.9 9 90.9c-2.6 3.8-5.6 7.5-9 10.9L261.8 416H352c17.7 0 32 14.3 32 32s-14.3 32-32 32H64c-35.3 0-64-28.7-64-64C0 249.6 127 112.9 289.3 97.5C296.2 60.2 328.8 32 368 32zm0 104a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path>
                                     </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Geração de NPCs</span><span class="text-secondary lh-0">Prepare NPCs para sua mesa em instantes</span></div>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.names.title}</span><span class="text-secondary lh-0">${t.nav.tools.names.desc}</span></div>
                                 </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="/apps/books.html" rel="help" data-bs-target="https://nutri.arkanus.app">
+                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/names" rel="help">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path>
                                     </svg>

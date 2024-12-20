@@ -1,6 +1,6 @@
 html {
   scroll-behavior: smooth;
-
+  font-family: 'PT Sans', sans-serif; 
 }
 
 #auto-scroll {
@@ -101,7 +101,7 @@ html {
 
 .card_system_card {
   border-radius: 8px; /* Borda arredondada */
-  border-color: #3a3a3b3d !important;
+  border-color: #2f2f363c !important;
   background: linear-gradient(50deg, var(--bs-body-bg),#21041078 );
   transition: background 0.3s ease;
 }
@@ -110,6 +110,10 @@ html {
   .system_card:hover {
     transform: scale(1.02); /* Escala menor para dispositivos móveis */
   }
+}
+
+h1 {
+  font-family: 'PT Sans', sans-serif;
 }
 
 .cardBonito {
@@ -127,6 +131,20 @@ html {
   align-items: center;
   margin: auto 10px auto;
   transition: 0.7s;
+}
+
+.custom-alert {
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  z-index: 1050; /* Certifique-se de que o alerta esteja acima de outros elementos */
+  width: auto;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-alert + .custom-alert {
+  top: calc(20px + 60px); /* Ajuste a posição do próximo alerta */
 }
 
 .row .box::before {
@@ -312,5 +330,15 @@ html {
 
 .transition-nav-hover-right {
   transition: all 0.2s ease-out;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.footer-spacer {
+    flex-grow: 1;
 }
 

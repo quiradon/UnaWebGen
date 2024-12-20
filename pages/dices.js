@@ -1,16 +1,12 @@
 const {nav, footer} = require('../components/navbar')
 const scripts = require('../components/bootscripts')
 const {head} = require('../components/head')
-const {blog, PlaceParagraphs, PlaceSmallParagraphs} = require('../components/blogpost')
-
 function Formatador(string) {
     let regex
     string = string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     //todos os operadores matemáticos devem ficar primary + - * / % 
     regex = /([+*%\/-])/g
     string = string.replace(regex, `<span class="text-primary">$1</span>`);
-
-
 
     //todo numero seguido de um numero ou operador mateatico deve ficar amarelo
     regex = /(\d+)([+*\/-])(\d+)/g
@@ -48,9 +44,15 @@ function Formatador(string) {
     regex = /(e)(\d+)/g
     string = string.replace(regex, `<span class="text-danger">$1</span>`);
     
+        //todo texto dentro de **ata** deve ficar em negrito
+        regex = /(\_)(.*?)(\_)/g
+        string = string.replace(regex, `<strong class="text-primary fw-bold">$2</strong>`)
+    
+    //todo \n deve ser substituido por <br>
+    string = string.replace(/\n/g, "<br>")
+
     return string
 }
-
 
 function page(idioma, rota) {
     const t = idioma
@@ -59,25 +61,52 @@ function page(idioma, rota) {
 <html lang="${t.lang}" data-bs-theme="dark">
 ${head(`${t.lang}${rota}`,t.dices.title,t.dices.desc)}
 <body>
+    <script src="https://unpkg.com/mathjs@11.8.2/lib/browser/math.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/random-js@2.1.0/dist/random-js.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@dice-roller/rpg-dice-roller/lib/umd/bundle.min.js"></script>
+    <script>
+    var diceRoller = new rpgDiceRoller.DiceRoller();
+    </script>
+
     ${nav(t, rota)}
 
-    ${blog(t.dices.title,t.dices.tags,"/static/img/bg/space.webp",`
-    ${PlaceParagraphs(t.tos[0].title,Formatador(t.dices.guide[0].desc))}
-    <div class="row row-cols-1 row-cols-lg-2">
-        ${PlaceParagraphs(t.dices.guide[1].title,Formatador(t.dices.guide[1].desc))}
-        ${PlaceParagraphs(t.dices.guide[2].title,Formatador(t.dices.guide[2].desc))}
-        ${PlaceParagraphs(t.dices.guide[3].title,Formatador(t.dices.guide[3].desc))}
-        ${PlaceParagraphs(t.dices.guide[4].title,Formatador(t.dices.guide[4].desc))}
-        ${PlaceParagraphs(t.dices.guide[5].title,Formatador(t.dices.guide[5].desc))}
-        ${PlaceParagraphs(t.dices.guide[6].title,Formatador(t.dices.guide[6].desc))}
-        ${PlaceParagraphs(t.dices.guide[7].title,Formatador(t.dices.guide[7].desc))}
-    </div>
-</div>
 
-    `)}
+<section>
+    <div class="container">
+        <div class="row mt-5">
+            <div>
+                <h1 class="display-5 fw-bold mt-0">Teste aqui as suas roladas.</h1>
+                <p class="lead text-secondary">Os dados dentro do mundo de RPG de mesa, podem ser um pouco confusos no começo, porém não se preocupe estamos aqui para te ajudar, aqui em baixo temos um guia completo de como dar boas roladas, o atlas vai te ensinar vários truques e artimanhas.</p>
+                <div class="input-group input-group-lg">
+                    <input id="diceString" class="form-control" type="text" placeholder="5d20+3" name="dice" />
+                    <button id="diceRoll" class="btn btn-primary d-xl-flex align-items-xl-center" type="button">
+                        <svg class="me-2" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+                            <path d="M201 10.3c14.3-7.8 31.6-7.8 46 0L422.3 106c5.1 2.8 8.3 8.2 8.3 14s-3.2 11.2-8.3 14L231.7 238c-4.8 2.6-10.5 2.6-15.3 0L25.7 134c-5.1-2.8-8.3-8.2-8.3-14s3.2-11.2 8.3-14L201 10.3zM23.7 170l176 96c5.1 2.8 8.3 8.2 8.3 14V496c0 5.6-3 10.9-7.8 13.8s-10.9 3-15.8 .3L25 423.1C9.6 414.7 0 398.6 0 381V184c0-5.6 3-10.9 7.8-13.8s10.9-3 15.8-.3zm400.7 0c5-2.7 11-2.6 15.8 .3s7.8 8.1 7.8 13.8V381c0 17.6-9.6 33.7-25 42.1L263.7 510c-5 2.7-11 2.6-15.8-.3s-7.8-8.1-7.8-13.8V280c0-5.9 3.2-11.2 8.3-14l176-96z"></path>
+                        </svg>
+                        Rolar Dados
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+            <div class="col-md-6">
+                <h2 class="fw-bold mt-0">Tipos de Dados</h2>
+                <p class="lead text-secondary ">${Formatador(`_Padrão:_\nNotação: d{n}\nUm dado padrão tem um número numérico positivo de lados, como dados típicos de 6 lados ou um d20.\n_Dados de percentil:_\nNotação: d%\nOs dados percentuais rolam um número inteiro entre , e são especificados com o formato . Esta é uma abreviação para um dado padrão com 100 lados, %d100`)}</p>
+            </div>
+            <div class="col-md-6">
+                <h2 class="fw-bold mt-0">Documentação completa.</h2>
+                <p class="lead text-secondary">Os dados dentro do mundo de RPG de mesa, podem ser um pouco confusos no começo, porém não se preocupe estamos aqui para te ajudar, aqui em baixo temos um guia completo de como dar boas roladas, o atlas vai te ensinar vários truques e artimanhas.</p>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="footer-spacer" style="flex-grow: 1;"></div>
 
     ${footer(t,rota)}
     ${scripts}
+    <script src="/static/js/dice_roll.js"></script>
 </body>
 </html>
 `

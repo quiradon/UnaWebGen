@@ -32,9 +32,7 @@ ${head(`${t.lang}${rota}`,`${t.changelogs.title}`)}
                         </div>
                     </div>
                     <div class="row gx-2 gy-2 row-cols-1 row-cols-md-2 row-cols-xl-3 photos" data-bss-baguettebox>
-                        ${gebIMG("/static/img/misc/secrets/calva.webp")}         
-                        ${gebIMG("/static/img/misc/secrets/dominix.webp")}        
-                        ${gebIMG("/static/img/misc/secrets/uwu.webp")}        
+                        Secreto     
                     </div>
                     
                 </div>

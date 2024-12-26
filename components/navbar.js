@@ -5,7 +5,6 @@ const lang_FLAGS = {
     'pt': '/static/img/flags/br.svg',
     'en': '/static/img/flags/en.svg',
     'es': '/static/img/flags/es.svg',
-    'ru': '/static/img/flags/ru.svg',
 }
 
 
@@ -21,16 +20,8 @@ const lang_FLAGS = {
                             
  */
 
-function nav(t,rota){
-    let lang = idiomaR(t)
-    rota = roteador(rota)
-    return `
-    <div class="sticky-top p-2">
-    <nav class="navbar navbar-expand-lg mx-1 mx-md-4 px-2 mt-2">
-        <div class="container-fluid"><a class="navbar-brand fs-2 fw-bold d-flex align-items-center" href="${lang}/#"><span class="fs-3 fw-bold" style="font-family: Roboto, sans-serif;">Mini Kraken</span></a><button class="navbar-toggler border-1 py-2" data-bs-toggle="collapse" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div id="navcol-2" class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown auto-open animations-select"><a class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
+function acervo(t){return `
+<li class="nav-item dropdown auto-open animations-select"><a class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64H348.7c2.2 20.4 3.3 41.8 3.3 64zm28.8-64H503.9c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0H18.6C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192H131.2c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6H344.3c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352H135.3zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6H493.4z"></path>
                             </svg>${t.nav.acervo}<svg class="mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"></path>
@@ -66,22 +57,34 @@ function nav(t,rota){
                         </a>
                             </div>
                     </li>
+                    `
+}
+
+function nav(t,rota){
+    let lang = idiomaR(t)
+    rota = roteador(rota)
+    return `
+    <div class="sticky-top p-2">
+    <nav class="navbar navbar-expand-lg mx-1 mx-md-4 px-2 mt-2">
+        <div class="container-fluid"><a class="navbar-brand fs-2 fw-bold d-flex align-items-center" href="${lang}/#"><span class="fs-3 fw-bold" style="font-family: Roboto, sans-serif;">Mini Kraken</span></a><button class="navbar-toggler border-1 py-2" data-bs-toggle="collapse" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div id="navcol-2" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
                     <li  class="nav-item dropdown auto-open animations-select"><a class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M315.4 15.5C309.7 5.9 299.2 0 288 0s-21.7 5.9-27.4 15.5l-96 160c-5.9 9.9-6.1 22.2-.4 32.2s16.3 16.2 27.8 16.2H384c11.5 0 22.2-6.2 27.8-16.2s5.5-22.3-.4-32.2l-96-160zM288 312V456c0 22.1 17.9 40 40 40H472c22.1 0 40-17.9 40-40V312c0-22.1-17.9-40-40-40H328c-22.1 0-40 17.9-40 40zM128 512a128 128 0 1 0 0-256 128 128 0 1 0 0 256z"></path>
                             </svg>${t.nav.guide}<svg class="mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"></path>
                             </svg></a>
-                        <div class="dropdown-menu"><a class="dropdown-item d-flex justify-content-sm-start" href="https://etheris.arkanus.app" rel="help" data-bs-target="https://rpg.arkanus.app">
+                        <div class="dropdown-menu"><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/commands" rel="help" data-bs-target="${lang}/commands">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M342.6 9.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l9.4 9.4L28.1 342.6C10.1 360.6 0 385 0 410.5V416c0 53 43 96 96 96h5.5c25.5 0 49.9-10.1 67.9-28.1L448 205.3l9.4 9.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-32-32-96-96-32-32zM205.3 256L352 109.3 402.7 160l-96 96H205.3z"></path>
                                     </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Lista de Comandos e Funções</span><span class="text-secondary lh-0">Veja a lista completa de funções</span></div>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.docs.cmds.title}</span><span class="text-secondary lh-0">${t.nav.docs.cmds.docs}</span></div>
                                 </div>
                             </a><a target="_blank" class="dropdown-item d-flex justify-content-sm-start" href="https://dice-roller.github.io/documentation/guide/notation/" rel="help" data-bs-target="https://dice-roller.github.io/documentation/guide/notation/">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-danger border rounded border-0 p-2 fme-2 d-none d-md-flex nav_icon_background me-2" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM112 256H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"></path>
                                     </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Documentação Dados</span><span class="text-secondary lh-0">Guias de como usar a ferramenta</span></div>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.docs.dices.names}</span><span class="text-secondary lh-0">${t.nav.docs.dices.desc}</span></div>
                                 </div>
                             </a><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/changelog" rel="help" data-bs-target="https://nutri.arkanus.app">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -125,16 +128,10 @@ function nav(t,rota){
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.poker.name}</span><span class="text-secondary lh-0">${t.nav.tools.poker.desc}</span></div>
                                 </div>
                             </a>
-                            <a class="dropdown-item d-flex justify-content-sm-start" href="https://nutri.arkanus.app" rel="help" data-bs-target="https://nutri.arkanus.app">
-                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
-                                        <path d="M315.4 15.5C309.7 5.9 299.2 0 288 0s-21.7 5.9-27.4 15.5l-96 160c-5.9 9.9-6.1 22.2-.4 32.2s16.3 16.2 27.8 16.2H384c11.5 0 22.2-6.2 27.8-16.2s5.5-22.3-.4-32.2l-96-160zM288 312V456c0 22.1 17.9 40 40 40H472c22.1 0 40-17.9 40-40V312c0-22.1-17.9-40-40-40H328c-22.1 0-40 17.9-40 40zM128 512a128 128 0 1 0 0-256 128 128 0 1 0 0 256z"></path>
-                                    </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Ver todas as Ferramentas</span><span class="text-secondary">Tudo procura e mais um pouco.</span></div>
-                                </div>
-                            </a></div>
+                        </div>
                     </li>
                     ${lang_selector(t, lang, rota)}
-                </ul><a class="btn btn-primary fw-bold link-light border rounded border-0 d-lg-flex d-xxl-flex align-items-lg-center justify-content-xxl-center align-items-xxl-center px-3" role="button" href="https://www.instagram.com/direct/t/17847127176019261" target="_blank"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor">
+                </ul><a class="btn btn-primary fw-bold link-light border rounded border-0 d-lg-flex d-xxl-flex align-items-lg-center justify-content-xxl-center align-items-xxl-center px-3" role="button" href="${lang}/#premium"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor">
                         <path d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"></path>
                     </svg>${t.nav.donate}</a>
             </div>
@@ -146,7 +143,7 @@ function nav(t,rota){
 
 function lang_selector(t, lang, rota) {
     return `
-                        <li class="nav-item"><a class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" href="${discord_invite}"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor">
+                        <li class="nav-item"><a class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" target="_blank"href="${discord_invite}"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor">
                                 <path d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"></path>
                             </svg>${t.nav.support}</a></li>
                     <li class="nav-item auto-open dropdown"><a aria-label="${t.lang} Selected in Lang Selector" class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><img class="img-fluid me-1" src="${lang_FLAGS[t.lang]}" width="25" height="25" alt="${t.lang} Flag"/> <svg class="mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -155,8 +152,7 @@ function lang_selector(t, lang, rota) {
                         <div class="dropdown-menu shadow">
                             <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/pt${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/br.svg" width="25" height="25" alt="Portuguese Lang selector"/>Português</span></a>
                             <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/en.svg" width="25" height="25" alt="English Lang selector"/>English</span></a>
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/es.svg" width="25" height="25" alt="Spanish Lang selector" />Spanish</span></a>                            
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/ru${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/ru.svg" width="25" height="25" alt="Russian Lang selector"/>Russian</span></a></div>
+                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/es.svg" width="25" height="25" alt="Spanish Lang selector" />Español</span></a>                            
                     </li>
                     `
 }

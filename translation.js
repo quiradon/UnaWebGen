@@ -1,9 +1,10 @@
 const pt = require('./i18n/pt.json')
 const en = require('./i18n/en.json')
-
+const es = require('./i18n/es.json')
 const translations = {
     pt,
-    en
+    en,
+    es
 }
 
 function traduz(language) {

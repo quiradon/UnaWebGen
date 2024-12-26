@@ -5,6 +5,7 @@ let cmds = require('../data/cmds.json')
 const commands = cmds.cmds
 
 function replaceText(text) {
+    if (!text) return '';
     text = text.replace(/\n/g, '<br />');
     text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     text = text.replace(/@(\w+)/g, '<span class="text-primary">@$1</span>');
@@ -76,6 +77,10 @@ function page(idioma, rota) {
     if (idiomaUpdates == 'pt') {
         idiomaUpdates = 'pt-BR'
     } 
+
+    if (idiomaUpdates == 'es') {
+        idiomaUpdates = 'en'
+    }
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">

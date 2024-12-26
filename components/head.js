@@ -15,6 +15,11 @@ function extrairIdioma(rota) {
     if (rota.includes('pt/')) {
         idioma = 'pt'
     }
+
+    if (rota.includes('es/')) {
+        idioma = 'es'
+    }
+
     return idioma
 }
 
@@ -51,6 +56,7 @@ function head(rota,title,desc,pictureURL) {
     <link rel="canonical" href="${url}${rotaRoot}">
     <link rel="alternate" hreflang="pt" href="${url}/pt${rotaRoot}">
     <link rel="alternate" hreflang="en" href="${url}${rotaRoot}">
+    <link rel="alternate" hreflang="es" href="${url}/es${rotaRoot}">
     <link rel="alternate" hreflang="x-default" href="${url}${rotaRoot}">
     <meta property="og:url" content="${url}${rotaRoot}">
     <meta property="og:type" content="website">

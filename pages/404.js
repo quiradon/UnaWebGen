@@ -4,10 +4,7 @@ const {head} = require('../components/head')
 const {idiomaR} = require('../caminho')
 function page(idioma, rota) {
     const t = idioma
-    let idiomaUpdates = t.lang
-    if (idiomaUpdates == 'pt') {
-        idiomaUpdates = 'pt-BR'
-    } 
+
     const lang = idiomaR(t)
     return `
 <!DOCTYPE html>

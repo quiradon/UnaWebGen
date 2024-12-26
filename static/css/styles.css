@@ -1,3 +1,5 @@
+
+
 html {
   scroll-behavior: smooth;
   font-family: 'PT Sans', sans-serif; 
@@ -106,7 +108,9 @@ html {
 .card_system_card {
   border-radius: 8px; /* Borda arredondada */
   border-color: #2f2f363c !important;
-  background: linear-gradient(50deg, var(--bs-body-bg),#21041078 );
+  border-width: 1px !important; 
+  border-style: solid;
+  background: linear-gradient(50deg, var(--bs-body-bg),#130f1b );
   transition: background 0.3s ease;
 }
 
@@ -136,6 +140,16 @@ h1 {
   margin: auto 10px auto;
   transition: 0.7s;
 }
+@keyframes fadeInGrow {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 .custom-alert {
   position: fixed;
@@ -145,6 +159,7 @@ h1 {
   width: auto;
   max-width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeInGrow 0.2s ease-in-out; /* Animação de aparição e crescimento */
 }
 
 .custom-alert + .custom-alert {

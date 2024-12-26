@@ -7,6 +7,7 @@ function roteador(rota) {
     if (rota == '/index') {
         rota = '/'
     }
+    rota = rota.replace('/es','')
     rota = rota.replace('/pt','')
     return rota
 }

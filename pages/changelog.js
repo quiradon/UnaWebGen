@@ -17,15 +17,17 @@ let updates = require('../data/updates.json')
 //transforme o json em um array de objetos
 updates = updates.v
 function generateCard(version, text, image) {
-    text = text.replace(/\n/g, '<br/>');
-    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-    text = text.replace(/@(\w+)/g, '<span class="text-primary">@$1</span>');
-    text = text.replace(/`(.*?)`/g, '<span class="text-bg-primary">$1</span>');
+    if (text) {
+        text = text.replace(/\n/g, '<br/>');
+        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/@(\w+)/g, '<span class="text-primary">@$1</span>');
+        text = text.replace(/`(.*?)`/g, '<span class="text-bg-primary">$1</span>');
+    }
     return `<div class="col" id="${version}">
         <div class="border rounded border-1 border-primary-subtle px-4 py-1 m-2 my-4">
             <h2 class="text-center mt-3">${version}</h2>
             <hr class="text-primary">
-            <p class="text-break text-light">${text}</p>
+            <p class="text-break text-light">${text || ''}</p>
             <hr class="text-primary">
             ${image ? `<img class="rounded img-fluid" src="${image}">` : ''}
         </div>
@@ -38,6 +40,10 @@ function page(idioma, rota) {
     if (idiomaUpdates == 'pt') {
         idiomaUpdates = 'pt-BR'
     } 
+
+    if (idiomaUpdates == 'es') {
+        idiomaUpdates = 'en'
+    }
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">

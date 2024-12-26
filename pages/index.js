@@ -30,7 +30,7 @@ function dice(t) {
                     <p class="lead text-secondary">${t.index.dices.desc}</p>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6"><img class="img-fluid" src="/static/img/misc/blobs/dices.webp" /></div>
+            <div class="col-lg-6 col-xl-6"><img class="img-fluid" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/dices.webp" /></div>
         </div>
     </div>
 </section>`
@@ -57,12 +57,14 @@ function systemCard(title, description, img, url) {
         <div class="col-10 col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
             <div class="card d-flex flex-grow-1 card_system_card border-1">
                 <div class="card-body d-flex flex-column py-2 px-3">
-                    <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-1 bs-icon">
-                        <a href="${url}" class="link-unstyled"><img class="img-fluid user-select-none" src="${img}" /></a>
+                <a href="${url}" class="link-unstyled">    
+                <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-1 bs-icon">
+                        <img class="img-fluid user-select-none" alt="${title} Icon" src="${img}" />
                     </div>
                     <h4 class="card-title user-select-none text-primary">
-                        <a href="${url}" class="link-unstyled">${title}</a>
+                        ${title}
                     </h4>
+                    </a>
                     <p class="card-text user-select-none flex-grow-1">${description}</p>
                 </div>
             </div>
@@ -101,7 +103,7 @@ function inicio2(t) {
                     <p class="text-secondary">${t.index.start.desc}</p><a class="btn btn-primary btn-lg border-2 px-5" type="link" href="${bot_invite}" target="_blank" style="font-weight: bold;">${t.nav.add}</a>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid" src="/static/img/misc/blobs/place.webp" /></div>
+            <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid" alt="Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" /></div>
         </div>
     </div>
 </section>

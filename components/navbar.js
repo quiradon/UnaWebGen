@@ -9,6 +9,18 @@ const lang_FLAGS = {
 }
 
 
+/**
+ * 
+ * <a class="dropdown-item d-flex justify-content-sm-start" href="https://etheris.arkanus.app" rel="help" data-bs-target="https://rpg.arkanus.app">
+                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+                                        <path d="M368 80h32v32H368V80zM352 32c-17.7 0-32 14.3-32 32H128c0-17.7-14.3-32-32-32H32C14.3 32 0 46.3 0 64v64c0 17.7 14.3 32 32 32V352c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32H320c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V384c0-17.7-14.3-32-32-32V160c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H352zM96 160c17.7 0 32-14.3 32-32H320c0 17.7 14.3 32 32 32V352c-17.7 0-32 14.3-32 32H128c0-17.7-14.3-32-32-32V160zM48 400H80v32H48V400zm320 32V400h32v32H368zM48 112V80H80v32H48z"></path>
+                                    </svg>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Geração de Assets</span><span class="text-secondary lh-0">Prepare assets para sua mesa em instantes</span></div>
+                                </div>
+                            </a>
+                            
+ */
+
 function nav(t,rota){
     let lang = idiomaR(t)
     rota = roteador(rota)
@@ -65,17 +77,11 @@ function nav(t,rota){
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Lista de Comandos e Funções</span><span class="text-secondary lh-0">Veja a lista completa de funções</span></div>
                                 </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="https://rpg.arkanus.app" rel="help" data-bs-target="https://rpg.arkanus.app">
+                            </a><a target="_blank" class="dropdown-item d-flex justify-content-sm-start" href="https://dice-roller.github.io/documentation/guide/notation/" rel="help" data-bs-target="https://dice-roller.github.io/documentation/guide/notation/">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-danger border rounded border-0 p-2 fme-2 d-none d-md-flex nav_icon_background me-2" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM112 256H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"></path>
                                     </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Documentação</span><span class="text-secondary lh-0">Guias de como usar a ferramenta</span></div>
-                                </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="https://rpg.arkanus.app" rel="help" data-bs-target="https://rpg.arkanus.app">
-                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-danger border rounded border-0 p-2 fme-2 d-none d-md-flex nav_icon_background me-2" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
-                                        <path d="M153.6 29.9l16-21.3C173.6 3.2 180 0 186.7 0C198.4 0 208 9.6 208 21.3V43.5c0 13.1 5.4 25.7 14.9 34.7L307.6 159C356.4 205.6 384 270.2 384 337.7C384 434 306 512 209.7 512H192C86 512 0 426 0 320v-3.8c0-48.8 19.4-95.6 53.9-130.1l3.5-3.5c4.2-4.2 10-6.6 16-6.6C85.9 176 96 186.1 96 198.6V288c0 35.3 28.7 64 64 64s64-28.7 64-64v-3.9c0-18-7.2-35.3-19.9-48l-38.6-38.6c-24-24-37.5-56.7-37.5-90.7c0-27.7 9-54.8 25.6-76.9z"></path>
-                                    </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Lore &amp; Universo</span><span class="text-secondary lh-0">Um pouco sobre nossas aventuras</span></div>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Documentação Dados</span><span class="text-secondary lh-0">Guias de como usar a ferramenta</span></div>
                                 </div>
                             </a><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/changelog" rel="help" data-bs-target="https://nutri.arkanus.app">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -96,13 +102,10 @@ function nav(t,rota){
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.dices.title}</span><span class="text-secondary lh-0">${t.nav.dices.desc}</span></div>
                                 </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="https://etheris.arkanus.app" rel="help" data-bs-target="https://rpg.arkanus.app">
-                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
-                                        <path d="M368 80h32v32H368V80zM352 32c-17.7 0-32 14.3-32 32H128c0-17.7-14.3-32-32-32H32C14.3 32 0 46.3 0 64v64c0 17.7 14.3 32 32 32V352c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32H320c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V384c0-17.7-14.3-32-32-32V160c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H352zM96 160c17.7 0 32-14.3 32-32H320c0 17.7 14.3 32 32 32V352c-17.7 0-32 14.3-32 32H128c0-17.7-14.3-32-32-32V160zM48 400H80v32H48V400zm320 32V400h32v32H368zM48 112V80H80v32H48z"></path>
-                                    </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">Geração de Assets</span><span class="text-secondary lh-0">Prepare assets para sua mesa em instantes</span></div>
-                                </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/names" rel="help" data-bs-target="${lang}/tools/names">
+                            </a>
+                            
+
+                            <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/names" rel="help" data-bs-target="${lang}/tools/names">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor">
                                         <path d="M368 32c41.7 0 75.9 31.8 79.7 72.5l85.6 26.3c25.4 7.8 42.8 31.3 42.8 57.9c0 21.8-11.7 41.9-30.7 52.7L400.8 323.5 493.3 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H480c-8.5 0-16.6-3.4-22.6-9.4L346.9 360.2c11.7-36 3.2-77.1-25.4-105.7c-40.6-40.6-106.3-40.6-146.9-.1L101 324.4c-6.4 6.1-6.7 16.2-.6 22.6s16.2 6.6 22.6 .6l73.8-70.2 .1-.1 .1-.1c3.5-3.5 7.3-6.6 11.3-9.2c27.9-18.5 65.9-15.4 90.5 9.2c24.7 24.7 27.7 62.9 9 90.9c-2.6 3.8-5.6 7.5-9 10.9L261.8 416H352c17.7 0 32 14.3 32 32s-14.3 32-32 32H64c-35.3 0-64-28.7-64-64C0 249.6 127 112.9 289.3 97.5C296.2 60.2 328.8 32 368 32zm0 104a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path>
                                     </svg>
@@ -114,7 +117,15 @@ function nav(t,rota){
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.tarot.name}</span><span class="text-secondary lh-0">${t.nav.tools.tarot.desc}</span></div>
                                 </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="https://nutri.arkanus.app" rel="help" data-bs-target="https://nutri.arkanus.app">
+                            </a>
+                            <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/poker" rel="help">
+                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
+                                        <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path>
+                                    </svg>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.poker.name}</span><span class="text-secondary lh-0">${t.nav.tools.poker.desc}</span></div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item d-flex justify-content-sm-start" href="https://nutri.arkanus.app" rel="help" data-bs-target="https://nutri.arkanus.app">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M315.4 15.5C309.7 5.9 299.2 0 288 0s-21.7 5.9-27.4 15.5l-96 160c-5.9 9.9-6.1 22.2-.4 32.2s16.3 16.2 27.8 16.2H384c11.5 0 22.2-6.2 27.8-16.2s5.5-22.3-.4-32.2l-96-160zM288 312V456c0 22.1 17.9 40 40 40H472c22.1 0 40-17.9 40-40V312c0-22.1-17.9-40-40-40H328c-22.1 0-40 17.9-40 40zM128 512a128 128 0 1 0 0-256 128 128 0 1 0 0 256z"></path>
                                     </svg>
@@ -138,14 +149,14 @@ function lang_selector(t, lang, rota) {
                         <li class="nav-item"><a class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" href="${discord_invite}"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor">
                                 <path d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"></path>
                             </svg>${t.nav.support}</a></li>
-                    <li class="nav-item auto-open dropdown"><a class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><img class="img-fluid me-1" src="${lang_FLAGS[t.lang]}" width="25" height="25" /> <svg class="mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
+                    <li class="nav-item auto-open dropdown"><a aria-label="${t.lang} Selected in Lang Selector" class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><img class="img-fluid me-1" src="${lang_FLAGS[t.lang]}" width="25" height="25" alt="${t.lang} Flag"/> <svg class="mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"></path>
                             </svg></a>
                         <div class="dropdown-menu shadow">
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/pt${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/br.svg" width="25" height="25" />Português</span></a>
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/en.svg" width="25" height="25" />English</span></a>
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/es.svg" width="25" height="25" />Spanish</span></a>                            
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/ru${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/ru.svg" width="25" height="25" />Russian</span></a></div>
+                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/pt${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/br.svg" width="25" height="25" alt="Portuguese Lang selector"/>Português</span></a>
+                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/en.svg" width="25" height="25" alt="English Lang selector"/>English</span></a>
+                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/es.svg" width="25" height="25" alt="Spanish Lang selector" />Spanish</span></a>                            
+                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/ru${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/ru.svg" width="25" height="25" alt="Russian Lang selector"/>Russian</span></a></div>
                     </li>
                     `
 }
@@ -168,8 +179,8 @@ function footer(t, rota) {
             <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
                 <b class="fs-6 mb-0 pb-0">${t.footer.about}</b>
                 <ul class="list-unstyled">
-                    <li><a href="https://arkanus.app/team">${t.footer.team}</a></li>
-                    <li><a href="https://arkanus.app/quest">${t.footer.quest}</a></li>
+                    <li><a href="https://arkanus.app/about">${t.footer.team}</a></li>
+                    <li><a href="https://arkanus.app/about">${t.footer.quest}</a></li>
                     <li></li>
                 </ul>
             </div> 

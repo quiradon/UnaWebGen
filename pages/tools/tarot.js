@@ -14,7 +14,7 @@ ${head(`${t.lang}${rota}`,`${t.tarot.title}`)}
     <section class="justify-content-lg-center pt-2 mt-4 mb-4">
         <div class="container">
             <div class="row g-0 d-flex d-md-flex justify-content-center justify-content-md-center">
-                <div class="col-10 col-md-5 order-first order-md-last"><img class="img-fluid p-5 w-100 h-100 fit-cover CardPoker" id="cardshow" src="/static/api/tarot-card/22.webp" loading="auto" alt="Carta de Tarot aleatoria"></div>
+                <div class="col-10 col-md-5 order-first order-md-last"><img class="img-fluid p-5 w-100 h-100 fit-cover CardPoker" id="cardshow" src="/static/api/tarot-card/20.webp" loading="auto" alt="Carta de Tarot aleatoria"></div>
                 <div class="col-12 col-md-7 d-flex justify-content-center align-items-center align-content-center order-last p-4">
                     <div class="text-white">
                         <h1 class="fw-bold text-white">${t.tarot.article.title}</h1>

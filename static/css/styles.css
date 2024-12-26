@@ -75,10 +75,14 @@ html {
 .CardPoker {
   transform-style: flat;
   transition: transform 0.3s; /* Transição rápida */
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .flip {
   animation: flip 0.3s linear; /* Animação rápida */
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 .nav-drop-text {

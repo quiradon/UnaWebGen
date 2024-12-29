@@ -1,4 +1,4 @@
-/en/:rota /:rota 301
+/en/* /:splat 301
 /pt/posts/dices /pt/dices 301
 /posts/dices /dices 301
 /sistemas/:rota /systems/:rota 301

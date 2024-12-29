@@ -1,63 +1,65 @@
-Melhore suas sessões de **RPG de mesa**. Tenha suporte a diversos sistemas como DnD, Ordem, Tormenta , Gaia e [vários outros](https://rpg.arkanus.app/pt/), Além de recursos como fichas de personagem automáticas, gerenciamento de iniciativa, rolagem de dados, grimórios de magia e muito mais. Confira a [lista completa de comandos disponíveis!](https://rpg.arkanus.app/pt/commands)
+Transforme seu **RPG de mesa** com praticidade e recursos poderosos.
+Tenha à disposição ferramentas dedicadas a diversos sistemas, como Dungeons & Dragons (DnD), Ordem Paranormal, Tormenta 20, Gaia e [muitos outros.]((https://rpg.arkanus.app/pt/)) Aproveite também funcionalidades como fichas de personagem automáticas, gerenciamento de iniciativa, rolagem de dados, grimórios de magia e muito mais. [Confira a lista completa de comandos disponíveis!](https://rpg.arkanus.app/pt/commands)
+
 
 ![A ferramenta definitiva para RPG de mesa e rolagem de dados](https://rpg.arkanus.app/static/img/util/bot/pt/index.webp)
 
 
 **Recursos e funções:**
 
-- Rolagem de Dados totalmente personalizável
-- Fichas de personagens automáticas e integradas
-- Anotações e Inventario
-- Grimorios de Magias e Rituais
+- Rolagem de dados personalizável (Simple Roll, Fate, Vampiro, Invazores)
+- Fichas de personagens automáticas
+- Anotações e Inventário
 - Gerenciamento de Iniciativa
-- **Geradores:**
-  - [Nomes de personagem](https://rpg.arkanus.app/pt/tools/names)
-  - [Baralho de cartas](https://rpg.arkanus.app/pt/tools/poker)
-  - [Baralho de Tarot](https://rpg.arkanus.app/pt/tools/tarot)
+- Ferramentas de Geração:
+ - [Nomes de personagem](https://rpg.arkanus.app/pt/tools/names)
+ - [Baralho de cartas](https://rpg.arkanus.app/pt/tools/poker)
+ - [Baralho de Tarot](https://rpg.arkanus.app/pt/tools/tarot)
 
 
 ![Sistemas de Rolagem de Dados](https://rpg.arkanus.app/static/img/util/bot/pt/dice.webp)
 **Rolagem de Dados:**
-Utilize a sintaxe RPG para rolar dados com um número específico de lados e quantidade. Por exemplo, `5d20` rola cinco dados de vinte lados e soma os resultados. 
-[Clique aqui](https://rpg.arkanus.app/pt/dices) e saiba mais sobre o sistema de rolagem de dados complexas como: `4#6d6ei`
 
-Personalize seus dados, escolha entre `25+` skins disponíveis no `/store dices`
+Use a sintaxe RPG para rolar dados com números específicos de lados e quantidades. Por exemplo, `5d20` rola cinco dados de vinte lados e soma os resultados.
+[Clique aqui](https://rpg.arkanus.app/pt/dices) para aprender mais sobre sistemas de rolagem de dados complexos, como `4#6d6ei`.
+
+Personalize seus dados escolhendo entre 45+ skins disponíveis na loja 
+`/store dices`.
 
 
 
 ![Sistemas de RPG suportados e disponíveis](https://rpg.arkanus.app/static/img/util/bot/pt/system.webp)
-**Sistemas de RPG adaptados:**
+**Sistemas de RPG Adaptados:**
 
-Um companheiro para sua jornada de RPG. Confira abaixo a lista de sistemas de RPG que possuem suporte as fichas automáticas. Se o seu sistema preferido não estiver listado, o envie como sugestão usando o comando `/suggest`.
+Encontre o companheiro ideal para sua jornada de RPG com sistemas que possuem suporte para fichas automáticas. Se o seu sistema preferido não estiver na lista, envie uma sugestão usando o comando `/sugerir`.
 
-| Sistemas RPG Suportados | Ícones | Grimórios | Tags do sistema |
-| ------------------------- | -------------------------------------------------- | -------- | ------------------- |
-| **Dungeons e Dragões (DnD)** | ![Logotipo de Dungeons and Dragons](https://rpg.arkanus.app/static/img/util/bot/icons/DnD.webp) | 🏗️ | `Medieval`, `Fantasia` |
-| **Ordem Paranormal**| ![Logotipo da Ordem Paranormal](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) | 🏗️ | `Moderno`, `Investigação` |
-| **Tormenta20** | ![Logotipo do Tormenta RPG](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) | 🏗️ | `Medieval`, `Fantasia` |
-| **Carbon2185** | ![Carbon2185 - RPG de mesa Cyberpunk](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) | 🏗️ | `Cyberpunk`, `Futurista` |
-| **Gaia: O Prelúdio** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) | 🏗️ | `Medieval`, `Fantasia` |
-| **3DET** | ![3DET - RPG de fantasia](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) | 🏗️ | `Tudo`, `Dinâmico` |
-| **Pathfinder** | ![RPG Pathfinder](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) | 🏗️ | `Fantasia` |
-| **Feiticeiros e Maldições** | ![RPG Jujutsu Kaisen](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 🏗️ | `Jujutsu`, `Escola` |
+| Sistemas RPG Suportados | Ícones |  Tags do sistema |
+| ------------------------- | -------------------------------------------------- | ------------------- |
+| **Dungeons e Dragons (DnD)** | ![Logotipo de Dungeons and Dragons](https://rpg.arkanus.app/static/img/util/bot/icons/DnD.webp) | `Medieval`, `Fantasia` |
+| **Ordem Paranormal**| ![Logotipo da Ordem Paranormal](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) |  `Moderno`, `Investigação` |
+| **Tormenta20** | ![Logotipo do Tormenta RPG](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) |  `Medieval`, `Fantasia` |
+| **Carbon2185** | ![Carbon2185 - RPG de mesa Cyberpunk](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) |  `Cyberpunk`, `Futurista` |
+| **Gaia: O Prelúdio** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) |  `Medieval`, `Fantasia` |
+| **3DET** | ![3DET - RPG de fantasia](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) |  `Tudo`, `Dinâmico` |
+| **Pathfinder** | ![RPG Pathfinder](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) |  `Fantasia` |
+| **Feiticeiros e Maldições** | ![RPG Jujutsu Kaisen](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) |  `Jujutsu`, `Escola` |
 
-O Bot é feito por fãs para fãs, auxiliando na experiência de RPG. Não reivindicamos ou possuimos direitos sobre os jogos, livros e sistemas. E não somos afiliados ou possuimos vinculo com a maioria editoras e escritores dos jogos. 
-
+-# A Ferramenta é feito por fãs para fãs. Não possuimos ou reinvindicamos direitos sobre os jogos, livros e sistemas. E não possuimos vinculo com a maioria editoras e escritores. 
 
 ![Melhore sua Comunidade de RPG](https://rpg.arkanus.app/static/img/util/bot/pt/comunity.webp)
 
 **Comunidades de RPG:**
-Funções feitas para comunidades, Sistema de economia local e galerias da comunidade onde os jogadores de RPG podem compartilhar itens, magias, NPCs, e muitos outros conteúdos globalmente. promovendo toda uma experiência. 
+Funções feitas para facilitar a interação entre membros de comunidades. Inclui um sistema de economia local e galerias da comunidade, onde jogadores de RPG podem compartilhar itens, magias, NPCs e muitos outros conteúdos globalmente, promovendo uma experiência colaborativa.
 
-- Sistema de Economia (Crie uma moeda própria e personalizada para o seu servidor)
+- **Sistema de Economia:** Crie uma moeda própria e personalizada para o seu servidor de RPG.**
 
 ---
 
-A Mini Kraken é a escolha ideal para jogadores de RPG de mesa, agilizando as sessões, proporcionando uma experiência de jogo mais tranquila e oferecendo uma variedade de recursos para GMs (Mestres) e Players (jogadores). 
+Escolha ideal para jogadores de RPG de mesa, que buscam agilizar sessões, proporcionando uma experiência de jogo mais tranquila e cheia de recursos para Mestres e Jogadores.
 
-**Instalação e Configurações:**
-Segue abaixo um pequeno guia de como instalar e configurar a Mini Kraken em seu servidor.
+**Instalação e Configuração:|**
+Siga este guia simples para adicionar a Mini Kraken ao seu servidor de RPG:
 
 1. Clique em "Adicionar ao servidor".
-2. Use o comando `/config` para definir o `Sistema de RPG`, `Cargo do mestre` e demais configurações.
-3. Pronto! Comece a usar a Mini Kraken em suas sessões de RPG e não se esqueça de se **divertir**.
+2. Use o comando `/configurar` para definir o Cargo do mestre (Use o cargo de mestre para poder ver e editar fichas de outros jogadores)
+3. Pronto! Comece a usar a Mini Kraken em suas sessões de RPG e não se esqueça de se divertir.

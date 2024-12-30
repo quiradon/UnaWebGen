@@ -8,7 +8,7 @@ const lang_FLAGS = {
     'de' : '/static/img/flags/de.svg',
     'fr' : '/static/img/flags/fr.svg',
     'zh' : '/static/img/flags/cn.svg',
-    'jp' : '/static/img/flags/jp.svg'
+    'ja' : '/static/img/flags/jp.svg'
 }   
 
 

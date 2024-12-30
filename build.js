@@ -2,6 +2,7 @@ const { traduz } = require('./translation.js')
 const fs = require('fs')
 const path = require('path')
 const exportFolder = path.join(__dirname, 'dist')
+const i18nPath = path.join(__dirname, 'i18n');
 function copyFolderRecursiveSync(source, target) {
     let files = []
     const targetFolder = path.join(target, path.basename(source))
@@ -22,7 +23,7 @@ function copyFolderRecursiveSync(source, target) {
 }
 
 function compilePages() {
-    const languages = ['pt', 'en', 'es', 'de']
+    const languages = fs.readdirSync(i18nPath).map(file => path.basename(file, path.extname(file)));
     const pages = fs.readdirSync(path.join(__dirname, 'pages'))
     if (!fs.existsSync(exportFolder)) {
         fs.mkdirSync(exportFolder)

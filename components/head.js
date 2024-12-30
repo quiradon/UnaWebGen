@@ -22,6 +22,8 @@ function head(rota,title,desc,pictureURL) {
         return obj
     }).join('\n')
 
+    let canonicalLink = rotaRoot === '/' ? `<link rel="canonical" href="${url}${rotaRoot}">` : ''
+
     return `<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -36,7 +38,7 @@ function head(rota,title,desc,pictureURL) {
     <link rel="icon" type="image/png" sizes="180x180" href='/static/img/icons/logo.svg'>
     <link rel="icon" type="image/png" sizes="32x32" href='/static/img/icons/logo.svg'>
     <link rel="icon" type="image/png" sizes="16x16" href='/static/img/icons/logo.svg'>
-    <link rel="canonical" href="${url}${rotaRoot}">
+    ${canonicalLink}
     ${alternateLinks}
     <link rel="alternate" hreflang="x-default" href="${url}${rotaRoot}">
     <meta property="og:url" content="${url}${rotaRoot}">

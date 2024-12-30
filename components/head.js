@@ -38,7 +38,7 @@ function head(rota,title,desc,pictureURL) {
     <link rel="icon" type="image/png" sizes="16x16" href='/static/img/icons/logo.svg'>
     <link rel="canonical" href="${url}${rotaRoot}">
     ${alternateLinks}
-    <link rel=alternate hreflang=x-default href="${url}${rotaRoot}">
+    <link rel="alternate" hreflang="x-default" href="${url}${rotaRoot}">
     <meta property="og:url" content="${url}${rotaRoot}">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">

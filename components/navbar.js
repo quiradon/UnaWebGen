@@ -8,7 +8,8 @@ const lang_FLAGS = {
     'de' : '/static/img/flags/de.svg',
     'fr' : '/static/img/flags/fr.svg',
     'zh' : '/static/img/flags/cn.svg',
-    'ja' : '/static/img/flags/jp.svg'
+    'ja' : '/static/img/flags/jp.svg',
+    'ru' : '/static/img/flags/ru.svg'
 }   
 
 
@@ -161,6 +162,7 @@ function lang_selector(t, lang, rota) {
                             <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/fr${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/fr.svg" width="25" height="25" alt="Franch Lang selector" />Français</span></a>                                                 
                             <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/zh${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/cn.svg" width="25" height="25" alt="Chinese Lang selector" />中文</span></a>                                                 
                             <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/ja${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/jp.svg" width="25" height="25" alt="Japanese Lang selector" />日本語</span></a>                                                 
+                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/ru${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/ru.svg" width="25" height="25" alt="Russian Lang selector" />Русский</span></a>                                                 
             
                             
                             </div>

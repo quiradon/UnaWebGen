@@ -21,9 +21,7 @@ function head(rota,title,desc,pictureURL) {
         let obj = `<link rel="alternate" hreflang="${lang}" href="${url}${langPath}${rotaRoot}">`
         return obj
     }).join('\n')
-
-    let canonicalLink = rotaRoot === '/' ? `<link rel="canonical" href="${url}${rotaRoot}">` : ''
-
+    let canonicalLink = (rota.includes('en/')) ? `<link rel="canonical" href="${url}${rotaRoot}">` : '';
     return `<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">

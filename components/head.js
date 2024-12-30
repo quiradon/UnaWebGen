@@ -19,7 +19,6 @@ function head(rota,title,desc,pictureURL) {
     let alternateLinks = languages.map(lang => {
         let langPath = lang === 'x-default' || lang === 'en' ? '' : `/${lang}`
         let obj = `<link rel="alternate" hreflang="${lang}" href="${url}${langPath}${rotaRoot}">`
-        console.log(obj)
         return obj
     }).join('\n')
 

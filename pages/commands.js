@@ -79,7 +79,7 @@ function page(idioma, rota) {
     } 
 
 
-    if (idiomaUpdates == 'es' || idiomaUpdates == 'de' || idiomaUpdates == 'fr') {
+    if (idiomaUpdates == 'es' || idiomaUpdates == 'de' || idiomaUpdates == 'fr' || idiomaUpdates == 'zh' || idiomaUpdates == 'jp') {
         idiomaUpdates = 'en'
     }
     return `

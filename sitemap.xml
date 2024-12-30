@@ -1,115 +1,692 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
 <url>
-<loc>https://rpg.arkanus.app/</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>1</priority>
+  <loc>https://rpg.arkanus.app/</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>1.00</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/tools/names</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/tools/names"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/commands</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/tools/poker</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/tools/poker"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/changelog</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/tools/tarot</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/tools/tarot"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/dices</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/dices</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/dices"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/tools/names</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/commands</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/commands"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/tools/tarot</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/changelog</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/changelog"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/tools/poker</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/systems/dnd</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/systems/dnd"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/pt/</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/systems/ordem</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/systems/ordem"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/es/</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/systems/tormenta</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/systems/tormenta"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/de/</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/systems/carbon</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/systems/carbon"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/fr/</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/systems/gaia</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/systems/gaia"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/zh/</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/systems/3det</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/systems/3det"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/ja/</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/systems/feiticeiros</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/systems/feiticeiros"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/ru/</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/tos</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/tos"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/systems/dnd</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-<loc>https://rpg.arkanus.app/privacy</loc>
-<xhtml:link rel="alternate" hreflang="pt" href="https://rpg.arkanus.app/pt/privacy"/>
-<lastmod>2024-04-08</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.9</priority>
+  <loc>https://rpg.arkanus.app/systems/ordem</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
+<url>
+  <loc>https://rpg.arkanus.app/systems/tormenta</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/systems/carbon</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/systems/gaia</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/systems/3det</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/systems/pathfinder</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/systems/feiticeiros</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/tos</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/privacy</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/commands</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/commands</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/commands</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/commands</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/commands</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/commands</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/commands</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/changelog</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/changelog</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/changelog</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/changelog</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/changelog</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/changelog</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/changelog</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/dices</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/dices</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/dices</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/dices</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/dices</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/dices</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/dices</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/tools/names</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/tools/names</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/tools/names</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/tools/names</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/tools/names</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/tools/names</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/tools/names</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/tools/tarot</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/tools/tarot</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/tools/tarot</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/tools/tarot</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/tools/tarot</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/tools/tarot</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/tools/tarot</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/tools/poker</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/tools/poker</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/tools/poker</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/tools/poker</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/tools/poker</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/tools/poker</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/tools/poker</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/systems/dnd</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/systems/ordem</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/systems/tormenta</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/systems/carbon</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/systems/gaia</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/systems/3det</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/systems/pathfinder</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/systems/feiticeiros</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/tos</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/pt/privacy</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/systems/dnd</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/systems/ordem</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/systems/tormenta</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/systems/carbon</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/systems/gaia</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/systems/3det</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/systems/pathfinder</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/systems/feiticeiros</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/tos</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/es/privacy</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/systems/dnd</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/systems/ordem</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/systems/tormenta</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/systems/carbon</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/systems/gaia</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/systems/3det</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/systems/pathfinder</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/systems/feiticeiros</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/tos</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/de/privacy</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/systems/dnd</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/systems/ordem</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/systems/tormenta</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/systems/carbon</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/systems/gaia</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/systems/3det</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/systems/pathfinder</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/systems/feiticeiros</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/tos</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/fr/privacy</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/systems/dnd</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/systems/ordem</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/systems/tormenta</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/systems/carbon</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/systems/gaia</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/systems/3det</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/systems/pathfinder</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/systems/feiticeiros</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/tos</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/zh/privacy</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/systems/dnd</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/systems/ordem</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/systems/tormenta</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/systems/carbon</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/systems/gaia</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/systems/3det</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/systems/pathfinder</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/systems/feiticeiros</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/tos</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ja/privacy</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/systems/dnd</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/systems/ordem</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/systems/tormenta</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/systems/carbon</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/systems/gaia</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/systems/3det</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/systems/pathfinder</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/systems/feiticeiros</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/tos</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://rpg.arkanus.app/ru/privacy</loc>
+  <lastmod>2024-12-30T21:28:08+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
 </urlset>

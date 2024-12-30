@@ -19,7 +19,7 @@ function GenerateCard(name, description, params, lang) {
     let paramsDescriptions = '';
     if (params) {
         paramsSpans = params.map(param => {
-            let paramName = param.name[lang];
+            let paramName = param.name[lang] ?? param.name['en'];
             if (paramName.startsWith('?')) {
                 paramName = paramName.slice(1) + ' (opcional)';
             }
@@ -30,7 +30,7 @@ function GenerateCard(name, description, params, lang) {
             `;
         }).join('');
         paramsDescriptions = params.map(param => {
-            let paramName = param.name[lang];
+            let paramName = param.name[lang] ?? param.name['en'];
             if (paramName.startsWith('?')) {
                 paramName = paramName.slice(1) + ' (opcional)';
             }
@@ -78,8 +78,7 @@ function page(idioma, rota) {
         idiomaUpdates = 'pt-BR'
     } 
 
-
-    if (idiomaUpdates == 'es' || idiomaUpdates == 'de' || idiomaUpdates == 'fr' || idiomaUpdates == 'zh' || idiomaUpdates == 'jp') {
+    if (idiomaUpdates == 'es') {
         idiomaUpdates = 'en'
     }
     return `

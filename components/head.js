@@ -1,33 +1,6 @@
 const {url} = require('../config.json')
 const {traduz} = require('../translation')
-function extrairRotaSemIdioma(rota) {
-    let rotaNova = rota
-    rotaNova = rotaNova.replace("pt", "")
-    rotaNova = rotaNova.replace("en", "")
-    rotaNova = rotaNova.replace("es", "")
-    rotaNova = rotaNova.replace("de", "")
-    if (rotaNova == '/index') {
-        rotaNova = '/'
-    }
-    return rotaNova
-}
-
-function extrairIdioma(rota) {
-    let idioma = 'en'
-    if (rota.includes('pt/')) {
-        idioma = 'pt'
-    }
-
-    if (rota.includes('es/')) {
-        idioma = 'es'
-    }
-
-    if (rota.includes('de/')) {
-        idioma = 'de'
-    }
-
-    return idioma
-}
+const {extrairRotaSemIdioma, extrairIdioma, languages} = require('../caminho')
 
 function head(rota,title,desc,pictureURL) {
     let rotaRoot = extrairRotaSemIdioma(rota)
@@ -42,6 +15,13 @@ function head(rota,title,desc,pictureURL) {
         <meta property="og:image" content="${pictureURL}">
         `
     }
+
+    let alternateLinks = languages.map(lang => {
+        let langPath = lang === 'x-default' || lang === 'en' ? '' : `/${lang}`
+        let obj = `<link rel="alternate" hreflang="${lang}" href="${url}${langPath}${rotaRoot}">`
+        console.log(obj)
+        return obj
+    }).join('\n')
 
     return `<head>
     <meta charset="UTF-8">
@@ -58,10 +38,8 @@ function head(rota,title,desc,pictureURL) {
     <link rel="icon" type="image/png" sizes="32x32" href='/static/img/icons/logo.svg'>
     <link rel="icon" type="image/png" sizes="16x16" href='/static/img/icons/logo.svg'>
     <link rel="canonical" href="${url}${rotaRoot}">
-    <link rel="alternate" hreflang="pt" href="${url}/pt${rotaRoot}">
-    <link rel="alternate" hreflang="en" href="${url}${rotaRoot}">
-    <link rel="alternate" hreflang="es" href="${url}/es${rotaRoot}">
-    <link rel="alternate" hreflang="x-default" href="${url}${rotaRoot}">
+    ${alternateLinks}
+    <link rel=alternate hreflang=x-default href="${url}${rotaRoot}">
     <meta property="og:url" content="${url}${rotaRoot}">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -76,7 +54,6 @@ function head(rota,title,desc,pictureURL) {
 
 </head>`
 }
-
 
 module.exports = {
     head

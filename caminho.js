@@ -24,7 +24,36 @@ function roteador(rota) {
     return rota;
 }
 
+function extrairIdioma(rota) {
+    let idioma = 'en'; // Idioma padrão
+    languages.forEach(language => {
+        if (rota.includes(`${language}/`)) {
+            idioma = language;
+        }
+    });
+    return idioma;
+}
+
+// Função para extrair a rota sem o idioma
+function extrairRotaSemIdioma(rota) {
+    let rotaNova = rota;
+    languages.forEach(language => {
+        if (rotaNova.startsWith(`/${language}`)) {
+            rotaNova = rotaNova.replace(`/${language}`, '');
+        } else if (rotaNova.startsWith(`${language}`)) {
+            rotaNova = rotaNova.replace(`${language}`, '');
+        }
+    });
+    if (rotaNova === '/index') {
+        rotaNova = '/';
+    }
+    return rotaNova;
+}
+
 module.exports = {
+    languages,
+    extrairRotaSemIdioma,
+    extrairIdioma,
     idiomaR,
     roteador
 }

@@ -78,7 +78,8 @@ function page(idioma, rota) {
         idiomaUpdates = 'pt-BR'
     } 
 
-    if (idiomaUpdates == 'es') {
+
+    if (idiomaUpdates == 'es' || idiomaUpdates == 'de') {
         idiomaUpdates = 'en'
     }
     return `

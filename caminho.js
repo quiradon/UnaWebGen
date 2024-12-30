@@ -8,6 +8,7 @@ function roteador(rota) {
         rota = '/'
     }
     rota = rota.replace('/es','')
+    rota = rota.replace('/de','')
     rota = rota.replace('/pt','')
     return rota
 }

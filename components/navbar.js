@@ -5,6 +5,7 @@ const lang_FLAGS = {
     'pt': '/static/img/flags/br.svg',
     'en': '/static/img/flags/en.svg',
     'es': '/static/img/flags/es.svg',
+    'de' : '/static/img/flags/de.svg'
 }
 
 
@@ -152,7 +153,8 @@ function lang_selector(t, lang, rota) {
                         <div class="dropdown-menu shadow">
                             <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/pt${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/br.svg" width="25" height="25" alt="Portuguese Lang selector"/>Português</span></a>
                             <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/en.svg" width="25" height="25" alt="English Lang selector"/>English</span></a>
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/es.svg" width="25" height="25" alt="Spanish Lang selector" />Español</span></a>                            
+                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/es.svg" width="25" height="25" alt="Spanish Lang selector" />Español</span></a>       
+                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/de${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/de.svg" width="25" height="25" alt="Deutsch Lang selector" />Deutsch</span></a>                                                 
                     </li>
                     `
 }

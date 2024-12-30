@@ -4,6 +4,8 @@ function extrairRotaSemIdioma(rota) {
     let rotaNova = rota
     rotaNova = rotaNova.replace("pt", "")
     rotaNova = rotaNova.replace("en", "")
+    rotaNova = rotaNova.replace("es", "")
+    rotaNova = rotaNova.replace("de", "")
     if (rotaNova == '/index') {
         rotaNova = '/'
     }
@@ -18,6 +20,10 @@ function extrairIdioma(rota) {
 
     if (rota.includes('es/')) {
         idioma = 'es'
+    }
+
+    if (rota.includes('de/')) {
+        idioma = 'de'
     }
 
     return idioma

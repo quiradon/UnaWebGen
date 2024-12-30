@@ -22,7 +22,7 @@ function copyFolderRecursiveSync(source, target) {
 }
 
 function compilePages() {
-    const languages = ['pt', 'en', 'es']
+    const languages = ['pt', 'en', 'es', 'de']
     const pages = fs.readdirSync(path.join(__dirname, 'pages'))
     if (!fs.existsSync(exportFolder)) {
         fs.mkdirSync(exportFolder)

@@ -1,8 +1,6 @@
 const {nav, footer} = require('../components/navbar')
 const scripts = require('../components/bootscripts')
 const {head} = require('../components/head')
-let cmds = require('../data/cmds.json')
-const commands = cmds.cmds
 
 function replaceText(text) {
     if (!text) return '';
@@ -57,21 +55,65 @@ function GenerateCards(cmds, lang) {
     return cards
 }
 
-function OrdenarComandosOrdemAlfabetica(commands, lang) {
-    commands.sort((a, b) => {
-        if (a.name[lang] < b.name[lang]) {
-            return -1;
-        }
-        if (a.name[lang] > b.name[lang]) {
-            return 1;
-        }
-        return 0;
-    });
 
-    return commands;
+async function getCommandsFromApi() {
+    let url = "https://una.arkanus.app/commands"
+    let response = await fetch(url)
+    let data = await response.json()
+    return cleanCommands(data || [])
 }
 
-function page(idioma, rota) {
+function cleanCommands(commands) {
+    const keysToRemove = ['min_value', 'contexts', 'integration_types', 'max_value'];
+
+    function cleanCommand(cmd) {
+        keysToRemove.forEach(key => {
+            if (cmd.hasOwnProperty(key)) {
+                delete cmd[key];
+            }
+        });
+
+        if (cmd.options && cmd.options.length > 0) {
+            cmd.options = cmd.options.map(option => cleanCommand(option));
+        }
+
+        return cmd;
+    }
+
+    return commands.map(cmd => cleanCommand(cmd));
+}
+
+function generateCommandHierarchy(commands) {
+    if (!Array.isArray(commands)) {
+        throw new TypeError('commands must be an array');
+    }
+
+    function buildHierarchy(cmd, prefix = '') {
+        let baseName = prefix ? `${prefix} ${cmd.name}` : cmd.name;
+        let commandObj = { name: baseName, subcommands: [] };
+
+        if (cmd.options && cmd.options.length > 0) {
+            cmd.options.forEach(option => {
+                if (option.type === 1 || option.type === 2) {
+                    commandObj.subcommands.push(buildHierarchy(option, baseName));
+                }
+            });
+        }
+
+        return commandObj;
+    }
+
+    let commandHierarchy = [];
+    commands.forEach(cmd => {
+        commandHierarchy.push(buildHierarchy(cmd));
+    });
+
+    return commandHierarchy;
+}
+
+async function page(idioma, rota) {
+    let commands = await getCommandsFromApi()
+    console.log(generateCommandHierarchy(commands))
     const t = idioma
     let idiomaUpdates = t.lang
     if (idiomaUpdates == 'pt') {
@@ -95,7 +137,7 @@ ${head(`${t.lang}${rota}`,`${t.cmds.title}`)}
                 </div>
                 <div class="col-9 col-sm-10 col-md-10 col-lg-10 col-xl-11 col-xxl-10 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-0 d-block">
                     <div id="cards" class="row g-0 row-cols-1">
-                    ${GenerateCards(OrdenarComandosOrdemAlfabetica(commands,idiomaUpdates), idiomaUpdates)}
+                   
                     </div>
                 </div>
             </div>

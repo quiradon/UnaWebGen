@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const exportFolder = path.join(__dirname, 'dist')
 const i18nPath = path.join(__dirname, 'i18n');
+
 function copyFolderRecursiveSync(source, target) {
     let files = []
     const targetFolder = path.join(target, path.basename(source))
@@ -22,21 +23,21 @@ function copyFolderRecursiveSync(source, target) {
     }
 }
 
-function compilePages() {
+async function compilePages() {
     const languages = fs.readdirSync(i18nPath).map(file => path.basename(file, path.extname(file)));
     const pages = fs.readdirSync(path.join(__dirname, 'pages'))
     if (!fs.existsSync(exportFolder)) {
         fs.mkdirSync(exportFolder)
     }
 
-    languages.forEach(language => {
+    for (const language of languages) {
         const t = traduz(language)
         const languageFolder = language === 'en' ? exportFolder : path.join(exportFolder, language)
         if (!fs.existsSync(languageFolder)) {
             fs.mkdirSync(languageFolder)
         }
 
-        pages.forEach(page => {
+        for (const page of pages) {
             const pagePath = path.join(__dirname, 'pages', page)
             const pageStat = fs.statSync(pagePath)
             if (pageStat.isDirectory()) {
@@ -45,26 +46,26 @@ function compilePages() {
                 if (!fs.existsSync(exportPageFolder)) {
                     fs.mkdirSync(exportPageFolder)
                 }
-                pageFiles.forEach(file => {
+                for (const file of pageFiles) {
                     const filePath = path.join(pagePath, file)
                     const fileStat = fs.statSync(filePath)
                     if (fileStat.isFile()) {
                         const pageFunction = require(filePath)
                         const route = '/' + page + '/' + path.basename(file, path.extname(file))
-                        const html = pageFunction.page(t, route)
+                        const html = await pageFunction.page(t, route)
                         const exportFilePath = path.join(exportPageFolder, path.basename(file, path.extname(file)) + '.html')
                         fs.writeFileSync(exportFilePath, html)
                     }
-                })
+                }
             } else {
                 const route = '/' + path.basename(page, path.extname(page))
                 const pageFunction = require(pagePath)
-                const html = pageFunction.page(t, route)
+                const html = await pageFunction.page(t, route)
                 const exportFilePath = path.join(languageFolder, path.basename(page, path.extname(page)) + '.html')
                 fs.writeFileSync(exportFilePath, html)
             }
-        })
-    })
+        }
+    }
     console.log('[Páginas compiladas com sucesso!]')
 }
 
@@ -86,8 +87,8 @@ function copyExtraFiles() {
 }
 
 // Chame a função para executar a compilação das páginas
-compilePages()
-copyStaticFiles()
-copyExtraFiles()
-
-
+(async () => {
+    await compilePages()
+    copyStaticFiles()
+    copyExtraFiles()
+})();

@@ -27,9 +27,15 @@ function formatDescription(cmd, lang) {
     return cmd.description_localizations ? (cmd.description_localizations[lang] ? cmd.description_localizations[lang] : cmd.description) : cmd.description;
 }
 
-function GenerateCard(cmd, lang) {
+function GenerateCard(cmd, lang, parentName = "") {
+    // Oculta o comando 'zdev'
+    if (cmd.name === 'zdev') {
+        return '';
+    }
+
     let optionsSpans = "";
     let optionsDescriptions = "";
+    let subCommandCards = "";
 
     if (cmd.options) {
         optionsSpans = cmd.options.map(option => {
@@ -48,28 +54,40 @@ function GenerateCard(cmd, lang) {
 
             return `🞄 ${optionName}: ${optionDescription}<br />`;
         }).join("");
+
+        subCommandCards = cmd.options.filter(option => option.type === 1 || option.type === 2).map(option => {
+            return GenerateCard(option, lang, `${parentName} ${formatName(cmd, lang)}`);
+        }).join("");
     }
 
     const name = formatName(cmd, lang);
     const description = replaceText(formatDescription(cmd, lang));
+    const fullName = parentName ? `${parentName} ${name}` : `${name}`;
 
-    return `
-        <div class="col mt-1 mb-1">
-            <div class="card border-primary border-1 shadow-none">
-                <div class="card-body border-secondary">
-                    <div class="d-flex align-items-center align-content-center flex-wrap">
-                        <h3 class="text-light d-inline-block pt-2 me-2">/${name}</h3>
-                        ${optionsSpans}
+    // Verifica se é um comando final (não possui subcomandos do tipo 1 ou 2)
+    const isFinalCommand = !cmd.options || cmd.options.every(option => option.type !== 1 && option.type !== 2);
+
+    if (isFinalCommand) {
+        return `
+            <div class="col mt-1 mb-1">
+                <div class="card border-primary border-1 shadow-none">
+                    <div class="card-body border-secondary">
+                        <div class="d-flex align-items-center align-content-center flex-wrap">
+                            <h3 class="text-light d-inline-block pt-2 me-2">/${fullName.replace(" ","")}</h3>
+                            ${optionsSpans}
+                        </div>
+                        <p class="card-text">${description}<br /><br />${optionsDescriptions}</p>
                     </div>
-                    <p class="card-text">${description}<br /><br />${optionsDescriptions}</p>
                 </div>
             </div>
-        </div>
-    `;
+        `;
+    } else {
+        return subCommandCards;
+    }
 }
-
 async function page(language, route) {
-    const lang = "pt-BR";
+    let lang = language.lang;
+    if (lang === "pt") lang = "pt-BR";
     const commands = await getCommands();
     const cards = commands.map(cmd => GenerateCard(cmd, lang)).join("");
 

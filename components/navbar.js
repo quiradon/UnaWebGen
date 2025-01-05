@@ -9,7 +9,12 @@ const lang_FLAGS = {
     'fr' : '/static/img/flags/fr.svg',
     'zh' : '/static/img/flags/cn.svg',
     'ja' : '/static/img/flags/jp.svg',
-    'ru' : '/static/img/flags/ru.svg'
+    'ru' : '/static/img/flags/ru.svg',
+    'ko' : '/static/img/flags/ko.svg',
+    'it' : '/static/img/flags/it.svg',
+    'pl' : '/static/img/flags/pl.svg',
+    'tr' : '/static/img/flags/tr.svg',
+    'hu' : '/static/img/flags/hu.svg',
 }   
 
 
@@ -155,17 +160,20 @@ function lang_selector(t, lang, rota) {
                                 <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"></path>
                             </svg></a>
                         <div class="dropdown-menu shadow">
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/pt${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/br.svg" width="25" height="25" alt="Portuguese Lang selector"/>Português</span></a>
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/en.svg" width="25" height="25" alt="English Lang selector"/>English</span></a>
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/es.svg" width="25" height="25" alt="Spanish Lang selector" />Español</span></a>       
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/de${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/de.svg" width="25" height="25" alt="Deutsch Lang selector" />Deutsch</span></a>                                                 
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/fr${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/fr.svg" width="25" height="25" alt="Franch Lang selector" />Français</span></a>                                                 
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/zh${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/cn.svg" width="25" height="25" alt="Chinese Lang selector" />中文</span></a>                                                 
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/ja${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/jp.svg" width="25" height="25" alt="Japanese Lang selector" />日本語</span></a>                                                 
-                            <a class="dropdown-item d-flex justify-content-xl-start align-items-xl-start" href="/ru${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="/static/img/flags/ru.svg" width="25" height="25" alt="Russian Lang selector" />Русский</span></a>                                                 
-            
-                            
-                            </div>
+                            <a class="dropdown-item d-flex" href="${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.en}" width="25" height="25" alt="English Lang selector"/>English</span></a>
+                            <a class="dropdown-item d-flex" href="/zh${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.zh}" width="25" height="25" alt="Chinese Lang selector" />中文</span></a>
+                            <a class="dropdown-item d-flex" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.es}" width="25" height="25" alt="Spanish Lang selector" />Español</span></a>
+                            <a class="dropdown-item d-flex" href="/fr${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.fr}" width="25" height="25" alt="Franch Lang selector" />Français</span></a>
+                            <a class="dropdown-item d-flex" href="/de${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.de}" width="25" height="25" alt="Deutsch Lang selector" />Deutsch</span></a>
+                            <a class="dropdown-item d-flex" href="/pt${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.pt}" width="25" height="25" alt="Portuguese Lang selector"/>Português</span></a>
+                            <a class="dropdown-item d-flex" href="/ru${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.ru}" width="25" height="25" alt="Russian Lang selector" />Русский </span></a>
+                            <a class="dropdown-item d-flex" href="/ja${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.ja}" width="25" height="25" alt="Japanese Lang selector" />日本語</span></a>
+                            <a class="dropdown-item d-flex" href="/ko${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.ko}" width="25" height="25" alt="Korean Lang selector" />한국어</span></a>
+                            <a class="dropdown-item d-flex" href="/it${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.it}" width="25" height="25" alt="Italian Lang selector" />Italiano</span></a>
+                            <a class="dropdown-item d-flex" href="/tr${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.tr}" width="25" height="25" alt="Turkish Lang selector" />Türkçe</span></a>
+                            <a class="dropdown-item d-flex" href="/pl${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.pl}" width="25" height="25" alt="Polish Lang selector" />Polski</span></a>
+                            <a class="dropdown-item d-flex" href="/hu${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.hu}" width="25" height="25" alt="Hungarian Lang selector" />Magyar</span></a>
+                        </div>
                         </li>
                     `
 }

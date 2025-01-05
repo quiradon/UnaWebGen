@@ -367,7 +367,7 @@
                 "pt-BR" : "+ Agora A una ganhou alterações no comando /help que leva para lista de comandos no site\n+ Ler Pensamentos, agora consigo saber em qual idioma você pensa e falo no seu idioma dentre os que conheço\n+ Alteração no /config adicionado a função Global\n+ Correção no /enviar campanha",
                 "en" : "+ Now Una has changes in the /help command that leads to the list of commands on the site\n+ Reading Thoughts, now I can know in which language you think and speak in your language among those I know\n+ Change in /config added the Global function\n+ Correction in /enviar campanha"
             },
-            "img" : "https://rpg.arkanus.app/static/img/updates/changelog/2_1_1.webp"
+            "img" : "https://rpg.arkanus.app/static/img/updates/2_1_1.webp"
         },
         {
             "version" : "2.0.1 - Voices in my head",
@@ -383,7 +383,7 @@
                 "pt-BR" : "Ara Ara Update, oh não o Raio Japonês acertou o Mini Kraken e agora é uma gostosa 2D.\nConheça Inanimalia Fortuna Tenebris Verteri\n(Una) para os mais íntimos, Uma das primeiras Promessas do /donate foi finalmente realizada.\n#Comandos de Minecraft\n/Mc Skin\n/Mc Head\n#Coisas_Novas_de_RPG\nSistema de HP (/hp)\nAdição do /wiki comando de biblioteca da comunidade.\n#Rolagem_de_Dados\nCorreção de bugs no /d\nUpdate do /d com o ++\nOtimização do /d (70% mais rapido)\nDocumentação reformulada.\n#Geral\nQuase todos os comandos estão traduzidos (exceto o /bater /analise e /wiki items)\nAtualização do /help\nCorreção e adição de embed em /Analise e /bater\nAlteração no /config\nAdição do /vote (Em breve terão de recompensas por votar)\nAdição do /server info \n#Coisas_Técnicas\nAgora ao remover o bot do servidor ele apaga o servidor do banco de dados.\nAgora o Premium está com o sistema de Tempo Organização e desativa só.\n#Waifu_UwU\nMudança no Visual e foto de perfil do bot\nAlterações no sobre min e nos status automatícos",
                 "en" : "Ara Ara Update, oh no the Japanese Ray hit the Mini Kraken and now it's a 2D hottie.\nMeet Inanimalia Fortuna Tenebris Verteri\n(Una) for the closest, One of the first Promises of /donate has finally been fulfilled.\n#Minecraft_Commands\n/Mc Skin\n/Mc Head\n#New_RPG_Things\nHP System (/hp)\nAddition of the /wiki community library command.\n#Dice_Rolling\nBug fixes in /d\nUpdate of /d with ++\nOptimization of /d (70% faster)\nDocumentation reformulated.\n#General\nAlmost all commands are translated (except /bater /analise and /wiki items)\nUpdate of /help\nCorrection and addition of embed in /Analise and /bater\nChange in /config\nAddition of /vote (Soon there will be rewards for voting)\nAddition of /server info \n#Technical_Things\nNow when removing the bot from the server it deletes the server from the database.\nNow the Premium is with the Time Organization system and deactivates only.\n#Waifu_UwU\nChange in the Visual and profile picture of the bot\nChanges in about me and in automatic statuses"
             },
-            "img" : "https://rpg.arkanus.app/static/img/updates/changelog/2_0.webp"
+            "img" : "https://rpg.arkanus.app/static/img/updates/2_0.webp"
         },
         {
             "version" : "1.11.2",

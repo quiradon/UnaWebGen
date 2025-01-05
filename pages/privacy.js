@@ -8,7 +8,7 @@ function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`,`${t.privacy.title}`)}
+${head(`${t.lang}${rota}`,`${t.privacy.title}`,`${t.privacy.desc}`)}
 <body>
     ${nav(t, rota)}
 

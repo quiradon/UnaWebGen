@@ -1,1 +1,423 @@
-{"PageNotFound":{"btn":"Powrót na początek","desc":"Ups! Wygląda na to, że znalazłeś stronę, która już nie istnieje. Nie martw się, czasem tak się zdarza podczas przeglądania. W międzyczasie możesz przeglądać inne części naszej strony, aby znaleźć to, czego szukasz.","title":"Strona nie znaleziona"},"changelogs":{"desc":"Odkryj najnowsze aktualizacje i ulepszenia naszego projektu na stronie zmian. Bądź na bieżąco z każdą nową wersją, poprawkami błędów i dodanymi funkcjami.","title":"Aktualizacje"},"cmds":{"desc":"Odkryj wszystkie dostępne komendy w Mini Kraken, online'owym systemie RPG. Stwórz swoją grę, zarządzaj ekonomią, wchodź w interakcje z innymi graczami i wiele więcej. Poznaj jego funkcje, aby uczynić swoje RPG jeszcze bardziej wciągającym i dynamicznym!","title":"Komendy"},"comum":{"copy":"Kopiuj"},"default":{"desc":"Mini Kraken to strona RPG oferująca narzędzia, artykuły i treści dla graczy RPG i Mistrzów Gry. Znajdziesz tu informacje o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, opowiadaniu historii i innych systemach RPG."},"dices":{"desc":"Opanuj sztukę rzucania kośćmi z Mini Kraken! Odkryj eksplodujące zasady, limity czasowe, utrzymywanie wyników i wyrażenia liczbowe, aby podnieść swoją grę RPG na wyższy poziom.","page":{"btn":"Rzuć kośćmi","desc":"Kostki w świecie RPG na stole mogą być na początku nieco mylące, ale nie martw się, jesteśmy tutaj, aby Ci pomóc. Poniżej znajduje się kompletny przewodnik, jak dobrze rzucać kośćmi. Atlas nauczy Cię kilku sztuczek i trików.","link":"Mini Kraken używa biblioteki do rzucania kośćmi, aby wykonywać wszystkie rzuty, oferując precyzję i elastyczność dla graczy RPG. Za pomocą tego narzędzia możesz odkrywać szeroki zakres możliwości, od prostych rzutów, takich jak 1k20 (jedna dwudziestościenna kostka) lub 3k6 (trzy sześciościenne kostki dodane razem), do bardziej zaawansowanych kombinacji, takich jak 2k10+5 (dwie dziesięciościenne kostki z bonusem +5) lub 4k6kh3 (cztery sześciościenne kostki, odrzucając najniższy wynik i dodając trzy najwyższe, idealne do tworzenia atrybutów postaci). Aby lepiej zrozumieć, jak działa notacja używana w rzutach i jak w pełni wykorzystać tę funkcjonalność, <a href=\"https://dice-roller.github.io/documentation/guide/notation/\" target=\"_blank\">kliknij tutaj</a> i zapoznaj się z kompletnym przewodnikiem z praktycznymi przykładami.","title1":"Sprawdź swoje rzuty tutaj."},"title":"Składnia systemu rzucania kośćmi"},"donate_text":"Jeśli dotarłeś tak daleko, to dlatego, że chcesz wesprzeć projekt! Odwiedź nasz oficjalny serwer i przejdź do czatu Bilety","footer":{"about":"O nas","arkanus":{"desc":"Zamieniając marzenia w rzeczywistość dzięki kilku linijkom kodu."},"legal":"Polityka prawna","map":"Mapa witryny","priv":"Polityka prywatności","quest":"Misja","start":"Strona startowa","team":"Zespół","tos":"Warunki korzystania","util":"Narzędzia"},"index":{"dices":{"desc":"Rzucanie kośćmi jest niezbędną częścią przygód RPG na stole. Wprowadza dreszczyk nieprzewidywalności, gdzie los postaci może zmienić się wraz z jednym rzutem. Pozwól, aby Mini Kraken zajął się tym za Ciebie za pomocą /d","subtitle":"Masz kostki w domu? Nie? Żaden problem!","title":"Rzucanie kośćmi"},"donate":{"btn":"Wesprzyj projekt","desc":"Chociaż Mini Kraken jest darmowy, uruchomiliśmy Program Wspierających, aby pomóc w kosztach utrzymania Projektu, który zależy od maszyn działających 24 godziny na dobę w celu przetwarzania danych i przewijania. Każda darowizna przyczynia się bezpośrednio do utrzymania projektu aktywnego przez kolejny dzień. Przypominamy, że Projekt nie przechowuje żadnych treści należących do wydawców. Takie dane pochodzą z zewnętrznych interfejsów API, które nam nie należą.","title":"Wesprzyj projekt"},"features":{"desc":"Mini Kraken to bot na Discorda, oferujący szeroką gamę funkcji, które pomogą Ci w Twojej przygodzie z grami fabularnymi. Rzucaj kostkami, zarządzaj inicjatywą, twórz postacie, korzystaj z generatorów imion i wiele więcej. Sprawdź tylko niewielką próbkę tego, co Mini Kraken może dla Ciebie zrobić!","title":"Eksploruj funkcje"},"func":{"card":{"0":{"desc":"Nie trać czasu na ręczne obliczanie zdrowia swojej postaci. Dzięki komendzie /edit life, Mini Kraken wykona obliczenia za Ciebie, pozwalając Ci skupić się na grze.","title":"Obliczanie punktów życia"},"1":{"desc":"Bot posiada zaawansowany system rzucania kostkami, umożliwiający różne kombinacje z użyciem komendy /d. Dodatkowo, dostępne są różne skórki danych, do których można uzyskać dostęp za pomocą komendy /data store","title":"Rzut kostką"},"2":{"desc":"Łatwo organizuj informacje o postaciach dzięki Inteligentnym Żetonom. Za pomocą prostych komend, takich jak /ficha, możesz tworzyć i edytować karty postaci, czyniąc swój stół bardziej zwinnym i wydajnym.","title":"Inteligentne Karty"},"3":{"desc":"Wybierz jeden z dostępnych systemów RPG, aby dodatkowo spersonalizować swoją kampanię, a jeśli to nie wystarczy, stwórz własny system.","title":"Personalizacja"},"4":{"desc":"Z łatwością znajdź graczy do swojego stołu RPG, korzystając z systemu ujawniania kampanii Fortuny. Dzięki komendzie /send campaign, nie trać więcej czasu na szukanie graczy, pozwól Fortunie Ci pomóc!","title":"Znajdź graczy"},"5":{"desc":"Różnorodność generatorów imion i liter, które pomogą w tworzeniu postaci. Dzięki komendom /generate name oraz /deck, możesz generować losowe imiona, karty tarota lub talie, aby wzbogacić swoją narrację.","title":"Generatory"},"6":{"desc":"Szeroki system ekonomiczny o nazwie KC (Kraken Coins), który można zdobywać na różne sposoby, przydatny do takich funkcji, jak skórki danych i personalizacja.","title":"Ekonomia"},"7":{"desc":"Znajduj zaklęcia i rytuały w swojej księdze zaklęć łatwiej dzięki naszej księdze zaklęć, która pozwala na wyszukiwanie w czasie rzeczywistym!","title":"Księga Zaklęć"},"8":{"desc":"Ta funkcja jest jeszcze w przygotowaniu, ale plotki mówią, że będzie to bestiariusz społeczności.","title":"..."}}},"landing":{"text":"Najlepszy sposób na grę w **Gry Fabularne** na Discordzie"},"name":"Bot do gier fabularnych","sec2":{"desc":"Bot na Discorda, stworzony przez fanów dla fanów, ma na celu pomoc w rozgrywce w Twojej ulubionej grze fabularnej. Nie posiadamy ani nie roszcimy sobie praw do wspomnianych gier. Jesteśmy grupą programistów i entuzjastów, którzy upraszczają systemy RPG, aby sprawić, że doświadczenie będzie przyjemniejsze. Nie jest to oficjalny produkt ani platforma, i nie jesteśmy powiązani z twórcami wspomnianych gier","title":"Zaadaptowane systemy RPG"},"start":{"btn1":"Dodaj Fortunę","desc":"Podnieś swoje wrażenia z gier fabularnych na Discordzie! Nasze narzędzie zaprojektowane w celu ulepszenia Twoich sesji gier, zarówno w systemach bardziej nastawionych na fabułę, jak i tych z mniejszą ilością obliczeń."},"status":{"cmds":"Komendy","desc":"Sprawdź niektóre dane wydajności dla Inanimalia Fortuna Tenebris Verteri - najlepszego bota do gier fabularnych na Discordzie zdaniem twórców. Bądź na bieżąco z wydajnością swojego bota i uzyskaj jak najwięcej ze swojego doświadczenia.","guilds":"Gildie","subtitle":"Jest tyle kości...","title":"Statystyki projektu.","user":"Użytkownicy","version":"Wersja"},"system":{"desc":"Uzyskaj dostęp do automatycznego sumowania i rzucania atrybutami na swojej karcie, żądając testów atrybutów i umiejętności za pomocą komendy **/di**  przynosząc więcej praktyczności Twoim graczom!","subtitle":"Zaadaptowane Systemy RPG","title":"Automatyczne Karty do Twoich przygód!"}},"join_server_btn":"Dołącz do Oficjalnej Gildii","lang":"pl","misc":{"btn":{"gencard":"Generuj Kartę"},"gen":{"all":"Wszystkie Imiona","fem":"Kobieta","male":"Mężczyzna"}},"names":{"article":{"all":"Wszystkie","btn":"Generuj Imiona","desc":"Ten generator imion postaci został stworzony, aby być punktem wyjścia dla Ciebie, pomagając Ci napisać książkę, kampanię RPG lub grę. Jeśli szukasz imion dla swoich postaci, jesteś we właściwym miejscu.","female":"Kobieta","male":"Mężczyzna","title":"Generator Imion"}},"nav":{"acervo":"Kolekcja","add":"Dodaj Aplikację","dices":{"desc":"Testuj i ucz się, jak rzucać. ","title":"Rzucając Kośćmi"},"docs":{"changelogs":{"desc":"Zobacz historię aktualizacji bota","name":"Historia Zmian"},"cmds":{"docs":"Zobacz listę komend","title":"Lista Komend"},"dices":{"desc":"Przewodnik, jak rzucać kośćmi w bocie","names":"Notacja Kości"},"title":"Dokumentacja"},"donate":"Wsparcie Projektu","guide":"Przewodnik","lang":{"title":"Język"},"support":"Społeczność","tools":{"names":{"desc":"Generuj imiona dla swoich postaci","title":"Generator Imion"},"poker":{"desc":"Wylosuj losową kartę z talii","name":"Karty do Pokera"},"tarot":{"desc":"Wylosuj kartę z talii wróżb","name":"Karty Tarota"},"title":"Narzędzia"}},"poker":{"article":{"desc":"Losowy generator kart do gry, który może pomóc w tworzeniu kampanii lub gry.","title":"Generator Kart do Pokera"},"cards":{"type":{"0":"Wszystkie Kolory Kart","1":"Piki","2":"Trefle","3":"Kier","4":"Karo"}},"title":"Karty do Pokera","desc":"Generuj losowe karty do gry dla swoich kampanii RPG lub gier. Ulepsz swoje opowiadanie dzięki Generatorowi Kart do Pokera."},"posts":{"sistemas":{"0":{"article":"Dungeons & Dragons, legendarna gra fabularna na papierze, wciąż pobudza wyobraźnię graczy w każdym wieku na całym świecie. Przez dziesięciolecia ta epicka gra przenosiła graczy do fantastycznych światów pełnych niebezpieczeństw, skarbów i niezapomnianych przygód. W Dungeons & Dragons gracze mają okazję stworzyć własne, unikalne postacie i wyruszyć w ekscytujące podróże. Mogą wybierać spośród szerokiej gamy ras, takich jak elfy, krasnoludy i ludzie, oraz klas, takich jak wojownicy, magowie i łowcy, z których każda ma specjalne umiejętności i cechy. Mechanika gry opiera się na połączeniu rzucania kośćmi i wyobraźni. Mistrz Gry, znany również jako Dungeon Master (DM), jest odpowiedzialny za stworzenie świata, opowiadanie historii i odgrywanie postaci niezależnych (NPC), podczas gdy gracze podejmują decyzje, eksplorują niebezpieczne środowiska, stawiają czoła potworom i rozwiązują zagadki. Dungeons & Dragons to gra kooperacyjna, w której wyobraźnia i interakcja między graczami odgrywają fundamentalną rolę. Razem stawiają czoła epickim wyzwaniom, rozwiązują intrygujące zagadki i budują więzi przyjaźni pośród akcji i niebezpieczeństwa. Gra zachęca również do kreatywności, pozwalając graczom dostosowywać i rozwijać swoje historie i postacie z czasem. Oprócz ekscytujących przygód, Dungeons & Dragons daje graczom możliwość połączenia się w tętniącej życiem społeczności. Spotkania w realu przy stołach do gier, konwencje poświęcone grom fabularnym i platformy online łączą entuzjastów z całego świata, dzieląc się doświadczeniami, wskazówkami i tworząc trwałe wspomnienia. Dzięki bogatej mitologii, niezliczonej liczbie dodatków i rozszerzeń oraz pasjonackiej bazie fanów, Dungeons & Dragons pozostaje ikoną świata gier fabularnych na papierze. Dzięki tej grze granice wyobraźni są podważane, koleżeństwo jest wzmacniane, a epickie przygody są przeżywane z każdym rzutem kośćmi. Więc zbierz swoich przyjaciół, chwyć kostki i przygotuj się na zanurzenie w świecie magii i przygody z Dungeons & Dragons. Stół jest zastawiony, los czeka, a chwała jest w zasięgu ręki. Na co czekasz, aby dołączyć do tej niesamowitej podróży?","bg":"/static/img/bg/dnd.webp","card":{"btn":"Dowiedz się więcej o DnD","desc":"Legendarna fantastyczna gra RPG, która pozwala graczom tworzyć własne historie w światach miecza i magii.","title":"Dungeons & Dragons"},"icon":"/static/img/rpg/DND.svg","legal":"System Dungeons & Dragons obecnie należy do [Wizards Of The Coast](https://company.wizards.com/en), które posiada wszystkie prawa zastrzeżone. Książki systemu zostały wydane na licencji [OPEN GAME LICENSE Version 1.1](https://en.wikipedia.org/wiki/Open_Game_License) Mini Kraken nie ma żadnego związku z wydawcą ani twórcą, Mini Kraken to tylko zestaw narzędzi stworzonych, aby pomóc mistrzom i graczom z różnych systemów. w ten sam sposób, w jaki nie mamy ich upoważnienia do działania.","path":"dnd","tags":"System RPG,Fantasy,Średniowiecze,Dungeons & Dragons"},"1":{"article":"Paranormal Order to nowa gra fabularna na papierze, która przenosi graczy do świata pełnego tajemnic i zjawisk nadprzyrodzonych. W tym mrocznym i wciągającym otoczeniu ukryte sekrety i złe istoty zagrażają ludzkości, a tylko odważni agenci Paranormal Order mogą stawić czoła tym zagrożeniom. W grze gracze wcielają się w rolę agentów paranormalnych, członków tajnej organizacji poświęconej ochronie świata przed niebezpieczeństwami nieznanego. Każdy agent posiada specjalne umiejętności, takie jak jasnowidzenie, kontrolowanie energii, mediumizm i bystry wzrok, które pomagają im stawić czoła nadprzyrodzonym wyzwaniom, na jakie napotykają na swojej drodze. W miarę postępów graczy w misjach, ich postacie zdobywają doświadczenie i rozwijają nowe zdolności paranormalne, stając się bardziej biegłymi w stawianiu czoła nadprzyrodzonym zjawiskom. Ewolucja postaci pozwala graczom dostosowywać swoje umiejętności do swojego stylu gry i przygotowywać się na jeszcze większe wyzwania. Paranormal Order oferuje ekscytujące i wciągające doświadczenie dla fanów gier fabularnych na papierze i miłośników nadprzyrodzonych historii. Dzięki wciągającej fabule i urzekającej mechanice, gra obiecuje przenieść graczy do świata suspensu i tajemnicy, gdzie będą musieli wykorzystać swoją inteligencję i odwagę, aby chronić ludzkość przed siłami pozaziemskimi. Przygotuj się na spotkanie z nieznanym i odkrycie mrocznych sekretów podczas gry w Paranormal Order. Zbierz swoich przyjaciół, wybierz swoje zdolności paranormalne i wyrusz w tę ekscytującą przygodę, w której granica między rzeczywistością a nadprzyrodzonym staje się niewyraźna. Los paranormalnego świata jest w twoich rękach!","bg":"/static/img/bg/ordem.webp","card":{"btn":"Dowiedz się więcej o OP","desc":"Wszechświat paranormalnych śledztw, gdzie agenci walczą z siłami nadprzyrodzonymi i chronią naszą rzeczywistość.","title":"Ordem Paranormal"},"icon":"/static/img/rpg/Ordem.svg","legal":"Ordem Paranormal został stworzony przez Rafaela Lange \"Cellbit\" Lange i jest obecnie publikowany przez [Editora Jambo](https://jamboeditora.com.br/), która zastrzega sobie wszelkie prawa. Książki systemu zostały opublikowane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nie jest powiązany z wydawcą ani twórcą; Mini Kraken to jedynie zestaw narzędzi stworzonych, aby pomóc mistrzom gry i graczom z różnych systemów, podobnie jak nie posiadamy ich autoryzacji do działania.","path":"ordem","tags":"System RPG,Miejskie,Paranormalne,Śledztwo"},"2":{"article":"Tormenta20, ceniony system RPG na papierze, powraca z nową edycją, która obiecuje zanurzyć graczy w epickim świecie fantasy pełnym emocji. Od swojego pierwotnego wydania Tormenta urzekła wyobraźnię fanów RPG wciągającymi historiami, charyzmatycznymi postaciami i dynamicznymi zasadami. W nowej edycji Tormenta20 kontynuuje eksplorację rozległego kontynentu Arton, bogatego i tętniącego życiem miejsca z unikalną mitologią. Gracze mają swobodę tworzenia własnych bohaterów, wybierając spośród szerokiej gamy ras i klas, od honorowych wojowników po potężnych magów i przebiegłych łotrów. Mechanika gry opiera się na uaktualnionym systemie zasad, który łączy prostotę i strategiczną głębię. Gracze stawiają czoła ekscytującym wyzwaniom, rozwiązują intrygujące zagadki i walczą z niebezpiecznymi stworzeniami w taktycznych bitwach. Postęp postaci pozwala im zdobywać specjalne umiejętności i moce, stając się prawdziwymi legendarnymi bohaterami. Dzięki trwałemu dziedzictwu i oddanej bazie fanów Tormenta20 nadal urzeka graczy w każdym wieku i na każdym poziomie doświadczenia. Niezależnie od tego, czy jesteś weteranem gier fabularnych, czy początkującym szukającym wspaniałej przygody, Tormenta20 oferuje wrota do fantastycznego świata pełnego bohaterów, magii i nieuchronnych niebezpieczeństw. Przygotuj się więc na niezapomnianą podróż z Tormentą20. Wybierz swoją rasę, stwórz swój los i staw czoła epickim wyzwaniom w świecie fantasy, który czeka na twoją odwagę. Zbierz przyjaciół, przygotuj swoje dane i wyrusz w tę ekscytującą przygodę. Los Artonu jest w twoich rękach!","bg":"/static/img/bg/space.webp","card":{"btn":"Dowiedz się więcej o T20","desc":"Epicka gra RPG fantasy osadzona w świecie Arton, z intuicyjnymi i elastycznymi zasadami","title":"Tormenta20"},"icon":"/static/img/rpg/Tormenta.svg","legal":"Tormenta jest obecnie publikowana przez [Editora Jambo](https://jamboeditora.com.br/), która zastrzega sobie wszelkie prawa. Książki systemu zostały opublikowane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nie jest powiązany z wydawcą ani twórcą; Mini Kraken to jedynie zestaw narzędzi stworzonych, aby pomóc mistrzom gry i graczom z różnych systemów, podobnie jak nie posiadamy ich autoryzacji do działania.","path":"tormenta","tags":"System RPG, Średniowiecze, Fantasy"},"3":{"article":"Carbon 2185 to gra fabularna na papierze osadzona w dystopijnej, cyberpunkowej przyszłości. W roku 2185 Ziemia leży w ruinie z powodu zmian klimatu i wojny. Potężne megakorporacje kontrolują społeczeństwo, a zaawansowana technologia jest wszechobecna. Gracze wcielają się w rolę \"Agentów\", wyszkolonych indywidualności podejmujących misje zwalczania niesprawiedliwości i odkrywania mrocznych sekretów świata. Dostosowywanie postaci: Gracze mogą wybierać spośród różnych archetypów, takich jak hakerzy, najemnicy, szpiedzy lub wojownicy walczący wręcz, każdy z unikalnymi umiejętnościami. Rozwój umiejętności: W trakcie gry gracze mogą ulepszać cybernetyczne możliwości swoich postaci i zdobywać futurystyczną broń. Podejmowanie decyzji: Wybory graczy wpływają na kierunek narracji, pozwalając im kształtować losy świata w grze. System rzutów kośćmi: Gra wykorzystuje rzuty kośćmi i atrybuty do określenia sukcesu działań i walk.","bg":"/static/img/bg/cyberpunk.webp","card":{"btn":"Dowiedz się więcej o Carbon2185","desc":"Cyberpunkowe RPG osadzone w dystopijnej przyszłości, inspirowane Blade Runnerem i Ghost in the Shell.","title":"Carbon2185"},"icon":"/static/img/rpg/Carbon.svg","legal":"System Carbon 2185 został stworzony przez Roberta Marriner-Doddsa i jest obecnie publikowany przez [Dragon Turtle Games](https://www.dragonturtlegames.com), które zastrzega sobie wszelkie prawa. Książki systemu zostały opublikowane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) 1.0a. Mini Kraken posiada wyraźną zgodę twórcy systemu.","path":"carbon","tags":"System RPG,Cyberpunk,Dystopia,#BoloQueimado"},"4":{"article":"Gaia: The Prelude to najnowsza, nowoczesna reinterpretacja gry RPG na papierze, przenosząca średniowieczne, wysokie fantasy do magicznego świata Auroria. W Gai będziesz wyjątkowy, krocząc ścieżką wykutą przez siebie, otwierając zamki zasłony w kierunku nieskończoności. W Gai możesz być kim chcesz. Istnieje dwadzieścia jeden Dziedzictw, które definiują wygląd twojej postaci, a także w pełni spersonalizowany hybrydowy system walki. Stwórz swoją osobowość na swój własny sposób: wojownik niszczący armie, ale w wolnym czasie studiujący sekrety Zasłony? Rozdziel to, co robisz najlepiej w walce i poza nią, tak jak chcesz. Podczas swojej przygody odblokuj Zasłonę w sobie, stawiając czoła unikalnym stworzeniom z Homuncularium, unikalnego systemu tworzenia potworów, z miliardami (dosłownie) możliwych kombinacji! I oczywiście, zostaniesz za to nagrodzony, Punktami Uczenia się, które pozwolą ci zdobyć nowe moce, nowe umiejętności, na Ścieżkach Walki. Ścieżki Walki pozwalają ci kształtować swoją postać na swój własny sposób, co oznacza, że postać nie musi podążać tylko jedną Ścieżką, ale raczej wybrać własną drogę. Istnieje pięć podstawowych Ścieżek startowych, które zawierają dziesiątki umiejętności do wyboru, a każda umiejętność może być również ulepszona za pomocą jednej z trzech opcji Ulepszeń. A w przyszłości, gdy rozwiniesz swoją postać, będziesz mógł uzyskać dostęp do Zaawansowanych Ścieżek, które przynoszą setki nowych umiejętności, które dodatkowo wzbogacają twoje doświadczenie.","bg":"/static/img/bg/Forest9.webp","card":{"btn":"Dowiedz się więcej o Gai","desc":"Średniowieczne high fantasy RPG, z nowoczesnym i uproszczonym systemem, gdzie każda postać jest unikalna.","title":"Gaia: The Prelude"},"icon":"/static/img/rpg/Gaia.svg","legal":"Gaia: Preludium zostało opracowane przez Auroria - Game Studio, które zastrzega sobie wszystkie prawa. Książki systemu zostały wydane na licencji [OPEN GAME LICENSE](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) Wersja 1.0a i są chronione przez CBL (Brazylijska Izba Książki). Mini Kraken posiada wiedzę i autoryzację autorki Lyy do działania, dodatkowo zachęcamy do zakupu książki i wsparcia projektu finansowania na platformie [CATARSE](https://www.catarse.me/gaiapreludio)","path":"gaia","tags":"System RPG,Średniowiecze,Fantasy,Innowacja"},"5":{"article":"3DeT Victory: Nowy system RPG, który podbija wyobraźnię graczy. Od momentu powstania tysiące awanturników zapuściło się w nieograniczone scenariusze, tworząc unikalne postacie i eksplorując fantastyczne światy. Teraz, wraz z nadejściem Ery Ark, możesz zanurzyć się w miejskiej fantastyce wypełnionej wymiarowymi labiryntami, z których każdy skrywa własne niebezpieczeństwa i skarby. Wybierz spośród pięciu tematycznych rdzeni i przygotuj się na epicką podróż. Podręcznik 3DeT Victory, zawierający kompletne zasady, scenariusz Ery Ark i zapowiedzi rdzeni tematycznych, jest w fazie crowdfundingowej na platformie Catarse. Dołącz do tej nowej ery i bądź częścią tej ekscytującej przygody! 3DeT Victory oferuje szereg innowacyjnych mechanik, które sprawiają, że rozgrywka jest ekscytująca i wciągająca. Oto niektóre z głównych cech i zalet systemu: Prostota i elastyczność: System został zaprojektowany tak, aby był dostępny dla graczy na wszystkich poziomach doświadczenia. Zasady są intuicyjne i łatwe do nauczenia, co pozwala szybko wskoczyć do akcji. Dodatkowo, elastyczność systemu pozwala na dostosowanie mechaniki w razie potrzeby, aby dopasować ją do stylu gry. Narracja w centrum uwagi: 3DeT Victory stawia narrację w centrum gry. Mechanika zachęca do tworzenia wciągających historii, z możliwością improwizacji i kreatywności. Gracze mogą kształtować świat, rozwijać złożone postacie i eksplorować intrygujące fabuły. Rdzenie tematyczne: Pięć rdzeni tematycznych oferuje różnorodność i głębię systemu. Każdy rdzeń zawiera specyficzne zasady, unikalne postacie i odrębne wyzwania. Niezależnie od tego, czy jesteś kosmicznym awanturnikiem, tajnym agentem czy fantasy bohaterem, znajdziesz odpowiedni rdzeń dla siebie. Era Ark: Ustawienie Ery Ark to połączenie elementów fantasy i miejskich. Wymiarowe labirynty zwane Arkami są pełne tajemnic, dziwnych stworzeń i ukrytych skarbów. To ustawienie oferuje nieograniczone możliwości eksploracji i przygody. Kompletny podręcznik: Podręcznik 3DeT Victory to kompletne źródło informacji. Oprócz podstawowych zasad, przedstawia szczegóły dotyczące Ery Ark, wskazówki mistrzowskie, sugestie przygodowe i zapowiedzi rdzeni tematycznych. To niezbędny przewodnik zarówno dla graczy, jak i mistrzów gry. Krótko mówiąc, 3DeT Victory łączy prostotę, kreatywność i bogate ustawienie, aby zapewnić unikalne wrażenia z gry RPG. Dołącz do społeczności i odkryj świat możliwości!","bg":"/static/img/bg/Forest7.webp","card":{"btn":"Dowiedz się więcej o 3DET","desc":"Bohaterowie i złoczyńcy stają do walki w epickich bitwach. Magia, technologia i fantastyczne stworzenia zderzają się ze sobą.","title":"3DET Victory"},"icon":"/static/img/rpg/3DET.svg","legal":"3DET jest obecnie wydawane przez [Editora Jambo](https://jamboeditora.com.br/), która zastrzega sobie wszystkie prawa. Książki systemu zostały wydane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nie ma żadnego związku z wydawcą ani twórcą, Mini Kraken to tylko zestaw narzędzi stworzonych, aby pomóc mistrzom i graczom z różnych systemów. Podobnie, nie posiadamy ich autoryzacji do działania.","path":"3det","tags":"System RPG,GURPS2"},"6":{"article":"Pathfinder to gra fabularna na planszy, która urzeka wyobraźnię bogatą narracją i taktyczną złożonością. W Pathfinderze każdy gracz tworzy unikalną postać, wybierając spośród różnych ras i klas, z których każda ma własne specjalne umiejętności i historię. Gracze wyruszają na epickie przygody, stając przed wyzwaniami wymagającymi zarówno sprytu, jak i siły. Gra rządzi się zestawem zasad, które pomagają kształtować świat i interakcje postaci z nim, ale prawdziwa magia Pathfinder tkwi w swobodzie, jaką gracze mają w kształtowaniu własnych historii. Jako gra fabularna, Pathfinder pozwala na bezprecedensową kreatywną współpracę między graczami a Mistrzem Gry, który pełni funkcję narratora i arbitra zasad. Razem budują dynamiczną fabułę, która może zmieniać się w zależności od decyzji graczy i rzutów kośćmi. Ten aspekt gry zachęca graczy do głębokiego zanurzenia się w swoich postaciach i otaczającym ich świecie, tworząc wciągające i osobiste doświadczenie. Dodatkowo, Pathfinder znany jest ze swojego szczegółowego systemu personalizacji, w którym gracze mogą modyfikować swoje postacie za pomocą szerokiej gamy umiejętności, zaklęć i wyposażenia. To pozwala każdej postaci stać się naprawdę wyjątkową, odzwierciedlając wybory gracza i styl gry. Z każdą sesją postacie rosną w sile i złożoności, stając przed coraz większymi zagrożeniami i odkrywając tajemnice, które mogą zmienić świat gry. Świat Pathfinder to miejsce zdumienia i niebezpieczeństwa, zamieszkany przez mityczne stworzenia i różnorodne ludy. Z głębin najciemniejszych lochów po najwyższe szczyty gór, bohaterowie Pathfinder eksplorują nieznane terytoria, odkrywają starożytne cywilizacje i walczą ze złymi siłami. Z każdą przygodą mają okazję zdobyć legendarne skarby i wykuć własny los. Krótko mówiąc, Pathfinder to coś więcej niż gra; to brama do fantastycznych światów, gdzie wyobraźnia nie zna granic. To zaproszenie do opowiadania wspólnych historii, gdzie każdy wybór ma wagę, a każda chwila może stać się trwałą wspomnieniem. Niezależnie od tego, czy jesteś skrupulatnym strategiem, czy namiętnym gawędziarzem, Pathfinder oferuje bogate, satysfakcjonujące doświadczenie, które rozwija się w sposób tak unikalny, jak gracze, którzy spotykają się, aby grać.","bg":"/static/img/bg/Forest1.webp","card":{"btn":"Dowiedz się więcej o Pathfinder","desc":"Historia odważnych bohaterów i przebiegłych złoczyńców w świecie pełnym strasznych potworów i cudownych skarbów.","title":"Pathfinder"},"icon":"/static/img/rpg/Pathfinder.svg","legal":"Pathfinder jest obecnie wydawane przez [NEWORDER](https://newordereditora.com/), która zastrzega sobie wszystkie prawa. Książki systemu zostały wydane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nie ma żadnego związku z wydawcą ani twórcą, Mini Kraken to tylko zestaw narzędzi stworzonych, aby pomóc mistrzom i graczom z różnych systemów. Podobnie, nie posiadamy ich autoryzacji do działania.","path":"pathfinder","tags":"System RPG, Fantasy"},"7":{"article":"Czarodzieje i Klątwy oferują wciągające wrażenia, które oddają istotę anime Jujutsu Kaisen, pozwalając graczom zanurzyć się w świecie, w którym czarodzieje walczą z klątwami za pomocą nadprzyrodzonych mocy. Dzięki szczegółowemu systemowi rankingowemu, gracze mogą rozwijać swoje postacie od początkujących rangi 4 do potężnych czarodziejów rangi specjalnej. Z mechanikami takimi jak multiklasowanie i zróżnicowany sprzęt, gra zachęca do personalizacji i strategii. Dodatkowo, unikalne elementy takie jak Integralność i Przysięgi Graniczne dodają głębi i wyzwań, zapraszając graczy do podejmowania znaczących wyborów, które kształtują ich podróże. Dla entuzjastów gier RPG szukających przygody pełnej magii i tajemnicy, \"Czarodzieje i Klątwy\" to brama dla fanów anime, którzy chcą zacząć grać w gry fabularne.","bg":"/static/img/bg/Forest4.webp","card":{"btn":"Dowiedz się więcej o F&M","desc":"System dostosowuje świat anime, z nadprzyrodzonymi bitwami. W nim gracze mogą eksplorować wiele stylów walki i rytuałów.","title":"Feiticeiros e Maldições"},"icon":"/static/img/rpg/Feiticeiros.svg","legal":"Feiticeiros e Maldições to system RPG Open Source stworzony przez autora [Setsugiri](https://setsugiri.carrd.co/) Korzystając z licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken posiada pozwolenie twórcy systemu na działanie. Książki systemu można pobrać z serwera [Official Discord] (https://discord.com/invite/UGg6QUNNRp)","path":"feiticeiros","tags":"System RPG, Anime, Magia"}}},"premium":{"0":{"desc":"Plan dla samotnych wilków, którzy chcą uzyskać dostęp do zasobów w pojedynkę.","title":"Wojownik"},"1":{"desc":"Jeden za wszystkich, wszyscy za jednego – dzięki temu planowi każdy na twoim serwerze odniesie korzyści!","title":"Przygodowy"},"2":{"desc":"Dla prawdziwych miłośników Inanimalia Fortuna!","title":"Bohater-Ośmiornica"},"feat":{"0":"+5 Slotów na Makra (na postać)","1":"+24 Sloty na Postacie","2":"Podwojona przestrzeń na notatki","3":"Stwórz własny system Homebrew","4":"Miliony Monet Krakenów","5":"Wsparcie priorytetowe","6":"Funkcje premium","7":"Jedno Konto","8":"Jeden Gildii","9":"Ekskluzywne testy gry","10":"Pozycja Darczyńcy (Profil i Discord)","11":"Najwyższa Pozycja Darczyńcy (Profil i Discord)","12":"Dla Trzech Gildii","98":"Pakiet naklejek drużynowych i Clube da Una","99":"Poetycka licencja na żądanie Deweloperów"}},"price":{"0":"3$/miesiąc","1":"5$/miesiąc","2":"7$/miesiąc"},"privacy":{"0":{"desc":"Mini Kraken jest własnością Deweloperów, którzy są odpowiedzialni za zbieranie i zarządzanie danymi użytkowników w aplikacji. Ten dokument wyjaśnia, jakie dane są zbierane, dlaczego są zbierane i jak zapewniamy bezpieczeństwo tych danych."},"1":{"desc":"Podczas korzystania z aplikacji zbieramy informacje o Użytkownikach i Serwerach, a także inne informacje, które Państwo podają (w tym, między innymi: Nazwy, Identyfikatory, Zdjęcia Użytkowników i Gildii). Ponadto zbieramy informacje wewnątrz aplikacji, które są przechowywane, np. w systemie tokenów RPG. Jedyne treści wiadomości, które są zbierane, dotyczą systemu rzutu kostką bez użycia slash. Treści wiadomości nie są przechowywane, więc deweloperzy nie mają do nich dostępu. Przetwarzanie tych danych umożliwia funkcjonowanie różnych funkcji w aplikacji, takich jak identyfikacja w celu zapisywania informacji w bazie danych, indywidualne ustawienia aplikacji dla każdej gildii i użytkownika, a także dostosowanie interfejsu aplikacji w celu zapewnienia lepszego doświadczenia użytkownika.","title":"Zbierane Informacje"},"2":{"desc":"Posiadasz następujące zagwarantowane prawa dotyczące swoich danych: Prawo do informacji. Prawo do sprostowania. Prawo do usunięcia. Prawo do weryfikacji. Prawo do sprzeciwu. Korzystając z aplikacji, rozumiesz i akceptujesz warunki oraz zbierane dane.","title":"Twoje prawa"},"3":{"desc":"Gwarantujemy bezpieczeństwo informacji, które nam przekazujesz. Serwery i komputery, na których są one przechowywane, znajdują się w bezpiecznych i kontrolowanych środowiskach, chronionych przed nieautoryzowanym dostępem, wykorzystaniem i ujawnieniem. Stosujemy środki bezpieczeństwa administracyjne, techniczne i fizyczne, aby chronić dane przed nieautoryzowanym dostępem, wykorzystaniem, ochroną i ujawnieniem.  Jednakże, żadna transmisja danych przez Internet nie może być w pełni bezpieczna.","title":"Bezpieczeństwo informacji"},"4":{"desc":"Jeśli chcesz uzyskać więcej informacji na temat tej Polityki Prywatności lub uzyskać dostęp do informacji związanych z Twoimi prawami i danymi osobowymi, możesz otworzyć zgłoszenie w pomocy gildii (/support) lub wysłać e-mail na adres support@arkanus.app.","title":"Kontakt"},"title":"Polityka Prywatności","desc":"Przeczytaj Politykę Prywatności Mini Kraken. Dowiedz się, jak zbieramy, wykorzystujemy i chronimy Twoje dane."},"system":{"default":{"desc":"Dowiedz się więcej o systemie %system% i jak grać na Discordzie z Mini Kraken RPG Bot. Ten praktyczny przewodnik oferuje wskazówki dotyczące eksploracji i jak najlepiej bawić się podczas przygód RPG.","playDiscord":"Jak grać w %system% na Discordzie","playDiscordDesc":"%system% to jeden z systemów, w którym można grać, używając Mini Kraken jako ułatwiacza rzucania kośćmi. Zdefiniowanie systemu jest proste: wpisz /configure, przejdź do zakładki system i zdefiniuj go. Dzięki temu uzyskasz inteligentne żetony i dynamiczne dane, aby usprawnić swoją rozgrywkę. Po ustawieniach będziesz mógł korzystać z kilku narzędzi, które pomogą Twojemu stołowi, takich jak system inteligentnych żetonów, dostępny za pomocą /ficha, który integruje rzucanie kośćmi, czyli gdy rzucasz kośćmi za pomocą /di, wszystkie obliczenia są wykonywane przez UNA.","title":"Jak grać w %system% na Discordzie"}},"tarot":{"article":{"desc":"Losowy generator kart Tarota, który może pomóc w tworzeniu kampanii lub gry.","title":"Generator Kart Tarota"},"title":"Karty Tarota","desc":"Generuj losowe karty Tarota, aby ulepszyć swoje kampanie RPG lub gry. Poznaj Generator Kart Tarota Mini Kraken, aby uzyskać kreatywną inspirację."},"tos":{"0":{"desc":"Arkanus, zwany dalej \"twórcami\", to zespół zajmujący się opracowywaniem różnych projektów i aplikacji, w tym, między innymi, (Mini Kraken BOT, znany również jako Inanimalia Fortuna Tenebris Verteri). Korzystając z naszych usług, zgadzasz się na poniższe warunki.  Uzyskując dostęp do naszych Usług, automatycznie zgadzasz się na przedstawione poniżej warunki, zasady i polityki prywatności. Jeśli jesteś pełnoletni w swoim kraju zamieszkania lub jeśli masz od 13 do 18 lat i Twój prawny opiekun zapoznał się z tymi Warunkami i je akceptuje, jesteś nimi związany. Jeśli nie zgadzasz się z jakąkolwiek częścią tych warunków, natychmiast zaprzestań korzystania z naszych usług.","title":"Wprowadzenie"},"1":{"desc":"O ile nie zaznaczono inaczej, wszystkie prawa własności intelektualnej do treści publikowanych w Usłudze należą do Usługi i jej licencjodawców. Wszelkie prawa dotyczące własności intelektualnej są ściśle zastrzeżone, a my zastrzegamy sobie prawo do podjęcia niezbędnych działań prawnych za pośrednictwem naszych oficjalnych kanałów komunikacji. Nie jesteś uprawniony do: - Sprzedawania, wynajmowania ani sublicencjonowania żadnych materiałów związanych z Mini Kraken, Fortuną lub podobnymi. - Ponownego rozpowszechniania treści z Mini Kraken, Fortuny lub podobnych bez wyraźnego zezwolenia. - Celowego podejmowania prób obejścia mechanizmów bezpieczeństwa Usługi w jakikolwiek sposób bez uprzedniej autoryzacji. Niektóre obszary Usługi oferują możliwość personalizacji przez użytkowników, bez uprzedniej filtracji lub weryfikacji przez nas przed publikacją. Komentarze i personalizacje odzwierciedlają wyłącznie opinie ich autorów. W zakresie dozwolonym przez obowiązujące prawo, Usługa nie ponosi odpowiedzialności prawnej za takie komentarze/personalizacje ani za jakiekolwiek szkody, ryzyka lub koszty wynikające z ich użycia, publikacji lub pojawienia się w Usłudze. Zastrzegamy sobie prawo, bez obowiązku, do usunięcia dowolnego komentarza lub personalizacji, które uważamy za niewłaściwe, obraźliwe lub naruszające niniejsze Warunki. Korzystając z naszej Usługi, zgadzasz się chronić i bronić nas przed wszelkimi roszczeniami, pozwami, szkodami, kosztami i wydatkami wynikającymi z lub związanymi z korzystaniem z Usługi. Żaden link nie powinien być umieszczany na żadnej Stronie internetowej, która może być interpretowana jako oszczercza, obsceniczna, karalna lub naruszająca prawa osób trzecich. Publikując komentarze, personalizacje lub inne treści w naszej Usłudze, oświadczasz i gwarantujesz, że: Masz prawo do publikowania tych treści i posiadasz wszystkie niezbędne licencje i zezwolenia, aby to zrobić. Twoje komentarze, personalizacje lub inne treści nie naruszają żadnych praw własności intelektualnej osób trzecich, w tym praw autorskich, patentów lub znaków towarowych. Twoje komentarze, personalizacje lub inne treści nie zawierają materiałów oszczerczych, zniesławiających, obraźliwych, nieprzyzwoitych lub niezgodnych z prawem ani nie naruszają prywatności osób trzecich. Twoje komentarze, personalizacje lub inne treści nie będą wykorzystywane do nakłaniania do lub promowania nielegalnych działań. Publikując komentarze, personalizacje lub inne treści w naszej Usłudze, udzielasz Usłudze (w tym Mini Kraken, Twórcom i partnerom) nieodwołalną, niewyłączną, światową, bezpłatną licencję z prawem udzielania sublicencji na korzystanie, reprodukcję, adaptację, modyfikację, publikację, tłumaczenie, tworzenie prac pochodnych, dystrybucję, publiczne wykonywanie i publiczne wyświetlanie takich treści w dowolnym formacie, nośniku lub technologii znanej obecnie lub opracowanej w przyszłości.","title":"Licencja"},"2":{"desc":"Zastrzegamy sobie prawo, według własnego uznania, do modyfikowania lub rewidowania niniejszych Warunków w dowolnym czasie, a Ty zgadzasz się być związany wszelkimi takimi modyfikacjami lub zmianami. Wszelkie zmiany lub modyfikacje będą obowiązywać tydzień po opublikowaniu w Usłudze, a dalsze korzystanie z Usługi po dacie wejścia w życie będzie stanowić Twoją akceptację i zgodę na takie zmiany lub modyfikacje. Jeśli sprzeciwiasz się jakiejkolwiek zmianie lub modyfikacji, Twoim jedynym środkiem zaradczym jest zaprzestanie korzystania z Usługi. Zastrzegamy sobie prawo do modyfikowania lub zaprzestania świadczenia Usługi (lub jej części) w dowolnym czasie, z powiadomieniem lub bez, bez ograniczeń w przypadku naruszenia Warunków.","title":"Zastrzeżenie praw i modyfikacje"},"3":{"desc":"W sytuacjach, gdy użytkownik wykonuje którekolwiek z poniższych czynności, może to skutkować automatycznym naruszeniem warunków użytkowania, co może skutkować konsekwencjami od ostrzeżeń po usunięcie dostępu do usługi i anulowanie konta lub dostępu do usługi, z powiadomieniem lub bez: Przypisanie rzeczywistej wartości do KC (gospodarki wirtualne) i sprzedaż ich za pieniądze lub towary rzeczywiste. Złożenie jakichkolwiek nieodpowiednich treści do zespołów wsparcia lub przeglądu. Nadużywanie błędów lub systemów w celu uzyskania przewagi lub uszkodzenia naszych struktur. Nadużywanie środków wsparcia. Próba obejścia dowolnego systemu usług w sposób szkodzący funkcjonowaniu usługi lub innym użytkownikom, bez uprzedniej autoryzacji zespołu programistów.","title":"Zakazy i obowiązki użytkowników"},"4":{"desc":"Nie ponosimy odpowiedzialności prawnej za żadne treści pojawiające się w naszej Usłudze, ponieważ jest ona zasilana przez społeczność. W przypadku naruszenia praw własności intelektualnej lub dyskomfortu, użytkownik może zażądać przeglądu lub usunięcia jednej lub kilku treści, otwierając żądanie usunięcia za pośrednictwem naszego Wsparcia. Jeśli znajdziesz w naszej Usłudze jakikolwiek link lub treść, która jest w jakikolwiek sposób obraźliwa lub narusza Twoje prawa autorskie, masz prawo i swobodę skontaktowania się z nami i poinformowania nas o problemie w dowolnym momencie. Rozważymy żądania usunięcia linków i treści, ale nie mamy obowiązku usuwania żadnych linków do naszej Usługi ani bezpośredniego odpowiadania na Twoje żądanie, chyba że narusza ono Twoje prawa autorskie. Wyślij e-mail na adres suporte@arkanus.app","title":"Odpowiedzialność za treść"},"tags":"Prawo, Prawo, Warunki użytkowania, Ustawodawstwo","title":"Warunki świadczenia usług","desc":"Przeczytaj Regulamin Mini Kraken. Zrozum swoje prawa i obowiązki podczas korzystania z naszych usług."}}
+{
+  "PageNotFound": {
+    "btn": "Powrót na początek",
+    "desc": "Ups! Wygląda na to, że znalazłeś stronę, która już nie istnieje. Nie martw się, czasem tak się zdarza podczas przeglądania. W międzyczasie możesz przeglądać inne części naszej strony, aby znaleźć to, czego szukasz.",
+    "title": "Strona nie znaleziona"
+  },
+  "changelogs": {
+    "desc": "Odkryj najnowsze aktualizacje i ulepszenia naszego projektu na stronie zmian. Bądź na bieżąco z każdą nową wersją, poprawkami błędów i dodanymi funkcjami.",
+    "title": "Aktualizacje"
+  },
+  "cmds": {
+    "desc": "Odkryj wszystkie dostępne komendy w Mini Kraken, online'owym systemie RPG. Stwórz swoją grę, zarządzaj ekonomią, wchodź w interakcje z innymi graczami i wiele więcej. Poznaj jego funkcje, aby uczynić swoje RPG jeszcze bardziej wciągającym i dynamicznym!",
+    "title": "Komendy"
+  },
+  "comum": {
+    "copy": "Kopiuj"
+  },
+  "default": {
+    "desc": "Mini Kraken to strona RPG oferująca narzędzia, artykuły i treści dla graczy RPG i Mistrzów Gry. Znajdziesz tu informacje o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, opowiadaniu historii i innych systemach RPG."
+  },
+  "dices": {
+    "desc": "Opanuj sztukę rzucania kośćmi z Mini Kraken! Odkryj eksplodujące zasady, limity czasowe, utrzymywanie wyników i wyrażenia liczbowe, aby podnieść swoją grę RPG na wyższy poziom.",
+    "page": {
+      "btn": "Rzuć kośćmi",
+      "desc": "Kostki w świecie RPG na stole mogą być na początku nieco mylące, ale nie martw się, jesteśmy tutaj, aby Ci pomóc. Poniżej znajduje się kompletny przewodnik, jak dobrze rzucać kośćmi. Atlas nauczy Cię kilku sztuczek i trików.",
+      "link": "Mini Kraken używa biblioteki do rzucania kośćmi, aby wykonywać wszystkie rzuty, oferując precyzję i elastyczność dla graczy RPG. Za pomocą tego narzędzia możesz odkrywać szeroki zakres możliwości, od prostych rzutów, takich jak 1k20 (jedna dwudziestościenna kostka) lub 3k6 (trzy sześciościenne kostki dodane razem), do bardziej zaawansowanych kombinacji, takich jak 2k10+5 (dwie dziesięciościenne kostki z bonusem +5) lub 4k6kh3 (cztery sześciościenne kostki, odrzucając najniższy wynik i dodając trzy najwyższe, idealne do tworzenia atrybutów postaci). Aby lepiej zrozumieć, jak działa notacja używana w rzutach i jak w pełni wykorzystać tę funkcjonalność, <a href=\"https://dice-roller.github.io/documentation/guide/notation/\" target=\"_blank\">kliknij tutaj</a> i zapoznaj się z kompletnym przewodnikiem z praktycznymi przykładami.",
+      "title1": "Sprawdź swoje rzuty tutaj."
+    },
+    "title": "Składnia systemu rzucania kośćmi"
+  },
+  "donate_text": "Jeśli dotarłeś tak daleko, to dlatego, że chcesz wesprzeć projekt! Odwiedź nasz oficjalny serwer i przejdź do czatu Bilety",
+  "footer": {
+    "about": "O nas",
+    "arkanus": {
+      "desc": "Zamieniając marzenia w rzeczywistość dzięki kilku linijkom kodu."
+    },
+    "legal": "Polityka prawna",
+    "map": "Mapa witryny",
+    "priv": "Polityka prywatności",
+    "quest": "Misja",
+    "start": "Strona startowa",
+    "team": "Zespół",
+    "tos": "Warunki korzystania",
+    "util": "Narzędzia"
+  },
+  "index": {
+    "dices": {
+      "desc": "Rzucanie kośćmi jest niezbędną częścią przygód RPG na stole. Wprowadza dreszczyk nieprzewidywalności, gdzie los postaci może zmienić się wraz z jednym rzutem. Pozwól, aby Mini Kraken zajął się tym za Ciebie za pomocą /d",
+      "subtitle": "Masz kostki w domu? Nie? Żaden problem!",
+      "title": "Rzucanie kośćmi"
+    },
+    "donate": {
+      "btn": "Wesprzyj projekt",
+      "desc": "Chociaż Mini Kraken jest darmowy, uruchomiliśmy Program Wspierających, aby pomóc w kosztach utrzymania Projektu, który zależy od maszyn działających 24 godziny na dobę w celu przetwarzania danych i przewijania. Każda darowizna przyczynia się bezpośrednio do utrzymania projektu aktywnego przez kolejny dzień. Przypominamy, że Projekt nie przechowuje żadnych treści należących do wydawców. Takie dane pochodzą z zewnętrznych interfejsów API, które nam nie należą.",
+      "title": "Wesprzyj projekt"
+    },
+    "features": {
+      "desc": "Mini Kraken to bot na Discorda, oferujący szeroką gamę funkcji, które pomogą Ci w Twojej przygodzie z grami fabularnymi. Rzucaj kostkami, zarządzaj inicjatywą, twórz postacie, korzystaj z generatorów imion i wiele więcej. Sprawdź tylko niewielką próbkę tego, co Mini Kraken może dla Ciebie zrobić!",
+      "title": "Eksploruj funkcje"
+    },
+    "func": {
+      "card": {
+        "0": {
+          "desc": "Nie trać czasu na ręczne obliczanie zdrowia swojej postaci. Dzięki komendzie /edit life, Mini Kraken wykona obliczenia za Ciebie, pozwalając Ci skupić się na grze.",
+          "title": "Obliczanie punktów życia"
+        },
+        "1": {
+          "desc": "Bot posiada zaawansowany system rzucania kostkami, umożliwiający różne kombinacje z użyciem komendy /d. Dodatkowo, dostępne są różne skórki danych, do których można uzyskać dostęp za pomocą komendy /data store",
+          "title": "Rzut kostką"
+        },
+        "2": {
+          "desc": "Łatwo organizuj informacje o postaciach dzięki Inteligentnym Żetonom. Za pomocą prostych komend, takich jak /ficha, możesz tworzyć i edytować karty postaci, czyniąc swój stół bardziej zwinnym i wydajnym.",
+          "title": "Inteligentne Karty"
+        },
+        "3": {
+          "desc": "Wybierz jeden z dostępnych systemów RPG, aby dodatkowo spersonalizować swoją kampanię, a jeśli to nie wystarczy, stwórz własny system.",
+          "title": "Personalizacja"
+        },
+        "4": {
+          "desc": "Z łatwością znajdź graczy do swojego stołu RPG, korzystając z systemu ujawniania kampanii Fortuny. Dzięki komendzie /send campaign, nie trać więcej czasu na szukanie graczy, pozwól Fortunie Ci pomóc!",
+          "title": "Znajdź graczy"
+        },
+        "5": {
+          "desc": "Różnorodność generatorów imion i liter, które pomogą w tworzeniu postaci. Dzięki komendom /generate name oraz /deck, możesz generować losowe imiona, karty tarota lub talie, aby wzbogacić swoją narrację.",
+          "title": "Generatory"
+        },
+        "6": {
+          "desc": "Szeroki system ekonomiczny o nazwie KC (Kraken Coins), który można zdobywać na różne sposoby, przydatny do takich funkcji, jak skórki danych i personalizacja.",
+          "title": "Ekonomia"
+        },
+        "7": {
+          "desc": "Znajduj zaklęcia i rytuały w swojej księdze zaklęć łatwiej dzięki naszej księdze zaklęć, która pozwala na wyszukiwanie w czasie rzeczywistym!",
+          "title": "Księga Zaklęć"
+        },
+        "8": {
+          "desc": "Ta funkcja jest jeszcze w przygotowaniu, ale plotki mówią, że będzie to bestiariusz społeczności.",
+          "title": "..."
+        }
+      }
+    },
+    "landing": {
+      "text": "Najlepszy sposób na grę w **Gry Fabularne** na Discordzie"
+    },
+    "name": "Bot do gier fabularnych",
+    "sec2": {
+      "desc": "Bot na Discorda, stworzony przez fanów dla fanów, ma na celu pomoc w rozgrywce w Twojej ulubionej grze fabularnej. Nie posiadamy ani nie roszcimy sobie praw do wspomnianych gier. Jesteśmy grupą programistów i entuzjastów, którzy upraszczają systemy RPG, aby sprawić, że doświadczenie będzie przyjemniejsze. Nie jest to oficjalny produkt ani platforma, i nie jesteśmy powiązani z twórcami wspomnianych gier",
+      "title": "Zaadaptowane systemy RPG"
+    },
+    "start": {
+      "btn1": "Dodaj Fortunę",
+      "desc": "Podnieś swoje wrażenia z gier fabularnych na Discordzie! Nasze narzędzie zaprojektowane w celu ulepszenia Twoich sesji gier, zarówno w systemach bardziej nastawionych na fabułę, jak i tych z mniejszą ilością obliczeń."
+    },
+    "status": {
+      "cmds": "Komendy",
+      "desc": "Sprawdź niektóre dane wydajności dla Inanimalia Fortuna Tenebris Verteri - najlepszego bota do gier fabularnych na Discordzie zdaniem twórców. Bądź na bieżąco z wydajnością swojego bota i uzyskaj jak najwięcej ze swojego doświadczenia.",
+      "guilds": "Gildie",
+      "subtitle": "Jest tyle kości...",
+      "title": "Statystyki projektu.",
+      "user": "Użytkownicy",
+      "version": "Wersja"
+    },
+    "system": {
+      "desc": "Uzyskaj dostęp do automatycznego sumowania i rzucania atrybutami na swojej karcie, żądając testów atrybutów i umiejętności za pomocą komendy **/di**  przynosząc więcej praktyczności Twoim graczom!",
+      "subtitle": "Zaadaptowane Systemy RPG",
+      "title": "Automatyczne Karty do Twoich przygód!"
+    }
+  },
+  "join_server_btn": "Dołącz do Oficjalnej Gildii",
+  "lang": "pl",
+  "misc": {
+    "btn": {
+      "gencard": "Generuj Kartę"
+    },
+    "gen": {
+      "all": "Wszystkie Imiona",
+      "fem": "Kobieta",
+      "male": "Mężczyzna"
+    }
+  },
+  "names": {
+    "article": {
+      "all": "Wszystkie",
+      "btn": "Generuj Imiona",
+      "desc": "Ten generator imion postaci został stworzony, aby być punktem wyjścia dla Ciebie, pomagając Ci napisać książkę, kampanię RPG lub grę. Jeśli szukasz imion dla swoich postaci, jesteś we właściwym miejscu.",
+      "female": "Kobieta",
+      "male": "Mężczyzna",
+      "title": "Generator Imion"
+    }
+  },
+  "nav": {
+    "acervo": "Kolekcja",
+    "add": "Dodaj Aplikację",
+    "dices": {
+      "desc": "Testuj i ucz się, jak rzucać. ",
+      "title": "Rzucając Kośćmi"
+    },
+    "docs": {
+      "changelogs": {
+        "desc": "Zobacz historię aktualizacji bota",
+        "name": "Historia Zmian"
+      },
+      "cmds": {
+        "docs": "Zobacz listę komend",
+        "title": "Lista Komend"
+      },
+      "dices": {
+        "desc": "Przewodnik, jak rzucać kośćmi w bocie",
+        "names": "Notacja Kości"
+      },
+      "title": "Dokumentacja"
+    },
+    "donate": "Wsparcie Projektu",
+    "guide": "Przewodnik",
+    "lang": {
+      "title": "Język"
+    },
+    "support": "Społeczność",
+    "tools": {
+      "names": {
+        "desc": "Generuj imiona dla swoich postaci",
+        "title": "Generator Imion"
+      },
+      "poker": {
+        "desc": "Wylosuj losową kartę z talii",
+        "name": "Karty do Pokera"
+      },
+      "tarot": {
+        "desc": "Wylosuj kartę z talii wróżb",
+        "name": "Karty Tarota"
+      },
+      "title": "Narzędzia"
+    }
+  },
+  "poker": {
+    "article": {
+      "desc": "Losowy generator kart do gry, który może pomóc w tworzeniu kampanii lub gry.",
+      "title": "Generator Kart do Pokera"
+    },
+    "cards": {
+      "type": {
+        "0": "Wszystkie Kolory Kart",
+        "1": "Piki",
+        "2": "Trefle",
+        "3": "Kier",
+        "4": "Karo"
+      }
+    },
+    "desc": "Generuj losowe karty do gry dla swoich kampanii RPG lub gier. Ulepsz swoje opowiadanie dzięki Generatorowi Kart do Pokera.",
+    "title": "Karty do Pokera"
+  },
+  "posts": {
+    "sistemas": {
+      "0": {
+        "article": "Dungeons & Dragons, legendarna gra fabularna na papierze, wciąż pobudza wyobraźnię graczy w każdym wieku na całym świecie. Przez dziesięciolecia ta epicka gra przenosiła graczy do fantastycznych światów pełnych niebezpieczeństw, skarbów i niezapomnianych przygód. W Dungeons & Dragons gracze mają okazję stworzyć własne, unikalne postacie i wyruszyć w ekscytujące podróże. Mogą wybierać spośród szerokiej gamy ras, takich jak elfy, krasnoludy i ludzie, oraz klas, takich jak wojownicy, magowie i łowcy, z których każda ma specjalne umiejętności i cechy. Mechanika gry opiera się na połączeniu rzucania kośćmi i wyobraźni. Mistrz Gry, znany również jako Dungeon Master (DM), jest odpowiedzialny za stworzenie świata, opowiadanie historii i odgrywanie postaci niezależnych (NPC), podczas gdy gracze podejmują decyzje, eksplorują niebezpieczne środowiska, stawiają czoła potworom i rozwiązują zagadki. Dungeons & Dragons to gra kooperacyjna, w której wyobraźnia i interakcja między graczami odgrywają fundamentalną rolę. Razem stawiają czoła epickim wyzwaniom, rozwiązują intrygujące zagadki i budują więzi przyjaźni pośród akcji i niebezpieczeństwa. Gra zachęca również do kreatywności, pozwalając graczom dostosowywać i rozwijać swoje historie i postacie z czasem. Oprócz ekscytujących przygód, Dungeons & Dragons daje graczom możliwość połączenia się w tętniącej życiem społeczności. Spotkania w realu przy stołach do gier, konwencje poświęcone grom fabularnym i platformy online łączą entuzjastów z całego świata, dzieląc się doświadczeniami, wskazówkami i tworząc trwałe wspomnienia. Dzięki bogatej mitologii, niezliczonej liczbie dodatków i rozszerzeń oraz pasjonackiej bazie fanów, Dungeons & Dragons pozostaje ikoną świata gier fabularnych na papierze. Dzięki tej grze granice wyobraźni są podważane, koleżeństwo jest wzmacniane, a epickie przygody są przeżywane z każdym rzutem kośćmi. Więc zbierz swoich przyjaciół, chwyć kostki i przygotuj się na zanurzenie w świecie magii i przygody z Dungeons & Dragons. Stół jest zastawiony, los czeka, a chwała jest w zasięgu ręki. Na co czekasz, aby dołączyć do tej niesamowitej podróży?",
+        "bg": "/static/img/bg/dnd.webp",
+        "card": {
+          "btn": "Dowiedz się więcej o DnD",
+          "desc": "Legendarna fantastyczna gra RPG, która pozwala graczom tworzyć własne historie w światach miecza i magii.",
+          "title": "Dungeons & Dragons"
+        },
+        "icon": "/static/img/rpg/DND.svg",
+        "legal": "System Dungeons & Dragons obecnie należy do [Wizards Of The Coast](https://company.wizards.com/en), które posiada wszystkie prawa zastrzeżone. Książki systemu zostały wydane na licencji [OPEN GAME LICENSE Version 1.1](https://en.wikipedia.org/wiki/Open_Game_License) Mini Kraken nie ma żadnego związku z wydawcą ani twórcą, Mini Kraken to tylko zestaw narzędzi stworzonych, aby pomóc mistrzom i graczom z różnych systemów. w ten sam sposób, w jaki nie mamy ich upoważnienia do działania.",
+        "path": "dnd",
+        "tags": "System RPG,Fantasy,Średniowiecze,Dungeons & Dragons"
+      },
+      "1": {
+        "article": "Paranormal Order to nowa gra fabularna na papierze, która przenosi graczy do świata pełnego tajemnic i zjawisk nadprzyrodzonych. W tym mrocznym i wciągającym otoczeniu ukryte sekrety i złe istoty zagrażają ludzkości, a tylko odważni agenci Paranormal Order mogą stawić czoła tym zagrożeniom. W grze gracze wcielają się w rolę agentów paranormalnych, członków tajnej organizacji poświęconej ochronie świata przed niebezpieczeństwami nieznanego. Każdy agent posiada specjalne umiejętności, takie jak jasnowidzenie, kontrolowanie energii, mediumizm i bystry wzrok, które pomagają im stawić czoła nadprzyrodzonym wyzwaniom, na jakie napotykają na swojej drodze. W miarę postępów graczy w misjach, ich postacie zdobywają doświadczenie i rozwijają nowe zdolności paranormalne, stając się bardziej biegłymi w stawianiu czoła nadprzyrodzonym zjawiskom. Ewolucja postaci pozwala graczom dostosowywać swoje umiejętności do swojego stylu gry i przygotowywać się na jeszcze większe wyzwania. Paranormal Order oferuje ekscytujące i wciągające doświadczenie dla fanów gier fabularnych na papierze i miłośników nadprzyrodzonych historii. Dzięki wciągającej fabule i urzekającej mechanice, gra obiecuje przenieść graczy do świata suspensu i tajemnicy, gdzie będą musieli wykorzystać swoją inteligencję i odwagę, aby chronić ludzkość przed siłami pozaziemskimi. Przygotuj się na spotkanie z nieznanym i odkrycie mrocznych sekretów podczas gry w Paranormal Order. Zbierz swoich przyjaciół, wybierz swoje zdolności paranormalne i wyrusz w tę ekscytującą przygodę, w której granica między rzeczywistością a nadprzyrodzonym staje się niewyraźna. Los paranormalnego świata jest w twoich rękach!",
+        "bg": "/static/img/bg/ordem.webp",
+        "card": {
+          "btn": "Dowiedz się więcej o OP",
+          "desc": "Wszechświat paranormalnych śledztw, gdzie agenci walczą z siłami nadprzyrodzonymi i chronią naszą rzeczywistość.",
+          "title": "Ordem Paranormal"
+        },
+        "icon": "/static/img/rpg/Ordem.svg",
+        "legal": "Ordem Paranormal został stworzony przez Rafaela Lange \"Cellbit\" Lange i jest obecnie publikowany przez [Editora Jambo](https://jamboeditora.com.br/), która zastrzega sobie wszelkie prawa. Książki systemu zostały opublikowane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nie jest powiązany z wydawcą ani twórcą; Mini Kraken to jedynie zestaw narzędzi stworzonych, aby pomóc mistrzom gry i graczom z różnych systemów, podobnie jak nie posiadamy ich autoryzacji do działania.",
+        "path": "ordem",
+        "tags": "System RPG,Miejskie,Paranormalne,Śledztwo"
+      },
+      "2": {
+        "article": "Tormenta20, ceniony system RPG na papierze, powraca z nową edycją, która obiecuje zanurzyć graczy w epickim świecie fantasy pełnym emocji. Od swojego pierwotnego wydania Tormenta urzekła wyobraźnię fanów RPG wciągającymi historiami, charyzmatycznymi postaciami i dynamicznymi zasadami. W nowej edycji Tormenta20 kontynuuje eksplorację rozległego kontynentu Arton, bogatego i tętniącego życiem miejsca z unikalną mitologią. Gracze mają swobodę tworzenia własnych bohaterów, wybierając spośród szerokiej gamy ras i klas, od honorowych wojowników po potężnych magów i przebiegłych łotrów. Mechanika gry opiera się na uaktualnionym systemie zasad, który łączy prostotę i strategiczną głębię. Gracze stawiają czoła ekscytującym wyzwaniom, rozwiązują intrygujące zagadki i walczą z niebezpiecznymi stworzeniami w taktycznych bitwach. Postęp postaci pozwala im zdobywać specjalne umiejętności i moce, stając się prawdziwymi legendarnymi bohaterami. Dzięki trwałemu dziedzictwu i oddanej bazie fanów Tormenta20 nadal urzeka graczy w każdym wieku i na każdym poziomie doświadczenia. Niezależnie od tego, czy jesteś weteranem gier fabularnych, czy początkującym szukającym wspaniałej przygody, Tormenta20 oferuje wrota do fantastycznego świata pełnego bohaterów, magii i nieuchronnych niebezpieczeństw. Przygotuj się więc na niezapomnianą podróż z Tormentą20. Wybierz swoją rasę, stwórz swój los i staw czoła epickim wyzwaniom w świecie fantasy, który czeka na twoją odwagę. Zbierz przyjaciół, przygotuj swoje dane i wyrusz w tę ekscytującą przygodę. Los Artonu jest w twoich rękach!",
+        "bg": "/static/img/bg/space.webp",
+        "card": {
+          "btn": "Dowiedz się więcej o T20",
+          "desc": "Epicka gra RPG fantasy osadzona w świecie Arton, z intuicyjnymi i elastycznymi zasadami",
+          "title": "Tormenta20"
+        },
+        "icon": "/static/img/rpg/Tormenta.svg",
+        "legal": "Tormenta jest obecnie publikowana przez [Editora Jambo](https://jamboeditora.com.br/), która zastrzega sobie wszelkie prawa. Książki systemu zostały opublikowane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nie jest powiązany z wydawcą ani twórcą; Mini Kraken to jedynie zestaw narzędzi stworzonych, aby pomóc mistrzom gry i graczom z różnych systemów, podobnie jak nie posiadamy ich autoryzacji do działania.",
+        "path": "tormenta",
+        "tags": "System RPG, Średniowiecze, Fantasy"
+      },
+      "3": {
+        "article": "Carbon 2185 to gra fabularna na papierze osadzona w dystopijnej, cyberpunkowej przyszłości. W roku 2185 Ziemia leży w ruinie z powodu zmian klimatu i wojny. Potężne megakorporacje kontrolują społeczeństwo, a zaawansowana technologia jest wszechobecna. Gracze wcielają się w rolę \"Agentów\", wyszkolonych indywidualności podejmujących misje zwalczania niesprawiedliwości i odkrywania mrocznych sekretów świata. Dostosowywanie postaci: Gracze mogą wybierać spośród różnych archetypów, takich jak hakerzy, najemnicy, szpiedzy lub wojownicy walczący wręcz, każdy z unikalnymi umiejętnościami. Rozwój umiejętności: W trakcie gry gracze mogą ulepszać cybernetyczne możliwości swoich postaci i zdobywać futurystyczną broń. Podejmowanie decyzji: Wybory graczy wpływają na kierunek narracji, pozwalając im kształtować losy świata w grze. System rzutów kośćmi: Gra wykorzystuje rzuty kośćmi i atrybuty do określenia sukcesu działań i walk.",
+        "bg": "/static/img/bg/cyberpunk.webp",
+        "card": {
+          "btn": "Dowiedz się więcej o Carbon2185",
+          "desc": "Cyberpunkowe RPG osadzone w dystopijnej przyszłości, inspirowane Blade Runnerem i Ghost in the Shell.",
+          "title": "Carbon2185"
+        },
+        "icon": "/static/img/rpg/Carbon.svg",
+        "legal": "System Carbon 2185 został stworzony przez Roberta Marriner-Doddsa i jest obecnie publikowany przez [Dragon Turtle Games](https://www.dragonturtlegames.com), które zastrzega sobie wszelkie prawa. Książki systemu zostały opublikowane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) 1.0a. Mini Kraken posiada wyraźną zgodę twórcy systemu.",
+        "path": "carbon",
+        "tags": "System RPG,Cyberpunk,Dystopia,#BoloQueimado"
+      },
+      "4": {
+        "article": "Gaia: The Prelude to najnowsza, nowoczesna reinterpretacja gry RPG na papierze, przenosząca średniowieczne, wysokie fantasy do magicznego świata Auroria. W Gai będziesz wyjątkowy, krocząc ścieżką wykutą przez siebie, otwierając zamki zasłony w kierunku nieskończoności. W Gai możesz być kim chcesz. Istnieje dwadzieścia jeden Dziedzictw, które definiują wygląd twojej postaci, a także w pełni spersonalizowany hybrydowy system walki. Stwórz swoją osobowość na swój własny sposób: wojownik niszczący armie, ale w wolnym czasie studiujący sekrety Zasłony? Rozdziel to, co robisz najlepiej w walce i poza nią, tak jak chcesz. Podczas swojej przygody odblokuj Zasłonę w sobie, stawiając czoła unikalnym stworzeniom z Homuncularium, unikalnego systemu tworzenia potworów, z miliardami (dosłownie) możliwych kombinacji! I oczywiście, zostaniesz za to nagrodzony, Punktami Uczenia się, które pozwolą ci zdobyć nowe moce, nowe umiejętności, na Ścieżkach Walki. Ścieżki Walki pozwalają ci kształtować swoją postać na swój własny sposób, co oznacza, że postać nie musi podążać tylko jedną Ścieżką, ale raczej wybrać własną drogę. Istnieje pięć podstawowych Ścieżek startowych, które zawierają dziesiątki umiejętności do wyboru, a każda umiejętność może być również ulepszona za pomocą jednej z trzech opcji Ulepszeń. A w przyszłości, gdy rozwiniesz swoją postać, będziesz mógł uzyskać dostęp do Zaawansowanych Ścieżek, które przynoszą setki nowych umiejętności, które dodatkowo wzbogacają twoje doświadczenie.",
+        "bg": "/static/img/bg/Forest9.webp",
+        "card": {
+          "btn": "Dowiedz się więcej o Gai",
+          "desc": "Średniowieczne high fantasy RPG, z nowoczesnym i uproszczonym systemem, gdzie każda postać jest unikalna.",
+          "title": "Gaia: The Prelude"
+        },
+        "icon": "/static/img/rpg/Gaia.svg",
+        "legal": "Gaia: Preludium zostało opracowane przez Auroria - Game Studio, które zastrzega sobie wszystkie prawa. Książki systemu zostały wydane na licencji [OPEN GAME LICENSE](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) Wersja 1.0a i są chronione przez CBL (Brazylijska Izba Książki). Mini Kraken posiada wiedzę i autoryzację autorki Lyy do działania, dodatkowo zachęcamy do zakupu książki i wsparcia projektu finansowania na platformie [CATARSE](https://www.catarse.me/gaiapreludio)",
+        "path": "gaia",
+        "tags": "System RPG,Średniowiecze,Fantasy,Innowacja"
+      },
+      "5": {
+        "article": "3DeT Victory: Nowy system RPG, który podbija wyobraźnię graczy. Od momentu powstania tysiące awanturników zapuściło się w nieograniczone scenariusze, tworząc unikalne postacie i eksplorując fantastyczne światy. Teraz, wraz z nadejściem Ery Ark, możesz zanurzyć się w miejskiej fantastyce wypełnionej wymiarowymi labiryntami, z których każdy skrywa własne niebezpieczeństwa i skarby. Wybierz spośród pięciu tematycznych rdzeni i przygotuj się na epicką podróż. Podręcznik 3DeT Victory, zawierający kompletne zasady, scenariusz Ery Ark i zapowiedzi rdzeni tematycznych, jest w fazie crowdfundingowej na platformie Catarse. Dołącz do tej nowej ery i bądź częścią tej ekscytującej przygody! 3DeT Victory oferuje szereg innowacyjnych mechanik, które sprawiają, że rozgrywka jest ekscytująca i wciągająca. Oto niektóre z głównych cech i zalet systemu: Prostota i elastyczność: System został zaprojektowany tak, aby był dostępny dla graczy na wszystkich poziomach doświadczenia. Zasady są intuicyjne i łatwe do nauczenia, co pozwala szybko wskoczyć do akcji. Dodatkowo, elastyczność systemu pozwala na dostosowanie mechaniki w razie potrzeby, aby dopasować ją do stylu gry. Narracja w centrum uwagi: 3DeT Victory stawia narrację w centrum gry. Mechanika zachęca do tworzenia wciągających historii, z możliwością improwizacji i kreatywności. Gracze mogą kształtować świat, rozwijać złożone postacie i eksplorować intrygujące fabuły. Rdzenie tematyczne: Pięć rdzeni tematycznych oferuje różnorodność i głębię systemu. Każdy rdzeń zawiera specyficzne zasady, unikalne postacie i odrębne wyzwania. Niezależnie od tego, czy jesteś kosmicznym awanturnikiem, tajnym agentem czy fantasy bohaterem, znajdziesz odpowiedni rdzeń dla siebie. Era Ark: Ustawienie Ery Ark to połączenie elementów fantasy i miejskich. Wymiarowe labirynty zwane Arkami są pełne tajemnic, dziwnych stworzeń i ukrytych skarbów. To ustawienie oferuje nieograniczone możliwości eksploracji i przygody. Kompletny podręcznik: Podręcznik 3DeT Victory to kompletne źródło informacji. Oprócz podstawowych zasad, przedstawia szczegóły dotyczące Ery Ark, wskazówki mistrzowskie, sugestie przygodowe i zapowiedzi rdzeni tematycznych. To niezbędny przewodnik zarówno dla graczy, jak i mistrzów gry. Krótko mówiąc, 3DeT Victory łączy prostotę, kreatywność i bogate ustawienie, aby zapewnić unikalne wrażenia z gry RPG. Dołącz do społeczności i odkryj świat możliwości!",
+        "bg": "/static/img/bg/Forest7.webp",
+        "card": {
+          "btn": "Dowiedz się więcej o 3DET",
+          "desc": "Bohaterowie i złoczyńcy stają do walki w epickich bitwach. Magia, technologia i fantastyczne stworzenia zderzają się ze sobą.",
+          "title": "3DET Victory"
+        },
+        "icon": "/static/img/rpg/3DET.svg",
+        "legal": "3DET jest obecnie wydawane przez [Editora Jambo](https://jamboeditora.com.br/), która zastrzega sobie wszystkie prawa. Książki systemu zostały wydane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nie ma żadnego związku z wydawcą ani twórcą, Mini Kraken to tylko zestaw narzędzi stworzonych, aby pomóc mistrzom i graczom z różnych systemów. Podobnie, nie posiadamy ich autoryzacji do działania.",
+        "path": "3det",
+        "tags": "System RPG,GURPS2"
+      },
+      "6": {
+        "article": "Pathfinder to gra fabularna na planszy, która urzeka wyobraźnię bogatą narracją i taktyczną złożonością. W Pathfinderze każdy gracz tworzy unikalną postać, wybierając spośród różnych ras i klas, z których każda ma własne specjalne umiejętności i historię. Gracze wyruszają na epickie przygody, stając przed wyzwaniami wymagającymi zarówno sprytu, jak i siły. Gra rządzi się zestawem zasad, które pomagają kształtować świat i interakcje postaci z nim, ale prawdziwa magia Pathfinder tkwi w swobodzie, jaką gracze mają w kształtowaniu własnych historii. Jako gra fabularna, Pathfinder pozwala na bezprecedensową kreatywną współpracę między graczami a Mistrzem Gry, który pełni funkcję narratora i arbitra zasad. Razem budują dynamiczną fabułę, która może zmieniać się w zależności od decyzji graczy i rzutów kośćmi. Ten aspekt gry zachęca graczy do głębokiego zanurzenia się w swoich postaciach i otaczającym ich świecie, tworząc wciągające i osobiste doświadczenie. Dodatkowo, Pathfinder znany jest ze swojego szczegółowego systemu personalizacji, w którym gracze mogą modyfikować swoje postacie za pomocą szerokiej gamy umiejętności, zaklęć i wyposażenia. To pozwala każdej postaci stać się naprawdę wyjątkową, odzwierciedlając wybory gracza i styl gry. Z każdą sesją postacie rosną w sile i złożoności, stając przed coraz większymi zagrożeniami i odkrywając tajemnice, które mogą zmienić świat gry. Świat Pathfinder to miejsce zdumienia i niebezpieczeństwa, zamieszkany przez mityczne stworzenia i różnorodne ludy. Z głębin najciemniejszych lochów po najwyższe szczyty gór, bohaterowie Pathfinder eksplorują nieznane terytoria, odkrywają starożytne cywilizacje i walczą ze złymi siłami. Z każdą przygodą mają okazję zdobyć legendarne skarby i wykuć własny los. Krótko mówiąc, Pathfinder to coś więcej niż gra; to brama do fantastycznych światów, gdzie wyobraźnia nie zna granic. To zaproszenie do opowiadania wspólnych historii, gdzie każdy wybór ma wagę, a każda chwila może stać się trwałą wspomnieniem. Niezależnie od tego, czy jesteś skrupulatnym strategiem, czy namiętnym gawędziarzem, Pathfinder oferuje bogate, satysfakcjonujące doświadczenie, które rozwija się w sposób tak unikalny, jak gracze, którzy spotykają się, aby grać.",
+        "bg": "/static/img/bg/Forest1.webp",
+        "card": {
+          "btn": "Dowiedz się więcej o Pathfinder",
+          "desc": "Historia odważnych bohaterów i przebiegłych złoczyńców w świecie pełnym strasznych potworów i cudownych skarbów.",
+          "title": "Pathfinder"
+        },
+        "icon": "/static/img/rpg/Pathfinder.svg",
+        "legal": "Pathfinder jest obecnie wydawane przez [NEWORDER](https://newordereditora.com/), która zastrzega sobie wszystkie prawa. Książki systemu zostały wydane na licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nie ma żadnego związku z wydawcą ani twórcą, Mini Kraken to tylko zestaw narzędzi stworzonych, aby pomóc mistrzom i graczom z różnych systemów. Podobnie, nie posiadamy ich autoryzacji do działania.",
+        "path": "pathfinder",
+        "tags": "System RPG, Fantasy"
+      },
+      "7": {
+        "article": "Czarodzieje i Klątwy oferują wciągające wrażenia, które oddają istotę anime Jujutsu Kaisen, pozwalając graczom zanurzyć się w świecie, w którym czarodzieje walczą z klątwami za pomocą nadprzyrodzonych mocy. Dzięki szczegółowemu systemowi rankingowemu, gracze mogą rozwijać swoje postacie od początkujących rangi 4 do potężnych czarodziejów rangi specjalnej. Z mechanikami takimi jak multiklasowanie i zróżnicowany sprzęt, gra zachęca do personalizacji i strategii. Dodatkowo, unikalne elementy takie jak Integralność i Przysięgi Graniczne dodają głębi i wyzwań, zapraszając graczy do podejmowania znaczących wyborów, które kształtują ich podróże. Dla entuzjastów gier RPG szukających przygody pełnej magii i tajemnicy, \"Czarodzieje i Klątwy\" to brama dla fanów anime, którzy chcą zacząć grać w gry fabularne.",
+        "bg": "/static/img/bg/Forest4.webp",
+        "card": {
+          "btn": "Dowiedz się więcej o F&M",
+          "desc": "System dostosowuje świat anime, z nadprzyrodzonymi bitwami. W nim gracze mogą eksplorować wiele stylów walki i rytuałów.",
+          "title": "Feiticeiros e Maldições"
+        },
+        "icon": "/static/img/rpg/Feiticeiros.svg",
+        "legal": "Feiticeiros e Maldições to system RPG Open Source stworzony przez autora [Setsugiri](https://setsugiri.carrd.co/) Korzystając z licencji [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken posiada pozwolenie twórcy systemu na działanie. Książki systemu można pobrać z serwera [Official Discord] (https://discord.com/invite/UGg6QUNNRp)",
+        "path": "feiticeiros",
+        "tags": "System RPG, Anime, Magia"
+      }
+    }
+  },
+  "premium": {
+    "0": {
+      "desc": "Plan dla samotnych wilków, którzy chcą uzyskać dostęp do zasobów w pojedynkę.",
+      "title": "Wojownik"
+    },
+    "1": {
+      "desc": "Jeden za wszystkich, wszyscy za jednego – dzięki temu planowi każdy na twoim serwerze odniesie korzyści!",
+      "title": "Przygodowy"
+    },
+    "2": {
+      "desc": "Dla prawdziwych miłośników Inanimalia Fortuna!",
+      "title": "Bohater-Ośmiornica"
+    },
+    "feat": {
+      "0": "+5 Slotów na Makra (na postać)",
+      "1": "+24 Sloty na Postacie",
+      "2": "Podwojona przestrzeń na notatki",
+      "3": "Stwórz własny system Homebrew",
+      "4": "Miliony Monet Krakenów",
+      "5": "Wsparcie priorytetowe",
+      "6": "Funkcje premium",
+      "7": "Jedno Konto",
+      "8": "Jeden Gildii",
+      "9": "Ekskluzywne testy gry",
+      "10": "Pozycja Darczyńcy (Profil i Discord)",
+      "11": "Najwyższa Pozycja Darczyńcy (Profil i Discord)",
+      "12": "Dla Trzech Gildii",
+      "98": "Pakiet naklejek drużynowych i Clube da Una",
+      "99": "Poetycka licencja na żądanie Deweloperów"
+    }
+  },
+  "price": {
+    "0": "3$/miesiąc",
+    "1": "5$/miesiąc",
+    "2": "7$/miesiąc"
+  },
+  "privacy": {
+    "0": {
+      "desc": "Mini Kraken jest własnością Deweloperów, którzy są odpowiedzialni za zbieranie i zarządzanie danymi użytkowników w aplikacji. Ten dokument wyjaśnia, jakie dane są zbierane, dlaczego są zbierane i jak zapewniamy bezpieczeństwo tych danych."
+    },
+    "1": {
+      "desc": "Podczas korzystania z aplikacji zbieramy informacje o Użytkownikach i Serwerach, a także inne informacje, które Państwo podają (w tym, między innymi: Nazwy, Identyfikatory, Zdjęcia Użytkowników i Gildii). Ponadto zbieramy informacje wewnątrz aplikacji, które są przechowywane, np. w systemie tokenów RPG. Jedyne treści wiadomości, które są zbierane, dotyczą systemu rzutu kostką bez użycia slash. Treści wiadomości nie są przechowywane, więc deweloperzy nie mają do nich dostępu. Przetwarzanie tych danych umożliwia funkcjonowanie różnych funkcji w aplikacji, takich jak identyfikacja w celu zapisywania informacji w bazie danych, indywidualne ustawienia aplikacji dla każdej gildii i użytkownika, a także dostosowanie interfejsu aplikacji w celu zapewnienia lepszego doświadczenia użytkownika.",
+      "title": "Zbierane Informacje"
+    },
+    "2": {
+      "desc": "Posiadasz następujące zagwarantowane prawa dotyczące swoich danych: Prawo do informacji. Prawo do sprostowania. Prawo do usunięcia. Prawo do weryfikacji. Prawo do sprzeciwu. Korzystając z aplikacji, rozumiesz i akceptujesz warunki oraz zbierane dane.",
+      "title": "Twoje prawa"
+    },
+    "3": {
+      "desc": "Gwarantujemy bezpieczeństwo informacji, które nam przekazujesz. Serwery i komputery, na których są one przechowywane, znajdują się w bezpiecznych i kontrolowanych środowiskach, chronionych przed nieautoryzowanym dostępem, wykorzystaniem i ujawnieniem. Stosujemy środki bezpieczeństwa administracyjne, techniczne i fizyczne, aby chronić dane przed nieautoryzowanym dostępem, wykorzystaniem, ochroną i ujawnieniem.  Jednakże, żadna transmisja danych przez Internet nie może być w pełni bezpieczna.",
+      "title": "Bezpieczeństwo informacji"
+    },
+    "4": {
+      "desc": "Jeśli chcesz uzyskać więcej informacji na temat tej Polityki Prywatności lub uzyskać dostęp do informacji związanych z Twoimi prawami i danymi osobowymi, możesz otworzyć zgłoszenie w pomocy gildii (/support) lub wysłać e-mail na adres support@arkanus.app.",
+      "title": "Kontakt"
+    },
+    "5": {
+      "desc": "Współpracujemy z Microsoft Clarity i Microsoft Advertising, aby rejestrować sposób, w jaki korzystasz i wchodzisz w interakcje z naszą stroną internetową za pomocą metryk behawioralnych, map cieplnych i odtwarzania sesji, w celu ulepszania i marketingu naszych produktów/usług. Dane dotyczące korzystania ze strony internetowej są rejestrowane za pomocą plików cookie własnych i stron trzecich oraz innych technologii śledzenia, aby określić popularność produktów/usług i aktywność online. Dodatkowo, wykorzystujemy te informacje do optymalizacji witryny, celów związanych z bezpieczeństwem i zapobieganiem oszustwom oraz reklamy. Aby uzyskać więcej informacji na temat sposobu, w jaki Microsoft zbiera i wykorzystuje Twoje dane, odwiedź Oświadczenie o ochronie prywatności Microsoft https://www.microsoft.com/privacy/privacystatement\n",
+      "title": "Telemetria\n"
+    },
+    "desc": "Przeczytaj Politykę Prywatności Mini Kraken. Dowiedz się, jak zbieramy, wykorzystujemy i chronimy Twoje dane.",
+    "title": "Polityka Prywatności"
+  },
+  "system": {
+    "default": {
+      "desc": "Dowiedz się więcej o systemie %system% i jak grać na Discordzie z Mini Kraken RPG Bot. Ten praktyczny przewodnik oferuje wskazówki dotyczące eksploracji i jak najlepiej bawić się podczas przygód RPG.",
+      "playDiscord": "Jak grać w %system% na Discordzie",
+      "playDiscordDesc": "%system% to jeden z systemów, w którym można grać, używając Mini Kraken jako ułatwiacza rzucania kośćmi. Zdefiniowanie systemu jest proste: wpisz /configure, przejdź do zakładki system i zdefiniuj go. Dzięki temu uzyskasz inteligentne żetony i dynamiczne dane, aby usprawnić swoją rozgrywkę. Po ustawieniach będziesz mógł korzystać z kilku narzędzi, które pomogą Twojemu stołowi, takich jak system inteligentnych żetonów, dostępny za pomocą /ficha, który integruje rzucanie kośćmi, czyli gdy rzucasz kośćmi za pomocą /di, wszystkie obliczenia są wykonywane przez UNA.",
+      "title": "Jak grać w %system% na Discordzie"
+    }
+  },
+  "tarot": {
+    "article": {
+      "desc": "Losowy generator kart Tarota, który może pomóc w tworzeniu kampanii lub gry.",
+      "title": "Generator Kart Tarota"
+    },
+    "desc": "Generuj losowe karty Tarota, aby ulepszyć swoje kampanie RPG lub gry. Poznaj Generator Kart Tarota Mini Kraken, aby uzyskać kreatywną inspirację.",
+    "title": "Karty Tarota"
+  },
+  "tos": {
+    "0": {
+      "desc": "Arkanus, zwany dalej \"twórcami\", to zespół zajmujący się opracowywaniem różnych projektów i aplikacji, w tym, między innymi, (Mini Kraken BOT, znany również jako Inanimalia Fortuna Tenebris Verteri). Korzystając z naszych usług, zgadzasz się na poniższe warunki.  Uzyskując dostęp do naszych Usług, automatycznie zgadzasz się na przedstawione poniżej warunki, zasady i polityki prywatności. Jeśli jesteś pełnoletni w swoim kraju zamieszkania lub jeśli masz od 13 do 18 lat i Twój prawny opiekun zapoznał się z tymi Warunkami i je akceptuje, jesteś nimi związany. Jeśli nie zgadzasz się z jakąkolwiek częścią tych warunków, natychmiast zaprzestań korzystania z naszych usług.",
+      "title": "Wprowadzenie"
+    },
+    "1": {
+      "desc": "O ile nie zaznaczono inaczej, wszystkie prawa własności intelektualnej do treści publikowanych w Usłudze należą do Usługi i jej licencjodawców. Wszelkie prawa dotyczące własności intelektualnej są ściśle zastrzeżone, a my zastrzegamy sobie prawo do podjęcia niezbędnych działań prawnych za pośrednictwem naszych oficjalnych kanałów komunikacji. Nie jesteś uprawniony do: - Sprzedawania, wynajmowania ani sublicencjonowania żadnych materiałów związanych z Mini Kraken, Fortuną lub podobnymi. - Ponownego rozpowszechniania treści z Mini Kraken, Fortuny lub podobnych bez wyraźnego zezwolenia. - Celowego podejmowania prób obejścia mechanizmów bezpieczeństwa Usługi w jakikolwiek sposób bez uprzedniej autoryzacji. Niektóre obszary Usługi oferują możliwość personalizacji przez użytkowników, bez uprzedniej filtracji lub weryfikacji przez nas przed publikacją. Komentarze i personalizacje odzwierciedlają wyłącznie opinie ich autorów. W zakresie dozwolonym przez obowiązujące prawo, Usługa nie ponosi odpowiedzialności prawnej za takie komentarze/personalizacje ani za jakiekolwiek szkody, ryzyka lub koszty wynikające z ich użycia, publikacji lub pojawienia się w Usłudze. Zastrzegamy sobie prawo, bez obowiązku, do usunięcia dowolnego komentarza lub personalizacji, które uważamy za niewłaściwe, obraźliwe lub naruszające niniejsze Warunki. Korzystając z naszej Usługi, zgadzasz się chronić i bronić nas przed wszelkimi roszczeniami, pozwami, szkodami, kosztami i wydatkami wynikającymi z lub związanymi z korzystaniem z Usługi. Żaden link nie powinien być umieszczany na żadnej Stronie internetowej, która może być interpretowana jako oszczercza, obsceniczna, karalna lub naruszająca prawa osób trzecich. Publikując komentarze, personalizacje lub inne treści w naszej Usłudze, oświadczasz i gwarantujesz, że: Masz prawo do publikowania tych treści i posiadasz wszystkie niezbędne licencje i zezwolenia, aby to zrobić. Twoje komentarze, personalizacje lub inne treści nie naruszają żadnych praw własności intelektualnej osób trzecich, w tym praw autorskich, patentów lub znaków towarowych. Twoje komentarze, personalizacje lub inne treści nie zawierają materiałów oszczerczych, zniesławiających, obraźliwych, nieprzyzwoitych lub niezgodnych z prawem ani nie naruszają prywatności osób trzecich. Twoje komentarze, personalizacje lub inne treści nie będą wykorzystywane do nakłaniania do lub promowania nielegalnych działań. Publikując komentarze, personalizacje lub inne treści w naszej Usłudze, udzielasz Usłudze (w tym Mini Kraken, Twórcom i partnerom) nieodwołalną, niewyłączną, światową, bezpłatną licencję z prawem udzielania sublicencji na korzystanie, reprodukcję, adaptację, modyfikację, publikację, tłumaczenie, tworzenie prac pochodnych, dystrybucję, publiczne wykonywanie i publiczne wyświetlanie takich treści w dowolnym formacie, nośniku lub technologii znanej obecnie lub opracowanej w przyszłości.",
+      "title": "Licencja"
+    },
+    "2": {
+      "desc": "Zastrzegamy sobie prawo, według własnego uznania, do modyfikowania lub rewidowania niniejszych Warunków w dowolnym czasie, a Ty zgadzasz się być związany wszelkimi takimi modyfikacjami lub zmianami. Wszelkie zmiany lub modyfikacje będą obowiązywać tydzień po opublikowaniu w Usłudze, a dalsze korzystanie z Usługi po dacie wejścia w życie będzie stanowić Twoją akceptację i zgodę na takie zmiany lub modyfikacje. Jeśli sprzeciwiasz się jakiejkolwiek zmianie lub modyfikacji, Twoim jedynym środkiem zaradczym jest zaprzestanie korzystania z Usługi. Zastrzegamy sobie prawo do modyfikowania lub zaprzestania świadczenia Usługi (lub jej części) w dowolnym czasie, z powiadomieniem lub bez, bez ograniczeń w przypadku naruszenia Warunków.",
+      "title": "Zastrzeżenie praw i modyfikacje"
+    },
+    "3": {
+      "desc": "W sytuacjach, gdy użytkownik wykonuje którekolwiek z poniższych czynności, może to skutkować automatycznym naruszeniem warunków użytkowania, co może skutkować konsekwencjami od ostrzeżeń po usunięcie dostępu do usługi i anulowanie konta lub dostępu do usługi, z powiadomieniem lub bez: Przypisanie rzeczywistej wartości do KC (gospodarki wirtualne) i sprzedaż ich za pieniądze lub towary rzeczywiste. Złożenie jakichkolwiek nieodpowiednich treści do zespołów wsparcia lub przeglądu. Nadużywanie błędów lub systemów w celu uzyskania przewagi lub uszkodzenia naszych struktur. Nadużywanie środków wsparcia. Próba obejścia dowolnego systemu usług w sposób szkodzący funkcjonowaniu usługi lub innym użytkownikom, bez uprzedniej autoryzacji zespołu programistów.",
+      "title": "Zakazy i obowiązki użytkowników"
+    },
+    "4": {
+      "desc": "Nie ponosimy odpowiedzialności prawnej za żadne treści pojawiające się w naszej Usłudze, ponieważ jest ona zasilana przez społeczność. W przypadku naruszenia praw własności intelektualnej lub dyskomfortu, użytkownik może zażądać przeglądu lub usunięcia jednej lub kilku treści, otwierając żądanie usunięcia za pośrednictwem naszego Wsparcia. Jeśli znajdziesz w naszej Usłudze jakikolwiek link lub treść, która jest w jakikolwiek sposób obraźliwa lub narusza Twoje prawa autorskie, masz prawo i swobodę skontaktowania się z nami i poinformowania nas o problemie w dowolnym momencie. Rozważymy żądania usunięcia linków i treści, ale nie mamy obowiązku usuwania żadnych linków do naszej Usługi ani bezpośredniego odpowiadania na Twoje żądanie, chyba że narusza ono Twoje prawa autorskie. Wyślij e-mail na adres suporte@arkanus.app",
+      "title": "Odpowiedzialność za treść"
+    },
+    "desc": "Przeczytaj Regulamin Mini Kraken. Zrozum swoje prawa i obowiązki podczas korzystania z naszych usług.",
+    "tags": "Prawo, Prawo, Warunki użytkowania, Ustawodawstwo",
+    "title": "Warunki świadczenia usług"
+  }
+}

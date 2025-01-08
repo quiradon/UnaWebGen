@@ -103,8 +103,7 @@
     },
     "name": "Bot JDR sur table",
     "sec2": {
-      "desc": "Le bot pour Discord, développé par des fans pour les fans, vise à faciliter l'expérience de jeu de votre JDR préféré. Nous ne possédons ni ne revendiquons les droits sur les jeux mentionnés. Nous sommes un groupe de programmeurs et d'enthousiastes qui simplifient les systèmes de JDR pour rendre l'expérience plus agréable. Il ne s'agit pas d'un produit ou d'une plateforme officielle, et nous ne sommes pas affiliés aux créateurs des jeux mentionnés",
-      "title": "Systèmes de JDR adaptés"
+      "desc": "Le bot pour Discord, développé par des fans pour les fans, vise à faciliter l'expérience de jeu de votre JDR préféré. Nous ne possédons ni ne revendiquons les droits sur les jeux mentionnés. Nous sommes un groupe de programmeurs et d'enthousiastes qui simplifient les systèmes de JDR pour rendre l'expérience plus agréable. Il ne s'agit pas d'un produit ou d'une plateforme officielle, et nous ne sommes pas affiliés aux créateurs des jeux mentionnés"
     },
     "start": {
       "btn1": "Ajouter Fortuna",
@@ -120,8 +119,8 @@
       "version": "Version"
     },
     "system": {
-      "desc": "Accédez à la somme et au lancer automatiques des attributs sur votre fiche en demandant des tests d'attributs et de compétences avec la commande **/di ** pour apporter plus de praticité à vos joueurs !",
-      "subtitle": "Systèmes JDR Adaptés",
+      "desc": "Accédez à des outils dédiés pour certains de vos systèmes préférés, offrant plus de commodité pour votre JdR. (Nous n'avons aucun lien avec les systèmes ou leurs éditeurs.)\n",
+      "subtitle": "Systèmes disposant d'outils.\n",
       "title": "Fiches Automatiques pour vos aventures !"
     }
   },

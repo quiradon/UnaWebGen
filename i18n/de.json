@@ -103,8 +103,7 @@
     },
     "name": "Tabletop-RPG-Bot",
     "sec2": {
-      "desc": "Der von Fans für Fans entwickelte Discord-Bot zielt darauf ab, das Spielerlebnis deines Lieblings-RPGs zu unterstützen. Wir besitzen oder beanspruchen keine Rechte an den genannten Spielen. Wir sind eine Gruppe von Programmierern und Enthusiasten, die RPG-Systeme vereinfachen, um das Spielerlebnis angenehmer zu gestalten. Dies ist kein offizielles Produkt oder keine offizielle Plattform, und wir sind nicht mit den Erstellern der genannten Spiele verbunden.",
-      "title": "Angepasste RPG-Systeme"
+      "desc": "Der von Fans für Fans entwickelte Discord-Bot zielt darauf ab, das Spielerlebnis deines Lieblings-RPGs zu unterstützen. Wir besitzen oder beanspruchen keine Rechte an den genannten Spielen. Wir sind eine Gruppe von Programmierern und Enthusiasten, die RPG-Systeme vereinfachen, um das Spielerlebnis angenehmer zu gestalten. Dies ist kein offizielles Produkt oder keine offizielle Plattform, und wir sind nicht mit den Erstellern der genannten Spiele verbunden."
     },
     "start": {
       "btn1": "Fortuna hinzufügen",
@@ -120,8 +119,8 @@
       "version": "Version"
     },
     "system": {
-      "desc": "Erhalte Zugriff auf die automatische Summe und das Werfen von Attributen auf deinem Blatt, indem du Attribut- und Fertigkeitsprüfungen mit dem Befehl **/di** anforderst – für mehr Praktikabilität für deine Spieler!",
-      "subtitle": "Angepasste RPG-Systeme",
+      "desc": "Erhalten Sie Zugriff auf spezielle Tools für einige Ihrer Lieblingssysteme und vereinfachen Sie so Ihr Rollenspiel. (Wir haben keine Verbindung zu den Systemen oder ihren Herausgebern.)\n",
+      "subtitle": "Systeme mit Werkzeugen\n",
       "title": "Automatische Charakterbögen für deine Abenteuer!"
     }
   },

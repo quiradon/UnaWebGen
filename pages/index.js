@@ -36,6 +36,24 @@ function dice(t) {
 </section>`
 }
 
+function textoSistemas(t) {
+    return `
+<section>
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-lg-6 col-xl-6 d-lg-flex align-items-lg-center">
+                <div class="mb-5">
+                    <h4 class="fw-semibold text-primary mb-0">${t.index.dices.subtitle}</h4>
+                    <h1 class="display-5 fw-bold mt-0">${t.index.dices.title}</h1>
+                    <p class="lead text-secondary">${t.index.dices.desc}</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-6"><img class="img-fluid" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/dices.webp" /></div>
+        </div>
+    </div>
+</section>`
+}
+
 function modal(t) {
     return `<div id="premium_modal" class="modal fade" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

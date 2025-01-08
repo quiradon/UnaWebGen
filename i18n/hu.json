@@ -103,8 +103,7 @@
     },
     "name": "Szerepjáték Bot",
     "sec2": {
-      "desc": "A rajongók által, rajongóknak fejlesztett Discord bot, amely a kedvenc szerepjátékod játékélményét hivatott segíteni. Nem birtokoljuk és nem is igényelünk jogokat a megemlített játékokra. Programozók és rajongók csoportja vagyunk, akik leegyszerűsítik a szerepjáték rendszereket, hogy élvezetesebbé tegyék a játékot. Ez nem hivatalos termék vagy platform, és nem vagyunk kapcsolatban a megemlített játékok készítőivel.",
-      "title": "Adaptált szerepjáték rendszerek"
+      "desc": "A rajongók által, rajongóknak fejlesztett Discord bot, amely a kedvenc szerepjátékod játékélményét hivatott segíteni. Nem birtokoljuk és nem is igényelünk jogokat a megemlített játékokra. Programozók és rajongók csoportja vagyunk, akik leegyszerűsítik a szerepjáték rendszereket, hogy élvezetesebbé tegyék a játékot. Ez nem hivatalos termék vagy platform, és nem vagyunk kapcsolatban a megemlített játékok készítőivel."
     },
     "start": {
       "btn1": "Add hozzá Fortunát",
@@ -120,8 +119,8 @@
       "version": "Verzió"
     },
     "system": {
-      "desc": "Használd a **di** parancsot a karakterlapján lévő attribútumok automatikus összegzéséhez és dobásához, így praktikusabbá téve a játékot a játékosok számára!",
-      "subtitle": "Adaptált RPG Rendszerek",
+      "desc": "Szerezz hozzáférést dedikált eszközökhöz kedvenc rendszereid néhányához, így RPG-d kényelmesebbé válik. (Nincs kapcsolatban a rendszerekkel vagy a kiadóikkal.)\n",
+      "subtitle": "Szerszámokkal rendelkező rendszerek\n",
       "title": "Automatikus karakterlapok a kalandjaidhoz!"
     }
   },

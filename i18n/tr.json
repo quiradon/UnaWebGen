@@ -103,8 +103,7 @@
     },
     "name": "Masaüstü RPG Botu",
     "sec2": {
-      "desc": "Hayranlar tarafından hayranlar için geliştirilen Discord botu, en sevdiğiniz RPG'nin oyun deneyimine yardımcı olmayı amaçlamaktadır. Bahsedilen oyunların haklarına sahip değiliz veya iddia etmiyoruz. Oyun deneyimini daha keyifli hale getirmek için RPG sistemlerini basitleştiren bir grup programcı ve meraklıyız. Bu resmi bir ürün veya platform değildir ve bahsedilen oyunların yaratıcılarıyla bağlantılı değiliz.",
-      "title": "Uyarlanmış RPG Sistemleri"
+      "desc": "Hayranlar tarafından hayranlar için geliştirilen Discord botu, en sevdiğiniz RPG'nin oyun deneyimine yardımcı olmayı amaçlamaktadır. Bahsedilen oyunların haklarına sahip değiliz veya iddia etmiyoruz. Oyun deneyimini daha keyifli hale getirmek için RPG sistemlerini basitleştiren bir grup programcı ve meraklıyız. Bu resmi bir ürün veya platform değildir ve bahsedilen oyunların yaratıcılarıyla bağlantılı değiliz."
     },
     "start": {
       "btn1": "Fortuna'yı Ekleyin",
@@ -120,8 +119,8 @@
       "version": "Sürüm"
     },
     "system": {
-      "desc": "**/di** komutuyla nitelik ve beceri testleri isteyerek karakter sayfanızdaki niteliklerin otomatik toplamını ve atılmasını sağlayarak oyuncularınız için daha fazla pratiklik getirin!",
-      "subtitle": "Uyarlanmış RPG Sistemleri",
+      "desc": "En sevdiğiniz sistemlerden bazılarında özel araçlara erişim sağlayarak, RPG'niz için daha fazla kolaylık sunuyoruz. (Sistemler veya yayıncılarıyla hiçbir bağlantımız yoktur.)\n",
+      "subtitle": "",
       "title": "Maceralarınız için Otomatik Karakter Sayfaları!"
     }
   },

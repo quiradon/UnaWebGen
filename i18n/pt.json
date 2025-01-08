@@ -103,8 +103,7 @@
     },
     "name": "Bot RPG de Mesa",
     "sec2": {
-      "desc": "O Bot para o discord, desenvolvido por fãs para fãs, tem como objetivo auxiliar na experiência de jogo do seu RPG favorito. Não possuímos nem reivindicamos direitos sobre os jogos mencionados. Somos um grupo de programadores e entusiastas que simplificam os sistemas de RPG para tornar a experiência mais agradável. Este não é um produto ou plataforma oficial, e não somos afiliados aos criadores ou editoras dos jogos mencionados",
-      "title": "Sistemas de RPG adaptados"
+      "desc": "O Bot para o discord, desenvolvido por fãs para fãs, tem como objetivo auxiliar na experiência de jogo do seu RPG favorito. Não possuímos nem reivindicamos direitos sobre os jogos mencionados. Somos um grupo de programadores e entusiastas que simplificam os sistemas de RPG para tornar a experiência mais agradável. Este não é um produto ou plataforma oficial, e não somos afiliados aos criadores ou editoras dos jogos mencionados"
     },
     "start": {
       "btn1": "Adicionar Fortuna",
@@ -120,8 +119,8 @@
       "version": "Versão"
     },
     "system": {
-      "desc": "Tenha acesso a soma e rolagem automática de atributos na sua ficha pedindo os testes de atributos e pericias com o comando **/di **traga mais praticidade a seus players!",
-      "subtitle": "Sistemas de RPG Adaptados",
+      "desc": "Tenha acesso a ferramentas dedicadas para alguns dos seus sistemas favoritos, proporcionando mais praticidade ao seu RPG. (Não possuímos qualquer vínculo com os sistemas ou suas editoras.)",
+      "subtitle": "Sistemas que possuem ferramentas",
       "title": "Fichas Automáticas para suas aventuras!"
     }
   },

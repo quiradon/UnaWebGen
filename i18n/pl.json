@@ -103,8 +103,7 @@
     },
     "name": "Bot do gier fabularnych",
     "sec2": {
-      "desc": "Bot na Discorda, stworzony przez fanów dla fanów, ma na celu pomoc w rozgrywce w Twojej ulubionej grze fabularnej. Nie posiadamy ani nie roszcimy sobie praw do wspomnianych gier. Jesteśmy grupą programistów i entuzjastów, którzy upraszczają systemy RPG, aby sprawić, że doświadczenie będzie przyjemniejsze. Nie jest to oficjalny produkt ani platforma, i nie jesteśmy powiązani z twórcami wspomnianych gier",
-      "title": "Zaadaptowane systemy RPG"
+      "desc": "Bot na Discorda, stworzony przez fanów dla fanów, ma na celu pomoc w rozgrywce w Twojej ulubionej grze fabularnej. Nie posiadamy ani nie roszcimy sobie praw do wspomnianych gier. Jesteśmy grupą programistów i entuzjastów, którzy upraszczają systemy RPG, aby sprawić, że doświadczenie będzie przyjemniejsze. Nie jest to oficjalny produkt ani platforma, i nie jesteśmy powiązani z twórcami wspomnianych gier"
     },
     "start": {
       "btn1": "Dodaj Fortunę",
@@ -120,8 +119,8 @@
       "version": "Wersja"
     },
     "system": {
-      "desc": "Uzyskaj dostęp do automatycznego sumowania i rzucania atrybutami na swojej karcie, żądając testów atrybutów i umiejętności za pomocą komendy **/di**  przynosząc więcej praktyczności Twoim graczom!",
-      "subtitle": "Zaadaptowane Systemy RPG",
+      "desc": "Zyskaj dostęp do dedykowanych narzędzi dla niektórych z Twoich ulubionych systemów, oferując większą wygodę w Twojej grze RPG. (Nie mamy żadnych powiązań z systemami ani ich wydawcami.)\n",
+      "subtitle": "Systemy posiadające narzędzia\n",
       "title": "Automatyczne Karty do Twoich przygód!"
     }
   },

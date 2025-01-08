@@ -103,8 +103,7 @@
     },
     "name": "Bot de RPG de mesa",
     "sec2": {
-      "desc": "El Bot para Discord, desarrollado por fans para fans, tiene como objetivo ayudar en la experiencia de juego de tu RPG favorito. No poseemos ni reclamamos derechos sobre los juegos mencionados. Somos un grupo de programadores y entusiastas que simplifican los sistemas de RPG para hacer la experiencia más agradable. Este no es un producto o plataforma oficial, y no estamos afiliados a los creadores de los juegos mencionados",
-      "title": "Sistemas de RPG adaptados"
+      "desc": "El Bot para Discord, desarrollado por fans para fans, tiene como objetivo ayudar en la experiencia de juego de tu RPG favorito. No poseemos ni reclamamos derechos sobre los juegos mencionados. Somos un grupo de programadores y entusiastas que simplifican los sistemas de RPG para hacer la experiencia más agradable. Este no es un producto o plataforma oficial, y no estamos afiliados a los creadores de los juegos mencionados"
     },
     "start": {
       "btn1": "Añadir a Fortuna",
@@ -120,8 +119,8 @@
       "version": "Versión"
     },
     "system": {
-      "desc": "Ten acceso a la suma y tirada automática de atributos en tu hoja solicitando pruebas de atributos y habilidades con el comando **/di** ¡aporta más practicidad a tus jugadores!",
-      "subtitle": "Sistemas de RPG adaptados",
+      "desc": "Obtén acceso a herramientas dedicadas para algunos de tus sistemas favoritos, ofreciendo mayor comodidad para tu juego de rol. (No tenemos afiliación con los sistemas o sus editores.)\n",
+      "subtitle": "Sistemas que poseen herramientas\n",
       "title": "¡Hojas automáticas para tus aventuras!"
     }
   },

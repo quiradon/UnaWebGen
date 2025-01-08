@@ -103,8 +103,7 @@
     },
     "name": "Tabletop RPG Bot",
     "sec2": {
-      "desc": "The Bot for discord, developed by fans for fans, aims to assist in the gaming experience of your favorite RPG. We do not own or claim rights to the games mentioned. We are a group of programmers and enthusiasts who simplify RPG systems to make the experience more enjoyable. This is not an official product or platform, and we are not affiliated with the creators of the games mentioned",
-      "title": "Adapted RPG systems"
+      "desc": "The Bot for discord, developed by fans for fans, aims to assist in the gaming experience of your favorite RPG. We do not own or claim rights to the games mentioned. We are a group of programmers and enthusiasts who simplify RPG systems to make the experience more enjoyable. This is not an official product or platform, and we are not affiliated with the creators of the games mentioned"
     },
     "start": {
       "btn1": "Add Fortuna",
@@ -120,8 +119,8 @@
       "version": "Version"
     },
     "system": {
-      "desc": "Have access to the automatic sum and roll of attributes on your sheet by requesting attribute and skill tests with the command **/di **bring more practicality to your players!",
-      "subtitle": "Adapted RPG Systems",
+      "desc": "Gain access to dedicated tools for some of your favorite systems, offering more convenience for your RPG. (We have no affiliation with the systems or their publishers.)",
+      "subtitle": "Systems that have tools",
       "title": "Automatic Sheets for your adventures!"
     }
   },

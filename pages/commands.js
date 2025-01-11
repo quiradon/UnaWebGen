@@ -28,9 +28,7 @@ function formatDescription(cmd, lang) {
 }
 
 function GenerateCard(cmd, lang, parentName = "") {
-    if (lang === 'pt') {
-        lang = 'pt-BR';
-    }
+    // Oculta o comando 'zdev'
     if (cmd.name === 'zdev') {
         return '';
     }
@@ -89,14 +87,14 @@ function GenerateCard(cmd, lang, parentName = "") {
 }
 async function page(language, route) {
     let lang = language.lang;
-    
+    if (lang === "pt") lang = "pt-BR";
     const commands = await getCommands();
     const cards = commands.map(cmd => GenerateCard(cmd, lang)).join("");
 
     return `
     <!DOCTYPE html>
     <html lang="${lang}" data-bs-theme="dark">
-        ${head(`${lang}${route}`, `${language.cmds.title}`,`${language.cmds.desc}`)}
+        ${head(`${lang}${route}`, `${language.cmds.title}`)}
         <body>
             ${nav(language, route)}
             <section>

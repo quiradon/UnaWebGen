@@ -13,9 +13,13 @@ function TitleAndSubtitle(title,paragraph) {
         `
 }
 
-let updates = require('../data/updates.json')
-//transforme o json em um array de objetos
-updates = updates.v
+async function fetchUpdates() {
+    const response = await fetch('https://una.arkanus.app/updates');
+    
+    const data = await response.json();
+    return data;
+}
+
 function generateCard(version, text, image) {
     if (text) {
         text = text.replace(/\n/g, '<br/>');
@@ -34,7 +38,7 @@ function generateCard(version, text, image) {
     </div>
     `
 }
-function page(idioma, rota) {
+async function page(idioma, rota) {
     const t = idioma
     let idiomaUpdates = t.lang
     if (idiomaUpdates == 'pt') {
@@ -44,6 +48,9 @@ function page(idioma, rota) {
     if (idiomaUpdates == 'es') {
         idiomaUpdates = 'en'
     }
+
+    const updates = await fetchUpdates(); // Buscando as atualizações da URL
+
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">

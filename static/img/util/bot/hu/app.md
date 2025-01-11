@@ -53,10 +53,3 @@ Funkciók, amelyek megkönnyítik a közösségek közötti interakciót. Tartal
 ---
 
 Az ideális választás társas RPG játékosok számára, akik gyorsítani szeretnék az üléseiket, és simább, gazdag funkciókkal rendelkező élményt szeretnének biztosítani a Mestereknek és a Játékosoknak.
-
-**Telepítés és beállítás:**
-Kövesd ezt az egyszerű útmutatót, hogy hozzáadd a Mini Kraken-t az RPG szerveredhez:
-
-1. Kattints az "Add to server" gombra.
-2. Használd a `/config` parancsot a Mester szerepének beállításához (Használd a Mester szerepét, hogy megtekintsd és szerkeszthesd más játékosok karakterlapjait).
-3. Kész! Kezdj el Mini Kraken-t használni a RPG üléseiden, és ne felejts el jól szórakozni.

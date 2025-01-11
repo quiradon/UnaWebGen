@@ -53,10 +53,3 @@ Functions designed to enhance interaction among community members. Includes a lo
 ---
 
 The ideal choice for tabletop RPG players who want to speed up sessions, providing a smoother and feature-rich experience for both Masters and Players.
-
-**Installation and Setup:**
-Follow this simple guide to add Mini Kraken to your RPG server:
-
-1. Click "Add to server."
-2. Use the command `/config` to define the Master's role (Use the Master's role to view and edit other players' sheets)
-3. Done! Start using Mini Kraken in your RPG sessions and don't forget to have fun.

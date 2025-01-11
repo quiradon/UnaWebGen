@@ -49,10 +49,3 @@ Funzioni progettate per le comunità, caratterizzate da un sistema economico loc
 
 
 Il Mini Kraken è la scelta ideale per i giocatori di giochi di ruolo da tavolo, ottimizzando le sessioni, fornendo un'esperienza di gioco più fluida e offrendo una varietà di risorse per GM (Game Master) e giocatori.
-
-**Installazione e configurazione:**
-Ecco una guida rapida su come installare e configurare Mini Kraken sul tuo server.
-
-1. Fare clic su "Aggiungi al server".
-2. Utilizza il comando `/config` per impostare il `Sistema RPG`, il `Ruolo GM` e altre configurazioni.
-3. Pronto! Inizia a utilizzare Mini Kraken nelle tue sessioni di gioco di ruolo e non dimenticare di **divertirti**.

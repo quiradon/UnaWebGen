@@ -1,5 +1,5 @@
 Transforme seu **RPG de mesa** com praticidade e recursos poderosos.
-Tenha à disposição ferramentas dedicadas a diversos sistemas, como Dungeons & Dragons (DnD), Ordem Paranormal, Tormenta 20, Gaia e [muitos outros.]((https://rpg.arkanus.app/pt/)) Aproveite também funcionalidades como fichas de personagem automáticas, gerenciamento de iniciativa, rolagem de dados, grimórios de magia e muito mais. [Confira a lista completa de comandos disponíveis!](https://rpg.arkanus.app/pt/commands)
+Tenha à disposição ferramentas dedicadas a diversos sistemas, como Dungeons & Dragons (DnD), Ordem Paranormal, Tormenta 20, Gaia e [muitos outros.](https://rpg.arkanus.app/pt/) Aproveite também funcionalidades como fichas de personagem automáticas, gerenciamento de iniciativa, rolagem de dados, grimórios de magia e muito mais. [Confira a lista completa de comandos disponíveis!](https://rpg.arkanus.app/pt/commands)
 
 
 ![A ferramenta definitiva para RPG de mesa e rolagem de dados](https://rpg.arkanus.app/static/img/util/bot/pt/index.webp)
@@ -56,10 +56,3 @@ Funções feitas para facilitar a interação entre membros de comunidades. Incl
 ---
 
 Escolha ideal para jogadores de RPG de mesa, que buscam agilizar sessões, proporcionando uma experiência de jogo mais tranquila e cheia de recursos para Mestres e Jogadores.
-
-**Instalação e Configuração:|**
-Siga este guia simples para adicionar a Mini Kraken ao seu servidor de RPG:
-
-1. Clique em "Adicionar ao servidor".
-2. Use o comando `/configurar` para definir o Cargo do mestre (Use o cargo de mestre para poder ver e editar fichas de outros jogadores)
-3. Pronto! Comece a usar a Mini Kraken em suas sessões de RPG e não se esqueça de se divertir.

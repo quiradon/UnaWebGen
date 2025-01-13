@@ -85,25 +85,38 @@ function GenerateCard(cmd, lang, parentName = "") {
         return subCommandCards;
     }
 }
+function TitleAndSubtitle(title,paragraph) {
+    paragraph = paragraph || ''
+    paragraph = paragraph.replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1</span>')
+    return `
+            <div class="mb-3">
+            <h1 class="display-5 fw-bold mt-0">${title}</h1>
+            <p class="lead text-secondary -3">${paragraph}</p>
+        </div>
+        `
+}
+
 async function page(language, route) {
     let lang = language.lang;
+    let realLang = lang;
     if (lang === "pt") lang = "pt-BR";
     const commands = await getCommands();
     const cards = commands.map(cmd => GenerateCard(cmd, lang)).join("");
 
     return `
     <!DOCTYPE html>
-    <html lang="${lang}" data-bs-theme="dark">
-        ${head(`${lang}${route}`, `${language.cmds.title}`)}
+    <html lang="${realLang}" data-bs-theme="dark">
+        ${head(`${realLang}${route}`, `${language.cmds.title}`)}
         <body>
             ${nav(language, route)}
             <section>
                 <div class="container-fluid pt-5">
                     <div class="row flex-column justify-content-center align-items-center">
-                        <div class="col-12 text-center mb-4">
-                            <h1>${language.cmds.title}</h1>
-                        </div>
+
+                        
+                        
                         <div class="col-9 col-sm-10 col-md-10 col-lg-10 col-xl-11 col-xxl-10 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-0 d-block">
+                                ${TitleAndSubtitle(language.cmds.title, language.cmds.desc)}
                             <div id="cards" class="row g-0 row-cols-1">
                                 ${cards}
                             </div>

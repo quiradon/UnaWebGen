@@ -4,8 +4,7 @@ Access tools dedicated to various systems like Dungeons & Dragons (DnD), Pathfin
 ![The ultimate tool for tabletop RPG and dice rolling](https://rpg.arkanus.app/static/img/util/bot/en/index.webp)
 
 **Features and Functions:**
-
-- Customizable dice rolling (Simple Roll, Fate, Vampire, Invaders)
+- Dice Rolling
 - Automatic character sheets
 - Notes and Inventory
 - Initiative Management
@@ -20,13 +19,14 @@ Access tools dedicated to various systems like Dungeons & Dragons (DnD), Pathfin
 
 Use RPG syntax to roll dice with specific numbers of sides and quantities. For example, `5d20` rolls five 20-sided dice and adds the results.
 [Click here](https://rpg.arkanus.app/dices) to learn more about complex dice rolling systems like `4#6d6ei`.
+(Simple Roll, Fate, Vampire, Invaders)
 
-Customize your dice by choosing from 45+ skins available in the store 
+Customize your dice by choosing from 52+ skins available in the store 
 `/store dices`.
 
 ![Supported RPG Systems](https://rpg.arkanus.app/static/img/util/bot/en/system.webp)
 
-**Adapted RPG Systems:**
+**RPG Systems with Tools:**
 
 Find the ideal companion for your RPG journey with systems that support automatic character sheets. If your preferred system is not on the list, submit a suggestion using the `/suggest` command.
 
@@ -41,7 +41,7 @@ Find the ideal companion for your RPG journey with systems that support automati
 | **Pathfinder 2e** | ![Pathfinder RPG](https://rpg.arkanus.app/static/img/sico/Pathfinder.png) | 
 | **Sorcerers and Curses** | ![Jujutsu Kaisen RPG](https://rpg.arkanus.app/static/img/sico/Fem.png) | 
 | **Rodentia** | ![Rats RPG](https://rpg.arkanus.app/static/img/sico/Rodentia.png) | 
-| **Dharmar** | ![Open Source Brazilian RPG](https://rpg.arkanus.app/static/img/sico/Dhagmar.png) | 
+| **Dharma** | ![Open Source Brazilian RPG](https://rpg.arkanus.app/static/img/sico/Dharma.png) | 
 | **Invazores RPG** | ![Rats RPG](https://rpg.arkanus.app/static/img/sico/Invazores.png) | 
 Legal: The tool is made by fans for fans. We do not own or claim rights to the games, books, and systems. We are not affiliated with most publishers and writers.
 

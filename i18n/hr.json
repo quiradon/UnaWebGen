@@ -1,0 +1,426 @@
+{
+  "PageNotFound": {
+    "btn": "Povratak na početak\n",
+    "desc": "Ups! Čini se da ste naišli na stranicu koja više ne postoji. Nemojte se brinuti, to se ponekad dogodi tijekom pregledavanja. U međuvremenu, istražite druge dijelove naše web-stranice kako biste pronašli ono što tražite.\n",
+    "title": "Stranica nije pronađena.\n"
+  },
+  "changelogs": {
+    "desc": "Otkrijte sve najnovije ažuriranja i poboljšanja našeg projekta putem naše stranice s zapisima promjena. Budite u tijeku sa svakom novom verzijom, ispravkom pogrešaka i dodanim značajkama.\n",
+    "title": "Ažuriranja\n"
+  },
+  "cmds": {
+    "desc": "Otkrijte sve dostupne naredbe u Mini Krakenu, online RPG sustavu. Postavite svoju igru, upravljajte ekonomijom, komunicirajte s drugim igračima i još mnogo toga. Istražite njegove značajke kako biste svoje RPG iskustvo učinili još zaokruženijim i dinamičnijim!\n",
+    "title": "Naredbe\n"
+  },
+  "comum": {
+    "copy": "Kopiraj\n"
+  },
+  "default": {
+    "desc": "Mini Kraken je RPG web stranica koja nudi alate, članke i sadržaj za igrače i voditelje igara uloga. Ovdje možete pronaći informacije o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling i drugim RPG sustavima.\n"
+  },
+  "dices": {
+    "desc": "Ovladajte umijećem bacanja kockica s Mini Krakenom! Otkrijte eksplozivna pravila, raspone, zadržavanje i numeričke izraze kako biste podigli svoju RPG igru.\n",
+    "page": {
+      "btn": "Kotrljaj Kockice\n",
+      "desc": "Podaci u svijetu stolnih RPG-a mogu biti malo zbunjujući na početku, ali ne brinite, tu smo da vam pomognemo. Ispod ćete naći potpuni vodič kako dobro bacati kocke; atlas će vas naučiti raznim trikovima i vještinama.\n",
+      "link": "Mini Kraken koristi biblioteku za bacanje kockica kako bi izvršio sve bacanja, pružajući preciznost i fleksibilnost igračima uloga.  S ovim alatom možete istražiti širok raspon mogućnosti, od jednostavnih bacanja, poput 1d20 (jedna kocka s 20 strana) ili 3d6 (tri kocke s 6 strana zbrojene), do naprednijih kombinacija, poput 2d10+5 (dvije kocke s 10 strana s bonusom od +5) ili 4d6kh3 (četiri kocke s 6 strana, odbacujući najmanji rezultat i zbrajajući tri najveća, idealno za stvaranje atributa likova). Za bolje razumijevanje notacije koja se koristi u bacanjima i maksimalno iskorištavanje ove funkcionalnosti, <a href=\"https://dice-roller.github.io/documentation/guide/notation/\" target=\"_blank\">kliknite ovdje</a> i pogledajte detaljan vodič s praktičnim primjerima.\n",
+      "title1": "Testirajte ovdje svoje rolade.\n"
+    },
+    "title": "Sintaksa Sustava Kockanja Kockicama\n"
+  },
+  "donate_text": "Ako ste stigli ovamo, to znači da želite podržati projekt! Posjetite naš službeni server i idite na chat za zahtjeve.\n",
+  "footer": {
+    "about": "O nama\n",
+    "arkanus": {
+      "desc": "Pretvaramo vaše snove u stvarnost s nekoliko linija koda.\n"
+    },
+    "legal": "Pravno\n",
+    "map": "Sitemap\n",
+    "priv": "Politika privatnosti",
+    "quest": "Svrha",
+    "start": "Početna stranica",
+    "team": "Tim",
+    "tos": "Uvjeti korištenja",
+    "util": "Pomoćni program"
+  },
+  "index": {
+    "dices": {
+      "desc": "Bacanje kocki je bitan dio avantura u stolnoj igri uloga. Unosi uzbuđenje nepredvidivosti, gdje se sudbina lika može promijeniti jednim bacanjem. Neka se Mini Kraken pobrine za to putem /d ",
+      "subtitle": "Imate kocke kod kuće? Ne? Nema problema!",
+      "title": "Bacanje Kockica"
+    },
+    "donate": {
+      "btn": "Podrži projekt",
+      "desc": "Iako je Mini Kraken besplatan, pokrenuli smo Program podrške kako bismo pomogli u pokrivanju troškova održavanja projekta, koji ovisi o strojevima koji rade 24 sata dnevno za obradu podataka i bacanja. Svaka donacija izravno doprinosi održavanju projekta aktivnim još jedan dan. Podsjećamo da Projekt ne pohranjuje nikakve sadržaje koji pripadaju izdavačima. Ti podaci potječu iz vanjskih API-ja koji nam ne pripadaju.",
+      "title": "Podržite Projekt"
+    },
+    "features": {
+      "desc": "Mini Kraken je bot za Discord koji nudi širok raspon funkcija kako bi vam pomogao u vašoj avanturi stolne igre uloga. Bacajte kocke, upravljajte inicijativama, stvarajte likove, koristite generatore imena i još mnogo toga. Pogledajte ovdje samo mali dio svega što Mini Kraken može učiniti za vas!",
+      "title": "Istražite Funkcije"
+    },
+    "func": {
+      "card": {
+        "0": {
+          "desc": "Ne gubite vrijeme ručno izračunavajući život svog lika. Naredbom /uredi život, Mini Kraken obavlja matematiku umjesto vas, omogućujući vam da se usredotočite na igru.",
+          "title": "Izračun Života"
+        },
+        "1": {
+          "desc": "Bot ima napredni sustav bacanja kockica, omogućujući razne kombinacije s naredbom /d. Osim višestrukih izgleda kockica koje se mogu pristupiti putem /trgovina kockicama,",
+          "title": "Sustav Kockica"
+        },
+        "2": {
+          "desc": "Lako organizirajte informacije o likovima pomoću Inteligentnih kartica. Jednostavnim naredbama, s /kartica moguće je stvarati i uređivati kartice likova, čineći vašu igru bržom i učinkovitijom.",
+          "title": "Inteligentne Kartice"
+        },
+        "3": {
+          "desc": "Odaberite jedan od dostupnih sustava za igranje uloga kako biste dodatno personalizirali svoju kampanju, a ako to nije dovoljno, kreirajte svoj vlastiti sustav.",
+          "title": "Personalizacija"
+        },
+        "4": {
+          "desc": "Pronađite igrače za svoj stolni RPG s lakoćom koristeći Fortuna sustav za objavu kampanja. S naredbom /pošalji kampanju, ne gubite više vrijeme tražeći igrače, neka Fortuna pomogne!",
+          "title": "Pronađi Igrače"
+        },
+        "5": {
+          "desc": "Raznolikost generatora imena i karata za pomoć u stvaranju likova. S naredbama /generiraj ime i /karte, možete generirati slučajna imena, karte tarota ili karte za obogaćivanje vaše priče.",
+          "title": "Generatori"
+        },
+        "6": {
+          "desc": "Opsežan ekonomski sustav nazvan KC (Kraken Coins) koji se može zaraditi na različite načine, koristan za funkcije poput izgleda kocki i personalizacija.",
+          "title": "Ekonomija"
+        },
+        "7": {
+          "desc": "Pronađite čarolije i rituale svog grimorijuma lakše uz našu knjigu čarolija koja omogućuje pretraživanje u stvarnom vremenu!",
+          "title": "Knjiga Čarolija"
+        },
+        "8": {
+          "desc": "Ova funkcija još uvijek dolazi, ali se šuška da će to biti zajednički bestijarij.",
+          "title": "..."
+        }
+      }
+    },
+    "landing": {
+      "text": "Najbolji način za igranje **stolnih RPG-ova** na Discordu"
+    },
+    "name": "Bot za Stolni RPG",
+    "sec2": {
+      "desc": "Bot za Discord, razvijen od strane fanova za fanove, ima za cilj pomoći u iskustvu igranja vašeg omiljenog RPG-a. Ne posjedujemo niti ne polažemo prava na spomenute igre. Mi smo grupa programera i entuzijasta koji pojednostavljuju sustave za igranje uloga kako bi iskustvo bilo ugodnije. Ovo nije službeni proizvod ili platforma, i nismo povezani s kreatorima ili izdavačima spomenutih igara."
+    },
+    "start": {
+      "btn1": "Dodaj Fortunu",
+      "desc": "Podignite svoje iskustvo igranja RPG-a na Discordu! Alat dizajniran za poboljšanje vaših sesija igranja, bilo u sustavima, više roleplaya i manje matematike."
+    },
+    "status": {
+      "cmds": "Naredbe",
+      "desc": "Pratioce neke podatke o performansama Inanimalia Fortuna Tenebris Verteri - najboljeg bota za stolni RPG za Discord prema mišljenju kreatora. Budite u tijeku s performansama bota i iskoristite maksimalno svoje iskustvo.",
+      "guilds": "Poslužitelji",
+      "subtitle": "Puno podataka...",
+      "title": "Statistika projekta",
+      "user": "Korisnici",
+      "version": "Verzija"
+    },
+    "system": {
+      "desc": "Pristupite alatima namijenjenim nekim od vaših omiljenih sustava, što će uvelike olakšati igranje vaših RPG igara. (Nemamo nikakve veze s tim sustavima ili njihovim izdavačima.)",
+      "subtitle": "Sustavi s dostupnim alatima",
+      "title": "Automatizirane kartice za vaše avanture!"
+    }
+  },
+  "join_server_btn": "Pridruži se poslužitelju",
+  "lang": "hr",
+  "misc": {
+    "btn": {
+      "gencard": "Generiraj kartu"
+    },
+    "gen": {
+      "all": "Svi",
+      "fem": "Žensko",
+      "male": "Muško"
+    }
+  },
+  "names": {
+    "article": {
+      "all": "Svi",
+      "btn": "Generiraj imena",
+      "desc": "Ovaj generator imena likova stvoren je kako bi vam pomogao u početku, pomažući vam u pisanju knjige, RPG kampanje ili igre. Ako tražite imena za svoje likove, na pravom ste mjestu.",
+      "female": "Žensko",
+      "male": "Muško",
+      "title": "Generator Imena"
+    }
+  },
+  "nav": {
+    "acervo": "Zbirka",
+    "add": "Dodaj Aplikaciju",
+    "dices": {
+      "desc": "Testiraj i nauči kako bacati.",
+      "title": "Bacanje Kockica"
+    },
+    "docs": {
+      "changelogs": {
+        "desc": "Pogledajte povijest ažuriranja bota",
+        "name": "Ažuriranja"
+      },
+      "cmds": {
+        "docs": "Pogledajte popis naredbi i značajki",
+        "title": "Popis Naredbi"
+      },
+      "dices": {
+        "desc": "Vodič za bacanje kockica u botu",
+        "names": "Notacija Bacanja"
+      },
+      "title": "Dokumentacija"
+    },
+    "donate": "Podrži Projekt",
+    "guide": "Vodiči",
+    "lang": {
+      "title": "Jezik"
+    },
+    "support": "Zajednica",
+    "tools": {
+      "names": {
+        "desc": "Generiraj imena za svoje likove",
+        "title": "Generator Imena"
+      },
+      "poker": {
+        "desc": "Povuci slučajnu kartu iz špila",
+        "name": "Poker Karte"
+      },
+      "tarot": {
+        "desc": "Povuci kartu iz špila Tarota",
+        "name": "Tarot Karte"
+      },
+      "title": "Alati"
+    }
+  },
+  "poker": {
+    "article": {
+      "desc": "Generator nasumičnih karata za karte za igru, koji može nekako pomoći u stvaranju kampanje ili igre.",
+      "title": "Generator Karata za Karte"
+    },
+    "cards": {
+      "type": {
+        "0": "Sve Karte",
+        "1": "Mačevi",
+        "2": "Palice",
+        "3": "Pehari",
+        "4": "Zlato"
+      }
+    },
+    "desc": "Generirajte nasumične karte za vaše kampanje ili igre uloga. Poboljšajte svoju priču s Generatorom karata za poker.",
+    "title": "Karte za igru"
+  },
+  "posts": {
+    "sistemas": {
+      "0": {
+        "article": "Dungeons & Dragons, legendarna igra uloga za stol, nastavlja osvajati maštu igrača svih dobnih skupina diljem svijeta. Desetljećima ova epska igra prenosi igrače u fantastične svjetove ispunjene opasnostima, blagom i nezaboravnim avanturama. U Dungeons & Dragonsu, igrači imaju priliku stvoriti vlastite jedinstvene likove i krenuti na uzbudljiva putovanja. Mogu birati između širokog spektra rasa, poput elfova, patuljaka i ljudi, i klasa, poput ratnika, čarobnjaka i rendžera, svaka s posebnim vještinama i karakteristikama. Mehanika igre temelji se na kombinaciji bacanja kocki i mašte. Igrač voditelj, također poznat kao Dungeon Master (DM), odgovoran je za stvaranje svijeta, pripovijedanje priče i tumačenje NLK-a (neigračkih likova), dok igrači donose odluke, istražuju opasna okruženja, suočavaju se s čudovištima i otkrivaju tajne. Dungeons & Dragons je suradnička igra u kojoj mašta i interakcija među igračima igraju ključnu ulogu. Zajedno se suočavaju s epskim izazovima, rješavaju intrigantne zagonetke i grade prijateljstva usred akcije i opasnosti. Igra također potiče kreativnost, omogućujući igračima da personaliziraju i razvijaju svoje priče i likove tijekom vremena. Osim uzbudljivih avantura, Dungeons & Dragons igračima pruža priliku da se povežu u živahnoj zajednici. Lični susreti za stolom za igru, konvencije posvećene igrama uloga i online platforme okupljaju entuzijaste iz cijelog svijeta, dijeleći iskustva, savjete i stvarajući trajne uspomene. Sa svojom bogatom mitologijom, brojnim dodacima i proširenjima te strastvenom bazom obožavatelja, Dungeons & Dragons ostaje ikona svijeta igara za stol. Kroz ovu igru, granice mašte se izazivaju, druženje se jača i epske avanture doživljavaju se uz svako bacanje kocke. Dakle, okupite svoje prijatelje, uzmite svoje kocke i pripremite se za uranjanje u svijet magije i avanture s Dungeons & Dragons. Stol je postavljen, sudbina čeka i slava je na dohvat ruke. Što čekate da se pridružite ovom nevjerojatnom putovanju?",
+        "bg": "/static/img/bg/dnd.webp",
+        "card": {
+          "desc": "Legendarna fantastična igra uloga koja igračima omogućuje stvaranje vlastitih priča u svjetovima mačeva i magije.",
+          "title": "Dungeons & Dragons"
+        },
+        "icon": "/static/img/rpg/DND.svg",
+        "legal": "Sistem Dungeons & Dragons trenutno pripada [Wizards Of The Coast](https://company.wizards.com/en) koji ima sva prava zadržana. Knjige sistema objavljene su pod licencom [OPEN GAME LICENSE Version 1.1](https://en.wikipedia.org/wiki/Open_Game_License) Mini Kraken nema nikakve veze s izdavačem ili kreatorom, Mini Kraken je samo skup alata napravljenih za pomoć majstorima i igračima različitih sistema. Isto tako, nemamo dozvolu od njih za rad.",
+        "path": "dnd",
+        "tags": "Sistem igre uloga,Fantastika,Srednji vijek,Tamnice & Zmajevi"
+      },
+      "1": {
+        "article": "Paranormalni Red je nova igra uloga za stol koja igrače prenosi u svijet ispunjen misterijama i natprirodnim fenomenima. U ovom mračnom i zadivljujućem scenariju, skrivene tajne i zlobna bića ugrožavaju čovječanstvo, a samo hrabri agenti Paranormalnog Reda mogu se suočiti s tim prijetnjama. U igri, igrači preuzimaju ulogu paranormalnih agenata, članova tajne organizacije posvećene zaštiti svijeta od opasnosti nepoznatog. Svaki agent ima posebne sposobnosti, poput vidovitosti, kontrole energije, medijstva i oštre percepcije, koje im pomažu u suočavanju s natprirodnim izazovima koje susreću na svom putu. Kako igrači napreduju u misijama, njihovi likovi stječu iskustvo i razvijaju nove paranormalne sposobnosti, postajući vještiji u suočavanju s natprirodnim. Razvoj likova omogućuje igračima da prilagode svoje sposobnosti prema svom stilu igre i pripreme se za još veće izazove. Paranormalni Red nudi uzbudljivo i impozantno iskustvo za ljubitelje igara uloga za stol i ljubitelje natprirodnih priča. Sa svojom zadivljujućom radnjom i privlačnim mehanikama, igra obećava prenijeti igrače u svijet napetosti i misterije, gdje će morati koristiti svoju inteligenciju i hrabrost kako bi zaštitili čovječanstvo od sila onostranog. Pripremite se za suočavanje s nepoznatom i otkrivanje mračnih tajni dok igrate Paranormalni Red. Okupite svoje prijatelje, odaberite svoje paranormalne sposobnosti i krenite na ovu uzbudljivu avanturu gdje granica između stvarnosti i natprirodnog postaje mutna. Sudbina paranormalnog svijeta je u vašim rukama!",
+        "bg": "/static/img/bg/ordem.webp",
+        "card": {
+          "desc": "Svemir paranormalne istrage, gdje agenti bore protiv natprirodnog i štite našu stvarnost.",
+          "title": "Paranormalni Red"
+        },
+        "icon": "/static/img/rpg/Ordem.svg",
+        "legal": "Paranormalni Red je kreirao Rafael Lange \"Cellbit\" Lange, a trenutno ga objavljuje [Jambo izdavačka kuća](https://jamboeditora.com.br/) koja zadržava sva prava. Knjige sustava objavljene su pod licencom [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nema nikakve veze s izdavačem ili kreatorom; Mini Kraken je samo skup alata za pomoć majstorima i igračima različitih sustava, te nemamo njihovu dozvolu za rad. Nabavite Paranormalni Red: [Osnovna knjiga](https://amzn.to/3BuEkbj) [Dodatak | Preživljavanje horora](https://amzn.to/3PaFlIF)",
+        "path": "red",
+        "tags": "RPG sustav,Urbano,Paranormalno,Istraga"
+      },
+      "2": {
+        "article": "Tormenta20, hvaljeni stolni RPG, vraća se s novim izdanjem koje obećaje uroniti igrače u svijet epske fantastike ispunjene uzbuđenjem. Od svog prvobitnog izdanja, Tormenta je očarala maštu ljubitelja RPG-a svojim zanimljivim pričama, nezaboravnim likovima i dinamičnim pravilima. U novom izdanju, Tormenta20 nastavlja istraživati prostrani kontinent Arton, bogat i živopisan okoliš s jedinstvenom mitologijom. Igrači imaju slobodu stvarati vlastite junake, birajući iz širokog raspona rasa i klasa, od časnih ratnika do moćnih mađioničara i lukavih lopova. Mehanika igre temelji se na ažuriranom sustavu pravila koji spaja jednostavnost i stratešku dubinu. Igrači se suočavaju s uzbudljivim izazovima, rješavaju zagonetke i bore se protiv opasnih stvorenja u taktičkim bitkama. Napredovanje likova omogućuje im stjecanje vještina i posebnih moći, pretvarajući ih u prave legendarne junake. Sa svojom dugotrajnom baštinom i predanom bazom obožavatelja, Tormenta20 nastavlja očaravati igrače svih dobnih skupina i razina iskustva. Bilo da ste veterani RPG-a ili početnik u potrazi za velikom avanturom, Tormenta20 nudi ulaz u fantastičan svijet ispunjen junacima, magijom i neizbježnim opasnostima. Dakle, pripremite se za nezaboravno putovanje s Tormentom20. Odaberite svoju rasu, stvorite svoju sudbinu i suočite se s epskim izazovima u svijetu fantastike koji čeka na vašu hrabrost. Okupite svoje prijatelje, uzmite svoje kocke i krenite u ovu uzbudljivu avanturu. Sudbina Artona je u vašim rukama!",
+        "bg": "/static/img/bg/space.webp",
+        "card": {
+          "desc": "Epski fantastični RPG smješten u svijetu Artona, s intuitivnim i fleksibilnim pravilima.",
+          "title": "Tormenta20"
+        },
+        "icon": "/static/img/rpg/Tormenta.svg",
+        "legal": "Tormenta trenutno objavljuje [Jambo izdavačka kuća](https://jamboeditora.com.br/) koja zadržava sva prava. Knjige sustava objavljene su pod licencom [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nema nikakve veze s izdavačem ili kreatorom; Mini Kraken je samo skup alata za pomoć majstorima i igračima različitih sustava, te nemamo njihovu dozvolu za rad. Nabavite Tormenta 20: [Tormenta20 — Izdavanje Igra godine | Amazon](https://amzn.to/3Door6P) [Tormenta20 — Izdavanje Igra godine | Izdavač](https://jamboeditora.com.br/produto/tormenta20-edicao-jogo-do-ano/) [Tormenta20 — Junačko putovanje | Amazon](https://amzn.to/3Door6P) [Tormenta20 — Junačko putovanje | Izdavač](https://jamboeditora.com.br/produto/tormenta20-coracao-rubi/)",
+        "path": "tormenta",
+        "tags": "RPG sustav,Srednjovjekovni,Fantastika"
+      },
+      "3": {
+        "article": "Carbon 2185 je stolni RPG smješten u distopijsku cyberpunk budućnost. Godine 2185., Zemlja je u ruševinama zbog klimatskih promjena i ratova. Moćne megakorporacije kontroliraju društvo, a napredna tehnologija je posvuda. Igrači preuzimaju uloge \"Operativaca\", visoko obučenih pojedinaca koji obavljaju misije kako bi se borili protiv nepravde i otkrivali mračne tajne svijeta. Personalizacija lika: Igrači mogu birati između različitih arhetipova, poput hakera, plaćenika, špijuna ili boraca prsa u prsa, svaki s jedinstvenim sposobnostima. Razvoj vještina: Tijekom igre, igrači mogu poboljšati kibernetske sposobnosti svojih likova i nabaviti futurističko oružje. Donošenje odluka: Izbori igrača utječu na tijek priče, omogućujući im da oblikuju sudbinu svijeta u igri. Sustav bacanja kocki: Igra koristi bacanje kocki i atribute za određivanje uspjeha radnji i borbi.",
+        "bg": "/static/img/bg/cyberpunk.webp",
+        "card": {
+          "desc": "Cyberpunk RPG smješten u distopijsku budućnost, inspiriran Blade Runnerom i Ghost in the Shellom.",
+          "title": "Carbon2185"
+        },
+        "icon": "/static/img/rpg/Carbon.svg",
+        "legal": "Sustav Carbon 2185 kreirao je Robert Marriner-Dodds, a trenutno ga objavljuje [Dragon Turtle Games](https://www.dragonturtlegames.com) koja zadržava sva prava. Knjige sustava objavljene su pod licencom [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) 1.0a. Mini Kraken ima izričitu suglasnost kreatora sustava.",
+        "path": "carbon",
+        "tags": "Sistem RPG-a, Cyberpunk, Distopija, #BoloQueimado"
+      },
+      "4": {
+        "article": "Gaia: Preludio je najnovija moderna reinterpretacija za stolni RPG, donoseći scenarij visoke fantastične srednjovjekovne magije u svijetu Aurorije. U Gajai ćete biti jedinstveni, koračajući putem koji sami kreirate, otključavajući brave Zavjese prema beskonačnosti. U Gajai možete biti što god poželite. Postoji dvadeset i jedan Legat koji definira izgled vašeg lika, uz potpuno prilagodljiv hibridni sustav borbe. Stvorite svoju osobnost na svoj način: Ratnik koji uništava vojske, ali u slobodno vrijeme proučava tajne Zavjese? Odvojite ono što najbolje radite u borbi i izvan nje, kako god želite. Tijekom svoje avanture otključajte Zavjesu u sebi suočavajući se s jedinstvenim stvorenjima iz Homunculariuma, jedinstvenog sustava stvaranja čudovišta, s milijardama (doslovno) mogućih kombinacija! I naravno, bit ćete nagrađeni za to, s Bodovima učenja koji će vam omogućiti da steknete nove moći, nove sposobnosti, na Putevima borbe. Putevi borbe služe vam da oblikujete svog lika na svoj način, tako da lik ne mora slijediti samo jedan Put, već može birati na svoj način. Postoji pet početnih Osnovnih Puteva koji sadrže desetke sposobnosti po izboru, a svaka sposobnost se može poboljšati s jednom od tri opcije Poboljšanja. I u budućnosti, kada razvijete svog lika, moći ćete pristupiti Naprednim Putevima koji donose stotine novih sposobnosti koje će još više poboljšati vaše iskustvo.",
+        "bg": "/static/img/bg/Forest9.webp",
+        "card": {
+          "desc": "RPG visoke fantastične srednjovjekovne magije, s modernim i pojednostavljenim sustavom, gdje je svaki lik jedinstven.",
+          "title": "Gaia: Preludio"
+        },
+        "icon": "/static/img/rpg/Gaia.svg",
+        "legal": "Gaia: Preludio razvija Auroria - Game Studio, koji zadržava sva prava. Knjige sustava objavljene su pod licencom [OPEN GAME LICENSE](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) Verzija 1.0a, i zaštićene su CBL (Hrvatska Književna Zajednica) Mini Kraken posjeduje znanje i ovlaštenje autora Lyy-a za rad, a također preporučujemo da nabavite knjigu i podržite projekt financiranja na [CATARSE](https://www.catarse.me/gaiapreludio)",
+        "path": "gaia",
+        "tags": "Sistem RPG-a, Srednjovjekovni, Fantastični, Inovacija"
+      },
+      "5": {
+        "article": "3DeT Victory: Novi sustav RPG-a koji osvaja maštu igrača. Od svog stvaranja, tisuće avanturista upustilo se u neograničene scenarije, stvarajući jedinstvene likove i istražujući fantastične svjetove. Sada, dolaskom Ere Arka, možete uroniti u urbanu fantastiku punu dimenzionalnih labirinata, od kojih svaki ima svoje opasnosti i blago. Odaberite između pet tematskih jezgri i pripremite se za epsko putovanje. Priručnik 3DeT Victory, koji sadrži potpuna pravila, scenarij Ere Arka i preglede tematskih jezgri, dostupan je putem kolektivnog financiranja na Catarseu. Pridružite se ovoj novoj eri i budite dio uzbudljive avanture! 3DeT Victory nudi niz inovativnih mehanika koje čine iskustvo igre uzbudljivim i zadivljujućim. Evo nekih od glavnih karakteristika i prednosti sustava: Jednostavnost i fleksibilnost: Sustav je dizajniran da bude dostupan igračima svih razina iskustva. Pravila su intuitivna i laka za učenje, što vam omogućuje da se brzo bacite u akciju. Uz to, fleksibilnost sustava omogućuje vam da prilagodite mehaniku prema potrebi kako biste se prilagodili svom stilu igre. Narativ u fokusu: 3DeT Victory stavlja narativ u središte igre. Mehanike potiču stvaranje primamljivih priča, s prostorom za improvizaciju i kreativnost. Igrači mogu oblikovati svijet, razvijati kompleksne likove i istraživati intrigantne zaplete. Tematske jezgre: Pet tematskih jezgri nudi raznolikost i dubinu sustavu. Svaka jezgra predstavlja specifična pravila, jedinstvene likove i različite izazove. Bilo da ste svemirski avanturist, tajni agent ili fantastični junak, postoji jezgra za svačiji ukus. Era Arka: Scenarij Ere Arka je fuzija fantastike i urbanih elemenata. Dimenzionalni labirinti zvani Arke puni su misterija, čudnih stvorenja i skrivenih blaga. Ova atmosfera nudi beskonačne mogućnosti za istraživanje i avanturu. Potpuni priručnik: Priručnik 3DeT Victory je potpuni izvor informacija. Osim osnovnih pravila, predstavlja detalje o Eri Arka, savjete za majstora, prijedloge za avanture i preglede tematskih jezgri. To je ključni vodič za igrače i majstore. Ukratko, 3DeT Victory kombinira jednostavnost, kreativnost i bogatu atmosferu kako bi pružio jedinstveno iskustvo RPG-a. Pridružite se zajednici i otkrijte svijet mogućnosti!",
+        "bg": "/static/img/bg/Forest7.webp",
+        "card": {
+          "desc": "Junaci i zlikovci se suočavaju u epskim bitkama. Magija, tehnologija i fantastična stvorenja se sudaraju.",
+          "title": "3DET Victory"
+        },
+        "icon": "/static/img/rpg/3DET.svg",
+        "legal": "3DET trenutno objavljuje [Izdavačka kuća Jambo](https://jamboeditora.com.br/), koja zadržava sva prava. Knjige sustava objavljene su pod licencom [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a Mini Kraken nema nikakve veze s izdavačem ili kreatorom, Mini Kraken je samo skup alata napravljenih za pomoć majstorima i igračima različitih sustava. Isto tako, nemamo njihovu dozvolu za rad.",
+        "path": "3det",
+        "tags": "Sistem RPG-a, GURPS2, MadeInBrazil"
+      },
+      "6": {
+        "article": "Pathfinder je stolni RPG koji plijeni maštu svojom bogatom pričom i taktičkom kompleksnošću. U Pathfinderu, svaki igrač stvara jedinstvenog lika, birajući između različitih rasa i klasa, od kojih svaka ima svoje posebne sposobnosti i pozadinsku priču. Igrači se upuštaju u epske avanture, suočavajući se s izazovima koji zahtijevaju i lukavost i silu. Igra se upravlja skupom pravila koja pomažu oblikovati svijet i interakcije likova s njim, ali prava magija Pathfindera leži u slobodi koju igrači imaju u oblikovanju svojih priča. Kao RPG, Pathfinder omogućuje neviđenu kreativnu suradnju između igrača i Majstora igre, koji djeluje kao pripovjedač i sudac pravila. Zajedno grade dinamičnu radnju koja se može mijenjati na temelju odluka igrača i bacanja kocke. Taj aspekt igre potiče igrače da se duboko urone u svoje likove i svijet oko sebe, stvarajući uronjivo i osobno iskustvo. Uz to, Pathfinder je poznat po svom detaljnim sustavu prilagodbe, gdje igrači mogu prilagoditi svoje likove širokim rasponom vještina, čarolija i opreme. To omogućuje da svaki lik postane istinski jedinstven, odražavajući izbore i stil igre igrača. S svakom sesijom, likovi rastu u moći i kompleksnosti, suočavajući se s sve većim prijetnjama i otkrivajući misterije koje mogu promijeniti svijet igre. Svijet Pathfindera je mjesto čuda i opasnosti, nastanjen mitskim stvorenjima i različitim narodima. Od dubina najtamnijih tamnica do vrhova najviših planina, heroji Pathfindera istražuju nepoznate teritorije, otkrivaju drevne civilizacije i bore se protiv zlih sila. S svakom avanturom, imaju priliku steći legendarna blaga i stvoriti svoju sudbinu. Ukratko, Pathfinder je više od igre; to je ulaz u fantastične svjetove gdje mašta nema granica. To je poziv na pripovijedanje zajedničkih priča gdje svaki izbor ima težinu i svaki trenutak može postati trajna uspomena. Bilo da ste metodični strateg ili strastveni pripovjedač, Pathfinder nudi bogato i ispunjavajuće iskustvo koje se odvija na načine jedinstvene kao i igrači koji se okupljaju da igraju.",
+        "bg": "/static/img/bg/Forest1.webp",
+        "card": {
+          "desc": "Priča o hrabrim herojima i lukavim zlikovcima u svijetu punom strašnih čudovišta i čarobnih blaga.",
+          "title": "Pathfinder"
+        },
+        "icon": "/static/img/rpg/Pathfinder.svg",
+        "legal": "Pathfinder trenutno objavljuje [NEWORDER](https://newordereditora.com/), koja zadržava sva prava. Knjige sustava objavljene su pod licencom [Verzija OPEN GAME LICENSE](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken nema nikakve veze s izdavačem ili tvorcem; Mini Kraken je samo skup alata napravljenih za pomoć majstorima i igračima različitih sustava. Isto tako, nemamo dopuštenje za rad.",
+        "path": "pathfinder",
+        "tags": "RPG sustav, Fantastika"
+      },
+      "7": {
+        "article": "Čarobnjaci i Prokletstva nude uronjivo iskustvo koje hvata bit animea Jujutsu Kaisen, omogućujući igračima da se urone u svijet u kojem se čarobnjaci bore protiv prokletstava natprirodnim sposobnostima. Kroz detaljan sustav rangiranja, igrači mogu razvijati svoje likove od početnika 4. stupnja do moćnih čarobnjaka posebnog stupnja. S mehanikama poput multiklase i raznolike opreme, igra potiče personalizaciju i strategiju. Uz to, jedinstveni elementi poput integriteta i zavjeta ograničenja dodaju dubinu i izazov, pozivajući igrače da donose značajne odluke koje oblikuju njihova putovanja. Za entuzijaste RPG-a koji traže avanturu punu magije i misterije, \"Čarobnjaci i Prokletstva\" su ulazna točka za obožavatelje animea koji žele početi igrati RPG.",
+        "bg": "/static/img/bg/Forest4.webp",
+        "card": {
+          "desc": "Sustav prilagođava svijet animea, s natprirodnim bitkama. U njemu igrači mogu istražiti mnoge stilove borbi i rituala.",
+          "title": "Čarobnjaci i Prokletstva"
+        },
+        "icon": "/static/img/rpg/Feiticeiros.svg",
+        "legal": "Čarobnjaci i Prokletstva su RPG sustav otvorenog koda autora [Setsugiri](https://setsugiri.carrd.co/) koji koristi [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken ima suglasnost kreatorice sustava za rad. Knjige sustava mogu se preuzeti na poslužitelju [Službenog Discorda](https://discord.com/invite/UGg6QUNNRp).",
+        "path": "feiticeiros",
+        "tags": "RPG sustav, Anime, Magija, Čarobnjaci, Prokletstvo"
+      },
+      "8": {
+        "article": "Dharmar je brazilski RPG sustav otvorene licence, s ciljem pružanja zabavnih i realističnih sesija za apsolutno svaki scenarij. Sustav se temelji na jednostavnom i intuitivnom sustavu bacanja kocke, što igračima i majstorima omogućuje da se usredotoče na priču i interpretaciju likova. Dharmar je fleksibilan i prilagodljiv sustav koji se može lako prilagoditi potrebama različitih skupina igrača i stilova igre. S jasnim i sažetim pravilima, Dharmar je izvrsna opcija za početnike i veterane koji traže zaokružujuće i dinamično RPG iskustvo. Ako tražite pristupačan, zabavan i svestran RPG sustav, Dharmar je savršen izbor za vas. Okupite svoje prijatelje, stvorite svoje likove i krenite na epsku avanturu s Dharmarom!",
+        "bg": "/static/img/bg/Forest7.webp",
+        "card": {
+          "desc": "Brazilski RPG otvorene licence, s ciljem pružanja zabavnih i realističnih sesija za apsolutno svaki scenarij.",
+          "title": "Dharmar"
+        },
+        "icon": "/static/img/rpg/Dharmar.svg",
+        "legal": "Dharmar je RPG sustav otvorenog koda autora [Bruno More Eyes](https://www.instagram.com/brunomoreeyes/). Mini Kraken nema nikakve veze s tvorcem; Mini Kraken je samo skup alata napravljenih za pomoć majstorima i igračima različitih sustava. Isto tako, nemamo dopuštenje za rad. Nabavite: [Dharmar na Amazonu](https://amzn.to/4a3olxF)",
+        "path": "dharmar",
+        "tags": "Sistem RPG-a,Otvoreni kod,Brazil, premium"
+      }
+    }
+  },
+  "premium": {
+    "0": {
+      "desc": "Plan za usamljene vukove koji žele pristupiti resursima sami.",
+      "title": "Ratnik"
+    },
+    "1": {
+      "desc": "Jedan za sve i svi za jednoga, s ovim planom svi na vašem poslužitelju dobivaju pogodnosti!",
+      "title": "Avanturisti"
+    },
+    "2": {
+      "desc": "Za prave ljubitelje Inanimalia Fortune!",
+      "title": "Heroj hobotnice"
+    },
+    "feat": {
+      "0": "+5 Makro utora (po liku)",
+      "1": "+24 Utora za likove",
+      "2": "Dvostruko više prostora za bilješke",
+      "3": "Kreirajte svoj vlastiti Homebrew sustav",
+      "4": "Milijuni Kraken kovanica",
+      "5": "Prioritetna podrška",
+      "6": "Premium funkcije",
+      "7": "Jedan račun",
+      "8": "Jedan poslužitelj",
+      "9": "Ekskluzivne playtestove\n",
+      "10": "Donatorska uloga (Profil i Discord)",
+      "11": "Vrhovna donatorska uloga (Profil i Discord)",
+      "12": "za tri poslužitelja",
+      "98": "Paket za stopala tima & Una Klub\n",
+      "99": "Pjesnička licenca za naplatu developerima.\n"
+    }
+  },
+  "price": {
+    "0": "5R$/mjesečno\n",
+    "1": "5 $/mj.\n",
+    "2": "7 $/mj.\n"
+  },
+  "privacy": {
+    "0": {
+      "desc": "Mini Kraken je u vlasništvu Razvojnih programera koji su odgovorni za prikupljanje i upravljanje Vašim podacima unutar aplikacije. Ovaj dokument objašnjava koje podatke prikupljamo, zašto ih prikupljamo i kako osiguravamo njihovu sigurnost.\n"
+    },
+    "1": {
+      "desc": "Korištenjem aplikacije prikupljamo informacije o Korisniku i Poslužitelju, kao i druge informacije koje Vi pružite (uključujući, ali ne ograničavajući se na: Imena, ID-ove, slike Korisnika i Guildova).  Osim toga, prikupljamo informacije unutar aplikacije, koje se pohranjuju, na primjer, u sustavu RPG kartica. Jedini sadržaj poruka koji se prikuplja nalazi se u sustavu bacanja kockica bez korištenja slash komande. Sadržaj poruka se ne pohranjuje, stoga programeri nemaju pristup njima. Obrada ovih podataka omogućuje funkcioniranje različitih funkcija unutar aplikacije, kao što su identifikacije za spremanje informacija u bazu podataka, individualne postavke aplikacije za svaki guild i korisnika, kao i prilagodbu sučelja aplikacije kako bi se korisniku pružilo poboljšano iskustvo.\n",
+      "title": "Prikupljene informacije\n"
+    },
+    "2": {
+      "desc": "Imate sljedeća prava vezana uz vaše podatke: Pravo na informiranje. Pravo na ispravak. Pravo na brisanje. Pravo na pristup. Pravo na prigovor. Korištenjem aplikacije, smatra se da prihvaćate uvjete i prikupljanje podataka.\n",
+      "title": "Vaša prava\n"
+    },
+    "3": {
+      "desc": "Jamčimo sigurnost informacija koje nam pružate na poslužiteljima i računalima pohranjenima u sigurnim i kontroliranim okruženjima, zaštićenima od neovlaštenog pristupa, korištenja i otkrivanja.  Održavamo administrativne, tehničke i fizičke sigurnosne mjere za zaštitu podataka od neovlaštenog pristupa, korištenja, zaštite i otkrivanja. Međutim, nijedan prijenos podataka putem interneta ne može se jamčiti kao potpuno siguran.\n",
+      "title": "Informacijska sigurnost\n"
+    },
+    "4": {
+      "desc": "Ako želite više informacija o ovoj Politici privatnosti ili pristupiti informacijama vezanim uz vaša individualna prava i vaše osobne podatke, možete otvoriti zahtjev u podršci gildije (/support) ili poslati e-mail na support@arkanus.app.\n",
+      "title": "Kontakt\n"
+    },
+    "5": {
+      "desc": "Partneriramo s Microsoft Clarityjem i Microsoft Advertisingom kako bismo pratili kako koristite i komunicirate s našom web stranicom putem metričkih podataka o ponašanju, heatmapa i reprodukcije sesija, kako bismo poboljšali i prodali naše proizvode/usluge. Podaci o korištenju web stranice prikupljaju se pomoću kolačića prve i treće strane te drugih tehnologija praćenja kako bismo utvrdili popularnost proizvoda/usluga i online aktivnost.  Osim toga, te informacije koristimo za optimizaciju web stranice, sigurnosne/protuprijevarne svrhe i oglašavanje. Za više informacija o tome kako Microsoft prikuplja i koristi vaše podatke, posjetite Izjavu o privatnosti Microsofta https://www.microsoft.com/privacy/privacystatement\n",
+      "title": "Telemetrija\n"
+    },
+    "desc": "Pročitajte Pravila o privatnosti Mini Krakensa. Saznajte kako prikupljamo, koristimo i štitimo vaše podatke.\n",
+    "title": "Politika privatnosti\n"
+  },
+  "system": {
+    "default": {
+      "desc": "Naučite se o sustavu %system% i kako igrati putem Discorda s RPG botom Mini Kraken. Ovaj praktični vodič nudi savjete za istraživanje i maksimalno uživanje u vašim RPG avanturama.\n",
+      "playDiscord": "Kako igrati %system% na Discordu\n",
+      "playDiscordDesc": "%system% je jedan od dostupnih sustava za igranje koristeći Mini Krakena kao pomoć pri bacanju kocke. Postavljanje sustava je jednostavno: upišite /postavi, idite na karticu sustav i postavite ga.  To će vam omogućiti pametne kartice i dinamičke kockice kako biste ubrzali vašu igru. Nakon postavljanja, moći ćete koristiti razne alate za pomoć svojoj igri, poput sustava pametnih kartica dostupnog putem /kartica, koji integrira bacanje kocke. Drugim riječima, kada bacate kockice putem /di, svu matematiku obavlja UNA.\n",
+      "title": "Nauči kako igrati %system% preko Discorda\n"
+    }
+  },
+  "tarot": {
+    "article": {
+      "desc": "Generator nasumičnih tarot karata, koji može nekako pomoći u vođenju kampanje ili igre.\n",
+      "title": "Generator Tarot Karata\n"
+    },
+    "desc": "Generirajte nasumične karte Tarota kako biste poboljšali svoje kampanje ili RPG igre. Istražite Generator Karata Tarota Mini Krakensa za kreativnu inspiraciju.\n",
+    "title": "Karte Tarota\n"
+  },
+  "tos": {
+    "0": {
+      "desc": "Arkanus, u daljnjem tekstu \"razvojna ekipa\", posvećena je razvoju različitih projekata, uključujući, ali ne ograničavajući se na (Mini Kraken BOT, također poznat kao Inanimalia Fortuna Tenebris Verteri). Korištenjem naših usluga, slažete se s dolje navedenim uvjetima. Pristupom našim Uslugama automatski se slažete s uvjetima, odredbama i pravilima o privatnosti navedenim u nastavku. Ako ste punoljetni u vašoj jurisdikciji, ili ako imate između 13 i 18 godina i vaš zakonski skrbnik je pregledao i slaže se s ovim Uvjetima, onda ste njima vezani. Ukoliko se ne slažete s bilo kojim dijelom ovih uvjeta i odredbi, molimo vas da odmah prestanite koristiti naše usluge.\n",
+      "title": "Uvod\n"
+    },
+    "1": {
+      "desc": "Osim ako nije drugačije izričito navedeno, sva prava intelektualnog vlasništva na sadržaju objavljenom u Servisu pripadaju Servisu i njegovim licencjodavcima. Sva prava vezana uz intelektualno vlasništvo su strogo zaštićena, te zadržavamo pravo poduzimanja pravnih mjera, po potrebi, putem naših službenih komunikacijskih kanala.  Niste ovlašteni: - prodavati, iznajmljivati ili podlicencirati bilo koji materijal povezan s Mini Krakenom, Fortunom ili sličnima; - redistribuirati sadržaj Mini Krakensa, Fortune ili sličnih bez izričitog odobrenja; - namjerno pokušavati zaobići sigurnosne mehanizme Servisa na bilo koji način bez prethodnog odobrenja.  Neka područja Servisa nude mogućnost personalizacije od strane korisnika, bez prethodne filtracije ili pregleda s naše strane prije objave. Komentari i personalizacije isključivo reflektiraju mišljenja njihovih autora. U mjeri dopuštenoj primjenjivim zakonom, Servis ne snosi pravnu odgovornost za te komentare/personalizacije ili za bilo kakvu štetu, rizike ili troškove koji proizlaze iz njihove upotrebe, objave ili pojavljivanja u Servisu. Zadržavamo pravo, bez obveze, uklanjanja bilo kojeg komentara ili personalizacije koji smatramo neprimjerenima, uvredljivima ili u suprotnosti s ovim Uvjetima korištenja. Korištenjem našeg Servisa, slažete se da ćete nas štititi i braniti od svih zahtjeva, postupaka, štete, troškova i izdataka koji proizlaze iz ili su povezani s vašom upotrebom Servisa.  Nije dopušteno postavljanje linkova na bilo koju stranicu koja se može protumačiti kao klevetnička, opscena, kriminalna ili koja krši prava trećih strana.Objavljivanjem komentara, personalizacija ili drugog sadržaja u našem Servisu, izjavljujete i jamčite da: imate zakonsko pravo objavljivati ​​taj sadržaj i posjedujete sve potrebne licence i ovlaštenja za to; vaši komentari, personalizacije ili drugi sadržaj ne krše nikakva prava intelektualnog vlasništva trećih strana, uključujući autorska prava, patente ili zaštitne znakove; vaši komentari, personalizacije ili drugi sadržaj ne sadrže klevetnički, uvredljiv, opsceni, neprimjereni ili ilegalni materijal, niti krše privatnost trećih strana; vaši komentari, personalizacije ili drugi sadržaj neće se koristiti za traženje ili promicanje nezakonitih aktivnosti.Objavljivanjem komentara, personalizacija ili drugog sadržaja u našem Servisu, dajete Servisu (uključujući Mini Kraken, Razvojne programere i partnere) nepovratnu, neekskluzivnu, globalnu, besplatnu i podlicencijabilnu licencu za korištenje, reprodukciju, prilagodbu, izmjenu, objavljivanje, prevođenje, stvaranje izvedenih djela, distribuciju, izvođenje i javno prikazivanje takvog sadržaja u bilo kojem formatu, mediju ili tehnologiji koja je trenutno poznata ili će biti razvijena u budućnosti.\n",
+      "title": "Dozvola.\n"
+    },
+    "2": {
+      "desc": "Zadržavamo pravo, po vlastitom nahođenju, izmijeniti ili revidirati ove Uvjete u bilo kojem trenutku, a Vi se slažete da ćete se pridržavati takvih izmjena ili revizija.  Bilo koja promjena ili izmjena stupa na snagu tjedan dana nakon objave na Servisu, a Vaša daljnja uporaba Servisa nakon datuma stupanja na snagu predstavlja Vaše prihvaćanje i suglasnost s takvim promjenama ili izmjenama. Ako osporavate bilo koju promjenu ili izmjenu, Vaše jedino pravno sredstvo je prestanak korištenja usluge. Zadrzavamo si pravo izmijeniti ili prekinuti uslugu (ili njezin dio) u bilo kojem trenutku, s obavijesti ili bez nje, bez ograničenja zbog kršenja uvjeta.\n",
+      "title": "Zaštita Prava i Izmene\n"
+    },
+    "3": {
+      "desc": "U slučajevima kada korisnik poduzme bilo koju od dolje navedenih radnji, može doći do automatskog kršenja uvjeta korištenja, što može imati posljedice od upozorenja do uklanjanja pristupa usluzi i otkazivanja računa ili pristupa usluzi, s ili bez prethodne najave:  Davanje stvarne vrijednosti KC-ima (virtualnim uštedama) i njihova prodaja za novac ili stvarne dobra.  Slanje bilo kojeg neprikladnog sadržaja podršci ili timovima za pregled.  Zlouporaba grešaka ili sustava u svrhu stjecanja prednosti ili oštećenja naše infrastrukture.  Zlouporaba sredstava za podršku.  Pokušaj zaobilaženja bilo kojeg sustava usluge na način koji šteti funkcioniranju usluge ili drugim korisnicima, bez prethodnog odobrenja tima za razvoj.\n",
+      "title": "Zabrane i Odgovornosti Korisnika\n"
+    },
+    "4": {
+      "desc": "Nećemo biti pravno odgovorni za bilo koji sadržaj koji se pojavi na našoj Usluzi, budući da je ona podržana od strane zajednice. U slučaju kršenja intelektualnog vlasništva ili nelagode, korisnik može zatražiti pregled ili uklanjanje jednog ili više sadržaja, otvarajući zahtjev za uklanjanje putem naše Podrške. Ako pronađete bilo koju poveznicu ili sadržaj na našoj Usluzi koji je na bilo koji način uvredljiv ili krši vaša autorska prava, imate pravo i slobodu da nas kontaktirate i obavijestite o problemu u bilo kojem trenutku. Razmotrit ćemo zahtjeve za uklanjanje poveznica i sadržaja, ali nismo obvezni ukloniti bilo koje poveznice s naše usluge niti izravno odgovoriti na vaš zahtjev, osim u slučaju kršenja vaših autorskih prava. Pošaljite e-mail na: podrška@arkanus.app\n",
+      "title": "Odgovornost za Sadržaj\n"
+    },
+    "desc": "Pročitajte Uvjete pružanja usluge Mini Krakensa. Razumite svoja prava i odgovornosti pri korištenju naših usluga.\n",
+    "tags": "Zakonito, Pravno,Uvjeti korištenja, Zakonodavstvo\n",
+    "title": "Uvjeti pružanja usluge\n"
+  }
+}

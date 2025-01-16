@@ -15,6 +15,9 @@ const lang_FLAGS = {
     'pl' : '/static/img/flags/pl.svg',
     'tr' : '/static/img/flags/tr.svg',
     'hu' : '/static/img/flags/hu.svg',
+    'id' : '/static/img/flags/id.svg',
+    'da' : '/static/img/flags/dk.svg',
+    'hr' : '/static/img/flags/hr.svg',
 }   
 
 
@@ -173,7 +176,13 @@ function lang_selector(t, lang, rota) {
                             <a class="dropdown-item d-flex" href="/tr${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.tr}" width="25" height="25" alt="Turkish Lang selector" />Türkçe</span></a>
                             <a class="dropdown-item d-flex" href="/pl${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.pl}" width="25" height="25" alt="Polish Lang selector" />Polski</span></a>
                             <a class="dropdown-item d-flex" href="/hu${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.hu}" width="25" height="25" alt="Hungarian Lang selector" />Magyar</span></a>
-                        </div>
+                            <a class="dropdown-item d-flex" href="/da${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.da}" width="25" height="25" alt="Danish Lang selector" />Danish</span></a>
+                            <a class="dropdown-item d-flex" href="/hr${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.hr}" width="25" height="25" alt="Croatian Lang selector" />Croatian</span></a>
+                            <a class="dropdown-item d-flex" href="/id${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.id}" width="25" height="25" alt="Indonesian Lang selector" />Indonesian</span></a>
+         
+                            
+
+                            </div>
                         </li>
                     `
 }

@@ -1,0 +1,426 @@
+{
+  "PageNotFound": {
+    "btn": "Kembali ke Awal",
+    "desc": "Ups! Sepertinya Anda menemukan halaman yang sudah tidak ada. Jangan khawatir, terkadang hal ini terjadi saat menjelajah. Sementara itu, jelajahi bagian lain situs kami untuk menemukan apa yang Anda cari.",
+    "title": "Halaman Tidak Ditemukan"
+  },
+  "changelogs": {
+    "desc": "Temukan semua pembaruan dan peningkatan terbaru untuk proyek kami melalui halaman catatan rilis kami. Tetap terinformasi tentang setiap versi baru, perbaikan bug, dan fitur yang ditambahkan.",
+    "title": "Pembaruan"
+  },
+  "cmds": {
+    "desc": "Temukan semua perintah yang tersedia di Mini Kraken, sebuah sistem RPG online. Siapkan gim Anda, kelola ekonomi, berinteraksi dengan pemain lain, dan banyak lagi. Jelajahi fitur-fiturnya untuk membuat pengalaman RPG Anda lebih menarik dan dinamis!",
+    "title": "Perintah"
+  },
+  "comum": {
+    "copy": "Salin"
+  },
+  "default": {
+    "desc": "Mini Kraken adalah situs web RPG yang menawarkan alat, artikel, dan konten untuk pemain RPG dan DM. Di sini Anda akan menemukan informasi tentang Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling, dan sistem RPG lainnya."
+  },
+  "dices": {
+    "desc": "Kuasai seni melempar dadu dengan Mini Kraken! Temukan aturan yang eksplosif, batas waktu, simpanan, dan ekspresi numerik untuk meningkatkan permainan RPG Anda.",
+    "page": {
+      "btn": "Lempar Dadu",
+      "desc": "Dadu di dunia TTRPG mungkin sedikit membingungkan pada awalnya, tetapi jangan khawatir, kami di sini untuk membantu Anda. Di bawah ini kami memiliki panduan lengkap tentang cara melempar dengan baik, atlas akan mengajari Anda beberapa trik dan kiat.",
+      "link": "Mini Kraken menggunakan pustaka lemparan dadu untuk melakukan semua lemparan dadu, menawarkan presisi dan fleksibilitas bagi pemain RPG. Dengan alat ini, Anda dapat menjelajahi berbagai kemungkinan, mulai dari lemparan sederhana, seperti 1d20 (satu dadu 20 sisi) atau 3d6 (tiga dadu 6 sisi ditambahkan bersama), hingga kombinasi yang lebih canggih, seperti 2d10+5 (dua dadu 10 sisi dengan bonus +5) atau 4d6kh3 (empat dadu 6 sisi, membuang hasil terendah dan menambahkan tiga tertinggi, ideal untuk membuat atribut karakter). Untuk lebih memahami cara kerja notasi yang digunakan dalam lemparan dan memanfaatkan fungsi ini sepenuhnya, <a href=\"https://dice-roller.github.io/documentation/guide/notation/\" target=\"_blank\">klik di sini</a> dan lihat panduan lengkap dengan contoh praktis.",
+      "title1": "Uji lemparan Anda di sini."
+    },
+    "title": "Sintaks Sistem Pelemparan Dadu"
+  },
+  "donate_text": "Jika Anda sampai sejauh ini, itu karena Anda ingin mendukung proyek ini! Kunjungi server resmi kami dan buka obrolan Tiket,",
+  "footer": {
+    "about": "Tentang",
+    "arkanus": {
+      "desc": "Mengubah mimpi Anda menjadi kenyataan dengan beberapa baris kode."
+    },
+    "legal": "Legal",
+    "map": "Peta Situs",
+    "priv": "Kebijakan Privasi",
+    "quest": "Misi",
+    "start": "Halaman Awal",
+    "team": "Tim",
+    "tos": "Syarat Penggunaan",
+    "util": "Utilitas"
+  },
+  "index": {
+    "dices": {
+      "desc": "Melempar dadu merupakan bagian penting dari petualangan TTRPG. Ini menghadirkan sensasi ketidakpastian, di mana nasib karakter dapat berubah dengan sekali lempar. Biarkan Mini Kraken mengurusnya untuk Anda melalui /d",
+      "subtitle": "Punya dadu di rumah? Tidak? Tidak masalah!",
+      "title": "Melempar Dadu"
+    },
+    "donate": {
+      "btn": "Dukung Proyek",
+      "desc": "Meskipun Mini Kraken gratis, kami meluncurkan Program Pendukung untuk membantu biaya perawatan Proyek, yang bergantung pada mesin yang berjalan 24 jam sehari untuk memproses data dan pengguliran. Setiap donasi berkontribusi langsung untuk menjaga proyek tetap aktif untuk hari berikutnya. Ingat bahwa Proyek tidak menyimpan konten apa pun milik penerbit. Data tersebut berasal dari API eksternal yang bukan milik kami.",
+      "title": "Dukung Proyek Ini"
+    },
+    "features": {
+      "desc": "Mini Kraken adalah bot untuk Discord yang menawarkan berbagai fungsi untuk membantu Anda dalam perjalanan TTRPG Anda. Lempar dadu, kelola inisiatif, buat karakter, gunakan generator nama, dan banyak lagi. Lihatlah sebagian kecil dari semua yang dapat dilakukan Mini Kraken untuk Anda!",
+      "title": "Jelajahi Fungsinya"
+    },
+    "func": {
+      "card": {
+        "0": {
+          "desc": "Jangan buang waktu menghitung kesehatan karakter Anda secara manual. Dengan perintah /edit life, Mini Kraken akan menghitungnya untuk Anda, sehingga Anda dapat fokus bermain.",
+          "title": "Perhitungan Kesehatan"
+        },
+        "1": {
+          "desc": "Bot ini memiliki sistem lempar dadu canggih, yang memungkinkan kombinasi yang berbeda dengan perintah /d. Selain berbagai skin data yang dapat diakses dengan penyimpanan data /data",
+          "title": "Lempar Dadu"
+        },
+        "2": {
+          "desc": "Atur informasi karakter dengan mudah menggunakan Smart Tokens. Dengan perintah sederhana, dengan /ficha Anda dapat membuat dan mengedit lembar karakter, membuat meja Anda lebih gesit dan efisien.",
+          "title": "Lembar Pintar"
+        },
+        "3": {
+          "desc": "Pilih salah satu dari berbagai sistem RPG yang tersedia untuk lebih menyesuaikan kampanye Anda, dan jika itu tidak cukup, buat sistem Anda sendiri.",
+          "title": "Kustomisasi"
+        },
+        "4": {
+          "desc": "Temukan pemain untuk meja RPG Anda dengan mudah menggunakan sistem Pengungkapan Kampanye Fortuna. Dengan perintah /send campaign, jangan buang waktu lagi mencari pemain, biarkan Fortuna membantu Anda!",
+          "title": "Temukan Pemain"
+        },
+        "5": {
+          "desc": "Berbagai generator nama dan huruf untuk membantu pembuatan karakter. Dengan perintah /generate name dan /deck, Anda dapat menghasilkan nama acak, kartu tarot, atau deck untuk memperkaya narasi Anda.",
+          "title": "Generator"
+        },
+        "6": {
+          "desc": "Sistem Ekonomi yang luas yang disebut KC (Kraken Coins) yang dapat diperoleh dengan berbagai cara, berguna untuk fungsi-fungsi seperti skin data dan kustomisasi.",
+          "title": "Ekonomi"
+        },
+        "7": {
+          "desc": "Temukan mantra dan ritual di buku mantra Anda lebih mudah dengan buku mantra kami yang memungkinkan Anda untuk mencari secara real time!",
+          "title": "Buku Mantra"
+        },
+        "8": {
+          "desc": "Fungsi ini belum datang, tetapi rumor mengatakan bahwa itu akan menjadi bestiari komunitas.",
+          "title": "..."
+        }
+      }
+    },
+    "landing": {
+      "text": "Cara Terbaik untuk Bermain **Tabletop RPG** di Discord"
+    },
+    "name": "Bot Tabletop RPG",
+    "sec2": {
+      "desc": "Bot untuk discord, dikembangkan oleh penggemar untuk penggemar, bertujuan untuk membantu pengalaman bermain game RPG favorit Anda. Kami tidak memiliki atau mengklaim hak atas game yang disebutkan. Kami adalah sekelompok programmer dan penggemar yang menyederhanakan sistem RPG untuk membuat pengalaman lebih menyenangkan. Ini bukan produk atau platform resmi, dan kami tidak berafiliasi dengan pembuat game yang disebutkan."
+    },
+    "start": {
+      "btn1": "Tambahkan Fortuna",
+      "desc": "Tingkatkan pengalaman tabletop RPG Anda di Discord! Alat kami dirancang untuk meningkatkan sesi permainan Anda, baik dalam sistem yang lebih banyak roleplay dan lebih sedikit matematika."
+    },
+    "status": {
+      "cmds": "Perintah",
+      "desc": "Lihat beberapa data kinerja untuk Inanimalia Fortuna Tenebris Verteri - bot tabletop RPG terbaik untuk Discord menurut pendapat para pembuatnya. Tetap perbarui kinerja bot Anda dan dapatkan hasil maksimal dari pengalaman Anda.",
+      "guilds": "Guild",
+      "subtitle": "Ada begitu banyak dadu...",
+      "title": "Statistik Proyek",
+      "user": "Pengguna",
+      "version": "Versi"
+    },
+    "system": {
+      "desc": "Dapatkan akses ke alat khusus untuk beberapa sistem favorit Anda, menawarkan lebih banyak kemudahan untuk RPG Anda. (Kami tidak berafiliasi dengan sistem atau penerbitnya.)",
+      "subtitle": "Sistem yang memiliki alat",
+      "title": "Lembar Otomatis untuk petualangan Anda!"
+    }
+  },
+  "join_server_btn": "Gabung Guild Resmi",
+  "lang": "id",
+  "misc": {
+    "btn": {
+      "gencard": "Buat Kartu"
+    },
+    "gen": {
+      "all": "Semua Nama",
+      "fem": "Perempuan",
+      "male": "Laki-laki"
+    }
+  },
+  "names": {
+    "article": {
+      "all": "Semua",
+      "btn": "Buat Nama",
+      "desc": "Generator nama karakter ini dibuat untuk menjadi titik awal bagi Anda, membantu Anda menulis Buku, Kampanye RPG, atau permainan. Jika Anda mencari nama untuk karakter Anda, Anda berada di tempat yang tepat.",
+      "female": "Perempuan",
+      "male": "Laki-laki",
+      "title": "Generator Nama"
+    }
+  },
+  "nav": {
+    "acervo": "Koleksi",
+    "add": "Tambahkan Aplikasi",
+    "dices": {
+      "desc": "Uji dan pelajari cara melempar dadu.",
+      "title": "Pelemparan Dadu"
+    },
+    "docs": {
+      "changelogs": {
+        "desc": "Lihat riwayat pembaruan bot.",
+        "name": "Catatan Perubahan"
+      },
+      "cmds": {
+        "docs": "Lihat daftar perintah.",
+        "title": "Daftar Perintah"
+      },
+      "dices": {
+        "desc": "Panduan tentang cara melempar dadu di bot.",
+        "names": "Notasi Dadu"
+      },
+      "title": "Dokumentasi"
+    },
+    "donate": "Dukung Proyek",
+    "guide": "Panduan",
+    "lang": {
+      "title": "Bahasa"
+    },
+    "support": "Komunitas",
+    "tools": {
+      "names": {
+        "desc": "Buat nama untuk karakter Anda.",
+        "title": "Pembuat Nama"
+      },
+      "poker": {
+        "desc": "Ambil kartu acak dari dek.",
+        "name": "Kartu Poker"
+      },
+      "tarot": {
+        "desc": "Ambil kartu dari dek ramalan.",
+        "name": "Kartu Tarot"
+      },
+      "title": "Alat"
+    }
+  },
+  "poker": {
+    "article": {
+      "desc": "Generator kartu remi acak, yang dapat membantu dalam pembuatan kampanye atau permainan.",
+      "title": "Generator Kartu Poker"
+    },
+    "cards": {
+      "type": {
+        "0": "Semua Jenis Kartu",
+        "1": "Sekop",
+        "2": "Keriting",
+        "3": "Hati",
+        "4": "Wajik"
+      }
+    },
+    "desc": "Buat kartu remi acak untuk kampanye RPG atau permainan Anda. Tingkatkan cerita Anda dengan Generator Kartu Poker.",
+    "title": "Kartu Poker"
+  },
+  "posts": {
+    "sistemas": {
+      "0": {
+        "article": "Dungeons & Dragons, permainan peran meja legendaris, terus memikat imajinasi pemain dari segala usia di seluruh dunia. Selama beberapa dekade, permainan epik ini telah membawa pemain ke dunia fantasi yang penuh dengan bahaya, harta karun, dan petualangan yang tak terlupakan. Dalam Dungeons & Dragons, pemain memiliki kesempatan untuk menciptakan karakter unik mereka sendiri dan memulai perjalanan yang mengasyikkan. Mereka dapat memilih dari berbagai ras, seperti elf, kurcaci, dan manusia, dan kelas, seperti prajurit, penyihir, dan penjaga hutan, masing-masing dengan kemampuan dan karakteristik khusus. Mekanisme permainan didasarkan pada kombinasi pelemparan dadu dan imajinasi. Game Master, juga dikenal sebagai Dungeon Master (DM), bertanggung jawab untuk menciptakan dunia, menceritakan kisah dan memainkan NPC (karakter non-pemain), sementara pemain membuat keputusan, menjelajahi lingkungan yang berbahaya, menghadapi monster, dan mengungkap misteri. Dungeons & Dragons adalah permainan kolaboratif, di mana imajinasi dan interaksi antar pemain memainkan peran mendasar. Bersama-sama, mereka menghadapi tantangan epik, memecahkan teka-teki yang menarik, dan menjalin ikatan persahabatan di tengah aksi dan bahaya. Permainan ini juga mendorong kreativitas, memungkinkan pemain untuk menyesuaikan dan mengembangkan cerita dan karakter mereka dari waktu ke waktu. Selain petualangan yang mengasyikkan, Dungeons & Dragons memberi pemain kesempatan untuk terhubung dalam komunitas yang dinamis. Pertemuan langsung di meja permainan, konvensi yang didedikasikan untuk RPG, dan platform online menyatukan penggemar dari seluruh dunia, berbagi pengalaman, kiat, dan menciptakan kenangan abadi. Dengan mitologi yang kaya, banyak sekali suplemen dan ekspansi, dan basis penggemar yang bersemangat, Dungeons & Dragons tetap menjadi ikon dari dunia permainan meja. Melalui permainan ini, batasan imajinasi ditantang, persahabatan diperkuat, dan petualangan epik dialami dengan setiap lemparan dadu. Jadi, kumpulkan teman-teman Anda, ambil dadu Anda, dan bersiaplah untuk menyelami dunia sihir dan petualangan dengan Dungeons & Dragons. Meja sudah diatur, takdir menanti, dan kemuliaan ada dalam jangkauan Anda. Apa yang Anda tunggu untuk bergabung dengan perjalanan luar biasa ini?",
+        "bg": "/static/img/bg/dnd.webp",
+        "card": {
+          "desc": "RPG fantasi legendaris yang memungkinkan pemain untuk menciptakan cerita mereka sendiri di dunia pedang dan sihir.",
+          "title": "Dungeons & Dragons"
+        },
+        "icon": "/static/img/rpg/DND.svg",
+        "legal": "Sistem Dungeons & Dragons saat ini milik [Wizards Of The Coast](https://company.wizards.com/en) yang memiliki semua hak cipta. Buku-buku sistem diterbitkan di bawah lisensi [OPEN GAME LICENSE Version 1.1](https://en.wikipedia.org/wiki/Open_Game_License) Mini Kraken tidak memiliki hubungan dengan penerbit atau pencipta, Mini Kraken hanyalah sekumpulan alat yang dibuat untuk membantu master dan pemain dari berbagai sistem. dengan cara yang sama bahwa kami tidak memiliki otorisasi mereka untuk beroperasi.",
+        "path": "dnd",
+        "tags": "Sistem RPG,Fantasi, Abad Pertengahan, Dungeons & Dragons"
+      },
+      "1": {
+        "article": "Paranormal Order adalah permainan peran meja baru yang membawa pemain ke dunia yang dipenuhi dengan misteri dan fenomena supranatural. Dalam setting yang gelap dan menarik ini, rahasia tersembunyi dan entitas jahat mengancam umat manusia, dan hanya agen Paranormal Order yang berani yang dapat menghadapi ancaman ini. Dalam permainan, pemain berperan sebagai agen paranormal, anggota organisasi rahasia yang didedikasikan untuk melindungi dunia dari bahaya yang tidak diketahui. Setiap agen memiliki kemampuan khusus, seperti kemampuan melihat jauh, pengendalian energi, kemampuan berkomunikasi dengan roh, dan persepsi yang tajam, yang membantu mereka menghadapi tantangan supranatural yang mereka temui dalam perjalanan mereka. Saat pemain maju melalui misi, karakter mereka mendapatkan pengalaman dan mengembangkan kemampuan paranormal baru, menjadi lebih mahir dalam menghadapi hal-hal supranatural. Evolusi karakter memungkinkan pemain untuk menyesuaikan keterampilan mereka sesuai dengan gaya bermain mereka dan mempersiapkan diri untuk tantangan yang lebih besar. Paranormal Order menawarkan pengalaman yang menarik dan mendalam bagi penggemar RPG meja dan pecinta cerita supranatural. Dengan plot yang menarik dan mekanisme yang menawan, permainan menjanjikan untuk membawa pemain ke dunia suspensi dan misteri, di mana mereka harus menggunakan kecerdasan dan keberanian mereka untuk melindungi umat manusia dari kekuatan di luar batas. Bersiaplah untuk menghadapi hal yang tidak diketahui dan temukan rahasia gelap saat Anda memainkan Paranormal Order. Kumpulkan teman-teman Anda, pilih kemampuan paranormal Anda, dan mulailah petualangan yang menarik ini di mana garis antara kenyataan dan supranatural menjadi kabur. Nasib dunia paranormal ada di tangan Anda!",
+        "bg": "/static/img/bg/ordem.webp",
+        "card": {
+          "desc": "Sebuah dunia investigasi paranormal, di mana agen melawan kekuatan supranatural dan melindungi realita kita.",
+          "title": "Ordem Paranormal"
+        },
+        "icon": "/static/img/rpg/Ordem.svg",
+        "legal": "Ordem Paranormal diciptakan oleh Rafael Lange \"Cellbit\" Lange dan saat ini diterbitkan oleh [Editora Jambo](https://jamboeditora.com.br/) yang memiliki semua hak cipta. Buku-buku sistem diterbitkan di bawah lisensi [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken tidak memiliki hubungan dengan penerbit atau pencipta, Mini Kraken hanyalah sekumpulan alat yang dibuat untuk membantu master dan pemain dari sistem yang berbeda. Dengan cara yang sama, kami tidak memiliki izin mereka untuk beroperasi.",
+        "path": "ordem",
+        "tags": "Sistem RPG,Urban,Paranormal,Investigasi"
+      },
+      "2": {
+        "article": "Tormenta20, RPG tabletop yang terkenal, kembali dengan edisi baru yang menjanjikan untuk membenamkan pemain dalam dunia fantasi epik yang penuh emosi. Sejak rilis aslinya, Tormenta telah memikat imajinasi penggemar RPG dengan cerita-cerita yang memikat, karakter-karakter yang menawan, dan aturan-aturan yang dinamis. Dalam edisi baru, Tormenta20 terus menjelajahi benua Arton yang luas, sebuah latar yang kaya dan hidup dengan mitologi yang unik. Pemain memiliki kebebasan untuk menciptakan pahlawan mereka sendiri, memilih dari berbagai ras dan kelas, dari pejuang terhormat hingga penyihir yang kuat dan penjahat yang licik. Mekanisme permainan didasarkan pada sistem aturan yang diperbarui yang menggabungkan kesederhanaan dan kedalaman strategis. Pemain menghadapi tantangan yang menarik, memecahkan teka-teki yang menarik, dan melawan makhluk berbahaya dalam pertempuran taktis. Perkembangan karakter memungkinkan mereka untuk memperoleh keterampilan dan kekuatan khusus, menjadi pahlawan legendaris sejati. Dengan warisan yang abadi dan basis penggemar yang berdedikasi, Tormenta20 terus memikat pemain dari segala usia dan tingkat pengalaman. Baik Anda seorang veteran game role-playing atau pemula yang mencari petualangan hebat, Tormenta20 menawarkan gerbang ke dunia fantastis yang dipenuhi dengan pahlawan, sihir, dan bahaya yang membayangi. Jadi bersiaplah untuk memulai perjalanan yang tak terlupakan dengan Tormenta20. Pilih ras Anda, tempa takdir Anda, dan hadapi tantangan epik di dunia fantasi yang menanti keberanian Anda. Kumpulkan teman-teman Anda, dapatkan data Anda, dan mulailah petualangan seru ini. Nasib Arton ada di tangan Anda!",
+        "bg": "/static/img/bg/space.webp",
+        "card": {
+          "desc": "RPG fantasi epik yang berlatar di dunia Arton, dengan aturan yang intuitif dan fleksibel.",
+          "title": "Tormenta20"
+        },
+        "icon": "/static/img/rpg/Tormenta.svg",
+        "legal": "Tormenta saat ini diterbitkan oleh [Editora Jambo](https://jamboeditora.com.br/) yang memiliki semua hak cipta. Buku-buku sistem diterbitkan di bawah lisensi [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken tidak memiliki hubungan dengan penerbit atau pencipta, Mini Kraken hanyalah sekumpulan alat yang dibuat untuk membantu master dan pemain dari sistem yang berbeda. Dengan cara yang sama, kami tidak memiliki izin mereka untuk beroperasi.",
+        "path": "tormenta",
+        "tags": "Sistem RPG, Abad Pertengahan, Fantasi"
+      },
+      "3": {
+        "article": "Carbon 2185 adalah permainan peran meja yang berlatar di masa depan dystopian dan cyberpunk. Di tahun 2185, Bumi hancur karena perubahan iklim dan perang. Megakorporasi yang kuat mengendalikan masyarakat dan teknologi canggih ada di mana-mana. Pemain berperan sebagai \"Operatif,\" individu yang terlatih tinggi yang melakukan misi untuk memerangi ketidakadilan dan mengungkap rahasia gelap dunia. Kustomisasi Karakter: Pemain dapat memilih di antara berbagai arketipe, seperti peretas, tentara bayaran, mata-mata, atau petarung jarak dekat, masing-masing dengan kemampuan unik. Pengembangan Keterampilan: Sepanjang permainan, pemain dapat meningkatkan kemampuan cybernetic karakter mereka dan memperoleh senjata futuristik. Pengambilan Keputusan: Pilihan pemain memengaruhi arah narasi, memungkinkan mereka untuk membentuk nasib dunia dalam permainan. Sistem lemparan dadu: Permainan menggunakan lemparan dadu dan atribut untuk menentukan keberhasilan tindakan dan pertempuran.",
+        "bg": "/static/img/bg/cyberpunk.webp",
+        "card": {
+          "desc": "RPG cyberpunk yang berlatar di masa depan dystopian, terinspirasi oleh Blade Runner dan Ghost in the Shell.",
+          "title": "Carbon2185"
+        },
+        "icon": "/static/img/rpg/Carbon.svg",
+        "legal": "Sistem Carbon 2185 diciptakan oleh Robert Marriner-Dodds dan saat ini diterbitkan oleh [Dragon Turtle Games](https://www.dragonturtlegames.com) yang memiliki semua hak cipta. Buku-buku sistem diterbitkan di bawah lisensi [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) 1.0a. Mini Kraken memiliki persetujuan eksplisit dari pencipta sistem.",
+        "path": "carbon",
+        "tags": "Sistem RPG, Cyberpunk, Distopia, #BoloQueimado\n"
+      },
+      "4": {
+        "article": "Gaia: The Prelude adalah penafsiran ulang modern terbaru dari RPG tabletop, membawa setting fantasi tinggi abad pertengahan ke dunia magis Auroria. Di Gaia, kamu akan unik, melangkah di jalan yang kamu tempuh sendiri, membuka kunci-kunci Veil menuju keabadian. Di Gaia, kamu bisa menjadi apa pun yang kamu inginkan. Ada dua puluh satu Legasi yang menentukan penampilan karaktermu, selain sistem pertarungan hibrida yang sepenuhnya dapat dikustomisasi. Ciptakan kepribadianmu dengan caramu sendiri: Seorang prajurit yang menghancurkan pasukan, tetapi mempelajari rahasia Veil di waktu luangnya? Pisahkan apa yang terbaik kamu lakukan di dalam dan di luar pertempuran sesukamu. Selama petualanganmu, buka kunci Veil di dalam dirimu dengan menghadapi makhluk unik dari Homuncularium, sistem penciptaan monster unik, dengan miliaran (benar-benar) kombinasi yang mungkin! Dan tentu saja, kamu akan dihargai untuk ini, dengan Learning Points yang akan membuatmu memperoleh kekuatan baru, keterampilan baru, di Combat Paths. Combat Paths memungkinkanmu untuk membentuk karaktermu dengan caramu sendiri, artinya karakter tidak perlu mengikuti satu Path saja, melainkan memilih jalannya sendiri. Ada lima Basic Paths awal yang berisi puluhan keterampilan untuk dipilih, dan setiap keterampilan juga dapat ditingkatkan dengan salah satu dari tiga opsi Enhancement. Dan di masa depan, ketika kamu mengembangkan karaktermu, kamu akan dapat mengakses Advanced Paths yang membawa ratusan keterampilan baru yang lebih meningkatkan pengalamanmu.\n",
+        "bg": "/static/img/bg/Forest9.webp",
+        "card": {
+          "desc": "RPG fantasi tinggi abad pertengahan, dengan sistem modern dan sederhana, di mana setiap karakter unik.\n",
+          "title": "Gaia: The Prelude"
+        },
+        "icon": "/static/img/rpg/Gaia.svg",
+        "legal": "Gaia: The Prelude dikembangkan oleh Auroria - Game Studio, yang memiliki semua hak cipta. Buku-buku sistem diterbitkan di bawah lisensi [OPEN GAME LICENSE](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) Versi 1.0a, dan dilindungi oleh CBL (Câmara Brasileira do Livro). Mini Kraken memiliki pengetahuan dan izin dari penulis Lyy untuk beroperasi,  selain itu kami sarankan Anda membeli buku dan mendukung proyek pendanaannya di [CATARSE](https://www.catarse.me/gaiapreludio).\n",
+        "path": "Please provide the content you want me to translate into Indonesian (using the 'gaia' locale, which I assume is a typo and should be 'id').  I need the text to be able to translate it.\n",
+        "tags": "Sistem RPG, Abad Pertengahan, Fantasi, Inovasi\n"
+      },
+      "5": {
+        "article": "Kemenangan 3DeT: Sistem RPG baru yang memikat imajinasi para pemain. Sejak penciptaannya, ribuan petualang telah menjelajahi skenario tanpa batas, menciptakan karakter unik dan menjelajahi dunia fantasi. Kini, dengan datangnya Zaman Ark, Anda dapat membenamkan diri dalam fantasi urban yang penuh dengan labirin dimensi, masing-masing dengan bahaya dan harta karunnya sendiri. Pilih di antara lima inti bertema dan bersiaplah untuk perjalanan epik. Manual Kemenangan 3DeT, yang berisi aturan lengkap, skenario Zaman Ark, dan pratinjau inti tematik, sedang dalam penggalangan dana di Catarse. Bergabunglah dengan era baru ini dan jadilah bagian dari petualangan seru ini! Kemenangan 3DeT menawarkan serangkaian mekanisme inovatif yang membuat pengalaman bermain game menjadi menarik dan mendalam. Berikut adalah beberapa fitur dan keuntungan utama dari sistem ini: Kesederhanaan dan Fleksibilitas: Sistem ini dirancang agar mudah diakses oleh pemain dari semua tingkat pengalaman. Aturannya intuitif dan mudah dipelajari, memungkinkan Anda untuk segera terjun ke dalam aksi. Selain itu, fleksibilitas sistem memungkinkan Anda untuk menyesuaikan mekanisme sesuai kebutuhan untuk menyesuaikan gaya bermain Anda. Naratif sebagai Fokus: Kemenangan 3DeT menempatkan narasi di jantung permainan. Mekanismenya mendorong terciptanya cerita yang memikat, dengan ruang untuk improvisasi dan kreativitas. Pemain dapat membentuk dunia, mengembangkan karakter yang kompleks, dan menjelajahi plot yang menarik. Inti Tematik: Lima inti tematik menawarkan variasi dan kedalaman pada sistem. Setiap inti memiliki aturan spesifik, karakter unik, dan tantangan yang berbeda. Baik Anda seorang petualang luar angkasa, agen rahasia, atau pahlawan fantasi, ada inti untuk semua orang. Zaman Ark: Pengaturan Zaman Ark adalah perpaduan antara unsur fantasi dan urban. Labirin dimensi yang disebut Ark penuh dengan misteri, makhluk aneh, dan harta karun tersembunyi. Pengaturan ini menawarkan kemungkinan tak terbatas untuk eksplorasi dan petualangan. Manual Lengkap: Manual Kemenangan 3DeT adalah sumber informasi lengkap. Selain aturan dasar, ia menyajikan detail tentang Zaman Ark, kiat-kiat ahli, saran petualangan, dan pratinjau inti tematik. Ini adalah panduan penting bagi pemain dan GM. Singkatnya, Kemenangan 3DeT menggabungkan kesederhanaan, kreativitas, dan pengaturan yang kaya untuk memberikan pengalaman RPG yang unik. Bergabunglah dengan komunitas dan temukan dunia kemungkinan!\n",
+        "bg": "/static/img/bg/Forest7.webp",
+        "card": {
+          "desc": "Pahlawan dan penjahat berbenturan dalam pertempuran epik. Sihir, teknologi, dan makhluk fantastis bertabrakan.\n",
+          "title": "3DET Victory"
+        },
+        "icon": "/static/img/rpg/3DET.svg",
+        "legal": "3DET saat ini diterbitkan oleh [Editora Jambo](https://jamboeditora.com.br/) yang memiliki semua hak cipta. Buku-buku sistem diterbitkan di bawah lisensi [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken tidak memiliki hubungan dengan penerbit atau pencipta, Mini Kraken hanyalah sekumpulan alat yang dibuat untuk membantu master dan pemain dari berbagai sistem. Dengan cara yang sama, kami tidak memiliki otorisasi mereka untuk beroperasi.\n",
+        "path": "3det",
+        "tags": "Sistem RPG, GURPS2.\n"
+      },
+      "6": {
+        "article": "Pathfinder adalah permainan peran meja (tabletop role-playing game) yang memikat imajinasi dengan narasinya yang kaya dan kompleksitas taktisnya. Dalam Pathfinder, setiap pemain menciptakan karakter unik, memilih dari berbagai ras dan kelas, masing-masing dengan kemampuan dan latar belakang khusus mereka sendiri. Pemain memulai petualangan epik, menghadapi tantangan yang membutuhkan kecerdasan dan kekuatan brutal. Permainan diatur oleh seperangkat aturan yang membantu membentuk dunia dan interaksi karakter dengannya, tetapi keajaiban sejati Pathfinder terletak pada kebebasan pemain untuk membentuk cerita mereka sendiri. Sebagai permainan peran, Pathfinder memungkinkan kolaborasi kreatif yang belum pernah terjadi sebelumnya antara pemain dan Game Master, yang berfungsi sebagai narator dan arbiter aturan. Bersama-sama, mereka membangun alur cerita yang dinamis yang dapat berubah berdasarkan keputusan pemain dan lemparan dadu. Aspek permainan ini mendorong pemain untuk menyelami karakter mereka dan dunia di sekitar mereka, menciptakan pengalaman yang mendalam dan personal.  Selain itu, Pathfinder dikenal karena sistem kustomisasinya yang detail, di mana pemain dapat memodifikasi karakter mereka dengan berbagai macam keterampilan, mantra, dan peralatan. Ini memungkinkan setiap karakter untuk menjadi benar-benar unik, mencerminkan pilihan dan gaya bermain pemain. Dengan setiap sesi, karakter tumbuh dalam kekuatan dan kompleksitas, menghadapi ancaman yang semakin besar dan mengungkap misteri yang dapat mengubah dunia permainan. Dunia Pathfinder adalah tempat yang menakjubkan dan berbahaya, dihuni oleh makhluk mitos dan berbagai macam orang. Dari kedalaman penjara bawah tanah tergelap hingga puncak gunung tertinggi, pahlawan Pathfinder menjelajahi wilayah yang tidak dikenal, menemukan peradaban kuno, dan melawan kekuatan jahat. Dengan setiap petualangan, mereka memiliki kesempatan untuk memperoleh harta legendaris dan menempa takdir mereka sendiri. Singkatnya, Pathfinder lebih dari sekadar permainan; Ini adalah gerbang menuju dunia fantasi di mana imajinasi tidak mengenal batas. Ini adalah undangan untuk menceritakan kisah kolektif di mana setiap pilihan memiliki bobot dan setiap momen dapat menjadi kenangan abadi. Baik Anda seorang ahli strategi yang teliti atau seorang pendongeng yang bersemangat, Pathfinder menawarkan pengalaman yang kaya dan bermanfaat yang terungkap dengan cara yang unik seperti pemain yang berkumpul untuk bermain.\n",
+        "bg": "/static/img/bg/Forest1.webp",
+        "card": {
+          "desc": "Kisah para pahlawan pemberani dan penjahat licik di dunia yang penuh dengan monster mengerikan dan harta karun menakjubkan.",
+          "title": "Pathfinder"
+        },
+        "icon": "/static/img/rpg/Pathfinder.svg",
+        "legal": "Pathfinder saat ini diterbitkan oleh [NEWORDER](https://newordereditora.com/) yang memiliki semua hak cipta. Buku-buku sistem ini diterbitkan di bawah lisensi [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken tidak memiliki hubungan dengan penerbit atau pencipta, Mini Kraken hanyalah seperangkat alat yang dibuat untuk membantu para master dan pemain dari berbagai sistem. Dengan cara yang sama kami tidak memiliki izin dari mereka untuk beroperasi.",
+        "path": "pathfinder",
+        "tags": "Sistem RPG, Fantasi"
+      },
+      "7": {
+        "article": "Feiticeiros dan Maldições menawarkan pengalaman mendalam yang menangkap esensi anime Jujutsu Kaisen, memungkinkan pemain untuk membenamkan diri dalam dunia di mana para penyihir melawan kutukan dengan kemampuan supernatural. Melalui sistem peringkat detail, pemain dapat mengembangkan karakter mereka dari peringkat 4 pemula hingga penyihir peringkat spesial yang kuat. Dengan mekanik seperti multiclassing dan peralatan yang bervariasi, permainan mendorong kustomisasi dan strategi. Selain itu, elemen unik seperti Integritas dan Sumpah Batas menambah kedalaman dan tantangan, mengundang pemain untuk membuat pilihan bermakna yang membentuk perjalanan mereka. Bagi penggemar RPG yang mencari petualangan penuh sihir dan misteri, \"Feiticeiros dan Maldições\" adalah pintu gerbang bagi penggemar anime yang ingin mulai memainkan permainan peran.",
+        "bg": "/static/img/bg/Forest4.webp",
+        "card": {
+          "desc": "Sistem ini mengadaptasi dunia anime, dengan pertarungan supernatural. Di dalamnya, pemain dapat menjelajahi berbagai gaya bertarung dan ritual.",
+          "title": "Feiticeiros e Maldições"
+        },
+        "icon": "/static/img/rpg/Feiticeiros.svg",
+        "legal": "Feiticeiros e Maldições adalah sistem RPG Open Source yang dibuat oleh penulis [Setsugiri](https://setsugiri.carrd.co/) Menggunakan [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken memiliki izin dari pencipta sistem untuk beroperasi. Buku-buku sistem dapat diunduh dari server [Official Discord](https://discord.com/invite/UGg6QUNNRp)",
+        "path": "feiticeiros",
+        "tags": "Sistem RPG, Anime, Sihir"
+      },
+      "8": {
+        "article": "Dharmar adalah sistem RPG Brasil berlisensi terbuka yang bertujuan untuk memberikan sesi yang menyenangkan dan realistis untuk setiap skenario. Sistem ini didasarkan pada sistem lempar dadu yang sederhana dan intuitif yang memungkinkan pemain dan GM untuk fokus pada narasi dan permainan peran. Dharmar adalah sistem yang fleksibel dan mudah beradaptasi yang dapat dengan mudah disesuaikan untuk memenuhi kebutuhan berbagai kelompok pemain dan gaya bermain. Dengan aturan yang jelas dan ringkas, Dharmar adalah pilihan yang sangat baik untuk pemain pemula dan veteran yang mencari pengalaman RPG yang menarik dan dinamis. Jika Anda mencari sistem RPG yang mudah diakses, menyenangkan, dan serbaguna, Dharmar adalah pilihan yang tepat untuk Anda. Kumpulkan teman-teman Anda, ciptakan karakter Anda, dan mulailah petualangan epik dengan Dharmar!",
+        "bg": "/static/img/bg/Forest7.webp",
+        "card": {
+          "desc": "Sistem RPG Brasil berlisensi terbuka, dibuat dengan tujuan untuk memberikan sesi yang menyenangkan, sederhana, dan realistis untuk setiap skenario RPG.",
+          "title": "Dharmar"
+        },
+        "icon": "/static/img/rpg/Dharmar.svg",
+        "legal": "Dharmar adalah sistem RPG Open Source yang dibuat oleh penulis [Bruno More Eyes](https://www.instagram.com/brunomoreeyes/) Mini Kraken tidak memiliki hubungan dengan pencipta, Mini Kraken hanyalah seperangkat alat yang dibuat untuk membantu para master dan pemain dari berbagai sistem. Dengan cara yang sama kami tidak memiliki izin dari mereka untuk beroperasi. Pembelian: [Dharmar di Amazon](https://amzn.to/4a3olxF)",
+        "path": "dharmar",
+        "tags": "Sistem RPG, Sumber Terbuka, Brasil, premium"
+      }
+    }
+  },
+  "premium": {
+    "0": {
+      "desc": "Rencana untuk Serigala Tunggal yang Ingin Mengakses Sumber Daya Sendiri.",
+      "title": "Prajurit"
+    },
+    "1": {
+      "desc": "Satu untuk semua dan semua untuk satu, dengan rencana ini semua orang di server Anda mendapat manfaat!",
+      "title": "Petualang"
+    },
+    "2": {
+      "desc": "Untuk pecinta sejati Inanimalia Fortuna!",
+      "title": "Pahlawan Gurita"
+    },
+    "feat": {
+      "0": "+5 Slot Makro (per karakter)",
+      "1": "+24 Slot Karakter",
+      "2": "Ruang catatan dua kali lipat",
+      "3": "Buat sistem Homebrew Anda sendiri",
+      "4": "Jutaan Koin Kraken",
+      "5": "Dukungan Prioritas",
+      "6": "Fitur premium",
+      "7": "Satu Akun",
+      "8": "Satu Guild",
+      "9": "Test Play Eksklusif",
+      "10": "Posisi Donatur (Profil dan Discord)",
+      "11": "Posisi Donatur Tertinggi (Profil dan Discord)",
+      "12": "Untuk Tiga Guild",
+      "98": "Paket Kaki Tim dan Clube da Una",
+      "99": "Lisensi Puitis untuk Meminta Pengembang"
+    }
+  },
+  "price": {
+    "0": "$3/Bulan",
+    "1": "$5/Bulan",
+    "2": "$7/Bulan"
+  },
+  "privacy": {
+    "0": {
+      "desc": "Mini Kraken dimiliki oleh Pengembang yang bertanggung jawab untuk mengumpulkan dan mengelola Data Anda dalam aplikasi. Dokumen ini menjelaskan data apa yang dikumpulkan, alasan pengumpulannya, dan bagaimana kami menjaga keamanan data ini."
+    },
+    "1": {
+      "desc": "Saat menggunakan aplikasi, kami mengumpulkan informasi Pengguna dan Server di samping informasi lain yang Anda berikan (Termasuk, tetapi tidak terbatas pada: Nama, ID, Gambar Pengguna dan Guild). Selain itu, kami mengumpulkan informasi dalam aplikasi, yang disimpan sebagai contoh sistem token RPG. Satu-satunya konten pesan yang dikumpulkan terjadi dalam sistem dadu tanpa adanya slash. Konten pesan tidak disimpan, sehingga pengembang tidak memiliki akses ke dalamnya. Pemrosesan data ini memungkinkan pengoperasian berbagai fungsi dalam aplikasi, seperti identifikasi untuk menyimpan informasi dalam database, pengaturan aplikasi individual untuk setiap guild dan pengguna, serta penyesuaian antarmuka aplikasi untuk memberikan pengalaman pengguna yang lebih baik.",
+      "title": "Informasi yang Dikumpulkan"
+    },
+    "2": {
+      "desc": "Anda memiliki hak-hak berikut yang dijamin terkait data Anda: Hak untuk diinformasikan. Hak untuk perbaikan. Hak untuk menghapus. Hak untuk verifikasi. Hak untuk keberatan. Dengan menggunakan aplikasi, dipahami bahwa Anda setuju dengan ketentuan dan data yang dikumpulkan.",
+      "title": "Hak Anda"
+    },
+    "3": {
+      "desc": "Kami menjamin keamanan informasi yang Anda berikan pada server dan komputer yang disimpan di lingkungan yang aman dan terkendali, terlindungi dari akses, penggunaan, dan pengungkapan yang tidak sah. Kami mempertahankan langkah-langkah keamanan administratif, teknis, dan fisik untuk melindungi data dari akses, penggunaan, perlindungan, dan pengungkapan yang tidak sah. Namun, tidak ada transmisi data melalui Internet yang dapat dijamin sepenuhnya aman.",
+      "title": "Keamanan Informasi"
+    },
+    "4": {
+      "desc": "Jika Anda ingin informasi lebih lanjut tentang Kebijakan Privasi ini atau mengakses informasi terkait hak individu dan Informasi Pribadi Anda, Anda dapat membuka tiket di dukungan guild (/support) atau mengirim email ke support@arkanus.app.",
+      "title": "Kontak"
+    },
+    "5": {
+      "desc": "Kami bermitra dengan Microsoft Clarity dan Microsoft Advertising untuk menangkap bagaimana Anda menggunakan dan berinteraksi dengan situs web kami melalui metrik perilaku, peta panas, dan pemutaran ulang sesi untuk meningkatkan dan memasarkan produk/layanan kami. Data penggunaan situs web ditangkap menggunakan cookie pihak pertama dan ketiga dan teknologi pelacakan lainnya untuk menentukan popularitas produk/layanan dan aktivitas online. Selain itu, kami menggunakan informasi ini untuk optimasi situs, tujuan penipuan/keamanan, dan periklanan. Untuk informasi lebih lanjut tentang bagaimana Microsoft mengumpulkan dan menggunakan data Anda, kunjungi Pernyataan Privasi Microsoft https://www.microsoft.com/privacy/privacystatement",
+      "title": "Telemetri"
+    },
+    "desc": "Baca Kebijakan Privasi untuk Mini Kraken. Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data Anda.",
+    "title": "Kebijakan Privasi"
+  },
+  "system": {
+    "default": {
+      "desc": "Pelajari tentang sistem %system% dan cara bermain di Discord dengan Bot RPG Mini Kraken. Panduan praktis ini menawarkan kiat untuk menjelajahi dan bersenang-senang dalam petualangan RPG Anda.",
+      "playDiscord": "Cara Memainkan %system% di Discord",
+      "playDiscordDesc": "%system% adalah salah satu sistem yang tersedia untuk dimainkan menggunakan Mini Kraken sebagai fasilitator lemparan dadu.  Menentukan sistemnya mudah, cukup ketik /configure dan masuk ke tab sistem, lalu tentukan. Dengan begitu, Anda akan mendapatkan chip pintar dan data dinamis untuk memperlancar sesi Anda. Setelah pengaturan, Anda dapat menggunakan beberapa alat untuk membantu meja Anda, seperti sistem chip pintar yang dapat diakses melalui /ficha yang mengintegrasikan lemparan dadu, artinya, saat melempar dadu melalui /di, semua perhitungan dilakukan oleh UNA.",
+      "title": "Pelajari Cara Memainkan %system% di Discord"
+    }
+  },
+  "tarot": {
+    "article": {
+      "desc": "Generator kartu Tarot acak, yang dapat membantu dalam pembuatan kampanye atau permainan.",
+      "title": "Generator Kartu Tarot"
+    },
+    "desc": "Hasilkan kartu Tarot acak untuk meningkatkan kampanye atau permainan RPG Anda. Jelajahi Generator Kartu Tarot Mini Kraken untuk inspirasi kreatif.",
+    "title": "Kartu Tarot"
+  },
+  "tos": {
+    "0": {
+      "desc": "Arkanus, selanjutnya disebut sebagai \"pengembang\", adalah tim yang berdedikasi untuk mengembangkan berbagai proyek dan aplikasi, termasuk namun tidak terbatas pada (Mini Kraken BOT, juga dikenal sebagai Inanimalia Fortuna Tenebris Verteri). Dengan menggunakan layanan kami, Anda setuju dengan ketentuan berikut. Dengan mengakses Layanan kami, Anda secara otomatis menyetujui syarat, ketentuan, dan kebijakan privasi yang disajikan di bawah ini. Jika Anda telah mencapai usia mayoritas di yurisdiksi Anda, atau jika Anda berusia antara 13 dan usia mayoritas dan wali Anda telah meninjau dan menyetujui Ketentuan ini, Anda terikat olehnya. Jika Anda tidak setuju dengan bagian apa pun dari syarat dan ketentuan ini, segera hentikan penggunaan layanan kami.",
+      "title": "Pendahuluan"
+    },
+    "1": {
+      "desc": "Kecuali dinyatakan secara tegas, semua hak kekayaan intelektual dalam konten yang diterbitkan pada Layanan adalah milik Layanan dan pemberi lisensinya. Semua hak yang berkaitan dengan kekayaan intelektual dilindungi secara ketat, dan kami berhak untuk mengambil tindakan hukum yang diperlukan melalui saluran komunikasi resmi kami. Anda tidak berwenang untuk: - Menjual, menyewakan, atau memberikan sublisensi materi apa pun yang berkaitan dengan Mini Kraken, Fortuna, atau yang serupa. - Mendistribusikan kembali konten dari Mini Kraken, Fortuna, atau yang serupa tanpa izin tegas. - Sengaja mencoba untuk menghindari mekanisme keamanan Layanan dengan cara apa pun tanpa izin sebelumnya. Beberapa area Layanan menawarkan kemungkinan personalisasi oleh pengguna, tanpa penyaringan atau peninjauan sebelumnya oleh kami sebelum publikasi. Komentar dan penyesuaian hanya mencerminkan pendapat penulis masing-masing. Sebesar yang diizinkan oleh hukum yang berlaku, Layanan tidak bertanggung jawab secara hukum atas komentar/personalisasi tersebut atau untuk setiap kerusakan, risiko, atau biaya yang timbul dari penggunaan, posting, atau penampilannya pada Layanan. Kami berhak, tanpa kewajiban, untuk menghapus komentar atau personalisasi apa pun yang kami anggap tidak pantas, menyinggung, atau melanggar Syarat dan Ketentuan ini. Dengan menggunakan Layanan kami, Anda setuju untuk melindungi dan membela kami terhadap semua klaim, tuntutan, kerusakan, biaya, dan pengeluaran yang timbul dari atau berkaitan dengan penggunaan Layanan oleh Anda. Tidak boleh ada tautan yang ditempatkan di Situs Web apa pun yang dapat ditafsirkan sebagai pencemaran nama baik, cabul, kriminal, atau melanggar hak pihak ketiga. Dengan memposting komentar, penyesuaian, atau konten lain pada Layanan kami, Anda menyatakan dan menjamin bahwa: Anda memiliki hak hukum untuk memposting konten ini dan memiliki semua lisensi dan otorisasi yang diperlukan untuk melakukannya. Komentar, penyesuaian, atau konten Anda tidak melanggar hak kekayaan intelektual pihak ketiga, termasuk hak cipta, paten, atau merek dagang. Komentar, penyesuaian, atau konten Anda tidak mengandung materi yang mencemarkan nama baik, fitnah, menyinggung, tidak senonoh, atau melanggar hukum, atau melanggar privasi pihak ketiga. Komentar, penyesuaian, atau konten Anda tidak akan digunakan untuk meminta atau mempromosikan aktivitas ilegal. Dengan memposting komentar, penyesuaian, atau konten lain pada Layanan kami, Anda memberikan Layanan (termasuk Mini Kraken, Pengembang, dan mitra) lisensi yang tidak dapat dicabut, tidak eksklusif, di seluruh dunia, bebas royalti, dan dapat disublisensikan untuk menggunakan, mereproduksi, mengadaptasi, memodifikasi, menerbitkan, menerjemahkan, membuat karya turunan dari, mendistribusikan, melakukan secara publik, dan menampilkan secara publik konten tersebut dalam format, media, atau teknologi apa pun yang sekarang dikenal atau yang akan dikembangkan di kemudian hari.",
+      "title": "Lisensi"
+    },
+    "2": {
+      "desc": "Kami berhak, atas kebijakan kami sendiri, untuk mengubah atau merevisi Ketentuan ini kapan saja, dan Anda setuju untuk terikat oleh modifikasi atau revisi tersebut. Setiap perubahan atau modifikasi akan berlaku satu minggu setelah diposting pada Layanan, dan penggunaan Layanan Anda yang berkelanjutan setelah tanggal efektif akan merupakan penerimaan dan persetujuan Anda terhadap perubahan atau modifikasi tersebut. Jika Anda keberatan dengan perubahan atau modifikasi apa pun, satu-satunya jalan keluar Anda adalah menghentikan penggunaan Layanan. Kami berhak untuk mengubah atau menghentikan Layanan (atau sebagian darinya) kapan saja, dengan atau tanpa pemberitahuan, tanpa batasan untuk pelanggaran Ketentuan.",
+      "title": "Reservasi Hak dan Modifikasi"
+    },
+    "3": {
+      "desc": "Dalam situasi di mana pengguna melakukan salah satu tindakan yang tercantum di bawah ini, hal itu dapat mengakibatkan pelanggaran otomatis terhadap ketentuan penggunaan, yang dapat menimbulkan konsekuensi mulai dari peringatan hingga bahkan penghapusan akses ke layanan dan pembatalan akun atau akses ke layanan, dengan atau tanpa pemberitahuan sebelumnya: Menugaskan Nilai Nyata ke KC (Ekonomi Virtual) dan menjualnya untuk uang atau barang nyata. Mengirim konten yang tidak pantas ke tim dukungan atau peninjau. Menyalahgunakan Bug atau Sistem untuk mendapatkan keuntungan atau merusak struktur kami. Penyalahgunaan Sarana Dukungan. Mencoba untuk menghindari sistem layanan apa pun dengan cara yang membahayakan fungsi layanan atau pengguna lain, tanpa izin sebelumnya dari tim pengembangan.",
+      "title": "Larangan dan Tanggung Jawab Pengguna"
+    },
+    "4": {
+      "desc": "Kami tidak akan bertanggung jawab secara hukum atas konten apa pun yang muncul di Layanan kami karena didukung oleh komunitas. Jika ada pelanggaran hak kekayaan intelektual atau ketidaknyamanan, pengguna dapat meminta peninjauan atau penghapusan satu atau lebih konten dengan membuka permintaan penghapusan melalui Dukungan kami. Jika Anda menemukan tautan atau konten apa pun di Layanan kami yang dengan cara apa pun menyinggung atau melanggar hak cipta Anda, Anda memiliki hak dan kebebasan untuk menghubungi kami dan memberi tahu kami tentang masalah tersebut kapan saja. Kami akan mempertimbangkan permintaan untuk menghapus tautan dan konten, tetapi kami tidak berkewajiban untuk menghapus tautan apa pun ke Layanan kami atau menanggapi permintaan Anda secara langsung kecuali jika melanggar hak cipta Anda. Kirim email ke suporte@arkanus.app",
+      "title": "Tanggung Jawab atas Konten"
+    },
+    "desc": "Baca Syarat dan Ketentuan Layanan untuk Mini Kraken. Pahami hak dan tanggung jawab Anda saat menggunakan layanan kami.",
+    "tags": "Hukum, Hukum, Syarat Penggunaan, Perundang-undangan",
+    "title": "Syarat dan Ketentuan Layanan"
+  }
+}

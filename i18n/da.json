@@ -1,0 +1,426 @@
+{
+  "PageNotFound": {
+    "btn": "Tilbage til forsiden",
+    "desc": "Ups! Det ser ud som om du har fundet en side, der ikke længere eksisterer. Bare rolig, det sker sommetider under navigation. I mellemtiden kan du udforske andre dele af vores hjemmeside for at finde det, du leder efter.",
+    "title": "Side ikke fundet"
+  },
+  "changelogs": {
+    "desc": "Oplev alle de seneste opdateringer og forbedringer i vores projekt via vores changelog-side. Hold dig opdateret om hver ny version, fejlrettelser og tilføjede funktioner.",
+    "title": "Opdateringer"
+  },
+  "cmds": {
+    "desc": "Oplev alle de tilgængelige kommandoer i Mini Kraken, et online RPG-system. Konfigurer dit spil, administrer økonomien, interagér med andre spillere og meget mere. Udforsk dets funktioner for at gøre din RPG-oplevelse endnu mere medrivende og dynamisk!",
+    "title": "Kommandoer"
+  },
+  "comum": {
+    "copy": "Kopiér"
+  },
+  "default": {
+    "desc": "Mini Kraken er et RPG-websted, der tilbyder værktøjer, artikler og indhold til RPG-spillere og -game masters. Her finder du information om Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling og andre RPG-systemer."
+  },
+  "dices": {
+    "desc": "Behersk kunsten at rulle terninger med Mini Kraken! Oplev eksplosive regler, intervaller, keep og numeriske udtryk for at forbedre dit RPG-spil.",
+    "page": {
+      "btn": "Rul Terninger",
+      "desc": "Terninger i verden af bord-RPG kan være lidt forvirrende i starten, men bare rolig, vi er her for at hjælpe dig. Herunder har vi en komplet guide til, hvordan man får gode rulninger, og atlasset vil lære dig forskellige tricks og kneb.",
+      "link": "Mini Kraken bruger dice roll-biblioteket til at udføre alle terningerulninger, hvilket giver præcision og fleksibilitet til RPG-spillere. Med dette værktøj kan du udforske en bred vifte af muligheder, fra simple rulninger som 1d20 (en 20-sidet terning) eller 3d6 (tre 6-sidede terninger adderet), til mere avancerede kombinationer som 2d10+5 (to 10-sidede terninger med en bonus på +5) eller 4d6kh3 (fire 6-sidede terninger, hvor det laveste resultat kasseres og de tre højeste adderes, ideelt til at skabe karakterattributter). For at forstå bedre, hvordan notationen bruges i rulningerne, og for at få mest muligt ud af denne funktion, <a href=\"https://dice-roller.github.io/documentation/guide/notation/\" target=\"_blank\">klik her</a> og se en komplet guide med praktiske eksempler.",
+      "title1": "Test dine rulninger her."
+    },
+    "title": "Syntaks for terningrulningssystem"
+  },
+  "donate_text": "Hvis du er nået hertil, er det fordi du ønsker at støtte projektet! Gå til vores officielle server og gå til ticket-chatten.",
+  "footer": {
+    "about": "Om",
+    "arkanus": {
+      "desc": "Forvandler dine drømme til virkelighed med mange linjer kode."
+    },
+    "legal": "Juridisk",
+    "map": "Sitemap",
+    "priv": "Privatlivspolitik\n",
+    "quest": "Mål\n",
+    "start": "Forsiden\n",
+    "team": "Hold\n",
+    "tos": "Brugervilkår\n",
+    "util": "Hjælpeprogram\n"
+  },
+  "index": {
+    "dices": {
+      "desc": "Ternings af terninger er en essentiel del af eventyr i rollespil. Det tilføjer spændingen ved det uforudsigelige, hvor en figurs skæbne kan ændre sig med et enkelt slag. Lad Mini Kraken klare det for dig via /d \n",
+      "subtitle": "Har du hjemmebanefordel? Nej? Intet problem!\n",
+      "title": "Terningkast\n"
+    },
+    "donate": {
+      "btn": "Støt Projekt\n",
+      "desc": "Selvom Mini Kraken er gratis, har vi lanceret et støtteprogram for at hjælpe med at dække udgifterne til projektets vedligeholdelse, som er afhængig af maskiner, der kører 24 timer i døgnet for at behandle data og rulning.  Enhver donation bidrager direkte til at holde projektet kørende en dag mere. Husk at projektet ikke gemmer noget indhold, der tilhører forlagene. Disse data stammer fra eksterne API'er, som ikke tilhører os.\n",
+      "title": "Støt Projektet\n"
+    },
+    "features": {
+      "desc": "Mini Kraken er en Discord-bot, der tilbyder en bred vifte af funktioner til at hjælpe dig på din bordrollespilsrejse. Slå terninger, administrer initiativer, skab figurer, brug navnegeneratorer og meget mere. Se her blot en lille smagsprøve på alt, hvad Mini Kraken kan gøre for dig!\n",
+      "title": "Udforsk funktionerne\n"
+    },
+    "func": {
+      "card": {
+        "0": {
+          "desc": "Spild ikke tid på at regne din figurs levetid ud manuelt. Med kommandoen /editar vida, klarer Mini Kraken matematikken for dig, så du kan koncentrere dig om at spille.\n",
+          "title": "Livsregning\n"
+        },
+        "1": {
+          "desc": "Botten har et avanceret terningrulsystem, der tillader forskellige kombinationer med kommandoen /d.  Derudover findes der flere terningskins, som kan tilgås med /butik terninger.\n",
+          "title": "Datasystem\n"
+        },
+        "2": {
+          "desc": "Organiser nemt karakterinformation med Smarte Ark. Med simple kommandoer, som /ficha, kan du oprette og redigere karakterark, hvilket gør din bordplads mere effektiv og hurtig.\n",
+          "title": "Smarte Flips\n"
+        },
+        "3": {
+          "desc": "Vælg mellem flere forskellige rollespilsystemer for at tilpasse din kampagne yderligere, og hvis det ikke er nok, så skab dit eget system.",
+          "title": "Tilpasning"
+        },
+        "4": {
+          "desc": "Find spillere til dit rollespilsbord nemt ved hjælp af Fortunas kampagneudbredelsessystem. Med kommandoen /send kampagne. Spild ikke mere tid på at lede efter spillere, lad Fortuna hjælpe dig!",
+          "title": "Find Spillere"
+        },
+        "5": {
+          "desc": "En række navne- og kortgeneratorer til at hjælpe med at skabe figurer. Med kommandoerne /generer navn og /kortstok kan du generere tilfældige navne, tarotkort eller spillekort for at berige din fortælling.",
+          "title": "Generatorer"
+        },
+        "6": {
+          "desc": "Et omfattende økonomisystem kaldet KC (Kraken Coins), som kan opnås på forskellige måder, nyttigt til funktioner som terning-skins og tilpasninger.",
+          "title": "Økonomi"
+        },
+        "7": {
+          "desc": "Find dine magi- og ritualbøger nemmere med vores magibog, der giver dig mulighed for søgning i realtid!",
+          "title": "Magibog"
+        },
+        "8": {
+          "desc": "Denne funktion er endnu ikke klar, men der går rygter om, at det bliver et fællesskabsbaseret bestiarium.",
+          "title": "..."
+        }
+      }
+    },
+    "landing": {
+      "text": "Den bedste måde at spille **rollespil** på Discord"
+    },
+    "name": "Rollespilsbot",
+    "sec2": {
+      "desc": "Botten til Discord, udviklet af fans til fans, har til formål at forbedre spilleoplevelsen i dit foretrukne rollespil. Vi ejer eller hævder ikke rettigheder til de nævnte spil. Vi er en gruppe programmører og entusiaster, der forenkler rollespilssystemer for at gøre oplevelsen mere behagelig. Dette er ikke et officielt produkt eller platform, og vi er ikke tilknyttet skaberne eller udgiverne af de nævnte spil."
+    },
+    "start": {
+      "btn1": "Tilføj Fortuna",
+      "desc": "Forbedr din rollespiloplevelse på Discord! Et værktøj designet til at forbedre dine spilsessioner, uanset om det drejer sig om systemer, mere rollespil og mindre matematik."
+    },
+    "status": {
+      "cmds": "Kommandoer",
+      "desc": "Følg nogle ydelsesdata for Inanimalia Fortuna Tenebris Verteri - den bedste rollespilsbot til Discord ifølge skaberne. Hold dig opdateret om bottens ydeevne og få mest muligt ud af din oplevelse.",
+      "guilds": "Servere",
+      "subtitle": "Mange data...",
+      "title": "Projektstatistik",
+      "user": "Brugere",
+      "version": "Version"
+    },
+    "system": {
+      "desc": "Få adgang til dedikerede værktøjer til nogle af dine yndlingssystemer, hvilket giver mere praktisk anvendelse til din rollespil. (Vi har ingen tilknytning til systemerne eller deres udgivere.)",
+      "subtitle": "Systemer med værktøjer",
+      "title": "Automatiske figurblad til dine eventyr!"
+    }
+  },
+  "join_server_btn": "Deltag i serveren",
+  "lang": "da",
+  "misc": {
+    "btn": {
+      "gencard": "Generer Kort"
+    },
+    "gen": {
+      "all": "Alle",
+      "fem": "Kvinde",
+      "male": "Mand"
+    }
+  },
+  "names": {
+    "article": {
+      "all": "Alle",
+      "btn": "Generer Navne",
+      "desc": "Denne navnegenerator til figurer er skabt som et udgangspunkt for dig og hjælper dig med at skrive en bog, en rollespilskampagne eller et spil. Hvis du leder efter navne til dine figurer, er du kommet til det rette sted.",
+      "female": "Kvinde",
+      "male": "Mand",
+      "title": "Navnegenerator"
+    }
+  },
+  "nav": {
+    "acervo": "Arkiv",
+    "add": "Tilføj App",
+    "dices": {
+      "desc": "Test og lær hvordan du ruller.",
+      "title": "Terningkast"
+    },
+    "docs": {
+      "changelogs": {
+        "desc": "Se historikken over bottens opdateringer",
+        "name": "Opdateringer"
+      },
+      "cmds": {
+        "docs": "Se listen over kommandoer og funktioner",
+        "title": "Kommandoliste"
+      },
+      "dices": {
+        "desc": "Guide til hvordan du ruller terninger i botten",
+        "names": "Terningnotation"
+      },
+      "title": "Dokumentation"
+    },
+    "donate": "Støt Projektet",
+    "guide": "Guider",
+    "lang": {
+      "title": "Sprog"
+    },
+    "support": "Fællesskab",
+    "tools": {
+      "names": {
+        "desc": "Generér navne til dine karakterer",
+        "title": "Navnegenerator"
+      },
+      "poker": {
+        "desc": "Træk et tilfældigt kort fra bunken",
+        "name": "Pokerkort"
+      },
+      "tarot": {
+        "desc": "Træk et kort fra tarot-bunken",
+        "name": "Tarotkort"
+      },
+      "title": "Værktøjer"
+    }
+  },
+  "poker": {
+    "article": {
+      "desc": "En tilfældig spillekortgenerator, der kan hjælpe med at skabe en kampagne eller et spil.",
+      "title": "Spillekortgenerator"
+    },
+    "cards": {
+      "type": {
+        "0": "Alle Kort",
+        "1": "Spar",
+        "2": "Kløver",
+        "3": "Hjerter",
+        "4": "Ruder"
+      }
+    },
+    "desc": "Generér tilfældige spillekort til dine kampagner eller rollespil. Forbedr din historiefortælling med Spillekortgeneratoren.",
+    "title": "Spillekort"
+  },
+  "posts": {
+    "sistemas": {
+      "0": {
+        "article": "Dungeons & Dragons, det legendariske rollespil, fortsætter med at fange fantasien hos spillere i alle aldre over hele verden. I årtier har dette episke spil transporteret spillere til fantasifulde verdener fyldt med farer, skatte og uforglemmelige eventyr. I Dungeons & Dragons har spillere mulighed for at skabe deres egne unikke karakterer og begive sig ud på spændende rejser. De kan vælge mellem et bredt udvalg af racer, såsom elvere, dværge og mennesker, og klasser, såsom krigere, tryllekunstnere og rangere, hver med specielle evner og egenskaber. Spillets mekanik er baseret på en kombination af terningkast og fantasi. Spillemesteren, også kendt som Dungeon Master (DM), er ansvarlig for at skabe verdenen, fortælle historien og spille NPC'erne (ikke-spillerkarakterer), mens spillerne træffer beslutninger, udforsker farlige omgivelser, kæmper mod monstre og løser mysterier. Dungeons & Dragons er et samarbejdsspil, hvor fantasi og interaktion mellem spillerne spiller en afgørende rolle. Sammen overvinder de episke udfordringer, løser gåder og danner venskaber midt i handling og fare. Spillet opmuntrer også til kreativitet, så spillerne kan tilpasse og udvikle deres historier og karakterer over tid. Udover de spændende eventyr giver Dungeons & Dragons spillerne mulighed for at forbinde sig med et levende fællesskab. Personlige møder ved spilleborde, konventioner dedikeret til rollespil og online platforme samler entusiaster fra hele verden, der deler erfaringer, tips og skaber varige minder. Med sin rige mytologi, utallige supplerende materialer og udvidelser og en base af passionerede fans, forbliver Dungeons & Dragons et ikon inden for bordspilsuniverset. Gennem dette spil udfordres fantasien, kammeratskabet styrkes, og episke eventyr opleves ved hvert terningkast. Så saml dine venner, tag dine terninger og gør dig klar til at dykke ned i en verden af magi og eventyr med Dungeons & Dragons. Bordet er dækket, skæbnen venter, og æren er inden for rækkevidde. Hvad venter du på at slutte dig til denne fantastiske rejse?",
+        "bg": "/static/img/bg/dnd.webp",
+        "card": {
+          "desc": "Et legendarisk fantasy-rollespil, der lader spillerne skabe deres egne historier i verdener af sværd og magi.",
+          "title": "Dungeons & Dragons"
+        },
+        "icon": "/static/img/rpg/DND.svg",
+        "legal": "Dungeons & Dragons-systemet tilhører i øjeblikket [Wizards Of The Coast](https://company.wizards.com/en), der har alle rettigheder forbeholdt. Systemets bøger er udgivet under licensen [OPEN GAME LICENSE Version 1.1](https://en.wikipedia.org/wiki/Open_Game_License) Mini Kraken har ingen tilknytning til udgiveren eller skaberen. Mini Kraken er blot et sæt værktøjer til at hjælpe mestre og spillere i forskellige systemer. Vi har heller ikke tilladelse fra dem til at operere.",
+        "path": "dnd",
+        "tags": "Rollespilssystem,Fantasy,Medieval,Fangehuller & Drager"
+      },
+      "1": {
+        "article": "Paranormal Orden er et nyt rollespil, der transporterer spillerne til en verden fyldt med mysterier og overnaturlige fænomener. I dette mørke og medrivende miljø truer skjulte hemmeligheder og onde enheder menneskeheden, og kun de modige agenter i Paranormal Orden kan konfrontere disse trusler. I spillet indtager spillerne rollen som paranormale agenter, medlemmer af en hemmelig organisation dedikeret til at beskytte verden mod farerne fra det ukendte. Hver agent har specielle evner, såsom clairvoyance, energikontrol, mediumevne og skarp perception, der hjælper dem med at overvinde de overnaturlige udfordringer, de møder på deres vej. Efterhånden som spillerne skrider frem i missionerne, får deres karakterer erfaring og udvikler nye paranormale evner, der gør dem mere dygtige til at bekæmpe det overnaturlige. Udviklingen af karaktererne giver spillerne mulighed for at tilpasse deres evner i overensstemmelse med deres spillestil og forberede sig på endnu større udfordringer. Paranormal Orden tilbyder en spændende og medrivende oplevelse for fans af rollespil og elskere af overnaturlige historier. Med sin medrivende plot og fængslende mekanik lover spillet at transportere spillerne til en verden af suspense og mysterium, hvor de skal bruge deres intelligens og mod til at beskytte menneskeheden mod kræfterne fra hinsides. Gør dig klar til at konfrontere det ukendte og afdække mørke hemmeligheder, mens du spiller Paranormal Orden. Saml dine venner, vælg dine paranormale evner og begiv dig ud på dette spændende eventyr, hvor grænsen mellem det virkelige og det overnaturlige bliver sløret. Skæbnen for den paranormale verden er i dine hænder!",
+        "bg": "/static/img/bg/ordem.webp",
+        "card": {
+          "desc": "Et univers af paranormal efterforskning, hvor agenter bekæmper det overnaturlige og beskytter vores virkelighed.",
+          "title": "Paranormal Orden"
+        },
+        "icon": "/static/img/rpg/Ordem.svg",
+        "legal": "Paranormal Orden blev skabt af Rafael Lange \"Cellbit\" Lange og udgives i øjeblikket af [Editora Jambo](https://jamboeditora.com.br/), som har alle rettigheder forbeholdt. Bøgerne i systemet blev udgivet under [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken har ingen tilknytning til forlaget eller skaberen; Mini Kraken er blot et sæt værktøjer designet til at hjælpe mestre og spillere af forskellige systemer, og vi har heller ikke tilladelse fra dem til at operere. Køb Paranormal Orden: [Basisbog](https://amzn.to/3BuEkbj)[Supplement | Overlevelse af Gys](https://amzn.to/3PaFlIF)",
+        "path": "orden",
+        "tags": "RPG-system,Urbant,Paranormalt,Efterforskning"
+      },
+      "2": {
+        "article": "Tormenta20, det anerkendte rollespil, er tilbage med en ny udgave, der lover at involvere spillerne i en verden af episk fantasi fyldt med spænding. Siden den oprindelige lancering har Tormenta fanget fantasien hos RPG-fans med sine fængslende historier, mindeværdige karakterer og dynamiske regler. I den nye udgave fortsætter Tormenta20 med at udforske det store kontinent Arton, et rigt og levende miljø med en unik mytologi. Spillerne har frihed til at skabe deres egne helte og vælge mellem et bredt udvalg af racer og klasser, lige fra ærede krigere til magtfulde magikere og snu tyve. Spillets mekanik er baseret på et opdateret regelsæt, der kombinerer enkelhed og strategisk dybde. Spillerne står over for spændende udfordringer, løser gåder og bekæmper farlige væsner i taktiske kampe. Karakterernes progression giver dem mulighed for at erhverve færdigheder og specielle kræfter, så de bliver sande legendariske helte. Med sin vedvarende arv og en dedikeret fanbase fortsætter Tormenta20 med at fange spillere i alle aldre og på alle niveauer. Uanset om du er en erfaren RPG-spiller eller en nybegynder på jagt efter et stort eventyr, tilbyder Tormenta20 en indgang til en fantastisk verden fyldt med helte, magi og overhængende farer. Så gør dig klar til at begive dig ud på et uforglemmeligt eventyr med Tormenta20. Vælg din race, skab din skæbne og stå over for episke udfordringer i en fantasiverden, der venter på dit mod. Saml dine venner, tag dine terninger og begiv dig ud på dette spændende eventyr. Artons skæbne ligger i dine hænder!",
+        "bg": "/static/img/bg/space.webp",
+        "card": {
+          "desc": "Et episk fantasy-rollespil i verdenen Arton med intuitive og fleksible regler.",
+          "title": "Tormenta20"
+        },
+        "icon": "/static/img/rpg/Tormenta.svg",
+        "legal": "Tormenta udgives i øjeblikket af [Editora Jambo](https://jamboeditora.com.br/), som har alle rettigheder forbeholdt. Bøgerne i systemet blev udgivet under [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken har ingen tilknytning til forlaget eller skaberen; Mini Kraken er blot et sæt værktøjer designet til at hjælpe mestre og spillere af forskellige systemer, og vi har heller ikke tilladelse fra dem til at operere. Køb Tormenta 20: [Tormenta20 — Årets Spiludgave | Amazon](https://amzn.to/3Door6P)[Tormenta20 — Årets Spiludgave | Forlag](https://jamboeditora.com.br/produto/tormenta20-edicao-jogo-do-ano/)[Tormenta20 — Heroisk Rejse | Amazon](https://amzn.to/3Door6P)[Tormenta20 — Heroisk Rejse | Forlag](https://jamboeditora.com.br/produto/tormenta20-coracao-rubi/)",
+        "path": "tormenta",
+        "tags": "RPG-system, Middelalder, Fantastisk"
+      },
+      "3": {
+        "article": "Carbon 2185 er et rollespil i en dystopisk og cyberpunk fremtid. I år 2185 ligger Jorden i ruiner på grund af klimaændringer og krige. Magtfulde megakorporationer kontrollerer samfundet, og avanceret teknologi er udbredt. Spillerne påtager sig rollen som \"Operatives\", højt trænede individer, der udfører missioner for at bekæmpe uretfærdighed og afsløre verdens mørke hemmeligheder.  Karaktertilpasning: Spillerne kan vælge mellem forskellige arketyper, såsom hackere, lejesoldater, spioner eller nærkampkæmpere, hver med unikke evner. Udvikling af færdigheder: Under spillet kan spillerne forbedre deres karakterers cybernetiske evner og erhverve futuristiske våben. Beslutningstagning: Spillernes valg påvirker historiens forløb, så de kan forme spillets verdens skæbne. Terningrulningssystem: Spillet bruger terningkast og attributter til at bestemme succes med handlinger og kampe.",
+        "bg": "/static/img/bg/cyberpunk.webp",
+        "card": {
+          "desc": "Et cyberpunk-rollespil i en dystopisk fremtid, inspireret af Blade Runner og Ghost in the Shell.",
+          "title": "Carbon2185"
+        },
+        "icon": "/static/img/rpg/Carbon.svg",
+        "legal": "Carbon 2185-systemet blev skabt af Robert Marriner-Dodds og udgives i øjeblikket af [Dragon Turtle Games](https://www.dragonturtlegames.com), som har alle rettigheder forbeholdt. Bøgerne i systemet blev udgivet under [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) 1.0a. Mini Kraken har den udtrykkelige tilladelse fra systemets skaber.",
+        "path": "carbon",
+        "tags": "System af RPG,Cyberpunk,Distopi,#BoloQueimado"
+      },
+      "4": {
+        "article": "Gaia: O Prelúdio er den nyeste moderne genfortolkning af rollespil, der bringer et højmiddelalderligt high fantasy-scenarie til Aurorias magiske verden. I Gaia vil du være unik og bane din egen vej, låse op for Slørets hemmeligheder på vej mod det uendelige. I Gaia kan du være, hvad du vil. Der er enogtyve arvegods, der definerer dit characters udseende, samt et fuldt tilpasset hybridkampssystem. Skab din personlighed på din måde: En kriger, der ødelægger hære, men som studerer Slørets hemmeligheder i sin fritid? Adskil dine bedste evner inden og uden kamp, som du ønsker. Undervejs i dit eventyr skal du låse op for Sløret inde i dig ved at bekæmpe unikke væsner fra Homuncularium, et unikt monsterskabelsessystem med milliarder (bogstaveligt talt) af mulige kombinationer! Og selvfølgelig vil du blive belønnet for dette med Læringspunkter, der vil give dig nye kræfter og evner på Kampvejene. Kampvejene giver dig mulighed for at forme dit character på din egen måde, så et character ikke behøver at følge kun én vej, men i stedet kan vælge efter eget valg. Der er fem basale startveje med snesevis af evner at vælge imellem, og hver evne kan også forbedres med en af ​​de tre forbedringsmuligheder. Og i fremtiden, når du udvikler dit character, kan du få adgang til avancerede veje, der giver hundredvis af nye evner, der forbedrer din oplevelse yderligere.",
+        "bg": "/static/img/bg/Forest9.webp",
+        "card": {
+          "desc": "Højmiddelalderligt high fantasy-rollespil med et moderne og simpelt system, hvor hvert character er unikt.",
+          "title": "Gaia: O Prelúdio"
+        },
+        "icon": "/static/img/rpg/Gaia.svg",
+        "legal": "Gaia: O Prelúdio er udviklet af Auroria - Game Studio, der har alle rettigheder forbeholdt. Systemets bøger er udgivet under [OPEN GAME LICENSE](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) Version 1.0a og er beskyttet af CBL (Câmara Brasileira do Livro). Mini Kraken har viden om og tilladelse fra forfatteren Lyy til at fungere, og vi anbefaler, at du køber bogen og støtter projektets finansiering på [CATARSE](https://www.catarse.me/gaiapreludio).",
+        "path": "gaia",
+        "tags": "System af RPG,Medieval,Fantastisk,Innovation"
+      },
+      "5": {
+        "article": "3DeT Victory: Det nye rollespil, der erobrer spilleres fantasi. Siden dets skabelse har tusindvis af eventyrere bevæget sig i ubegrænsede scenarier, skabt unikke characters og udforsket fantastiske verdener. Nu, med ankomsten af ​​Arkernes Æra, kan du dykke ned i et urbant fantasiunivers fyldt med dimensionale labyrinter, hver med sine egne farer og skatte. Vælg mellem de fem tematiske kerner og gør dig klar til en episk rejse. 3DeT Victory-manualen, der indeholder komplette regler, Arkernes Æra-scenarie og forhåndsvisninger af de tematiske kerner, er i crowdfunding på Catarse. Deltag i denne nye æra og bliv en del af dette spændende eventyr! 3DeT Victory tilbyder en række innovative mekanismer, der gør spilloplevelsen spændende og engagerende. Her er nogle af systemets vigtigste funktioner og fordele: Enkelhed og fleksibilitet: Systemet er designet til at være tilgængeligt for spillere på alle niveauer. Reglerne er intuitive og nemme at lære, så du hurtigt kan kaste dig ud i handlingen. Desuden giver systemets fleksibilitet dig mulighed for at tilpasse mekanikken efter behov for at passe til din spillestil. Fokus på fortælling: 3DeT Victory sætter fortællingen i centrum af spillet. Mekanikken opfordrer til skabelsen af ​​fængslende historier med plads til improvisation og kreativitet. Spillere kan forme verden, udvikle komplekse characters og udforske spændende plots. Tematiske kerner: De fem tematiske kerner giver variation og dybde til systemet. Hver kerne har specifikke regler, unikke characters og forskellige udfordringer. Uanset om du er en rumfarer, en hemmelig agent eller en fantasy-helt, er der en kerne til enhver smag. Arkernes Æra: Arkernes Æra-scenariet er en blanding af fantasi og urbane elementer. De dimensionale labyrinter kaldet Arker er fulde af mysterier, mærkelige væsner og skjulte skatte. Denne atmosfære giver uendelige muligheder for udforskning og eventyr. Komplette manual: 3DeT Victory-manualen er en komplet informationskilde. Udover de grundlæggende regler indeholder den detaljer om Arkernes Æra, tips til mestre, forslag til eventyr og forhåndsvisninger af de tematiske kerner. Det er en essentiel guide til spillere og mestre. Kort sagt kombinerer 3DeT Victory enkelhed, kreativitet og en rig atmosfære for at give en unik rollespiloplevelse. Deltag i fællesskabet og opdag en verden af ​​muligheder!",
+        "bg": "/static/img/bg/Forest7.webp",
+        "card": {
+          "desc": "Helte og skurke kæmper i episke slag. Magi, teknologi og fantastiske væsner kolliderer.",
+          "title": "3DET Victory"
+        },
+        "icon": "/static/img/rpg/3DET.svg",
+        "legal": "3DET udgives i øjeblikket af [Editora Jambo](https://jamboeditora.com.br/), der har alle rettigheder forbeholdt. Systemets bøger er udgivet under [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken har ingen forbindelse til forlaget eller skaberen. Mini Kraken er kun et sæt værktøjer designet til at hjælpe mestre og spillere i forskellige systemer. Vi har heller ikke tilladelse fra dem til at operere.",
+        "path": "3det",
+        "tags": "System af RPG,GURPS2,MadeInBrazil"
+      },
+      "6": {
+        "article": "Pathfinder er et bordrollespil, der fanger fantasien med sin rige fortælling og taktiske kompleksitet. I Pathfinder skaber hver spiller en unik karakter, og vælger mellem en række racer og klasser, hver med sine egne særlige evner og baggrundshistorier. Spillerne begår sig på episke eventyr, der står over for udfordringer, der kræver både list og råstyrke. Spillet styres af et regelsæt, der hjælper med at forme verden og karakterernes interaktion med den, men den sande magi i Pathfinder ligger i den frihed, som spillerne har til at forme deres egne historier. Som et rollespil muliggør Pathfinder et hidtil uset kreativt samarbejde mellem spillerne og Game Masteren, der fungerer som fortæller og regeldommer. Sammen opbygger de et dynamisk plot, der kan ændre sig baseret på spillerens beslutninger og terningkast. Denne del af spillet opfordrer spillerne til at dykke dybt ned i deres karakterer og den omgivende verden, og skaber en fordybende og personlig oplevelse. Derudover er Pathfinder kendt for sit detaljerede tilpasningssystem, hvor spillerne kan justere deres karakterer med en bred vifte af evner, trylleformularer og udstyr. Dette gør det muligt for hver karakter at blive virkelig unik, og afspejler spillerens valg og spillestil. Med hver session vokser karaktererne i styrke og kompleksitet, og står over for stadig større trusler og afslører mysterier, der kan ændre spillets verden. Pathfinder-verdenen er et sted med både mirakler og farer, beboet af mytiske væsner og forskellige folk. Fra de mørkeste fangekælders dybder til de højeste bjergtoppe udforsker Pathfinder-heltene ukendt territorium, opdager gamle civilisationer og bekæmper onde kræfter. Med hvert eventyr har de mulighed for at erhverve legendariske skatte og smede deres egen skæbne. Kort sagt er Pathfinder mere end et spil; det er en portal til fantasiverdener, hvor fantasien ikke kender grænser. Det er en invitation til at fortælle fælleshistorier, hvor hvert valg har vægt, og hvert øjeblik kan blive til et varigt minde. Uanset om du er en omhyggelig strateg eller en passioneret historiefortæller, tilbyder Pathfinder en rig og givende oplevelse, der udfolder sig på så unikke måder som de spillere, der samles for at spille.",
+        "bg": "/static/img/bg/Forest1.webp",
+        "card": {
+          "desc": "Historien om modige helte og lumske skurke i en verden fuld af frygtelige monstre og vidunderlige skatte.",
+          "title": "Pathfinder"
+        },
+        "icon": "/static/img/rpg/Pathfinder.svg",
+        "legal": "Pathfinder udgives i øjeblikket af [NEWORDER](https://newordereditora.com/), der ejer alle rettigheder. Systembøgerne er udgivet under licensen [Version OPEN GAME LICENSE](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken har ingen tilknytning til udgiveren eller skaberen. Mini Kraken er blot et sæt værktøjer designet til at hjælpe mestre og spillere af forskellige systemer. Vi har heller ikke tilladelse til at operere.",
+        "path": "pathfinder",
+        "tags": "RPG-system, Fantasy"
+      },
+      "7": {
+        "article": "Troldmænd og Forbandelser tilbyder en fordybende oplevelse, der indfanger essensen af ​​Jujutsu Kaisen-animen, og giver spillerne mulighed for at fordybe sig i en verden, hvor troldmænd bekæmper forbandelser med overnaturlige evner. Gennem et detaljeret rangeringssystem kan spillerne udvikle deres karakterer fra nybegyndere på niveau 4 til magtfulde troldmænd på specialniveau. Med mekanikker som multiklasse og varieret udstyr opmuntrer spillet til tilpasning og strategi. Desuden tilføjer unikke elementer som integritet og begrænsende løfter dybde og udfordring, og inviterer spillerne til at træffe betydningsfulde valg, der former deres rejse. For RPG-entusiaster, der søger et eventyr fyldt med magi og mystik, er \"Troldmænd og Forbandelser\" en indgangsport for anime-fans, der ønsker at begynde at spille RPG.",
+        "bg": "/static/img/bg/Forest4.webp",
+        "card": {
+          "desc": "Systemet tilpasser anime-verdenen med overnaturlige kampe. Her kan spillerne udforske mange forskellige kampstile og ritualer.",
+          "title": "Troldmænd og Forbandelser"
+        },
+        "icon": "/static/img/rpg/Feiticeiros.svg",
+        "legal": "Troldmænd og Forbandelser er et open source RPG-system skabt af forfatteren [Setsugiri](https://setsugiri.carrd.co/) ved brug af [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken har tilladelse fra systemets skaber til at operere. Systembøgerne kan downloades på den officielle [Discord-server](https://discord.com/invite/UGg6QUNNRp).",
+        "path": "feiticeiros",
+        "tags": "RPG-system, Anime, Magi, Troldmænd, Forbandelse"
+      },
+      "8": {
+        "article": "Dharmar er et brasiliansk open source RPG-system, der har til formål at give sjove og realistiske sessioner til absolut ethvert scenarie. Systemet er baseret på et simpelt og intuitivt terningkast-system, der giver spillerne og mesteren mulighed for at fokusere på fortælling og karakterfortolkning. Dharmar er et fleksibelt og tilpasningsdygtigt system, der nemt kan tilpasses til forskellige spillergruppers behov og spillestile. Med klare og præcise regler er Dharmar et glimrende valg for både begyndere og erfarne spillere, der søger en engagerende og dynamisk RPG-oplevelse. Hvis du leder efter et tilgængeligt, sjovt og alsidigt RPG-system, er Dharmar det perfekte valg for dig. Saml dine venner, skab jeres karakterer, og begiv jer ud på et episk eventyr med Dharmar!",
+        "bg": "/static/img/bg/Forest7.webp",
+        "card": {
+          "desc": "Brasiliansk open source RPG-system, der har til formål at give sjove og realistiske sessioner til absolut ethvert scenarie.",
+          "title": "Dharmar"
+        },
+        "icon": "/static/img/rpg/Dharmar.svg",
+        "legal": "Dharmar er et open source RPG-system skabt af forfatteren [Bruno More Eyes](https://www.instagram.com/brunomoreeyes/). Mini Kraken har ingen tilknytning til skaberen. Mini Kraken er blot et sæt værktøjer designet til at hjælpe mestre og spillere af forskellige systemer. Vi har heller ikke tilladelse fra ham til at operere. Køb: [Dharmar på Amazon](https://amzn.to/4a3olxF)",
+        "path": "dharmar",
+        "tags": "RPG-system,Open Source,Brasilien, premium"
+      }
+    }
+  },
+  "premium": {
+    "0": {
+      "desc": "En plan for ensomme ulve, der ønsker adgang til ressourcerne alene.",
+      "title": "Kriger"
+    },
+    "1": {
+      "desc": "En for alle og alle for en, med denne plan får alle på din server fordele!",
+      "title": "Eventyrer"
+    },
+    "2": {
+      "desc": "Til de sande elskere af Inanimalia Fortuna!",
+      "title": "Blækspruttehelt"
+    },
+    "feat": {
+      "0": "+5 Makro-slots (per karakter)",
+      "1": "+24 Karakter-slots",
+      "2": "Dobbelt så meget plads til noter",
+      "3": "Opret dit eget Homebrew-system",
+      "4": "Millioner af Kraken Coins",
+      "5": "Prioriteret support",
+      "6": "Premium-funktioner",
+      "7": "Én Konto",
+      "8": "Én Server",
+      "9": "Eksklusive playtests\n",
+      "10": "Donatorrolle (Profil og Discord)",
+      "11": "Højeste Donatorrolle (Profil og Discord)",
+      "12": "til Tre Servere",
+      "98": "Hold-in-hånd pakke fra teamet & Una Klubben\n",
+      "99": "Poetisk licens til at opkræve udviklere.\n"
+    }
+  },
+  "price": {
+    "0": "50 kr./md.\n",
+    "1": "7 kr./md.\n",
+    "2": "15 kr./md.\n"
+  },
+  "privacy": {
+    "0": {
+      "desc": "Mini Kraken ejes af Udviklerne, som er ansvarlige for indsamling og administration af dine data i applikationen. Dette dokument forklarer, hvilke data der indsamles, hvorfor de indsamles, og hvordan vi sikrer disse data.\n"
+    },
+    "1": {
+      "desc": "Når du bruger applikationen, indsamler vi oplysninger fra brugeren og serveren, samt andre oplysninger, du giver (inklusive, men ikke begrænset til: Navne, ID'er, billeder af brugere og guilds). Derudover indsamler vi oplysninger inde i applikationen, som f.eks. gemmes i RPG-firkortsystemet. Det eneste indhold af beskeder, der indsamles, sker i terningrulningssystemet uden brug af slash-kommandoer. Beskedindholdet gemmes ikke, og udviklerne har derfor ingen adgang til det. Behandlingen af disse data muliggør funktionen af forskellige funktioner i applikationen, såsom identifikationer til at gemme oplysninger i databasen, individuelle applikationsindstillinger for hver guild og bruger, samt tilpasning af applikationens interface for at give en forbedret brugeroplevelse.\n",
+      "title": "Indsamlede Oplysninger\n"
+    },
+    "2": {
+      "desc": "Du har følgende rettigheder i forbindelse med dine data: Retten til at blive informeret. Retten til berigtigelse. Retten til at blive glemt. Retten til indsigt. Retten til at gøre indsigelse. Ved at bruge applikationen accepterer du vilkårene og de indsamlede data.\n",
+      "title": "Dine Rettigheder\n"
+    },
+    "3": {
+      "desc": "Vi garanterer sikkerheden af de oplysninger, du giver, på servere og computere, der er opbevaret i sikre og kontrollerede miljøer, beskyttet mod uautoriseret adgang, brug og videregivelse. Vi opretholder administrative, tekniske og fysiske sikkerhedsforanstaltninger for at beskytte data mod uautoriseret adgang, brug, beskyttelse og videregivelse.  Ingen dataoverførsel via internettet kan dog garanteres at være fuldstændig sikker.\n",
+      "title": "Informationsikkerhed\n"
+    },
+    "4": {
+      "desc": "Hvis du ønsker mere information om denne Privatlivspolitik eller ønsker at få adgang til information vedrørende dine individuelle rettigheder og dine Personoplysninger, kan du oprette en supportticket (/support) eller sende en e-mail til support@arkanus.app.\n",
+      "title": "Contacto"
+    },
+    "5": {
+      "desc": "Vi samarbejder med Microsoft Clarity og Microsoft Advertising for at registrere, hvordan du bruger og interagerer med vores website via adfærdsdata, heatmaps og sessionoptagelser, for at forbedre og markedsføre vores produkter/tjenester. Data om websitebrug indsamles ved hjælp af førsteparts- og tredjepartscookies og andre trackingteknologier for at bestemme populariteten af produkter/tjenester og online aktivitet.  Derudover bruger vi disse oplysninger til websiteoptimering, sikkerheds-/svindelformål og reklame. For yderligere information om, hvordan Microsoft indsamler og bruger dine data, besøg Microsofts Privatlivspolitik https://www.microsoft.com/privacy/privacystatement\n",
+      "title": "Telemetri\n"
+    },
+    "desc": "Læs Mini Krakens Privatlivspolitik. Lær hvordan vi indsamler, bruger og beskytter dine data.\n",
+    "title": "Privatlivspolitik\n"
+  },
+  "system": {
+    "default": {
+      "desc": "Lær om %system% systemet og hvordan du spiller via Discord med Mini Kraken RPG-botten. Denne praktiske guide giver tips til at udforske og få mest muligt ud af dine RPG-eventyr.\n",
+      "playDiscord": "Sådan spiller du %system% på Discord",
+      "playDiscordDesc": "%system% er et af de tilgængelige systemer, der kan spilles ved hjælp af Mini Kraken som en terningrullefremmer.  Det er nemt at indstille systemet: skriv blot /konfigurer, gå til fanen system, og definer det. Dette giver dig smarte figurer og dynamiske terninger for at fremskynde din session. Efter konfigurationen kan du bruge forskellige værktøjer til at hjælpe dit bord, såsom det smarte figur-system, der kan tilgås via /figur, som integrerer terningrulning. Det vil sige, når du ruller terninger via /di, beregnes al matematikken af UNA.",
+      "title": "Lær at spille %system% på Discord"
+    }
+  },
+  "tarot": {
+    "article": {
+      "desc": "En generator af tilfældige tarotkort, der kan hjælpe med at skabe en kampagne eller et spil.",
+      "title": "Tarotkortgenerator"
+    },
+    "desc": "Generer tilfældige tarotkort for at forbedre dine kampagner eller rollespil. Udforsk Mini Krakens tarotkortgenerator for kreativ inspiration.",
+    "title": "Tarotkort"
+  },
+  "tos": {
+    "0": {
+      "desc": "Arkanus, fremover benævnt \"udviklere\", er et team dedikeret til udvikling af en række projekter, inklusive, men ikke begrænset til, (Mini Kraken BOT, også kendt som Inanimalia Fortuna Tenebris Verteri). Ved at bruge vores tjenester accepterer du følgende vilkår. Når du får adgang til vores tjenester, accepterer du automatisk de vilkår, betingelser og privatlivspolitikker, der er præsenteret nedenfor. Hvis du er myndig i din jurisdiktion, eller hvis du er mellem 13 og myndig, og din værge har gennemgået og accepterer disse vilkår, er du bundet af dem. Hvis du ikke er enig i nogen del af disse vilkår og betingelser, skal du straks stoppe med at bruge vores tjenester.",
+      "title": "Introduktion"
+    },
+    "1": {
+      "desc": "Medmindre andet udtrykkeligt er angivet, tilhører alle rettigheder til intellektuel ejendom vedrørende indhold offentliggjort på tjenesten tjenesten og dens licensgivere. Alle rettigheder vedrørende intellektuel ejendom er strengt forbeholdt, og vi forbeholder os retten til at tage juridiske skridt efter behov via vores officielle kommunikationskanaler. Du har ikke tilladelse til at:- Sælge, udleje eller give i underlicens noget materiale relateret til Mini Kraken, Fortuna eller lignende.- Omfordele indhold fra Mini Kraken, Fortuna eller lignende uden udtrykkelig tilladelse.- Forsøge at omgå tjenestens sikkerhedsmekanismer på nogen måde uden forudgående tilladelse. Nogle områder af tjenesten tilbyder brugertilpasning uden forudgående filtrering eller gennemgang fra vores side før offentliggørelse. Kommentarer og tilpasninger afspejler udelukkende deres respektive forfatteres meninger. I det omfang loven tillader det, er tjenesten ikke juridisk ansvarlig for disse kommentarer/tilpasninger eller for skader, risici eller udgifter, der stammer fra deres brug, offentliggørelse eller fremtræden på tjenesten. Vi forbeholder os retten, uden forpligtelse, til at fjerne enhver kommentar eller tilpasning, som vi anser for upassende, stødende eller i strid med disse vilkår og betingelser. Ved at bruge vores tjeneste accepterer du at beskytte os og forsvare os mod alle krav, retssager, skader, omkostninger og udgifter, der stammer fra eller er relateret til din brug af tjenesten. Der må ikke indsættes links til et websted, der kan fortolkes som injurierende, uanstændigt, kriminelt eller som krænker tredjeparters rettigheder. Ved at sende kommentarer, tilpasninger eller andet indhold til vores tjeneste, erklærer og garanterer du, at: Du har den juridiske ret til at sende dette indhold og har alle nødvendige licenser og tilladelser til dette. Dine kommentarer, tilpasninger eller andet indhold krænker ikke intellektuel ejendom tilhørende tredjepart, inklusive ophavsret, patenter eller varemærker. Dine kommentarer, tilpasninger eller andet indhold indeholder ikke injurierende, bagtalende, stødende, uanstændigt eller ulovligt materiale, og krænker heller ikke tredjeparters privatliv. Dine kommentarer, tilpasninger eller andet indhold bruges ikke til at anmode om eller fremme ulovlige aktiviteter. Ved at sende kommentarer, tilpasninger eller andet indhold til vores tjeneste, giver du tjenesten (inklusive Mini Kraken, Udviklere og partnere) en uigenkaldelig, ikke-eksklusiv, global, royalty-fri og sublicenserbar licens til at bruge, reproducere, tilpasse, modificere, udgive, oversætte, oprette afledte værker, distribuere, udføre og offentligt vise sådant indhold i ethvert format, medie eller teknologi, der er kendt i dag eller udvikles i fremtiden.",
+      "title": "Licens"
+    },
+    "2": {
+      "desc": "Vi forbeholder os retten, efter eget skøn, til at ændre eller revidere disse vilkår når som helst, og du accepterer at forpligte dig til sådanne ændringer eller revisioner. Enhver ændring eller modifikation træder i kraft en uge efter offentliggørelse på tjenesten, og din fortsatte brug af tjenesten efter den effektive dato udgør din accept og samtykke til sådanne ændringer eller modifikationer. Hvis du bestrider en ændring eller modifikation, er din eneste mulighed at stoppe med at bruge tjenesten. Vi forbeholder os retten til at ændre eller afbryde tjenesten (eller dele af den) når som helst, med eller uden varsel, uden begrænsning til en overtrædelse af vilkårene.",
+      "title": "Forbehold af rettigheder og ændringer"
+    },
+    "3": {
+      "desc": "I situationer, hvor brugeren udfører nogen af ​​de nedenfor nævnte handlinger, kan det resultere i en automatisk overtrædelse af brugsvilkårene, hvilket kan medføre konsekvenser, der spænder fra advarsler til fjernelse af adgangen til tjenesten og annullering af kontoen eller adgangen til tjenesten, med eller uden varsel: At tildele en reel værdi til KC'er (virtuelle besparelser) og sælge dem for penge eller reale varer. At sende upassende indhold til support eller gennemgangsteams. At misbruge fejl eller systemer med det formål at opnå fordel eller beskadige vores strukturer. At misbruge supportmidler. At forsøge at omgå et servicesystem på en måde, der forringer servicefunktionaliteten eller andre brugere, uden forudgående tilladelse fra udviklingsteamet.",
+      "title": "Forbud og brugeransvar"
+    },
+    "4": {
+      "desc": "Vi er ikke juridisk ansvarlige for noget indhold, der vises på vores tjeneste, da den drives af fællesskabet. Hvis der er krænkelse af intellektuel ejendom eller ubehag, kan brugeren anmode om en gennemgang eller fjernelse af et eller flere indhold ved at åbne en anmodning om fjernelse via vores support. Hvis du finder et link eller indhold på vores tjeneste, der på nogen måde er stødende eller krænker dine ophavsrettigheder, har du ret og frihed til at kontakte os og informere os om problemet når som helst. Vi vil overveje anmodninger om fjernelse af links og indhold, men vi er ikke forpligtet til at fjerne links fra vores tjeneste eller til at svare direkte på din anmodning, undtagen hvis det krænker dine ophavsrettigheder. Send en e-mail til: support@arkanus.app",
+      "title": "Ansvar for indhold"
+    },
+    "desc": "Læs Mini Krakens servicevilkår. Forstå dine rettigheder og ansvar, når du bruger vores tjenester.",
+    "tags": "Juridisk, Vilkår for brug",
+    "title": "Servicevilkår"
+  }
+}

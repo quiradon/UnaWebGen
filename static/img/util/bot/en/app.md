@@ -32,17 +32,17 @@ Find the ideal companion for your RPG journey with systems that support automati
 
 | Supported RPG Systems | Icons | 
 | --------------------- | ----- | 
-| **Dungeons and Dragons (DnD)** | ![Dungeons and Dragons Icon](https://rpg.arkanus.app/static/img/util/bot/icons/DnD.webp) |
-| **Ordem Paranormal (OP)** | ![Ordem Paranormal Icon](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) | 
-| **Tormenta20 (T20)** | ![Tormenta20](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) | 
-| **Carbon2185** | ![Carbon2185 - Cyberpunk Tabletop RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) | 
-| **Gaia: The Prelude** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) | 
-| **3DET** | ![3DET](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) | 
-| **Pathfinder 2e** | ![Pathfinder RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) | 
-| **Sorcerers and Curses** | ![Jujutsu Kaisen RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 
-| **Rodentia** | ![Rats RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 
-| **Dharmar** | ![Open Source Brazilian RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 
-| **Invazores RPG** | ![Rats RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 
+| **Dungeons and Dragons (DnD)** | ![Dungeons and Dragons Icon](https://rpg.arkanus.app/static/img/sico/Dnd.png) |
+| **Ordem Paranormal (OP)** | ![Ordem Paranormal Icon](https://rpg.arkanus.app/static/img/sico/Ordem.png) | 
+| **Tormenta20 (T20)** | ![Tormenta20](https://rpg.arkanus.app/static/img/sico/t20.png) | 
+| **Carbon2185** | ![Carbon2185 - Cyberpunk Tabletop RPG](https://rpg.arkanus.app/static/img/sico/Carbon2185.png) | 
+| **Gaia: The Prelude** | ![Gaia](https://rpg.arkanus.app/static/img/sico/Gaia.png) | 
+| **3DET** | ![3DET](https://rpg.arkanus.app/static/img/sico/3DET.png) | 
+| **Pathfinder 2e** | ![Pathfinder RPG](https://rpg.arkanus.app/static/img/sico/Pathfinder.png) | 
+| **Sorcerers and Curses** | ![Jujutsu Kaisen RPG](https://rpg.arkanus.app/static/img/sico/Fem.png) | 
+| **Rodentia** | ![Rats RPG](https://rpg.arkanus.app/static/img/sico/Rodentia.png) | 
+| **Dharmar** | ![Open Source Brazilian RPG](https://rpg.arkanus.app/static/img/sico/Dhagmar.png) | 
+| **Invazores RPG** | ![Rats RPG](https://rpg.arkanus.app/static/img/sico/Invazores.png) | 
 Legal: The tool is made by fans for fans. We do not own or claim rights to the games, books, and systems. We are not affiliated with most publishers and writers.
 
 ![Enhance your RPG Community](https://rpg.arkanus.app/static/img/util/bot/en/comunity.webp)

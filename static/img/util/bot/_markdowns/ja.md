@@ -1,6 +1,6 @@
 **テーブルトップRPGセッション**を、**ダンジョンズ＆ドラゴンズ（DnD）**、**パスファインダー**などの人気システム向けの高度な機能とシームレスなツールで強化しましょう。自動化されたキャラクターシート、イニシアティブトラッカー、ダイスロール、呪文書などでゲームプレイを簡素化します。[利用可能なすべてのコマンドを今すぐ探索！](https://rpg.arkanus.app/ja/commands)
 
-![テーブルトップRPGとダイスロールの究極のツール](https://rpg.arkanus.app/static/img/util/bot/ja/index.webp)
+![テーブルトップRPGとダイスロールの究極のツール](https://rpg.arkanus.app/static/img/util/bot/en/index.webp)
 
 ## 🎲 テーブルトップRPGプレイヤー向けの主な機能
 
@@ -13,7 +13,7 @@
   - カスタマイズ可能な**カードデッキ**
   - 詳細な**タロットカードデッキ**
 
-![ダイスロールシステム](https://rpg.arkanus.app/static/img/util/bot/ja/dice.webp)
+![ダイスロールシステム](https://rpg.arkanus.app/static/img/util/bot/en/dice.webp)
 
 ### 🎯 高度なダイスロールメカニクス
 
@@ -46,7 +46,7 @@
 
 *免責事項：このツールはファンが作成したもので、公式の出版社や著者とは関係ありません。*
 
-![RPGコミュニティを強化](https://rpg.arkanus.app/static/img/util/bot/ja/comunity.webp)
+![RPGコミュニティを強化](https://rpg.arkanus.app/static/img/util/bot/en/comunity.webp)
 
 ## 🌐 RPGコミュニティを強化
 

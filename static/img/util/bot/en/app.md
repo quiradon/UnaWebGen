@@ -10,9 +10,9 @@ Access tools dedicated to various systems like Dungeons & Dragons (DnD), Pathfin
 - Notes and Inventory
 - Initiative Management
 - Generation Tools:
-  - [Character Names](https://rpg.arkanus.app/tools/names)
-  - [Deck of Cards](https://rpg.arkanus.app/tools/poker)
-  - [Tarot Deck](https://rpg.arkanus.app/tools/tarot)
+  - Character Names
+  - Deck of Cards
+  - Tarot Deck
 
 ![Dice Rolling Systems](https://rpg.arkanus.app/static/img/util/bot/en/dice.webp)
 
@@ -30,18 +30,20 @@ Customize your dice by choosing from 45+ skins available in the store
 
 Find the ideal companion for your RPG journey with systems that support automatic character sheets. If your preferred system is not on the list, submit a suggestion using the `/suggest` command.
 
-| Supported RPG Systems | Icons | System Tags |
-| --------------------- | ----- | ----------- |
-| **Dungeons and Dragons (DnD)** | ![Dungeons and Dragons Logo](https://rpg.arkanus.app/static/img/util/bot/icons/DnD.webp) | `Medieval`, `Fantasy` |
-| **Ordem Paranormal** | ![Ordem Paranormal Logo](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) | `Modern`, `Investigation` |
-| **Tormenta20** | ![Tormenta RPG Logo](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) | `Medieval`, `Fantasy` |
-| **Carbon2185** | ![Carbon2185 - Cyberpunk Tabletop RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) | `Cyberpunk`, `Futuristic` |
-| **Gaia: The Prelude** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) | `Medieval`, `Fantasy` |
-| **3DET** | ![3DET - Fantasy RPG](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) | `Everything`, `Dynamic` |
-| **Pathfinder** | ![Pathfinder RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) | `Fantasy` |
-| **Sorcerers and Curses** | ![Jujutsu Kaisen RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | `Jujutsu`, `School` |
-
-- # The tool is made by fans for fans. We do not own or claim rights to the games, books, and systems. We are not affiliated with most publishers and writers.
+| Supported RPG Systems | Icons | 
+| --------------------- | ----- | 
+| **Dungeons and Dragons (DnD)** | ![Dungeons and Dragons Icon](https://rpg.arkanus.app/static/img/util/bot/icons/DnD.webp) |
+| **Ordem Paranormal (OP)** | ![Ordem Paranormal Icon](https://rpg.arkanus.app/static/img/util/bot/icons/Ordem.webp) | 
+| **Tormenta20 (T20)** | ![Tormenta20](https://rpg.arkanus.app/static/img/util/bot/icons/T20.webp) | 
+| **Carbon2185** | ![Carbon2185 - Cyberpunk Tabletop RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Carbon.webp) | 
+| **Gaia: The Prelude** | ![Gaia](https://rpg.arkanus.app/static/img/util/bot/icons/Gaia.webp) | 
+| **3DET** | ![3DET](https://rpg.arkanus.app/static/img/util/bot/icons/3DET.webp) | 
+| **Pathfinder 2e** | ![Pathfinder RPG](https://rpg.arkanus.app/static/img/util/bot/icons/Pathfinder.webp) | 
+| **Sorcerers and Curses** | ![Jujutsu Kaisen RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 
+| **Rodentia** | ![Rats RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 
+| **Dharmar** | ![Open Source Brazilian RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 
+| **Invazores RPG** | ![Rats RPG](https://rpg.arkanus.app/static/img/util/bot/icons/FeM.webp) | 
+Legal: The tool is made by fans for fans. We do not own or claim rights to the games, books, and systems. We are not affiliated with most publishers and writers.
 
 ![Enhance your RPG Community](https://rpg.arkanus.app/static/img/util/bot/en/comunity.webp)
 

@@ -49,7 +49,6 @@ html {
   border: 1px solid rgba(103,125,181,0.18);
   backdrop-filter: opacity(1) blur(10px) saturate(100%) sepia(0%);
   background: rgba(11,9,16,0.85);
-  max-width: 2000px;
   padding: auto;
 }
 

@@ -8,6 +8,13 @@
     "desc": "Descubra todas as últimas atualizações e melhorias do nosso projeto através da nossa página de logs de alterações. Mantenha-se informado sobre cada nova versão, correções de bugs e recursos adicionados.",
     "title": "Atualizações"
   },
+  "character": {
+    "sheet": {
+      "desc": "Gestisci le schede dei tuoi personaggi in modo pratico e intuitivo usando il comando /sheet, ed effettua tiri di dado con calcolo automatico delle somme usando il comando /di, accelerando le tue sessioni e fornendo un'esperienza più dinamica e organizzata. Avvertenza: I sistemi adattati appartengono ai rispettivi creatori. Lavoriamo solo con adattamenti di testo delle schede, rispettando i diritti d'autore dei loro proprietari.",
+      "subtitle": "Dove ho messo quel foglio?",
+      "title": "Schede Personaggio Automatizzate"
+    }
+  },
   "cmds": {
     "desc": "Scopri tutti i comandi disponibili in Mini Kraken, un sistema RPG online. Configura la tua partita, gestisci l'economia, interagisci con altri giocatori e molto altro. Esplora le sue funzionalità per rendere la tua esperienza RPG ancora più coinvolgente e dinamica!",
     "title": "Comandos"

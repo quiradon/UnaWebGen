@@ -8,6 +8,13 @@
     "desc": "Odkryj najnowsze aktualizacje i ulepszenia naszego projektu na stronie zmian. Bądź na bieżąco z każdą nową wersją, poprawkami błędów i dodanymi funkcjami.",
     "title": "Aktualizacje"
   },
+  "character": {
+    "sheet": {
+      "desc": "Zarządzaj kartami postaci w praktyczny i intuicyjny sposób za pomocą komendy /sheet oraz wykonuj rzuty kośćmi z automatycznym sumowaniem wyników za pomocą komendy /di, przyspieszając swoje sesje i zapewniając bardziej dynamiczne i zorganizowane wrażenia. Ostrzeżenie: Zaadaptowane systemy należą do ich twórców. Pracujemy jedynie z tekstowymi adaptacjami kart, respektując prawa autorskie ich właścicieli.",
+      "subtitle": "Gdzie schowałem ten papier?",
+      "title": "Zautomatyzowane Karty Postaci"
+    }
+  },
   "cmds": {
     "desc": "Odkryj wszystkie dostępne komendy w Mini Kraken, online'owym systemie RPG. Stwórz swoją grę, zarządzaj ekonomią, wchodź w interakcje z innymi graczami i wiele więcej. Poznaj jego funkcje, aby uczynić swoje RPG jeszcze bardziej wciągającym i dynamicznym!",
     "title": "Komendy"

@@ -8,6 +8,13 @@
     "desc": "Fedezd fel a projekt legújabb frissítéseit és fejlesztéseit a változásnaplónk oldalán. Maradj tájékozott minden új verzióról, hibajavításról és hozzáadott funkcióról.",
     "title": "Frissítések"
   },
+  "character": {
+    "sheet": {
+      "desc": "Kezeld a karakterlapjaidat praktikus és intuitív módon a /sheet paranccsal, és végezz dobókockadobásokat automatikus összegzési számítással a /di paranccsal, felgyorsítva ezzel a játékmeneteidet, és dinamikusabb, rendezettebb élményt biztosítva. Figyelmeztetés: Az adaptált rendszerek a saját alkotóikhoz tartoznak. Kizárólag a lapok szöveges adaptációival dolgozunk, tiszteletben tartva a tulajdonosaik szerzői jogait.",
+      "subtitle": "Hová tettem el azt a papírt?",
+      "title": "Automatizált Karakterlapok"
+    }
+  },
   "cmds": {
     "desc": "Fedezd fel a Mini Kraken, az online RPG rendszer minden elérhető parancsát! Állítsd be a játékot, kezeld a gazdaságot, lépj interakcióba más játékosokkal és még sok minden mással. Fedezd fel a funkcióit, hogy RPG élményed még magával ragadóbb és dinamikusabb legyen!",
     "title": "Parancsok"

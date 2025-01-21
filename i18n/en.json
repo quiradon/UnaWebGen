@@ -8,6 +8,13 @@
     "desc": "Discover all the latest updates and improvements to our project via our changelogs page. Stay informed about each new version, bug fixes and added features.",
     "title": "Updates"
   },
+  "character": {
+    "sheet": {
+      "desc": "Manage your character sheets easily and intuitively using the /sheet command, and perform dice rolls with automatic sum calculations using the /di command, speeding up your sessions and providing a more dynamic and organized experience.  Warning: Adapted systems belong to their respective creators. We only work with text adaptations of the sheets, respecting the copyrights of their owners.",
+      "subtitle": "Where did I put that paper?",
+      "title": "Automated Character Sheets"
+    }
+  },
   "cmds": {
     "desc": "Discover all the available commands in Mini Kraken, an online RPG system. Set up your game, manage the economy, interact with other players, and more. Explore its features to make your RPG experience even more engaging and dynamic!",
     "title": "Commands"

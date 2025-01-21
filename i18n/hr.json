@@ -8,6 +8,13 @@
     "desc": "Otkrijte sve najnovije ažuriranja i poboljšanja našeg projekta putem naše stranice s zapisima promjena. Budite u tijeku sa svakom novom verzijom, ispravkom pogrešaka i dodanim značajkama.\n",
     "title": "Ažuriranja\n"
   },
+  "character": {
+    "sheet": {
+      "desc": "Upravljajte karticama svojih likova praktično i intuitivno pomoću naredbe /sheet i izvodite bacanja kocke s automatskim izračunom zbrojeva pomoću naredbe /di, ubrzavajući svoje sesije i pružajući dinamičnije i organiziranije iskustvo. Upozorenje: Prilagođeni sustavi pripadaju njihovim tvorcima. Radimo samo s tekstualnim prilagodbama kartica, poštujući autorska prava njihovih vlasnika.",
+      "subtitle": "Gdje sam spremio taj papir?",
+      "title": "Automatizirane Kartice Likova"
+    }
+  },
   "cmds": {
     "desc": "Otkrijte sve dostupne naredbe u Mini Krakenu, online RPG sustavu. Postavite svoju igru, upravljajte ekonomijom, komunicirajte s drugim igračima i još mnogo toga. Istražite njegove značajke kako biste svoje RPG iskustvo učinili još zaokruženijim i dinamičnijim!\n",
     "title": "Naredbe\n"

@@ -8,6 +8,13 @@
     "desc": "Oplev alle de seneste opdateringer og forbedringer i vores projekt via vores changelog-side. Hold dig opdateret om hver ny version, fejlrettelser og tilføjede funktioner.",
     "title": "Opdateringer"
   },
+  "character": {
+    "sheet": {
+      "desc": "Administrer dine karakterark på en praktisk og intuitiv måde ved hjælp af kommandoen /sheet, og udfør terningkast med automatisk beregning af summer ved hjælp af kommandoen /di, hvilket fremskynder dine sessioner og giver en mere dynamisk og organiseret oplevelse. Advarsel: Tilpassede systemer tilhører deres respektive skabere. Vi arbejder kun med teksttilpasninger af arkene, og respekterer ophavsretten til deres ejere.",
+      "subtitle": "Hvor gemte jeg det papir?",
+      "title": "Automatiske Figurark"
+    }
+  },
   "cmds": {
     "desc": "Oplev alle de tilgængelige kommandoer i Mini Kraken, et online RPG-system. Konfigurer dit spil, administrer økonomien, interagér med andre spillere og meget mere. Udforsk dets funktioner for at gøre din RPG-oplevelse endnu mere medrivende og dynamisk!",
     "title": "Kommandoer"

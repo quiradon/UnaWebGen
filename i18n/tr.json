@@ -8,6 +8,13 @@
     "desc": "Değişiklik kayıtları sayfamız aracılığıyla projemizdeki tüm en son güncellemeleri ve iyileştirmeleri keşfedin. Her yeni sürüm, hata düzeltmeleri ve eklenen özellikler hakkında bilgilendirilmeye devam edin.",
     "title": "Güncellemeler"
   },
+  "character": {
+    "sheet": {
+      "desc": "Karakter sayfalarınızı pratik ve sezgisel bir şekilde /sheet komutunu kullanarak yönetin ve /di komutuyla otomatik toplam hesaplamalı zar atışları yaparak oyun seanslarınızı hızlandırın ve daha dinamik ve düzenli bir deneyim sağlayın. Uyarı: Uyarlanmış sistemler ilgili yaratıcılarına aittir. Sadece sayfaların metin uyarlamalarıyla çalışıyoruz ve sahiplerinin telif haklarına saygı duyuyoruz.",
+      "subtitle": "Bu kağıdı nereye koydum?",
+      "title": "Otomatik Karakter Sayfaları"
+    }
+  },
   "cmds": {
     "desc": "Mini Kraken, çevrimiçi RPG sisteminde bulunan tüm komutları keşfedin. Oyununuzu kurun, ekonomiyi yönetin, diğer oyuncularla etkileşim kurun ve daha fazlasını yapın. RPG deneyiminizi daha ilgi çekici ve dinamik hale getirmek için özelliklerini keşfedin!",
     "title": "Komutlar"

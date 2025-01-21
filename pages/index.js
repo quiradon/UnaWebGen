@@ -30,7 +30,7 @@ function dice(t) {
                     <p class="lead text-secondary">${t.index.dices.desc}</p>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6"><img class="img-fluid" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/dices.webp" /></div>
+            <div class="col-lg-6 col-xl-6"><img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/dices.webp" /></div>
         </div>
     </div>
 </section>`
@@ -43,12 +43,12 @@ function textoSistemas(t) {
         <div class="row py-5">
             <div class="col-lg-6 col-xl-6 d-lg-flex align-items-lg-center">
                 <div class="mb-5">
-                    <h4 class="fw-semibold text-primary mb-0">${t.index.dices.subtitle}</h4>
-                    <h1 class="display-5 fw-bold mt-0">${t.index.dices.title}</h1>
-                    <p class="lead text-secondary">${t.index.dices.desc}</p>
+                    <h4 class="fw-semibold text-primary mb-0">${t.character.sheet.subtitle}</h4>
+                    <h1 class="display-5 fw-bold mt-0">${t.character.sheet.title}</h1>
+                    <p class="lead text-secondary">${t.character.sheet.desc}</p>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6"><img class="img-fluid" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/dices.webp" /></div>
+            <div class="col-lg-6 col-xl-6"><img class="img-fluid p-4 generic_grow" width="600" height="400" alt="RPG Characters Sheets" src="/static/img/misc/blobs/sheets.webp" /></div>
         </div>
     </div>
 </section>`
@@ -118,10 +118,10 @@ function inicio2(t) {
             <div class="col-auto col-xl-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
                 <div class="mb-5">
                     <h1 class="display-1 fw-bold" >${text}</h1>
-                    <p class="text-secondary">${t.index.start.desc}</p><a class="btn btn-primary btn-lg border-2 px-5" type="link" href="${bot_invite}" target="_blank" style="font-weight: bold;">${t.nav.add}</a>
+                    <p class="text-secondary">${t.index.start.desc}</p><a class="btn btn-primary btn-lg border-2 px-5 generic_grow" type="link" href="${bot_invite}" target="_blank" style="font-weight: bold;">${t.nav.add}</a>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid" alt="Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" /></div>
+            <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid generic_grow" alt="Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" /></div>
         </div>
     </div>
 </section>
@@ -135,7 +135,7 @@ function botStatus(t) {
             <div class="text-nowrap d-flex justify-content-center align-items-center animated-text noSelect"></div>
             ${TitleAndSubtitle(t.index.status.title, t.index.status.subtitle, t.index.status.desc)}
             <div class="row gy-4 row-cols-2 row-cols-md-4 justify-content-center align-items-center">
-                <div class="col">
+                <div class="col generic_grow">
                     <div class="text-center d-flex flex-column justify-content-center align-items-center py-3 mb-3" data-bss-hover-animate="pulse">
                         <div class="bs-icon-xl bs-icon-circle bs-icon-primary bg-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg"><svg xmlns="https://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor" class="text-dark">
                                 <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"></path>
@@ -146,7 +146,7 @@ function botStatus(t) {
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col generic_grow">
                     <div class="text-center d-flex flex-column justify-content-center align-items-center py-3 mb-3" data-bss-hover-animate="pulse">
                         <div class="bs-icon-xl bs-icon-circle bs-icon-primary bg-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg"><svg xmlns="https://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor" class="text-dark">
                                 <path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"></path>
@@ -157,7 +157,7 @@ function botStatus(t) {
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col generic_grow">
                     <div class="text-center d-flex flex-column justify-content-center align-items-center py-3 mb-3" data-bss-hover-animate="pulse">
                         <div class="bs-icon-xl bs-icon-circle bs-icon-primary bg-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg"><svg xmlns="https://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor" class="text-dark">
                                 <path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"></path>
@@ -168,7 +168,7 @@ function botStatus(t) {
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col generic_grow">
                     <div class="text-center d-flex flex-column justify-content-center align-items-center py-3 mb-3" data-bss-hover-animate="pulse">
                         <div class="bs-icon-xl bs-icon-circle bs-icon-primary bg-primary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-2 bs-icon lg"><svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" class="text-dark">
                                 <path d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z"></path>
@@ -324,6 +324,7 @@ ${head(`${t.lang}${rota}`,`${t.index.name}`)}
     ${sistemList(t)}
     ${dice(t)}
     ${botStatus(t)}
+    ${textoSistemas(t)}
     ${cards(t)}
     ${plans(t)}
     ${footer(t,rota)}

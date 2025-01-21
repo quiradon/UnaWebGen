@@ -8,6 +8,13 @@
     "desc": "Temukan semua pembaruan dan peningkatan terbaru untuk proyek kami melalui halaman catatan rilis kami. Tetap terinformasi tentang setiap versi baru, perbaikan bug, dan fitur yang ditambahkan.",
     "title": "Pembaruan"
   },
+  "character": {
+    "sheet": {
+      "desc": "Kelola lembar karakter Anda dengan mudah dan intuitif menggunakan perintah /sheet, dan lakukan penggulingan dadu dengan perhitungan penjumlahan otomatis menggunakan perintah /di, mempercepat sesi Anda dan memberikan pengalaman yang lebih dinamis dan terorganisir. Peringatan: Sistem yang diadaptasi milik pembuatnya masing-masing. Kami hanya bekerja dengan adaptasi teks dari lembar karakter, dengan menghormati hak cipta pemiliknya.",
+      "subtitle": "Di mana saya menyimpan kertas itu?",
+      "title": "Lembar Karakter Otomatis"
+    }
+  },
   "cmds": {
     "desc": "Temukan semua perintah yang tersedia di Mini Kraken, sebuah sistem RPG online. Siapkan gim Anda, kelola ekonomi, berinteraksi dengan pemain lain, dan banyak lagi. Jelajahi fitur-fiturnya untuk membuat pengalaman RPG Anda lebih menarik dan dinamis!",
     "title": "Perintah"

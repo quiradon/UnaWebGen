@@ -8,6 +8,13 @@
     "desc": "Entdecken Sie alle neuesten Updates und Verbesserungen unseres Projekts über unsere Changelog-Seite. Bleiben Sie über jede neue Version, Fehlerbehebungen und hinzugefügte Funktionen informiert.",
     "title": "Updates"
   },
+  "character": {
+    "sheet": {
+      "desc": "Verwalte deine Charakterbögen einfach und intuitiv mit dem Befehl /sheet und führe Würfelwürfe mit automatischer Summenberechnung mit dem Befehl /di durch, wodurch deine Sitzungen beschleunigt und eine dynamischere und organisiertere Erfahrung ermöglicht wird. Warnung: Angepasste Systeme gehören ihren jeweiligen Erstellern. Wir arbeiten nur mit Textanpassungen der Bögen und respektieren die Urheberrechte ihrer Eigentümer.",
+      "subtitle": "Wo habe ich dieses Papier hingelegt?",
+      "title": "Automatisierte Charakterbögen"
+    }
+  },
   "cmds": {
     "desc": "Entdecke alle verfügbaren Befehle in Mini Kraken, einem Online-RPG-System. Richte dein Spiel ein, verwalte die Wirtschaft, interagiere mit anderen Spielern und vieles mehr. Erforsche seine Funktionen, um dein RPG-Erlebnis noch ansprechender und dynamischer zu gestalten!",
     "title": "Befehle"

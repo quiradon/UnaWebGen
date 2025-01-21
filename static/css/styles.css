@@ -2,7 +2,6 @@
 
 html {
   scroll-behavior: smooth;
-  font-family: 'PT Sans', sans-serif; 
 }
 
 #auto-scroll {
@@ -354,9 +353,17 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: 'PT Sans', sans-serif; 
 }
 
 .footer-spacer {
     flex-grow: 1;
 }
 
+.generic_grow {
+  transition: transform 0.3s ease;
+}
+
+.generic_grow:hover {
+  transform: scale(1.01);
+}

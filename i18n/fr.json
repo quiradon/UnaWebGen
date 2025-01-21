@@ -8,6 +8,13 @@
     "desc": "Découvrez toutes les dernières mises à jour et améliorations de notre projet via notre page des journaux de modifications. Restez informé de chaque nouvelle version, des corrections de bogues et des fonctionnalités ajoutées.",
     "title": "Mises à jour"
   },
+  "character": {
+    "sheet": {
+      "desc": "Gérez vos fiches de personnages de manière pratique et intuitive en utilisant la commande /sheet, et effectuez des lancers de dés avec calcul automatique des sommes grâce à la commande /di, accélérant ainsi vos sessions et offrant une expérience plus dynamique et organisée.  Avertissement : Les systèmes adaptés appartiennent à leurs créateurs respectifs. Nous travaillons uniquement avec des adaptations textuelles des fiches, en respectant les droits d'auteur de leurs propriétaires.",
+      "subtitle": "Où ai-je rangé ce papier ?",
+      "title": "Fiches de Personnage Automatisées"
+    }
+  },
   "cmds": {
     "desc": "Découvrez toutes les commandes disponibles dans Mini Kraken, un système de jeu de rôle en ligne. Configurez votre jeu, gérez l'économie, interagissez avec d'autres joueurs, et plus encore. Explorez ses fonctionnalités pour rendre votre expérience JDR encore plus captivante et dynamique !",
     "title": "Commandes"

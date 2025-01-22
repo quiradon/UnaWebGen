@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Découvrez toutes les commandes disponibles dans Mini Kraken, un système de jeu de rôle en ligne. Configurez votre jeu, gérez l'économie, interagissez avec d'autres joueurs, et plus encore. Explorez ses fonctionnalités pour rendre votre expérience JDR encore plus captivante et dynamique !",
+    "seo": "Découvrez toutes les commandes disponibles dans Mini Kraken, un système de jeu de rôle en ligne, pour rendre votre expérience de jeu encore plus immersive et dynamique. (140 caractères)",
     "title": "Commandes"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "Générer des cartes de Tarot aléatoires pour améliorer vos campagnes ou jeux de JDR. Explorez le générateur de cartes de Tarot Mini Kraken pour une inspiration créative.",
     "title": "Cartes de Tarot"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Liste de tous les outils.",
+      "title": "Afficher tous les outils"
+    }
   },
   "tos": {
     "0": {

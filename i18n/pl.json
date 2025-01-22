@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Odkryj wszystkie dostępne komendy w Mini Kraken, online'owym systemie RPG. Stwórz swoją grę, zarządzaj ekonomią, wchodź w interakcje z innymi graczami i wiele więcej. Poznaj jego funkcje, aby uczynić swoje RPG jeszcze bardziej wciągającym i dynamicznym!",
+    "seo": "Odkryj wszystkie dostępne komendy w Mini Kraken, systemie RPG online, aby uczynić swoje wrażenia z gry jeszcze bardziej wciągającymi i dynamicznymi. (140 znaków)",
     "title": "Komendy"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "Generuj losowe karty Tarota, aby ulepszyć swoje kampanie RPG lub gry. Poznaj Generator Kart Tarota Mini Kraken, aby uzyskać kreatywną inspirację.",
     "title": "Karty Tarota"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Lista wszystkich narzędzi.",
+      "title": "Pokaż wszystkie narzędzia"
+    }
   },
   "tos": {
     "0": {

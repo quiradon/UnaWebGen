@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Entdecke alle verfügbaren Befehle in Mini Kraken, einem Online-RPG-System. Richte dein Spiel ein, verwalte die Wirtschaft, interagiere mit anderen Spielern und vieles mehr. Erforsche seine Funktionen, um dein RPG-Erlebnis noch ansprechender und dynamischer zu gestalten!",
+    "seo": "Entdecke alle verfügbaren Befehle in Mini Kraken, einem Online-RPG-System, um dein Spielerlebnis noch immersiver und dynamischer zu gestalten. (140 Zeichen)",
     "title": "Befehle"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "Generiere zufällige Tarotkarten, um deine Rollenspielkampagnen oder Spiele aufzuwerten. Entdecke den Mini Kraken Tarot Karten Generator für kreative Inspiration.",
     "title": "Tarotkarten"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Liste aller Werkzeuge.",
+      "title": "Alle Werkzeuge anzeigen"
+    }
   },
   "tos": {
     "0": {

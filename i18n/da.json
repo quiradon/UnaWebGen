@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Oplev alle de tilgængelige kommandoer i Mini Kraken, et online RPG-system. Konfigurer dit spil, administrer økonomien, interagér med andre spillere og meget mere. Udforsk dets funktioner for at gøre din RPG-oplevelse endnu mere medrivende og dynamisk!",
+    "seo": "Oplev alle tilgængelige kommandoer i Mini Kraken, et online RPG-system, for at gøre din spiloplevelse endnu mere fordybende og dynamisk. (140 tegn)",
     "title": "Kommandoer"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "Generer tilfældige tarotkort for at forbedre dine kampagner eller rollespil. Udforsk Mini Krakens tarotkortgenerator for kreativ inspiration.",
     "title": "Tarotkort"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Liste over alle værktøjer.",
+      "title": "Vis alle værktøjer"
+    }
   },
   "tos": {
     "0": {

@@ -43,11 +43,10 @@ async function page(idioma, rota) {
     let idiomaUpdates = t.lang
     if (idiomaUpdates == 'pt') {
         idiomaUpdates = 'pt-BR'
-    } 
-
-    if (idiomaUpdates == 'es') {
-        idiomaUpdates = 'en'
+    } else {
+        idiomaUpdates = 'en-US'
     }
+
 
     const updates = await fetchUpdates(); // Buscando as atualizações da URL
 

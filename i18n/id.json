@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Temukan semua perintah yang tersedia di Mini Kraken, sebuah sistem RPG online. Siapkan gim Anda, kelola ekonomi, berinteraksi dengan pemain lain, dan banyak lagi. Jelajahi fitur-fiturnya untuk membuat pengalaman RPG Anda lebih menarik dan dinamis!",
+    "seo": "Temukan semua perintah yang tersedia di Mini Kraken, sebuah sistem RPG online, untuk membuat pengalaman bermain game Anda lebih mendalam dan dinamis. (140 karakter)",
     "title": "Perintah"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "Hasilkan kartu Tarot acak untuk meningkatkan kampanye atau permainan RPG Anda. Jelajahi Generator Kartu Tarot Mini Kraken untuk inspirasi kreatif.",
     "title": "Kartu Tarot"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Daftar semua alat.",
+      "title": "Lihat Semua Alat"
+    }
   },
   "tos": {
     "0": {

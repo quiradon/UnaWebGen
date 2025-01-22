@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Fedezd fel a Mini Kraken, az online RPG rendszer minden elérhető parancsát! Állítsd be a játékot, kezeld a gazdaságot, lépj interakcióba más játékosokkal és még sok minden mással. Fedezd fel a funkcióit, hogy RPG élményed még magával ragadóbb és dinamikusabb legyen!",
+    "seo": "Fedezd fel a Mini Krakenben, egy online RPG rendszerben elérhető összes parancsot, hogy a játékélményed még magával ragadóbb és dinamikusabb legyen. (140 karakter)",
     "title": "Parancsok"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "Generálj véletlenszerű Tarot kártyákat szerepjátékos kampányaidhoz vagy játékaidhoz. Fedezd fel a Mini Kraken Tarot Card Generator kreatív ihletforrását.",
     "title": "Tarot kártyák"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Minden eszköz listája.",
+      "title": "Minden eszköz megjelenítése"
+    }
   },
   "tos": {
     "0": {

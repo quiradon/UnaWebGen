@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Discover all the available commands in Mini Kraken, an online RPG system. Set up your game, manage the economy, interact with other players, and more. Explore its features to make your RPG experience even more engaging and dynamic!",
+    "seo": "Discover all available commands in Mini Kraken, an online RPG system, to make your gaming experience even more immersive and dynamic. (140 characters)",
     "title": "Commands"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "Generate random Tarot cards to enhance your RPG campaigns or games. Explore the Mini Kraken Tarot Card Generator for creative inspiration.",
     "title": "Tarot Cards"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "List of all tools.",
+      "title": "View All Tools"
+    }
   },
   "tos": {
     "0": {

@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Otkrijte sve dostupne naredbe u Mini Krakenu, online RPG sustavu. Postavite svoju igru, upravljajte ekonomijom, komunicirajte s drugim igračima i još mnogo toga. Istražite njegove značajke kako biste svoje RPG iskustvo učinili još zaokruženijim i dinamičnijim!\n",
+    "seo": "Otkrijte sve dostupne naredbe u Mini Krakenu, online RPG sustavu, kako biste svoje iskustvo igranja učinili još uranjajućim i dinamičnijim. (140 znakova)",
     "title": "Naredbe\n"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "Generirajte nasumične karte Tarota kako biste poboljšali svoje kampanje ili RPG igre. Istražite Generator Karata Tarota Mini Krakensa za kreativnu inspiraciju.\n",
     "title": "Karte Tarota\n"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Popis svih alata.",
+      "title": "Prikaži sve alate"
+    }
   },
   "tos": {
     "0": {

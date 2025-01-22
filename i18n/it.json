@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Scopri tutti i comandi disponibili in Mini Kraken, un sistema RPG online. Configura la tua partita, gestisci l'economia, interagisci con altri giocatori e molto altro. Esplora le sue funzionalità per rendere la tua esperienza RPG ancora più coinvolgente e dinamica!",
+    "seo": "Scopri tutti i comandi disponibili in Mini Kraken, un sistema RPG online, per rendere la tua esperienza di gioco ancora più coinvolgente e dinamica. (140 caratteri)",
     "title": "Comandos"
   },
   "comum": {
@@ -187,11 +188,11 @@
         "title": "Gerador de Nomes"
       },
       "poker": {
-        "desc": "Puxe um cartão aleatório do baralho",
+        "desc": "Estrai una carta a caso dal mazzo.\n",
         "name": "Cartas de Poker"
       },
       "tarot": {
-        "desc": "Puxe um cartão do baralho de fortuna",
+        "desc": "Estrai una carta dal mazzo dei Tarocchi.\n",
         "name": "Cartas de Tarot"
       },
       "title": "Ferramentas"
@@ -199,8 +200,8 @@
   },
   "poker": {
     "article": {
-      "desc": "Um gerador de cartas de jogo aleatório, que pode de alguma forma ajudar a criar uma campanha ou jogo.",
-      "title": "Gerador de Cartas de Poker"
+      "desc": "Un generatore casuale di carte da gioco, che può in qualche modo aiutare a creare una campagna o un gioco.\n",
+      "title": "Generatore di Carte da Poker\n"
     },
     "cards": {
       "type": {
@@ -212,7 +213,7 @@
       }
     },
     "desc": "Genera cartas de juego aleatorias para tus campañas o juegos de rol. Mejora tu narrativa con el Generador de Cartas de Póker.",
-    "title": "Cartas de Poker"
+    "title": "Carte da Poker\n"
   },
   "posts": {
     "sistemas": {
@@ -404,6 +405,12 @@
     },
     "desc": "Genera cartas del Tarot aleatorias para mejorar tus campañas o juegos de rol. Explora el Generador de Cartas del Tarot de Mini Kraken para obtener inspiración creativa.",
     "title": "Cartas de Tarô"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Elenco di tutti gli strumenti.",
+      "title": "Visualizza tutti gli strumenti"
+    }
   },
   "tos": {
     "0": {

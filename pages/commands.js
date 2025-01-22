@@ -106,7 +106,7 @@ async function page(language, route) {
     return `
     <!DOCTYPE html>
     <html lang="${realLang}" data-bs-theme="dark">
-        ${head(`${realLang}${route}`, `${language.cmds.title}`)}
+        ${head(`${realLang}${route}`, `${language.cmds.title}`, language.cmds.seo)}
         <body>
             ${nav(language, route)}
             <section>

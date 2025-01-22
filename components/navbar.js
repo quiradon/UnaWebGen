@@ -141,7 +141,15 @@ function nav(t,rota){
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.poker.name}</span><span class="text-secondary lh-0">${t.nav.tools.poker.desc}</span></div>
                                 </div>
                             </a>
+
+                                                <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/coinflip" rel="help" >
+                        <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
+                                <path d="M315.4 15.5C309.7 5.9 299.2 0 288 0s-21.7 5.9-27.4 15.5l-96 160c-5.9 9.9-6.1 22.2-.4 32.2s16.3 16.2 27.8 16.2H384c11.5 0 22.2-6.2 27.8-16.2s5.5-22.3-.4-32.2l-96-160zM288 312V456c0 22.1 17.9 40 40 40H472c22.1 0 40-17.9 40-40V312c0-22.1-17.9-40-40-40H328c-22.1 0-40 17.9-40 40zM128 512a128 128 0 1 0 0-256 128 128 0 1 0 0 256z"></path>
+                            </svg>
+                            <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.tools.all.title}</span><span class="text-secondary lh-0">${t.tools.all.subtitle}</span></div>
                         </div>
+                    </a>
+                        
                     </li>
                     ${lang_selector(t, lang, rota)}
                 </ul><a class="btn btn-primary fw-bold link-light border rounded border-0 d-lg-flex d-xxl-flex align-items-lg-center justify-content-xxl-center align-items-xxl-center px-3" role="button" href="${lang}/#premium"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor">
@@ -162,7 +170,7 @@ function lang_selector(t, lang, rota) {1
                     <li class="nav-item auto-open dropdown"><a aria-label="${t.lang} Selected in Lang Selector" class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><img class="img-fluid me-1" src="${lang_FLAGS[t.lang]}" width="25" height="25" alt="${t.lang} Flag"/> <svg class="mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"></path>
                             </svg></a>
-                        <div class="dropdown-menu shadow">
+                        <div class="dropdown-menu shadow overflow-auto">
                             <a class="dropdown-item d-flex" href="${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.en}" width="25" height="25" alt="English Lang selector"/>English</span></a>
                             <a class="dropdown-item d-flex" href="/zh${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.zh}" width="25" height="25" alt="Chinese Lang selector" />中文</span></a>
                             <a class="dropdown-item d-flex" href="/es${rota}" data-bs-target="https://rpg.arkanus.app"><span><img class="img-fluid me-2" src="${lang_FLAGS.es}" width="25" height="25" alt="Spanish Lang selector" />Español</span></a>

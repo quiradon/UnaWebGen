@@ -17,6 +17,7 @@
   },
   "cmds": {
     "desc": "Mini Kraken, çevrimiçi RPG sisteminde bulunan tüm komutları keşfedin. Oyununuzu kurun, ekonomiyi yönetin, diğer oyuncularla etkileşim kurun ve daha fazlasını yapın. RPG deneyiminizi daha ilgi çekici ve dinamik hale getirmek için özelliklerini keşfedin!",
+    "seo": "Mini Kraken, çevrimiçi bir RPG sisteminde bulunan tüm komutları keşfedin ve oyun deneyiminizi daha sürükleyici ve dinamik hale getirin. (140 karakter)",
     "title": "Komutlar"
   },
   "comum": {
@@ -404,6 +405,12 @@
     },
     "desc": "RPG kampanyalarınız veya oyunlarınızı geliştirmek için rastgele Tarot kartları oluşturun. Yaratıcı ilham için Mini Kraken Tarot Kart Oluşturucu'yu keşfedin.",
     "title": "Tarot Kartları"
+  },
+  "tools": {
+    "all": {
+      "subtitle": "Tüm araçların listesi.",
+      "title": "Tüm araçları göster"
+    }
   },
   "tos": {
     "0": {

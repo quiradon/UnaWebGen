@@ -273,7 +273,7 @@
         },
         "icon": "/static/img/rpg/Gaia.svg",
         "legal": "Gaia: The Prelude dikembangkan oleh Auroria - Game Studio, yang memiliki semua hak cipta. Buku-buku sistem diterbitkan di bawah lisensi [OPEN GAME LICENSE](https://en.wikipedia.org/wiki/Open_Game_License#Open_Game_License) Versi 1.0a, dan dilindungi oleh CBL (Câmara Brasileira do Livro). Mini Kraken memiliki pengetahuan dan izin dari penulis Lyy untuk beroperasi,  selain itu kami sarankan Anda membeli buku dan mendukung proyek pendanaannya di [CATARSE](https://www.catarse.me/gaiapreludio).\n",
-        "path": "Please provide the content you want me to translate into Indonesian (using the 'gaia' locale, which I assume is a typo and should be 'id').  I need the text to be able to translate it.\n",
+        "path": "gaia",
         "tags": "Sistem RPG, Abad Pertengahan, Fantasi, Inovasi\n"
       },
       "5": {

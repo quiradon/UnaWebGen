@@ -237,7 +237,7 @@
         },
         "icon": "/static/img/rpg/Ordem.svg",
         "legal": "Paranormal Orden blev skabt af Rafael Lange \"Cellbit\" Lange og udgives i øjeblikket af [Editora Jambo](https://jamboeditora.com.br/), som har alle rettigheder forbeholdt. Bøgerne i systemet blev udgivet under [OPEN GAME LICENSE Version](https://en.wikipedia.org/wiki/Open_Game_License) 1.0a. Mini Kraken har ingen tilknytning til forlaget eller skaberen; Mini Kraken er blot et sæt værktøjer designet til at hjælpe mestre og spillere af forskellige systemer, og vi har heller ikke tilladelse fra dem til at operere. Køb Paranormal Orden: [Basisbog](https://amzn.to/3BuEkbj)[Supplement | Overlevelse af Gys](https://amzn.to/3PaFlIF)",
-        "path": "orden",
+        "path": "ordem",
         "tags": "RPG-system,Urbant,Paranormalt,Efterforskning"
       },
       "2": {

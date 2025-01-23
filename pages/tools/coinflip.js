@@ -5,9 +5,9 @@ const {head} = require('../../components/head')
 function page(idioma, rota) {
     const t = idioma
     return `
-<!DOCTYPE html>
-<html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`,`${t.tarot.title}`,`${t.tarot.desc}`)}
+  <!DOCTYPE html>
+  <html lang="${t.lang}" data-bs-theme="dark">
+  ${head(`${t.lang}${rota}`,`Coin Flip`,`Coin Flip`)}
     <style>
     .coin {
       width: 100px;
@@ -66,34 +66,48 @@ ${head(`${t.lang}${rota}`,`${t.tarot.title}`,`${t.tarot.desc}`)}
     @keyframes shrinkOut {
       to { transform: scale(0); }
     }
-  </style>
-<body>
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    </style>
+  <body>
 
     ${nav(t, rota)}
 
-    <section class="justify-content-lg-center pt-2 mt-4 mb-4">
-        <div class="container text-center">
-             <h1>Rolar uma Moeda</h1>
+    <section class="justify-content-lg-center pt-2 mt-3 mb-4">
+      <div class="container align-items-center">
+      <div>
+            <div class="text-white">
+            <h1 class="fw-bold text-white mb-3">${t.names.article.title}</h1>
+            <p class="mb-4">${t.names.article.desc}</p>
+            </div>
+      </div>
+      
     <div id="coins-container" class="d-flex flex-wrap justify-content-center gap-2">
       <div class="coin" onclick="flipCoin(this)">
-        <div class="side front"></div>
-        <div class="side back"></div>
+      <div class="side front"></div>
+      <div class="side back"></div>
       </div>
     </div>
-    <button class="btn btn-primary mt-3" onclick="rerollAll()">Re-rolar Todas</button>
-    <div class="stack-controls mt-3">
+    <div class="button-container mt-3">
+      <button class="btn btn-primary" onclick="rerollAll()">Re-rolar Todas</button>
+    </div>
+    <div class="button-container stack-controls mt-3">
       <button class="btn btn-secondary" onclick="decreaseStack()">-</button>
-         <input type="number" disabled id="stack-size" class="form-control d-inline-block w-auto" value="1" min="1" max="20" onchange="setStackSize()">
+       <input type="number" disabled id="stack-size" class="form-control d-inline-block w-auto" value="1" min="1" max="24" onchange="setStackSize()">
       <button class="btn btn-secondary" onclick="increaseStack()">+</button>
     </div>
-        </div>
+      </div>
     </section>
     ${footer(t,rota)}
     ${scripts}
     <script src="/static/js/coin_flip.js"></script>
-</body>
-</html>
-`
+  </body>
+  </html>
+  `
 }
 
 module.exports = {

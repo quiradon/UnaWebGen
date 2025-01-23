@@ -151,6 +151,7 @@
       "desc": "Bu karakter ismi üreticisi, bir Kitap, RPG Kampanyası veya oyun yazmanıza yardımcı olmak için bir başlangıç noktası olarak oluşturulmuştur. Karakterleriniz için isim arıyorsanız doğru yerdesiniz.",
       "female": "Kadın",
       "male": "Erkek",
+      "seo": "Kitap, RPG ve oyun karakterleri için isim üreteci. Yaratımınız için mükemmel ismi bulun.",
       "title": "İsim Üretici"
     }
   },

@@ -10,7 +10,7 @@ function flipCoin(coin) {
 
 function addCoin() {
     const coinsContainer = document.getElementById('coins-container');
-    if (coinsContainer.children.length >= 20) return; // Limite máximo de 20 moedas
+    if (coinsContainer.children.length >= 24) return; // Limite máximo de 24 moedas
     const newCoin = document.createElement('div');
     newCoin.className = 'coin animate';
     newCoin.onclick = () => flipCoin(newCoin);
@@ -58,7 +58,7 @@ function updateStackSize() {
 
 function increaseStack() {
     const stackSizeInput = document.getElementById('stack-size');
-    if (parseInt(stackSizeInput.value) < 20) { // Limite máximo de 20 moedas
+    if (parseInt(stackSizeInput.value) < 24) { // Limite máximo de 24 moedas
         stackSizeInput.value = parseInt(stackSizeInput.value) + 1;
         addCoin();
     }
@@ -75,7 +75,7 @@ function decreaseStack() {
 function setStackSize() {
     const stackSizeInput = document.getElementById('stack-size');
     let stackSize = parseInt(stackSizeInput.value);
-    if (stackSize > 20) stackSize = 20; // Limite máximo de 20 moedas
+    if (stackSize > 24) stackSize = 24; // Limite máximo de 24 moedas
     const coinsContainer = document.getElementById('coins-container');
     coinsContainer.innerHTML = '';
     for (let i = 0; i < stackSize; i++) {

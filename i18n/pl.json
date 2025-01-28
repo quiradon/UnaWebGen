@@ -37,6 +37,12 @@
     "title": "Składnia systemu rzucania kośćmi"
   },
   "donate_text": "Jeśli dotarłeś tak daleko, to dlatego, że chcesz wesprzeć projekt! Odwiedź nasz oficjalny serwer i przejdź do czatu Bilety",
+  "flip_coin": {
+    "btn": "Rzuć ponownie wszystko",
+    "desc": "W wielu systemach RPG rzucanie monetą służy do podejmowania ważnych decyzji, wprowadzając element szczęścia i strategii do gry. W Invazores RPG – brazylijskim systemie łapania potworów osadzonym w postapokaliptycznym świecie – ta mechanika jest niezbędna. Tutaj możesz wybrać, ile monet chcesz rzucać, klikając na każdą z nich, aby obracać je pojedynczo, lub wybierając ponowne rzucenie wszystkich naraz.",
+    "seo": "System rzucania monetą, znany również jako orzeł czy reszka, rzuć jedną lub więcej monet i zobacz wynik.",
+    "title": "Rzucać monetami"
+  },
   "footer": {
     "about": "O nas",
     "arkanus": {

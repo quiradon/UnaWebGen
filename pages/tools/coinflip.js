@@ -7,7 +7,7 @@ function page(idioma, rota) {
     return `
   <!DOCTYPE html>
   <html lang="${t.lang}" data-bs-theme="dark">
-  ${head(`${t.lang}${rota}`,`Coin Flip`,`Coin Flip`)}
+  ${head(`${t.lang}${rota}`,`${t.flip_coin.title}`,`${t.flip_coin.seo}`)}
     <style>
     .coin {
       width: 100px;
@@ -81,8 +81,8 @@ function page(idioma, rota) {
       <div class="container align-items-center">
       <div>
             <div class="text-white">
-            <h1 class="fw-bold text-white mb-3">${t.names.article.title}</h1>
-            <p class="mb-4">${t.names.article.desc}</p>
+            <h1 class="fw-bold text-white mb-3">${t.flip_coin.title}</h1>
+            <p class="mb-4 text-secondary">${t.flip_coin.desc}</p>
             </div>
       </div>
       
@@ -93,7 +93,7 @@ function page(idioma, rota) {
       </div>
     </div>
     <div class="button-container mt-3">
-      <button class="btn btn-primary" onclick="rerollAll()">Re-rolar Todas</button>
+      <button class="btn btn-primary" onclick="rerollAll()">${t.flip_coin.btn}</button>
     </div>
     <div class="button-container stack-controls mt-3">
       <button class="btn btn-secondary" onclick="decreaseStack()">-</button>

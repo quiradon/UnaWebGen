@@ -37,6 +37,12 @@
     "title": "Sintaxe do Sistema de Rolagem de Dados"
   },
   "donate_text": "Se você chegou até aqui, é porque quer apoiar o projeto! Visite nosso servidor oficial e vá até o chat de Tickets",
+  "flip_coin": {
+    "btn": "Rilancia Tutto",
+    "desc": "In molti sistemi di gioco di ruolo, il lancio di monete viene usato per decidere azioni importanti, portando fortuna e strategia nel gioco. In Invazores RPG – un sistema brasiliano di cattura di mostri ambientato in un mondo post-apocalittico – questa meccanica è essenziale. Qui, puoi selezionare quante monete vuoi lanciare, cliccando su ciascuna per girarla individualmente o scegliendo di rilanciare tutte insieme.",
+    "seo": "Sistema di lancio di monete, noto anche come testa o croce, lancia una o più monete e vedi il risultato.",
+    "title": "Lanciare monete"
+  },
   "footer": {
     "about": "Sobre",
     "arkanus": {

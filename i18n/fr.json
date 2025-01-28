@@ -37,6 +37,12 @@
     "title": "Syntaxe du système de lancer de dés"
   },
   "donate_text": "Si vous êtes arrivé jusque-là, c’est que vous souhaitez soutenir le projet ! Visitez notre serveur officiel et allez sur le chat Tickets",
+  "flip_coin": {
+    "btn": "Relancer toutes",
+    "desc": "Dans de nombreux systèmes de JdR, le lancer de pièces est utilisé pour décider d'actions importantes, apportant chance et stratégie au jeu. Dans Invazores RPG – un système brésilien de capture de monstres se déroulant dans un monde post-apocalyptique – cette mécanique est essentielle. Ici, vous pouvez sélectionner le nombre de pièces que vous souhaitez lancer, en cliquant sur chacune pour la faire tourner individuellement ou en choisissant de relancer toutes en même temps.",
+    "seo": "Système de lancer de pièces, aussi connu comme pile ou face, lancez une ou plusieurs pièces et voyez le résultat.",
+    "title": "Lancer des pièces"
+  },
   "footer": {
     "about": "À propos",
     "arkanus": {

@@ -37,6 +37,12 @@
     "title": "Kockadobó rendszer szintaxis"
   },
   "donate_text": "Ha idáig eljutottál, az azért van, mert támogatni szeretnéd a projektet! Látogass meg minket a hivatalos szerverünkön és menj a Tickets csevegésbe",
+  "flip_coin": {
+    "btn": "Minden újra dobás",
+    "desc": "Sok RPG-rendszerekben az érmék dobálása fontos döntések meghozatalára szolgál, szerencsét és stratégiát hozva a játékba. Az Invazores RPG-ben – egy brazil, posztapokaliptikus világban játszódó szörnyfogó rendszerben – ez a mechanika elengedhetetlen. Itt kiválaszthatod, hogy hány érmét szeretnél dobni, mindegyikre kattintva egyenként megforgathatod őket, vagy egyszerre dobhatod újra az összeset.",
+    "seo": "Érmeforgató rendszer, más néven fej vagy írás, dobj fel egy vagy több érmét, és nézd meg az eredményt.",
+    "title": "Érmeket dobni"
+  },
   "footer": {
     "about": "Névjegy",
     "arkanus": {

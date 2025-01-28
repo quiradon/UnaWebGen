@@ -37,6 +37,12 @@
     "title": "Syntax des Würfelsystems"
   },
   "donate_text": "Wenn Sie es bis hierher geschafft haben, dann weil Sie das Projekt unterstützen wollen! Besuchen Sie unseren offiziellen Server und gehen Sie zum Tickets-Chat",
+  "flip_coin": {
+    "btn": "Alle neu würfeln",
+    "desc": "In vielen RPG-Systemen wird das Werfen von Münzen verwendet, um wichtige Aktionen zu entscheiden, was Glück und Strategie ins Spiel bringt. In Invazores RPG – einem brasilianischen Monsterfang-System in einer postapokalyptischen Welt – ist diese Mechanik essentiell. Hier können Sie auswählen, wie viele Münzen Sie werfen möchten, indem Sie auf jede einzelne klicken, um sie einzeln zu drehen, oder indem Sie sich entscheiden, alle auf einmal neu zu werfen.",
+    "seo": "Münzwurf-System, auch bekannt als Kopf oder Zahl, wirf eine oder mehrere Münzen und sieh dir das Ergebnis an.",
+    "title": "Münzen werfen"
+  },
   "footer": {
     "about": "Über",
     "arkanus": {

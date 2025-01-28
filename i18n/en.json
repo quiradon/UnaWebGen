@@ -37,6 +37,12 @@
     "title": "Dice Rolling System Syntax"
   },
   "donate_text": "If you've made it this far, it's because you want to support the project! Visit our official server and go to the Tickets chat",
+  "flip_coin": {
+    "btn": "Re-roll All",
+    "desc": "In many RPG systems, coin flipping is used to decide important actions, bringing luck and strategy to the game. In Invazores RPG – a Brazilian monster catch system set in a post-apocalyptic world – this mechanic is essential. Here, you can select how many coins you want to roll, clicking on each one to spin it individually or choosing to reroll all at once.",
+    "seo": "Coin flipping system, also known as heads or tails, flip one or more coins and see the result.",
+    "title": "Flip coins"
+  },
   "footer": {
     "about": "About",
     "arkanus": {

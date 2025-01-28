@@ -37,6 +37,12 @@
     "title": "Sintaxis del sistema de tirada de dados"
   },
   "donate_text": "Si has llegado hasta aquí, ¡es porque quieres apoyar el proyecto! Visita nuestro servidor oficial y ve al chat de Tickets",
+  "flip_coin": {
+    "btn": "Re-lanzar Todas",
+    "desc": "En muchos sistemas de RPG, el lanzamiento de monedas se usa para decidir acciones importantes, aportando suerte y estrategia al juego. En Invazores RPG – un sistema brasileño de captura de monstruos ambientado en un mundo postapocalíptico – esta mecánica es esencial. Aquí, puedes seleccionar cuántas monedas deseas lanzar, haciendo clic en cada una para girarla individualmente o eligiendo volver a lanzar todas a la vez.",
+    "seo": "Sistema de lanzamiento de monedas, también conocido como cara o cruz, lanza una o más monedas y observa el resultado.",
+    "title": "Lanzar monedas"
+  },
   "footer": {
     "about": "Acerca de",
     "arkanus": {

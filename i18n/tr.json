@@ -37,6 +37,12 @@
     "title": "Zar Atma Sistemi Sözdizimi"
   },
   "donate_text": "Buraya kadar geldiyseniz, projeyi desteklemek istediğiniz içindir! Resmi sunucumuzu ziyaret edin ve Biletler sohbetine gidin",
+  "flip_coin": {
+    "btn": "Hepsini Yeniden At",
+    "desc": "Birçok RPG sisteminde, önemli eylemlere karar vermek için para atma kullanılır, oyuna şans ve strateji katar. Invazores RPG'de – post-apokaliptik bir dünyada geçen Brezilya yapımı bir canavar yakalama sisteminde – bu mekanik esastır. Burada, kaç para atmak istediğinizi seçebilir, her birine tıklayarak tek tek döndürebilir veya hepsini birden yeniden atabilirsiniz.",
+    "seo": "Madeni para çevirme sistemi, yazı tura olarak da bilinir, bir veya daha fazla madeni para çevirin ve sonucu görün.",
+    "title": "Para atmak"
+  },
   "footer": {
     "about": "Hakkında",
     "arkanus": {

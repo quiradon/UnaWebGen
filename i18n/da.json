@@ -37,6 +37,12 @@
     "title": "Syntaks for terningrulningssystem"
   },
   "donate_text": "Hvis du er nået hertil, er det fordi du ønsker at støtte projektet! Gå til vores officielle server og gå til ticket-chatten.",
+  "flip_coin": {
+    "btn": "Genrul alle",
+    "desc": "I mange RPG-systemer bruges møntkast til at afgøre vigtige handlinger, hvilket tilføjer held og strategi til spillet. I Invazores RPG – et brasiliansk monstersamlesystem i en postapokalyptisk verden – er denne mekanik essentiel. Her kan du vælge, hvor mange mønter du vil kaste, klikke på hver enkelt for at dreje den individuelt eller vælge at kaste alle på én gang.",
+    "seo": "Møntkast-system, også kendt som plat eller krone, kast en eller flere mønter og se resultatet.",
+    "title": "Kast med mønter"
+  },
   "footer": {
     "about": "Om",
     "arkanus": {

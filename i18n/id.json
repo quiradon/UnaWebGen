@@ -37,6 +37,12 @@
     "title": "Sintaks Sistem Pelemparan Dadu"
   },
   "donate_text": "Jika Anda sampai sejauh ini, itu karena Anda ingin mendukung proyek ini! Kunjungi server resmi kami dan buka obrolan Tiket,",
+  "flip_coin": {
+    "btn": "Ulangi Semua",
+    "desc": "Dalam banyak sistem RPG, pelemparan koin digunakan untuk memutuskan tindakan penting, membawa keberuntungan dan strategi ke dalam permainan. Dalam Invazores RPG – sistem tangkap monster Brasil yang berlatar dunia pasca-apokaliptik – mekanik ini sangat penting. Di sini, Anda dapat memilih berapa banyak koin yang ingin Anda lempar, dengan mengklik masing-masing untuk memutarnya secara individual atau memilih untuk melempar ulang semuanya sekaligus.",
+    "seo": "Sistem pelemparan koin, juga dikenal sebagai kepala atau ekor, lempar satu atau lebih koin dan lihat hasilnya.",
+    "title": "Melempar koin"
+  },
   "footer": {
     "about": "Tentang",
     "arkanus": {

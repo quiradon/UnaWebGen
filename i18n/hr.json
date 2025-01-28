@@ -37,6 +37,12 @@
     "title": "Sintaksa Sustava Kockanja Kockicama\n"
   },
   "donate_text": "Ako ste stigli ovamo, to znači da želite podržati projekt! Posjetite naš službeni server i idite na chat za zahtjeve.\n",
+  "flip_coin": {
+    "btn": "Ponovno baci sve",
+    "desc": "U mnogim RPG sustavima, bacanje novčića se koristi za odlučivanje o važnim radnjama, donoseći sreću i strategiju u igru. U Invazores RPG-u – brazilskom sustavu hvatanja čudovišta smještenom u postapokaliptičkom svijetu – ova je mehanika bitna. Ovdje možete odabrati koliko novčića želite baciti, klikom na svaki da ga okrećete pojedinačno ili odabirom da ponovno bacite sve odjednom.",
+    "seo": "Sustav bacanja novčića, također poznat kao glava ili pismo, bacite jedan ili više novčića i pogledajte rezultat.",
+    "title": "Baciti kovanice"
+  },
   "footer": {
     "about": "O nama\n",
     "arkanus": {

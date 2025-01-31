@@ -40,6 +40,7 @@
   "flip_coin": {
     "btn": "Ulangi Semua",
     "desc": "Dalam banyak sistem RPG, pelemparan koin digunakan untuk memutuskan tindakan penting, membawa keberuntungan dan strategi ke dalam permainan. Dalam Invazores RPG – sistem tangkap monster Brasil yang berlatar dunia pasca-apokaliptik – mekanik ini sangat penting. Di sini, Anda dapat memilih berapa banyak koin yang ingin Anda lempar, dengan mengklik masing-masing untuk memutarnya secara individual atau memilih untuk melempar ulang semuanya sekaligus.",
+    "description": "Lempar beberapa koin dan lihat hasilnya: kepala atau ekor.",
     "seo": "Sistem pelemparan koin, juga dikenal sebagai kepala atau ekor, lempar satu atau lebih koin dan lihat hasilnya.",
     "title": "Melempar koin"
   },
@@ -203,6 +204,11 @@
         "name": "Kartu Tarot"
       },
       "title": "Alat"
+    }
+  },
+  "online": {
+    "tools": {
+      "btn": "Alat Online"
     }
   },
   "poker": {
@@ -417,6 +423,9 @@
     "all": {
       "subtitle": "Daftar semua alat.",
       "title": "Lihat Semua Alat"
+    },
+    "section": {
+      "title": "Daftar Alat RPG"
     }
   },
   "tos": {

@@ -40,6 +40,7 @@
   "flip_coin": {
     "btn": "Ponovno baci sve",
     "desc": "U mnogim RPG sustavima, bacanje novčića se koristi za odlučivanje o važnim radnjama, donoseći sreću i strategiju u igru. U Invazores RPG-u – brazilskom sustavu hvatanja čudovišta smještenom u postapokaliptičkom svijetu – ova je mehanika bitna. Ovdje možete odabrati koliko novčića želite baciti, klikom na svaki da ga okrećete pojedinačno ili odabirom da ponovno bacite sve odjednom.",
+    "description": "Bacite nekoliko kovanica i pogledajte rezultat: glava ili pismo.",
     "seo": "Sustav bacanja novčića, također poznat kao glava ili pismo, bacite jedan ili više novčića i pogledajte rezultat.",
     "title": "Baciti kovanice"
   },
@@ -203,6 +204,11 @@
         "name": "Tarot Karte"
       },
       "title": "Alati"
+    }
+  },
+  "online": {
+    "tools": {
+      "btn": "Online alati"
     }
   },
   "poker": {
@@ -417,6 +423,9 @@
     "all": {
       "subtitle": "Popis svih alata.",
       "title": "Prikaži sve alate"
+    },
+    "section": {
+      "title": "Popis alata za RPG"
     }
   },
   "tos": {

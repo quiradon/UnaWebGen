@@ -40,6 +40,7 @@
   "flip_coin": {
     "btn": "Rzuć ponownie wszystko",
     "desc": "W wielu systemach RPG rzucanie monetą służy do podejmowania ważnych decyzji, wprowadzając element szczęścia i strategii do gry. W Invazores RPG – brazylijskim systemie łapania potworów osadzonym w postapokaliptycznym świecie – ta mechanika jest niezbędna. Tutaj możesz wybrać, ile monet chcesz rzucać, klikając na każdą z nich, aby obracać je pojedynczo, lub wybierając ponowne rzucenie wszystkich naraz.",
+    "description": "Rzuć kilka monet i zobacz wynik: orzeł czy reszka.",
     "seo": "System rzucania monetą, znany również jako orzeł czy reszka, rzuć jedną lub więcej monet i zobacz wynik.",
     "title": "Rzucać monetami"
   },
@@ -203,6 +204,11 @@
         "name": "Karty Tarota"
       },
       "title": "Narzędzia"
+    }
+  },
+  "online": {
+    "tools": {
+      "btn": "Narzędzia online"
     }
   },
   "poker": {
@@ -417,6 +423,9 @@
     "all": {
       "subtitle": "Lista wszystkich narzędzi.",
       "title": "Pokaż wszystkie narzędzia"
+    },
+    "section": {
+      "title": "Lista narzędzi RPG"
     }
   },
   "tos": {

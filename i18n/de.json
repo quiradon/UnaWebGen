@@ -40,6 +40,7 @@
   "flip_coin": {
     "btn": "Alle neu würfeln",
     "desc": "In vielen RPG-Systemen wird das Werfen von Münzen verwendet, um wichtige Aktionen zu entscheiden, was Glück und Strategie ins Spiel bringt. In Invazores RPG – einem brasilianischen Monsterfang-System in einer postapokalyptischen Welt – ist diese Mechanik essentiell. Hier können Sie auswählen, wie viele Münzen Sie werfen möchten, indem Sie auf jede einzelne klicken, um sie einzeln zu drehen, oder indem Sie sich entscheiden, alle auf einmal neu zu werfen.",
+    "description": "Wirf mehrere Münzen und sieh das Ergebnis: Kopf oder Zahl.",
     "seo": "Münzwurf-System, auch bekannt als Kopf oder Zahl, wirf eine oder mehrere Münzen und sieh dir das Ergebnis an.",
     "title": "Münzen werfen"
   },
@@ -203,6 +204,11 @@
         "name": "Tarot Karten"
       },
       "title": "Werkzeuge"
+    }
+  },
+  "online": {
+    "tools": {
+      "btn": "Online-Tools"
     }
   },
   "poker": {
@@ -417,6 +423,9 @@
     "all": {
       "subtitle": "Liste aller Werkzeuge.",
       "title": "Alle Werkzeuge anzeigen"
+    },
+    "section": {
+      "title": "Liste der RPG-Tools"
     }
   },
   "tos": {

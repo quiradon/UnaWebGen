@@ -40,6 +40,7 @@
   "flip_coin": {
     "btn": "Hepsini Yeniden At",
     "desc": "Birçok RPG sisteminde, önemli eylemlere karar vermek için para atma kullanılır, oyuna şans ve strateji katar. Invazores RPG'de – post-apokaliptik bir dünyada geçen Brezilya yapımı bir canavar yakalama sisteminde – bu mekanik esastır. Burada, kaç para atmak istediğinizi seçebilir, her birine tıklayarak tek tek döndürebilir veya hepsini birden yeniden atabilirsiniz.",
+    "description": "Birkaç para atın ve sonuçları görün: tura veya yazı.",
     "seo": "Madeni para çevirme sistemi, yazı tura olarak da bilinir, bir veya daha fazla madeni para çevirin ve sonucu görün.",
     "title": "Para atmak"
   },
@@ -203,6 +204,11 @@
         "name": "Tarot Kartları"
       },
       "title": "Araçlar"
+    }
+  },
+  "online": {
+    "tools": {
+      "btn": "Çevrimiçi Araçlar"
     }
   },
   "poker": {
@@ -417,6 +423,9 @@
     "all": {
       "subtitle": "Tüm araçların listesi.",
       "title": "Tüm araçları göster"
+    },
+    "section": {
+      "title": "RPG Araç Listesi"
     }
   },
   "tos": {

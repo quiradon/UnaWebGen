@@ -40,6 +40,7 @@
   "flip_coin": {
     "btn": "Relancer toutes",
     "desc": "Dans de nombreux systèmes de JdR, le lancer de pièces est utilisé pour décider d'actions importantes, apportant chance et stratégie au jeu. Dans Invazores RPG – un système brésilien de capture de monstres se déroulant dans un monde post-apocalyptique – cette mécanique est essentielle. Ici, vous pouvez sélectionner le nombre de pièces que vous souhaitez lancer, en cliquant sur chacune pour la faire tourner individuellement ou en choisissant de relancer toutes en même temps.",
+    "description": "Lancez plusieurs pièces et voyez le résultat : pile ou face.",
     "seo": "Système de lancer de pièces, aussi connu comme pile ou face, lancez une ou plusieurs pièces et voyez le résultat.",
     "title": "Lancer des pièces"
   },
@@ -203,6 +204,11 @@
         "name": "Cartes de Tarot"
       },
       "title": "Outils"
+    }
+  },
+  "online": {
+    "tools": {
+      "btn": "Outils en ligne"
     }
   },
   "poker": {
@@ -417,6 +423,9 @@
     "all": {
       "subtitle": "Liste de tous les outils.",
       "title": "Afficher tous les outils"
+    },
+    "section": {
+      "title": "Liste d'outils JdR"
     }
   },
   "tos": {

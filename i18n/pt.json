@@ -40,6 +40,7 @@
   "flip_coin": {
     "btn": "Rolar Tudo Novamente",
     "desc": "Em muitos sistemas de RPG, o lançamento de moedas é usado para decidir ações importantes, trazendo sorte e estratégia para o jogo. No Invazores RPG – um sistema brasileiro de captura de monstros ambientado em um mundo pós-apocalíptico – essa mecânica é essencial. Aqui, você pode selecionar quantas moedas deseja lançar, clicando em cada uma para girá-la individualmente ou optando por relançar todas de uma vez.",
+    "description": "Jogue várias moedas e veja o resultado: cara ou coroa.",
     "seo": "Sistema de lançamento de moedas, também conhecido como cara ou coroa, lance uma ou mais moedas e veja o resultado.",
     "title": "Lançar moedas"
   },
@@ -203,6 +204,11 @@
         "name": "Cartas de Tarot"
       },
       "title": "Ferramentas"
+    }
+  },
+  "online": {
+    "tools": {
+      "btn": "Ferramentas online"
     }
   },
   "poker": {
@@ -417,6 +423,9 @@
     "all": {
       "subtitle": "Lista de todas as ferramentas.",
       "title": "Ver todas as ferramentas"
+    },
+    "section": {
+      "title": "Lista de Ferramentas de RPG"
     }
   },
   "tos": {

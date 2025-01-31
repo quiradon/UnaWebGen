@@ -113,12 +113,14 @@ function inicio2(t) {
     text = t.index.landing.text.replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1</span>')
     return `
     <section id="inicio" style="background: url('/static/img/bg/pattern-square.svg') top / auto repeat-x;">
-    <div class="container d-lg-flex align-items-lg-center py-2 py-xl-3">
+    <div class="container d-lg-flex align-items-lg-center py-4 py-xl-5">
         <div class="row gy-2 gy-md-0 row-cols-1 row-cols-lg-2 my-3 py-3">
             <div class="col-auto col-xl-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
                 <div class="mb-5">
                     <h1 class="display-1 fw-bold" >${text}</h1>
-                    <p class="text-secondary">${t.index.start.desc}</p><a class="btn btn-primary btn-lg border-2 px-5 generic_grow" type="link" href="${bot_invite}" target="_blank" style="font-weight: bold;">${t.nav.add}</a>
+                    <p class="text-secondary">${t.index.start.desc}</p>
+                    <a class="btn btn-primary btn-lg border-2 px-5 me-1 generic_grow" type="link" href="${bot_invite}" target="_blank" style="font-weight: bold;">${t.nav.add}</a>
+                    <a class="btn btn-light btn-lg border-2 px-4 generic_grow" type="link" href="./tools">${t.online.tools.btn}</a>
                 </div>
             </div>
             <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid generic_grow" alt="Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" /></div>

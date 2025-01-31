@@ -40,6 +40,7 @@
   "flip_coin": {
     "btn": "Minden újra dobás",
     "desc": "Sok RPG-rendszerekben az érmék dobálása fontos döntések meghozatalára szolgál, szerencsét és stratégiát hozva a játékba. Az Invazores RPG-ben – egy brazil, posztapokaliptikus világban játszódó szörnyfogó rendszerben – ez a mechanika elengedhetetlen. Itt kiválaszthatod, hogy hány érmét szeretnél dobni, mindegyikre kattintva egyenként megforgathatod őket, vagy egyszerre dobhatod újra az összeset.",
+    "description": "Dobd fel több érmét, és nézd meg az eredményt: fej vagy írás.",
     "seo": "Érmeforgató rendszer, más néven fej vagy írás, dobj fel egy vagy több érmét, és nézd meg az eredményt.",
     "title": "Érmeket dobni"
   },
@@ -203,6 +204,11 @@
         "name": "Tarot kártyák"
       },
       "title": "Eszközök"
+    }
+  },
+  "online": {
+    "tools": {
+      "btn": "Online eszközök"
     }
   },
   "poker": {
@@ -417,6 +423,9 @@
     "all": {
       "subtitle": "Minden eszköz listája.",
       "title": "Minden eszköz megjelenítése"
+    },
+    "section": {
+      "title": "RPG eszközök listája"
     }
   },
   "tos": {

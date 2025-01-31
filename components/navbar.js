@@ -127,22 +127,28 @@ function nav(t,rota){
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.names.title}</span><span class="text-secondary lh-0">${t.nav.tools.names.desc}</span></div>
                                 </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/tarot" rel="help">
+                            </a>
+                            
+                            <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/poker" rel="help">
+                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
+                                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path>
+                                    </svg>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.poker.name}</span><span class="text-secondary lh-0">${t.nav.tools.poker.desc}</span></div>
+                                </div>
+                            </a>
+                            
+                            
+                            
+                            <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/tarot" rel="help">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path>
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.tarot.name}</span><span class="text-secondary lh-0">${t.nav.tools.tarot.desc}</span></div>
                                 </div>
                             </a>
-                            <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/poker" rel="help">
-                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
-                                        <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path>
-                                    </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.poker.name}</span><span class="text-secondary lh-0">${t.nav.tools.poker.desc}</span></div>
-                                </div>
-                            </a>
+                        
 
-                                                <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/coinflip" rel="help" >
+                                                <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools" rel="help" >
                         <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M315.4 15.5C309.7 5.9 299.2 0 288 0s-21.7 5.9-27.4 15.5l-96 160c-5.9 9.9-6.1 22.2-.4 32.2s16.3 16.2 27.8 16.2H384c11.5 0 22.2-6.2 27.8-16.2s5.5-22.3-.4-32.2l-96-160zM288 312V456c0 22.1 17.9 40 40 40H472c22.1 0 40-17.9 40-40V312c0-22.1-17.9-40-40-40H328c-22.1 0-40 17.9-40 40zM128 512a128 128 0 1 0 0-256 128 128 0 1 0 0 256z"></path>
                             </svg>

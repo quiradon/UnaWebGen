@@ -34,7 +34,7 @@ ${head(`${t.lang}${rota}`,`${t.tools.section.title}`,`${t.names.article.seo}`)}
     <div class="container py-3">
         <div>
             <h1 class="fw-bold text-center d-flex justify-content-center align-items-center justify-content-md-center mt-3" style="font-family: 'PT Sans', sans-serif;">${t.tools.section.title}</h1>
-            <p class="d-flex justify-content-center align-items-center justify-content-md-center">Blog Single Column We write stuff from time to time that might be interesting 🤷‍‍</p>
+
         </div>
     </div>
     <div class="container py-4 py-xl-5">

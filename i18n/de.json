@@ -425,7 +425,8 @@
       "title": "Alle Werkzeuge anzeigen"
     },
     "section": {
-      "title": "Liste der RPG-Tools"
+      "title": "Liste der RPG-Tools",
+      "desc": "Werkzeugliste, die Spielleitern und Spielern bei ihren Tabletop-Rollenspielen helfen soll."
     }
   },
   "tos": {

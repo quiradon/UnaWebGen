@@ -425,7 +425,8 @@
       "title": "Afficher tous les outils"
     },
     "section": {
-      "title": "Liste d'outils JdR"
+      "title": "Liste d'outils JdR",
+      "desc": "Liste d'outils conçue pour aider les Maîtres du Jeu et les Joueurs avec leurs JDR sur table."
     }
   },
   "tos": {

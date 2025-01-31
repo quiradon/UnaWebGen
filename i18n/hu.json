@@ -425,7 +425,8 @@
       "title": "Minden eszköz megjelenítése"
     },
     "section": {
-      "title": "RPG eszközök listája"
+      "title": "RPG eszközök listája",
+      "desc": "Eszközlista, amely segíti a Játékmestereket és a Játékosokat asztali szerepjátékaikban."
     }
   },
   "tos": {

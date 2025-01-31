@@ -425,7 +425,8 @@
       "title": "Lihat Semua Alat"
     },
     "section": {
-      "title": "Daftar Alat RPG"
+      "title": "Daftar Alat RPG",
+      "desc": "Daftar alat yang dirancang untuk membantu Game Master dan Pemain dengan permainan peran meja mereka."
     }
   },
   "tos": {

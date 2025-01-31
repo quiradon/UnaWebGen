@@ -27,14 +27,14 @@ function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`,`${t.tools.section.title}`,`${t.names.article.seo}`)}
+${head(`${t.lang}${rota}`,`${t.tools.section.title}`,`${t.tools.section.desc}`)}
 <body>
     ${nav(t, rota)}
     <section id="inicio" style="background: url('pattern-square.svg') top / auto repeat-x;">
     <div class="container py-3">
         <div>
             <h1 class="fw-bold text-center d-flex justify-content-center align-items-center justify-content-md-center mt-3" style="font-family: 'PT Sans', sans-serif;">${t.tools.section.title}</h1>
-
+            <p class="d-flex justify-content-center align-items-center justify-content-md-center">${t.tools.section.desc}</p>
         </div>
     </div>
     <div class="container py-4 py-xl-5">

@@ -425,7 +425,8 @@
       "title": "View All Tools"
     },
     "section": {
-      "title": "RPG Tool List"
+      "title": "RPG Tool List",
+      "desc": "Tool list designed to help Game Masters and Players with their tabletop RPGs."
     }
   },
   "tos": {

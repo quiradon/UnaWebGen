@@ -425,7 +425,8 @@
       "title": "Ver todas as ferramentas"
     },
     "section": {
-      "title": "Lista de Ferramentas de RPG"
+      "title": "Lista de Ferramentas de RPG",
+      "desc": "Lista de ferramentas projetada para ajudar Mestres e Jogadores com seus RPGs de mesa."
     }
   },
   "tos": {

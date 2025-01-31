@@ -425,7 +425,8 @@
       "title": "Vis alle værktøjer"
     },
     "section": {
-      "title": "Liste over RPG-værktøjer"
+      "title": "Liste over RPG-værktøjer",
+      "desc": "Værktøjsliste designet til at hjælpe Spille Mestre og Spillere med deres tabletop RPG'er."
     }
   },
   "tos": {

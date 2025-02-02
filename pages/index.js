@@ -119,8 +119,8 @@ function inicio2(t) {
                 <div class="mb-5">
                     <h1 class="display-1 fw-bold" >${text}</h1>
                     <p class="text-secondary">${t.index.start.desc}</p>
-                    <a class="btn btn-primary btn-lg border-2 px-5 me-1 generic_grow" type="link" href="${bot_invite}" target="_blank" style="font-weight: bold;">${t.nav.add}</a>
-                    <a class="btn btn-light btn-lg border-2 px-4 generic_grow" type="link" href="./tools">${t.online.tools.btn}</a>
+                    <a class="btn btn-primary btn-lg mt-1 border-2 px-5 me-1 generic_grow" type="link" href="${bot_invite}" target="_blank" style="font-weight: bold;">${t.nav.add}</a>
+                    <a class="btn btn-primary btn-lg mt-1 border-2 px-4 generic_grow" type="link" href="./tools">${t.online.tools.btn}</a>
                 </div>
             </div>
             <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid generic_grow" alt="Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" /></div>

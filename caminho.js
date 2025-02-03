@@ -21,6 +21,10 @@ function roteador(rota) {
         rota = '/'
     }
 
+    //de replace em todos os index para vazio
+    rota = rota.replace(/index/g, '');
+
+
     return rota;
 }
 

@@ -24,6 +24,8 @@ function roteador(rota) {
     //de replace em todos os index para vazio
     rota = rota.replace(/index/g, '');
 
+    
+
 
     return rota;
 }
@@ -48,9 +50,14 @@ function extrairRotaSemIdioma(rota) {
             rotaNova = rotaNova.replace(`${language}`, '');
         }
     });
+
+
     if (rotaNova === '/index') {
         rotaNova = '/';
     }
+
+    rota = rota.replace(/index/g, '');
+
     return rotaNova;
 }
 

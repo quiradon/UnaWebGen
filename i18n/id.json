@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Kuasai seni melempar dadu dengan Mini Kraken! Temukan aturan yang eksplosif, batas waktu, simpanan, dan ekspresi numerik untuk meningkatkan permainan RPG Anda.",
+    "docs": {
+      "title": "Dokumentasi lengkap."
+    },
     "page": {
       "btn": "Lempar Dadu",
       "desc": "Dadu di dunia TTRPG mungkin sedikit membingungkan pada awalnya, tetapi jangan khawatir, kami di sini untuk membantu Anda. Di bawah ini kami memiliki panduan lengkap tentang cara melempar dengan baik, atlas akan mengajari Anda beberapa trik dan kiat.",
@@ -425,8 +428,8 @@
       "title": "Lihat Semua Alat"
     },
     "section": {
-      "title": "Daftar Alat RPG",
-      "desc": "Daftar alat yang dirancang untuk membantu Game Master dan Pemain dengan permainan peran meja mereka."
+      "desc": "Daftar alat yang dirancang untuk membantu Game Master dan Pemain dengan permainan peran meja mereka.",
+      "title": "Daftar Alat RPG"
     }
   },
   "tos": {

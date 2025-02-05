@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Mini Kraken ile zar atma sanatında ustalaşın! RPG oyununuzu geliştirmek için patlayıcı kuralları, zaman aşımını, tutmaları ve sayısal ifadeleri keşfedin.",
+    "docs": {
+      "title": "Tam dokümantasyon."
+    },
     "page": {
       "btn": "Zar At",
       "desc": "Masaüstü RPG dünyasında zarlar ilk başta biraz kafa karıştırıcı olabilir, ancak endişelenmeyin size yardımcı olmak için buradayız, aşağıda iyi nasıl zar atacağınız konusunda eksiksiz bir kılavuz bulunmaktadır, atlas size çeşitli püf noktaları ve hileler öğretecektir.",
@@ -425,8 +428,8 @@
       "title": "Tüm araçları göster"
     },
     "section": {
-      "title": "RPG Araç Listesi",
-      "desc": "Masaüstü RPG'lerinde GM'ler ve Oyunculara yardımcı olmak için tasarlanmış araç listesi."
+      "desc": "Masaüstü RPG'lerinde GM'ler ve Oyunculara yardımcı olmak için tasarlanmış araç listesi.",
+      "title": "RPG Araç Listesi"
     }
   },
   "tos": {

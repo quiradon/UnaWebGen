@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Mesterítsd el a kockadobás művészetét a Mini Krakennel! Fedezz fel robbanásveszélyes szabályokat, időtúllépéseket, megtartásokat és numerikus kifejezéseket, hogy feldobd a szerepjátékodat!",
+    "docs": {
+      "title": "Teljes dokumentáció."
+    },
     "page": {
       "btn": "Kockadobás",
       "desc": "A szerepjátékos világ kockái eleinte egy kicsit zavaróak lehetnek, de ne aggódj, itt vagyunk, hogy segítsünk! Lent egy teljes útmutatót találsz a jó dobáshoz, az atlasz pedig számos trükköt és fogást tanít meg neked.",
@@ -425,8 +428,8 @@
       "title": "Minden eszköz megjelenítése"
     },
     "section": {
-      "title": "RPG eszközök listája",
-      "desc": "Eszközlista, amely segíti a Játékmestereket és a Játékosokat asztali szerepjátékaikban."
+      "desc": "Eszközlista, amely segíti a Játékmestereket és a Játékosokat asztali szerepjátékaikban.",
+      "title": "RPG eszközök listája"
     }
   },
   "tos": {

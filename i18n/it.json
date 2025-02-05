@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Domine a arte de rolar dados com o Mini Kraken! Descubra regras explosivas, timeouts, keeps e expressões numéricas para elevar seu jogo de RPG.",
+    "docs": {
+      "title": "Documentazione completa."
+    },
     "page": {
       "btn": "Rolar dados",
       "desc": "Os dados no mundo do RPG de mesa podem ser um pouco confusos no início, mas não se preocupe, estamos aqui para ajudá-lo, abaixo temos um guia completo de como rolar bem, o atlas irá te ensinar diversas dicas e truques.",
@@ -425,8 +428,8 @@
       "title": "Visualizza tutti gli strumenti"
     },
     "section": {
-      "title": "Elenco di Strumenti RPG",
-      "desc": "Elenco di strumenti progettato per aiutare i Master e i Giocatori con i loro giochi di ruolo da tavolo."
+      "desc": "Elenco di strumenti progettato per aiutare i Master e i Giocatori con i loro giochi di ruolo da tavolo.",
+      "title": "Elenco di Strumenti RPG"
     }
   },
   "tos": {

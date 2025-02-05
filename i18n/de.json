@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Meistern Sie die Kunst des Würfelns mit Mini Kraken! Entdecken Sie explosive Regeln, Timeouts, Keeps und numerische Ausdrücke, um Ihr RPG-Spiel zu verbessern.",
+    "docs": {
+      "title": "Vollständige Dokumentation."
+    },
     "page": {
       "btn": "Würfeln",
       "desc": "Die Würfel in der Welt der Tabletop-RPGs können zunächst etwas verwirrend sein, aber keine Sorge, wir sind da, um Ihnen zu helfen. Unten finden Sie eine vollständige Anleitung, wie man gut würfelt. Der Atlas wird Ihnen verschiedene Tricks und Kniffe beibringen.",
@@ -425,8 +428,8 @@
       "title": "Alle Werkzeuge anzeigen"
     },
     "section": {
-      "title": "Liste der RPG-Tools",
-      "desc": "Werkzeugliste, die Spielleitern und Spielern bei ihren Tabletop-Rollenspielen helfen soll."
+      "desc": "Werkzeugliste, die Spielleitern und Spielern bei ihren Tabletop-Rollenspielen helfen soll.",
+      "title": "Liste der RPG-Tools"
     }
   },
   "tos": {

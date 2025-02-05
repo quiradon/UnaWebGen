@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Master the art of dice rolling with the Mini Kraken! Discover explosive rules, timeouts, keeps, and numerical expressions to elevate your RPG game.",
+    "docs": {
+      "title": "Complete Documentation."
+    },
     "page": {
       "btn": "Roll dices",
       "desc": "The dice in the tabletop RPG world can be a little confusing at first, but don't worry we are here to help you, below we have a complete guide on how to roll well, the atlas will teach you several tricks and tricks .",
@@ -425,8 +428,8 @@
       "title": "View All Tools"
     },
     "section": {
-      "title": "RPG Tool List",
-      "desc": "Tool list designed to help Game Masters and Players with their tabletop RPGs."
+      "desc": "Tool list designed to help Game Masters and Players with their tabletop RPGs.",
+      "title": "RPG Tool List"
     }
   },
   "tos": {

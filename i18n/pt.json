@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Domine a arte da rolagem de dados com a Mini Kraken! Descubra regras explosivas, intervalos, keep e expressões numéricas para elevar seu jogo de RPG. ",
+    "docs": {
+      "title": "Documentação completa."
+    },
     "page": {
       "btn": "Rolar Dados",
       "desc": "Os dados dentro do mundo de RPG de mesa, podem ser um pouco confusos no começo, porém não se preocupe estamos aqui para te ajudar, aqui em baixo temos um guia completo de como dar boas roladas, o atlas vai te ensinar vários truques e artimanhas.",
@@ -425,8 +428,8 @@
       "title": "Ver todas as ferramentas"
     },
     "section": {
-      "title": "Lista de Ferramentas de RPG",
-      "desc": "Lista de ferramentas projetada para ajudar Mestres e Jogadores com seus RPGs de mesa."
+      "desc": "Lista de ferramentas projetada para ajudar Mestres e Jogadores com seus RPGs de mesa.",
+      "title": "Lista de Ferramentas de RPG"
     }
   },
   "tos": {

@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Ovladajte umijećem bacanja kockica s Mini Krakenom! Otkrijte eksplozivna pravila, raspone, zadržavanje i numeričke izraze kako biste podigli svoju RPG igru.\n",
+    "docs": {
+      "title": "Potpuna dokumentacija."
+    },
     "page": {
       "btn": "Kotrljaj Kockice\n",
       "desc": "Podaci u svijetu stolnih RPG-a mogu biti malo zbunjujući na početku, ali ne brinite, tu smo da vam pomognemo. Ispod ćete naći potpuni vodič kako dobro bacati kocke; atlas će vas naučiti raznim trikovima i vještinama.\n",
@@ -425,8 +428,8 @@
       "title": "Prikaži sve alate"
     },
     "section": {
-      "title": "Popis alata za RPG",
-      "desc": "Popis alata dizajniran da pomogne Majstorima igre i Igračima s njihovim stolno-igrnim RPG-ima."
+      "desc": "Popis alata dizajniran da pomogne Majstorima igre i Igračima s njihovim stolno-igrnim RPG-ima.",
+      "title": "Popis alata za RPG"
     }
   },
   "tos": {

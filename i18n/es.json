@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "¡Domina el arte de tirar dados con Mini Kraken! Descubre reglas explosivas, tiempos de espera, conservaciones y expresiones numéricas para mejorar tu juego de RPG.",
+    "docs": {
+      "title": "Documentación completa."
+    },
     "page": {
       "btn": "Tirar dados",
       "desc": "Los dados en el mundo RPG de mesa pueden resultar un poco confusos al principio, pero no te preocupes estamos aquí para ayudarte, a continuación tenemos una guía completa de cómo tirar bien, el atlas te enseñará varios trucos y trucos.",
@@ -425,8 +428,8 @@
       "title": "Ver todas las herramientas"
     },
     "section": {
-      "title": "Lista de Herramientas de RPG",
-      "desc": "Lista de herramientas diseñada para ayudar a los Maestros del Juego y a los Jugadores con sus juegos de rol de mesa."
+      "desc": "Lista de herramientas diseñada para ayudar a los Maestros del Juego y a los Jugadores con sus juegos de rol de mesa.",
+      "title": "Lista de Herramientas de RPG"
     }
   },
   "tos": {

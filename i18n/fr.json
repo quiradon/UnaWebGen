@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Maîtrisez l’art du lancer de dés avec Mini Kraken ! Découvrez des règles explosives, des délais, des relances et des expressions numériques pour rehausser votre jeu de JdR.",
+    "docs": {
+      "title": "Documentation complète."
+    },
     "page": {
       "btn": "Lancer les dés",
       "desc": "Les dés dans le monde des JdR sur table peuvent être un peu déroutants au début, mais ne vous inquiétez pas, nous sommes là pour vous aider. Ci-dessous, vous trouverez un guide complet sur la façon de bien lancer les dés. L’atlas vous apprendra plusieurs astuces et techniques.",
@@ -425,8 +428,8 @@
       "title": "Afficher tous les outils"
     },
     "section": {
-      "title": "Liste d'outils JdR",
-      "desc": "Liste d'outils conçue pour aider les Maîtres du Jeu et les Joueurs avec leurs JDR sur table."
+      "desc": "Liste d'outils conçue pour aider les Maîtres du Jeu et les Joueurs avec leurs JDR sur table.",
+      "title": "Liste d'outils JdR"
     }
   },
   "tos": {

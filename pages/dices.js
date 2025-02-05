@@ -88,7 +88,7 @@ ${head(`${t.lang}${rota}`,t.dices.title,t.dices.desc)}
                 </div>
             </div>
 
-                <h2 class="fw-bold mt-5">Documentação completa.</h2>
+                <h2 class="fw-bold mt-5">${t.dices.docs.title}</h2>
                 <p class="lead text-secondary">${t.dices.page.link}</p>
             </div>
         </div>

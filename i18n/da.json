@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Behersk kunsten at rulle terninger med Mini Kraken! Oplev eksplosive regler, intervaller, keep og numeriske udtryk for at forbedre dit RPG-spil.",
+    "docs": {
+      "title": "Komplet dokumentation."
+    },
     "page": {
       "btn": "Rul Terninger",
       "desc": "Terninger i verden af bord-RPG kan være lidt forvirrende i starten, men bare rolig, vi er her for at hjælpe dig. Herunder har vi en komplet guide til, hvordan man får gode rulninger, og atlasset vil lære dig forskellige tricks og kneb.",
@@ -425,8 +428,8 @@
       "title": "Vis alle værktøjer"
     },
     "section": {
-      "title": "Liste over RPG-værktøjer",
-      "desc": "Værktøjsliste designet til at hjælpe Spille Mestre og Spillere med deres tabletop RPG'er."
+      "desc": "Værktøjsliste designet til at hjælpe Spille Mestre og Spillere med deres tabletop RPG'er.",
+      "title": "Liste over RPG-værktøjer"
     }
   },
   "tos": {

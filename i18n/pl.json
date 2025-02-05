@@ -28,6 +28,9 @@
   },
   "dices": {
     "desc": "Opanuj sztukę rzucania kośćmi z Mini Kraken! Odkryj eksplodujące zasady, limity czasowe, utrzymywanie wyników i wyrażenia liczbowe, aby podnieść swoją grę RPG na wyższy poziom.",
+    "docs": {
+      "title": "Kompletna dokumentacja."
+    },
     "page": {
       "btn": "Rzuć kośćmi",
       "desc": "Kostki w świecie RPG na stole mogą być na początku nieco mylące, ale nie martw się, jesteśmy tutaj, aby Ci pomóc. Poniżej znajduje się kompletny przewodnik, jak dobrze rzucać kośćmi. Atlas nauczy Cię kilku sztuczek i trików.",
@@ -425,8 +428,8 @@
       "title": "Pokaż wszystkie narzędzia"
     },
     "section": {
-      "title": "Lista narzędzi RPG",
-      "desc": "Lista narzędzi zaprojektowana, aby pomóc Mistrzom Gry i Graczom w ich grach fabularnych."
+      "desc": "Lista narzędzi zaprojektowana, aby pomóc Mistrzom Gry i Graczom w ich grach fabularnych.",
+      "title": "Lista narzędzi RPG"
     }
   },
   "tos": {

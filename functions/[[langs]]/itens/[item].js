@@ -36,16 +36,17 @@ export async function onRequest(context) {
 
     let response = new Response(responseBody, {
         headers: {
-            'Cache-Control': 'public, max-age=31536000, immutable', // Cache por 1 ano
-            'Surrogate-Control': 'max-age=31536000',
-            'ETag': `"${btoa(responseBody)}"`, // Garantir cache por ETag
+            // 🔹 Cabeçalhos para controle de cache
+            'Cache-Control': 'public, max-age=3600', // Cache por 1 hora
+            'Surrogate-Control': 'max-age=3600', // Cache para proxy de borda
+            'ETag': `"${btoa(responseBody)}"`, // ✅ Gera ETag com base no conteúdo
             'X-Worker-Cache': 'Generated'
         }
     });
 
     // 🔹 Armazena no cache
+    console.log('[CACHE] Tentando armazenar no cache:', cacheKey);
     context.waitUntil(cache.put(new Request(cacheKey), response.clone()));
-
     console.log('[CACHE] Resposta armazenada com sucesso:', cacheKey);
 
     return response;

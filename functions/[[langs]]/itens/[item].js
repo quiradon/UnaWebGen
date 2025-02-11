@@ -9,7 +9,7 @@ export async function onRequest(context) {
     let item = context.params.item ?? '0';
     let cacheKey = `${item}-${atual_lang}`;
     let responseBody = `item: ${item} - lang: ${atual_lang}`;
-    let etag = `"${btoa(responseBody)}"`;
+    let etag = `"${Buffer.from(responseBody).toString('base64')}"`;
 
     // Verifica o cache do Cloudflare
     const cache = caches.default;

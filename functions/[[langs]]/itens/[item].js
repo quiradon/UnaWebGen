@@ -13,25 +13,6 @@ export async function onRequest(context) {
         return new Response('Parâmetro item inválido', { status: 400 });
     }
 
-    // 🔹 Construção da chave do cache
-    const baseUrl = 'https://rpg.arkanus.app';
-    let cacheKey = atual_lang === 'default' 
-        ? `${baseUrl}/itens/${item}`
-        : `${baseUrl}/${atual_lang}/itens/${item}`;
-
-    console.log('[CACHE] Tentando recuperar:', cacheKey);
-
-    const cache = caches.default;
-
-    // 🔹 Verifica se já está no cache
-    let cachedResponse = await cache.match(new Request(cacheKey));
-    if (cachedResponse) {
-        console.log('[CACHE] Resposta encontrada, servindo do cache:', cacheKey);
-        return cachedResponse;  // Retorna diretamente do cache
-    }
-
-    console.log('[CACHE] Nenhuma resposta no cache, gerando nova...');
-
     let responseBody = `item: ${item} - lang: ${atual_lang}`;
 
     let response = new Response(responseBody, {
@@ -43,13 +24,6 @@ export async function onRequest(context) {
             'X-Worker-Cache': 'Generated'
         }
     });
-    
-
-
-    // 🔹 Armazena no cache
-    console.log('[CACHE] Tentando armazenar no cache:', cacheKey);
-    context.waitUntil(cache.put(new Request(cacheKey), response.clone()));
-    console.log('[CACHE] Resposta armazenada com sucesso:', cacheKey);
 
     return response;
 }

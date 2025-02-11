@@ -27,7 +27,7 @@ export async function onRequest(context) {
     let cachedResponse = await cache.match(new Request(cacheKey));
     if (cachedResponse) {
         console.log('[CACHE] Resposta encontrada, servindo do cache:', cacheKey);
-        return cachedResponse;
+        return cachedResponse;  // Retorna diretamente do cache
     }
 
     console.log('[CACHE] Nenhuma resposta no cache, gerando nova...');
@@ -36,9 +36,9 @@ export async function onRequest(context) {
 
     let response = new Response(responseBody, {
         headers: {
-            'Cache-Control': 'public, max-age=31536000, immutable',
+            'Cache-Control': 'public, max-age=31536000, immutable', // Cache por 1 ano
             'Surrogate-Control': 'max-age=31536000',
-            'ETag': `"${btoa(responseBody)}"`, // ✅ Corrigido para ser compatível
+            'ETag': `"${btoa(responseBody)}"`, // Garantir cache por ETag
             'X-Worker-Cache': 'Generated'
         }
     });

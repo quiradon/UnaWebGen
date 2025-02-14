@@ -13,6 +13,14 @@ export async function onRequest(context) {
         return new Response('Parâmetro item inválido', { status: 400 });
     }
 
+    let cacheKey = new Request(context.request.url, context.request);
+    let cache = caches.default;
+    let cachedResponse = await cache.match(cacheKey);
+
+    if (cachedResponse) {
+        return cachedResponse;
+    }
+
     let responseBody = `item: ${item} - lang: ${atual_lang}`;
 
     let response = new Response(responseBody, {
@@ -24,6 +32,8 @@ export async function onRequest(context) {
             'X-Worker-Cache': 'Generated'
         }
     });
+
+    context.waitUntil(cache.put(cacheKey, response.clone()));
 
     return response;
 }

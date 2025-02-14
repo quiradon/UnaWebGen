@@ -1,94 +1,84 @@
 const { traduz } = require('./translation.js')
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
 const exportFolder = path.join(__dirname, 'dist')
 const i18nPath = path.join(__dirname, 'i18n');
 
-function copyFolderRecursiveSync(source, target) {
-    let files = []
-    const targetFolder = path.join(target, path.basename(source))
-    if (!fs.existsSync(targetFolder)) {
-        fs.mkdirSync(targetFolder)
-    }
-    if (fs.lstatSync(source).isDirectory()) {
-        files = fs.readdirSync(source)
-        files.forEach(file => {
-            const curSource = path.join(source, file)
-            if (fs.lstatSync(curSource).isDirectory()) {
-                copyFolderRecursiveSync(curSource, targetFolder)
-            } else {
-                fs.copyFileSync(curSource, path.join(targetFolder, file))
-            }
-        })
-    }
+async function copyFolderRecursiveSync(source, target) {
+    const targetFolder = target; // Corrigir a duplicação de caminhos
+    await fs.ensureDir(targetFolder)
+    const items = await fs.readdir(source)
+    await Promise.all(items.map(async item => {
+        const srcPath = path.join(source, item)
+        const destPath = path.join(targetFolder, item)
+        const stat = await fs.lstat(srcPath)
+        if (stat.isDirectory()) {
+            await copyFolderRecursiveSync(srcPath, destPath)
+        } else {
+            await fs.copy(srcPath, destPath)
+        }
+    }))
 }
 
 async function compilePages() {
-    const languages = fs.readdirSync(i18nPath).map(file => path.basename(file, path.extname(file)));
-    const pages = fs.readdirSync(path.join(__dirname, 'pages'))
-    if (!fs.existsSync(exportFolder)) {
-        fs.mkdirSync(exportFolder)
-    }
+    const languages = (await fs.readdir(i18nPath)).map(file => path.basename(file, path.extname(file)));
+    const pages = await fs.readdir(path.join(__dirname, 'pages'))
+    await fs.ensureDir(exportFolder)
 
-    for (const language of languages) {
+    await Promise.all(languages.map(async language => {
         const t = traduz(language)
         const languageFolder = language === 'en' ? exportFolder : path.join(exportFolder, language)
-        if (!fs.existsSync(languageFolder)) {
-            fs.mkdirSync(languageFolder)
-        }
+        await fs.ensureDir(languageFolder)
 
-        for (const page of pages) {
+        await Promise.all(pages.map(async page => {
             const pagePath = path.join(__dirname, 'pages', page)
-            const pageStat = fs.statSync(pagePath)
+            const pageStat = await fs.stat(pagePath)
             if (pageStat.isDirectory()) {
-                const pageFiles = fs.readdirSync(pagePath)
+                const pageFiles = await fs.readdir(pagePath)
                 const exportPageFolder = path.join(languageFolder, page)
-                if (!fs.existsSync(exportPageFolder)) {
-                    fs.mkdirSync(exportPageFolder)
-                }
-                for (const file of pageFiles) {
+                await fs.ensureDir(exportPageFolder)
+                await Promise.all(pageFiles.map(async file => {
                     const filePath = path.join(pagePath, file)
-                    const fileStat = fs.statSync(filePath)
+                    const fileStat = await fs.stat(filePath)
                     if (fileStat.isFile()) {
                         const pageFunction = require(filePath)
                         const route = '/' + page + '/' + path.basename(file, path.extname(file))
                         const html = await pageFunction.page(t, route)
                         const exportFilePath = path.join(exportPageFolder, path.basename(file, path.extname(file)) + '.html')
-                        fs.writeFileSync(exportFilePath, html)
+                        await fs.writeFile(exportFilePath, html)
                     }
-                }
+                }))
             } else {
                 const route = '/' + path.basename(page, path.extname(page))
                 const pageFunction = require(pagePath)
                 const html = await pageFunction.page(t, route)
                 const exportFilePath = path.join(languageFolder, path.basename(page, path.extname(page)) + '.html')
-                fs.writeFileSync(exportFilePath, html)
+                await fs.writeFile(exportFilePath, html)
             }
-        }
-    }
+        }))
+    }))
     console.log('[Páginas compiladas com sucesso!]')
 }
 
-function copyStaticFiles() {
+async function copyStaticFiles() {
     const staticFolder = path.join(__dirname, 'static')
-    copyFolderRecursiveSync(staticFolder, exportFolder)
+    const targetFolder = path.join(exportFolder, 'static') // Garantir que os itens fiquem dentro da pasta 'static'
+    await copyFolderRecursiveSync(staticFolder, targetFolder)
     console.log('[Arquivos estáticos copiados com sucesso!]')
 }
 
-function copyExtraFiles() {
-    //copie robots.txt, sitemap.xml e _redirects para out
-    const extraFiles = ['robots.txt', 'sitemap.xml', '_redirects','manifest.json']
-    extraFiles.forEach(file => {
-        const filePath = path.join(__dirname, file )
+async function copyExtraFiles() {
+    const extraFiles = ['robots.txt', 'sitemap.xml', '_redirects', 'manifest.json']
+    await Promise.all(extraFiles.map(async file => {
+        const filePath = path.join(__dirname, file)
         const exportFilePath = path.join(exportFolder, file)
-        fs.copyFileSync(filePath, exportFilePath)
-    })  
+        await fs.copy(filePath, exportFilePath)
+    }))
     console.log('[Arquivos extras copiados com sucesso!]')
 }
 
-// Chame a função para executar a compilação das páginas
 (async () => {
     await compilePages()
-    copyStaticFiles()
-    copyExtraFiles()
+    await copyStaticFiles()
+    await copyExtraFiles()
 })();

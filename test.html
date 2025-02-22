@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sortable Squares</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #sortable-list {
+            width: auto;
+            display: flex;
+            flex-direction: row; /* Alterado para alinhar horizontalmente */
+            gap: 10px;
+            padding: 0;
+            list-style: none;
+        }
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.2s ease;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #2ecc71;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <button id="addButton">Adicionar Quadrado</button>
+    <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
+    <script>
+    const { animate, scroll, press, hover } = Motion;
+    </script>
+    <script>
+
+        let idCounter = 1;
+        let items = Array.from({ length: 5 }, () => ({ id: idCounter++ }));
+
+        function addNewItem() {
+            items.unshift({ id: idCounter++ });
+            render();
+            animateNewItem();
+        }
+
+        function animateNewItem() {
+            const firstItem = document.querySelector(".square");
+            animate(firstItem, { scale: [0, 1] }, { duration: 0.5 });
+        }
+
+        function render() {
+            const app = document.getElementById("app");
+            app.innerHTML = '';
+
+            const list = document.createElement("ul");
+            list.id = "sortable-list";
+            list.className = "list";
+
+            items.forEach((item, index) => {
+                const li = document.createElement("li");
+                li.className = "square";
+                li.textContent = item.id;
+                li.draggable = true;
+                li.dataset.index = index;
+
+                hover(li, { scale: 1.1 }, (event) => {
+                    event.target.style.transform = "scale(1.1)";
+                });
+                press(li, { scale: 0.9 }, (event) => {
+                    event.target.style.transform = "scale(0.9)";
+                });
+
+                li.addEventListener("dragstart", (event) => {
+                    event.dataTransfer.setData("text/plain", index);
+                    event.target.style.opacity = "0.5";
+                    animate(event.target, { scale: [1, 1.2] }, { duration: 0.2 });
+                });
+                
+                li.addEventListener("dragend", (event) => {
+                    event.target.style.opacity = "1";
+                    animate(event.target, { scale: [1.2, 1] }, { duration: 0.2 });
+                });
+                
+                li.addEventListener("dragover", (event) => {
+                    event.preventDefault();
+                });
+
+                li.addEventListener("drop", (event) => {
+                    event.preventDefault();
+                    const draggingIndex = parseInt(event.dataTransfer.getData("text/plain"));
+                    const draggedItem = items.splice(draggingIndex, 1)[0];
+                    items.splice(index, 0, draggedItem);
+                    
+                    animate(li, { scale: [1.2, 1] }, { duration: 0.2 });
+                    render();
+                });
+
+                list.appendChild(li);
+            });
+            
+            app.appendChild(list);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("addButton").addEventListener("click", addNewItem);
+            render();
+        });
+    </script>
+</body>
+</html>

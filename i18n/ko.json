@@ -20,6 +20,9 @@
     "seo": "온라인 RPG 시스템 Mini Kraken에서 사용 가능한 모든 명령어를 찾아 게임 경험을 더욱 몰입감 있고 역동적으로 만들어보세요. (140자)",
     "title": "명령어"
   },
+  "common": {
+    "random": "임의의"
+  },
   "comum": {
     "copy": "복사"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "모든 도구 목록.",
       "title": "모든 도구 보기"
+    },
+    "clima": {
+      "button": "기후 생성",
+      "intense": {
+        "mild": "강도: 약함",
+        "moderate": "강도: 보통",
+        "severe": "강도: 심각"
+      },
+      "options": {
+        "blizzard": "블리자드",
+        "clear": "맑은 하늘",
+        "cloudy": "흐림",
+        "dust_devil": "모래 폭풍",
+        "heavy_rain": "폭우",
+        "light_rain": "가랑비",
+        "sandstorm": "모래폭풍",
+        "snow": "눈",
+        "thunderstorm": "뇌우"
+      },
+      "pageDesc": "TRPG를 위한 무작위 날씨 조건을 생성하는 도구입니다. 극지방, 온대, 사막 지역의 기후를 시뮬레이션하여 여러분의 탁상용 TRPG 모험을 더욱 풍성하게 만들어보세요.",
+      "pageTitle": "날씨 생성기",
+      "pageTitleExtrea": "다양한 기후를 모험에 경험하세요",
+      "select": "지역 유형을 선택하십시오",
+      "temperatura": "온도",
+      "type": {
+        "cold": "극지방",
+        "desert": "사막 지역",
+        "temperate": "온대 지역"
+      },
+      "vento": "풍속"
     },
     "section": {
       "desc": "테이블탑 RPG를 위한 게임 마스터와 플레이어를 위한 도구 목록입니다.",

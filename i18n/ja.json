@@ -20,6 +20,9 @@
     "seo": "オンラインRPGシステムMini Krakenで利用可能なコマンドをすべて発見し、ゲーム体験をさらに没入型でダイナミックなものにしましょう。(140文字)",
     "title": "コマンド"
   },
+  "common": {
+    "random": "ランダム"
+  },
   "comum": {
     "copy": "コピー"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "すべてのツールのリスト。",
       "title": "すべてのツールを表示"
+    },
+    "clima": {
+      "button": "気候を生成する",
+      "intense": {
+        "mild": "強度：マイルド",
+        "moderate": "強度：中等度",
+        "severe": "強度：深刻"
+      },
+      "options": {
+        "blizzard": "ブリザード",
+        "clear": "快晴 (kai sei)",
+        "cloudy": "曇り (kumori)",
+        "dust_devil": "砂嵐 (Sunarashi)",
+        "heavy_rain": "激しい雨",
+        "light_rain": "小雨 (しょうう)",
+        "sandstorm": "砂嵐 (Sunarashi)",
+        "snow": "雪",
+        "thunderstorm": "雷雨"
+      },
+      "pageDesc": "TRPG向けのランダムな天候条件を生成するツールです。極地、温帯、砂漠地域の気候をシミュレートして、あなたのテーブルトークRPGの冒険を盛り上げましょう。",
+      "pageTitle": "天気ジェネレーター",
+      "pageTitleExtrea": "様々な気候を冒険に体験してください",
+      "select": "地域の種類を選択してください",
+      "temperatura": "温度",
+      "type": {
+        "cold": "極地地方",
+        "desert": "砂漠地帯",
+        "temperate": "温帯地域"
+      },
+      "vento": "風速"
     },
     "section": {
       "desc": "テーブルトークRPGをGMとプレイヤーがプレイする際に役立つツール一覧です。",

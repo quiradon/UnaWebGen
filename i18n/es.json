@@ -20,6 +20,9 @@
     "seo": "Descubre todos los comandos disponibles en Mini Kraken, un sistema de RPG online, para hacer tu experiencia de juego aún más inmersiva y dinámica. (140 caracteres)",
     "title": "Comandos"
   },
+  "common": {
+    "random": "Aleatorio"
+  },
   "comum": {
     "copy": "Copiar"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "Lista de todas las herramientas.",
       "title": "Ver todas las herramientas"
+    },
+    "clima": {
+      "button": "Generar Clima",
+      "intense": {
+        "mild": "Intensidad: Suave",
+        "moderate": "Intensidad: Moderada",
+        "severe": "Intensidad: Severa"
+      },
+      "options": {
+        "blizzard": "Blizzard",
+        "clear": "Cielo despejado",
+        "cloudy": "Nublado",
+        "dust_devil": "Tormenta de arena",
+        "heavy_rain": "Lluvia fuerte",
+        "light_rain": "Lluvia ligera",
+        "sandstorm": "Tormenta de arena",
+        "snow": "nieve",
+        "thunderstorm": "Tormenta con rayos"
+      },
+      "pageDesc": "Herramienta para generar condiciones climáticas aleatorias para juegos de rol. Simula climas en regiones polares, templadas y desérticas para tus aventuras de rol de mesa.",
+      "pageTitle": "Generador de Clima",
+      "pageTitleExtrea": "Experimenta climas variados para tus aventuras",
+      "select": "Selecciona el tipo de región",
+      "temperatura": "Temperatura",
+      "type": {
+        "cold": "Región polar",
+        "desert": "Región desértica",
+        "temperate": "Región templada"
+      },
+      "vento": "Velocidad del viento"
     },
     "section": {
       "desc": "Lista de herramientas diseñada para ayudar a los Maestros del Juego y a los Jugadores con sus juegos de rol de mesa.",

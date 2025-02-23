@@ -20,6 +20,9 @@
     "seo": "探索Mini Kraken在线RPG系统中所有可用的命令，让您的游戏体验更加沉浸和充满活力。(140个字符)",
     "title": "命令"
   },
+  "common": {
+    "random": "随机"
+  },
   "comum": {
     "copy": "复制"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "所有工具的列表。",
       "title": "查看所有工具"
+    },
+    "clima": {
+      "button": "生成气候",
+      "intense": {
+        "mild": "强度：温和",
+        "moderate": "强度：中等",
+        "severe": "强度：严重"
+      },
+      "options": {
+        "blizzard": "暴风雪",
+        "clear": "晴朗的天空",
+        "cloudy": "多云",
+        "dust_devil": "沙尘暴",
+        "heavy_rain": "暴雨",
+        "light_rain": "小雨",
+        "sandstorm": "沙尘暴",
+        "snow": "雪",
+        "thunderstorm": "雷雨"
+      },
+      "pageDesc": "用于生成 RPG 随机天气条件的工具。模拟极地、温带和沙漠地区的的气候，为您的桌面 RPG 冒险增添乐趣。",
+      "pageTitle": "天气生成器",
+      "pageTitleExtrea": "体验各种气候的冒险",
+      "select": "选择区域类型",
+      "temperatura": "温度",
+      "type": {
+        "cold": "极地地区",
+        "desert": "沙漠地区",
+        "temperate": "温带地区"
+      },
+      "vento": "风速"
     },
     "section": {
       "desc": "旨在帮助游戏大师和玩家进行桌面角色扮演游戏的工具列表。",

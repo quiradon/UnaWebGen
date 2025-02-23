@@ -49,27 +49,27 @@ async function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`, "Gerador de Clima - Simulador de Condições Climáticas", "Ferramenta gratuita para gerar condições climáticas aleatórias para RPG. Simule climas em regiões polares, temperadas e desérticas para suas aventuras de RPG de mesa.")}
+${head(`${t.lang}${rota}`, `${t.tools.clima.pageTitle} - ${t.tools.clima.pageTitleExtrea}`, `${t.tools.clima.pageDesc}`)}
 <body>
     ${nav(t, rota)}
     <div class="container">
-        <div class="col-12 text-center mb-2 mt-4">
-            ${TitleAndSubtitle("gerador de climas para RPG", "Gere climas variados para suas aventuras")}
+        <div class="col-12  mb-2 mt-4">
+            ${TitleAndSubtitle(t.tools.clima.pageTitle, t.tools.clima.pageDesc)}
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="climateType" class="form-la bel">Selecione o bioma</label>
+                            <label for="climateType" class="form-la bel mb-2">${t.tools.clima.select}</label>
                             <select class="form-select" id="climateType">
-                                <option value="random">aleatório</option>
-                                <option value="cold">região polar</option>
-                                <option value="temperate">região temperada</option>
-                                <option value="desert">região desértica</option>
+                                <option value="random">${t.common.random}</option>
+                                <option value="cold">${t.tools.clima.type.cold}</option>
+                                <option value="temperate">${t.tools.clima.type.desert}</option>
+                                <option value="desert">${t.tools.clima.type.temperate}</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary w-100" onclick="generateWeather()">Gerar Clima</button>
+                        <button class="btn btn-primary w-100" onclick="generateWeather()">${t.tools.clima.button}</button>
                         <div id="weatherResult" class="mt-3 text-center" style="display: none;">
                             <h3 class="weather-condition mb-3"></h3>
                             <div class="intensity mb-2"></div>
@@ -102,21 +102,21 @@ ${head(`${t.lang}${rota}`, "Gerador de Clima - Simulador de Condições Climáti
             };
             
             const translations = {
-                clear: 'céu limpo',
-                cloudy: 'nublado',
-                light_rain: 'chuva leve',
-                heavy_rain: 'chuva forte',
-                thunderstorm: 'tempestade com raios',
-                snow: 'neve',
-                blizzard: 'nevasca',
-                sandstorm: 'tempestade de areia',
-                dust_devil: 'redemoinho de areia'
+                clear: '${t.tools.clima.options.clear}',
+                cloudy: '${t.tools.clima.options.cloudy}',
+                light_rain: '${t.tools.clima.options.light_rain}',
+                heavy_rain: '${t.tools.clima.options.heavy_rain}',
+                thunderstorm: '${t.tools.clima.options.thunderstorm}',
+                snow: '${t.tools.clima.options.snow}',
+                blizzard: '${t.tools.clima.options.blizzard}',
+                sandstorm: '${t.tools.clima.options.sandstorm}',
+                dust_devil: '${t.tools.clima.options.dust_devil}'
             };
 
             const intensityTranslations = {
-                mild: 'Intensidade: Suave',
-                moderate: 'Intensidade: Moderada',
-                severe: 'Intensidade: Severa'
+                mild: '${t.tools.clima.intense.mild}',
+                moderate: '${t.tools.clima.intense.moderate}',
+                severe: '${t.tools.clima.intense.severe}'
             };
 
             document.querySelector('.weather-condition').innerHTML = 
@@ -124,9 +124,9 @@ ${head(`${t.lang}${rota}`, "Gerador de Clima - Simulador de Condições Climáti
             document.querySelector('.intensity').innerHTML = 
                 \`\${intensityTranslations[result.intensity]}\`;
             document.querySelector('.temperature').innerHTML = 
-                \`Temperatura: \${result.temp}°C\`;
+                \`${t.tools.clima.temperatura}: \${result.temp}°C\`;
             document.querySelector('.wind-speed').innerHTML = 
-                \`Velocidade do Vento: \${result.wind} km/h\`;
+                \`${t.tools.clima.vento} \${result.wind} km/h\`;
             
             weatherResult.style.display = 'block';
         }

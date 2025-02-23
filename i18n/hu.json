@@ -20,6 +20,9 @@
     "seo": "Fedezd fel a Mini Krakenben, egy online RPG rendszerben elérhető összes parancsot, hogy a játékélményed még magával ragadóbb és dinamikusabb legyen. (140 karakter)",
     "title": "Parancsok"
   },
+  "common": {
+    "random": "Véletlenszerű"
+  },
   "comum": {
     "copy": "Másolás"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "Minden eszköz listája.",
       "title": "Minden eszköz megjelenítése"
+    },
+    "clima": {
+      "button": "Klíma generálása",
+      "intense": {
+        "mild": "Intenzitás: Gyenge",
+        "moderate": "Intenzitás: Közepes",
+        "severe": "Intenzitás: Súlyos"
+      },
+      "options": {
+        "blizzard": "Hóvihar",
+        "clear": "Tiszta ég",
+        "cloudy": "Felhős",
+        "dust_devil": "Homokvihar",
+        "heavy_rain": "Önös eső",
+        "light_rain": "Enyhe eső",
+        "sandstorm": "Homokvihar",
+        "snow": "hó",
+        "thunderstorm": "Zivatar villámkísérettel"
+      },
+      "pageDesc": "Eszköz véletlenszerű időjárási körülmények generálásához szerepjátékokhoz. Szimulálj klímákat sarkvidéki, mérsékelt övi és sivatagi területeken asztali szerepjátékos kalandjaidhoz.",
+      "pageTitle": "Időjárás-generátor",
+      "pageTitleExtrea": "Tapasztaljon meg változatos éghajlatokat a kalandjaihoz",
+      "select": "Válassza ki a régió típusát",
+      "temperatura": "Hőmérséklet",
+      "type": {
+        "cold": "Sarki régió",
+        "desert": "Sivatagi régió",
+        "temperate": "Mérsékelt öv"
+      },
+      "vento": "Szélerősség"
     },
     "section": {
       "desc": "Eszközlista, amely segíti a Játékmestereket és a Játékosokat asztali szerepjátékaikban.",

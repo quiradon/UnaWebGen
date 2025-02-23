@@ -20,6 +20,9 @@
     "seo": "Découvrez toutes les commandes disponibles dans Mini Kraken, un système de jeu de rôle en ligne, pour rendre votre expérience de jeu encore plus immersive et dynamique. (140 caractères)",
     "title": "Commandes"
   },
+  "common": {
+    "random": "Aléatoire"
+  },
   "comum": {
     "copy": "Copier"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "Liste de tous les outils.",
       "title": "Afficher tous les outils"
+    },
+    "clima": {
+      "button": "Générer le climat",
+      "intense": {
+        "mild": "Intensité : Douce",
+        "moderate": "Intensité : Modérée",
+        "severe": "Intensité : Sévère"
+      },
+      "options": {
+        "blizzard": "Blizzard",
+        "clear": "Ciel clair",
+        "cloudy": "Nuageux",
+        "dust_devil": "Tempête de sable",
+        "heavy_rain": "Pluie forte",
+        "light_rain": "Pluie légère",
+        "sandstorm": "Tempête de sable",
+        "snow": "neige",
+        "thunderstorm": "Orage avec éclairs"
+      },
+      "pageDesc": "Outil pour générer des conditions météorologiques aléatoires pour les JdR. Simulez les climats des régions polaires, tempérées et désertiques pour vos aventures de jeu de rôle sur table.",
+      "pageTitle": "Générateur de Météo",
+      "pageTitleExtrea": "Découvrez des climats variés pour vos aventures",
+      "select": "Sélectionnez le type de région",
+      "temperatura": "Température",
+      "type": {
+        "cold": "Région polaire",
+        "desert": "Région désertique",
+        "temperate": "Région tempérée"
+      },
+      "vento": "Vitesse du vent"
     },
     "section": {
       "desc": "Liste d'outils conçue pour aider les Maîtres du Jeu et les Joueurs avec leurs JDR sur table.",

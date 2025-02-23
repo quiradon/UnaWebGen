@@ -20,6 +20,9 @@
     "seo": "Entdecke alle verfügbaren Befehle in Mini Kraken, einem Online-RPG-System, um dein Spielerlebnis noch immersiver und dynamischer zu gestalten. (140 Zeichen)",
     "title": "Befehle"
   },
+  "common": {
+    "random": "Zufällig"
+  },
   "comum": {
     "copy": "Kopieren"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "Liste aller Werkzeuge.",
       "title": "Alle Werkzeuge anzeigen"
+    },
+    "clima": {
+      "button": "Klima generieren",
+      "intense": {
+        "mild": "Intensität: Mild",
+        "moderate": "Intensität: Mittel",
+        "severe": "Intensität: Stark"
+      },
+      "options": {
+        "blizzard": "Blizzard",
+        "clear": "Klarer Himmel",
+        "cloudy": "Bewölkt",
+        "dust_devil": "Sandsturm",
+        "heavy_rain": "Starker Regen",
+        "light_rain": "Leichter Regen",
+        "sandstorm": "Sandsturm",
+        "snow": "Schnee",
+        "thunderstorm": "Gewitter mit Blitz"
+      },
+      "pageDesc": "Tool zur Generierung zufälliger Wetterbedingungen für Rollenspiele. Simulieren Sie Klimazonen in Polar-, gemäßigten und Wüstenregionen für Ihre Tabletop-Rollenspielabenteuer.",
+      "pageTitle": "Wettergenerator",
+      "pageTitleExtrea": "Erleben Sie verschiedene Klimazonen für Ihre Abenteuer",
+      "select": "Regionstyp auswählen",
+      "temperatura": "Temperatur",
+      "type": {
+        "cold": "Polarregion",
+        "desert": "Wüstenregion",
+        "temperate": "Gemäßigte Zone"
+      },
+      "vento": "Windgeschwindigkeit"
     },
     "section": {
       "desc": "Werkzeugliste, die Spielleitern und Spielern bei ihren Tabletop-Rollenspielen helfen soll.",

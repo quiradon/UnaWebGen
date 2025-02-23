@@ -20,6 +20,9 @@
     "seo": "Odkryj wszystkie dostępne komendy w Mini Kraken, systemie RPG online, aby uczynić swoje wrażenia z gry jeszcze bardziej wciągającymi i dynamicznymi. (140 znaków)",
     "title": "Komendy"
   },
+  "common": {
+    "random": "Losowy"
+  },
   "comum": {
     "copy": "Kopiuj"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "Lista wszystkich narzędzi.",
       "title": "Pokaż wszystkie narzędzia"
+    },
+    "clima": {
+      "button": "Generuj klimat",
+      "intense": {
+        "mild": "Intensywność: Łagodna",
+        "moderate": "Intensywność: Umiarkowana",
+        "severe": "Intensywność: Ostra"
+      },
+      "options": {
+        "blizzard": "śnieżyca",
+        "clear": "Czyste niebo",
+        "cloudy": "Pochmurno",
+        "dust_devil": "Burza piasku",
+        "heavy_rain": "Ulewa",
+        "light_rain": "Lekki deszcz",
+        "sandstorm": "Burza piaskowa",
+        "snow": "śnieg",
+        "thunderstorm": "Burza z piorunami"
+      },
+      "pageDesc": "Narzędzie do generowania losowych warunków pogodowych dla gier RPG. Symuluj klimaty w regionach polarnych, umiarkowanych i pustynnych dla swoich przygód w RPG.",
+      "pageTitle": "Generator Pogody",
+      "pageTitleExtrea": "Doświadcz zróżnicowanych klimatów podczas swoich przygód",
+      "select": "Wybierz typ regionu",
+      "temperatura": "Temperatura",
+      "type": {
+        "cold": "Region polarna",
+        "desert": "Region pustynny",
+        "temperate": "Strefa umiarkowana"
+      },
+      "vento": "Prędkość wiatru"
     },
     "section": {
       "desc": "Lista narzędzi zaprojektowana, aby pomóc Mistrzom Gry i Graczom w ich grach fabularnych.",

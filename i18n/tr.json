@@ -20,6 +20,9 @@
     "seo": "Mini Kraken, çevrimiçi bir RPG sisteminde bulunan tüm komutları keşfedin ve oyun deneyiminizi daha sürükleyici ve dinamik hale getirin. (140 karakter)",
     "title": "Komutlar"
   },
+  "common": {
+    "random": "Rastgele"
+  },
   "comum": {
     "copy": "Kopyala"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "Tüm araçların listesi.",
       "title": "Tüm araçları göster"
+    },
+    "clima": {
+      "button": "İklim Oluştur",
+      "intense": {
+        "mild": "Yoğunluk: Hafif",
+        "moderate": "Yoğunluk: Orta",
+        "severe": "Şiddet: Şiddetli"
+      },
+      "options": {
+        "blizzard": "kar fırtınası",
+        "clear": "Açık gökyüzü",
+        "cloudy": "Bulutlu",
+        "dust_devil": "Kum fırtınası",
+        "heavy_rain": "Şiddetli yağmur",
+        "light_rain": "Hafif yağmur",
+        "sandstorm": "Kum fırtınası",
+        "snow": "kar",
+        "thunderstorm": "Şimşekli fırtına"
+      },
+      "pageDesc": "RPG'ler için rastgele hava koşulları üreten araç. Masaüstü RPG maceralarınız için kutup, ılıman ve çöl bölgelerinde iklimleri simüle edin.",
+      "pageTitle": "Hava Durumu Üreticisi",
+      "pageTitleExtrea": "Maceralarınız için çeşitli iklimleri deneyimleyin",
+      "select": "Bölge türünü seçin",
+      "temperatura": "Sıcaklık",
+      "type": {
+        "cold": "Kutup bölgesi",
+        "desert": "Çöl bölgesi",
+        "temperate": "Ilıman bölge"
+      },
+      "vento": "Rüzgar hızı"
     },
     "section": {
       "desc": "Masaüstü RPG'lerinde GM'ler ve Oyunculara yardımcı olmak için tasarlanmış araç listesi.",

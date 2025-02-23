@@ -20,6 +20,9 @@
     "seo": "Temukan semua perintah yang tersedia di Mini Kraken, sebuah sistem RPG online, untuk membuat pengalaman bermain game Anda lebih mendalam dan dinamis. (140 karakter)",
     "title": "Perintah"
   },
+  "common": {
+    "random": "Acak"
+  },
   "comum": {
     "copy": "Salin"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "Daftar semua alat.",
       "title": "Lihat Semua Alat"
+    },
+    "clima": {
+      "button": "Hasilkan Iklim",
+      "intense": {
+        "mild": "Intensitas: Ringan",
+        "moderate": "Intensitas: Sedang",
+        "severe": "Intensitas: Parah"
+      },
+      "options": {
+        "blizzard": "Badai salju",
+        "clear": "Langit cerah",
+        "cloudy": "Berawan",
+        "dust_devil": "Badai pasir",
+        "heavy_rain": "Hujan lebat",
+        "light_rain": "Hujan ringan",
+        "sandstorm": "Badai pasir",
+        "snow": "salju",
+        "thunderstorm": "Badai petir"
+      },
+      "pageDesc": "Alat untuk menghasilkan kondisi cuaca acak untuk RPG. Simulasikan iklim di wilayah kutub, sedang, dan gurun untuk petualangan RPG tabletop Anda.",
+      "pageTitle": "Generator Cuaca",
+      "pageTitleExtrea": "Rasakan iklim yang bervariasi untuk petualangan Anda",
+      "select": "Pilih tipe wilayah",
+      "temperatura": "Suhu",
+      "type": {
+        "cold": "Wilayah kutub",
+        "desert": "Wilayah gurun",
+        "temperate": "Daerah beriklim sedang"
+      },
+      "vento": "Kecepatan Angin"
     },
     "section": {
       "desc": "Daftar alat yang dirancang untuk membantu Game Master dan Pemain dengan permainan peran meja mereka.",

@@ -20,6 +20,9 @@
     "seo": "Oplev alle tilgængelige kommandoer i Mini Kraken, et online RPG-system, for at gøre din spiloplevelse endnu mere fordybende og dynamisk. (140 tegn)",
     "title": "Kommandoer"
   },
+  "common": {
+    "random": "Tilfældig"
+  },
   "comum": {
     "copy": "Kopiér"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "Liste over alle værktøjer.",
       "title": "Vis alle værktøjer"
+    },
+    "clima": {
+      "button": "Generer Klima",
+      "intense": {
+        "mild": "Intensitet: Mild",
+        "moderate": "Intensitet: Moderat",
+        "severe": "Intensitet: Alvorlig"
+      },
+      "options": {
+        "blizzard": "Sneveinstorm",
+        "clear": "Klar himmel",
+        "cloudy": "Skyet",
+        "dust_devil": "Sandstorm",
+        "heavy_rain": "Kraftig regn",
+        "light_rain": "Let regn",
+        "sandstorm": "Sandstorm",
+        "snow": "sne",
+        "thunderstorm": "Tordenvejr med lyn"
+      },
+      "pageDesc": "Værktøj til at generere tilfældige vejrforhold til RPG'er. Simuler klimaer i polarområder, tempererede områder og ørkenområder til dine tabletop RPG-eventyr.",
+      "pageTitle": "Vejrgenerator",
+      "pageTitleExtrea": "Oplev varierede klimaer til dine eventyr",
+      "select": "Vælg regionstype",
+      "temperatura": "Temperatur",
+      "type": {
+        "cold": "Polarregionen",
+        "desert": "Ørkenregion",
+        "temperate": "Tempereret region"
+      },
+      "vento": "Vindhastighed"
     },
     "section": {
       "desc": "Værktøjsliste designet til at hjælpe Spille Mestre og Spillere med deres tabletop RPG'er.",

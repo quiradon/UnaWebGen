@@ -20,6 +20,9 @@
     "seo": "Discover all available commands in Mini Kraken, an online RPG system, to make your gaming experience even more immersive and dynamic. (140 characters)",
     "title": "Commands"
   },
+  "common": {
+    "random": "Random"
+  },
   "comum": {
     "copy": "Copy"
   },
@@ -426,6 +429,36 @@
     "all": {
       "subtitle": "List of all tools.",
       "title": "View All Tools"
+    },
+    "clima": {
+      "button": "Generate Climate",
+      "intense": {
+        "mild": "Intensity: Mild",
+        "moderate": "Intensity: Moderate",
+        "severe": "Intensity: Severe"
+      },
+      "options": {
+        "blizzard": "Blizzard",
+        "clear": "Clear sky",
+        "cloudy": "Cloudy",
+        "dust_devil": "Sandstorm",
+        "heavy_rain": "Heavy rain",
+        "light_rain": "Light rain",
+        "sandstorm": "Sandstorm",
+        "snow": "Snow",
+        "thunderstorm": "Thunderstorm with lightning"
+      },
+      "pageDesc": "Tool to generate random weather conditions for RPGs. Simulate climates in polar, temperate, and desert regions for your tabletop RPG adventures.",
+      "pageTitle": "Weather Generator",
+      "pageTitleExtrea": "Experience varied climates for your adventures",
+      "select": "Select the region type",
+      "temperatura": "Temperature",
+      "type": {
+        "cold": "Polar Region",
+        "desert": "Desert region",
+        "temperate": "Temperate Region"
+      },
+      "vento": "Wind Speed"
     },
     "section": {
       "desc": "Tool list designed to help Game Masters and Players with their tabletop RPGs.",

@@ -49,7 +49,7 @@ async function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`, `${t.tools.clima.pageTitle} - ${t.tools.clima.pageTitleExtrea}`, `${t.tools.clima.pageDesc}`)}
+${head(`${t.lang}${rota}`, `${t.tools.clima.pageTitle}`, `${t.tools.clima.pageDesc}`)}
 <body>
     ${nav(t, rota)}
     <div class="container">

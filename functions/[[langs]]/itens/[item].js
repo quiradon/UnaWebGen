@@ -3,7 +3,7 @@ export async function onRequest(context) {
     let atual_lang = Array.isArray(context?.params?.langs) ? context.params.langs[0] : 'default';
 
     if (atual_lang !== 'default' && !valid_langs.includes(atual_lang)) {
-        return new Response(null, { status: 302, headers: { 'Location': 'https://rpg.arkanus.app/404.html' } });
+        return new Response(null, { status: 302, headers: { 'Location': 'https://rpg.arkanus.app/404' } });
     }
 
     let item = context.params.item ?? '0';

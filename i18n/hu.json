@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Másolás"
   },
+  "comunity_from": "RPG közösség által, a közösségért",
   "default": {
     "desc": "A Mini Kraken egy szerepjáték weboldal, amely eszközöket, cikkeket és tartalmakat kínál szerepjátékosok és mesterek számára. Itt találsz információkat a Dungeons and Dragons, a Call of Cthulhu, a GURPS, a FATE, a történetmesélés és más szerepjáték rendszerekről."
   },
@@ -210,8 +211,13 @@
         "name": "Tarot kártyák"
       },
       "title": "Eszközök"
+    },
+    "vtt": {
+      "desc": "Tokenek és térképek kezelése",
+      "title": "Virtuális asztal"
     }
   },
+  "new": "Új",
   "online": {
     "tools": {
       "btn": "Online eszközök"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "Minden eszköz listája.",
-      "title": "Minden eszköz megjelenítése"
+      "title": "Minden eszköz"
     },
     "clima": {
       "button": "Klíma generálása",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Eszközlista, amely segíti a Játékmestereket és a Játékosokat asztali szerepjátékaikban.",
-      "title": "RPG eszközök listája"
+      "title": "RPG Eszközök"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Olvassa el a Mini Kraken szolgáltatási feltételeit. Értsd meg a jogaidat és a felelősségeidet a szolgáltatásaink használatakor.",
     "tags": "Jogi, Jogi, Felhasználási feltételek, Jogszabályok",
     "title": "Szolgáltatási feltételek"
+  },
+  "vtt": {
+    "index": {
+      "title": "Térképek és rácsos megjelenítés testreszabása",
+      "desc": "Emeld a Discord szerepjátékos üléseid egy új szintre a térképek és zsetonok fejlett testreszabásával közvetlenül a Discordon belül. Szerkeszd a forgatókönyveket, állítsd be a pozíciókat, és igazítsd a játék környezetét valós időben, anélkül, hogy elhagynád a szerveredet. Teljes kontroll a mesterek és a játékosok számára, minden integrálva a Discord játéktéredbe."
+    }
   }
 }

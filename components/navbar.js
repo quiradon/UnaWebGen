@@ -87,7 +87,16 @@ function nav(t,rota){
                             </svg>${t.nav.guide}<svg class="mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"></path>
                             </svg></a>
-                        <div class="dropdown-menu"><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/commands" rel="help" data-bs-target="${lang}/commands">
+                        <div class="dropdown-menu">
+                        <a target="_blank" class="dropdown-item d-flex justify-content-sm-start" href="https://discord.com/discovery/applications/1300850389846855734" rel="help">
+                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary p-2 me-2 nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor">
+                                        <path d="M32 119.4C12.9 108.4 0 87.7 0 64C0 28.7 28.7 0 64 0c23.7 0 44.4 12.9 55.4 32H456.6C467.6 12.9 488.3 0 512 0c35.3 0 64 28.7 64 64c0 23.7-12.9 44.4-32 55.4V392.6c19.1 11.1 32 31.7 32 55.4c0 35.3-28.7 64-64 64c-23.7 0-44.4-12.9-55.4-32H119.4c-11.1 19.1-31.7 32-55.4 32c-35.3 0-64-28.7-64-64c0-23.7 12.9-44.4 32-55.4V119.4zM456.6 96H119.4c-5.6 9.7-13.7 17.8-23.4 23.4V392.6c9.7 5.6 17.8 13.7 23.4 23.4H456.6c5.6-9.7 13.7-17.8 23.4-23.4V119.4c-9.7-5.6-17.8-13.7-23.4-23.4zM128 160c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160zM256 320h32c35.3 0 64-28.7 64-64V224h64c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V320z"></path>
+                                    </svg>
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.vtt.title} <span class="badge rounded-pill bg-primary ms-1">${t.new}</span></span><span class="text-secondary lh-0">${t.nav.vtt.desc}</span></div>
+                                </div>
+                            </a>
+                        
+                        <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/commands" rel="help" data-bs-target="${lang}/commands">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M342.6 9.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l9.4 9.4L28.1 342.6C10.1 360.6 0 385 0 410.5V416c0 53 43 96 96 96h5.5c25.5 0 49.9-10.1 67.9-28.1L448 205.3l9.4 9.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-32-32-96-96-32-32zM205.3 256L352 109.3 402.7 160l-96 96H205.3z"></path>
                                     </svg>
@@ -99,13 +108,17 @@ function nav(t,rota){
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.docs.dices.names}</span><span class="text-secondary lh-0">${t.nav.docs.dices.desc}</span></div>
                                 </div>
-                            </a><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/changelog" rel="help" data-bs-target="https://nutri.arkanus.app">
+                            </a>
+                            <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/changelog" rel="help" data-bs-target="https://nutri.arkanus.app">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                         <path d="M96 96c0-35.3 28.7-64 64-64H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H80c-44.2 0-80-35.8-80-80V128c0-17.7 14.3-32 32-32s32 14.3 32 32V400c0 8.8 7.2 16 16 16s16-7.2 16-16V96zm64 24v80c0 13.3 10.7 24 24 24H296c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24H184c-13.3 0-24 10.7-24 24zm208-8c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zM160 304c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"></path>
                                     </svg>
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.docs.changelogs.name}</span><span class="text-secondary lh-0">${t.nav.docs.changelogs.desc}</span></div>
                                 </div>
-                            </a></div>
+                            </a>
+
+                            
+                            </div>
                     </li>
                     <li class="nav-item dropdown auto-open animations-select"><a class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                                 <path d="M176 88v40H336V88c0-4.4-3.6-8-8-8H184c-4.4 0-8 3.6-8 8zm-48 40V88c0-30.9 25.1-56 56-56H328c30.9 0 56 25.1 56 56v40h28.1c12.7 0 24.9 5.1 33.9 14.1l51.9 51.9c9 9 14.1 21.2 14.1 33.9V304H384V288c0-17.7-14.3-32-32-32s-32 14.3-32 32v16H192V288c0-17.7-14.3-32-32-32s-32 14.3-32 32v16H0V227.9c0-12.7 5.1-24.9 14.1-33.9l51.9-51.9c9-9 21.2-14.1 33.9-14.1H128zM0 416V336H128v16c0 17.7 14.3 32 32 32s32-14.3 32-32V336H320v16c0 17.7 14.3 32 32 32s32-14.3 32-32V336H512v80c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64z"></path>
@@ -136,8 +149,6 @@ function nav(t,rota){
                                     <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.poker.name}</span><span class="text-secondary lh-0">${t.nav.tools.poker.desc}</span></div>
                                 </div>
                             </a>
-                            
-                            
                             
                             <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/tarot" rel="help">
                                 <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -235,7 +246,7 @@ function footer(t, rota) {
         </div>
         <hr class="text-primary" />
         <div class="d-flex justify-content-between align-items-center pt-3">
-            <p class="text-muted mb-0">Made by comunity for comunity</p>
+            <p class="text-muted mb-0">${t.comunity_from}</p>
             <ul class="list-inline mb-0">
                 <li class="list-inline-item"><a aria-label="Fortuna Twitter Icon" title="twitter" alt="Twitter" href="https://twitter.com/MiniKrakenBOT"><svg class="text-primary" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
                             <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path>

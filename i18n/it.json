@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Copiar"
   },
+  "comunity_from": "Creato dalla community RPG per la community",
   "default": {
     "desc": "Mini Kraken é um site de RPG que oferece ferramentas, artigos e conteúdo para jogadores e Mestres de RPG. Aqui você encontrará informações sobre Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling e outros sistemas de RPG."
   },
@@ -210,8 +211,13 @@
         "name": "Cartas de Tarot"
       },
       "title": "Ferramentas"
+    },
+    "vtt": {
+      "desc": "Gestisci Token e Mappe",
+      "title": "Tavolo virtuale"
     }
   },
+  "new": "Nuovo",
   "online": {
     "tools": {
       "btn": "Strumenti online"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "Elenco di tutti gli strumenti.",
-      "title": "Visualizza tutti gli strumenti"
+      "title": "Tutti gli strumenti"
     },
     "clima": {
       "button": "Genera Clima",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Elenco di strumenti progettato per aiutare i Master e i Giocatori con i loro giochi di ruolo da tavolo.",
-      "title": "Elenco di Strumenti RPG"
+      "title": "Strumenti RPG"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Lee los Términos del Servicio de Mini Kraken. Comprende tus derechos y responsabilidades al usar nuestros servicios.",
     "tags": "Legal, Legal, Termos de Uso, Legislação",
     "title": "Termos de Serviço"
+  },
+  "vtt": {
+    "index": {
+      "title": "Personalizza mappe e griglie",
+      "desc": "Porta le tue sessioni di GDR su Discord a un livello superiore con la personalizzazione avanzata di mappe e token direttamente su Discord. Modifica gli scenari, regola le posizioni e adatta l'ambiente di gioco in tempo reale, senza lasciare il tuo server. Controllo totale per i GM e i giocatori, tutto integrato nel tuo spazio di gioco su Discord."
+    }
   }
 }

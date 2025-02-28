@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Salin"
   },
+  "comunity_from": "Dibuat oleh komunitas RPG untuk komunitas",
   "default": {
     "desc": "Mini Kraken adalah situs web RPG yang menawarkan alat, artikel, dan konten untuk pemain RPG dan DM. Di sini Anda akan menemukan informasi tentang Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling, dan sistem RPG lainnya."
   },
@@ -210,8 +211,13 @@
         "name": "Kartu Tarot"
       },
       "title": "Alat"
+    },
+    "vtt": {
+      "desc": "Kelola Token dan Peta",
+      "title": "Meja Virtual"
     }
   },
+  "new": "Baru",
   "online": {
     "tools": {
       "btn": "Alat Online"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "Daftar semua alat.",
-      "title": "Lihat Semua Alat"
+      "title": "Semua Alat"
     },
     "clima": {
       "button": "Hasilkan Iklim",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Daftar alat yang dirancang untuk membantu Game Master dan Pemain dengan permainan peran meja mereka.",
-      "title": "Daftar Alat RPG"
+      "title": "Alat RPG"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Baca Syarat dan Ketentuan Layanan untuk Mini Kraken. Pahami hak dan tanggung jawab Anda saat menggunakan layanan kami.",
     "tags": "Hukum, Hukum, Syarat Penggunaan, Perundang-undangan",
     "title": "Syarat dan Ketentuan Layanan"
+  },
+  "vtt": {
+    "index": {
+      "title": "Sesuaikan Peta dan Kisi-kisi",
+      "desc": "Tingkatkan sesi RPG Discord Anda ke level berikutnya dengan kustomisasi peta dan token tingkat lanjut langsung di Discord. Edit skenario, sesuaikan posisi, dan sesuaikan lingkungan game secara real time, tanpa meninggalkan server Anda. Kontrol penuh untuk GM dan pemain, semuanya terintegrasi ke dalam ruang permainan Discord Anda."
+    }
   }
 }

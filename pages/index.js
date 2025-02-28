@@ -36,6 +36,23 @@ function dice(t) {
 </section>`
 }
 
+function vtt(t) {
+    return `
+<section>
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-lg-6 col-xl-6 d-lg-flex align-items-lg-center">
+                <div class="mb-5">
+                    <h1 class="display-5 fw-bold mt-0">${t.vtt.index.title}</h1>
+                    <p class="lead text-secondary">${t.vtt.index.desc}</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-6 mb-5"><img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/vtt.webp" /></div>
+        </div>
+    </div>
+</section>`
+}
+
 function textoSistemas(t) {
     return `
 <section>
@@ -328,6 +345,7 @@ ${head(`${t.lang}${rota}`,`${t.index.name}`)}
     ${botStatus(t)}
     ${textoSistemas(t)}
     ${cards(t)}
+    ${vtt(t)}
     ${plans(t)}
     ${footer(t,rota)}
     ${scripts}

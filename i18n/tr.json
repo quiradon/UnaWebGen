@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Kopyala"
   },
+  "comunity_from": "RPG topluluğu tarafından topluluk için yapıldı",
   "default": {
     "desc": "Mini Kraken, RPG oyuncuları ve DM'ler için araçlar, makaleler ve içerik sunan bir RPG web sitesidir. Burada Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Hikaye Anlatımı ve diğer RPG sistemleri hakkında bilgi bulacaksınız."
   },
@@ -210,8 +211,13 @@
         "name": "Tarot Kartları"
       },
       "title": "Araçlar"
+    },
+    "vtt": {
+      "desc": "Token'ları ve Haritaları Yönet",
+      "title": "Sanal Masaüstü"
     }
   },
+  "new": "Yeni",
   "online": {
     "tools": {
       "btn": "Çevrimiçi Araçlar"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "Tüm araçların listesi.",
-      "title": "Tüm araçları göster"
+      "title": "Tüm Araçlar"
     },
     "clima": {
       "button": "İklim Oluştur",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Masaüstü RPG'lerinde GM'ler ve Oyunculara yardımcı olmak için tasarlanmış araç listesi.",
-      "title": "RPG Araç Listesi"
+      "title": "RPG Araçları"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Mini Kraken Hizmet Şartlarını okuyun. Hizmetlerimizi kullanırken haklarınızı ve sorumluluklarınızı anlayın.",
     "tags": "Yasal, Yasal, Kullanım Şartları, Mevzuat",
     "title": "Hizmet Şartları"
+  },
+  "vtt": {
+    "index": {
+      "title": "Haritaları ve Izgaraları Özelleştir",
+      "desc": "Discord RPG oturumlarınızı, doğrudan Discord içinde gelişmiş harita ve token özelleştirmesiyle bir üst seviyeye taşıyın. Senaryoları düzenleyin, konumları ayarlayın ve oyun ortamını gerçek zamanlı olarak uyarlayın, sunucudan çıkmadan. GM'ler ve oyuncular için tam kontrol, hepsi Discord oyun alanınıza entegre edilmiş."
+    }
   }
 }

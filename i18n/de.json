@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Kopieren"
   },
+  "comunity_from": "Erstellt von der RPG-Community für die Community",
   "default": {
     "desc": "Mini Kraken ist eine RPG-Website, die Tools, Artikel und Inhalte für RPG-Spieler und Spielleiter bietet. Hier finden Sie Informationen zu Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling und anderen RPG-Systemen."
   },
@@ -210,8 +211,13 @@
         "name": "Tarot Karten"
       },
       "title": "Werkzeuge"
+    },
+    "vtt": {
+      "desc": "Token und Karten verwalten",
+      "title": "Virtueller Spieltisch"
     }
   },
+  "new": "Neu",
   "online": {
     "tools": {
       "btn": "Online-Tools"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "Liste aller Werkzeuge.",
-      "title": "Alle Werkzeuge anzeigen"
+      "title": "Alle Werkzeuge"
     },
     "clima": {
       "button": "Klima generieren",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Werkzeugliste, die Spielleitern und Spielern bei ihren Tabletop-Rollenspielen helfen soll.",
-      "title": "Liste der RPG-Tools"
+      "title": "Rollenspiel-Tools"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Lies die Nutzungsbedingungen für Mini Kraken. Verstehe deine Rechte und Pflichten bei der Nutzung unserer Dienste.",
     "tags": "Rechtlich,Rechtlich,Nutzungsbedingungen,Gesetzgebung",
     "title": "Nutzungsbedingungen"
+  },
+  "vtt": {
+    "index": {
+      "title": "Karten und Raster anpassen",
+      "desc": "Hebe deine Discord-Rollenspiel-Sitzungen auf ein neues Level mit erweiterter Karten- und Token-Anpassung direkt in Discord. Bearbeite Szenarien, passe Positionen an und passe die Spielumgebung in Echtzeit an, alles ohne deinen Server zu verlassen. Volle Kontrolle für Spielleiter und Spieler, alles integriert in deinen Discord-Spielbereich."
+    }
   }
 }

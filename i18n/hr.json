@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Kopiraj\n"
   },
+  "comunity_from": "Napravljeno od RPG zajednice za zajednicu",
   "default": {
     "desc": "Mini Kraken je RPG web stranica koja nudi alate, članke i sadržaj za igrače i voditelje igara uloga. Ovdje možete pronaći informacije o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling i drugim RPG sustavima.\n"
   },
@@ -210,8 +211,13 @@
         "name": "Tarot Karte"
       },
       "title": "Alati"
+    },
+    "vtt": {
+      "desc": "Upravljajte tokenima i kartama",
+      "title": "Virtualni stolni"
     }
   },
+  "new": "Novo",
   "online": {
     "tools": {
       "btn": "Online alati"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "Popis svih alata.",
-      "title": "Prikaži sve alate"
+      "title": "Svi alati"
     },
     "clima": {
       "button": "Generiraj klimu",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Popis alata dizajniran da pomogne Majstorima igre i Igračima s njihovim stolno-igrnim RPG-ima.",
-      "title": "Popis alata za RPG"
+      "title": "RPG Alati"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Pročitajte Uvjete pružanja usluge Mini Krakensa. Razumite svoja prava i odgovornosti pri korištenju naših usluga.\n",
     "tags": "Zakonito, Pravno,Uvjeti korištenja, Zakonodavstvo\n",
     "title": "Uvjeti pružanja usluge\n"
+  },
+  "vtt": {
+    "index": {
+      "title": "Prilagodi karte i mreže",
+      "desc": "Podignite svoje Discord RPG sesije na višu razinu uz naprednu personalizaciju karata i žetona izravno u Discordu. Uređujte scenarije, prilagođavajte pozicije i prilagođavajte okruženje igre u stvarnom vremenu, bez napuštanja svog poslužitelja. Potpuna kontrola za voditelje i igrače, sve integrirano u vaš Discord prostor za igru."
+    }
   }
 }

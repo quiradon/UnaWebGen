@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Kopiér"
   },
+  "comunity_from": "Lavet af RPG-fællesskabet for fællesskabet",
   "default": {
     "desc": "Mini Kraken er et RPG-websted, der tilbyder værktøjer, artikler og indhold til RPG-spillere og -game masters. Her finder du information om Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling og andre RPG-systemer."
   },
@@ -210,8 +211,13 @@
         "name": "Tarotkort"
       },
       "title": "Værktøjer"
+    },
+    "vtt": {
+      "desc": "Administrer Tokens og Kort",
+      "title": "Virtuelt Bordplade"
     }
   },
+  "new": "Ny",
   "online": {
     "tools": {
       "btn": "Onlineværktøjer"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "Liste over alle værktøjer.",
-      "title": "Vis alle værktøjer"
+      "title": "Alle værktøjer"
     },
     "clima": {
       "button": "Generer Klima",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Værktøjsliste designet til at hjælpe Spille Mestre og Spillere med deres tabletop RPG'er.",
-      "title": "Liste over RPG-værktøjer"
+      "title": "RPG-værktøjer"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Læs Mini Krakens servicevilkår. Forstå dine rettigheder og ansvar, når du bruger vores tjenester.",
     "tags": "Juridisk, Vilkår for brug",
     "title": "Servicevilkår"
+  },
+  "vtt": {
+    "index": {
+      "title": "Tilpas kort og gitter",
+      "desc": "Tag dine Discord-RPG-sessioner op med avanceret kort- og tokentilpasning direkte i Discord. Rediger scenarier, juster positioner, og tilpas spilmiljøet i realtid, alt sammen uden at forlade din server. Fuldstændig kontrol for mestre og spillere, alt integreret i dit Discord-spilområde."
+    }
   }
 }

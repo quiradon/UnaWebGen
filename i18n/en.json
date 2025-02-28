@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Copy"
   },
+  "comunity_from": "Made by the RPG community for the community",
   "default": {
     "desc": "Mini Kraken is an RPG website offering tools, articles, and content for RPG players and DMs. Here you will find information about Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling, and other RPG systems."
   },
@@ -210,8 +211,13 @@
         "name": "Tarot Cards"
       },
       "title": "Tools"
+    },
+    "vtt": {
+      "desc": "Manage Tokens and Maps",
+      "title": "Virtual Tabletop"
     }
   },
+  "new": "New",
   "online": {
     "tools": {
       "btn": "Online Tools"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "List of all tools.",
-      "title": "View All Tools"
+      "title": "All Tools"
     },
     "clima": {
       "button": "Generate Climate",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Tool list designed to help Game Masters and Players with their tabletop RPGs.",
-      "title": "RPG Tool List"
+      "title": "RPG Tools"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Read the Terms of Service for Mini Kraken. Understand your rights and responsibilities when using our services.",
     "tags": "Legal,Legal,Terms of Use,Legislation",
     "title": "Terms of Service"
+  },
+  "vtt": {
+    "index": {
+      "title": "Customize Maps and Grids",
+      "desc": "Level up your Discord RPG sessions with advanced map and token customization directly within Discord. Edit scenarios, adjust positions, and adapt the game environment in real time, all without leaving your server. Full control for GMs and players, all integrated into your Discord game space."
+    }
   }
 }

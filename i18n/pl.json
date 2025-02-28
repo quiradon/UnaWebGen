@@ -26,6 +26,7 @@
   "comum": {
     "copy": "Kopiuj"
   },
+  "comunity_from": "Zrobione przez społeczność RPG dla społeczności",
   "default": {
     "desc": "Mini Kraken to strona RPG oferująca narzędzia, artykuły i treści dla graczy RPG i Mistrzów Gry. Znajdziesz tu informacje o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, opowiadaniu historii i innych systemach RPG."
   },
@@ -210,8 +211,13 @@
         "name": "Karty Tarota"
       },
       "title": "Narzędzia"
+    },
+    "vtt": {
+      "desc": "Zarządzaj tokenami i mapami",
+      "title": "Wirtualny stół"
     }
   },
+  "new": "Nowy",
   "online": {
     "tools": {
       "btn": "Narzędzia online"
@@ -428,7 +434,7 @@
   "tools": {
     "all": {
       "subtitle": "Lista wszystkich narzędzi.",
-      "title": "Pokaż wszystkie narzędzia"
+      "title": "Wszystkie narzędzia"
     },
     "clima": {
       "button": "Generuj klimat",
@@ -462,7 +468,7 @@
     },
     "section": {
       "desc": "Lista narzędzi zaprojektowana, aby pomóc Mistrzom Gry i Graczom w ich grach fabularnych.",
-      "title": "Lista narzędzi RPG"
+      "title": "Narzędzia RPG"
     }
   },
   "tos": {
@@ -489,5 +495,11 @@
     "desc": "Przeczytaj Regulamin Mini Kraken. Zrozum swoje prawa i obowiązki podczas korzystania z naszych usług.",
     "tags": "Prawo, Prawo, Warunki użytkowania, Ustawodawstwo",
     "title": "Warunki świadczenia usług"
+  },
+  "vtt": {
+    "index": {
+      "title": "Dostosuj mapy i siatki",
+      "desc": "Podnieś swoje sesje RPG na Discordzie na wyższy poziom dzięki zaawansowanej personalizacji map i żetonów bezpośrednio na Discordzie. Edytuj scenariusze, dostosuj pozycje i zmieniaj otoczenie gry w czasie rzeczywistym, bez opuszczania serwera. Pełna kontrola dla Mistrzów Gry i graczy, wszystko zintegrowane z Waszą przestrzenią gry na Discordzie."
+    }
   }
 }

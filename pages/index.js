@@ -47,11 +47,16 @@ function vtt(t) {
                     <p class="lead text-secondary">${t.vtt.index.desc}</p>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 mb-5"><img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/vtt.webp" /></div>
+            <div class="col-lg-6 col-xl-6 mb-5"><img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/vtt2.webp" /></div>
         </div>
     </div>
 </section>`
 }
+
+function FIXME(t) {
+}
+
+
 
 function textoSistemas(t) {
     return `

@@ -53,11 +53,6 @@ function vtt(t) {
 </section>`
 }
 
-function FIXME(t) {
-}
-
-
-
 function textoSistemas(t) {
     return `
 <section>
@@ -92,10 +87,19 @@ function modal(t) {
 </div>`
 }
 
-function systemCard(title, description, img, url) {
+function systemCard(title, description, img, url, autoSheet) {
+    let iconComponent = `<div class="bg-secondary-subtle border rounded-circle border-0 position-absolute end-0 mt-3 me-3" title="Suporte a Fichas &amp; Rolagem Automatica">
+    <svg class="text-secondary p-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 32px;">
+        <path d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z"></path>
+    </svg>
+    </div>`
+    if(!autoSheet) {
+        iconComponent = ''
+    }
     return `
         <div class="col-10 col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
             <div class="card d-flex flex-grow-1 card_system_card border-1">
+                ${iconComponent}
                 <div class="card-body d-flex flex-column py-2 px-3">
                 <a href="${url}" class="link-unstyled">    
                 <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-1 bs-icon">
@@ -112,6 +116,8 @@ function systemCard(title, description, img, url) {
     `;
 }
 
+let sistemas_tags_asrray = [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+
 function sistemList(t) {
     return `<section class="py-3">
     <div class="container">
@@ -119,10 +125,9 @@ function sistemList(t) {
         t.index.system.title,
         t.index.system.desc)}
         <div class="d-inline-flex flex-row flex-grow-1 flex-fill py-3 px-2 overflow-scroll" id="auto-scroll" style="width: 100%;">
-
                     ${Object.keys(t.posts.sistemas).map((key) => {
                     const sistema = t.posts.sistemas[key];
-                    return systemCard(sistema.card.title, sistema.card.desc, sistema.icon, `./systems/${sistema.path}`)
+                    return systemCard(sistema.card.title, sistema.card.desc, sistema.icon, `./systems/${sistema.path}`, sistemas_tags_asrray[key]);
                 }).join('')}
 
 
@@ -140,12 +145,12 @@ function inicio2(t) {
             <div class="col-auto col-xl-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
                 <div class="mb-5">
                     <h1 class="display-1 fw-bold" >${text}</h1>
-                    <p class="text-secondary">${t.index.start.desc}</p>
-                    <a class="btn btn-primary btn-lg mt-1 border-2 px-5 me-1 generic_grow" type="link" href="${bot_invite}" target="_blank" style="font-weight: bold;">${t.nav.add}</a>
-                    <a class="btn btn-primary btn-lg mt-1 border-2 px-4 generic_grow" type="link" href="./tools">${t.online.tools.btn}</a>
+                    <p class="text-secondary lead">${t.index.start.desc}</p>
+                    <a class="btn btn-primary btn-lg mt-1 border-2 px-5 me-1 generic_grow fw-bold" type="link" href="${bot_invite}" target="_blank">${t.nav.add}</a>
+                    <a class="btn btn-primary btn-lg mt-1 border-2 px-4 generic_grow fw-bold" type="link" href="./tools">${t.online.tools.btn}</a>
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid generic_grow" alt="Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" /></div>
+            <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"><img class="img-fluid generic_grow" alt="Mini Kraker RPG | Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" /></div>
         </div>
     </div>
 </section>
@@ -293,11 +298,14 @@ return `
 <div class="col d-flex mt-1 mb-3">
                 <div class="card border-white border-0 shadow glass-container cardBonito">
                     <div class="card-body p-4">
-                        <div class="d-flex justify-content-center align-items-center align-content-center">
-                            <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">${svg}</div>
+                        <div>
+                            <div class="d-flex justify-content-center align-items-center align-content-center">
+                                <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">${svg}</div>
+                            </div>
+                            <h3 class="text-center text-white card-title">${title}</h3>
+                            <p class="text-start text-light card-text">${text}</p>
                         </div>
-                        <h3 class="text-center text-white card-title">${title}</h3>
-                        <p class="text-start text-light card-text">${text}</p>
+
                     </div>
                 </div>
             </div>`

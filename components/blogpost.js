@@ -17,13 +17,13 @@ function blog(title, categories, img, content) {
 
 function PlaceParagraphs(title, text,color) {
     //faça a quebra de linhas com um /n
-    text = text.split('\n').map(paragraph => `<p class="text-light">${paragraph}</p>`).join('');
+    text = text.split('\n').map(paragraph => `<p class="text-secondary">${paragraph}</p>`).join('');
 
     return `
     <div>
-        <h2 class="text-${color ?? 'primary'} mt-3 mb-0">${title}</h2>
+        <h2 class="text-${color ?? 'light'} mt-3 mb-0">${title}</h2>
             <div>
-                <article class="p-1 pb-0">
+                <article class="pb-0 lead lead text-secondary">
                     ${text}
                 </article>
             </div>
@@ -33,7 +33,7 @@ function PlaceParagraphs(title, text,color) {
 
 function PlaceSmallParagraphs(title, text) {
     //faça a quebra de linhas com um /n
-    text = text.split('\n').map(paragraph => `<p class="text-light">${paragraph}</p>`).join('');
+    text = text.split('\n').map(paragraph => `<p class="text-secondary">${paragraph}</p>`).join('');
     return `
     <div class="col">
             <h2 class="text-primary mt-3 mb-0">${title}</h2>
@@ -48,8 +48,8 @@ function TextAndImage(title,text,img,alt){
     <div class="row mb-2">
         <div class="col-md-6 col-lg-6 col-xl-6">
             <div>
-                <h2 class="text-primary">${title}</h2>
-                <p class="text-light lead">${text}</p> 
+                <h2 class="text-light">${title}</h2>
+                <p class="text-secondary lead">${text}</p> 
             </div>
         </div>
         <div class="col-md-6 col-lg-6 col-xl-6 text-center mb-3">

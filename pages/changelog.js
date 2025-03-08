@@ -14,7 +14,7 @@ function TitleAndSubtitle(title,paragraph) {
 }
 
 async function fetchUpdates() {
-    const response = await fetch('https://una.arkanus.app/updates');
+    const response = await fetch('https://una-api.arkanus.app/updates');
     
     const data = await response.json();
     return data;

@@ -1,4 +1,4 @@
-fetch("https://una.arkanus.app/info")
+fetch("https://una-api.arkanus.app/info")
   .then(response => response.json())
   .then(data => {
     document.getElementById("version").innerHTML = data.version;

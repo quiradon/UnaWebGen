@@ -3,7 +3,7 @@ const scripts = require("../components/bootscripts");
 const { head } = require("../components/head");
 
 async function getCommands() {
-    const url = "https://una.arkanus.app/commands";
+    const url = "https://una-api.arkanus.app/commands";
     const response = await fetch(url);
     const data = await response.json();
     return data || [];

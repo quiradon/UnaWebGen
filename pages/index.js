@@ -97,7 +97,7 @@ function systemCard(title, description, img, url, autoSheet) {
         iconComponent = ''
     }
     return `
-        <div class="col-10 col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
+        <div class="col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
             <div class="card d-flex flex-grow-1 card_system_card border-1">
                 ${iconComponent}
                 <div class="card-body d-flex flex-column py-2 px-3">
@@ -117,7 +117,6 @@ function systemCard(title, description, img, url, autoSheet) {
 }
 
 let sistemas_tags_asrray = [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
-
 function sistemList(t) {
     return `<section class="py-3">
     <div class="container">
@@ -410,5 +409,6 @@ ${head(`${t.lang}${rota}`,`${t.index.name}`)}
 }
 
 module.exports = {
-    page
+    page,
+    sistemas_tags_asrray
 }

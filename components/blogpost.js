@@ -1,19 +1,50 @@
 function blog(title, categories, img, content) {
-    let tags = categories.split(',').map(category => `<span class="badge bg-primary text-light m-1">${category}</span>`).join('');
+    let tags = categories.split(',').map(category => 
+        `<span class="badge bg-primary text-light m-1">${category}</span>`
+    ).join('');
 
     return `
-        <div class="col m-md-3">
-            <div class="container border rounded border-0 p-0">
-                <div class="p-5 mb-3 img-fluid rounded" style="background: url('${img}') center / cover;">${tags}
-                    <h1 class="text-light pb-5 pt-2 border-2 text-shadow-l">${title}</h1>
+        <div class="container-lg d-flex justify-content-center 
+            px-2 px-md-3 px-lg-4 px-xl-5 px-xxl-6">
+            <div class="card border-0 shadow-sm w-100">
+                <div class="position-relative">
+                    <!-- Imagem como background -->
+                    <div class="w-100 rounded" style="
+                        background: url('${img}') center / cover no-repeat;
+                        height: 250px;
+                        max-height: 70vh;
+                        background-size: cover;
+                        background-position: center;">
+                        
+                        <!-- Conteúdo sobre a imagem -->
+                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center px-3 px-md-5">
+                            <div class="d-flex flex-wrap">
+                                ${tags}
+                            </div>
+                            <h1 class="text-light fw-bold text-shadow">
+                                ${title}
+                            </h1>
+                        </div>
+                    </div>
                 </div>
-                <div class="px-3 pb-3">
+                <div class="card-body">
+                    <div class="content">
                         ${content}
+                    </div>
                 </div>
             </div>
         </div>
-    `
+    `;
 }
+
+
+
+
+
+
+
+
+
 
 function PlaceParagraphs(title, text,color) {
     //faça a quebra de linhas com um /n
@@ -79,11 +110,26 @@ function TitleAndSubtitle(title,paragraph) {
         `
 }
 
+/**
+ * Renders markdown content as HTML within a blog post
+ * @param {string} markdown - The markdown content to render
+ * @returns {string} - The HTML representation of the markdown
+ */
+function MarkdownContent(markdown) {
+    const { markdownToHtml } = require('./markdown');
+    return `
+    <div class="markdown-content">
+        ${markdownToHtml(markdown)}
+    </div>
+    `;
+}
+
 module.exports = {
     blog,
     PlaceParagraphs,
     PlaceSmallParagraphs,
     CodeBlock,
     TextAndImage,
-    TitleAndSubtitle
+    TitleAndSubtitle,
+    MarkdownContent
 }

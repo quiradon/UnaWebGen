@@ -62,7 +62,7 @@ ${head(`${t.lang}${rota}`,`${t.changelogs.title}`,t.changelogs.desc)}
     ${TitleAndSubtitle(t.nav.docs.changelogs.name,t.nav.docs.changelogs.desc)}
 </div>
     <div class="row row-cols-1" id="updates"><div class="col">
-    ${updates.map(update => generateCard(update.version, update.text[idiomaUpdates], update.img)).join('')}
+    ${updates.map(update => generateCard(update?.version ?? "0" , update?.text[idiomaUpdates] ?? "", update.img)).join('')}
     </div>
 </div>
     ${footer(t,rota)}

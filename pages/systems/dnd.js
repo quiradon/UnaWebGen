@@ -1,7 +1,7 @@
 const {nav, footer} = require('../../components/navbar')
 const scripts = require('../../components/bootscripts')
 const {head} = require('../../components/head')
-const {blog, PlaceParagraphs, TextAndImage} = require('../../components/blogpost')
+const {blog, TextAndImage, MarkdownContent} = require('../../components/blogpost')
 
 function linkReplacer(string) {
     // transforme [link](url) em <a href="url">link</a>
@@ -20,9 +20,8 @@ ${head(`${t.lang}${rota}`,`${t.system.default.title.replaceAll("%system%",sistem
 <body>
     ${nav(t, rota)}
 
-    ${blog(t.system.default.title.replaceAll("%system%",sistema.card.title),sistema.tags,sistema.bg,`
-    ${PlaceParagraphs(t.tos[0].title,sistema.article)}
-    ${PlaceParagraphs(t.system.default.playDiscord.replaceAll("%system%",sistema.card.title),t.system.default.playDiscordDesc.replaceAll("%system%",sistema.card.title))}
+    ${blog(t.system.default.title.replaceAll("%system%",sistema.card.title),sistema.tags,sistema.bg,`    
+    ${MarkdownContent(sistema.md)}
     ${TextAndImage(t.footer.legal,linkReplacer(sistema.legal),sistema.icon,t.system.default.title.replaceAll("%system%",sistema.card.title))}
 
 

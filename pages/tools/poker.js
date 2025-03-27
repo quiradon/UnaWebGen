@@ -20,7 +20,7 @@ ${head(`${t.lang}${rota}`,`${t.poker.title}`,`${t.poker.desc}`)}
                     
                         <h1 class="display-5 fw-bold text-white">${t.poker.article.title}</h1>
                         <p class="lead text-secondary">${t.poker.article.desc}</p>
-                        <div class="d-lg-flex d-xl-flex justify-content-lg-start align-items-lg-center justify-content-xl-start align-items-xl-center"><button class="btn btn-primary btn-lg link-light m-2" id="cardsrun" type="button">${t.misc.btn.gencard}</button><select class="border rounded form-select-lg m-2 p-2" id="cardstype" name="card">
+                        <div class="input-group"><button class="text-wrap btn btn-primary link-light p-2" id="cardsrun" style="white-space: nowrap; type="button">${t.misc.btn.gencard}</button><select class="form-select me-2 " id="cardstype" name="card">
                                 <option value="random" selected="">${t.poker.cards.type[0]}</option>
                                 <option value="0">${t.poker.cards.type[1]} (♠)</option>
                                 <option value="1">${t.poker.cards.type[2]} (♣)</option>

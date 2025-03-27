@@ -128,9 +128,8 @@ function sistemList(t) {
                     const sistema = t.posts.sistemas[key];
                     return systemCard(sistema.card.title, sistema.card.desc, sistema.icon, `./systems/${sistema.path}`, sistemas_tags_asrray[key]);
                 }).join('')}
-
-
         </div>
+        <div class="text-end"><a class="mt-1 border-2generic_grow fw-bold" type="link" href="./systems">${t.index.allSystems.text}</a></div>
     </div>
 </section>`
 }

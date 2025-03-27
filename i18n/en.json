@@ -66,6 +66,9 @@
     "util": "Utility"
   },
   "index": {
+    "allSystems": {
+      "text": "Click here to see the full list"
+    },
     "dices": {
       "desc": "Dice rolling is an essential part of tabletop RPG adventures. It brings the thrill of the unpredictable, where a character's fate can change with a single roll. Let Mini Kraken take care of it for you through /d",
       "subtitle": "Got dice at home? No? No problem!",
@@ -350,6 +353,18 @@
         "legal": "Dharmar is an Open Source RPG system made by the author [Bruno More Eyes](https://www.instagram.com/brunomoreeyes/) Mini Kraken has no connection with the creator, Mini Kraken is just a set of tools made to assist masters and players of different systems. in the same way that we do not have authorization from them to operate. Purchase: [Dharmar on Amazon](https://amzn.to/4a3olxF)",
         "path": "dharmar",
         "tags": "RPG System, Open Source, Brazil"
+      },
+      "9": {
+        "bg": "/static/img/bg/nbg1.webp",
+        "card": {
+          "desc": "Classic Brazilian RPG that recaptures the essence of \"old school\" tabletop games, with simple rules and a rich setting.\n",
+          "title": "Old Dragon 2e"
+        },
+        "icon": "/static/img/rpg/OldDragon.svg",
+        "legal": "Old Dragon is an RPG system made by the author [Dei Priori](https://olddragon.com.br/) Mini Kraken has no direct connection with the creator, however we have the publisher's consent to add the system to the tool.",
+        "md": "# Old Dragon 2nd Edition: Revitalizing the Classic RPG with Modern Tools\n\n## Introduction\n\n**Old Dragon 2nd Edition** is a significant update to the renowned Brazilian RPG that aims to recapture the essence of classic tabletop games, incorporating improvements that cater to both veteran and new players. With new rules, settings, and digital integrations, this edition promises to enrich the gaming experience, maintaining the nostalgia and simplicity that characterize the original system.\n\n## General Context\n\nInitially launched in 2010, Old Dragon quickly stood out in the national RPG scene for its \"old school\" approach, inspired by early role-playing systems. The second edition emerges after more than a decade of community feedback, aiming to improve mechanics, expand the game's universe, and integrate tools that facilitate gameplay in virtual environments.\n\nFurthermore, **Old Dragon 2nd Edition** is now part of the **Mini Kraken** system list, a platform dedicated to independent RPGs. This expands access to the game and strengthens its presence in the digital landscape, making it easier for new players and game masters seeking classic and accessible experiences to get involved.\n\n## Main New Features of the 2nd Edition\n\n- **Rules Revision**: The mechanics have been refined to provide a more fluid experience, while maintaining the system's characteristic simplicity.\n- **New Setting – Valansia**: Introduction of the continent of Valansia as the default setting, offering a vast territory of approximately two thousand hexagons for exploration and adventures.\n- **Free Digital Availability**: The Core Rulebook and a Fast Play are available for free in digital format, democratizing access to the game.\n\n## Integration with Virtual Platforms\n\nRecognizing the growing popularity of virtual tables, Old Dragon 2nd Edition has integrated with major online RPG platforms:\n\n### Roll20\n\nThe specific Old Dragon 2nd Edition character sheet on Roll20 allows:\n\n- **Custom Creation**: Develop characters, spells, and items intuitively.\n- **Automatic Modifier Calculation**: Speeds up the process of character creation and development.\n- **Improved Dice Rolls**: Facilitates attribute tests, protection rolls, and attacks.\n\nWhile some features still require manual entry, the tool already represents a significant advancement in character management.\n\n### Mini Kraken Bot\n\nThe **Mini Kraken Bot** is an innovative tool that facilitates Old Dragon 2nd Edition gameplay directly on Discord. With practical commands and automations, it allows:\n\n- **Character Creation and Management**: Register character sheets, evolve attributes, and track your campaign in an organized manner.\n- **Intelligent Dice Rolls**: Use quick commands to perform attribute tests, protection rolls, and attacks, without needing manual calculations.\n- **Session Recording**: Store important campaign notes, ensuring that no detail is lost between sessions.\n\nThe bot is available for free and is an excellent option for those who want to play quickly without relying on more complex platforms.\n\n## Tips to Maximize Your Experience\n\n- **Participate in the Community**: Engage in forums and groups dedicated to Old Dragon to share experiences and get support.\n- **Explore the Valansia Setting**: Take advantage of the richness of detail and possibilities that the new continent offers to create engaging campaigns.\n- **Use Virtual Tools**: Familiarize yourself with the features of Roll20 and Mini Kraken Bot to optimize your game sessions.\n\n## Conclusion\n\nThe second edition of Old Dragon revitalizes the classic Brazilian RPG, combining tradition and innovation. Whether you are an experienced player or a curious newcomer, this edition offers resources and tools that enrich the gaming experience. Don't miss the opportunity to explore the new features and join this vibrant community. Access the free materials, try out the virtual platforms, and embark on new adventures with the old dragon.\n\n**Keywords**: Old Dragon 2nd Edition, classic Brazilian RPG, Valansia, Roll20, Mini Kraken, Mini Kraken Bot\n",
+        "path": "olddragon",
+        "tags": "RPG System, Brazil, Fantasy"
       }
     }
   },

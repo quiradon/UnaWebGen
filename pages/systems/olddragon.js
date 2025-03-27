@@ -10,9 +10,10 @@ function linkReplacer(string) {
 }
 
 
+
 function page(idioma, rota) {
     const t = idioma
-    const sistema = t.posts.sistemas[1]
+    const sistema = t.posts.sistemas[9]
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">

@@ -66,6 +66,9 @@
     "util": "Pomoćni program"
   },
   "index": {
+    "allSystems": {
+      "text": "Kliknite ovdje da biste vidjeli puni popis"
+    },
     "dices": {
       "desc": "Bacanje kocki je bitan dio avantura u stolnoj igri uloga. Unosi uzbuđenje nepredvidivosti, gdje se sudbina lika može promijeniti jednim bacanjem. Neka se Mini Kraken pobrine za to putem /d ",
       "subtitle": "Imate kocke kod kuće? Ne? Nema problema!",
@@ -350,6 +353,18 @@
         "legal": "Dharmar je RPG sustav otvorenog koda autora [Bruno More Eyes](https://www.instagram.com/brunomoreeyes/). Mini Kraken nema nikakve veze s tvorcem; Mini Kraken je samo skup alata napravljenih za pomoć majstorima i igračima različitih sustava. Isto tako, nemamo dopuštenje za rad. Nabavite: [Dharmar na Amazonu](https://amzn.to/4a3olxF)",
         "path": "dharmar",
         "tags": "Sistem RPG-a,Otvoreni kod,Brazil, premium"
+      },
+      "9": {
+        "bg": "/static/img/bg/nbg1.webp",
+        "card": {
+          "desc": "Klasična brazilska RPG igra koja vraća duh \"old school\" igara za stol, s jednostavnim pravilima i bogatim scenarijem.\n",
+          "title": "Old Dragon 2e"
+        },
+        "icon": "/static/img/rpg/OldDragon.svg",
+        "legal": "Old Dragon je RPG sustav autora [Dei Priori](https://olddragon.com.br/). Mini Kraken nema izravne veze s autorom, ali imamo dozvolu izdavača za dodavanje sustava u alat.\n",
+        "md": "# Old Dragon 2. izdanje: Oživljavanje klasičnog RPG-a modernim alatima\n\n## Uvod\n\n**Old Dragon 2. izdanje** je značajna nadogradnja renomiranog brazilskog RPG-a koji teži oživjeti bit klasičnih društvenih igara, uključujući poboljšanja koja zadovoljavaju i veterane i nove igrače. S novim pravilima, scenarijima i digitalnim integracijama, ovo izdanje obećava obogaćivanje iskustva igre, zadržavajući nostalgiju i jednostavnost koje karakteriziraju izvorni sustav.\n\n## Opći kontekst\n\nLansiran početkom 2010. godine, Old Dragon se brzo istaknuo na nacionalnoj RPG sceni svojim \"old school\" pristupom, inspiriranim prvim sustavima igranja uloga. Drugo izdanje nastaje nakon više od desetljeća povratnih informacija zajednice, s ciljem poboljšanja mehanike, proširenja svemira igre i integracije alata koji olakšavaju igranje u virtualnim okruženjima.\n\nOsim toga, **Old Dragon 2. izdanje** sada je dio liste sustava **Mini Krakensa**, platforme posvećene neovisnim RPG-ima. To proširuje pristup igri i jača njezinu prisutnost na digitalnoj sceni, olakšavajući ulazak novih igrača i voditelja koji traže klasična i pristupačna iskustva.\n\n## Glavne novosti 2. izdanja\n\n- **Revizija pravila**: Mehanika je usavršena kako bi se omogućilo fluidnije iskustvo, zadržavajući jednostavnost karakterističnu za sustav.\n- **Novo okruženje – Valansia**: Uvođenje kontinenta Valansia kao standardnog okruženja, nudeći prostrano područje od približno dvije tisuće heksagona za istraživanje i avanture.\n- **Besplatna digitalna dostupnost**: Osnovna knjiga i Fast Play dostupni su besplatno u digitalnom formatu, demokratizirući pristup igri.\n\n## Integracija s virtualnim platformama\n\nPrepoznavajući rastuću popularnost virtualnih stolova, Old Dragon 2. izdanje integrirao se u glavne online RPG platforme:\n\n### Roll20\n\nSpecifična karta lika za Old Dragon 2. izdanje na Roll20 omogućuje:\n\n- **Prilagođenu kreaciju**: Razvijajte likove, čarolije i predmete na intuitivan način.\n- **Automatski izračun modificatora**: Ubrzava proces stvaranja i razvoja likova.\n- **Poboljšane bacanja kocke**: Olakšava testove atributa, zaštitne poteze i napade.\n\nIako neke funkcionalnosti još uvijek zahtijevaju ručno popunjavanje, alat već predstavlja značajan napredak u upravljanju likovima.\n\n### Mini Kraken Bot\n\n**Mini Kraken Bot** je inovativni alat koji olakšava igranje Old Dragon 2. izdanja izravno na Discordu. S praktičnim naredbama i automatizacijama, omogućuje:\n\n- **Stvaranje i upravljanje likovima**: Registrirajte karte, razvijajte atribute i pratite svoju kampanju na organiziran način.\n- **Inteligentna bacanja kocke**: Koristite brze naredbe za izvođenje testova atributa, zaštitnih poteza i napada, bez potrebe za ručnim izračunima.\n- **Evidenciju sesija**: Spremite važne bilješke kampanje, osiguravajući da se nijedan detalj ne izgubi između sesija.\n\nBot je dostupan besplatno i izvrsna je opcija za one koji žele igrati brzo bez ovisnosti o kompleksnijim platformama.\n\n## Savjeti za maksimalno iskustvo\n\n- **Sudjelujte u zajednici**: Uključite se u forume i grupe posvećene Old Dragonu kako biste razmijenili iskustva i dobili podršku.\n- **Istražite okruženje Valansia**: Iskoristite bogatstvo detalja i mogućnosti koje novi kontinent nudi za stvaranje zadivljujućih kampanja.\n- **Koristite virtualne alate**: Upoznajte se s funkcionalnostima Roll20 i Mini Kraken Bota kako biste optimizirali svoje sesije igre.\n\n## Zaključak\n\nDrugo izdanje Old Dragona oživljava klasični brazilski RPG, kombinirajući tradiciju i inovaciju. Bilo da ste iskusni igrač ili znatiželjni početnik, ovo izdanje nudi resurse i alate koji obogaćuju iskustvo igre. Ne propustite priliku istražiti novosti i integrirati se u ovu vibrantnu zajednicu. Pristupite besplatnim materijalima, isprobajte virtualne platforme i krenite u nove avanture sa starim zmajem.\n\n**Ključne riječi**: Old Dragon 2. izdanje, klasični brazilski RPG, Valansia, Roll20, Mini Kraken, Mini Kraken Bot\n",
+        "path": "olddragon",
+        "tags": "RPG sustav, Brazilski, Fantastični\n"
       }
     }
   },

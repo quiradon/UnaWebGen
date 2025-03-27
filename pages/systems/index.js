@@ -57,19 +57,22 @@ function sistemList(t) {
 
 function page(idioma, rota) {
     const t = idioma;
-    const sistema = t.posts.sistemas[5];
 
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
 ${head(
         `${t.lang}${rota}`,
-        `${t.system.default.title.replaceAll('%system%', sistema.card.title)}`,
-        t.system.default.desc.replaceAll('%system%', sistema.card.title),
-        sistema.bg
+        `${t.systems.title}`,
+        t.systems.desc,
+        "/assets/img/bg/newbg2.webp",
     )}
 <body>
     ${nav(t, rota)}
+    <div class="container">
+        <h1 class="display-5 fw-bold mt-0">${t.systems.title}</h1>
+        <p class="lead text-secondary">${t.systems.desc}</p>
+    </div>
     ${sistemList(t)}
     ${footer(t, rota)}
     ${scripts}

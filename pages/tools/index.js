@@ -33,8 +33,8 @@ ${head(`${t.lang}${rota}`,`${t.tools.section.title}`,`${t.tools.section.desc}`)}
     <section id="inicio" style="background: url('pattern-square.svg') top / auto repeat-x;">
     <div class="container py-3">
         <div>
-            <h1 class="fw-bold text-center d-flex justify-content-center align-items-center justify-content-md-center mt-3" style="font-family: 'PT Sans', sans-serif;">${t.tools.section.title}</h1>
-            <p class="d-flex justify-content-center align-items-center justify-content-md-center">${t.tools.section.desc}</p>
+            <h1 class="display-5 fw-bold text-white">${t.tools.section.title}</h1>
+            <p class="lead text-secondary">${t.tools.section.desc}</p>
         </div>
     </div>
     <div class="container py-4 py-xl-5">

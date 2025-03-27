@@ -439,6 +439,10 @@
       "title": "So spielst du %system% auf Discord"
     }
   },
+  "systems": {
+    "title": "Vollständige Liste der Rollenspielsysteme",
+    "desc": "Sehen Sie sich die vollständige Liste der Rollenspielsysteme an! Entdecken Sie verschiedene Stile und Mechaniken, um das perfekte Rollenspiel für Ihr nächstes Abenteuer zu finden."
+  },
   "tarot": {
     "article": {
       "desc": "Ein Zufallsgenerator für Tarotkarten, der irgendwie helfen kann, eine Kampagne oder ein Spiel zu gestalten.",

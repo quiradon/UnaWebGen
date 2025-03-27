@@ -439,6 +439,10 @@
       "title": "Pelajari Cara Memainkan %system% di Discord"
     }
   },
+  "systems": {
+    "title": "Daftar Lengkap Sistem RPG",
+    "desc": "Lihat daftar lengkap sistem RPG! Jelajahi berbagai gaya dan mekanik untuk memilih RPG yang sempurna untuk petualangan Anda berikutnya."
+  },
   "tarot": {
     "article": {
       "desc": "Generator kartu Tarot acak, yang dapat membantu dalam pembuatan kampanye atau permainan.",

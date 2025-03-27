@@ -439,6 +439,10 @@
       "title": "Nauči kako igrati %system% preko Discorda\n"
     }
   },
+  "systems": {
+    "title": "Potpuni popis sustava za igranje uloga",
+    "desc": "Pogledajte potpuni popis RPG sustava! Istražite različite stilove i mehanike kako biste odabrali savršeni RPG za svoju sljedeću avanturu."
+  },
   "tarot": {
     "article": {
       "desc": "Generator nasumičnih tarot karata, koji može nekako pomoći u vođenju kampanje ili igre.\n",

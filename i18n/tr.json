@@ -439,6 +439,10 @@
       "title": "Discord'da %system% Nasıl Oynanır"
     }
   },
+  "systems": {
+    "title": "RPG Sistemlerinin Tam Listesi",
+    "desc": "RPG sistemlerinin tam listesine göz atın! Bir sonraki maceranız için mükemmel RPG'yi seçmek üzere farklı stilleri ve mekanikleri keşfedin."
+  },
   "tarot": {
     "article": {
       "desc": "Bir kampanya veya oyun oluşturmanıza yardımcı olabilecek rastgele bir Tarot kartı üreteci.",

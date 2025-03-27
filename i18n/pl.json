@@ -439,6 +439,10 @@
       "title": "Jak grać w %system% na Discordzie"
     }
   },
+  "systems": {
+    "title": "Pełna lista systemów RPG",
+    "desc": "Sprawdź kompletną listę systemów RPG! Poznaj różne style i mechaniki, aby wybrać idealny RPG na swoją następną przygodę."
+  },
   "tarot": {
     "article": {
       "desc": "Losowy generator kart Tarota, który może pomóc w tworzeniu kampanii lub gry.",

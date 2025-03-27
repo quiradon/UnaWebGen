@@ -17,8 +17,9 @@ ${head(`${t.lang}${rota}`,`${t.poker.title}`,`${t.poker.desc}`)}
                 <div class="col-md-6 order-first order-md-last p-5 pt-2 pb-0"><div class="p-5"><img class="rounded img-fluid w-100 h-100 fit-cover CardPoker" id="cardshow" src="/static/api/poker-card/2/10.webp" loading="auto" alt="Carta de baralho aleatoria"></div></div>
                 <div class="col d-flex justify-content-center align-items-center align-content-center order-last">
                     <div class="text-white">
-                        <h1 class="fw-bold text-white">${t.poker.article.title}</h1>
-                        <p>${t.poker.article.desc}</p>
+                    
+                        <h1 class="display-5 fw-bold text-white">${t.poker.article.title}</h1>
+                        <p class="lead text-secondary">${t.poker.article.desc}</p>
                         <div class="d-lg-flex d-xl-flex justify-content-lg-start align-items-lg-center justify-content-xl-start align-items-xl-center"><button class="btn btn-primary btn-lg link-light m-2" id="cardsrun" type="button">${t.misc.btn.gencard}</button><select class="border rounded form-select-lg m-2 p-2" id="cardstype" name="card">
                                 <option value="random" selected="">${t.poker.cards.type[0]}</option>
                                 <option value="0">${t.poker.cards.type[1]} (♠)</option>

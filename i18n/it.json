@@ -439,6 +439,10 @@
       "title": "Aprenda como jogar %system% no Discord"
     }
   },
+  "systems": {
+    "title": "Lista completa di Sistemi di Gioco di Ruolo",
+    "desc": "Controlla l'elenco completo dei sistemi di gioco di ruolo! Esplora diversi stili e meccaniche per scegliere il gioco di ruolo perfetto per la tua prossima avventura."
+  },
   "tarot": {
     "article": {
       "desc": "Um gerador aleatório de cartas de Tarô, que pode de alguma forma ajudar a criar uma campanha ou jogo.",

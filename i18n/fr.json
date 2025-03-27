@@ -439,6 +439,10 @@
       "title": "Apprenez à jouer à %system% sur Discord"
     }
   },
+  "systems": {
+    "title": "Liste complète des systèmes de JdR",
+    "desc": "Consultez la liste complète des systèmes de JdR ! Explorez différents styles et mécaniques pour choisir le JdR parfait pour votre prochaine aventure."
+  },
   "tarot": {
     "article": {
       "desc": "Un générateur aléatoire de cartes de Tarot, qui peut en quelque sorte aider à créer une campagne ou un jeu.",

@@ -439,6 +439,10 @@
       "title": "Lær at spille %system% på Discord"
     }
   },
+  "systems": {
+    "title": "Komplet liste over RPG-systemer",
+    "desc": "Se listen over rollespilsystemer! Udforsk forskellige stilarter og mekanikker for at finde det perfekte rollespil til dit næste eventyr."
+  },
   "tarot": {
     "article": {
       "desc": "En generator af tilfældige tarotkort, der kan hjælpe med at skabe en kampagne eller et spil.",

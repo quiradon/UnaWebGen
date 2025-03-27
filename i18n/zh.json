@@ -439,6 +439,10 @@
       "title": "学习如何在Discord上玩%system%"
     }
   },
+  "systems": {
+    "title": "完整的RPG系统列表",
+    "desc": "查看完整的RPG系统列表！探索不同的风格和机制，以选择适合您下次冒险的完美RPG。"
+  },
   "tarot": {
     "article": {
       "desc": "一个随机塔罗牌生成器，可以帮助创建战役或游戏。",

@@ -17,8 +17,8 @@ ${head(`${t.lang}${rota}`,`${t.tarot.title}`,`${t.tarot.desc}`)}
                 <div class="col-10 col-md-5 order-first order-md-last"><img class="img-fluid p-5 w-100 h-100 fit-cover CardPoker" id="cardshow" src="/static/api/tarot-card/20.webp" loading="auto" alt="Carta de Tarot aleatoria"></div>
                 <div class="col-12 col-md-7 d-flex justify-content-center align-items-center align-content-center order-last p-4">
                     <div class="text-white">
-                        <h1 class="fw-bold text-white">${t.tarot.article.title}</h1>
-                        <p>${t.tarot.article.desc}</p>
+                        <h1 class="display-5 fw-bold text-white">${t.tarot.article.title}</h1>
+                        <p class="lead text-secondary">${t.tarot.article.desc}</p>
                         <div class="d-lg-flex d-xl-flex justify-content-lg-start align-items-lg-center justify-content-xl-start align-items-xl-center"><button class="btn btn-primary btn-lg link-light m-2 ms-0" id="cardsrun" type="button">${t.misc.btn.gencard}</button></div>
                     </div>
                 </div>

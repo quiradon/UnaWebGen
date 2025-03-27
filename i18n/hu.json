@@ -439,6 +439,10 @@
       "title": "Tanuld meg, hogyan játssz %system%-et Discordon"
     }
   },
+  "systems": {
+    "title": "Teljes RPG-rendszerek listája",
+    "desc": "Nézd meg a szerepjátékok teljes rendszerlistáját! Fedezz fel különböző stílusokat és mechanikákat, hogy kiválaszd a tökéletes szerepjátékot a következő kalandodhoz."
+  },
   "tarot": {
     "article": {
       "desc": "Egy véletlenszerű Tarot kártya generátor, amely valahogy segíthet egy kampány vagy játék elkészítésében.",

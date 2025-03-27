@@ -439,6 +439,10 @@
       "title": "Aprenda como jogar %system% pelo Discord"
     }
   },
+  "systems": {
+    "title": "Lista completa de Sistemas de RPG",
+    "desc": "Confira a lista completa de sistemas de RPG! Explore diferentes estilos e mecânicas para escolher o RPG perfeito para sua próxima aventura."
+  },
   "tarot": {
     "article": {
       "desc": "Um Gerador de cartas de Tarot aleatórias, que pode de alguma de alguma forma ajudar a fazer alguma campanha ou jogo. ",

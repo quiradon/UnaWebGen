@@ -97,7 +97,7 @@ function systemCard(title, description, img, url, autoSheet) {
         iconComponent = ''
     }
     return `
-        <div class="col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
+        <div class="col-9 col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
             <div class="card d-flex flex-grow-1 card_system_card border-1">
                 ${iconComponent}
                 <div class="card-body d-flex flex-column py-2 px-3">
@@ -129,7 +129,7 @@ function sistemList(t) {
                     return systemCard(sistema.card.title, sistema.card.desc, sistema.icon, `./systems/${sistema.path}`, sistemas_tags_asrray[key]);
                 }).join('')}
         </div>
-        <div class="text-end"><a class="mt-1 border-2generic_grow fw-bold" type="link" href="./systems">${t.index.allSystems.text}</a></div>
+        <div class="text-end"><a class="mt-1 border-2 generic_grow fw-bold" type="link" href="./systems">${t.index.allSystems.text}</a></div>
     </div>
 </section>`
 }

@@ -21,7 +21,8 @@
     "title": "Commandes"
   },
   "common": {
-    "random": "Aléatoire"
+    "random": "Aléatoire",
+    "texto": "Texte"
   },
   "comum": {
     "copy": "Copier"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Liste complète des systèmes de JdR",
-    "desc": "Consultez la liste complète des systèmes de JdR ! Explorez différents styles et mécaniques pour choisir le JdR parfait pour votre prochaine aventure."
+    "desc": "Consultez la liste complète des systèmes de JdR ! Explorez différents styles et mécaniques pour choisir le JdR parfait pour votre prochaine aventure.",
+    "title": "Liste complète des systèmes de JdR"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Région tempérée"
       },
       "vento": "Vitesse du vent"
+    },
+    "morse": {
+      "btn1": "Lire le son",
+      "btn2": "Télécharger le son",
+      "desc": "Créez et gérez des audios en code Morse pour des scénarios d'enquête dans votre jeu de rôle sur table ou énigme.",
+      "title": "Code Morse",
+      "types": {
+        "0": "Classique",
+        "1": "Sonar",
+        "2": "OVNI",
+        "3": "Terror",
+        "4": "Tribal",
+        "5": "Spatial",
+        "6": "Sous-marin",
+        "7": "Bruit",
+        "title": "Type de son"
+      }
     },
     "section": {
       "desc": "Liste d'outils conçue pour aider les Maîtres du Jeu et les Joueurs avec leurs JDR sur table.",

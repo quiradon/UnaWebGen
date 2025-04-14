@@ -1,46 +1,46 @@
 const {nav, footer} = require('../../components/navbar');
 const scripts = require('../../components/bootscripts');
 const {head} = require('../../components/head');
-const {TitleAndSubtitle} = require('../../components/blogpost');
 
 async function page(idioma, rota) {
     const t = idioma;
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`, `teste`, `teste`)}
+${head(`${t.lang}${rota}`, `${t.tools.morse.title}`, `${t.tools.morse.desc}`)}
 <body>
     ${nav(t, rota)}
     <div class="container">
         <div class="col-12 mb-2 mt-4">
-            ${TitleAndSubtitle("teste", "teste")}
+                    <h1 class="display-5 fw-bold text-white mb-3">${t.tools.morse.title}</h1> 
+                    <p class="mb-4 lead text-secondary">${t.tools.morse.desc}</p>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div>
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="morseText" class="form-label">Texto</label>
+                            <label for="morseText" class="form-label">${t.common.texto}</label>
                             <textarea id="morseText" class="form-control" rows="3" >SOS</textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="morseOutput" class="form-label">Código Morse</label>
+                            <label for="morseOutput" class="form-label">${t.tools.morse.title}</label>
                             <textarea id="morseOutput" class="form-control" rows="3" readonly></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="morseStyle" class="form-label">Tipo de Som</label>
+                            <label for="morseStyle" class="form-label">${t.tools.morse.types.title}</label>
                             <select id="morseStyle" class="form-select">
-                                <option value="classic">Clássico</option>
-                                <option value="sonar">Sonar</option>
-                                <option value="ovni">OVNI</option>
-                                <option value="terror">Terror</option>
-                                <option value="tribal">Tribal</option>
-                                <option value="space">Espacial</option>
-                                <option value="underwater">Submarino</option>
-                                <option value="wind">Vento</option>
+                                <option value="classic">${t.tools.morse.types[0]}</option>
+                                <option value="sonar">${t.tools.morse.types[1]}</option>
+                                <option value="ovni">${t.tools.morse.types[2]}</option>
+                                <option value="terror">${t.tools.morse.types[3]}</option>
+                                <option value="tribal">${t.tools.morse.types[4]}</option>
+                                <option value="space">${t.tools.morse.types[5]}</option>
+                                <option value="underwater">${t.tools.morse.types[6]}</option>
+                                <option value="wind">${t.tools.morse.types[7]}</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary w-100 mb-2" onclick="playMorse()">Gerar Som</button> <button class="btn btn-secondary w-100" onclick="exportMorse()">Baixar Som</button> </div>
+                        <button class="btn btn-primary w-100 mb-2" onclick="playMorse()">${t.tools.morse.btn1}</button> <button class="btn btn-secondary w-100" onclick="exportMorse()">${t.tools.morse.btn2}</button> </div>
                 </div>
             </div>
         </div>

@@ -21,7 +21,8 @@
     "title": "Kommandoer"
   },
   "common": {
-    "random": "Tilfældig"
+    "random": "Tilfældig",
+    "texto": "Tekst"
   },
   "comum": {
     "copy": "Kopiér"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Komplet liste over RPG-systemer",
-    "desc": "Se listen over rollespilsystemer! Udforsk forskellige stilarter og mekanikker for at finde det perfekte rollespil til dit næste eventyr."
+    "desc": "Se listen over rollespilsystemer! Udforsk forskellige stilarter og mekanikker for at finde det perfekte rollespil til dit næste eventyr.",
+    "title": "Komplet liste over RPG-systemer"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Tempereret region"
       },
       "vento": "Vindhastighed"
+    },
+    "morse": {
+      "btn1": "Afspil lyd",
+      "btn2": "Download Lyd",
+      "desc": "Opret og administrer Morse-kode-lydfiler til efterforskningsscenarier i dit rollespil eller gåder.",
+      "title": "Morse-kode",
+      "types": {
+        "0": "Klassisk",
+        "1": "Sonar",
+        "2": "UFO",
+        "3": "Terror",
+        "4": "Tribal",
+        "5": "Rum",
+        "6": "Ubåd",
+        "7": "Støj",
+        "title": "Lydtype"
+      }
     },
     "section": {
       "desc": "Værktøjsliste designet til at hjælpe Spille Mestre og Spillere med deres tabletop RPG'er.",

@@ -21,7 +21,8 @@
     "title": "Parancsok"
   },
   "common": {
-    "random": "Véletlenszerű"
+    "random": "Véletlenszerű",
+    "texto": "Szöveg"
   },
   "comum": {
     "copy": "Másolás"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Teljes RPG-rendszerek listája",
-    "desc": "Nézd meg a szerepjátékok teljes rendszerlistáját! Fedezz fel különböző stílusokat és mechanikákat, hogy kiválaszd a tökéletes szerepjátékot a következő kalandodhoz."
+    "desc": "Nézd meg a szerepjátékok teljes rendszerlistáját! Fedezz fel különböző stílusokat és mechanikákat, hogy kiválaszd a tökéletes szerepjátékot a következő kalandodhoz.",
+    "title": "Teljes RPG-rendszerek listája"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Mérsékelt öv"
       },
       "vento": "Szélerősség"
+    },
+    "morse": {
+      "btn1": "Hang lejátszása",
+      "btn2": "Hang letöltése",
+      "desc": "Hozzon létre és kezeljen Morse-kód audiókat nyomozós forgatókönyvekhez asztali szerepjátékában vagy rejtvényében.",
+      "title": "Morse-kód",
+      "types": {
+        "0": "Klasszikus",
+        "1": "Sonár",
+        "2": "UFO",
+        "3": "Terror",
+        "4": "Törzsi",
+        "5": "Űr",
+        "6": "Tengeralattjáró",
+        "7": "Zaj",
+        "title": "Hang típus"
+      }
     },
     "section": {
       "desc": "Eszközlista, amely segíti a Játékmestereket és a Játékosokat asztali szerepjátékaikban.",

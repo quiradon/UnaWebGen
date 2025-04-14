@@ -21,7 +21,8 @@
     "title": "Komendy"
   },
   "common": {
-    "random": "Losowy"
+    "random": "Losowy",
+    "texto": "Tekst"
   },
   "comum": {
     "copy": "Kopiuj"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Pełna lista systemów RPG",
-    "desc": "Sprawdź kompletną listę systemów RPG! Poznaj różne style i mechaniki, aby wybrać idealny RPG na swoją następną przygodę."
+    "desc": "Sprawdź kompletną listę systemów RPG! Poznaj różne style i mechaniki, aby wybrać idealny RPG na swoją następną przygodę.",
+    "title": "Pełna lista systemów RPG"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Strefa umiarkowana"
       },
       "vento": "Prędkość wiatru"
+    },
+    "morse": {
+      "btn1": "Odtwarzaj dźwięk",
+      "btn2": "Pobierz dźwięk",
+      "desc": "Tworz i zarządzaj plikami audio kodu Morse'a dla scenariuszy śledczych w swojej grze fabularnej (RPG) lub zagadce.",
+      "title": "Kod Morse'a",
+      "types": {
+        "0": "Klasyczny",
+        "1": "Sonar",
+        "2": "UFO",
+        "3": "Terror",
+        "4": "Plemienny",
+        "5": "Kosmiczny",
+        "6": "Okręt podwodny",
+        "7": "Hałas",
+        "title": "Rodzaj dźwięku"
+      }
     },
     "section": {
       "desc": "Lista narzędzi zaprojektowana, aby pomóc Mistrzom Gry i Graczom w ich grach fabularnych.",

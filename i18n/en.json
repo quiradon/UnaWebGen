@@ -21,7 +21,8 @@
     "title": "Commands"
   },
   "common": {
-    "random": "Random"
+    "random": "Random",
+    "texto": "Text"
   },
   "comum": {
     "copy": "Copy"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Complete List of RPG Systems",
-    "desc": "Check out the complete list of RPG systems! Explore different styles and mechanics to choose the perfect RPG for your next adventure."
+    "desc": "Check out the complete list of RPG systems! Explore different styles and mechanics to choose the perfect RPG for your next adventure.",
+    "title": "Complete List of RPG Systems"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Temperate Region"
       },
       "vento": "Wind Speed"
+    },
+    "morse": {
+      "btn1": "Play sound",
+      "btn2": "Download Sound",
+      "desc": "Create and manage Morse code audio for investigative scenarios within your tabletop RPG or puzzle.",
+      "title": "Morse Code",
+      "types": {
+        "0": "Classic",
+        "1": "Sonar",
+        "2": "UFO",
+        "3": "Terror",
+        "4": "Tribal",
+        "5": "Space",
+        "6": "Submarine",
+        "7": "Noise",
+        "title": "Sound type"
+      }
     },
     "section": {
       "desc": "Tool list designed to help Game Masters and Players with their tabletop RPGs.",

@@ -21,7 +21,8 @@
     "title": "Comandos"
   },
   "common": {
-    "random": "Casuale"
+    "random": "Casuale",
+    "texto": "Testo"
   },
   "comum": {
     "copy": "Copiar"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Lista completa di Sistemi di Gioco di Ruolo",
-    "desc": "Controlla l'elenco completo dei sistemi di gioco di ruolo! Esplora diversi stili e meccaniche per scegliere il gioco di ruolo perfetto per la tua prossima avventura."
+    "desc": "Controlla l'elenco completo dei sistemi di gioco di ruolo! Esplora diversi stili e meccaniche per scegliere il gioco di ruolo perfetto per la tua prossima avventura.",
+    "title": "Lista completa di Sistemi di Gioco di Ruolo"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Regione temperata"
       },
       "vento": "Velocità del vento"
+    },
+    "morse": {
+      "btn1": "Riproduci suono",
+      "btn2": "Scarica Suono",
+      "desc": "Crea e gestisci audio in codice Morse per scenari investigativi all'interno del tuo gioco di ruolo da tavolo o enigma.",
+      "title": "Codice Morse",
+      "types": {
+        "0": "Classico",
+        "1": "Sonar",
+        "2": "UFO",
+        "3": "Terrore",
+        "4": "Tribale",
+        "5": "Spaziale",
+        "6": "Sottomarino",
+        "7": "Rumore",
+        "title": "Tipo di suono"
+      }
     },
     "section": {
       "desc": "Elenco di strumenti progettato per aiutare i Master e i Giocatori con i loro giochi di ruolo da tavolo.",

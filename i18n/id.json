@@ -21,7 +21,8 @@
     "title": "Perintah"
   },
   "common": {
-    "random": "Acak"
+    "random": "Acak",
+    "texto": "Teks"
   },
   "comum": {
     "copy": "Salin"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Daftar Lengkap Sistem RPG",
-    "desc": "Lihat daftar lengkap sistem RPG! Jelajahi berbagai gaya dan mekanik untuk memilih RPG yang sempurna untuk petualangan Anda berikutnya."
+    "desc": "Lihat daftar lengkap sistem RPG! Jelajahi berbagai gaya dan mekanik untuk memilih RPG yang sempurna untuk petualangan Anda berikutnya.",
+    "title": "Daftar Lengkap Sistem RPG"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Daerah beriklim sedang"
       },
       "vento": "Kecepatan Angin"
+    },
+    "morse": {
+      "btn1": "Putar suara",
+      "btn2": "Unduh Suara",
+      "desc": "Buat dan kelola audio kode Morse untuk skenario investigatif dalam RPG tabletop atau teka-teki Anda.",
+      "title": "Kode Morse",
+      "types": {
+        "0": "Klasik",
+        "1": "Sonar",
+        "2": "UFO",
+        "3": "Teror",
+        "4": "Suku",
+        "5": "Luar angkasa",
+        "6": "Kapal selam",
+        "7": "Kebisingan",
+        "title": "Jenis suara"
+      }
     },
     "section": {
       "desc": "Daftar alat yang dirancang untuk membantu Game Master dan Pemain dengan permainan peran meja mereka.",

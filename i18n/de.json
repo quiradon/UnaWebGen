@@ -21,7 +21,8 @@
     "title": "Befehle"
   },
   "common": {
-    "random": "Zufällig"
+    "random": "Zufällig",
+    "texto": "Text"
   },
   "comum": {
     "copy": "Kopieren"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Vollständige Liste der Rollenspielsysteme",
-    "desc": "Sehen Sie sich die vollständige Liste der Rollenspielsysteme an! Entdecken Sie verschiedene Stile und Mechaniken, um das perfekte Rollenspiel für Ihr nächstes Abenteuer zu finden."
+    "desc": "Sehen Sie sich die vollständige Liste der Rollenspielsysteme an! Entdecken Sie verschiedene Stile und Mechaniken, um das perfekte Rollenspiel für Ihr nächstes Abenteuer zu finden.",
+    "title": "Vollständige Liste der Rollenspielsysteme"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Gemäßigte Zone"
       },
       "vento": "Windgeschwindigkeit"
+    },
+    "morse": {
+      "btn1": "Ton abspielen",
+      "btn2": "Ton herunterladen",
+      "desc": "Erstelle und verwalte Morsecode-Audios für investigative Szenarien in deinem Tabletop-Rollenspiel oder Rätsel.",
+      "title": "Morsecode",
+      "types": {
+        "0": "Klassisch",
+        "1": "Sonar",
+        "2": "UFO",
+        "3": "Terror",
+        "4": "Tribal",
+        "5": "Raumfahrt",
+        "6": "U-Boot",
+        "7": "Geräusch",
+        "title": "Soundtyp"
+      }
     },
     "section": {
       "desc": "Werkzeugliste, die Spielleitern und Spielern bei ihren Tabletop-Rollenspielen helfen soll.",

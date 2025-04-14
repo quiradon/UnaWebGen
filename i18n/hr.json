@@ -21,7 +21,8 @@
     "title": "Naredbe\n"
   },
   "common": {
-    "random": "Slučajno"
+    "random": "Slučajno",
+    "texto": "Tekst"
   },
   "comum": {
     "copy": "Kopiraj\n"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Potpuni popis sustava za igranje uloga",
-    "desc": "Pogledajte potpuni popis RPG sustava! Istražite različite stilove i mehanike kako biste odabrali savršeni RPG za svoju sljedeću avanturu."
+    "desc": "Pogledajte potpuni popis RPG sustava! Istražite različite stilove i mehanike kako biste odabrali savršeni RPG za svoju sljedeću avanturu.",
+    "title": "Potpuni popis sustava za igranje uloga"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Umjerena regija"
       },
       "vento": "Brzina vjetra"
+    },
+    "morse": {
+      "btn1": "Pusti zvuk",
+      "btn2": "Preuzmi zvuk",
+      "desc": "Stvorite i upravljajte audio zapisima Morseove abecede za istražne scenarije u vašoj stolnoj RPG igri ili zagonetki.",
+      "title": "Morseova azbuka",
+      "types": {
+        "0": "Klasičan",
+        "1": "Sonar",
+        "2": "NLO",
+        "3": "Užas",
+        "4": "Tribal",
+        "5": "Svemir",
+        "6": "Podmornica",
+        "7": "Šum",
+        "title": "Vrsta zvuka"
+      }
     },
     "section": {
       "desc": "Popis alata dizajniran da pomogne Majstorima igre i Igračima s njihovim stolno-igrnim RPG-ima.",

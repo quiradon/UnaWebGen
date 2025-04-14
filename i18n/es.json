@@ -21,7 +21,8 @@
     "title": "Comandos"
   },
   "common": {
-    "random": "Aleatorio"
+    "random": "Aleatorio",
+    "texto": "Texto"
   },
   "comum": {
     "copy": "Copiar"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "Lista completa de Sistemas de RPG",
-    "desc": "Consulta la lista completa de sistemas de RPG! Explora diferentes estilos y mecánicas para elegir el RPG perfecto para tu próxima aventura."
+    "desc": "Consulta la lista completa de sistemas de RPG! Explora diferentes estilos y mecánicas para elegir el RPG perfecto para tu próxima aventura.",
+    "title": "Lista completa de Sistemas de RPG"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Región templada"
       },
       "vento": "Velocidad del viento"
+    },
+    "morse": {
+      "btn1": "Reproducir sonido",
+      "btn2": "Descargar Sonido",
+      "desc": "Crea y gestiona audios de código Morse para escenarios de investigación dentro de tu juego de rol de mesa o enigma.",
+      "title": "Código Morse",
+      "types": {
+        "0": "Clásico",
+        "1": "Sonar",
+        "2": "OVNI",
+        "3": "Terror",
+        "4": "Tribal",
+        "5": "Espacial",
+        "6": "Submarino",
+        "7": "Ruido",
+        "title": "Tipo de sonido"
+      }
     },
     "section": {
       "desc": "Lista de herramientas diseñada para ayudar a los Maestros del Juego y a los Jugadores con sus juegos de rol de mesa.",

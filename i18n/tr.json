@@ -21,7 +21,8 @@
     "title": "Komutlar"
   },
   "common": {
-    "random": "Rastgele"
+    "random": "Rastgele",
+    "texto": "Metin"
   },
   "comum": {
     "copy": "Kopyala"
@@ -440,8 +441,8 @@
     }
   },
   "systems": {
-    "title": "RPG Sistemlerinin Tam Listesi",
-    "desc": "RPG sistemlerinin tam listesine göz atın! Bir sonraki maceranız için mükemmel RPG'yi seçmek üzere farklı stilleri ve mekanikleri keşfedin."
+    "desc": "RPG sistemlerinin tam listesine göz atın! Bir sonraki maceranız için mükemmel RPG'yi seçmek üzere farklı stilleri ve mekanikleri keşfedin.",
+    "title": "RPG Sistemlerinin Tam Listesi"
   },
   "tarot": {
     "article": {
@@ -485,6 +486,23 @@
         "temperate": "Ilıman bölge"
       },
       "vento": "Rüzgar hızı"
+    },
+    "morse": {
+      "btn1": "Sesi çal",
+      "btn2": "Sesi indir",
+      "desc": "Masaüstü RPG'niz veya bulmacanızdaki araştırma senaryoları için Morse kodu ses dosyaları oluşturun ve yönetin.",
+      "title": "Morse Kodu",
+      "types": {
+        "0": "Klasik",
+        "1": "Sonar",
+        "2": "UFO",
+        "3": "Terör",
+        "4": "Kabile",
+        "5": "Uzay",
+        "6": "Denizaltı",
+        "7": "Gürültü",
+        "title": "Ses türü"
+      }
     },
     "section": {
       "desc": "Masaüstü RPG'lerinde GM'ler ve Oyunculara yardımcı olmak için tasarlanmış araç listesi.",

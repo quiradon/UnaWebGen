@@ -1,6 +1,6 @@
 const {discord_invite, bot_invite, url} = require('../config.json')
 const {idiomaR, roteador} = require('../caminho')
-
+const icons = require('../components/icons')
 const lang_FLAGS = {
     'pt': '/static/img/flags/br.svg',
     'en': '/static/img/flags/en.svg',
@@ -126,52 +126,37 @@ function nav(t,rota){
                                 <path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z"></path>
                             </svg></a>
                         <div class="dropdown-menu shadow"><a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/dices" rel="help" data-bs-target="https://rpg.arkanus.app">
-                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-danger border rounded border-0 p-2 fme-2 d-none d-md-flex nav_icon_background me-2" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
-                                        <path d="M201 10.3c14.3-7.8 31.6-7.8 46 0L422.3 106c5.1 2.8 8.3 8.2 8.3 14s-3.2 11.2-8.3 14L231.7 238c-4.8 2.6-10.5 2.6-15.3 0L25.7 134c-5.1-2.8-8.3-8.2-8.3-14s3.2-11.2 8.3-14L201 10.3zM23.7 170l176 96c5.1 2.8 8.3 8.2 8.3 14V496c0 5.6-3 10.9-7.8 13.8s-10.9 3-15.8 .3L25 423.1C9.6 414.7 0 398.6 0 381V184c0-5.6 3-10.9 7.8-13.8s10.9-3 15.8-.3zm400.7 0c5-2.7 11-2.6 15.8 .3s7.8 8.1 7.8 13.8V381c0 17.6-9.6 33.7-25 42.1L263.7 510c-5 2.7-11 2.6-15.8-.3s-7.8-8.1-7.8-13.8V280c0-5.9 3.2-11.2 8.3-14l176-96z"></path>
-                                    </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.dices.title}</span><span class="text-secondary lh-0">${t.nav.dices.desc}</span></div>
+                                <div class="d-flex justify-content-center align-items-center m-2">${icons.caixa}
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5 mb-0 pb-0 ">${t.nav.dices.title}</span><span class="mt-0 pt-0 text-secondary lh-0">${t.nav.dices.desc}</span></div>
                                 </div>
                             </a>
-                            
 
                             <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/names" rel="help" data-bs-target="${lang}/tools/names">
-                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor">
-                                        <path d="M368 32c41.7 0 75.9 31.8 79.7 72.5l85.6 26.3c25.4 7.8 42.8 31.3 42.8 57.9c0 21.8-11.7 41.9-30.7 52.7L400.8 323.5 493.3 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H480c-8.5 0-16.6-3.4-22.6-9.4L346.9 360.2c11.7-36 3.2-77.1-25.4-105.7c-40.6-40.6-106.3-40.6-146.9-.1L101 324.4c-6.4 6.1-6.7 16.2-.6 22.6s16.2 6.6 22.6 .6l73.8-70.2 .1-.1 .1-.1c3.5-3.5 7.3-6.6 11.3-9.2c27.9-18.5 65.9-15.4 90.5 9.2c24.7 24.7 27.7 62.9 9 90.9c-2.6 3.8-5.6 7.5-9 10.9L261.8 416H352c17.7 0 32 14.3 32 32s-14.3 32-32 32H64c-35.3 0-64-28.7-64-64C0 249.6 127 112.9 289.3 97.5C296.2 60.2 328.8 32 368 32zm0 104a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path>
-                                    </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.names.title}</span><span class="text-secondary lh-0">${t.nav.tools.names.desc}</span></div>
+                                <div class="d-flex justify-content-center align-items-center m-2">${icons.finger_print}
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5 mb-0 pb-0">${t.nav.tools.names.title}</span><span class="mt-0 pt-0 text-secondary lh-0">${t.nav.tools.names.desc}</span></div>
                                 </div>
                             </a>
                             
                             <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/poker" rel="help">
-                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
-                                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path>
-                                    </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.poker.name}</span><span class="text-secondary lh-0">${t.nav.tools.poker.desc}</span></div>
+                                <div class="d-flex justify-content-center align-items-center m-2">${icons.club_poker}
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5 mb-0 pb-0">${t.nav.tools.poker.name}</span><span class="mt-0 pt-0 text-secondary lh-0">${t.nav.tools.poker.desc}</span></div>
                                 </div>
                             </a>
                             
                             <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools/tarot" rel="help">
-                                <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="-64 0 512 512" width="1em" height="1em" fill="currentColor">
-                                        <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path>
-                                    </svg>
-                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.nav.tools.tarot.name}</span><span class="text-secondary lh-0">${t.nav.tools.tarot.desc}</span></div>
+                                <div class="d-flex justify-content-center align-items-center m-2">${icons.olho_tarot}
+                                    <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5 mb-0 pb-0">${t.nav.tools.tarot.name}</span><span class="mt-0 pt-0 text-secondary lh-0">${t.nav.tools.tarot.desc}</span></div>
                                 </div>
                             </a>
-                        
-
                                                 <a class="dropdown-item d-flex justify-content-sm-start" href="${lang}/tools" rel="help" >
-                        <div class="d-flex justify-content-center align-items-center m-2"><svg class="fs-1 text-primary border rounded border-0 p-2 me-2 nav_icon_background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
-                                <path d="M315.4 15.5C309.7 5.9 299.2 0 288 0s-21.7 5.9-27.4 15.5l-96 160c-5.9 9.9-6.1 22.2-.4 32.2s16.3 16.2 27.8 16.2H384c11.5 0 22.2-6.2 27.8-16.2s5.5-22.3-.4-32.2l-96-160zM288 312V456c0 22.1 17.9 40 40 40H472c22.1 0 40-17.9 40-40V312c0-22.1-17.9-40-40-40H328c-22.1 0-40 17.9-40 40zM128 512a128 128 0 1 0 0-256 128 128 0 1 0 0 256z"></path>
-                            </svg>
-                            <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5">${t.tools.all.title}</span><span class="text-secondary lh-0">${t.tools.all.subtitle}</span></div>
+                        <div class="d-flex justify-content-center align-items-center m-2">${icons.toolbox}
+                            <div class="d-flex flex-column"><span class="focus-ring focus-ring-primary fs-5 mb-0 pb-0">${t.tools.all.title}</span><span class="mt-0 pt-0 text-secondary lh-0">${t.tools.all.subtitle}</span></div>
                         </div>
                     </a>
                         
                     </li>
                     ${lang_selector(t, lang, rota)}
-                </ul><a class="btn btn-primary fw-bold link-light border rounded border-0 d-lg-flex d-xxl-flex align-items-lg-center justify-content-xxl-center align-items-xxl-center px-3" role="button" href="${lang}/#premium"><svg class="me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -32 576 576" width="1em" height="1em" fill="currentColor">
-                        <path d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"></path>
-                    </svg>${t.nav.donate}</a>
+                </ul><a class="btn btn-primary fw-bold link-light border rounded border-0 d-lg-flex d-xxl-flex align-items-lg-center justify-content-xxl-center align-items-xxl-center px-3" role="button" href="${lang}/#premium">${icons.coroa}${t.nav.donate}</a>
             </div>
         </div>
     </div>

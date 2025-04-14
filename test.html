@@ -1,132 +1,263 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sortable Squares</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        #sortable-list {
-            width: auto;
-            display: flex;
-            flex-direction: row; /* Alterado para alinhar horizontalmente */
-            gap: 10px;
-            padding: 0;
-            list-style: none;
-        }
-        .square {
-            width: 100px;
-            height: 100px;
-            background-color: #3498db;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            cursor: grab;
-            user-select: none;
-            transition: transform 0.2s ease;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            background-color: #2ecc71;
-            color: white;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Gerador de Código Morse com Estilos</title>
 </head>
 <body>
-    <div id="app"></div>
-    <button id="addButton">Adicionar Quadrado</button>
-    <script src="https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js"></script>
-    <script>
-    const { animate, scroll, press, hover } = Motion;
-    </script>
-    <script>
+  <h1>Gerador de Código Morse</h1>
+  <input type="text" id="textInput" placeholder="Digite o texto aqui" size="40">
+  <select id="styleSelect">
+    <option value="classic">Clássico</option>
+    <option value="movie">Filme antigo</option>
+    <option value="drum">Batuques</option>
+    <option value="horror">Terror</option>
+    <option value="sonar">Sonar</option>
+    <option value="classic">Clássico</option>
+    <option value="sonar">Sonar</option>
+    <option value="ovni">OVNI</option>
+    <option value="terror">Terror</option>
+    <option value="tribal">Tribal</option>
+  </select>
+  <button onclick="playMorse()">Tocar Código Morse</button>
+  <button onclick="exportMorse()">Exportar como WAV</button>
 
-        let idCounter = 1;
-        let items = Array.from({ length: 5 }, () => ({ id: idCounter++ }));
+  <script>
+    const morseCodeMap = {
+      A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....',
+      I: '..', J: '.---', K: '-.-', L: '.-..', M: '--', N: '-.', O: '---', P: '.--.',
+      Q: '--.-', R: '.-.', S: '...', T: '-', U: '..-', V: '...-', W: '.--', X: '-..-',
+      Y: '-.--', Z: '--..', '0': '-----', '1': '.----', '2': '..---', '3': '...--',
+      '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+      ' ': ' '
+    };
 
-        function addNewItem() {
-            items.unshift({ id: idCounter++ });
-            render();
-            animateNewItem();
+    const styles = {
+      classic: { type: 'sine', frequency: 440, gain: 1 },
+      sonar: {type: 'sine',frequency: 200,gain: 0.8,pulse: true},
+      movie: { type: 'triangle', frequency: 400, gain: 0.7 },
+      drum: { type: 'square', frequency: 200, gain: 1, short: true },
+      horror: { type: 'sawtooth', frequency: 80, gain: 1.2, modulate: true },
+      classic: {
+    type: 'sine',
+    frequency: 600,
+    gain: 0.5
+  },
+  sonar: {
+    type: 'sine',
+    frequency: 200,
+    gain: 0.8,
+    pulse: true
+  },
+  ovni: {
+    type: 'triangle',
+    frequency: 800,
+    gain: 0.6,
+    pulse: true,
+    vibrato: true,
+    vibratoSpeed: 7,
+    vibratoDepth: 25,
+    modulate: true,
+    modSpeed: 2,
+    modDepth: 40
+  },
+  terror: {
+    type: 'sawtooth',
+    frequency: 90,
+    gain: 0.9,
+    pulse: true,
+    vibrato: true,
+    vibratoSpeed: 5,
+    vibratoDepth: 50,
+    echo: true,
+    echoDelay: 0.3,
+    echoFeedback: 0.4
+  },
+  tribal: {
+    type: 'square',
+    frequency: 250,
+    gain: 0.7,
+    pulse: true,
+    modulate: true,
+    modSpeed: 3,
+    modDepth: 60
+  }
+    };
+
+    function textToMorse(text) {
+      return text.toUpperCase().split('').map(char => morseCodeMap[char] || '').join(' ');
+    }
+
+    function getSelectedStyle() {
+      const select = document.getElementById('styleSelect');
+      return styles[select.value] || styles.classic;
+    }
+
+    function playMorse() {
+      const text = document.getElementById('textInput').value;
+      const morse = textToMorse(text);
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const unit = 0.2;
+      const style = getSelectedStyle();
+      let time = ctx.currentTime;
+
+      for (let symbol of morse) {
+        let dur = 0;
+        if (symbol === '.') dur = unit;
+        else if (symbol === '-') dur = unit * 3;
+
+        if (symbol === '.' || symbol === '-') {
+          createBeep(ctx, time, dur, style);
+          time += dur + unit * 0.2;
+        } else if (symbol === ' ') {
+          time += unit * 3;
         }
+      }
+    }
 
-        function animateNewItem() {
-            const firstItem = document.querySelector(".square");
-            animate(firstItem, { scale: [0, 1] }, { duration: 0.5 });
+    function createBeep(ctx, startTime, duration, style) {
+  const osc = ctx.createOscillator();
+  const gainNode = ctx.createGain();
+
+  osc.type = style.type || 'sine';
+  osc.frequency.setValueAtTime(style.frequency || 440, startTime);
+  gainNode.gain.setValueAtTime(0.0001, startTime);
+
+  // Envelope de volume tipo "pulso"
+  if (style.pulse) {
+    gainNode.gain.exponentialRampToValueAtTime(style.gain || 0.5, startTime + duration * 0.1);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+  } else {
+    gainNode.gain.setValueAtTime(style.gain || 0.5, startTime);
+  }
+
+  // Vibrato (frequência oscilando rápido)
+  if (style.vibrato) {
+    const vibrato = ctx.createOscillator();
+    const vibratoGain = ctx.createGain();
+    vibrato.frequency.setValueAtTime(style.vibratoSpeed || 6, startTime);
+    vibratoGain.gain.setValueAtTime(style.vibratoDepth || 20, startTime);
+    vibrato.connect(vibratoGain).connect(osc.frequency);
+    vibrato.start(startTime);
+    vibrato.stop(startTime + duration);
+  }
+
+  // Modulação lenta (scanner alienígena)
+  if (style.modulate) {
+    const mod = ctx.createOscillator();
+    const modGain = ctx.createGain();
+    mod.frequency.setValueAtTime(style.modSpeed || 2, startTime);
+    modGain.gain.setValueAtTime(style.modDepth || 40, startTime);
+    mod.connect(modGain).connect(osc.frequency);
+    mod.start(startTime);
+    mod.stop(startTime + duration);
+  }
+
+  // Efeito de eco simples (repetição com ganho menor)
+  let finalNode = gainNode;
+  if (style.echo) {
+    const delay = ctx.createDelay();
+    delay.delayTime.value = style.echoDelay || 0.2;
+
+    const feedback = ctx.createGain();
+    feedback.gain.value = style.echoFeedback || 0.3;
+
+    gainNode.connect(delay);
+    delay.connect(feedback);
+    feedback.connect(delay);
+
+    finalNode = ctx.createGain();
+    gainNode.connect(finalNode);
+    delay.connect(finalNode);
+  }
+
+  osc.connect(gainNode);
+  finalNode.connect(ctx.destination);
+
+  osc.start(startTime);
+  osc.stop(startTime + duration);
+}
+
+    async function exportMorse() {
+      const text = document.getElementById('textInput').value;
+      const morse = textToMorse(text);
+      const unit = 0.2;
+      const sampleRate = 44100;
+      const style = getSelectedStyle();
+
+      let totalDuration = 0;
+      for (let s of morse) {
+        if (s === '.') totalDuration += unit + unit * 0.2;
+        else if (s === '-') totalDuration += unit * 3 + unit * 0.2;
+        else if (s === ' ') totalDuration += unit * 3;
+      }
+
+      const offlineCtx = new OfflineAudioContext(1, sampleRate * totalDuration, sampleRate);
+      let time = 0;
+
+      for (let symbol of morse) {
+        let dur = 0;
+        if (symbol === '.') dur = unit;
+        else if (symbol === '-') dur = unit * 3;
+
+        if (symbol === '.' || symbol === '-') {
+          createBeep(offlineCtx, time, dur, style);
+          time += dur + unit * 0.2;
+        } else if (symbol === ' ') {
+          time += unit * 3;
         }
+      }
 
-        function render() {
-            const app = document.getElementById("app");
-            app.innerHTML = '';
+      const buffer = await offlineCtx.startRendering();
+      const blob = bufferToWav(buffer);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'codigo-morse.wav';
+      a.click();
+    }
 
-            const list = document.createElement("ul");
-            list.id = "sortable-list";
-            list.className = "list";
+    function bufferToWav(buffer) {
+      const numChannels = buffer.numberOfChannels;
+      const sampleRate = buffer.sampleRate;
+      const format = 1;
+      const bitsPerSample = 16;
+      const blockAlign = numChannels * bitsPerSample / 8;
+      const byteRate = sampleRate * blockAlign;
+      const dataSize = buffer.length * blockAlign;
+      const bufferArray = new ArrayBuffer(44 + dataSize);
+      const view = new DataView(bufferArray);
+      let offset = 0;
 
-            items.forEach((item, index) => {
-                const li = document.createElement("li");
-                li.className = "square";
-                li.textContent = item.id;
-                li.draggable = true;
-                li.dataset.index = index;
-
-                hover(li, { scale: 1.1 }, (event) => {
-                    event.target.style.transform = "scale(1.1)";
-                });
-                press(li, { scale: 0.9 }, (event) => {
-                    event.target.style.transform = "scale(0.9)";
-                });
-
-                li.addEventListener("dragstart", (event) => {
-                    event.dataTransfer.setData("text/plain", index);
-                    event.target.style.opacity = "0.5";
-                    animate(event.target, { scale: [1, 1.2] }, { duration: 0.2 });
-                });
-                
-                li.addEventListener("dragend", (event) => {
-                    event.target.style.opacity = "1";
-                    animate(event.target, { scale: [1.2, 1] }, { duration: 0.2 });
-                });
-                
-                li.addEventListener("dragover", (event) => {
-                    event.preventDefault();
-                });
-
-                li.addEventListener("drop", (event) => {
-                    event.preventDefault();
-                    const draggingIndex = parseInt(event.dataTransfer.getData("text/plain"));
-                    const draggedItem = items.splice(draggingIndex, 1)[0];
-                    items.splice(index, 0, draggedItem);
-                    
-                    animate(li, { scale: [1.2, 1] }, { duration: 0.2 });
-                    render();
-                });
-
-                list.appendChild(li);
-            });
-            
-            app.appendChild(list);
+      function writeString(s) {
+        for (let i = 0; i < s.length; i++) {
+          view.setUint8(offset++, s.charCodeAt(i));
         }
+      }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("addButton").addEventListener("click", addNewItem);
-            render();
-        });
-    </script>
+      writeString('RIFF');
+      view.setUint32(offset, 36 + dataSize, true); offset += 4;
+      writeString('WAVE');
+      writeString('fmt ');
+      view.setUint32(offset, 16, true); offset += 4;
+      view.setUint16(offset, format, true); offset += 2;
+      view.setUint16(offset, numChannels, true); offset += 2;
+      view.setUint32(offset, sampleRate, true); offset += 4;
+      view.setUint32(offset, byteRate, true); offset += 4;
+      view.setUint16(offset, blockAlign, true); offset += 2;
+      view.setUint16(offset, bitsPerSample, true); offset += 2;
+      writeString('data');
+      view.setUint32(offset, dataSize, true); offset += 4;
+
+      const samples = buffer.getChannelData(0);
+      for (let i = 0; i < samples.length; i++) {
+        const s = Math.max(-1, Math.min(1, samples[i]));
+        view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+        offset += 2;
+      }
+
+      return new Blob([view], { type: 'audio/wav' });
+    }
+  </script>
 </body>
 </html>

@@ -47,7 +47,19 @@ ${head(`${t.lang}${rota}`, `${t.tools.morse.title}`, `${t.tools.morse.desc}`)}
     </div>
     ${footer(t, rota)}
     ${scripts}
+
+    
     <script>
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const valorCampo = urlParams.get('input') ?? null
+        const morseTextInput = document.getElementById('morseText');
+        if (valorCampo) {
+        const text = atob(valorCampo); // Decodifica o valor base64
+        
+        morseTextInput.value = text; // Define o valor do campo de texto
+        }
         const morseMap = {
             A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.",
             G: "--.", H: "....", I: "..", J: ".---", K: "-.-", L: ".-..",
@@ -70,7 +82,6 @@ ${head(`${t.lang}${rota}`, `${t.tools.morse.title}`, `${t.tools.morse.desc}`)}
         };
 
         // Referências aos elementos do DOM
-        const morseTextInput = document.getElementById('morseText');
         const morseOutputArea = document.getElementById('morseOutput');
 
         function textToMorse(text) {

@@ -10,6 +10,7 @@ let cachedPages = null;
 
 async function getLanguages() {
     if (!cachedLanguages) {
+        console.log('[Carregando idiomas...]');
         cachedLanguages = (await fs.readdir(i18nPath)).map(file => path.basename(file, path.extname(file)));
     }
     return cachedLanguages;
@@ -17,6 +18,7 @@ async function getLanguages() {
 
 async function getPages() {
     if (!cachedPages) {
+        console.log('[Carregando páginas...]');
         cachedPages = await fs.readdir(path.join(__dirname, 'pages'));
     }
     return cachedPages;
@@ -31,7 +33,7 @@ async function copyFolderRecursiveSync(source, target) {
         const stat = await fs.lstat(srcPath);
         if (stat.isDirectory()) {
             await copyFolderRecursiveSync(srcPath, destPath);
-        } else {
+        } else if (!(await fs.pathExists(destPath))) { // Evita sobrescrever arquivos existentes
             await fs.copy(srcPath, destPath);
         }
     }));
@@ -56,14 +58,18 @@ async function compilePages() {
                 await fs.ensureDir(exportPageFolder);
                 await Promise.all(pageFiles.map(async file => {
                     const filePath = path.join(pagePath, file);
-                    const html = await processPage(filePath, t, `/${page}/${path.basename(file, path.extname(file))}`);
                     const exportFilePath = path.join(exportPageFolder, path.basename(file, path.extname(file)) + '.html');
-                    await fs.writeFile(exportFilePath, html);
+                    if (!(await fs.pathExists(exportFilePath))) { // Evita recriar arquivos existentes
+                        const html = await processPage(filePath, t, `/${page}/${path.basename(file, path.extname(file))}`);
+                        await fs.writeFile(exportFilePath, html);
+                    }
                 }));
             } else {
-                const html = await processPage(pagePath, t, `/${path.basename(page, path.extname(page))}`);
                 const exportFilePath = path.join(languageFolder, path.basename(page, path.extname(page)) + '.html');
-                await fs.writeFile(exportFilePath, html);
+                if (!(await fs.pathExists(exportFilePath))) { // Evita recriar arquivos existentes
+                    const html = await processPage(pagePath, t, `/${path.basename(page, path.extname(page))}`);
+                    await fs.writeFile(exportFilePath, html);
+                }
             }
         }));
     }));
@@ -71,7 +77,7 @@ async function compilePages() {
 }
 
 async function processPage(filePath, t, route) {
-    const pageFunction = require(filePath);
+    const pageFunction = require(filePath); // Lazy loading
     return await pageFunction.page(t, route);
 }
 

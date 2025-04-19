@@ -7,7 +7,7 @@
     "start": "npx wrangler pages dev dist/ d1 create",
     "build": "npm run copy-static && npm run copy-root-files && node build.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "copy-static": "copyfiles -u 1 static/**/* dist/static",
+    "copy-static": "copyfiles -u 1 \"static/**/**/*\" dist/static",
     "copy-root-files": "copyfiles manifest.json robots.txt dist/static"
   },
   "author": "",

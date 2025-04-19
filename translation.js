@@ -1,21 +1,28 @@
-const fs = require('fs');
 const path = require('path');
+const fg = require('fast-glob');
+const fs = require('fs').promises; // versão assíncrona
 
 const translations = {};
 
-// Caminho para a pasta i18n
-const i18nPath = path.join(__dirname, 'i18n');
+const i18nPath = path.join('./i18n');
 
-// Lê todos os arquivos na pasta i18n
-fs.readdirSync(i18nPath).forEach(file => {
-    // Obtém o nome do arquivo sem a extensão
-    const language = path.basename(file, path.extname(file));
-    // Importa o arquivo JSON e adiciona ao objeto de traduções
-    translations[language] = require(path.join(i18nPath, file));
-});
+// Função assíncrona para carregar todas as traduções
+async function carregarTraducoes() {
+    const files = await fg(`${i18nPath}/*.json`);
+    await Promise.all(
+        files.map(async (file) => {
+            const language = path.basename(file, '.json');
+            const content = await fs.readFile(file, 'utf-8');
+            translations[language] = JSON.parse(content);
+        })
+    );
+}
+
+// Executa a função carregarTraducoes automaticamente
+carregarTraducoes();
 
 function traduz(language) {
-    return translations[language];
+    return translations[language] || {};
 }
 
 module.exports = {

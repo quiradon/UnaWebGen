@@ -5,20 +5,23 @@
   "main": "index.js",
   "scripts": {
     "start": "npx wrangler pages dev dist/ d1 create",
-    "build": "npm run copy-static && node build.js",
+    "build": "npm run copy-static && npm run copy-root-files && node build.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "copy-static": "copyfiles -u 1 static/**/* dist/static"
+    "copy-static": "copyfiles -u 1 static/**/* dist/static",
+    "copy-root-files": "copyfiles manifest.json robots.txt dist/static"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cli-progress": "^3.12.0",
     "copyfiles": "^2.4.1",
     "express": "^4.19.2",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
     "html-minifier": "^4.0.0",
     "http": "^0.0.1-security",
-    "p-limit": "^6.2.0"
+    "p-limit": "^6.2.0",
+    "progress": "^2.0.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.0",

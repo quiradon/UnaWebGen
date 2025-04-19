@@ -1,106 +1,112 @@
 const { traduz } = require('./translation.js');
-const fs = require('fs-extra');
+const fg = require('fast-glob'); // Substitui fs-extra para leitura de diretórios
+const fs = require('fs/promises'); // Substitui fs pelo fs/promises
 const path = require('path');
+const cliProgress = require('cli-progress'); // Importa o pacote cli-progress
 const exportFolder = path.join(__dirname, 'dist');
-const i18nPath = path.join(__dirname, 'i18n');
 const { generateSitemap } = require('./gensitemap.js');
 
-let cachedLanguages = null;
-let cachedPages = null;
-
 async function getLanguages() {
-    if (!cachedLanguages) {
-        console.log('[Carregando idiomas...]');
-        cachedLanguages = (await fs.readdir(i18nPath)).map(file => path.basename(file, path.extname(file)));
+    console.log('[Carregando idiomas...]');
+    const files = await fg(`./i18n/*`, { onlyFiles: true });
+    if (files.length === 0) {
+        console.error('[Erro]: Nenhum idioma encontrado no diretório i18n.');
+        return [];
     }
-    return cachedLanguages;
+    console.log(`[Idiomas encontrados]: ${files}`);
+    return files.map(file => path.basename(file, path.extname(file)));
 }
 
 async function getPages() {
-    if (!cachedPages) {
-        console.log('[Carregando páginas...]');
-        cachedPages = await fs.readdir(path.join(__dirname, 'pages'));
+    console.log('[Carregando páginas...]');
+    const pages = await fg(`./pages/**/*`, { onlyFiles: false });
+    if (pages.length === 0) {
+        console.error('[Erro]: Nenhuma página encontrada no diretório pages.');
+        return [];
     }
-    return cachedPages;
-}
-
-async function copyFolderRecursiveSync(source, target) {
-    await fs.ensureDir(target);
-    const items = await fs.readdir(source);
-    await Promise.all(items.map(async item => {
-        const srcPath = path.join(source, item);
-        const destPath = path.join(target, item);
-        const stat = await fs.lstat(srcPath);
-        if (stat.isDirectory()) {
-            await copyFolderRecursiveSync(srcPath, destPath);
-        } else if (!(await fs.pathExists(destPath))) { // Evita sobrescrever arquivos existentes
-            await fs.copy(srcPath, destPath);
-        }
-    }));
+    console.log(`[Páginas encontradas]: ${pages}`);
+    return pages;
 }
 
 async function compilePages() {
+    console.log('[Iniciando compilação de páginas...]');
     const languages = await getLanguages();
+    if (languages.length === 0) {
+        console.error('[Erro]: Processo abortado. Nenhum idioma disponível.');
+        return;
+    }
+
     const pages = await getPages();
-    await fs.ensureDir(exportFolder);
+    if (pages.length === 0) {
+        console.error('[Erro]: Processo abortado. Nenhuma página disponível.');
+        return;
+    }
+
+    await fs.mkdir(exportFolder, { recursive: true });
+    console.log(`[Diretório de exportação criado]: ${exportFolder}`);
+
+    // Barra de progresso total
+    const totalProgress = new cliProgress.SingleBar({
+        format: '[Progresso Total] {bar} {percentage}% | {value}/{total} idiomas',
+        barCompleteChar: '\u2588',
+        barIncompleteChar: '\u2591',
+        hideCursor: true
+    });
+    totalProgress.start(languages.length, 0);
 
     await Promise.all(languages.map(async language => {
+        console.log(`[Processando idioma]: ${language}`);
         const t = traduz(language);
         const languageFolder = language === 'en' ? exportFolder : path.join(exportFolder, language);
-        await fs.ensureDir(languageFolder);
+        await fs.mkdir(languageFolder, { recursive: true });
+        console.log(`[Diretório do idioma criado]: ${languageFolder}`);
+
+        // Barra de progresso por idioma
+        const languageProgress = new cliProgress.SingleBar({
+            format: `[${language}] {bar} {percentage}% | {value}/{total} páginas`,
+            barCompleteChar: '\u2588',
+            barIncompleteChar: '\u2591',
+            hideCursor: true
+        });
+        languageProgress.start(pages.length, 0);
 
         await Promise.all(pages.map(async page => {
-            const pagePath = path.join(__dirname, 'pages', page);
+            const pagePath = path.resolve(page);
+            const relativePath = path.relative('./pages', pagePath); // Caminho relativo para manter a estrutura
+            const exportPath = path.join(languageFolder, relativePath);
+
             const pageStat = await fs.stat(pagePath);
+
             if (pageStat.isDirectory()) {
-                const pageFiles = await fs.readdir(pagePath);
-                const exportPageFolder = path.join(languageFolder, page);
-                await fs.ensureDir(exportPageFolder);
-                await Promise.all(pageFiles.map(async file => {
-                    const filePath = path.join(pagePath, file);
-                    const exportFilePath = path.join(exportPageFolder, path.basename(file, path.extname(file)) + '.html');
-                    if (!(await fs.pathExists(exportFilePath))) { // Evita recriar arquivos existentes
-                        const html = await processPage(filePath, t, `/${page}/${path.basename(file, path.extname(file))}`);
-                        await fs.writeFile(exportFilePath, html);
-                    }
-                }));
+                await fs.mkdir(exportPath, { recursive: true });
             } else {
-                const exportFilePath = path.join(languageFolder, path.basename(page, path.extname(page)) + '.html');
-                if (!(await fs.pathExists(exportFilePath))) { // Evita recriar arquivos existentes
-                    const html = await processPage(pagePath, t, `/${path.basename(page, path.extname(page))}`);
-                    await fs.writeFile(exportFilePath, html);
-                }
+                const exportFilePath = exportPath.replace(/\.js$/, '.html'); // Substitui extensão .js por .html
+                const route = `/${relativePath.replace(/\.js$/, '')}`; // Define a rota com base no caminho relativo
+                await fs.mkdir(path.dirname(exportFilePath), { recursive: true }); // Garante que o diretório exista
+                const html = await processPage(pagePath, t, route);
+                await fs.writeFile(exportFilePath, html);
             }
+            languageProgress.increment(); // Incrementa a barra de progresso por idioma
         }));
+
+        languageProgress.stop(); // Finaliza a barra de progresso por idioma
+        totalProgress.increment(); // Incrementa a barra de progresso total
     }));
+
+    totalProgress.stop(); // Finaliza a barra de progresso total
     console.log('[Páginas compiladas com sucesso!]');
 }
 
 async function processPage(filePath, t, route) {
+    console.log(`[Carregando módulo]: ${filePath}`);
     const pageFunction = require(filePath); // Lazy loading
+    console.log(`[Processando página]: ${route}`);
     return await pageFunction.page(t, route);
 }
 
-async function copyStaticFiles() {
-    const staticFolder = path.join(__dirname, 'static');
-    const targetFolder = path.join(exportFolder, 'static');
-    await copyFolderRecursiveSync(staticFolder, targetFolder);
-    console.log('[Arquivos estáticos copiados com sucesso!]');
-}
-
-async function copyExtraFiles() {
-    const extraFiles = ['robots.txt', '_redirects', 'manifest.json'];
-    await Promise.all(extraFiles.map(async file => {
-        const filePath = path.join(__dirname, file);
-        const exportFilePath = path.join(exportFolder, file);
-        await fs.copy(filePath, exportFilePath);
-    }));
-    console.log('[Arquivos extras copiados com sucesso!]');
-}
-
 (async () => {
-    await compilePages();
-    await copyStaticFiles();
-    await copyExtraFiles();
+    console.log('[Iniciando geração do sitemap...]');
     await generateSitemap();
+    console.log('[Sitemap gerado com sucesso!]');
+    await compilePages();
 })();

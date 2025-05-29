@@ -377,3 +377,219 @@
   --bs-btn-disabled-border-color: #0b0910;
 }
 
+/* ========================================
+   CUSTOM TABLE STYLES
+   ======================================== */
+
+/* Glass morphism effect for tables */
+.table-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Enhanced table styling */
+.table-enhanced {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  table-layout: auto;
+  min-width: 100%;
+}
+
+.table-enhanced thead {
+  background: linear-gradient(135deg, #f80752, #F92C6C);
+  border: none;
+}
+
+.table-enhanced thead th {
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+}
+
+.table-enhanced tbody tr {
+  transition: all 0.3s ease;
+}
+
+
+
+.table-enhanced tbody td {
+  padding: 1rem 1.5rem;
+  color: #e9ecef;
+  vertical-align: middle;
+}
+
+/* Table cell content responsiveness */
+.table-enhanced td,
+.table-enhanced th {
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 200px;
+}
+
+/* Responsive table wrapper */
+.table-responsive-enhanced {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  margin: 2rem 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent table from breaking layout */
+.table-enhanced {
+  table-layout: auto;
+  min-width: 100%;
+}
+
+/* Stack table layout for very small screens */
+@media (max-width: 480px) {
+  .table-responsive-enhanced .table-enhanced,
+  .table-responsive-enhanced .table-enhanced thead,
+  .table-responsive-enhanced .table-enhanced tbody,
+  .table-responsive-enhanced .table-enhanced th,
+  .table-responsive-enhanced .table-enhanced td,
+  .table-responsive-enhanced .table-enhanced tr {
+    display: block;
+  }
+  
+  .table-responsive-enhanced .table-enhanced thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .table-responsive-enhanced .table-enhanced tr {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    padding: 1rem;
+    background: var(--bs-table-bg) !important;
+  }
+  
+  .table-responsive-enhanced .table-enhanced td {
+    border: none !important;
+    position: relative;
+    padding: 0.5rem 0 0.5rem 50% !important;
+    text-align: left !important;
+    max-width: none;
+  }
+  
+  .table-responsive-enhanced .table-enhanced td:before {
+    content: attr(data-label) ": ";
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-right: 5px;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #f80752;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .table-responsive-enhanced {
+    margin: 1rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table-enhanced {
+    font-size: 0.875rem;
+  }
+  
+  .table-enhanced thead th {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .table-enhanced tbody td {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .table-responsive-enhanced {
+    margin: 0.5rem 0;
+    border-radius: 6px;
+  }
+  
+  .table-enhanced {
+    font-size: 0.8rem;
+  }
+  
+  .table-enhanced thead th {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.3px;
+  }
+  
+  .table-enhanced tbody td {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Dark theme specific */
+[data-bs-theme="dark"] .table-enhanced,
+.table-enhanced[data-bs-theme="dark"] {
+  color: #f8f9fa;
+}
+
+[data-bs-theme="dark"] .table-enhanced tbody td,
+.table-enhanced[data-bs-theme="dark"] tbody td {
+  color: #dee2e6;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Animation for table appearance */
+@keyframes tableSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.table-enhanced {
+  animation: tableSlideIn 0.5s ease-out;
+}
+
+/* Cell content styling */
+.table-enhanced .badge {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.table-enhanced .text-success {
+  color: #20c997 !important;
+}
+
+.table-enhanced .text-warning {
+  color: #ffc107 !important;
+}
+
+.table-enhanced .text-danger {
+  color: #dc3545 !important;
+}
+
+/* Scrollbar styling for table container */
+.table-responsive-enhanced::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-responsive-enhanced::-webkit-scrollbar-track {
+  background: var(--bs-table-bg);
+  border-radius: 4px;
+}
+

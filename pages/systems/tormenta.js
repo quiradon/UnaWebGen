@@ -16,12 +16,12 @@ function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`,`${t.system.default.title.replaceAll("%system%",sistema.card.title)}`,t.system.default.desc.replaceAll("%system%",sistema.card.title),sistema.bg)}
+${head(`${t.lang}${rota}`,`${t.system.default.title.replaceAll("%system%",sistema.card.title)}`,t.system.default.desc.replaceAll("%system%",sistema.card.title),"/static/img/banners/Tormenta20.webp")}
 <body>
     ${nav(t, rota)}
 
-    ${blog(t.system.default.title.replaceAll("%system%",sistema.card.title),sistema.tags,sistema.bg,`
-    ${PlaceParagraphs(t.tos[0].title,sistema.article)}
+    ${blog(t.system.default.title.replaceAll("%system%",sistema.card.title),sistema.tags,"/static/img/banners/Tormenta20.webp",`
+    ${PlaceParagraphs("teste",sistema.article)}
     ${PlaceParagraphs(t.system.default.playDiscord.replaceAll("%system%",sistema.card.title),t.system.default.playDiscordDesc.replaceAll("%system%",sistema.card.title))}
     ${TextAndImage(t.footer.legal,linkReplacer(sistema.legal),sistema.icon,t.system.default.title.replaceAll("%system%",sistema.card.title))}
 

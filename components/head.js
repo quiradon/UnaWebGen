@@ -9,6 +9,11 @@ function head(rota,title,desc,pictureURL) {
     if (!desc){
         desc = t.default.desc
     }
+
+    if (!pictureURL) {
+        pictureURL = '/static/img/banners/default.webp'
+    }
+
     if (pictureURL){
         imgData = `
         <meta name="twitter:image" content="${pictureURL}">

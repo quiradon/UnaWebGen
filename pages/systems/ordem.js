@@ -16,10 +16,10 @@ function page(idioma, rota) {
     return `
 <!DOCTYPE html>
 <html lang="${t.lang}" data-bs-theme="dark">
-${head(`${t.lang}${rota}`,`${t.system.default.title.replaceAll("%system%",sistema.card.title)}`,t.system.default.desc.replaceAll("%system%",sistema.card.title),sistema.bg)}
+${head(`${t.lang}${rota}`,`${t.system.default.title.replaceAll("%system%",sistema.card.title)}`,t.system.default.desc.replaceAll("%system%",sistema.card.title),"/static/img/banners/Ordem_Paranormal_Banner.webp")}
 <body>
     ${nav(t, rota)}
-    ${blog(t.system.default.title.replaceAll("%system%",sistema.card.title),sistema.tags,sistema.bg,`
+    ${blog(t.system.default.title.replaceAll("%system%",sistema.card.title),sistema.tags,"/static/img/banners/Ordem_Paranormal_Banner.webp",`
     ${MarkdownContent(sistema.md)}
     ${TextAndImage(t.footer.legal,linkReplacer(sistema.legal),sistema.icon,t.system.default.title.replaceAll("%system%",sistema.card.title))}
     `)}

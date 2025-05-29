@@ -1,33 +1,30 @@
 function blog(title, categories, img, content) {
-    let tags = categories.split(',').map(category => 
+    let tags = categories.split(',').map(category =>
         `<span class="badge bg-primary text-light m-1">${category}</span>`
     ).join('');
 
     return `
-        <div class="container-lg d-flex justify-content-center 
-            px-2 px-md-3 px-lg-4 px-xl-5 px-xxl-6">
+        <div class="container-lg d-flex justify-content-center my-5"
+            style="max-width: 1100px;">
             <div class="card border-0 shadow-sm w-100">
                 <div class="position-relative">
-                    <!-- Imagem como background -->
-                    <div class="w-100 rounded" style="
-                        background: url('${img}') center / cover no-repeat;
-                        height: 250px;
-                        max-height: 70vh;
-                        background-size: cover;
-                        background-position: center;">
-                        
-                        <!-- Conteúdo sobre a imagem -->
-                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center px-3 px-md-5">
-                            <div class="d-flex flex-wrap">
-                                ${tags}
-                            </div>
-                            <h1 class="text-light fw-bold text-shadow">
-                                ${title}
-                            </h1>
-                        </div>
-                    </div>
+                    <!-- Imagem principal do post -->
+                    <img 
+                        src="${img}" 
+                        alt="${title}" 
+                        class="w-100 rounded px-3" 
+                        loading="eager"
+                    />
                 </div>
-                <div class="card-body">
+                <div class="card-body px-4 py-4">
+                    <div class="mb-3">
+                        <div class="d-flex flex-wrap">
+                            ${tags}
+                        </div>
+                        <h1 class="text-light fw-bold text-shadow mt-2">
+                            ${title}
+                        </h1>
+                    </div>
                     <div class="content">
                         ${content}
                     </div>

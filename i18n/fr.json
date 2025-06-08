@@ -4,6 +4,67 @@
     "desc": "Oups ! Il semble que vous ayez trouvé une page qui n’existe plus. Ne vous inquiétez pas, cela arrive parfois lors de la navigation. En attendant, explorez d’autres parties de notre site pour trouver ce que vous recherchez.",
     "title": "Page non trouvée"
   },
+  "aprove": {
+    "desc": "Vous pouvez désormais récupérer votre accès premium Mini Kraken. Suivez les instructions ci-dessous pour activer toutes les fonctionnalités exclusives.",
+    "faq": {
+      "q1": {
+        "answer": "Normalement, le processus d'activation prend quelques heures, mais cela peut prendre jusqu'à 24 heures dans des cas exceptionnels. Notre équipe travaille quotidiennement pour traiter toutes les demandes.",
+        "question": "Combien de temps faut-il pour activer le premium ?"
+      },
+      "q2": {
+        "answer": "Oui, il est essentiel d'avoir la preuve de paiement pour que nous puissions vérifier et traiter votre demande rapidement et en toute sécurité.",
+        "question": "Ai-je besoin de la preuve de paiement ?"
+      },
+      "q3": {
+        "answer": "Oui, vous pouvez choisir l'une ou l'autre méthode. Discord est généralement plus rapide grâce à l'assistance en temps réel, mais l'e-mail est également une option valable.",
+        "question": "Puis-je utiliser Discord et l'e-mail ?"
+      },
+      "title": "Foire aux Questions"
+    },
+    "important": {
+      "info1": "Gardez toujours votre preuve de paiement à portée de main.",
+      "info2": "Le processus d'activation peut prendre jusqu'à 24 heures.",
+      "info3": "En cas de doute, notre équipe est toujours disponible pour vous aider.",
+      "title": "Informations Importantes"
+    },
+    "instructions": {
+      "subtitle": "Choisissez l'une des options ci-dessous pour activer votre accès premium",
+      "title": "Comment Récupérer Votre Premium"
+    },
+    "options": {
+      "discord": {
+        "button": "Rejoindre Discord",
+        "desc": "Le moyen le plus rapide et le plus efficace de récupérer votre premium. Notre équipe est toujours disponible pour vous aider.",
+        "steps": {
+          "step1": "Rejoignez le serveur officiel Mini Kraken.",
+          "step2": "Allez au canal des tickets ou utilisez la commande pour créer un ticket.",
+          "step3": "Indiquez que vous souhaitez récupérer votre premium.",
+          "step4": "Envoyez la preuve de paiement à notre équipe."
+        },
+        "title": "Serveur de Support Discord"
+      },
+      "email": {
+        "button": "Envoyer un Email",
+        "desc": "Préférez-vous utiliser l'email ? Pas de problème ! Envoyez votre demande et nous vous répondrons bientôt.",
+        "steps": {
+          "step1": "Envoyez un email à notre support",
+          "step2": "Utilisez l'objet 'Récupération Premium - Mini Kraken'",
+          "step3": "Joignez la preuve de paiement à l'email"
+        },
+        "subject": "Récupération Premium - Mini Kraken",
+        "title": "Support par Email"
+      }
+    },
+    "steps": {
+      "title": "Étapes"
+    },
+    "subtitle": "Félicitations ! Votre paiement a été traité avec succès.",
+    "success": {
+      "message": "Votre paiement a été traité avec succès. Vous devez maintenant suivre l'une des méthodes ci-dessous pour activer votre premium.",
+      "title": "Paiement Confirmé !"
+    },
+    "title": "Paiement Approuvé - Récupérez Votre Premium"
+  },
   "changelogs": {
     "desc": "Découvrez toutes les dernières mises à jour et améliorations de notre projet via notre page des journaux de modifications. Restez informé de chaque nouvelle version, des corrections de bogues et des fonctionnalités ajoutées.",
     "title": "Mises à jour"

@@ -4,6 +4,67 @@
     "desc": "¡Ups! Parece que has encontrado una página que ya no existe. No te preocupes, a veces esto sucede mientras navegas. Mientras tanto, explora otras partes de nuestro sitio para encontrar lo que buscas.",
     "title": "Página no encontrada"
   },
+  "aprove": {
+    "desc": "Ahora puedes canjear tu acceso premium a Mini Kraken. Sigue las instrucciones a continuación para activar todas las funciones exclusivas.",
+    "faq": {
+      "q1": {
+        "answer": "Normalmente, el proceso de activación se completa en unas pocas horas, pero puede tardar hasta 24 horas en casos excepcionales. Nuestro equipo trabaja diariamente para procesar todas las solicitudes.",
+        "question": "¿Cuánto tiempo tarda en activarse el premium?"
+      },
+      "q2": {
+        "answer": "Sí, es esencial tener el comprobante de pago para que podamos verificar y procesar tu solicitud de forma rápida y segura.",
+        "question": "¿Necesito el comprobante de pago?"
+      },
+      "q3": {
+        "answer": "Sí, puedes elegir cualquiera de los métodos. Discord suele ser más rápido debido a la atención en tiempo real, pero el correo electrónico también es una opción válida.",
+        "question": "¿Puedo usar tanto Discord como correo electrónico?"
+      },
+      "title": "Preguntas Frecuentes"
+    },
+    "important": {
+      "info1": "Ten siempre a mano el comprobante de pago.",
+      "info2": "El proceso de activación puede tardar hasta 24 horas.",
+      "info3": "En caso de dudas, nuestro equipo está siempre disponible para ayudarte.",
+      "title": "Información Importante"
+    },
+    "instructions": {
+      "subtitle": "Elige una de las opciones a continuación para activar tu acceso premium",
+      "title": "Cómo Canjear Tu Premium"
+    },
+    "options": {
+      "discord": {
+        "button": "Unirse a Discord",
+        "desc": "La forma más rápida y eficiente de canjear tu premium. Nuestro equipo está siempre disponible para ayudarte.",
+        "steps": {
+          "step1": "Únete al servidor oficial de Mini Kraken.",
+          "step2": "Ve al canal de tickets o usa el comando para crear un ticket.",
+          "step3": "Informa que deseas canjear tu premium.",
+          "step4": "Envía el comprobante de pago a nuestro equipo."
+        },
+        "title": "Servidor de Soporte en Discord"
+      },
+      "email": {
+        "button": "Enviar Correo Electrónico",
+        "desc": "¿Prefieres usar correo electrónico? ¡Sin problema! Envía tu solicitud y te responderemos en breve.",
+        "steps": {
+          "step1": "Envía un correo electrónico a nuestro soporte",
+          "step2": "Usa el asunto 'Canje Premium - Mini Kraken'",
+          "step3": "Adjunta el comprobante de pago al correo electrónico"
+        },
+        "subject": "Canje Premium - Mini Kraken",
+        "title": "Soporte por Correo Electrónico"
+      }
+    },
+    "steps": {
+      "title": "Pasos"
+    },
+    "subtitle": "¡Felicidades! Tu pago se ha procesado correctamente.",
+    "success": {
+      "message": "Tu pago se ha procesado correctamente. Ahora necesitas seguir uno de los métodos a continuación para activar tu premium.",
+      "title": "¡Pago Confirmado!"
+    },
+    "title": "Pago Aprobado - Canjea Tu Premium"
+  },
   "changelogs": {
     "desc": "Descubre todas las últimas actualizaciones y mejoras de nuestro proyecto a través de nuestra página de registro de cambios. Mantente informado sobre cada nueva versión, correcciones de errores y características añadidas.",
     "title": "Actualizaciones"

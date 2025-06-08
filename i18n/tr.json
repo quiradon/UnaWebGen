@@ -4,6 +4,67 @@
     "desc": "Oops! Görünüşe göre artık mevcut olmayan bir sayfa buldunuz. Endişelenmeyin, bu bazen gezinirken olur. Bu arada, aradığınızı bulmak için sitemizin diğer bölümlerini keşfedin.",
     "title": "Sayfa Bulunamadı"
   },
+  "aprove": {
+    "desc": "Agora você pode resgatar seu acesso premium da Mini Kraken. Siga as instruções abaixo para ativar todos os recursos exclusivos.",
+    "faq": {
+      "q1": {
+        "answer": "Normalmente o processo de ativação é feito em algumas horas, mas pode levar até 24 horas em casos excepcionais. Nossa equipe trabalha diariamente para processar todas as solicitações.",
+        "question": "Quanto tempo demora para ativar o premium?"
+      },
+      "q2": {
+        "answer": "Sim, é essencial ter o comprovante de pagamento para que possamos verificar e processar sua solicitação de forma rápida e segura.",
+        "question": "Preciso do comprovante de pagamento?"
+      },
+      "q3": {
+        "answer": "Sim, você pode escolher qualquer um dos métodos. O Discord costuma ser mais rápido devido ao atendimento em tempo real, mas o email também é uma opção válida.",
+        "question": "Posso usar tanto Discord quanto email?"
+      },
+      "title": "Perguntas Frequentes"
+    },
+    "important": {
+      "info1": "Tenha sempre o comprovante de pagamento em mãos.",
+      "info2": "O processo de ativação pode levar até 24 horas.",
+      "info3": "Em caso de dúvidas, nossa equipe está sempre disponível para ajudar.",
+      "title": "Informações Importantes"
+    },
+    "instructions": {
+      "subtitle": "Escolha uma das opções abaixo para ativar seu acesso premium.",
+      "title": "Como Resgatar Seu Premium"
+    },
+    "options": {
+      "discord": {
+        "button": "Entrar no Discord",
+        "desc": "A forma mais rápida e eficiente de resgatar seu premium. Nossa equipe está sempre disponível para ajudar.",
+        "steps": {
+          "step1": "Entre no servidor oficial da Mini Kraken.",
+          "step2": "Vá até o canal de tickets ou use o comando para criar um ticket.",
+          "step3": "Informe que deseja resgatar seu premium.",
+          "step4": "Envie o comprovante de pagamento para nossa equipe."
+        },
+        "title": "Discord Destek Sunucusu"
+      },
+      "email": {
+        "button": "E-posta Gönder",
+        "desc": "E-posta kullanmayı mı tercih edersiniz? Sorun değil! Talebinizi gönderin, en kısa sürede cevap vereceğiz.",
+        "steps": {
+          "step1": "Destek ekibimize bir e-posta gönderin",
+          "step2": "'Premium Kurtarma - Mini Kraken' konulu bir e-posta kullanın",
+          "step3": "Ödeme dekontunuzu e-postaya ekleyin"
+        },
+        "subject": "Premium Kurtarma - Mini Kraken",
+        "title": "E-posta ile Destek"
+      }
+    },
+    "steps": {
+      "title": "Adımlar"
+    },
+    "subtitle": "Tebrikler! Ödemeniz başarıyla işlendi.",
+    "success": {
+      "message": "Ödemeniz başarıyla işlendi. Şimdi premium'unuzu etkinleştirmek için aşağıdaki yöntemlerden birini izlemeniz gerekiyor.",
+      "title": "Ödeme Onaylandı!\n"
+    },
+    "title": "Ödeme Onaylandı - Premium'unuzu Talep Edin\n"
+  },
   "changelogs": {
     "desc": "Değişiklik kayıtları sayfamız aracılığıyla projemizdeki tüm en son güncellemeleri ve iyileştirmeleri keşfedin. Her yeni sürüm, hata düzeltmeleri ve eklenen özellikler hakkında bilgilendirilmeye devam edin.",
     "title": "Güncellemeler"

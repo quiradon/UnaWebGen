@@ -4,6 +4,67 @@
     "desc": "Oops! It looks like you found a page that no longer exists. Don't worry, sometimes this happens while browsing. In the meantime, explore other parts of our site to find what you're looking for.",
     "title": "Page not Found"
   },
+  "aprove": {
+    "desc": "Now you can claim your Mini Kraken premium access. Follow the instructions below to activate all exclusive features.",
+    "faq": {
+      "q1": {
+        "answer": "Normally the activation process is done within a few hours, but it can take up to 24 hours in exceptional cases. Our team works daily to process all requests.",
+        "question": "How long does it take to activate premium?"
+      },
+      "q2": {
+        "answer": "Yes, it's essential to have the payment receipt so we can verify and process your request quickly and securely.",
+        "question": "Do I need the payment receipt?"
+      },
+      "q3": {
+        "answer": "Yes, you can choose any of the methods. Discord is usually faster due to real-time support, but email is also a valid option.",
+        "question": "Can I use both Discord and email?"
+      },
+      "title": "Frequently Asked Questions"
+    },
+    "important": {
+      "info1": "Always have your payment receipt ready",
+      "info2": "The activation process may take up to 24 hours",
+      "info3": "If you have any questions, our team is always available to help",
+      "title": "Important Information"
+    },
+    "instructions": {
+      "subtitle": "Choose one of the options below to activate your premium access",
+      "title": "How to Claim Your Premium"
+    },
+    "options": {
+      "discord": {
+        "button": "Join Discord",
+        "desc": "The fastest and most efficient way to claim your premium. Our team is always available to help.",
+        "steps": {
+          "step1": "Join the official Mini Kraken server",
+          "step2": "Go to the tickets channel or use the command to create a ticket",
+          "step3": "Inform that you want to claim your premium",
+          "step4": "Send the payment receipt to our team"
+        },
+        "title": "Discord Support Server"
+      },
+      "email": {
+        "button": "Send Email",
+        "desc": "Prefer using email? No problem! Send your request and we'll respond soon.",
+        "steps": {
+          "step1": "Send an email to our support",
+          "step2": "Use the subject 'Premium Claim - Mini Kraken'",
+          "step3": "Attach the payment receipt to the email"
+        },
+        "subject": "Premium Claim - Mini Kraken",
+        "title": "Email Support"
+      }
+    },
+    "steps": {
+      "title": "Steps"
+    },
+    "subtitle": "Congratulations! Your payment has been successfully processed",
+    "success": {
+      "message": "Your payment has been successfully processed. Now you need to follow one of the methods below to activate your premium.",
+      "title": "Payment Confirmed!"
+    },
+    "title": "Payment Approved - Claim Your Premium"
+  },
   "changelogs": {
     "desc": "Discover all the latest updates and improvements to our project via our changelogs page. Stay informed about each new version, bug fixes and added features.",
     "title": "Updates"

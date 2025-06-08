@@ -4,6 +4,67 @@
     "desc": "Ups! Úgy tűnik, egy már nem létező oldalra bukkantál. Ne aggódj, néha előfordul böngészés közben. Addig is, nézz körül a weboldalunkon, hogy megtaláld, amit keresel.",
     "title": "Oldal nem található"
   },
+  "aprove": {
+    "desc": "Most már beváltja Mini Kraken prémium hozzáférését. Kövesse az alábbi utasításokat az összes exkluzív funkció aktiválásához.",
+    "faq": {
+      "q1": {
+        "answer": "Az aktiválási folyamat általában néhány órán belül megtörténik, de kivételes esetekben akár 24 órát is igénybe vehet. Csapatunk naponta dolgozik minden kérelem feldolgozásán.",
+        "question": "Mennyi idő alatt aktiválódik a prémium hozzáférés?"
+      },
+      "q2": {
+        "answer": "Igen, elengedhetetlen a fizetési bizonylat, hogy gyorsan és biztonságosan tudjuk feldolgozni a kérelmét.",
+        "question": "Szükségem van a fizetési bizonylatra?"
+      },
+      "q3": {
+        "answer": "Igen, bármelyik módszert választhatja. A Discord általában gyorsabb a valós idejű ügyfélszolgálat miatt, de az e-mail is megfelelő lehetőség.",
+        "question": "Használhatom a Discordot és az e-mailt is?"
+      },
+      "title": "Gyakran Ismételt Kérdések"
+    },
+    "important": {
+      "info1": "Mindig legyen kéznél a fizetési bizonylat.",
+      "info2": "Az aktiválási folyamat akár 24 órát is igénybe vehet.",
+      "info3": "Kérdések esetén csapatunk mindig rendelkezésére áll.",
+      "title": "Fontos Információk"
+    },
+    "instructions": {
+      "subtitle": "Válasszon az alábbi lehetőségek közül a prémium hozzáférés aktiválásához.",
+      "title": "Prémium hozzáférés beváltása"
+    },
+    "options": {
+      "discord": {
+        "button": "Discordra belépés",
+        "desc": "A prémium hozzáférés beváltásának leggyorsabb és leghatékonyabb módja. Csapatunk mindig rendelkezésére áll, hogy segítsen.",
+        "steps": {
+          "step1": "Lépjen be a Mini Kraken hivatalos szerverére.",
+          "step2": "Menjen a jegyek csatornájába, vagy használja a parancsot egy jegy létrehozásához.",
+          "step3": "Tájékoztassa csapatunkat, hogy be szeretné váltani a prémium hozzáférését.",
+          "step4": "Küldje el a fizetési bizonylatot csapatunknak."
+        },
+        "title": "Discord Support Szerver"
+      },
+      "email": {
+        "button": "Email Küldése",
+        "desc": "Inkább emailt használnál? Nincs probléma! Küldd el a kérésedet, és hamarosan válaszolunk.",
+        "steps": {
+          "step1": "Küldj egy emailt a támogatási csapatunknak",
+          "step2": "A tárgy mezőbe írd be: 'Prémium Aktiválás - Mini Kraken'",
+          "step3": "Csatold a fizetési igazolást az emailhez"
+        },
+        "subject": "Prémium Aktiválás - Mini Kraken",
+        "title": "Emailes Támogatás"
+      }
+    },
+    "steps": {
+      "title": "Lépések"
+    },
+    "subtitle": "Gratulálunk! A fizetésed sikeresen feldolgozásra került.",
+    "success": {
+      "message": "A fizetésed sikeresen feldolgozásra került. Most már csak az alábbi módszerek egyikét kell követned a prémiumod aktiválásához.",
+      "title": "Fizetés Megerősítve!"
+    },
+    "title": "Fizetés Jóváhagyva - Aktiváld a Prémiumodat"
+  },
   "changelogs": {
     "desc": "Fedezd fel a projekt legújabb frissítéseit és fejlesztéseit a változásnaplónk oldalán. Maradj tájékozott minden új verzióról, hibajavításról és hozzáadott funkcióról.",
     "title": "Frissítések"

@@ -4,6 +4,67 @@
     "desc": "Ups! Čini se da ste naišli na stranicu koja više ne postoji. Nemojte se brinuti, to se ponekad dogodi tijekom pregledavanja. U međuvremenu, istražite druge dijelove naše web-stranice kako biste pronašli ono što tražite.\n",
     "title": "Stranica nije pronađena.\n"
   },
+  "aprove": {
+    "desc": "Sada možete iskoristiti svoj premium pristup Mini Krakenu. Slijedite upute u nastavku za aktiviranje svih ekskluzivnih značajki.",
+    "faq": {
+      "q1": {
+        "answer": "Proces aktivacije obično traje nekoliko sati, ali u iznimnim slučajevima može potrajati i do 24 sata. Naš tim svakodnevno radi na obradi svih zahtjeva.",
+        "question": "Koliko dugo traje aktivacija premium pristupa?"
+      },
+      "q2": {
+        "answer": "Da, nužno je imati dokaz o plaćanju kako bismo mogli provjeriti i obraditi vaš zahtjev brzo i sigurno.",
+        "question": "Trebam li dokaz o plaćanju?"
+      },
+      "q3": {
+        "answer": "Da, možete odabrati bilo koju od metoda. Discord je obično brži zbog usluge u stvarnom vremenu, ali e-pošta je također valjana opcija.",
+        "question": "Mogu li koristiti i Discord i e-poštu?"
+      },
+      "title": "Često postavljana pitanja"
+    },
+    "important": {
+      "info1": "Uvijek imajte pri ruci dokaz o plaćanju.",
+      "info2": "Proces aktivacije može trajati do 24 sata.",
+      "info3": "U slučaju bilo kakvih pitanja, naš tim je uvijek dostupan za pomoć.",
+      "title": "Važne informacije"
+    },
+    "instructions": {
+      "subtitle": "Odaberite jednu od opcija u nastavku za aktiviranje svog premium pristupa",
+      "title": "Kako iskoristiti svoj Premium pristup"
+    },
+    "options": {
+      "discord": {
+        "button": "Pridruži se Discordu",
+        "desc": "Najbrži i najučinkovitiji način za iskorištavanje vašeg premium pristupa. Naš tim je uvijek dostupan za pomoć.",
+        "steps": {
+          "step1": "Pridružite se službenom serveru Mini Krakensa.",
+          "step2": "Idite na kanal za zahtjeve ili upotrijebite naredbu za kreiranje zahtjeva.",
+          "step3": "Obavijestite nas da želite iskoristiti svoj premium pristup.",
+          "step4": "Pošaljite dokaz o plaćanju našem timu."
+        },
+        "title": "Discord Server za podršku"
+      },
+      "email": {
+        "button": "Pošalji Email",
+        "desc": "Radije biste koristili email? Nema problema! Pošaljite svoj zahtjev i uskoro ćemo vam odgovoriti.",
+        "steps": {
+          "step1": "Pošaljite email našoj podršci",
+          "step2": "Koristite predmet 'Otključavanje Premiuma - Mini Kraken'",
+          "step3": "Priložite dokaz o plaćanju emailu"
+        },
+        "subject": "Otključavanje Premiuma - Mini Kraken",
+        "title": "Podrška putem Emaila"
+      }
+    },
+    "steps": {
+      "title": "Koraci"
+    },
+    "subtitle": "Čestitamo! Vaša uplata je uspješno obrađena.",
+    "success": {
+      "message": "Vaša uplata je uspješno obrađena. Sada trebate slijediti jednu od metoda u nastavku kako biste aktivirali svoj premium.",
+      "title": "Uplata Potvrđena!"
+    },
+    "title": "Uplata Odobrena - Otključajte svoj Premium"
+  },
   "changelogs": {
     "desc": "Otkrijte sve najnovije ažuriranja i poboljšanja našeg projekta putem naše stranice s zapisima promjena. Budite u tijeku sa svakom novom verzijom, ispravkom pogrešaka i dodanim značajkama.\n",
     "title": "Ažuriranja\n"

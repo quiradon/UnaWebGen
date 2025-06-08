@@ -4,6 +4,67 @@
     "desc": "Hoppla! Es sieht so aus, als hätten Sie eine Seite gefunden, die nicht mehr existiert. Keine Sorge, das passiert beim Browsen manchmal. In der Zwischenzeit können Sie andere Bereiche unserer Website erkunden, um das zu finden, wonach Sie suchen.",
     "title": "Seite nicht gefunden"
   },
+  "aprove": {
+    "desc": "Jetzt können Sie Ihren Mini Kraken Premium-Zugang einlösen. Folgen Sie den Anweisungen unten, um alle exklusiven Funktionen zu aktivieren.",
+    "faq": {
+      "q1": {
+        "answer": "Normalerweise dauert der Aktivierungsprozess einige Stunden, kann aber in Ausnahmefällen bis zu 24 Stunden dauern. Unser Team arbeitet täglich daran, alle Anfragen zu bearbeiten.",
+        "question": "Wie lange dauert die Premium-Aktivierung?"
+      },
+      "q2": {
+        "answer": "Ja, der Zahlungsnachweis ist unerlässlich, damit wir Ihre Anfrage schnell und sicher prüfen und bearbeiten können.",
+        "question": "Benötige ich einen Zahlungsnachweis?"
+      },
+      "q3": {
+        "answer": "Ja, Sie können eine der beiden Methoden wählen. Discord ist in der Regel schneller aufgrund des Echtzeit-Supports, aber E-Mail ist auch eine gültige Option.",
+        "question": "Kann ich sowohl Discord als auch E-Mail verwenden?"
+      },
+      "title": "Häufig gestellte Fragen"
+    },
+    "important": {
+      "info1": "Halten Sie Ihren Zahlungsnachweis immer bereit.",
+      "info2": "Der Aktivierungsprozess kann bis zu 24 Stunden dauern.",
+      "info3": "Bei Fragen steht Ihnen unser Team jederzeit zur Verfügung.",
+      "title": "Wichtige Informationen"
+    },
+    "instructions": {
+      "subtitle": "Wählen Sie eine der folgenden Optionen, um Ihren Premium-Zugang zu aktivieren.",
+      "title": "So lösen Sie Ihr Premium ein"
+    },
+    "options": {
+      "discord": {
+        "button": "Discord beitreten",
+        "desc": "Die schnellste und effizienteste Möglichkeit, Ihr Premium einzulösen. Unser Team steht Ihnen jederzeit zur Verfügung.",
+        "steps": {
+          "step1": "Treten Sie dem offiziellen Mini Kraken Server bei.",
+          "step2": "Gehen Sie zum Ticket-Kanal oder verwenden Sie den Befehl, um ein Ticket zu erstellen.",
+          "step3": "Teilen Sie mit, dass Sie Ihr Premium einlösen möchten.",
+          "step4": "Senden Sie Ihren Zahlungsnachweis an unser Team."
+        },
+        "title": "Discord-Support-Server"
+      },
+      "email": {
+        "button": "E-Mail senden",
+        "desc": "Bevorzugen Sie E-Mail? Kein Problem! Senden Sie Ihre Anfrage und wir werden uns in Kürze bei Ihnen melden.",
+        "steps": {
+          "step1": "Senden Sie eine E-Mail an unseren Support",
+          "step2": "Verwenden Sie den Betreff 'Premium-Einlösung - Mini Kraken'",
+          "step3": "Hängen Sie den Zahlungsnachweis an die E-Mail an"
+        },
+        "subject": "Premium-Einlösung - Mini Kraken",
+        "title": "Support per E-Mail"
+      }
+    },
+    "steps": {
+      "title": "Schritte"
+    },
+    "subtitle": "Herzlichen Glückwunsch! Ihre Zahlung wurde erfolgreich verarbeitet.",
+    "success": {
+      "message": "Ihre Zahlung wurde erfolgreich verarbeitet. Jetzt müssen Sie eine der folgenden Methoden verwenden, um Ihr Premium zu aktivieren.",
+      "title": "Zahlung bestätigt!"
+    },
+    "title": "Zahlung genehmigt - Lösen Sie Ihr Premium ein"
+  },
   "changelogs": {
     "desc": "Entdecken Sie alle neuesten Updates und Verbesserungen unseres Projekts über unsere Changelog-Seite. Bleiben Sie über jede neue Version, Fehlerbehebungen und hinzugefügte Funktionen informiert.",
     "title": "Updates"

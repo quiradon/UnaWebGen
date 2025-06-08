@@ -1,0 +1,27 @@
+# Bun configuration file
+[install]
+# Configurações de instalação
+cache = true
+exact = false
+production = false
+lockfile = "bun.lockb"
+registry = "https://registry.npmjs.org/"
+
+[run]
+# Configurações de execução
+shell = "system"
+
+[build]
+# Configurações de build
+target = "browser"
+minify = true
+sourcemap = "external"
+
+[test]
+# Configurações de teste
+preload = []
+
+[bunfig]
+# Performance optimizations
+max_http_requests = 100
+timeout = 30000

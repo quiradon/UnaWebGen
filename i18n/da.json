@@ -4,6 +4,67 @@
     "desc": "Ups! Det ser ud som om du har fundet en side, der ikke længere eksisterer. Bare rolig, det sker sommetider under navigation. I mellemtiden kan du udforske andre dele af vores hjemmeside for at finde det, du leder efter.",
     "title": "Side ikke fundet"
   },
+  "aprove": {
+    "desc": "Du kan nu indløse din Mini Kraken premium-adgang. Følg instruktionerne nedenfor for at aktivere alle de eksklusive funktioner.",
+    "faq": {
+      "q1": {
+        "answer": "Aktiveringsprocessen tager normalt et par timer, men kan i undtagelsestilfælde tage op til 24 timer. Vores team arbejder dagligt på at behandle alle anmodninger.",
+        "question": "Hvor lang tid tager det at aktivere premium?"
+      },
+      "q2": {
+        "answer": "Ja, det er nødvendigt at have din betalingskvittering, så vi kan kontrollere og behandle din anmodning hurtigt og sikkert.",
+        "question": "Har jeg brug for betalingskvitteringen?"
+      },
+      "q3": {
+        "answer": "Ja, du kan vælge en hvilken som helst af metoderne. Discord er ofte hurtigere på grund af realtids support, men e-mail er også en gyldig mulighed.",
+        "question": "Kan jeg bruge både Discord og e-mail?"
+      },
+      "title": "Ofte stillede spørgsmål"
+    },
+    "important": {
+      "info1": "Hav altid din betalingskvittering ved hånden.",
+      "info2": "Aktiveringsprocessen kan tage op til 24 timer.",
+      "info3": "Hvis du har spørgsmål, er vores team altid tilgængeligt for at hjælpe.",
+      "title": "Vigtig information"
+    },
+    "instructions": {
+      "subtitle": "Vælg en af ​​mulighederne nedenfor for at aktivere din premium-adgang.",
+      "title": "Sådan indløser du din Premium"
+    },
+    "options": {
+      "discord": {
+        "button": "Gå til Discord",
+        "desc": "Den hurtigste og mest effektive måde at indløse din premium på. Vores team er altid klar til at hjælpe.",
+        "steps": {
+          "step1": "Gå til Mini Krakens officielle server.",
+          "step2": "Gå til ticket-kanalen eller brug kommandoen til at oprette en ticket.",
+          "step3": "Fortæl at du ønsker at indløse din premium.",
+          "step4": "Send din betalingskvittering til vores team."
+        },
+        "title": "Discord Support Server"
+      },
+      "email": {
+        "button": "Send Email",
+        "desc": "Foretrækker du at bruge e-mail? Intet problem! Send din forespørgsel, og vi svarer snart.",
+        "steps": {
+          "step1": "Send en e-mail til vores support",
+          "step2": "Brug emnet 'Premium Indløsning - Mini Kraken'",
+          "step3": "Vedhæft betalingsbeviset til e-mailen"
+        },
+        "subject": "Premium Indløsning - Mini Kraken",
+        "title": "E-mail Support"
+      }
+    },
+    "steps": {
+      "title": "Trin"
+    },
+    "subtitle": "Tillykke! Din betaling er blevet behandlet.",
+    "success": {
+      "message": "Din betaling er blevet behandlet. Nu skal du følge en af nedenstående metoder for at aktivere dit premium.",
+      "title": "Betaling Bekræftet!"
+    },
+    "title": "Betaling Godkendt - Indløs Dit Premium"
+  },
   "changelogs": {
     "desc": "Oplev alle de seneste opdateringer og forbedringer i vores projekt via vores changelog-side. Hold dig opdateret om hver ny version, fejlrettelser og tilføjede funktioner.",
     "title": "Opdateringer"

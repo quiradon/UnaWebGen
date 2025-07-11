@@ -7,6 +7,8 @@ let urlBase = 'https://rpg.arkanus.app' // URL base do seu site
 
 async function generateSitemap() {
     const sitemapPath = path.join(exportFolder, 'sitemap.xml');
+    // Garante que o diretório de exportação exista
+    await fs.ensureDir(exportFolder);
     const languages = (await fs.readdir(i18nPath)).map(file => path.basename(file, path.extname(file)));
     const pages = await fs.readdir(path.join(__dirname, 'pages'));
     const buildDate = new Date().toISOString(); // Data de build no formato ISO
@@ -72,12 +74,15 @@ async function generateSitemap() {
     sitemapContent += `  </url>\n`;
 
     sitemapContent += `</urlset>`;
+    // Garante que o diretório exista antes de cada escrita
+    await fs.ensureDir(path.dirname(sitemapPath));
     await fs.writeFile(sitemapPath, sitemapContent);
     console.log('[Sitemap criado com sucesso!]');
 
     // Compressão do sitemap
     const compressedSitemapPath = `${sitemapPath}.gz`;
     const compressedContent = zlib.gzipSync(sitemapContent);
+    await fs.ensureDir(path.dirname(compressedSitemapPath));
     await fs.writeFile(compressedSitemapPath, compressedContent);
     console.log('[Sitemap compactado criado com sucesso!]');
 }

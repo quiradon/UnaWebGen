@@ -6,7 +6,9 @@ async function getCommands() {
     const url = "https://una-api.arkanus.app/commands";
     const response = await fetch(url);
     const data = await response.json();
-    return data || [];
+    if (Array.isArray(data)) return data;
+    if (data && typeof data === 'object' && Array.isArray(data.commands)) return data.commands;
+    return [];
 }
 
 function replaceText(text) {

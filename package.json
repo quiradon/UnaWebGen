@@ -4,8 +4,8 @@
   "description": "A Static HTML page generator",
   "main": "index.js",
   "scripts": {
-    "start": "wrangler pages dev dist/ d1 create",
-    "build": "node build.js",
+    "start": "wrangler pages dev dist/",
+    "build": "node build.js && npm run copy-static",
     "test": "npm test",
     "copy-static": "copyfiles -u 1 \"static/**/**/*\" dist/static",
     "copy-root-files": "copyfiles manifest.json robots.txt dist/static",

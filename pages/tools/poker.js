@@ -14,7 +14,7 @@ ${head(`${t.lang}${rota}`,`${t.poker.title}`,`${t.poker.desc}`)}
     <section class="d-lg-flex justify-content-lg-center my-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 order-first order-md-last p-5 pt-2 pb-0"><div class="p-5"><img class="rounded img-fluid w-100 h-100 fit-cover CardPoker" id="cardshow" src="/static/api/poker-card/2/10.webp" loading="auto" alt="Carta de baralho aleatoria"></div></div>
+                <div class="col-md-6 order-first order-md-last p-5 pt-2 pb-0"><div class="p-5"><img class="rounded img-fluid w-100 h-100 fit-cover CardPoker" id="cardshow" src="/static/api/poker-card/2-10.webp" loading="auto" alt="Carta de baralho aleatoria"></div></div>
                 <div class="col d-flex justify-content-center align-items-center align-content-center order-last">
                     <div class="text-white">
                     

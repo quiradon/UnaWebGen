@@ -5,12 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "wrangler pages dev dist/",
-<<<<<<< HEAD
     "build": "npm run copy-static && npm run copy-root-files && node build.js",
-=======
-    "build": "node build.js && npm run copy-static",
     "test": "npm test",
->>>>>>> 5532d3c29a3401610029a8a9437ea71a0bceabf4
     "copy-static": "copyfiles -u 1 \"static/**/**/*\" dist/static",
     "copy-root-files": "copyfiles manifest.json robots.txt dist/static",
     "clean": "rimraf dist"

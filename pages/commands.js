@@ -101,6 +101,9 @@ async function page(language, route) {
     let realLang = lang;
     if (lang === "pt") lang = "pt-BR";
     const commands = await getCommands();
+    if (!Array.isArray(commands) || commands.length === 0) {
+        commands = [];
+    }
     const cards = commands.map(cmd => GenerateCard(cmd, lang)).join("");
 
     return `

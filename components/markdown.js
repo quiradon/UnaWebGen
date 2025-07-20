@@ -206,7 +206,7 @@ function processTables(text) {
             })
             .filter(row => row.length > 0);          // Build HTML table with custom enhanced styling
         let html = '<div class="table-responsive-enhanced">\n';
-        html += '  <table class="table table-hover table-enhanced table-dark table-sm">\n';          // Add header with custom enhanced styling
+        html += '  <table class="table table-hover table-enhanced border-0">\n';          // Add header with custom enhanced styling
         if (headers.length > 0) {
             html += '    <thead>\n      <tr>\n';
             headers.forEach((header, index) => {

@@ -4,14 +4,10 @@
   "description": "A Static HTML page generator",
   "main": "index.js",
   "scripts": {
-    "start": "wrangler pages dev dist/ d1 create",
-    "build": "node build.js",
-    "test": "npm test",
+    "start": "wrangler pages dev dist/",
+    "build": "npm run copy-static && npm run copy-root-files && node build.js",
     "copy-static": "copyfiles -u 1 \"static/**/**/*\" dist/static",
     "copy-root-files": "copyfiles manifest.json robots.txt dist/static",
-    "dev": "bun run build:dev && bun run start:dev",
-    "build:dev": "bun run copy-static && bun run copy-root-files && bun run build.js",
-    "start:dev": "bunx wrangler pages dev dist/ d1 create",
     "clean": "rimraf dist"
   },
   "author": "",

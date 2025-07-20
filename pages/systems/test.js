@@ -9,146 +9,152 @@ function linkReplacer(string) {
     return string.replace(regex, '<a href="$2">$1</a>')
 }
 
-const md = `# Guia Simplificado de Rolagem de Dados e Funções
+const md = `
+Este guia ensina a usar a notação de rolagem de dados para simular jogadas de RPG de forma rápida e eficiente. Pense nisso como uma "linguagem" para falar com o rolador de dados.
 
-Este guia explica como usar a notação do RPG Dice Roller para simular rolagens de dados em jogos de RPG. A notação é uma forma de dizer ao sistema quais dados rolar e como modificar os resultados.
+## **O Básico: A Fórmula da Rolagem**
 
-## **1\. Como Rolar Dados Básicos**
+A maioria das rolagens segue uma fórmula simples: QdL
 
-Para rolar dados, você precisa dizer quantos dados e de que tipo.
+* **Q:** A **Q**uantidade de dados que você quer rolar. Se omitido, o padrão é 1 (ex: d20 é o mesmo que 1d20).  
+* **d:** Um separador literal que significa "dado".  
+* **L:** O número de **L**ados que o dado tem (ex: 6, 10, 20).
 
-### **Quantidade de Dados**
+**Exemplos Práticos:**
 
-Você pode rolar de 1 a 999 dados de uma vez.
+* d20: Rola 1 dado de 20 lados. Perfeito para um teste de ataque ou perícia.  
+* 2d6: Rola 2 dados de 6 lados e soma os resultados. Comum para o dano de uma espada grande.  
+* 8d10: Rola 8 dados de 10 lados e soma tudo. O dano de uma poderosa Bola de Fogo\!
 
-* **Exemplos Válidos:**  
-  * d8 (rola 1 dado de 8 lados)  
-    * *Exemplo Prático:* Você está a atacar com uma adaga. O mestre pede uma rolagem de d8 para o dano.  
-  * 1d10 (rola 1 dado de 10 lados)  
-    * *Exemplo Prático:* Você está a tentar um teste de perícia. O mestre pede uma rolagem de 1d10 para determinar o sucesso.  
-  * 999d6 (rola 999 dados de 6 lados)  
-    * *Exemplo Prático:* Um exército de goblins atira milhares de flechas. O mestre decide simular isso com 999d6 para um dano massivo.  
-  * 20d4 \+ 999d10 (rola diferentes tipos de dados e soma os resultados)  
-    * *Exemplo Prático:* Um feitiço complexo causa dano de diferentes elementos. O mestre pede 20d4 para o dano de fogo e 999d10 para o dano de energia.  
-* **Exemplos Inválidos:**  
-  * 0d10 (não pode rolar 0 dados)  
-  * 1000d6 (excede o limite de 999 dados)  
-  * \-1d20 (não pode rolar um número negativo de dados)
+### **Adicionando Matemática**
 
-### **Tipos de Dados Padrão (d{n})**
+Você pode realizar operações matemáticas simples diretamente na sua rolagem.
 
-Um dado padrão tem um número positivo de lados (ex: d6, d20). Você pode rolar dados com quase qualquer número de lados.
+- \+ (Adição)  
+- \- (Subtração)  
+- \* (Multiplicação)  
+ \/ (Divisão)
 
-* **Sintaxe:** d{n}, onde {n} é o número de lados.  
-* **Exemplos:**  
-  * d6: Rola um dado de 6 lados.  
-    * *Exemplo Prático:* Você está a rolar o dano de uma espada curta.  
-  * 4d10: Rola quatro dados de 10 lados e soma os resultados.  
-    * *Exemplo Prático:* Um poderoso feitiço de bola de fogo causa 4d10 de dano flamejante.
+**Exemplos Práticos:**
 
-### **Dados Percentil (d%)**
+* d20+5: Rola um d20 e adiciona 5 ao resultado. Ótimo para um ataque com seu bônus de Força.  
+* 2d6-1: Rola dois d6, soma-os e subtrai 1 do total.
 
-Usado para rolar um número entre 1 e 100\. É um atalho para d100.
+## **Modificadores: Turbine Suas Rolagens**
 
-* **Exemplo:** 4d%: Rola quatro dados percentil e soma os resultados. É o mesmo que 4d100.  
-  * *Exemplo Prático:* Você está a determinar a chance de um evento raro acontecer, onde cada d% representa uma tentativa.
+Depois de dominar o básico, você pode turbinar suas rolagens com modificadores. Eles são comandos especiais que alteram os resultados e são adicionados ao final da fórmula.
 
-### **Dados Fudge/Fate (dF)**
+### **Ponto de Comparação (\>, \<, \=)**
 
-Estes são dados de 6 lados com faces de menos (-), mais (+) e em branco, que valem \-1, \+1 e 0\.
+Muitos modificadores precisam de uma condição para funcionar, e para isso usamos operadores de comparação seguidos de um número. Pense nisso como uma regra (ex: 'maior que 7' ou 'igual a 1'). Você verá essa estrutura, chamada de 'ponto de comparação' ou {cp}, em comandos como re-rolagem (r\>7) ou contagem de sucessos (\>=8).
 
-* **Sintaxe:** dF ou dF.2 (padrão, cada face tem 1/3 de chance).  
-* **Variante:** dF.1 (4 faces em branco, 1 \+, 1 \-).  
-* **Exemplos:**  
-  * dF: Rola um dado Fudge padrão.  
-    * *Exemplo Prático:* Você está a fazer um teste de persuasão em Fate, onde o resultado pode ser um sucesso, um fracasso ou um resultado neutro.  
-  * 4dF: Rola quatro dados Fudge padrão e soma os resultados.  
-    * *Exemplo Prático:* Seu personagem tem uma habilidade que permite rolar 4dF para um teste de agilidade.
+| Operador | Significado |
+| :---- | :---- |
+| \> | Maior que |
+| \< | Menor que |
+| \>= | Maior ou igual a |
+| \<= | Menor ou igual a |
+| \= | Igual a |
+| \!= ou \<\> | Diferente de |
 
-## **2\. Modificadores de Rolagem**
+### **Filtrando Resultados: Manter e Descartar**
 
-Modificadores são "flags" que mudam o resultado ou a forma como os dados são apresentados. Você pode combinar vários modificadores.
+Útil para mecânicas de vantagem/desvantagem ou para criar personagens.
 
-### **Ordem dos Modificadores**
+* **Manter (k ou kh / kl)**: Rola vários dados e **mantém** apenas os melhores ou piores.  
+  * kh (Keep Highest): Mantém os **N** mais altos. k é um atalho para kh.  
+  * kl (Keep Lowest): Mantém os **N** mais baixos.  
+* **Descartar (d ou dh / dl)**: Rola vários dados e **descarta** os melhores ou piores.  
+  * dl (Drop Lowest): Descarta os **N** mais baixos. d é um atalho para dl.  
+  * dh (Drop Highest): Descarta os **N** mais altos.
 
-Os modificadores são sempre executados numa ordem específica, não importa como você os escreva. Por exemplo, 4d6\!d1 e 4d6d1\! fazem a mesma coisa.
+**Exemplos Práticos:**
 
-### **Limite de Iterações**
+* 2d20kh1: Rola 2d20 e mantém o resultado mais alto (simula **Vantagem**).  
+* 2d20kl1: Rola 2d20 e mantém o resultado mais baixo (simula **Desvantagem**).  
+* 4d6dl1: Rola 4d6 e descarta o menor resultado. Um método clássico para gerar atributos de personagem.
 
-Para evitar problemas, modificadores como "Explosão" ou "Re-rolagem" são limitados a 1000 repetições por rolagem de dado.
+### **Manipulando Dados: Explodir e Re-rolar**
 
-### **Ponto de Comparação ({cp})**
+Para adicionar um pouco de emoção e imprevisibilidade às rolagens.
 
-Muitos modificadores usam um "Ponto de Comparação" para decidir quando agir. É um operador seguido por um número (ex: \=8).
+* **Explosão (\!)**: Se um dado rolar o valor máximo, role-o novamente e adicione o novo resultado ao total. Isso pode acontecer várias vezes\!  
+* **Re-rolagem (r)**: Se um dado rolar um valor indesejado (geralmente 1), role-o novamente até que um valor válido seja obtido. A versão ro re-rola apenas uma vez.
 
-| Operador | Significado | Exemplo de Uso |
-| :---- | :---- | :---- |
-| \= | Igual a | d6=3 |
-| \!= | Não igual a | d6\!=3 |
-| \<\> | Não igual a (alternativo, para evitar composição indesejada com explosão) | d6\<\>3 |
-| \< | Menor que | d6\<3 |
-| \> | Maior que | d6\>3 |
-| \<= | Menor ou igual a | d6\<=3 |
-| \>= | Maior ou igual a | d6\>=3 |
+**Exemplos Práticos:**
 
-**Importante:** Use \<\> para "não igual" com modificadores de explosão (\!). Por exemplo, 2d6\!\<\>4 explode se não for 4\. 2d6\!\!=4 seria diferente.
+* 3d6\!: Rola 3d6. Se algum dado der 6, role-o de novo e some, criando a chance de um dano massivo.  
+* 2d10r\<3: Rola 2d10. Se qualquer um dos dados resultar em 1 ou 2, ele será rolado novamente até que o resultado seja 3 ou maior.
 
-### **Modificadores Comuns**
+### **Contando Sucessos (Rolagem Alvo)**
 
-| Modificador | Notação | Descrição | Exemplo |
-| :---- | :---- | :---- | :---- |
-| **Mínimo** | min{n} | Trata rolagens abaixo de n como n. | 4d6min3 (1s e 2s viram 3s) |
-| **Máximo** | max{n} | Trata rolagens acima de n como n. | 4d6max3 (4s, 5s e 6s viram 3s) |
-| **Explosão** | \!, \!{cp} | Re-rola e adiciona rolagens que atingem o ponto de comparação (padrão: máximo). | 4d10\! (rola novamente se der 10\) |
-| **Composição** | \!\!, \!\!{cp} | Igual à explosão, mas combina as rolagens explodidas em um único valor. | 4d10\!\! (se explodir, soma tudo) |
-| **Penetração** | \!p, \!\!p, \!p{cp}, \!\!p{cp} | Re-rola o máximo, adiciona o resultado \-1. Pode ser composto. | 2d6\!p (se der 6, re-rola e subtrai 1 do novo resultado) |
-| **Re-rolagem** | r, ro, r{cp}, ro{cp} | Re-rola o mínimo (geralmente 1\) até que seja maior. ro re-rola apenas uma vez. | d6r (re-rola 1s até não ser 1\) |
-| **Único** | u, uo, u{cp}, uo{cp} | Re-rola valores duplicados até serem únicos. uo re-rola apenas uma vez. | 2d10u (re-rola se os dois dados forem iguais) |
-| **Manter** | k{n}, kh{n}, kl{n} | Rola dados e mantém os n resultados mais altos (kh) ou mais baixos (kl). k sozinho mantém os mais altos. | 4d10kh2 (mantém os 2 maiores de 4 d10) |
-| **Descartar** | d{n}, dh{n}, dl{n} | Rola dados e descarta os n resultados mais altos (dh) ou mais baixos (dl). d sozinho descarta os mais baixos. | 4d10dl2 (descarta os 2 menores de 4 d10) |
-| **Sucesso Alvo** | {cp} | Conta quantos dados atendem a uma condição (ex: 5d10\>=8 conta quantos dados de 10 lados deram 8 ou mais). | 5d10\>=8 |
-| **Falha Alvo** | f{cp} | Subtrai 1 do total de sucessos para cada falha. Deve seguir um Sucesso Alvo. | 4d6\>4f\<3 (sucessos \>4, falhas \<3) |
-| **Sucesso Crítico** | cs, cs{cp} | **Estético:** Destaca rolagens de sucesso crítico (padrão: máximo). | 2d20cs (destaca 20s em d20) |
-| **Falha Crítica** | cf, cf{cp} | **Estético:** Destaca rolagens de falha crítica (padrão: mínimo). | 2d20cf (destaca 1s em d20) |
-| **Ordenação** | s, sa, sd | Ordena os resultados dos dados. s ou sa para ascendente, sd para descendente. | 4d6s (ordena os resultados) |
+Em vez de somar os dados, você pode contar quantos deles atingem um certo valor.
 
-## **3\. Rolagens em Grupo**
+* **Sucesso (\>,\>=)**: Conta quantos dados são iguais ou superiores ao valor alvo.  
+* **Falha (f)**: Subtrai do total de sucessos cada dado que atinge o valor de falha.
 
-Permitem rolar várias expressões de dados e somar os resultados. Modificadores podem ser aplicados ao grupo todo.
+**Exemplos Práticos:**
 
-### **Sintaxe e Uso**
+* 5d10\>=8: Rola 5d10 e conta quantos resultados foram 8, 9 ou 10\. Ideal para sistemas como o Mundo das Trevas.  
+* 10d6\>5f=1: Rola 10d6. Conta os resultados 6 como sucessos e subtrai 1 do total para cada resultado 1\.
 
-Use chaves {} para agrupar rolagens, separadas por vírgulas.
+## **Recursos Adicionais**
 
-* **Exemplos:**  
-  * {4d6, 2d10, d4}: Soma os resultados de cada sub-rolagem.  
-  * {3d8\*2, 20/2d10}: Permite cálculos dentro das sub-rolagens.
+Ferramentas úteis para situações mais específicas.
 
-### **Modificadores com Grupos**
+### **Rolagens em Grupo {}**
 
-Alguns modificadores funcionam de forma diferente com grupos:
+Permite executar múltiplas rolagens de uma vez e somar seus totais. Basta separar as rolagens por vírgulas dentro de chaves.
 
-* **Manter (k{n}):** Se houver várias sub-rolagens, aplica-se aos *totais das sub-rolagens*, mantendo os mais altos/baixos.  
-* **Descartar (d{n}):** Se houver várias sub-rolagens, aplica-se aos *totais das sub-rolagens*, descartando os mais altos/baixos.  
-* **Sucesso Alvo ({cp}):** Conta quantos *totais de sub-rolagens* atendem à condição.  
-* **Falha Alvo (f{cp}):** Subtrai sucessos com base nos *totais de sub-rolagens* que são falhas.  
-* **Ordenação (s):** Ordena os resultados dos dados *e* os totais das sub-rolagens.
+**Exemplo:**
 
-## **4\. Descrições de Rolagem**
+* {4d6+2, 1d8}: Rola 4d6+2, rola 1d8 e soma os dois totais em um grande resultado final.
 
-A documentação não detalha esta parte.
+### **Dados Especiais**
 
-## **5\. Matemática**
+* **Dado Percentil (d%)**: Um atalho para d100, usado para rolar um número entre 1 e 100\.  
+* **Dados Fudge/Fate (dF)**: Um dado de 6 lados que resulta em \+1, 0 ou \-1. Usado principalmente no sistema FATE.
 
-Você pode usar operações matemáticas básicas como adição (+), subtração (-), multiplicação (\*), divisão (/) e expoentes (^) com dados ou números.
+**Exemplo:**
 
-* **Exemplos:**  
-  * 2d8+4  
-  * 1d6\*5
+* 4dF: Rola 4 dados Fudge e soma os modificadores (+1, 0, \-1) para determinar o resultado de uma ação.
 
-## **Conclusão**
+### **Organização e Estilo**
 
-O RPG Dice Roller é uma ferramenta poderosa para rolar dados, combinando a notação padrão com recursos avançados. Ele é feito para ser estável e flexível, permitindo simulações de dados complexas e precisas para suas sessões de RPG.`
+* **Ordenar (s, sa, sd)**: Mostra os resultados individuais dos dados em ordem crescente (s ou sa) ou decrescente (sd). Não altera a soma.  
+* **Adicionar Comentários (\#)**: Adicione uma descrição à sua rolagem para se lembrar do que ela significa.
+
+**Exemplo:**
+
+* 8d6s \#Dano da Bola de Fogo: Rola 8d6, mostra os resultados em ordem crescente e adiciona a etiqueta "Dano da Bola de Fogo".
+
+## **Referência Rápida de Modificadores**
+
+| Notação | O que faz |
+| :---- | :---- |
+| **Matemática** | . |
+| \+ \- \* / | Realiza operações matemáticas básicas. |
+| **Manter/Descartar** | . |
+| kh{N} ou k{N} | Mantém os **N** dados mais altos. |
+| kl{N} | Mantém os **N** dados mais baixos. |
+| dh{N} | Descarta os **N** dados mais altos. |
+| dl{N} ou d{N} | Descarta os **N** dados mais baixos. |
+| **Explosão/Re-rolagem** | . |
+| \! | Rola novamente o dado de valor máximo e soma ao total. |
+| r{cp} | Re-rola dados que atendem a uma condição (cp). |
+| ro{cp} | Re-rola dados que atendem à condição, mas só uma vez. |
+| **Sucesso/Falha** | . |
+| {cp} | Conta quantos dados atendem à condição. |
+| f{cp} | Define uma condição de falha que subtrai dos sucessos. |
+| **Estilo** | . |
+| s, sa | Ordena os resultados em ordem crescente. |
+| sd | Ordena os resultados em ordem decrescente. |
+| cs{cp} | Destaca visualmente um acerto crítico. |
+| cf{cp} | Destaca visualmente uma falha crítica. |
+| \# texto | Adiciona um comentário/descrição à rolagem. |
+
+
+`
 
 function page(idioma, rota) {
     const t = idioma
@@ -159,10 +165,8 @@ function page(idioma, rota) {
 ${head(`${t.lang}${rota}`,`${t.system.default.title.replaceAll("%system%",sistema.card.title)}`,t.system.default.desc.replaceAll("%system%",sistema.card.title),sistema.bg)}
 <body>
     ${nav(t, rota)}
-
     ${blog(t.system.default.title.replaceAll("%system%",sistema.card.title),sistema.tags,sistema.bg,`    
     ${MarkdownContent(md)}
-    ${TextAndImage(t.footer.legal,linkReplacer(sistema.legal),sistema.icon,t.system.default.title.replaceAll("%system%",sistema.card.title))}
 
 
     `)}

@@ -100,7 +100,7 @@ async function page(language, route) {
     let lang = language.lang;
     let realLang = lang;
     if (lang === "pt") lang = "pt-BR";
-    const commands = await getCommands();
+    let commands = await getCommands();
     if (!Array.isArray(commands) || commands.length === 0) {
         commands = [];
     }

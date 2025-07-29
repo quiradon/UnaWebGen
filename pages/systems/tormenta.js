@@ -21,7 +21,7 @@ ${head(`${t.lang}${rota}`,`${t.system.default.title.replaceAll("%system%",sistem
     ${nav(t, rota)}
 
     ${blog(t.system.default.title.replaceAll("%system%",sistema.card.title),sistema.tags,"/static/img/banners/Tormenta20.webp",`
-    ${PlaceParagraphs("teste",sistema.article)}
+    ${PlaceParagraphs("",sistema.article)}
     ${PlaceParagraphs(t.system.default.playDiscord.replaceAll("%system%",sistema.card.title),t.system.default.playDiscordDesc.replaceAll("%system%",sistema.card.title))}
     ${TextAndImage(t.footer.legal,linkReplacer(sistema.legal),sistema.icon,t.system.default.title.replaceAll("%system%",sistema.card.title))}
 

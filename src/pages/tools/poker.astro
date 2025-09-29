@@ -1,14 +1,9 @@
 ---
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
+import { loadT } from '@lib/i18n';
 
-export async function getStaticPaths() {
-  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
-}
-
-const lang = Astro.params.lang as string;
-const t = loadT(lang);
+const t = loadT('en');
 const route = '/tools/poker';
 ---
 <Layout t={t} route={route} title={t.poker?.title} desc={t.poker?.desc}>
@@ -28,10 +23,10 @@ const route = '/tools/poker';
               <button class="text-wrap btn btn-primary link-light p-2" id="cardsrun" style="white-space: nowrap;" type="button">{t.misc?.btn?.gencard}</button>
               <select class="form-select me-2" id="cardstype" name="card">
                 <option value="random" selected>{t.poker?.cards?.type?.["0"]}</option>
-                <option value="0">{t.poker?.cards?.type?.["4"]} (♦)</option>
-                <option value="1">{t.poker?.cards?.type?.["1"]} (♠)</option>
-                <option value="2">{t.poker?.cards?.type?.["2"]} (♣)</option>
-                <option value="3">{t.poker?.cards?.type?.["3"]} (♥)</option>
+                <option value="0">{t.poker?.cards?.type?.["4"]}</option>
+                <option value="1">{t.poker?.cards?.type?.["1"]}</option>
+                <option value="2">{t.poker?.cards?.type?.["2"]}</option>
+                <option value="3">{t.poker?.cards?.type?.["3"]}</option>
               </select>
             </div>
           </div>
@@ -44,17 +39,18 @@ const route = '/tools/poker';
     const audio = "/static/audio/play-card.mp3";
     document.getElementById('cardsrun').onclick = card;
     function card() {
-      let a = document.getElementById('cardstype').value ?? 0;
-      if (a === 'random') a = Math.floor(4 * Math.random());
+      let a = (document.getElementById('cardstype') as HTMLSelectElement).value ?? '0';
+      if (a === 'random') a = String(Math.floor(4 * Math.random()));
       const audioElement = new Audio(audio);
       audioElement.volume = 0.5;
       audioElement.play();
       const cardNumber = Math.floor(13 * Math.random()) + 1;
       const cardimg = `/static/api/poker-card/${a}-${cardNumber}.webp`;
-      const cardElement = document.getElementById('cardshow');
+      const cardElement = document.getElementById('cardshow') as HTMLImageElement;
       cardElement.src = cardimg;
       cardElement.classList.add('flip');
       setTimeout(() => { cardElement.classList.remove('flip'); }, 500);
     }
   </script>
 </Layout>
+

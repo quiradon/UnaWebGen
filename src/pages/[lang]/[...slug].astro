@@ -5,7 +5,7 @@ import { getLanguages, getRouteSlugs, resolveModuleAbsolutePathFromSlug, compute
 import { createRequire } from 'node:module';
 
 export async function getStaticPaths() {
-  const langs = getLanguages();
+  const langs = getLanguages().filter((l) => l !== 'en');
   const slugs = getRouteSlugs();
   const EXCLUDES = ['index', 'privacy', 'tos', 'commands', 'systems', '404', 'tools', 'test'];
   const filtered = slugs.filter((s) => !EXCLUDES.includes(s) && !s.startsWith('systems/'));

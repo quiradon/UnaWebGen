@@ -1,16 +1,10 @@
 ---
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
+import { loadT } from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
 
-export async function getStaticPaths() {
-  // Build tools index for all non-default languages
-  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
-}
-
-const langParam = Astro.params.lang as string;
-const t = loadT(langParam);
+const t = loadT('en');
 const lang = idiomaR(t);
 ---
 <Layout t={t} route="/tools" title={t.tools?.section?.title} desc={t.tools?.section?.desc}>
@@ -81,3 +75,4 @@ const lang = idiomaR(t);
     </div>
   </section>
 </Layout>
+

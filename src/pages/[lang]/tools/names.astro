@@ -6,7 +6,7 @@ import { getLanguages, loadT } from '@lib/i18n';
 import namesData from '../../../../data/names.json';
 
 export async function getStaticPaths() {
-  return getLanguages().map((lang) => ({ params: { lang } }));
+  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as string;
@@ -116,4 +116,3 @@ const route = '/tools/names';
     });
   </script>
 </Layout>
-

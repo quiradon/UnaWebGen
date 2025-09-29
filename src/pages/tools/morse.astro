@@ -1,0 +1,58 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { loadT } from '@lib/i18n';
+
+const t = loadT('en');
+const route = '/tools/morse';
+---
+<Layout t={t} route={route} title={t.tools?.morse?.title} desc={t.tools?.morse?.desc}>
+  <section class="justify-content-lg-center pt-2 mt-4 mb-4">
+    <div class="container">
+      <div class="col-12 mb-2">
+        <h1 class="display-5 fw-bold text-white mb-3">{t.tools?.morse?.title}</h1>
+        <p class="lead text-secondary">{t.tools?.morse?.desc}</p>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="morseText" class="form-label">{t.common?.texto}</label>
+                <textarea id="morseText" class="form-control" rows="3">SOS</textarea>
+              </div>
+              <div class="mb-3">
+                <label for="morseOutput" class="form-label">{t.tools?.morse?.title}</label>
+                <textarea id="morseOutput" class="form-control" rows="3" readonly></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="morseStyle" class="form-label">{t.tools?.morse?.types?.title}</label>
+                <select id="morseStyle" class="form-select">
+                  <option value="classic">{t.tools?.morse?.types?.["0"]}</option>
+                  <option value="sonar">{t.tools?.morse?.types?.["1"]}</option>
+                  <option value="ovni">{t.tools?.morse?.types?.["2"]}</option>
+                  <option value="terror">{t.tools?.morse?.types?.["3"]}</option>
+                  <option value="tribal">{t.tools?.morse?.types?.["4"]}</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="morseSpeed" class="form-label">Speed (WPM)</label>
+                <input id="morseSpeed" type="range" min="5" max="40" value="20" class="form-range" />
+              </div>
+              <button id="morseConvert" class="btn btn-primary">Convert</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script is:inline>
+    const table = { A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....', I: '..', J: '.---', K: '-.-', L: '.-..', M: '--', N: '-.', O: '---', P: '.--.', Q: '--.-', R: '.-.', S: '...', T: '-', U: '..-', V: '...-', W: '.--', X: '-..-', Y: '-.--', Z: '--..', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----' };
+    document.getElementById('morseConvert').onclick = () => {
+      const text = document.getElementById('morseText').value.toUpperCase();
+      const out = text.split('').map((ch) => table[ch] || '/').join(' ');
+      document.getElementById('morseOutput').value = out;
+    };
+  </script>
+</Layout>
+

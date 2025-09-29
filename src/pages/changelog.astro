@@ -1,0 +1,53 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { loadT } from '@lib/i18n';
+
+const t = loadT('en');
+
+type Update = { version?: string; text?: Record<string, string>; img?: string };
+let updates: Update[] = [];
+try {
+  const res = await fetch('https://una-api.arkanus.app/updates');
+  if (res.ok) updates = (await res.json()) as Update[];
+} catch (err) {
+  updates = [];
+}
+
+function formatUpdateText(raw: string | undefined): string {
+  if (!raw) return '';
+  let s = raw;
+  s = s.replace(/\n/g, '<br/>');
+  s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/@(\w+)/g, '<span class=\"text-primary\">@$1</span>');
+  s = s.replace(/`(.*?)`/g, '<span class=\"text-bg-primary\">$1</span>');
+  return s;
+}
+const idiomaUpdates = 'en-US';
+---
+<Layout t={t} route="/changelog" title={t.changelogs?.title} desc={t.changelogs?.desc}>
+  <div class="container">
+    <div class="col-12 text-center mb-2 mt-4">
+      <div class="mb-3">
+        <h1 class="display-5 fw-bold mt-0">{t.nav?.docs?.changelogs?.name}</h1>
+        <p class="lead text-secondary -3">{t.nav?.docs?.changelogs?.desc}</p>
+      </div>
+    </div>
+    <div class="row row-cols-1" id="updates">
+      <div class="col">
+        {updates.map((u) => (
+          <div class="col" id={u.version ?? '0'}>
+            <div class="border rounded border-1 border-primary-subtle px-4 py-1 m-2 my-4">
+              <h2 class="text-center mt-3">{u.version ?? '0'}</h2>
+              <hr class="text-primary" />
+              <p class="text-break text-light"><Fragment set:html={formatUpdateText(u.text?.[idiomaUpdates])} /></p>
+              <hr class="text-primary" />
+              {u.img && <img class="rounded img-fluid" src={u.img} alt={u.version ?? 'update'} />}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+

@@ -5,7 +5,7 @@ import { getLanguages, loadT } from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
 
 export async function getStaticPaths() {
-  return getLanguages().map((lang) => ({ params: { lang } }));
+  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
 }
 
 const langParam = Astro.params.lang as string;

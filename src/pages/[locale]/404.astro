@@ -1,24 +1,22 @@
 ---
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
 
-export async function getStaticPaths() {
-  return getLanguages().map((lang) => ({ params: { lang } }));
-}
+import { loadT, getStaticPaths } from '@lib/i18n';
+export { getStaticPaths };
 
-const lang = Astro.params.lang as string;
-const t = loadT(lang);
-const langPrefix = idiomaR(t);
+const langParam = Astro.params.locales as string;
+const t = loadT(langParam);
+const lang = idiomaR(t);
 ---
-<Layout t={t} route="/donate" title={t.PageNotFound?.title} desc={t.PageNotFound?.desc}>
+<Layout t={t} route="/404" title={t.PageNotFound?.title} desc={t.PageNotFound?.desc}>
   <section class="mb-5 pb-5">
     <div class="container mt-5 pt-5 mb-5 pb-5">
       <h1 class="display-1 fw-bold text-center text-primary pt-5 mt-5">404</h1>
       <p class="text-capitalize fs-4 text-center">{t.PageNotFound?.title}</p>
       <div class="d-flex justify-content-center">
-        <a class="btn btn-primary" role="button" href={`${langPrefix}/`}>{t.PageNotFound?.btn}</a>
+        <a class="btn btn-primary" role="button" href={`${lang}/`}>{t.PageNotFound?.btn}</a>
       </div>
     </div>
   </section>

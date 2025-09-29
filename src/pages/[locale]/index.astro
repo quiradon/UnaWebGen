@@ -2,15 +2,19 @@
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
 import icons from '@components/icons';
-import { getLanguages, loadT } from '@lib/i18n';
+import { getLanguages, loadT, getValidatedLanguage } from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
 import config from '../../../config.json';
 
 export async function getStaticPaths() {
-  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
+  const languages = getLanguages();
+  return languages.map((lang) => ({
+    params: { locale: lang },
+  }));
 }
-
-const lang = Astro.params.lang as string;
+// Obter idioma validado usando Astro.locals e parâmetros
+const requestedLang = Astro.params.locale as string;
+const lang = getValidatedLanguage(Astro.locals, requestedLang);
 const t = loadT(lang);
 const langPrefix = idiomaR(t);
 
@@ -319,7 +323,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       <div class="row g-0 justify-content-center align-items-center">
         <div class="col-xxl-12 box pb-0 mb-5">
           <div class="content">
-            <h3>{t.premium?.[0]?.title}<Fragment set:html={icons?.shild ?? ''} /></h3>
+            <h3>{t.premium?.[0]?.title}<Fragment set:html={icons?.coroa ?? ''} /></h3>
             <p>{t.premium?.[0]?.desc}</p>
             <ul class="list-unstyled justify-content-xxl-start mb-1">
               <li class="mb-1"><Fragment set:html={icons.user} /> {t.premium?.feat?.[10]}</li>
@@ -337,7 +341,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
         </div>
         <div class="col-xxl-12 box pb-0 mb-5">
           <div class="content">
-            <h3>{t.premium?.[1]?.title}<Fragment set:html={icons?.group ?? ''} /></h3>
+            <h3>{t.premium?.[1]?.title}<Fragment set:html={icons?.user ?? ''} /></h3>
             <p>{t.premium?.[1]?.desc}</p>
             <ul class="list-unstyled justify-content-xxl-start mb-1">
               <li class="mb-1"><Fragment set:html={icons.user} /> {t.premium?.feat?.[10]}</li>
@@ -356,16 +360,16 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
         </div>
         <div class="col-xxl-12 box pb-0 mb-5">
           <div class="content">
-            <h3>{t.premium?.[2]?.title}<Fragment set:html={icons?.octopus ?? ''} /></h3>
+            <h3>{t.premium?.[2]?.title}<Fragment set:html={icons?.coroa ?? ''} /></h3>
             <p>{t.premium?.[2]?.desc}</p>
             <ul class="list-unstyled justify-content-xxl-start mb-1">
               <li class="mb-1"><Fragment set:html={icons.user} /> {t.premium?.feat?.[11]}</li>
               <li class="mb-1"><Fragment set:html={icons.coin} /> 10 {t.premium?.feat?.[4]}</li>
               <li class="mb-1"><Fragment set:html={icons.key} /> {t.premium?.feat?.[6]} {t.premium?.feat?.[12]}</li>
               <li class="mb-1"><Fragment set:html={icons.msg} /> {t.premium?.feat?.[5]}</li>
-              <li class="mb-1"><Fragment set:html={icons?.xadrez ?? ''} /> {t.premium?.feat?.[9]}</li>
-              <li class="mb-1"><Fragment set:html={icons?.picture ?? ''} /> {t.premium?.feat?.[98]}</li>
-              <li class="mb-1"><Fragment set:html={icons?.blocks ?? ''} /> {t.premium?.feat?.[99]}</li>
+              <li class="mb-1"><Fragment set:html={icons?.caixa ?? ''} /> {t.premium?.feat?.[9]}</li>
+              <li class="mb-1"><Fragment set:html={icons?.info ?? ''} /> {t.premium?.feat?.[98]}</li>
+              <li class="mb-1"><Fragment set:html={icons?.caixa ?? ''} /> {t.premium?.feat?.[99]}</li>
               <li><hr /></li>
               <li class="mb-1"><Fragment set:html={icons.dice} /> {t.premium?.feat?.[0]}</li>
               <li class="mb-1"><Fragment set:html={icons.tags} /> {t.premium?.feat?.[1]}</li>
@@ -438,5 +442,4 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       if (window.location.hash === '#premium_modal') openModal();
     });
   </script>
-  <script is:inline src="/static/js/user_count.js"></script>
-</Layout>
+  </Layout>

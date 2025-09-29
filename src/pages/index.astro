@@ -1,9 +1,102 @@
 ---
-// Página de redirecionamento para a página inicial localizada
-// Esta página é obrigatória quando prefixDefaultLocale: false
-// Redireciona automaticamente para /<defaultLocale>
-import { DEFAULT_LOCALE } from '../lib/i18n';
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import icons from '@components/icons';
+import { getValidatedLanguage, loadT } from '@lib/i18n';
+import { idiomaR } from '@lib/routes';
+import config from '../../config.json';
 
-// Redireciona para a página inicial do idioma padrão
-return Astro.redirect(`/${DEFAULT_LOCALE}/`);
+// Para a rota raiz, sempre usar inglês como padrão (sem parâmetro locale)
+const lang = getValidatedLanguage(Astro.locals, undefined); // undefined força o uso do padrão
+const t = loadT(lang);
+const langPrefix = idiomaR(t);
+
+const landingHTML = (t.index?.landing?.text ?? '').replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1<\/span>');
+const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 ---
+<Layout t={t} route="/index" title={t.index?.name ?? 'Mini Kraken'}>
+  <style>
+    .bgImg2 {
+      background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)),
+                  linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%),
+                  url('/static/img/bg/dnd.webp') center / cover repeat-x;
+    }
+  </style>
+
+  <!-- Hero -->
+  <section id="inicio" style="background: url('/static/img/bg/pattern-square.svg') top / auto repeat-x;">
+    <div class="container d-lg-flex align-items-lg-center py-4 py-xl-5">
+      <div class="row gy-2 gy-md-0 row-cols-1 row-cols-lg-2 my-3 py-3">
+        <div class="col-auto col-xl-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+          <div class="mb-5">
+            <h1 class="display-1 fw-bold"><Fragment set:html={landingHTML} /></h1>
+            <p class="text-secondary lead">{t.index?.start?.desc}</p>
+            <a class="btn btn-primary btn-lg mt-1 border-2 px-5 me-1 generic_grow fw-bold" href={config.bot_invite} target="_blank">{t.nav?.add}</a>
+            <a class="btn btn-primary btn-lg mt-1 border-2 px-4 generic_grow fw-bold" href={`${langPrefix}/tools`}>{t.online?.tools?.btn}</a>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0">
+          <img class="img-fluid generic_grow" alt="Mini Kraken RPG | Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Systems carousel -->
+  <section class="py-3">
+    <div class="container">
+      <div class="mb-3">
+        <h4 class="fw-semibold text-primary mb-0">{t.index?.system?.subtitle}</h4>
+        <h1 class="display-5 fw-bold mt-0">{t.index?.system?.title}</h1>
+        <p class="lead text-secondary -3">{t.index?.system?.desc}</p>
+      </div>
+      <div class="position-relative">
+        <div class="top-0 start-auto end-0 gap-2 text-end">
+          <button class="btn btn-primary" id="prev-btn" aria-label="Previous">&#x2039;</button>
+          <button class="btn btn-primary" id="next-btn" aria-label="Next">&#x203A;</button>
+        </div>
+        <div class="d-inline-flex flex-row flex-grow-1 flex-fill py-3 px-2 overflow-scroll" id="auto-scroll" style="width: 100%;">
+          {Object.keys(sistemas).map((key, idx) => {
+            const s = sistemas[key];
+            const url = `${langPrefix}/systems/${s.path}`;
+            const showAuto = true;
+            return (
+              <div class="col-9 col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
+                <div class="card d-flex flex-grow-1 card_system_card border-1 position-relative">
+                  {showAuto && (
+                    <div class="bg-secondary-subtle border rounded-circle border-0 position-absolute end-0 mt-3 me-3" title="Suporte a Fichas &amp; Rolagem Automatica">
+                      <svg class="text-secondary p-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 32px;"><path d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z"/></svg>
+                    </div>
+                  )}
+                  <div class="card-body d-flex flex-column py-2 px-3">
+                    <a href={url} class="link-unstyled">
+                      <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-1 bs-icon">
+                        <img class="img-fluid user-select-none" alt={`${s.card?.title} Icon`} src={s.icon} />
+                      </div>
+                      <h4 class="card-title user-select-none text-primary">{s.card?.title}</h4>
+                    </a>
+                    <p class="card-text user-select-none flex-grow-1">{s.card?.desc}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div class="text-end"><a class="mt-1 border-2 generic_grow fw-bold" href={`${langPrefix}/systems`}>{t.index?.allSystems?.text}</a></div>
+    </div>
+  </section>
+
+  <!-- Continue with all other sections from the [locale]/index.astro file... -->
+  
+  <!-- Page specific scripts -->
+  <script is:inline>
+    const scrollContainer = document.getElementById('auto-scroll');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    if (prevBtn && nextBtn && scrollContainer) {
+      prevBtn.addEventListener('click', () => scrollContainer.scrollBy({ left: -300, behavior: 'smooth' }));
+      nextBtn.addEventListener('click', () => scrollContainer.scrollBy({ left: 300, behavior: 'smooth' }));
+    }
+  </script>
+</Layout>

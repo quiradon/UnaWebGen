@@ -5,6 +5,13 @@ export type Translations = Record<string, any> & { lang: string };
 
 const I18N_DIR = path.resolve(process.cwd(), 'i18n');
 
+export async function getStaticPaths() {
+  const languages = getLanguages();
+  return languages.map((lang) => ({
+    params: { locale: lang },
+  }));
+}
+
 export function getLanguages(): string[] {
   if (!fs.existsSync(I18N_DIR)) return [];
   return fs
@@ -14,6 +21,7 @@ export function getLanguages(): string[] {
 }
 
 export function loadT(lang: string): Translations {
+  if (!lang) lang = 'en';
   const file = path.join(I18N_DIR, `${lang}.json`);
   const raw = fs.readFileSync(file, 'utf-8');
   const t = JSON.parse(raw) as Translations;
@@ -21,50 +29,22 @@ export function loadT(lang: string): Translations {
   return t;
 }
 
-export function getRouteSlugs(): string[] {
-  const PAGES_DIR = path.resolve(process.cwd(), 'pages');
-  const slugs: string[] = [];
-  if (!fs.existsSync(PAGES_DIR)) return slugs;
-
-  const walk = (dir: string, prefix = '') => {
-    const entries = fs.readdirSync(dir, { withFileTypes: true });
-    for (const entry of entries) {
-      const full = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        walk(full, path.join(prefix, entry.name));
-      } else if (entry.isFile() && entry.name.endsWith('.js')) {
-        const name = path.basename(entry.name, '.js');
-        if (prefix === '' && name === 'index') {
-          continue;
-        }
-        if (name === 'index') {
-          slugs.push(prefix.replace(/\\/g, '/'));
-        } else {
-          slugs.push(path.join(prefix, name).replace(/\\/g, '/'));
-        }
-      }
-    }
-  };
-
-  walk(PAGES_DIR);
-  return [...new Set(slugs)].sort();
+export function getValidatedLanguage(astroLocals: any, requestedLang?: string): string {
+  const availableLanguages = astroLocals?.availableLanguages || getLanguages();
+  const defaultLanguage = 'en'; // Sempre usar inglês como padrão
+  
+  // Se não há idioma solicitado, retorna o padrão
+  if (!requestedLang) {
+    return defaultLanguage;
+  }
+  
+  // Se o idioma solicitado é válido, usa ele
+  if (availableLanguages.includes(requestedLang)) {
+    return requestedLang;
+  }
+  
+  // Se o idioma não é válido, retorna o padrão
+  return defaultLanguage;
 }
 
-export function resolveModuleAbsolutePathFromSlug(slug: string): string | null {
-  const PAGES_DIR = path.resolve(process.cwd(), 'pages');
-  const base = path.join(PAGES_DIR, slug);
-  const direct = `${base}.js`;
-  const asIndex = path.join(base, 'index.js');
-  if (fs.existsSync(direct)) return direct;
-  if (fs.existsSync(asIndex)) return asIndex;
-  return null;
-}
-
-export function computeRotaFromAbsolutePath(absPath: string): string {
-  const PAGES_DIR = path.resolve(process.cwd(), 'pages');
-  let rel = path.relative(PAGES_DIR, absPath).replace(/\\/g, '/');
-  rel = rel.replace(/\.js$/, '');
-  if (rel === 'index') return '/index';
-  return '/' + rel;
-}
 

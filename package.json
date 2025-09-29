@@ -8,7 +8,6 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "postbuild": "node scripts/generate-root.js",
     "pages:dev": "wrangler pages dev dist/",
     "clean": "rimraf dist"
   },

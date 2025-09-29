@@ -1,8 +1,8 @@
 ---
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
-
+import { loadT, getStaticPaths } from '@lib/i18n';
+export { getStaticPaths };
 type Cmd = {
   name: string;
   description: string;
@@ -11,10 +11,6 @@ type Cmd = {
   options?: CmdOption[];
 };
 type CmdOption = Cmd & { type: number };
-
-export async function getStaticPaths() {
-  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
-}
 
 async function getCommands(): Promise<Cmd[]> {
   const url = 'https://una-api.arkanus.app/commands';
@@ -76,7 +72,8 @@ function renderCard(cmd: Cmd, lang: string, parentName = ''): string {
   return subCards;
 }
 
-const lang = Astro.params.lang as string;
+
+const lang = Astro.params.locales as string;
 const t = loadT(lang);
 const apiLang = t.lang === 'pt' ? 'pt-BR' : 'en-US';
 const commands = await getCommands();

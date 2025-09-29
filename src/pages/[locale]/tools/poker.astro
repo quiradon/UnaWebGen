@@ -1,13 +1,9 @@
 ---
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
-
-export async function getStaticPaths() {
-  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
-}
-
-const lang = Astro.params.lang as string;
+import { loadT, getStaticPaths } from '@lib/i18n';
+export { getStaticPaths };
+const lang = Astro.params.locales as string;
 const t = loadT(lang);
 const route = '/tools/poker';
 ---

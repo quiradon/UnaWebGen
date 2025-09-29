@@ -1,0 +1,351 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { getLanguages, loadT } from '@lib/i18n';
+
+export async function getStaticPaths() {
+  return getLanguages().map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as string;
+const t = loadT(lang);
+const route = '/tools/morse';
+---
+<Layout t={t} route={route} title={t.tools?.morse?.title} desc={t.tools?.morse?.desc}>
+  <section class="justify-content-lg-center pt-2 mt-4 mb-4">
+    <div class="container">
+      <div class="col-12 mb-2">
+        <h1 class="display-5 fw-bold text-white mb-3">{t.tools?.morse?.title}</h1>
+        <p class="lead text-secondary">{t.tools?.morse?.desc}</p>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="morseText" class="form-label">{t.common?.texto}</label>
+                <textarea id="morseText" class="form-control" rows="3">SOS</textarea>
+              </div>
+              <div class="mb-3">
+                <label for="morseOutput" class="form-label">{t.tools?.morse?.title}</label>
+                <textarea id="morseOutput" class="form-control" rows="3" readonly></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="morseStyle" class="form-label">{t.tools?.morse?.types?.title}</label>
+                <select id="morseStyle" class="form-select">
+                  <option value="classic">{t.tools?.morse?.types?.["0"]}</option>
+                  <option value="sonar">{t.tools?.morse?.types?.["1"]}</option>
+                  <option value="ovni">{t.tools?.morse?.types?.["2"]}</option>
+                  <option value="terror">{t.tools?.morse?.types?.["3"]}</option>
+                  <option value="tribal">{t.tools?.morse?.types?.["4"]}</option>
+                  <option value="space">{t.tools?.morse?.types?.["5"]}</option>
+                  <option value="underwater">{t.tools?.morse?.types?.["6"]}</option>
+                  <option value="wind">{t.tools?.morse?.types?.["7"]}</option>
+                </select>
+              </div>
+              <button class="btn btn-primary w-100 mb-2" onclick="playMorse()">{t.tools?.morse?.btn1}</button>
+              <button class="btn btn-secondary w-100" onclick="exportMorse()">{t.tools?.morse?.btn2}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Read optional input from query parameter 'input' (base64)
+    (function initFromQuery(){
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const b64 = params.get('input');
+        if (b64) {
+          const text = atob(b64);
+          const el = document.getElementById('morseText');
+          if (el) el.value = text;
+        }
+      } catch {}
+    })();
+
+    const morseMap = {
+      A: '.-',   B: '-...', C: '-.-.', D: '-..',  E: '.',    F: '..-.',
+      G: '--.',  H: '....', I: '..',   J: '.---', K: '-.-',  L: '.-..',
+      M: '--',   N: '-.',   O: '---',  P: '.--.', Q: '--.-', R: '.-.',
+      S: '...',  T: '-',    U: '..-',  V: '...-', W: '.--',  X: '-..-',
+      Y: '-.--', Z: '--..',
+      0: '-----', 1: '.----', 2: '..---', 3: '...--', 4: '....-',
+      5: '.....', 6: '-....', 7: '--...', 8: '---..', 9: '----.',
+      ' ': ' / '
+    };
+
+    const styles = {
+      classic: { type: 'sine', frequency: 600, gain: 0.5 },
+      sonar:   { type: 'sine', frequency: 200, gain: 0.8, pulse: true },
+      ovni:    { type: 'triangle', frequency: 800, gain: 0.6, pulse: true, vibrato: true, vibratoSpeed: 7, vibratoDepth: 25, modulate: true, modSpeed: 2, modDepth: 40 },
+      terror:  { type: 'sawtooth', frequency: 90, gain: 0.9, pulse: true, vibrato: true, vibratoSpeed: 5, vibratoDepth: 50, echo: true, echoDelay: 0.3, echoFeedback: 0.4 },
+      tribal:  { type: 'square', frequency: 250, gain: 0.7, pulse: true, modulate: true, modSpeed: 3, modDepth: 60 },
+      space:   { type: 'sine', frequency: 440, gain: 0.4, tremolo: true, tremoloSpeed: 2, tremoloDepth: 0.3, delay: true, delayTime: 0.2, delayFeedback: 0.5 },
+      underwater: { type: 'sine', frequency: 300, gain: 0.6, distortion: true, distortionAmount: 0.15 },
+      wind:    { type: 'white', gain: 0.2, pan: true, panValue: 0.5, fadeIn: 0.1, fadeOut: 0.3 },
+    };
+
+    const morseTextInput = document.getElementById('morseText');
+    const morseOutputArea = document.getElementById('morseOutput');
+
+    function textToMorse(text) {
+      return text.trim().toUpperCase().split('').map(char => morseMap[char] || '').join(' ').replace(/\s+\/\s+/g, ' / ');
+    }
+
+    function updateOutput() {
+      const text = morseTextInput.value;
+      morseOutputArea.value = textToMorse(text);
+    }
+    morseTextInput.addEventListener('input', updateOutput);
+    updateOutput();
+
+    function bufferToWav(buffer) {
+      const numOfChan = buffer.numberOfChannels;
+      const length = buffer.length * numOfChan * 2 + 44;
+      const bufferArray = new ArrayBuffer(length);
+      const view = new DataView(bufferArray);
+      const channels = [];
+      let sample;
+      let offset = 0;
+      let pos = 0;
+      // write WAVE header
+      setUint32(0x46464952); // "RIFF"
+      setUint32(length - 8); // file length - 8
+      setUint32(0x45564157); // "WAVE"
+      setUint32(0x20746d66); // "fmt " chunk
+      setUint32(16); // length = 16
+      setUint16(1); // PCM (uncompressed)
+      setUint16(numOfChan);
+      setUint32(buffer.sampleRate);
+      setUint32(buffer.sampleRate * 2 * numOfChan); // avg. bytes/sec
+      setUint16(numOfChan * 2); // block-align
+      setUint16(16); // 16-bit (hardcoded in this demo)
+      setUint32(0x61746164); // "data" - chunk
+      setUint32(length - pos - 4); // chunk length
+      // write interleaved data
+      for (let i = 0; i < buffer.numberOfChannels; i++) channels.push(buffer.getChannelData(i));
+      while (pos < length) {
+        for (let i = 0; i < numOfChan; i++) { // interleave channels
+          sample = Math.max(-1, Math.min(1, channels[i][offset])); // clamp
+          view.setInt16(pos, sample < 0 ? sample * 0x8000 : sample * 0x7fff, true);
+          pos += 2;
+        }
+        offset++;
+      }
+      return new Blob([view], { type: 'audio/wav' });
+      function setUint16(data) { view.setUint16(pos, data, true); pos += 2; }
+      function setUint32(data) { view.setUint32(pos, data, true); pos += 4; }
+    }
+
+    function createBeep(ctx, startTime, duration, style) {
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0, startTime);
+      const fadeIn = style.fadeIn || 0.01;
+      const fadeOut = style.fadeOut || 0.01;
+      gain.gain.linearRampToValueAtTime(style.gain || 0.5, startTime + fadeIn);
+      const endTime = startTime + duration;
+      gain.gain.setValueAtTime(style.gain || 0.5, endTime - fadeOut);
+      gain.gain.linearRampToValueAtTime(0, endTime);
+
+      let source;
+      if (style.type === 'white') {
+        const bufferSize = 2 * (ctx.sampleRate || 44100);
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate || 44100);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
+        source = ctx.createBufferSource();
+        source.buffer = noiseBuffer;
+      } else {
+        source = ctx.createOscillator();
+        source.type = style.type || 'sine';
+        source.frequency.setValueAtTime(style.frequency || 600, startTime);
+      }
+
+      let currentNode = source;
+      if (style.pulse && style.type !== 'white') {
+        const pulse = ctx.createOscillator();
+        const pulseGain = ctx.createGain();
+        pulse.frequency.setValueAtTime(6, startTime);
+        pulseGain.gain.setValueAtTime(40, startTime);
+        pulse.connect(pulseGain).connect(source.frequency);
+        pulse.start(startTime);
+        pulse.stop(startTime + duration);
+      }
+      if (style.vibrato && style.type !== 'white') {
+        const vibrato = ctx.createOscillator();
+        const vibratoGain = ctx.createGain();
+        vibrato.frequency.setValueAtTime(style.vibratoSpeed || 5, startTime);
+        vibratoGain.gain.setValueAtTime(style.vibratoDepth || 50, startTime);
+        vibrato.connect(vibratoGain).connect(source.frequency);
+        vibrato.start(startTime);
+        vibrato.stop(startTime + duration);
+      }
+      if (style.modulate && style.type !== 'white') {
+        const mod = ctx.createOscillator();
+        const modGain = ctx.createGain();
+        mod.frequency.setValueAtTime(style.modSpeed || 2, startTime);
+        modGain.gain.setValueAtTime(style.modDepth || 40, startTime);
+        mod.connect(modGain).connect(source.frequency);
+        mod.start(startTime);
+        mod.stop(startTime + duration);
+      }
+
+      if (style.distortion && style.type !== 'white') {
+        const distortion = ctx.createWaveShaper();
+        function makeDistortionCurve(amount) {
+          const k = typeof amount === 'number' ? amount : 50;
+          const n_samples = 44100;
+          const curve = new Float32Array(n_samples);
+          const deg = Math.PI / 180;
+          let i = 0;
+          for (; i < n_samples; ++i) {
+            const x = i * 2 / n_samples - 1;
+            curve[i] = (3 + k) * Math.atan(Math.sinh(x * 0.25) * 5) / (Math.PI + k * Math.abs(x));
+          }
+          return curve;
+        }
+        distortion.curve = makeDistortionCurve(style.distortionAmount * 400);
+        distortion.oversample = '4x';
+        currentNode.connect(distortion);
+        currentNode = distortion;
+      }
+
+      currentNode.connect(gain);
+      currentNode = gain;
+      if (style.tremolo && style.type !== 'white') {
+        const tremolo = ctx.createOscillator();
+        const tremoloDepth = ctx.createGain();
+        tremolo.frequency.setValueAtTime(style.tremoloSpeed || 5, startTime);
+        tremoloDepth.gain.setValueAtTime(style.tremoloDepth || 0.4, startTime);
+        const tremoloEffectGain = ctx.createGain();
+        currentNode.connect(tremoloEffectGain);
+        currentNode = tremoloEffectGain;
+        tremolo.connect(tremoloDepth).connect(tremoloEffectGain.gain);
+        tremoloEffectGain.gain.setValueAtTime(1.0 - (style.tremoloDepth || 0.4), startTime);
+        tremolo.start(startTime);
+        tremolo.stop(startTime + duration);
+      }
+
+      if (style.echo && style.type !== 'white') {
+        const delay = ctx.createDelay(5.0);
+        delay.delayTime.setValueAtTime(style.echoDelay || 0.2, startTime);
+        const feedback = ctx.createGain();
+        feedback.gain.setValueAtTime(style.echoFeedback || 0.3, startTime);
+        currentNode.connect(delay);
+        delay.connect(feedback);
+        feedback.connect(delay);
+        const wetMix = ctx.createGain();
+        wetMix.gain.setValueAtTime(0.6, startTime);
+        delay.connect(wetMix);
+        const dryMix = ctx.createGain();
+        dryMix.gain.setValueAtTime(0.7, startTime);
+        currentNode.connect(dryMix);
+        const outputNode = ctx.createGain();
+        dryMix.connect(outputNode);
+        wetMix.connect(outputNode);
+        currentNode = outputNode;
+      } else if (style.delay && style.type !== 'white') {
+        const delayNode = ctx.createDelay(5.0);
+        delayNode.delayTime.setValueAtTime(style.delayTime || 0.2, startTime);
+        const feedbackNode = ctx.createGain();
+        feedbackNode.gain.value = style.delayFeedback || 0.5;
+        currentNode.connect(delayNode);
+        delayNode.connect(feedbackNode);
+        feedbackNode.connect(delayNode);
+        const wetMix = ctx.createGain();
+        wetMix.gain.setValueAtTime(0.6, startTime);
+        delayNode.connect(wetMix);
+        const dryMix = ctx.createGain();
+        dryMix.gain.setValueAtTime(0.7, startTime);
+        currentNode.connect(dryMix);
+        const outputNode = ctx.createGain();
+        dryMix.connect(outputNode);
+        wetMix.connect(outputNode);
+        currentNode = outputNode;
+      }
+
+      if (style.pan && style.type === 'white') {
+        const panNode = ctx.createStereoPanner();
+        panNode.pan.setValueAtTime(style.panValue || 0, startTime);
+        currentNode.connect(panNode);
+        currentNode = panNode;
+      }
+
+      currentNode.connect(ctx.destination);
+      source.start(startTime);
+      const stopTime = startTime + duration + (style.echo || style.delay ? Math.max(style.echoDelay || 0, style.delayTime || 0) * 5 : 0.05);
+      source.stop(stopTime);
+    }
+
+    function playMorse() {
+      const text = morseTextInput.value;
+      const style = styles[document.getElementById('morseStyle').value];
+      const morse = textToMorse(text);
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      let time = ctx.currentTime + 0.1;
+      const dot = 0.08;
+      const dash = dot * 3;
+      const intra = dot;
+      const inter = dot * 3;
+      const word = dot * 7;
+      for (let i = 0; i < morse.length; i++) {
+        const ch = morse[i];
+        if (ch === '.') { createBeep(ctx, time, dot, style); time += dot + intra; }
+        else if (ch === '-') { createBeep(ctx, time, dash, style); time += dash + intra; }
+        else if (ch === ' ') {
+          if (i > 0 && morse[i-1] !== ' ' && i < morse.length - 1 && morse[i+1] !== ' ') time += inter - intra;
+        } else if (ch === '/') { time += word - intra; }
+      }
+    }
+
+    function exportMorse() {
+      const text = morseTextInput.value;
+      const style = styles[document.getElementById('morseStyle').value];
+      const morse = textToMorse(text);
+      const dot = 0.08;
+      const dash = dot * 3;
+      const intra = dot;
+      const inter = dot * 3;
+      const word = dot * 7;
+      let estimated = 0.1;
+      for (let i = 0; i < morse.length; i++) {
+        const ch = morse[i];
+        if (ch === '.') estimated += dot + intra;
+        else if (ch === '-') estimated += dash + intra;
+        else if (ch === ' ') {
+          if (i > 0 && morse[i-1] !== ' ' && i < morse.length - 1 && morse[i+1] !== ' ') estimated += inter - intra;
+        } else if (ch === '/') { estimated += word - intra; }
+      }
+      estimated += (style.echo || style.delay ? Math.max(style.echoDelay || 0, style.delayTime || 0) * 5 : 1.0);
+
+      const sampleRate = 44100;
+      const totalSamples = Math.ceil(sampleRate * estimated);
+      const ctx = new OfflineAudioContext(1, totalSamples, sampleRate);
+      let time = 0.1;
+      for (let i = 0; i < morse.length; i++) {
+        const ch = morse[i];
+        if (ch === '.') { createBeep(ctx, time, dot, style); time += dot + intra; }
+        else if (ch === '-') { createBeep(ctx, time, dash, style); time += dash + intra; }
+        else if (ch === ' ') {
+          if (i > 0 && morse[i-1] !== ' ' && i < morse.length - 1 && morse[i+1] !== ' ') time += inter - intra;
+        } else if (ch === '/') { time += word - intra; }
+      }
+      ctx.startRendering().then(buffer => {
+        if (buffer.length === 0) { alert('Audio render error.'); return; }
+        try {
+          const blob = bufferToWav(buffer);
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url; a.download = 'morse_minikraken.wav';
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } catch (e) { console.error(e); alert('Failed to export.'); }
+      });
+    }
+  </script>
+</Layout>
+

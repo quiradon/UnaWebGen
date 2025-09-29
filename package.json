@@ -4,16 +4,20 @@
   "description": "A Static HTML page generator",
   "main": "index.js",
   "scripts": {
-    "start": "wrangler pages dev dist/",
-    "build": "npm run copy-static && npm run copy-root-files && node build.js",
-    "test": "npm test",
-    "copy-static": "copyfiles -u 1 \"static/**/**/*\" dist/static",
-    "copy-root-files": "copyfiles manifest.json robots.txt dist/static",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "postbuild": "node scripts/generate-root.js",
+    "pages:dev": "wrangler pages dev dist/",
     "clean": "rimraf dist"
   },
   "author": "",
   "license": "ISC",
-  "packageManager": "bun@1.0.0",
+  "packageManager": "bun@1.1.30",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
   "dependencies": {
     "cli-progress": "^3.12.0",
     "copyfiles": "^2.4.1",
@@ -26,6 +30,7 @@
     "progress": "^2.0.3"
   },
   "devDependencies": {
+    "astro": "^4.15.9",
     "nodemon": "^3.1.0",
     "wrangler": "^4.19.1",
     "rimraf": "^5.0.5"

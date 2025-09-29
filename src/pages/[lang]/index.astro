@@ -1,0 +1,24 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { getLanguages, loadT } from '@lib/i18n';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+
+export async function getStaticPaths() {
+  return getLanguages().map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as string;
+const t = loadT(lang);
+const require = createRequire(import.meta.url);
+const mod = require(path.resolve(process.cwd(), 'pages', 'index.js'));
+const html = await mod.page(t, '/index');
+const bodyMatch = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+let bodyHTML = bodyMatch?.[1] ?? html;
+bodyHTML = bodyHTML.replace(/<nav[\s\S]*?<\/nav>/i, '').replace(/<footer[\s\S]*?<\/footer>/i, '');
+---
+<Layout t={t} route="/index" title={t.index?.name ?? 'Mini Kraken'}>
+  <Fragment set:html={bodyHTML} />
+</Layout>
+

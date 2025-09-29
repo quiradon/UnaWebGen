@@ -1,0 +1,37 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { getLanguages, loadT } from '@lib/i18n';
+import { markdownToHtml } from '@components/Markdown';
+
+export async function getStaticPaths() {
+  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as string;
+const t = loadT(lang);
+const html = markdownToHtml(t.privacy?.md ?? '');
+---
+<Layout t={t} route="/privacy" title={t.privacy?.title} desc={t.privacy?.desc} pictureURL="/static/img/banners/terms_of_service_banner.webp">
+  <section class="container-lg d-flex justify-content-center my-5" style="max-width: 1100px;">
+    <div class="card border-0 shadow-sm w-100">
+      <div class="position-relative">
+        <img src="/static/img/banners/terms_of_service_banner.webp" alt={t.privacy?.title} class="w-100 rounded px-3" loading="eager" />
+      </div>
+      <div class="card-body px-4 py-4">
+        <div class="mb-3">
+          <div class="d-flex flex-wrap">
+            {(t.privacy?.tags ?? '').split(',').map((category: string) => (
+              <span class="badge bg-primary text-light m-1">{category}</span>
+            ))}
+          </div>
+          <h1 class="text-light fw-bold text-shadow mt-2">{t.privacy?.title}</h1>
+        </div>
+        <div class="content">
+          <Fragment set:html={html} />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+

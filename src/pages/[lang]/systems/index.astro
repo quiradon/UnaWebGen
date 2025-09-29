@@ -1,0 +1,41 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { getLanguages, loadT } from '@lib/i18n';
+import { idiomaR } from '@lib/routes';
+
+export async function getStaticPaths() {
+  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as string;
+const t = loadT(lang);
+const base = idiomaR(t);
+const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
+---
+<Layout t={t} route="/systems" title={t.systems?.title} desc={t.systems?.desc} pictureURL="/static/img/bg/newbg2.webp">
+  <div class="container">
+    <h1 class="display-5 fw-bold mt-0">{t.systems?.title}</h1>
+    <p class="lead text-secondary">{t.systems?.desc}</p>
+  </div>
+  <section class="py-3">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {sistemas.map((sistema) => (
+          <div class="col d-flex">
+            <div class="card w-100 d-flex flex-column shadow-lg border-1 p-3 position-relative">
+              <a href={`${base}/systems/${sistema.path}`} class="link-unstyled">
+                <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-2 bs-icon">
+                  <img class="img-fluid user-select-none" alt={`${sistema.card.title} Icon`} src={sistema.icon} />
+                </div>
+                <h4 class="card-title user-select-none text-primary">{sistema.card.title}</h4>
+              </a>
+              <p class="card-text user-select-none flex-grow-1">{sistema.card.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+

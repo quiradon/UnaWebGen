@@ -1,0 +1,119 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { getLanguages, loadT } from '@lib/i18n';
+
+import namesData from '../../../../data/names.json';
+
+export async function getStaticPaths() {
+  return getLanguages().map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as string;
+const t = loadT(lang);
+const route = '/tools/names';
+---
+<Layout t={t} route={route} title={t.names?.article?.title} desc={t.names?.article?.desc}>
+  <section class="py-4 py-xl-5">
+    <div class="container">
+      <div class="row row-cols-md-2 d-flex flex-grow-1">
+        <div class="col-auto col-sm-12 col-md-6 d-flex align-self-baseline order-first order-md-last">
+          <img class="img-fluid d-flex" src="/static/img/misc/blobs/names_generate.webp" alt="Names generator" loading="lazy" />
+        </div>
+        <div class="col-md-6 col-xl-6 order-last mt-5">
+          <div class="text-white">
+            <h1 class="display-5 fw-bold text-white mb-3">{t.names?.article?.title}</h1>
+            <p class="mb-4 lead text-secondary">{t.names?.article?.desc}</p>
+            <div class="custom-control custom-radio">
+              <input id="customRadio1" class="custom-control-input form-check-input" type="radio" name="config" checked />
+              <label class="form-label custom-control-label ms-1" for="customRadio1">{t.misc?.gen?.all}</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="customRadio2" class="custom-control-input form-check-input" type="radio" name="config" />
+              <label class="form-label custom-control-label ms-1" for="customRadio2">{t.misc?.gen?.male}</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="customRadio3" class="custom-control-input form-check-input" type="radio" name="config" />
+              <label class="form-label custom-control-label ms-1" for="customRadio3">{t.misc?.gen?.fem}</label>
+            </div>
+          </div>
+          <div>
+            <button id="gerar" class="btn btn-primary link-light mt-2 mb-2" type="button">{t.names?.article?.btn}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center">
+        <span id="fake_load" class="d-none spinner-border text-primary mt-1" role="status"></span>
+      </div>
+      <div id="cardsList" class="row g-0 d-xl-flex justify-content-xl-center align-items-xl-center"></div>
+    </div>
+  </section>
+
+  <style is:global>
+    .fade-in.delay-1 {animation-delay: 0.2s;}
+    .fade-in.delay-2 {animation-delay: 0.4s;}
+    .fade-in.delay-3 {animation-delay: 0.6s;}
+    .fade-in.delay-4 {animation-delay: 0.8s;}
+    .fade-in.delay-5 {animation-delay: 1s;}
+    @keyframes fadeIn { 0% {opacity: 0;} 100% {opacity: 1;} }
+    .fade-in { animation: fadeIn 1s; animation-fill-mode: both; }
+  </style>
+
+  <script define:vars={{ namesData, copyLabel: t.comum?.copy ?? 'Copy' }}>
+    function copyToClipboard(text) {
+      const el = document.createElement('textarea');
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    }
+    function genCard(name) {
+      return `
+      <div class="card m-1">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-9 col-lg-10 col-xl-10 d-flex justify-content-center align-items-center">
+              <h4 class="text-primary d-flex flex-grow-1 justify-content-sm-center justify-content-lg-start mb-0">${name}</h4>
+            </div>
+            <div class="col d-flex justify-content-center align-items-center justify-content-md-end">
+              <button onclick="copyToClipboard('${name.replace(/'/g, "\\'")}')" class="btn btn-primary mt-1" type="button">${copyLabel}</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }
+    const CardsList = document.getElementById('cardsList');
+    function showLoad(){document.getElementById('fake_load').classList.remove('d-none')}
+    function hideLoad(){document.getElementById('fake_load').classList.add('d-none')}
+    function randomName(sex) {
+      const pool = sex === 'm' ? namesData.m : sex === 'f' ? namesData.f : namesData.m.concat(namesData.f);
+      const name = pool[Math.floor(Math.random() * pool.length)];
+      const lastname = namesData.l[Math.floor(Math.random() * namesData.l.length)];
+      return `${name} ${lastname}`;
+    }
+    function getType(){
+      const r2 = document.getElementById('customRadio2');
+      const r3 = document.getElementById('customRadio3');
+      if (r2.checked) return 'm';
+      if (r3.checked) return 'f';
+      return 't';
+    }
+    document.getElementById('gerar').addEventListener('click', function(){
+      CardsList.innerHTML = '';
+      showLoad();
+      for (let i = 0; i < 5; i++) {
+        const card = genCard(randomName(getType()));
+        const el = document.createElement('div');
+        el.innerHTML = card;
+        el.classList.add('fade-in');
+        el.classList.add('delay-' + (i + 1));
+        CardsList.appendChild(el);
+      }
+      setTimeout(hideLoad, 500);
+    });
+  </script>
+</Layout>
+

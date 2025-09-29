@@ -1,0 +1,104 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { getLanguages, loadT } from '@lib/i18n';
+
+type Cmd = {
+  name: string;
+  description: string;
+  name_localizations?: Record<string, string>;
+  description_localizations?: Record<string, string>;
+  options?: CmdOption[];
+};
+type CmdOption = Cmd & { type: number };
+
+export async function getStaticPaths() {
+  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
+}
+
+async function getCommands(): Promise<Cmd[]> {
+  const url = 'https://una-api.arkanus.app/commands';
+  const res = await fetch(url);
+  const data = (await res.json()) as Cmd[];
+  return Array.isArray(data) ? data : [];
+}
+
+function formatName(cmd: Cmd, lang: string) {
+  return cmd.name_localizations?.[lang] ?? cmd.name;
+}
+function formatDescription(cmd: Cmd, lang: string) {
+  return cmd.description_localizations?.[lang] ?? cmd.description;
+}
+function replaceText(text = '') {
+  return text
+    .replace(/\n/g, '<br />')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/@(\w+)/g, '<span class="text-primary">@$1</span>')
+    .replace(/`(.*?)`/g, '<span class="text-bg-primary">$1</span>')
+    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+}
+
+function renderCard(cmd: Cmd, lang: string, parentName = ''): string {
+  if (cmd.name === 'zdev') return '';
+  let optionsSpans = '';
+  let optionsDescriptions = '';
+  let subCards = '';
+  if (cmd.options) {
+    optionsSpans = cmd.options
+      .map((option) => {
+        const optionName = formatName(option, lang);
+        return `<span class=\"badge rounded-pill bg-primary me-1\">${optionName}</span>`;
+      })
+      .join('');
+
+    optionsDescriptions = cmd.options
+      .map((option) => {
+        const optionName = formatName(option, lang);
+        const optionDescription = replaceText(formatDescription(option, lang));
+        return `${optionName}: ${optionDescription}<br />`;
+      })
+      .join('');
+
+    subCards = cmd.options
+      .filter((o) => o.type === 1 || o.type === 2)
+      .map((o) => renderCard(o, lang, `${parentName} ${formatName(cmd, lang)}`))
+      .join('');
+  }
+
+  const name = formatName(cmd, lang);
+  const description = replaceText(formatDescription(cmd, lang));
+  const fullName = parentName ? `${parentName} ${name}` : `${name}`;
+  const isFinal = !cmd.options || cmd.options.every((o) => o.type !== 1 && o.type !== 2);
+  if (isFinal) {
+    return `
+      <div class=\"col mt-1 mb-1\">\n        <div class=\"card border-primary border-1 shadow-none\">\n          <div class=\"card-body border-secondary\">\n            <div class=\"d-flex align-items-center flex-wrap\">\n              <h3 class=\"text-light d-inline-block pt-2 me-2\">/${fullName.replace(' ', '')}</h3>\n              ${optionsSpans}\n            </div>\n            <p class=\"card-text\">${description}<br /><br />${optionsDescriptions}</p>\n          </div>\n        </div>\n      </div>`;
+  }
+  return subCards;
+}
+
+const lang = Astro.params.lang as string;
+const t = loadT(lang);
+const apiLang = t.lang === 'pt' ? 'pt-BR' : 'en-US';
+const commands = await getCommands();
+const cardsHtml = commands.map((cmd) => renderCard(cmd, apiLang)).join('');
+---
+<Layout t={t} route="/commands" title={t.cmds?.title} desc={t.cmds?.seo}>
+  <section>
+    <div class="container-fluid pt-5">
+      <div class="row flex-column justify-content-center align-items-center">
+        <div class="col-12 text-center mb-2 mt-4">
+          <div class="mb-1">
+            <h1 class="display-5 fw-bold mt-0">{t.cmds?.title}</h1>
+            <p class="lead text-secondary">{t.cmds?.desc}</p>
+          </div>
+        </div>
+        <div class="col-11">
+          <div class="row g-0 row-cols-1">
+            <Fragment set:html={cardsHtml} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+

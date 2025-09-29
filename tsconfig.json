@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@lib/*": ["src/lib/*"],
+      "@layouts/*": ["src/layouts/*"]
+    },
+    "types": ["astro/client"],
+    "resolveJsonModule": true,
+    "allowJs": true
+  },
+  "include": ["src", "*.d.ts", "astro.config.mjs"],
+  "exclude": ["node_modules", "dist"]
+}
+

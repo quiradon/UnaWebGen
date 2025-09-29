@@ -1,0 +1,68 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { getLanguages, loadT } from '@lib/i18n';
+import { markdownToHtml } from '@components/Markdown';
+
+export async function getStaticPaths() {
+  // Gera todas as combinações de idioma (exceto en) e systems a partir das traduções
+  const langs = getLanguages().filter((l) => l !== 'en');
+  const paths: any[] = [];
+  for (const lang of langs) {
+    const t = loadT(lang);
+    const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
+    for (const s of sistemas) paths.push({ params: { lang, system: s.path } });
+  }
+  return paths;
+}
+
+const lang = Astro.params.lang as string;
+const slug = Astro.params.system as string;
+const t = loadT(lang);
+const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
+const sistema = sistemas.find((s: any) => s.path === slug);
+if (!sistema) throw new Error(`System not found: ${slug}`);
+
+const title = t.system?.default?.title?.replaceAll('%system%', sistema.card.title) ?? sistema.card.title;
+const desc = t.system?.default?.desc?.replaceAll('%system%', sistema.card.title) ?? '';
+const mdHtml = markdownToHtml(sistema.md ?? '');
+const linkReplacer = (str: string) => str.replace(/\[(.*?)\]\((.*?)\)/gm, '<a href="$2">$1</a>');
+---
+<Layout t={t} route={`/systems/${slug}`} title={title} desc={desc} pictureURL={sistema.bg ?? sistema.icon}>
+  <section class="container-lg d-flex justify-content-center my-5" style="max-width: 1100px;">
+    <div class="card border-0 shadow-sm w-100">
+      {sistema.bg && (
+        <div class="position-relative">
+          <img src={sistema.bg} alt={title} class="w-100 rounded px-3" loading="eager" />
+        </div>
+      )}
+      <div class="card-body px-4 py-4">
+        <div class="mb-3">
+          <div class="d-flex flex-wrap">
+            {(sistema.tags ?? '').split(',').map((category: string) => (
+              <span class="badge bg-primary text-light m-1">{category}</span>
+            ))}
+          </div>
+          <h1 class="text-light fw-bold text-shadow mt-2">{title}</h1>
+        </div>
+        <div class="content">
+          <Fragment set:html={mdHtml} />
+        </div>
+        <div class="mt-4">
+          <div class="row mb-2">
+            <div class="col-md-6 col-lg-6 col-xl-6">
+              <div>
+                <h2 class="text-light">{t.footer?.legal ?? 'Legal'}</h2>
+                <p class="text-secondary lead"><Fragment set:html={linkReplacer(sistema.legal ?? '')} /></p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6 text-center mb-3">
+              <img class="img-fluid" src={sistema.icon} alt={title} loading="eager" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+

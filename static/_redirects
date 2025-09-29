@@ -1,0 +1,8 @@
+/ /index.html 200
+/pt/posts/dices /pt/dices 301
+/posts/dices /dices 301
+/sistemas/:rota /systems/:rota 301
+/pt/sistemas/:rota /pt/systems/:rota 301
+/pt/* /pt/404 404
+/* /404 404
+

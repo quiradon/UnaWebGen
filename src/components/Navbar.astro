@@ -1,0 +1,61 @@
+---
+import { idiomaR, roteador } from '@lib/routes';
+import type { Translations } from '@lib/i18n';
+import config from '../../config.json';
+
+interface Props { t: Translations; route: string }
+const { t, route } = Astro.props as Props;
+const lang = idiomaR(t);
+const r = roteador(route);
+
+const lang_FLAGS: Record<string, string> = {
+  pt: '/static/img/flags/br.svg',
+  en: '/static/img/flags/en.svg',
+  es: '/static/img/flags/es.svg',
+  de: '/static/img/flags/de.svg',
+  fr: '/static/img/flags/fr.svg',
+  zh: '/static/img/flags/cn.svg',
+  ja: '/static/img/flags/jp.svg',
+  ru: '/static/img/flags/ru.svg',
+  ko: '/static/img/flags/ko.svg',
+  it: '/static/img/flags/it.svg',
+  pl: '/static/img/flags/pl.svg',
+  tr: '/static/img/flags/tr.svg',
+  hu: '/static/img/flags/hu.svg',
+  id: '/static/img/flags/id.svg',
+  da: '/static/img/flags/dk.svg',
+  hr: '/static/img/flags/hr.svg',
+};
+
+const langs = Object.keys(lang_FLAGS).filter((k) => k !== t.lang);
+---
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a class="navbar-brand fw-bold" href="/">Mini Kraken</a>
+    <div class="d-flex align-items-center">
+      <ul class="navbar-nav me-3 mb-0 d-flex flex-row gap-3">
+        <li class="nav-item"><a class="nav-link" href={`${lang}/`}>{t?.nav?.home ?? 'Home'}</a></li>
+        <li class="nav-item"><a class="nav-link" href={`${lang}/dices`}>{t?.nav?.docs?.dices?.name ?? 'Dices'}</a></li>
+        <li class="nav-item"><a class="nav-link" href={`${lang}/systems`}>{t?.nav?.systems ?? 'Systems'}</a></li>
+        <li class="nav-item"><a class="nav-link" href={`${lang}/commands`}>{t?.nav?.commands ?? 'Commands'}</a></li>
+        <li class="nav-item"><a class="nav-link" href={`${lang}/tools`}>{t?.nav?.tools ?? 'Tools'}</a></li>
+        <li class="nav-item"><a class="nav-link" href={config.discord_invite} target="_blank" rel="noopener noreferrer">Discord</a></li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="img-fluid me-1" src={lang_FLAGS[t.lang]} width="25" height="25" alt={`${t.lang} Flag`} />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            {langs.map((code) => (
+              <li><a class="dropdown-item d-flex align-items-center" href={`/${code}${r}`}>
+                <img class="img-fluid me-2" src={lang_FLAGS[code]} width="25" height="25" alt={`${code} Flag`} />
+                <span style="text-transform: capitalize;">{code}</span>
+              </a></li>
+            ))}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </nav>

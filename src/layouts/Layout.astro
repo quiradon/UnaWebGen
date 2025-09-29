@@ -1,0 +1,26 @@
+---
+import Head from '@components/Head.astro';
+import LegacyNavbar from '@components/LegacyNavbar.astro';
+import Footer from '@components/Footer.astro';
+import type { Translations } from '@lib/i18n';
+
+interface Props {
+  t: Translations;
+  route: string;
+  title: string;
+  desc?: string;
+  pictureURL?: string;
+}
+
+const { t, route, title, desc, pictureURL } = Astro.props as Props;
+---
+<html lang={t.lang} data-bs-theme="dark">
+  <Head route={t.lang + route} title={title} desc={desc} pictureURL={pictureURL} />
+  <body>
+    <LegacyNavbar t={t} route={route} />
+    <slot />
+    <Footer t={t} route={route} />
+    <script is:inline src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script is:inline src="/static/js/system.js"></script>
+  </body>
+</html>

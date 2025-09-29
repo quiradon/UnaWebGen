@@ -10,4 +10,11 @@ export default defineConfig({
   build: {
     format: 'directory',
   },
+  i18n: {
+  locales: ["da", "de", "en", "es", "fr", "hr", "hu", "id", "it", "ja","ko","pl","pt","ru","tr","zh"],
+  defaultLocale: "en",
+  routing: {
+    prefixDefaultLocale: false
+  }
+  }
 });

@@ -7,15 +7,26 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@lib/*": ["src/lib/*"],
-      "@layouts/*": ["src/layouts/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@static/*": ["public/*"],
+      "@data/*": ["data/*"]
     },
     "types": ["astro/client"],
     "resolveJsonModule": true,
-    "allowJs": true
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": false,
+    "noEmit": true
   },
-  "include": ["src", "*.d.ts", "astro.config.mjs"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "*.d.ts", "astro.config.mjs", "data/**/*", "i18n/**/*"],
+  "exclude": ["node_modules", "dist", ".astro"]
 }
 

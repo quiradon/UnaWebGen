@@ -1,20 +1,59 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+import { i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
+import sitemap from "@astrojs/sitemap";
 
-// Configuração Astro para gerar em ./dist e servir assets de ./static.
-// Mantemos o formato de diretórios (route/index.html) para compatibilidade com _redirects.
+const defaultLocale = "en";
+const locales = {
+  en: "en-US", // the `defaultLocale` value must present in `locales` keys
+  es: "es-ES",
+  fr: "fr-CA",
+  pt: "pt-BR",
+  de: "de-DE",
+  da: "da-DK",
+  hr: "hr-HR",
+  hu: "hu-HU",
+  id: "id-ID",
+  it: "it-IT",
+  ja: "ja-JP",
+  ko: "ko-KR",
+  pl: "pl-PL",
+  ru: "ru-RU",
+  tr: "tr-TR",
+  zh: "zh-CN",
+};
+
 export default defineConfig({
-  site: 'https://rpg.arkanus.app',
-  outDir: './dist',
-  publicDir: './static',
-  srcDir: './src',
+  trailingSlash: "always",
+  site: "https://rpg.arkanus.app",
   build: {
-    format: 'directory',
+    format: "directory"
   },
-  i18n: {
-  locales: ["da", "de", "en", "es", "fr", "hr", "hu", "id", "it", "ja","ko","pl","pt","ru","tr","zh"],
-  defaultLocale: "en",
-  routing: {
-    prefixDefaultLocale: false
-  }
-  }
+  vite: {
+    resolve: {
+      alias: {
+        '@': '/src',
+        '@components': '/src/components',
+        '@lib': '/src/lib',
+        '@layouts': '/src/layouts',
+        '@pages': '/src/pages',
+        '@i18n': '/src/i18n',
+        '@static': '/static',
+        '@data': '/data'
+      }
+    }
+  },
+  integrations: [
+    i18n({
+      locales,
+      defaultLocale,
+      
+    }),
+    sitemap({
+      i18n: {
+        locales,
+        defaultLocale,
+      },
+      filter: filterSitemapByDefaultLocale({ defaultLocale }),
+    }),
+  ],
 });

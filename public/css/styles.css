@@ -26,30 +26,6 @@ html {
 }
 
 
-  .dropdown-menu {
-    display: block; /* Mantém o bloco para permitir a transformação */
-    transform: scale(0);
-    opacity: 0;
-    transition: all 0.2s ease-out;
-    transform-origin: top;
-    overflow: hidden;
-    max-height: 0;
-  }
-
-  .dropdown-menu.show {
-    transform: scale(1);
-    opacity: 1;
-    max-height: 700px;
-  }
-
-
-.navbar {
-  border-radius: 8px;
-  border: 1px solid rgba(103,125,181,0.18);
-  backdrop-filter: opacity(1) blur(10px) saturate(100%) sepia(0%);
-  background: rgba(11,9,16,0.85);
-  padding: auto;
-}
 
 
 
@@ -66,28 +42,8 @@ html {
 
 
 
-@keyframes flip {
-  0% { transform: rotateY(0deg); }
-  50% { transform: rotateY(180deg); }
-  100% { transform: rotateY(360deg); }
-}
 
-.CardPoker {
-  transform-style: flat;
-  transition: transform 0.3s; /* Transição rápida */
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
 
-.flip {
-  animation: flip 0.3s linear; /* Animação rápida */
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-
-.nav-drop-text {
-  font-size: 14px;
-}
 
 .link-unstyled, .link-unstyled:link, .link-unstyled:hover {
   color: inherit!important;

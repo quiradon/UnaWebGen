@@ -1,21 +1,19 @@
 ---
+import { Image } from 'astro:assets';
 export const prerender = true;
+import { getLocale } from "astro-i18n-aut";
 import Layout from '@layouts/Layout.astro';
 import icons from '@components/icons';
-import { getLanguages, loadT, getValidatedLanguage } from '@lib/i18n';
+import { loadT} from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
 import config from '../config.json';
 
-export async function getStaticPaths() {
-  const languages = getLanguages();
-  return languages.map((lang) => ({
-    params: { locale: lang },
-  }));
-}
-// Obter idioma validado usando Astro.locals e parâmetros
-const requestedLang = Astro.params.locale as string;
-const lang = getValidatedLanguage(Astro.locals, requestedLang);
-const t = loadT(lang);
+import image1 from "../assets/img/landing/place.webp";
+import image2 from "../assets/img/landing/dices.webp";
+import imageSheet from "../assets/img/landing/sheets.webp";
+import imageVTT from "../assets/img/landing/vtt2.webp";
+
+const t = loadT(getLocale(Astro.url));
 const langPrefix = idiomaR(t);
 
 const landingHTML = (t.index?.landing?.text ?? '').replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1<\/span>');
@@ -29,7 +27,67 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
                   url('/img/bg/dnd.webp') center / cover repeat-x;
     }
   </style>
+  <script >
+    // Auto Scroll esse elemento deve estar presente somente na landing page
+    document.querySelectorAll('#auto-scroll').forEach(function(element) {
+      const htmlElement = element as HTMLElement;
+      let isMouseOver = false;
+      let isDragging = false;
+      let startX: number = 0;
+      let scrollLeft: number = 0;
 
+      element.addEventListener('mouseenter', function() {
+        isMouseOver = true;
+      });
+
+      element.addEventListener('mouseleave', function() {
+        isMouseOver = false;
+      });
+
+      element.addEventListener('mousedown', function(e) {
+        const mouseEvent = e as MouseEvent;
+        isDragging = true;
+        startX = mouseEvent.pageX - htmlElement.offsetLeft;
+        scrollLeft = htmlElement.scrollLeft;
+        element.classList.add('active');
+      });
+
+      element.addEventListener('mouseleave', function() {
+        isDragging = false;
+        element.classList.remove('active');
+      });
+
+      element.addEventListener('mouseup', function() {
+        isDragging = false;
+        element.classList.remove('active');
+      });
+
+      element.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        const mouseEvent = e as MouseEvent;
+        const x = mouseEvent.pageX - htmlElement.offsetLeft;
+        const walk = (x - startX) * 2; // Multiplique por 2 para aumentar a velocidade de arrasto
+        htmlElement.scrollLeft = scrollLeft - walk;
+      });
+
+      function scrollRight() {
+        if (!isMouseOver) {
+          const card = element.querySelector('.card') as HTMLElement;
+          if (card) {
+            const cardWidth = card.offsetWidth;
+            if (htmlElement.scrollLeft < htmlElement.scrollWidth - htmlElement.clientWidth) {
+              htmlElement.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            } else {
+              htmlElement.scrollTo({ left: 0, behavior: 'smooth' });
+            }
+          }
+        }
+      }
+
+      setInterval(scrollRight, 2000); // Ajuste o intervalo conforme necessário
+    });
+</script>
   <!-- Hero -->
   <section id="inicio" style="background: url('/img/bg/pattern-square.svg') top / auto repeat-x;">
     <div class="container d-lg-flex align-items-lg-center py-4 py-xl-5">
@@ -43,7 +101,16 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0">
-          <img class="img-fluid generic_grow" alt="Mini Kraken RPG | Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/img/misc/blobs/place.webp" />
+            <Image 
+              class="img-fluid generic_grow" 
+              alt="Mini Kraken RPG | Inanimalia Fortuna in Dungeon Background" 
+              width="600" 
+              height="400" 
+              src={image1} 
+              loading="eager"
+              fetchpriority="high"
+              decoding="sync"
+            />
         </div>
       </div>
     </div>
@@ -78,7 +145,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
                   <div class="card-body d-flex flex-column py-2 px-3">
                     <a href={url} class="link-unstyled">
                       <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-1 bs-icon">
-                        <img class="img-fluid user-select-none" alt={`${s.card?.title} Icon`} src={s.icon} />
+                        <Image  class="img-fluid user-select-none" alt={`${s.card?.title} Icon`} src={s.icon} width="80" height="80" />
                       </div>
                       <h4 class="card-title user-select-none text-primary">{s.card?.title}</h4>
                     </a>
@@ -106,7 +173,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6">
-          <img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/img/misc/blobs/dices.webp" />
+          <Image class="img-fluid generic_grow" alt="Mini Kraken RPG | Dice roll Illustration" inferSize={true} src={image2} loading="lazy" />
         </div>
       </div>
     </div>
@@ -124,7 +191,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6">
-          <img class="img-fluid p-4 generic_grow" width="600" height="400" alt="RPG Characters Sheets" src="/img/misc/blobs/sheets.webp" />
+          <Image class="img-fluid p-4 generic_grow" inferSize={true} alt="RPG Characters Sheets" src={imageSheet} />
         </div>
       </div>
     </div>
@@ -305,7 +372,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6 mb-5">
-          <img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken VTT Ilustration" src="/img/misc/blobs/vtt2.webp" />
+          <Image class="img-fluid generic_grow" inferSize={true} alt="Mini Kraken VTT Ilustration" src={imageVTT} />
         </div>
       </div>
     </div>
@@ -443,3 +510,5 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
     });
   </script>
   </Layout>
+
+

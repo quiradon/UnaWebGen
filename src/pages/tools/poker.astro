@@ -1,10 +1,9 @@
 ---
 export const prerender = true;
+import { getLocale } from "astro-i18n-aut";
 import Layout from '@layouts/Layout.astro';
-import { loadT, getStaticPaths } from '@lib/i18n';
-export { getStaticPaths };
-const lang = Astro.params.locales as string;
-const t = loadT(lang);
+import { loadT } from '@lib/i18n';
+const t = loadT(getLocale(Astro.url));
 const route = '/tools/poker';
 ---
 <Layout t={t} route={route} title={t.poker?.title} desc={t.poker?.desc}>
@@ -13,7 +12,7 @@ const route = '/tools/poker';
       <div class="row">
         <div class="col-md-6 order-first order-md-last p-5 pt-2 pb-0">
           <div class="p-5">
-            <img class="rounded img-fluid w-100 h-100 fit-cover CardPoker" id="cardshow" src="/api/poker-card/2-10.webp" loading="lazy" alt="Random playing card" />
+            <img id="cardshow" class="rounded img-fluid w-100 h-100 fit-cover CardPoker" src="/api/poker-card/2-10.webp" loading="lazy" alt="Random playing card" />
           </div>
         </div>
         <div class="col d-flex justify-content-center align-items-center align-content-center order-last">
@@ -37,7 +36,7 @@ const route = '/tools/poker';
   </section>
 
   <script is:inline>
-    const audio = "/audio/play-card.mp3";
+  const audio = "/audio/play-card.mp3";
     document.getElementById('cardsrun').onclick = card;
     function card() {
       let a = document.getElementById('cardstype').value ?? 0;
@@ -53,4 +52,24 @@ const route = '/tools/poker';
       setTimeout(() => { cardElement.classList.remove('flip'); }, 500);
     }
   </script>
+    <style>
+    @keyframes flip {
+  0% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.CardPoker {
+  transform-style: flat;
+  transition: transform 0.3s; /* Transição rápida */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.flip {
+  animation: flip 0.3s linear; /* Animação rápida */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+  </style>
 </Layout>

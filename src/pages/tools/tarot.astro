@@ -1,10 +1,9 @@
 ---
 export const prerender = true;
+import { getLocale } from "astro-i18n-aut";
 import Layout from '@layouts/Layout.astro';
-import { loadT, getStaticPaths } from '@lib/i18n';
-export { getStaticPaths };
-const lang = Astro.params.locales as string;
-const t = loadT(lang);
+import { loadT } from '@lib/i18n';
+const t = loadT(getLocale(Astro.url));
 const route = '/tools/tarot';
 ---
 <Layout t={t} route={route} title={t.tarot?.title} desc={t.tarot?.desc}>
@@ -40,4 +39,25 @@ const route = '/tools/tarot';
       setTimeout(() => cardshow.classList.remove('flip'), 300);
     });
   </script>
+
+  <style>
+    @keyframes flip {
+  0% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.CardPoker {
+  transform-style: flat;
+  transition: transform 0.3s; /* Transição rápida */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.flip {
+  animation: flip 0.3s linear; /* Animação rápida */
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+  </style>
 </Layout>

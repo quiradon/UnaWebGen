@@ -26,9 +26,32 @@ export default defineConfig({
   trailingSlash: "always",
   site: "https://rpg.arkanus.app",
   build: {
-    format: "directory"
+    format: "directory",
+    inlineStylesheets: "auto",
+    minify: true
   },
   vite: {
+    build: {
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+          pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
+        },
+        mangle: true,
+        format: {
+          comments: false
+        }
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['astro']
+          }
+        }
+      }
+    },
     resolve: {
       alias: {
         '@': '/src',

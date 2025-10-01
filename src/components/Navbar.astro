@@ -2,7 +2,6 @@
 import { idiomaR} from '@lib/routes';
 import type { Translations } from '@lib/i18n';
 import { loadT } from '@lib/i18n';
-import icons from '@components/icons';
 import config from '../config.json';
 import { getLocale, getAllLocaleUrls } from "astro-i18n-aut";
 import { Shapes, Wrench, Network, Wand, FileText, Book, Package, Fingerprint, Heart, Eye, Briefcase, MessageCircle, Crown, ChevronDown, Menu, X, Globe } from '@lucide/astro';
@@ -11,11 +10,8 @@ interface Props { t: Translations; route: string }
 
 const locale = getLocale(Astro.url)
 const t = loadT(locale);
-
 const lang = idiomaR(t);
-
 const allUrls = getAllLocaleUrls(Astro.url);
-console.log(allUrls);
 
 
 const lang_FLAGS: Record<string, string> = {

@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro';
 import icons from '@components/icons';
 import { getLanguages, loadT, getValidatedLanguage } from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
-import config from '../../../config.json';
+import config from '../config.json';
 
 export async function getStaticPaths() {
   const languages = getLanguages();
@@ -26,12 +26,12 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
     .bgImg2 {
       background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)),
                   linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%),
-                  url('/static/img/bg/dnd.webp') center / cover repeat-x;
+                  url('/img/bg/dnd.webp') center / cover repeat-x;
     }
   </style>
 
   <!-- Hero -->
-  <section id="inicio" style="background: url('/static/img/bg/pattern-square.svg') top / auto repeat-x;">
+  <section id="inicio" style="background: url('/img/bg/pattern-square.svg') top / auto repeat-x;">
     <div class="container d-lg-flex align-items-lg-center py-4 py-xl-5">
       <div class="row gy-2 gy-md-0 row-cols-1 row-cols-lg-2 my-3 py-3">
         <div class="col-auto col-xl-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
@@ -43,7 +43,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0">
-          <img class="img-fluid generic_grow" alt="Mini Kraken RPG | Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/static/img/misc/blobs/place.webp" />
+          <img class="img-fluid generic_grow" alt="Mini Kraken RPG | Inanimalia Fortuna in Dungeon Background" width="600" height="400" src="/img/misc/blobs/place.webp" />
         </div>
       </div>
     </div>
@@ -106,7 +106,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6">
-          <img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/static/img/misc/blobs/dices.webp" />
+          <img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken Dice Roll Ilustration" src="/img/misc/blobs/dices.webp" />
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6">
-          <img class="img-fluid p-4 generic_grow" width="600" height="400" alt="RPG Characters Sheets" src="/static/img/misc/blobs/sheets.webp" />
+          <img class="img-fluid p-4 generic_grow" width="600" height="400" alt="RPG Characters Sheets" src="/img/misc/blobs/sheets.webp" />
         </div>
       </div>
     </div>
@@ -305,7 +305,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6 mb-5">
-          <img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken VTT Ilustration" src="/static/img/misc/blobs/vtt2.webp" />
+          <img class="img-fluid generic_grow" width="600" height="400" alt="Mini Kraken VTT Ilustration" src="/img/misc/blobs/vtt2.webp" />
         </div>
       </div>
     </div>

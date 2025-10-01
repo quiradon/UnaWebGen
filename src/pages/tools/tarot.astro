@@ -12,7 +12,7 @@ const route = '/tools/tarot';
     <div class="container">
       <div class="row g-0 d-flex justify-content-center">
         <div class="col-10 col-md-5 order-first order-md-last">
-          <img class="img-fluid p-5 w-100 h-100 fit-cover CardPoker" id="cardshow" src="/static/api/tarot-card/20.webp" loading="lazy" alt="Random Tarot card" />
+          <img class="img-fluid p-5 w-100 h-100 fit-cover CardPoker" id="cardshow" src="/api/tarot-card/20.webp" loading="lazy" alt="Random Tarot card" />
         </div>
         <div class="col-12 col-md-7 d-flex justify-content-center align-items-center align-content-center order-last p-4">
           <div class="text-white">
@@ -27,7 +27,7 @@ const route = '/tools/tarot';
     </div>
   </section>
   <script is:inline>
-    const audio = "/static/audio/play-card.mp3";
+    const audio = "/audio/play-card.mp3";
     const cardsrun = document.getElementById('cardsrun');
     const cardshow = document.getElementById('cardshow');
     cardsrun.addEventListener('click', () => {
@@ -35,7 +35,7 @@ const route = '/tools/tarot';
       audioElement.volume = 0.5;
       audioElement.play();
       const randomCard = Math.floor(Math.random() * 22);
-      cardshow.src = '/static/api/tarot-card/' + randomCard + '.webp';
+      cardshow.src = '/api/tarot-card/' + randomCard + '.webp';
       cardshow.classList.add('flip');
       setTimeout(() => cardshow.classList.remove('flip'), 300);
     });

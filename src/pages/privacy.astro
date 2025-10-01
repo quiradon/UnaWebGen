@@ -12,11 +12,11 @@ const lang = Astro.params.lang as string;
 const t = loadT(lang);
 const html = markdownToHtml(t.privacy?.md ?? '');
 ---
-<Layout t={t} route="/privacy" title={t.privacy?.title} desc={t.privacy?.desc} pictureURL="/static/img/banners/terms_of_service_banner.webp">
+<Layout t={t} route="/privacy" title={t.privacy?.title} desc={t.privacy?.desc} pictureURL="/img/banners/terms_of_service_banner.webp">
   <section class="container-lg d-flex justify-content-center my-5" style="max-width: 1100px;">
     <div class="card border-0 shadow-sm w-100">
       <div class="position-relative">
-        <img src="/static/img/banners/terms_of_service_banner.webp" alt={t.privacy?.title} class="w-100 rounded px-3" loading="eager" />
+        <img src="/img/banners/terms_of_service_banner.webp" alt={t.privacy?.title} class="w-100 rounded px-3" loading="eager" />
       </div>
       <div class="card-body px-4 py-4">
         <div class="mb-3">

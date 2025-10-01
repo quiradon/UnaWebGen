@@ -13,7 +13,7 @@ const t = loadT(lang);
 const base = idiomaR(t);
 const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
 ---
-<Layout t={t} route="/systems" title={t.systems?.title} desc={t.systems?.desc} pictureURL="/static/img/bg/newbg2.webp">
+<Layout t={t} route="/systems" title={t.systems?.title} desc={t.systems?.desc} pictureURL="/img/bg/newbg2.webp">
   <div class="container">
     <h1 class="display-5 fw-bold mt-0">{t.systems?.title}</h1>
     <p class="lead text-secondary">{t.systems?.desc}</p>

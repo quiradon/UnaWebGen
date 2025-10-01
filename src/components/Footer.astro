@@ -1,7 +1,7 @@
 ---
 import { idiomaR, roteador } from '@lib/routes';
 import type { Translations } from '@lib/i18n';
-import config from '../../config.json';
+import config from '../config.json';
 
 interface Props { t: Translations; route: string }
 const { t, route } = Astro.props as Props;
@@ -32,7 +32,7 @@ const r = roteador(route);
       </ul>
     </div>
     <div class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last item social">
-      <div class="fw-bold d-flex align-items-center"><img alt="Logo From Arkanus in White Color" width="30" height="30" loading="lazy" src="/static/img/icons/arkanus.svg" /><span class="ms-2">Powered by Arkanus</span></div>
+      <div class="fw-bold d-flex align-items-center"><img alt="Logo From Arkanus in White Color" width="30" height="30" loading="lazy" src="/img/icons/arkanus.svg" /><span class="ms-2">Powered by Arkanus</span></div>
       <p class="text-muted copyright">{t.footer?.arkanus?.desc ?? ''}</p>
     </div>
   </div>

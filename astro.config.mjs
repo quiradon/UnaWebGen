@@ -37,7 +37,7 @@ export default defineConfig({
         '@layouts': '/src/layouts',
         '@pages': '/src/pages',
         '@i18n': '/src/i18n',
-        '@static': '/static',
+        '@static': '',
         '@data': '/data'
       }
     }

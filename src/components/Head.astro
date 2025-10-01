@@ -1,7 +1,7 @@
 ---
 import { extrairRotaSemIdioma } from '@lib/routes';
 import { getLanguages } from '@lib/i18n';
-import siteConfig from '../../config.json';
+import siteConfig from '../config.json';
 
 interface Props {
   route: string;
@@ -14,7 +14,7 @@ const { route, title, desc, pictureURL } = Astro.props as Props;
 const languages = getLanguages();
 let rotaRoot = extrairRotaSemIdioma(route);
 const description = desc ?? '';
-const image = pictureURL ?? '/static/img/banners/default.webp';
+const image = pictureURL ?? '/img/banners/default.webp';
 const url = siteConfig.url;
 const alternates = languages
   .map((lang) => {
@@ -30,15 +30,15 @@ const canonicalLink = route.includes('en/') ? `<link rel="canonical" href="${url
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
   <title>{title} | Mini Kraken</title>
   <meta name="description" content={description} />
-  <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/static/css/bs-theme-overrides.css" />
-  <link rel="stylesheet" href="/static/css/styles.css" />
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/bs-theme-overrides.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
   <meta name="theme-color" content="#f80752" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/static/img/icons/logo.svg" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/static/img/icons/logo.svg" />
-  <link rel="icon" type="image/png" sizes="180x180" href="/static/img/icons/logo.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/static/img/icons/logo.svg" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/static/img/icons/logo.svg" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/img/icons/logo.svg" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/logo.svg" />
+  <link rel="icon" type="image/png" sizes="180x180" href="/img/icons/logo.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/logo.svg" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/logo.svg" />
   <Fragment set:html={canonicalLink} />
   <Fragment set:html={alternates} />
   <link rel="alternate" hreflang="x-default" href={`${url}${rotaRoot}`} />

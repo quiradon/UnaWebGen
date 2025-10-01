@@ -12,7 +12,7 @@ const t = loadT(lang);
   <script src="https://cdn.jsdelivr.net/npm/random-js@2.1.0/dist/random-js.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@dice-roller/rpg-dice-roller/lib/umd/bundle.min.js"></script>
   <script is:inline>
-    // exposed for /static/js/dice_roll.js
+    // exposed for /js/dice_roll.js
     // @ts-ignore
     var diceRoller = new rpgDiceRoller.DiceRoller();
   </script>
@@ -38,5 +38,5 @@ const t = loadT(lang);
   </section>
 
   <div class="footer-spacer" style="flex-grow: 1;"></div>
-  <script is:inline src="/static/js/dice_roll.js"></script>
+  <script is:inline src="/js/dice_roll.js"></script>
 </Layout>

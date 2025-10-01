@@ -2,7 +2,7 @@
 import { idiomaR, roteador } from '@lib/routes';
 import type { Translations } from '@lib/i18n';
 import icons from '@components/icons';
-import config from '../../config.json';
+import config from '../config.json';
 
 interface Props { t: Translations; route: string }
 const { t, route } = Astro.props as Props;
@@ -10,22 +10,22 @@ const lang = idiomaR(t);
 const rota = roteador(route);
 
 const lang_FLAGS: Record<string, string> = {
-  pt: '/static/img/flags/br.svg',
-  en: '/static/img/flags/en.svg',
-  es: '/static/img/flags/es.svg',
-  de: '/static/img/flags/de.svg',
-  fr: '/static/img/flags/fr.svg',
-  zh: '/static/img/flags/cn.svg',
-  ja: '/static/img/flags/jp.svg',
-  ru: '/static/img/flags/ru.svg',
-  ko: '/static/img/flags/ko.svg',
-  it: '/static/img/flags/it.svg',
-  pl: '/static/img/flags/pl.svg',
-  tr: '/static/img/flags/tr.svg',
-  hu: '/static/img/flags/hu.svg',
-  id: '/static/img/flags/id.svg',
-  da: '/static/img/flags/dk.svg',
-  hr: '/static/img/flags/hr.svg',
+  pt: '/img/flags/br.svg',
+  en: '/img/flags/en.svg',
+  es: '/img/flags/es.svg',
+  de: '/img/flags/de.svg',
+  fr: '/img/flags/fr.svg',
+  zh: '/img/flags/cn.svg',
+  ja: '/img/flags/jp.svg',
+  ru: '/img/flags/ru.svg',
+  ko: '/img/flags/ko.svg',
+  it: '/img/flags/it.svg',
+  pl: '/img/flags/pl.svg',
+  tr: '/img/flags/tr.svg',
+  hu: '/img/flags/hu.svg',
+  id: '/img/flags/id.svg',
+  da: '/img/flags/dk.svg',
+  hr: '/img/flags/hr.svg',
 };
 
 const lang_LABELS: Record<string, string> = {

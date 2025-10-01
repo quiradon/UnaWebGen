@@ -506,6 +506,7 @@
         "moderate": "Intenzitás: Közepes",
         "severe": "Intenzitás: Súlyos"
       },
+      "intensidade": "Intenzitás",
       "options": {
         "blizzard": "Hóvihar",
         "clear": "Tiszta ég",
@@ -527,7 +528,9 @@
         "desert": "Sivatagi régió",
         "temperate": "Mérsékelt öv"
       },
-      "vento": "Szélerősség"
+      "vento": "Szélerősség",
+      "label": "Válasszon időjárás típust.",
+      "label2": "Kattintson a \"Időjárás generálása\" lehetőségre az eredmények megtekintéséhez."
     },
     "morse": {
       "btn1": "Hang lejátszása",

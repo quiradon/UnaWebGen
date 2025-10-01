@@ -506,6 +506,7 @@
         "moderate": "Intensitet: Moderat",
         "severe": "Intensitet: Alvorlig"
       },
+      "intensidade": "Intensitet",
       "options": {
         "blizzard": "Sneveinstorm",
         "clear": "Klar himmel",
@@ -527,7 +528,9 @@
         "desert": "Ørkenregion",
         "temperate": "Tempereret region"
       },
-      "vento": "Vindhastighed"
+      "vento": "Vindhastighed",
+      "label": "Vælg en vejrtype.",
+      "label2": "Klik på \"Generer vejr\" for at se resultaterne."
     },
     "morse": {
       "btn1": "Afspil lyd",

@@ -506,6 +506,7 @@
         "moderate": "Intensità: Moderata",
         "severe": "Intensità: Grave"
       },
+      "intensidade": "Intensità",
       "options": {
         "blizzard": "Blizzard",
         "clear": "Cielo sereno",
@@ -527,7 +528,9 @@
         "desert": "Regione desertica",
         "temperate": "Regione temperata"
       },
-      "vento": "Velocità del vento"
+      "vento": "Velocità del vento",
+      "label": "Seleziona un tipo di clima.",
+      "label2": "Clicca su \"Genera Clima\" per vedere i risultati."
     },
     "morse": {
       "btn1": "Riproduci suono",

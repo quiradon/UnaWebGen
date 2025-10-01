@@ -506,6 +506,7 @@
         "moderate": "Intensität: Mittel",
         "severe": "Intensität: Stark"
       },
+      "intensidade": "Intensität",
       "options": {
         "blizzard": "Blizzard",
         "clear": "Klarer Himmel",
@@ -527,7 +528,9 @@
         "desert": "Wüstenregion",
         "temperate": "Gemäßigte Zone"
       },
-      "vento": "Windgeschwindigkeit"
+      "vento": "Windgeschwindigkeit",
+      "label": "Wählen Sie einen Wettertyp.",
+      "label2": "Klicken Sie auf \"Wetter generieren\", um die Ergebnisse anzuzeigen."
     },
     "morse": {
       "btn1": "Ton abspielen",

@@ -506,6 +506,7 @@
         "moderate": "강도: 보통",
         "severe": "강도: 심각"
       },
+      "intensidade": "강도",
       "options": {
         "blizzard": "블리자드",
         "clear": "맑은 하늘",
@@ -527,7 +528,9 @@
         "desert": "사막 지역",
         "temperate": "온대 지역"
       },
-      "vento": "풍속"
+      "vento": "풍속",
+      "label": "기후 유형을 선택하세요.",
+      "label2": "\"날씨 생성\"을 클릭하여 결과를 확인하세요."
     },
     "morse": {
       "btn1": "소리 재생",

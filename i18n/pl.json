@@ -506,6 +506,7 @@
         "moderate": "Intensywność: Umiarkowana",
         "severe": "Intensywność: Ostra"
       },
+      "intensidade": "Intensywność",
       "options": {
         "blizzard": "śnieżyca",
         "clear": "Czyste niebo",
@@ -527,7 +528,9 @@
         "desert": "Region pustynny",
         "temperate": "Strefa umiarkowana"
       },
-      "vento": "Prędkość wiatru"
+      "vento": "Prędkość wiatru",
+      "label": "Wybierz typ pogody.",
+      "label2": "Kliknij \"Generuj pogodę\", aby zobaczyć wyniki."
     },
     "morse": {
       "btn1": "Odtwarzaj dźwięk",

@@ -3,10 +3,15 @@ export const prerender = true;
 import Layout from '@layouts/Layout.astro';
 import { loadT } from '@lib/i18n';
 import { CloudSun, Sliders, Shuffle, Snowflake, CloudRain, Sun, RefreshCw, AlertTriangle, Thermometer, Wind, CloudSnow, CloudLightning, CloudDrizzle, CloudFog, CloudHail, BookOpen, Copy, Check } from '@lucide/astro';
+import weatherNarratives from '../../../data/weather-narratives.json';
 
 import { getLocale } from "astro-i18n-aut";
-const t = loadT(getLocale(Astro.url));
+const currentLocale = getLocale(Astro.url);
+const t = loadT(currentLocale);
 const route = '/tools/weather';
+
+// Get narratives for current language, fallback to English, then Portuguese
+const narrativeLang = (weatherNarratives as any)[currentLocale] || weatherNarratives.en || weatherNarratives.pt;
 ---
 <Layout t={t} route={route} title={t.tools?.clima?.pageTitle} desc={t.tools?.clima?.pageDesc}>
   <section class="weather-section pt-2 mt-4 mb-5">
@@ -65,8 +70,8 @@ const route = '/tools/weather';
               <div class="mockup-icon mb-4">
                 <CloudSun size={80} class="opacity-25" />
               </div>
-              <h5 class="text-secondary text-center mb-2">Selecione um tipo de clima</h5>
-              <p class="text-muted text-center small">Clique em "Gerar Clima" para ver os resultados</p>
+              <h5 class="text-secondary text-center mb-2">{t.tools.clima.label}</h5>
+              <p class="text-muted text-center small">{t.tools.clima.label2}</p>
             </div>
           </div>
 
@@ -83,7 +88,7 @@ const route = '/tools/weather';
                 <div class="detail-item">
                   <AlertTriangle size={28} class="detail-icon" />
                   <div class="detail-content">
-                    <span class="detail-label">Intensidade</span>
+                    <span class="detail-label">{t.tools.clima.intensidade}</span>
                     <span class="detail-value intensity"></span>
                   </div>
                 </div>
@@ -109,14 +114,14 @@ const route = '/tools/weather';
               <div class="narrative-section mt-4">
                 <div class="narrative-header" id="narrativeHeader">
                   <BookOpen size={20} class="me-2" />
-                  <span>Descrição Narrativa</span>
+                  <span>{narrativeLang.narrativeTitle}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron ms-auto"><path d="m6 9 6 6 6-6"/></svg>
                 </div>
                 <div class="narrative-content" id="narrativeContent">
                   <p class="narrative-text" id="narrativeText"></p>
                   <button class="btn btn-sm btn-outline-primary copy-btn" id="copyNarrative">
                     <Copy size={16} class="me-1" />
-                    <span class="copy-text">Copiar</span>
+                    <span class="copy-text">{t.comum.copy}</span>
                   </button>
                 </div>
               </div>
@@ -273,10 +278,6 @@ const route = '/tools/weather';
       cursor: not-allowed;
     }
 
-    .result-card {
-      animation: slideInUp 0.5s ease-out;
-    }
-
     @keyframes slideInUp {
       from {
         opacity: 0;
@@ -286,6 +287,49 @@ const route = '/tools/weather';
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    .fade-out {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .weather-icon-container.updating {
+      animation: pulse 0.6s ease-in-out;
     }
 
     .weather-icon-container {
@@ -529,7 +573,7 @@ const route = '/tools/weather';
     .weather-storm { color: #9370db; }
   </style>
 
-  <script define:vars={{ climaTranslations: t.tools.clima }} is:inline>
+  <script define:vars={{ climaTranslations: t.tools.clima, narrativeLang: narrativeLang, userLocale: currentLocale }} is:inline>
     // Weather icon SVG mapping (Lucide-style)
     const weatherIconsSVG = {
       'blizzard': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 9a3 3 0 1 0 0 6"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="m9 18 3 3 3-3"/><path d="m9 6 3-3 3 3"/><path d="m15 18 3 3 3-3"/><path d="m15 6 3-3 3 3"/></svg>',
@@ -555,142 +599,38 @@ const route = '/tools/weather';
       'dust_devil': '#c89b6f'
     };
 
-    // RPG Narrative Templates
-    const narrativeTemplates = {
-      // Blizzard narratives
-      'blizzard_severe': [
-        'O vento uiva com uma fúria implacável, lançando cristais de gelo como lâminas afiadas. A visibilidade é quase nula, e cada passo é uma batalha contra a natureza. Qualquer pele exposta ao frio cortante sofre danos rapidamente. Os aventureiros devem encontrar abrigo urgentemente ou arriscam sucumbir ao abraço mortal do inverno.',
-        'Uma muralha branca de neve e gelo avança como uma criatura viva, engolindo tudo em seu caminho. O ar é tão frio que queima os pulmões a cada respiração. Sons distantes ecoam de forma distorcida, criando uma sensação de desorientação absoluta. Apenas os mais preparados sobreviverão a esta provação ártica.',
-        'A tempestade de neve rugindo ao redor parece ter vida própria, como se espíritos ancestrais do inverno dançassem em fúria. O frio penetra até os ossos, e os flocos congelados chicoteiam a pele sem piedade. Mesmo o fogo hesita em se manter aceso contra tal adversidade.'
-      ],
-      'blizzard_moderate': [
-        'Flocos de neve densos caem incessantemente, reduzindo a visibilidade a poucos metros. O vento frio corta através das roupas, e o chão está coberto por uma espessa camada de neve que dificulta a movimentação. É prudente buscar abrigo antes que as condições piorem.',
-        'Uma nevasca constante transforma a paisagem em um mar branco uniforme. O vento geme baixo entre as árvores, depositando neve em cada superfície. Manter-se aquecido requer esforço constante, e o grupo deve trabalhar junto para conservar energia e calor.'
-      ],
-      'blizzard_mild': [
-        'Neve fina dança no ar frio, trazida por rajadas de vento ocasionais. Embora o clima seja desafiador, ainda é possível viajar com cuidado. A paisagem adquire uma beleza etérea, apesar do desconforto do frio penetrante.',
-        'O ar gelado traz consigo flocos de neve que se depositam suavemente, criando um manto branco sobre tudo. O frio é intenso, mas manejável com o equipamento adequado. A jornada continua, embora a prudência seja necessária.'
-      ],
+    // Use narratives from JSON
+    const narrativeTemplates = narrativeLang.narratives;
 
-      // Snow narratives
-      'snow_severe': [
-        'A neve cai em torrentes espessas, acumulando-se rapidamente e transformando o terreno em um desafio mortal. Cada passo afunda profundamente, exaurindo a força dos viajantes. A temperatura despenca, e o risco de hipotermia é real e iminente.',
-        'Pesados flocos de neve caem sem pausa, criando um silêncio opressivo quebrado apenas pelo ranger da neve sob os pés. A acumulação rápida ameaça cobrir caminhos e referências, tornando impossível seguir em frente sem extremo cuidado.'
-      ],
-      'snow_moderate': [
-        'Neve constante cai do céu cinza, cobrindo o mundo em um cobertor branco. O avanço é lento mas possível, e abrigos temporários podem ser erguidos com relativa facilidade. A beleza do inverno compete com seu perigo.',
-        'Flocos grandes e úmidos descem suavemente, criando uma atmosfera quase pacífica. No entanto, a temperatura baixa exige atenção constante, e o grupo deve manter-se em movimento para evitar o frio que insidiosamente rouba o calor corporal.'
-      ],
-      'snow_mild': [
-        'Neve leve cai delicadamente, pontilhando o ar com cristais brilhantes. O cenário é de rara beleza, embora o frio ainda demande respeito. É possível apreciar a jornada enquanto se mantém vigilante.',
-        'Pequenos flocos flutuam preguiçosamente do céu, adicionando uma camada fina ao solo já coberto de branco. O ar é fresco e revigorante, e o grupo pode continuar sua jornada com cuidado moderado.'
-      ],
-
-      // Cloudy narratives  
-      'cloudy_severe': [
-        'Nuvens densas e escuras cobrem completamente o céu, criando uma penumbra antinatural mesmo durante o dia. O ar está pesado e úmido, prenunciando uma possível tempestade. Uma sensação de inquietação permeia o ambiente.',
-        'O céu está completamente coberto por camadas espessas de nuvens cinzentas que bloqueiam qualquer raio de sol. A atmosfera é opressiva, e há uma estranha qualidade no ar que deixa todos em alerta.'
-      ],
-      'cloudy_moderate': [
-        'Nuvens cinzentas dominam o céu, ocasionalmente permitindo que raios difusos de luz filtrem através. O clima é fresco e a iluminação natural é reduzida, criando longas sombras mesmo ao meio-dia.',
-        'Uma cobertura contínua de nuvens transforma o dia em uma série de tons de cinza. A luz é difusa mas adequada para viajar, embora o humor geral seja mais sombrio e contemplativo.'
-      ],
-      'cloudy_mild': [
-        'Nuvens altas e finas dançam no céu, permitindo que a luz do sol brinque entre as sombras. O clima é agradável, perfeito para uma jornada sem grandes preocupações meteorológicas.',
-        'Uma cobertura parcial de nuvens proporciona alívio do sol direto sem trazer a ameaça de chuva. É um dia ideal para viajar, com temperaturas confortáveis e uma brisa suave.'
-      ],
-
-      // Clear narratives
-      'clear_severe': [
-        'O sol brilha implacavelmente em um céu sem nuvens, transformando o mundo em uma fornalha. O calor é quase insuportável, e a luz intensa força os olhos a se estreitarem. Encontrar sombra e água torna-se prioridade absoluta.',
-        'Sob um céu perfeitamente azul, o sol castiga sem piedade. O ar ondula com o calor intenso, e miragens dançam no horizonte. Cada hora sob esta exposição drena energia e recursos preciosos.'
-      ],
-      'clear_moderate': [
-        'Um céu limpo e azul se estende de horizonte a horizonte, com o sol brilhando calorosamente. O clima é agradável, embora seja prudente buscar sombra nas horas mais quentes. As condições são excelentes para viagem.',
-        'O dia está límpido e luminoso, com uma brisa suave que torna o calor do sol tolerável. É um dia perfeito para aventuras, com visibilidade excelente e espíritos elevados.'
-      ],
-      'clear_mild': [
-        'O céu está cristalino, com o sol proporcionando luz e calor agradáveis. Uma brisa fresca mantém a temperatura confortável. É um dia magnífico para estar ao ar livre e explorar.',
-        'Condições perfeitas abençoam a jornada: céu azul brilhante, temperatura ideal e uma sensação geral de bem-estar. A natureza está em sua forma mais acolhedora.'
-      ],
-
-      // Thunderstorm narratives
-      'thunderstorm_severe': [
-        'O céu explode em fúria elemental! Relâmpagos rasgam as nuvens negras com luz cegante, seguidos imediatamente por trovões que sacodem o chão. Chuva torrencial cai como uma cortina sólida, e o vento uiva com força destrutiva. Buscar abrigo não é opcional - é questão de sobrevivência.',
-        'Uma tempestade apocalíptica desencadeia sua ira. Raios dançam do céu à terra em sequências aterrorizantes, iluminando um mundo transformado em caos. A chuva é tão intensa que respirar requer esforço. O trovão é contínuo, uma sinfonia de poder destrutivo que ameaça partir a própria terra.'
-      ],
-      'thunderstorm_moderate': [
-        'Nuvens de tempestade se acumulam ameaçadoramente enquanto relâmpagos ocasionais iluminam o céu distante. A chuva é forte mas não torrencial, e o trovão rola pelo céu como um aviso. É possível continuar, mas com grande cautela.',
-        'Uma tempestade elétrica se desenvolve, trazendo chuva pesada e espetáculos ocasionais de relâmpagos. O ar está carregado de eletricidade, fazendo os pelos se arrepiarem. O grupo deve ter cuidado com áreas expostas.'
-      ],
-      'thunderstorm_mild': [
-        'Trovões distantes anunciam uma tempestade que se aproxima, mas por ora apenas chuva moderada e relâmpagos ocasionais no horizonte marcam sua presença. O ar está úmido e carregado de antecipação.',
-        'Uma tempestade leve passa pela área, trazendo chuva refrescante e um show de luz e som no céu. Embora impressionante, não representa uma ameaça significativa aos viajantes preparados.'
-      ],
-
-      // Heavy rain narratives
-      'heavy_rain_severe': [
-        'A chuva cai em torrentes impiedosas, transformando o chão em lama traiçoeira e criando riachos instantâneos que arrastam tudo em seu caminho. A visibilidade é terrivelmente reduzida, e o som da água é ensurdecedor. Enchentes são uma ameaça real e presente.',
-        'Água despenca do céu em quantidades diluvianas, como se os próprios oceanos tivessem sido virados de cabeça para baixo. Cada depressão no terreno rapidamente se torna uma poça profunda. Permanecer seco é impossível, e o risco de hipotermia aumenta a cada hora.'
-      ],
-      'heavy_rain_moderate': [
-        'Chuva pesada e constante martela tudo, criando uma cortina de água que dificulta a visão e o movimento. O terreno está encharcado e escorregadio. Equipamentos adequados para chuva são essenciais.',
-        'Grandes gotas de chuva caem incessantemente, embebendo roupas e equipamento. O som rítmico da água contra superfícies cria um ambiente monótono mas não ameaçador. Progresso é possível, apenas mais lento e desconfortável.'
-      ],
-      'heavy_rain_mild': [
-        'Chuva firme e constante lava o mundo, trazendo com ela o aroma fresco da terra molhada. Embora inconveniente, pode ser manejada com a preparação adequada. A atmosfera é renovadora apesar do desconforto.',
-        'A chuva cai em rajadas firmes, mas há algo quase purificador sobre ela. Com capas adequadas, o grupo pode continuar sua jornada, talvez até apreciando o aspecto rejuvenescedor do aguaceiro.'
-      ],
-
-      // Light rain narratives
-      'light_rain_severe': [
-        'Uma chuva leve mas persistente penetra lentamente através das roupas, trazendo um frio úmido que se instala nos ossos. Embora pareça suave, a exposição prolongada pode ser perigosa.',
-        'Garoa contínua cria uma névoa úmida que permeia tudo. A umidade constante ameaça danificar equipamentos e diminuir o moral. O que parece inofensivo pode se tornar debilitante com o tempo.'
-      ],
-      'light_rain_moderate': [
-        'Chuva leve e constante cai do céu cinza, criando uma atmosfera melancólica mas não desagradável. O terreno está úmido mas transitável. É um dia para caminhar em contemplação silenciosa.',
-        'Gotas finas de chuva pontuam o ar, trazendo frescor e o som suave de água caindo. Com proteção básica contra chuva, a jornada pode prosseguir sem grandes contratempos.'
-      ],
-      'light_rain_mild': [
-        'Uma garoa suave beija a pele, refrescante e revigorante. O mundo parece lavado e limpo, com cores mais vibrantes sob a luz difusa. É quase prazeroso viajar em tal clima.',
-        'Chuva delicada cai como uma névoa fina, trazendo consigo uma qualidade quase mágica. Há beleza neste clima suave, e a jornada continua facilmente sob estas condições amenas.'
-      ],
-
-      // Sandstorm narratives
-      'sandstorm_severe': [
-        'Uma parede de areia avança como uma besta furiosa, transformando o dia em noite instantânea. O vento carrega milhões de grãos abrasivos que atingem a pele como agulhas. Respirar requer tecido sobre o rosto, e ver mais de um metro à frente é impossível. Esta tempestade de areia pode enterrar os incautos vivos.',
-        'O deserto se rebela! Areia é arrancada do solo em quantidades inimagináveis, criando um turbilhão marrom-avermelhado que bloqueia completamente o sol. O rugido do vento é apocalíptico, e qualquer exposição causa dor imediata. Sobrevivência depende de encontrar abrigo rochoso e esperar a fúria passar.'
-      ],
-      'sandstorm_moderate': [
-        'Ventos fortes levantam cortinas de areia que reduzem significativamente a visibilidade. Proteger olhos e vias respiratórias é essencial, e o progresso é lento e árduo. A tempestade não é mortal, mas exige respeito e cautela.',
-        'Rajadas poderosas carregam nuvens de areia que ocasionalmente envolvem o grupo. Entre as rajadas, há momentos de clareza, mas a ameaça constante exige vigilância. O clima hostil do deserto demonstra sua força.'
-      ],
-      'sandstorm_mild': [
-        'Redemoinhos ocasionais de areia dançam pelo deserto, trazidos por ventos caprichosos. A visibilidade é boa na maior parte do tempo, embora seja prudente proteger os olhos. A jornada continua com cautela moderada.',
-        'O vento levanta véus finos de areia que adicionam uma qualidade etérea à paisagem desértica. Embora ligeiramente desconfortável, não impede significativamente a viagem. A beleza austera do deserto é ainda assim visível.'
-      ],
-
-      // Dust devil narratives
-      'dust_devil_severe': [
-        'Colunas girando violentamente de areia e detritos rasgam pelo deserto como espíritos furiosos. Múltiplos redemoinhos se formam e dissipam, cada um capaz de derrubar uma pessoa ou arrancar equipamento mal preso. O ar está espesso com partículas suspensas.',
-        'Tornados menores de areia dançam caoticamente, criando um campo minado atmosférico. O vento muda de direção constantemente, levantando nuvens densas de poeira que cegam e sufocam. Navegar através deste fenômeno requer extrema cautela.'
-      ],
-      'dust_devil_moderate': [
-        'Redemoinhos de poeira se formam ocasionalmente, girando pelo deserto antes de se desfazerem. Embora impressionantes, são previsíveis o suficiente para serem evitados. A poeira no ar dá ao ambiente uma qualidade nebulosa.',
-        'Colunas giratórias de areia aparecem e desaparecem caprichosamente. O grupo deve estar atento mas não alarmado - estes fenômenos são parte do espírito selvagem do deserto, mais espetaculares que perigosos nesta intensidade.'
-      ],
-      'dust_devil_mild': [
-        'Pequenos redemoinhos de areia dançam ao longe, criando espirais fascinantes que sobem ao céu. Há uma beleza hipnótica nestes fenômenos, e eles não representam ameaça significativa à jornada.',
-        'Ocasionalmente, pequenas colunas de areia giram brevemente antes de se dissipar. Estes "espíritos dançantes" do deserto adicionam caráter à paisagem sem causar preocupação real. A travessia prossegue tranquilamente.'
-      ]
-    };
+    // Temperature unit detection and conversion
+    const useFahrenheit = userLocale === 'en'; // English (US) uses Fahrenheit
+    
+    function celsiusToFahrenheit(celsius) {
+      return Math.round((celsius * 9/5) + 32);
+    }
+    
+    function formatTemperature(celsius) {
+      if (useFahrenheit) {
+        return `${celsiusToFahrenheit(celsius)}°F`;
+      }
+      return `${celsius}°C`;
+    }
+    
+    function formatWindSpeed(kmh) {
+      if (useFahrenheit) {
+        // Convert km/h to mph for US
+        const mph = Math.round(kmh * 0.621371);
+        return `${mph} mph`;
+      }
+      return `${kmh} km/h`;
+    }
 
     function generateNarrative(weather, intensity, temp, wind) {
       const key = `${weather}_${intensity}`;
       const templates = narrativeTemplates[key] || narrativeTemplates[`${weather}_moderate`] || [];
       
       if (templates.length === 0) {
-        return `Você se encontra sob condições climáticas de ${weather} com intensidade ${intensity}. A temperatura está em ${temp}°C e o vento sopra a ${wind} km/h.`;
+        return `Weather conditions: ${weather} with ${intensity} intensity. Temperature: ${temp}°C, Wind: ${wind} km/h.`;
       }
       
       // Select random template
@@ -750,6 +690,10 @@ const route = '/tools/weather';
     // Generate weather button
     document.getElementById('genWeather').addEventListener('click', function() {
       const button = this;
+      const weatherResult = document.getElementById('weatherResult');
+      const mockupCard = document.getElementById('mockupCard');
+      const isRegeneration = weatherResult.style.display === 'block';
+      
       button.disabled = true;
       button.classList.add('loading');
       
@@ -759,12 +703,29 @@ const route = '/tools/weather';
       // Show loading state
       button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Gerando...';
       
-      setTimeout(() => {
+      // If regenerating, fade out current content
+      if (isRegeneration) {
+        weatherResult.classList.add('fade-out');
+        
+        setTimeout(() => {
+          updateWeatherContent();
+        }, 300);
+      } else {
+        // First time generation
+        setTimeout(() => {
+          updateWeatherContent();
+        }, 800);
+      }
+      
+      function updateWeatherContent() {
         const result = generateWeather(selectedClimate);
-        const weatherResult = document.getElementById('weatherResult');
-        const mockupCard = document.getElementById('mockupCard');
         const translations = T.options || {};
         const intensityTranslations = T.intense || {};
+        
+        // Check if narrative is currently expanded
+        const narrativeHeader = document.getElementById('narrativeHeader');
+        const narrativeContent = document.getElementById('narrativeContent');
+        const wasExpanded = narrativeHeader.classList.contains('expanded');
         
         // Update icon with color
         const weatherIcon = document.getElementById('weatherIcon');
@@ -775,38 +736,58 @@ const route = '/tools/weather';
         // Update content
         weatherResult.querySelector('.weather-condition').textContent = translations[result.weather] || result.weather;
         weatherResult.querySelector('.intensity').textContent = intensityTranslations[result.intensity] || result.intensity;
-        weatherResult.querySelector('.temperature').textContent = `${result.temp}°C`;
+        weatherResult.querySelector('.temperature').textContent = formatTemperature(result.temp);
         weatherResult.querySelector('.temperature-label').textContent = T.temperatura;
-        weatherResult.querySelector('.wind-speed').textContent = `${result.wind} km/h`;
+        weatherResult.querySelector('.wind-speed').textContent = formatWindSpeed(result.wind);
         weatherResult.querySelector('.wind-label').textContent = T.vento;
         
         // Generate and update narrative
         const narrative = generateNarrative(result.weather, result.intensity, result.temp, result.wind);
         document.getElementById('narrativeText').textContent = narrative;
         
-        // Reset narrative section state
-        const narrativeHeader = document.getElementById('narrativeHeader');
-        const narrativeContent = document.getElementById('narrativeContent');
-        narrativeHeader.classList.remove('expanded');
-        narrativeContent.classList.remove('expanded');
+        // Maintain narrative section state (keep expanded if it was expanded)
+        if (wasExpanded) {
+          narrativeHeader.classList.add('expanded');
+          narrativeContent.classList.add('expanded');
+        } else {
+          narrativeHeader.classList.remove('expanded');
+          narrativeContent.classList.remove('expanded');
+        }
         
-        // Hide mockup and show result with animation
+        // Remove ALL animation classes first
+        weatherResult.classList.remove('fade-out', 'fade-in');
+        weatherResult.style.animation = 'none';
+        
+        // Hide mockup and show result
         mockupCard.style.display = 'none';
-        weatherResult.style.display = 'none';
+        weatherResult.style.display = 'block';
+        
+        // Force reflow to restart animation
+        void weatherResult.offsetWidth;
+        
+        // Add fade-in animation
+        weatherResult.classList.add('fade-in');
+        
+        // Add pulse animation to icon
+        const iconContainer = weatherResult.querySelector('.weather-icon-container');
+        iconContainer.classList.remove('updating'); // Remove first
+        void iconContainer.offsetWidth; // Force reflow
+        iconContainer.classList.add('updating');
         
         setTimeout(() => {
-          weatherResult.style.display = 'block';
-          weatherResult.style.animation = 'none';
-          setTimeout(() => {
-            weatherResult.style.animation = 'slideInUp 0.5s ease-out';
-          }, 10);
-        }, 50);
+          iconContainer.classList.remove('updating');
+        }, 600);
+        
+        // Clean up animation class
+        setTimeout(() => {
+          weatherResult.classList.remove('fade-in');
+        }, 400);
         
         // Reset button
         button.disabled = false;
         button.classList.remove('loading');
         button.innerHTML = originalHTML;
-      }, 800);
+      }
     });
 
     // Narrative toggle functionality
@@ -830,7 +811,7 @@ const route = '/tools/weather';
           copyBtn.classList.add('copied');
           const copyTextSpan = copyBtn.querySelector('.copy-text');
           const originalText = copyTextSpan.textContent;
-          copyTextSpan.textContent = 'Copiado!';
+          copyTextSpan.textContent = narrativeLang.copiedButton;
           
           // Reset after 2 seconds
           setTimeout(() => {
@@ -838,7 +819,7 @@ const route = '/tools/weather';
             copyTextSpan.textContent = originalText;
           }, 2000);
         }).catch(err => {
-          console.error('Erro ao copiar:', err);
+          console.error('Error copying:', err);
         });
       }
     });

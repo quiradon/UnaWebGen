@@ -506,6 +506,7 @@
         "moderate": "Intensitas: Sedang",
         "severe": "Intensitas: Parah"
       },
+      "intensidade": "Intensitas",
       "options": {
         "blizzard": "Badai salju",
         "clear": "Langit cerah",
@@ -527,7 +528,9 @@
         "desert": "Wilayah gurun",
         "temperate": "Daerah beriklim sedang"
       },
-      "vento": "Kecepatan Angin"
+      "vento": "Kecepatan Angin",
+      "label": "Pilih jenis cuaca.",
+      "label2": "Klik \"Hasilkan Cuaca\" untuk melihat hasilnya."
     },
     "morse": {
       "btn1": "Putar suara",

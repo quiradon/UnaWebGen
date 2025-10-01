@@ -506,6 +506,7 @@
         "moderate": "強度：中等度",
         "severe": "強度：深刻"
       },
+      "intensidade": "強度",
       "options": {
         "blizzard": "ブリザード",
         "clear": "快晴 (kai sei)",
@@ -527,7 +528,9 @@
         "desert": "砂漠地帯",
         "temperate": "温帯地域"
       },
-      "vento": "風速"
+      "vento": "風速",
+      "label": "気候タイプを選択してください。",
+      "label2": "「天気を生成」をクリックして結果を表示します。"
     },
     "morse": {
       "btn1": "音を再生する",

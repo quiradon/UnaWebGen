@@ -506,6 +506,7 @@
         "moderate": "Intenzitet: Umjeren",
         "severe": "Intenzitet: Jaka"
       },
+      "intensidade": "Intenzitet",
       "options": {
         "blizzard": "Snježna mećava",
         "clear": "Vedro nebo",
@@ -527,7 +528,9 @@
         "desert": "Pustinjska regija",
         "temperate": "Umjerena regija"
       },
-      "vento": "Brzina vjetra"
+      "vento": "Brzina vjetra",
+      "label": "Odaberite vrstu vremena.",
+      "label2": "Kliknite na \"Generiraj vrijeme\" za prikaz rezultata."
     },
     "morse": {
       "btn1": "Pusti zvuk",

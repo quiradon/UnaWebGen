@@ -502,10 +502,11 @@
     "clima": {
       "button": "Generar Clima",
       "intense": {
-        "mild": "Intensidad: Suave",
-        "moderate": "Intensidad: Moderada",
-        "severe": "Intensidad: Severa"
+        "mild": "Suave",
+        "moderate": "Moderada",
+        "severe": "Severa"
       },
+      "intensidade": "Intensidad",
       "options": {
         "blizzard": "Blizzard",
         "clear": "Cielo despejado",
@@ -527,7 +528,9 @@
         "desert": "Región desértica",
         "temperate": "Región templada"
       },
-      "vento": "Velocidad del viento"
+      "vento": "Velocidad del viento",
+      "label": "Seleccione un tipo de clima.",
+      "label2": "Haga clic en \"Generar Clima\" para ver los resultados."
     },
     "morse": {
       "btn1": "Reproducir sonido",

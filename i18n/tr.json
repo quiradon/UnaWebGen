@@ -506,6 +506,7 @@
         "moderate": "Yoğunluk: Orta",
         "severe": "Şiddet: Şiddetli"
       },
+      "intensidade": "Yoğunluk",
       "options": {
         "blizzard": "kar fırtınası",
         "clear": "Açık gökyüzü",
@@ -527,7 +528,9 @@
         "desert": "Çöl bölgesi",
         "temperate": "Ilıman bölge"
       },
-      "vento": "Rüzgar hızı"
+      "vento": "Rüzgar hızı",
+      "label": "Bir hava durumu türü seçin.",
+      "label2": "Sonuçları görmek için \"Hava Durumu Oluştur\"a tıklayın."
     },
     "morse": {
       "btn1": "Sesi çal",

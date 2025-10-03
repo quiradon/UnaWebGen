@@ -2,15 +2,10 @@
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
 import { getLanguages, loadT } from '@lib/i18n';
-import { idiomaR } from '@lib/routes';
+import { getLocale } from "astro-i18n-aut";
 
-export async function getStaticPaths() {
-  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
-}
-
-const langParam = Astro.params.lang as string;
-const t = loadT(langParam);
-const lang = idiomaR(t);
+const currentLocale = getLocale(Astro.url);
+const t = loadT(currentLocale);
 const route = '/tools/coinflip';
 ---
 <Layout t={t} route={route} title={t.flip_coin?.title} desc={t.flip_coin?.description}>
@@ -21,19 +16,30 @@ const route = '/tools/coinflip';
         <p class="mb-4 text-secondary">{t.flip_coin?.desc}</p>
       </div>
 
-      <div id="coins-container" class="d-flex flex-wrap justify-content-center gap-2">
-        <div class="coin" onclick="flipCoin(this)">
-          <div class="side front"></div>
-          <div class="side back"></div>
-        </div>
+      <div id="coins-container" class="d-flex flex-wrap justify-content-center gap-2" role="region" aria-label="Coin flip area"></div>
+      
+      <div id="results-display" class="text-center mt-3 text-white" role="status" aria-live="polite">
+        <span class="badge bg-info me-2">Heads: <strong id="heads-count">0</strong></span>
+        <span class="badge bg-warning">Tails: <strong id="tails-count">0</strong></span>
       </div>
+
       <div class="button-container mt-3">
-        <button class="btn btn-primary" onclick="rerollAll()">{t.flip_coin?.btn}</button>
+        <button id="reroll-btn" class="btn btn-primary" aria-label="Re-roll all coins">{t.flip_coin?.btn}</button>
       </div>
+      
       <div class="button-container stack-controls mt-3">
-        <button class="btn btn-secondary" onclick="decreaseStack()">-</button>
-        <input type="number" disabled id="stack-size" class="form-control d-inline-block w-auto" value="1" min="1" max="24" onchange="setStackSize()" />
-        <button class="btn btn-secondary" onclick="increaseStack()">+</button>
+        <button id="decrease-btn" class="btn btn-secondary" aria-label="Decrease number of coins">-</button>
+        <input 
+          type="number" 
+          id="stack-size" 
+          class="form-control d-inline-block w-auto" 
+          value="1" 
+          min="1" 
+          max="24" 
+          aria-label="Number of coins"
+          readonly
+        />
+        <button id="increase-btn" class="btn btn-secondary" aria-label="Increase number of coins">+</button>
       </div>
     </div>
   </section>
@@ -45,8 +51,24 @@ const route = '/tools/coinflip';
       position: relative;
       perspective: 1000px;
       transform-style: preserve-3d;
-      transition: transform 1s;
       cursor: pointer;
+      border-radius: 50%;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .coin:hover:not(.spinning) {
+      transform: translateY(-5px) scale(1.05);
+    }
+    .coin:hover:not(.spinning) .side {
+      filter: drop-shadow(0 0 20px rgba(253, 13, 85, 0.6));
+      box-shadow: 0 8px 16px rgba(253, 13, 85, 0.3), 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+    .coin:active:not(.spinning) {
+      transform: translateY(-2px) scale(1.02);
+    }
+    .coin:focus {
+      outline: 2px solid #fd0d55;
+      outline-offset: 4px;
+      border-radius: 50%;
     }
     .coin .side {
       width: 100%;
@@ -54,18 +76,292 @@ const route = '/tools/coinflip';
       position: absolute;
       backface-visibility: hidden;
       border-radius: 50%;
-      transition: transform 0.6s ease-in-out;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
-    .coin .front { background-image: url('/img/geradores/coin/cara.webp'); background-size: cover; transform: rotateY(0deg); }
-    .coin .back { background-image: url('/img/geradores/coin/coroa.webp'); background-size: cover; transform: rotateY(180deg); }
-    .spinning { animation: spin 1s ease-in-out; }
-    .coin.spinning { pointer-events: none; }
-    @keyframes spin { 0% { transform: rotateY(0deg);} 50% { transform: rotateY(180deg);} 100% { transform: rotateY(360deg);} }
-    .button-container { display: flex; justify-content: center; gap: 10px; }
-    .coin.animate { transform: scale(0); animation: growIn 0.3s forwards; }
-    @keyframes growIn { to { transform: scale(1); } }
-    @keyframes shrinkOut { to { transform: scale(0); } }
+    .coin .front { 
+      background-image: url('/img/geradores/coin/cara.webp'); 
+      background-size: cover; 
+      background-position: center;
+      transform: rotateY(0deg); 
+    }
+    .coin .back { 
+      background-image: url('/img/geradores/coin/coroa.webp'); 
+      background-size: cover; 
+      background-position: center;
+      transform: rotateY(180deg); 
+    }
+    .coin.spinning { 
+      pointer-events: none;
+      animation: spin3D 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    @keyframes spin3D { 
+      0% { 
+        transform: rotateY(0deg) rotateX(0deg) scale(1);
+      }
+      25% {
+        transform: rotateY(180deg) rotateX(10deg) scale(1.1);
+      }
+      50% { 
+        transform: rotateY(360deg) rotateX(0deg) scale(1.15);
+      }
+      75% {
+        transform: rotateY(540deg) rotateX(-10deg) scale(1.1);
+      }
+      100% { 
+        transform: rotateY(720deg) rotateX(0deg) scale(1);
+      }
+    }
+    .button-container { 
+      display: flex; 
+      justify-content: center; 
+      gap: 10px; 
+      flex-wrap: wrap;
+    }
+    .coin.animate { 
+      transform: scale(0) rotateZ(-180deg);
+      opacity: 0;
+      animation: growIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; 
+    }
+    @keyframes growIn { 
+      0% {
+        transform: scale(0) rotateZ(-180deg);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.15) rotateZ(20deg);
+        opacity: 1;
+      }
+      100% { 
+        transform: scale(1) rotateZ(0deg);
+        opacity: 1;
+      }
+    }
+    @keyframes shrinkOut { 
+      0% {
+        transform: scale(1) rotateZ(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0) rotateZ(180deg);
+        opacity: 0;
+      }
+    }
+    #results-display .badge {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      transition: all 0.3s ease;
+    }
+    #results-display .badge:hover {
+      transform: scale(1.05);
+    }
+    /* Animação para os botões */
+    .btn {
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
   </style>
 
-  <script is:inline src="/js/coin_flip.js"></script>
+  <script is:inline>
+    // Constants
+    const MAX_COINS = 24;
+    const MIN_COINS = 1;
+    const FLIP_DURATION = 1000;
+    const ANIMATION_DURATION = 300;
+
+    // State
+    let isFlipping = false;
+
+    // Elements
+    const coinsContainer = document.getElementById('coins-container');
+    const stackSizeInput = document.getElementById('stack-size');
+    const rerollBtn = document.getElementById('reroll-btn');
+    const decreaseBtn = document.getElementById('decrease-btn');
+    const increaseBtn = document.getElementById('increase-btn');
+    const headsCount = document.getElementById('heads-count');
+    const tailsCount = document.getElementById('tails-count');
+
+    // Utility Functions
+    function updateResults() {
+      const coins = coinsContainer.querySelectorAll('.coin');
+      let heads = 0;
+      let tails = 0;
+      
+      coins.forEach(coin => {
+        const transform = coin.style.transform;
+        // Extrair o valor de rotateY
+        const match = transform.match(/rotateY\(([0-9.-]+)deg\)/);
+        if (match) {
+          const degrees = parseFloat(match[1]);
+          // Normalizar o ângulo para 0-360
+          const normalizedDegrees = ((degrees % 360) + 360) % 360;
+          // Se está entre 0-90 ou 270-360, é heads (frente)
+          // Se está entre 90-270, é tails (verso)
+          if (normalizedDegrees < 90 || normalizedDegrees >= 270) {
+            heads++;
+          } else {
+            tails++;
+          }
+        } else if (transform === '') {
+          // Moeda inicial sem transform é heads
+          heads++;
+        }
+      });
+      
+      headsCount.textContent = heads;
+      tailsCount.textContent = tails;
+    }
+
+    function flipCoin(coin) {
+      if (coin.classList.contains('spinning')) return;
+      
+      coin.classList.add('spinning');
+      coin.setAttribute('aria-busy', 'true');
+      
+      // Número aleatório de rotações extras (2-4 voltas completas)
+      const extraSpins = (Math.floor(Math.random() * 3) + 2) * 360;
+      const isHeads = Math.random() < 0.5;
+      const finalRotation = isHeads ? 0 : 180;
+
+      setTimeout(() => {
+        coin.classList.remove('spinning');
+        coin.setAttribute('aria-busy', 'false');
+        coin.setAttribute('aria-label', isHeads ? 'Heads' : 'Tails');
+        
+        // Aplicar rotação final com transição suave
+        coin.style.transform = `rotateY(${extraSpins + finalRotation}deg)`;
+        
+        // Atualizar resultados após a transição suave
+        setTimeout(() => {
+          updateResults();
+        }, 600);
+      }, FLIP_DURATION);
+    }
+
+    function createCoin() {
+      const newCoin = document.createElement('div');
+      newCoin.className = 'coin animate';
+      newCoin.setAttribute('role', 'button');
+      newCoin.setAttribute('tabindex', '0');
+      newCoin.setAttribute('aria-label', 'Coin - Click to flip');
+      newCoin.innerHTML = `
+        <div class="side front"></div>
+        <div class="side back"></div>
+      `;
+      
+      // Click event
+      newCoin.addEventListener('click', () => flipCoin(newCoin));
+      
+      // Keyboard support
+      newCoin.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          flipCoin(newCoin);
+        }
+      });
+      
+      return newCoin;
+    }
+
+    function addCoin() {
+      if (coinsContainer.children.length >= MAX_COINS) return;
+      
+      const newCoin = createCoin();
+      coinsContainer.appendChild(newCoin);
+      
+      setTimeout(() => {
+        newCoin.classList.remove('animate');
+        // Pequeno delay antes de flipar para efeito mais suave
+        setTimeout(() => {
+          flipCoin(newCoin);
+        }, 100);
+      }, 500);
+      
+      updateStackSize();
+    }
+
+    function removeCoin() {
+      if (coinsContainer.children.length <= 0) return;
+      
+      const lastCoin = coinsContainer.lastChild;
+      lastCoin.classList.remove('animate');
+      lastCoin.style.animation = 'shrinkOut 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+      
+      setTimeout(() => {
+        coinsContainer.removeChild(lastCoin);
+        updateStackSize();
+        updateResults();
+      }, 500);
+    }
+
+    function rerollAll() {
+      if (isFlipping) return;
+      isFlipping = true;
+      rerollBtn.disabled = true;
+      
+      const coins = coinsContainer.querySelectorAll('.coin');
+      const delay = 120; // Delay entre cada moeda em ms (mais rápido)
+      
+      coins.forEach((coin, index) => {
+        setTimeout(() => {
+          flipCoin(coin);
+        }, index * delay);
+      });
+      
+      // Calcular o tempo total: última moeda começa + tempo de flip + bounce
+      const totalTime = (coins.length - 1) * delay + FLIP_DURATION + 400;
+      
+      setTimeout(() => {
+        isFlipping = false;
+        rerollBtn.disabled = false;
+      }, totalTime);
+    }
+
+    function updateStackSize() {
+      const currentSize = coinsContainer.children.length;
+      stackSizeInput.value = currentSize;
+      decreaseBtn.disabled = currentSize <= MIN_COINS;
+      increaseBtn.disabled = currentSize >= MAX_COINS;
+    }
+
+    function increaseStack() {
+      const currentValue = parseInt(stackSizeInput.value);
+      if (currentValue < MAX_COINS) {
+        addCoin();
+      }
+    }
+
+    function decreaseStack() {
+      const currentValue = parseInt(stackSizeInput.value);
+      if (currentValue > MIN_COINS) {
+        removeCoin();
+      }
+    }
+
+    // Event Listeners
+    rerollBtn.addEventListener('click', rerollAll);
+    decreaseBtn.addEventListener('click', decreaseStack);
+    increaseBtn.addEventListener('click', increaseStack);
+
+    // Initialize
+    function init() {
+      // Clear container and add initial coin
+      coinsContainer.innerHTML = '';
+      addCoin();
+      updateStackSize();
+    }
+
+    // Run initialization when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
 </Layout>

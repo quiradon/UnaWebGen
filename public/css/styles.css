@@ -25,10 +25,6 @@ html {
   cursor: grab
 }
 
-
-
-
-
 .mouse-click-icon:hover {
   cursor: pointer;
 }
@@ -39,11 +35,6 @@ html {
   padding: 1rem;
   margin-bottom: 1rem;
 }
-
-
-
-
-
 
 .link-unstyled, .link-unstyled:link, .link-unstyled:hover {
   color: inherit!important;

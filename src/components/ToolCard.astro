@@ -1,0 +1,22 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  icon: any;
+}
+
+const { href, title, description, icon: Icon } = Astro.props;
+---
+
+<div class="col-xxl-4 d-flex">
+  <a href={href} class="card system_card text-decoration-none flex-grow-1">
+    <div class="card-body d-flex flex-column p-4">
+      <div class="bs-icon-md bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center d-inline-block mb-3 bs-icon">
+        <Icon size={24} />
+      </div>
+      <h4 class="card-title">{title}</h4>
+      <p class="card-text flex-grow-1">{description}</p>
+    </div>
+  </a>
+</div>

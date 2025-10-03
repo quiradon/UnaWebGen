@@ -12,22 +12,99 @@ const route = '/tools/poker';
       <div class="row">
         <div class="col-md-6 order-first order-md-last p-5 pt-2 pb-0">
           <div class="p-5">
-            <img id="cardshow" class="rounded img-fluid w-100 h-100 fit-cover CardPoker" src="/api/poker-card/2-10.webp" loading="lazy" alt="Random playing card" />
+            <div class="card-container">
+              <img id="cardshow" class="rounded img-fluid w-100 h-100 fit-cover CardPoker" src="/api/poker-card/2-10.webp" loading="eager" alt="Random playing card" />
+            </div>
+            <div class="text-center mt-3">
+              <p id="cardname" class="h5 text-white mb-0" aria-live="polite"></p>
+              <p id="deckstatus" class="text-secondary small mt-1" aria-live="polite"></p>
+            </div>
           </div>
         </div>
         <div class="col d-flex justify-content-center align-items-center align-content-center order-last">
           <div class="text-white">
             <h1 class="display-5 fw-bold text-white">{t.poker?.article?.title}</h1>
             <p class="lead text-secondary">{t.poker?.article?.desc}</p>
-            <div class="input-group">
-              <button class="text-wrap btn btn-primary link-light p-2" id="cardsrun" style="white-space: nowrap;" type="button">{t.misc?.btn?.gencard}</button>
-              <select class="form-select me-2" id="cardstype" name="card">
-                <option value="random" selected>{t.poker?.cards?.type?.["0"]}</option>
-                <option value="0">{t.poker?.cards?.type?.["4"]} (♦)</option>
-                <option value="1">{t.poker?.cards?.type?.["1"]} (♠)</option>
-                <option value="2">{t.poker?.cards?.type?.["2"]} (♣)</option>
-                <option value="3">{t.poker?.cards?.type?.["3"]} (♥)</option>
-              </select>
+            
+            <div class="mb-3">
+              <div class="input-group mb-2">
+                <button 
+                  class="text-wrap btn btn-primary link-light p-2" 
+                  id="cardsrun" 
+                  style="white-space: nowrap;" 
+                  type="button"
+                  aria-label={t.misc?.btn?.gencard}
+                >
+                  {t.misc?.btn?.gencard}
+                </button>
+                <select 
+                  class="form-select" 
+                  id="cardstype" 
+                  name="card"
+                  aria-label="Selecionar tipo de carta"
+                >
+                  <option value="random" selected>{t.poker?.cards?.type?.["0"]}</option>
+                  <option value="0">{t.poker?.cards?.type?.["4"]} (♦)</option>
+                  <option value="1">{t.poker?.cards?.type?.["1"]} (♠)</option>
+                  <option value="2">{t.poker?.cards?.type?.["2"]} (♣)</option>
+                  <option value="3">{t.poker?.cards?.type?.["3"]} (♥)</option>
+                </select>
+              </div>
+              
+              <div class="form-check mb-3">
+                <input 
+                  class="form-check-input" 
+                  type="checkbox" 
+                  id="limitdeck" 
+                  aria-describedby="limitdeckhelp"
+                >
+                <label class="form-check-label text-white" for="limitdeck">
+                  Limitar a 52 cartas (Baralho Realista)
+                </label>
+                <div id="limitdeckhelp" class="form-text">
+                  Simula um baralho real - cada carta só pode ser gerada uma vez
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seção de Histórico -->
+  <section class="bg-dark bg-opacity-25">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <!-- Header -->
+          <div class="card bg-dark border-secondary mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <div>
+                <h5 class="mb-0 text-white">
+                  <i class="bi bi-collection-fill me-2"></i>
+                  Histórico de Cartas
+                </h5>
+                <small class="text-muted">Clique no X para devolver a carta ao baralho</small>
+              </div>
+              <button 
+                id="clearhistory" 
+                class="btn btn-sm btn-outline-danger"
+                aria-label="Limpar todas as cartas"
+              >
+                <i class="bi bi-trash"></i> Limpar Tudo
+              </button>
+            </div>
+            <div class="card-body bg-dark bg-opacity-50 p-3">
+              <div id="history" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-3">
+                <div class="col">
+                  <div class="alert alert-secondary text-center mb-0" role="alert">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Nenhuma carta gerada ainda
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -36,40 +113,509 @@ const route = '/tools/poker';
   </section>
 
   <script is:inline>
-  const audio = "/audio/play-card.mp3";
-    document.getElementById('cardsrun').onclick = card;
-    function card() {
-      let a = document.getElementById('cardstype').value ?? 0;
-      if (a === 'random') a = Math.floor(4 * Math.random());
-      const audioElement = new Audio(audio);
-      audioElement.volume = 0.5;
-      audioElement.play();
-      const cardNumber = Math.floor(13 * Math.random()) + 1;
-      const cardimg = `/api/poker-card/${a}-${cardNumber}.webp`;
-      const cardElement = document.getElementById('cardshow');
-      cardElement.src = cardimg;
-      cardElement.classList.add('flip');
-      setTimeout(() => { cardElement.classList.remove('flip'); }, 500);
+    // Configurações
+    const audio = "/audio/play-card.mp3";
+    const audioElement = new Audio(audio);
+    audioElement.volume = 0.5;
+    
+    // Preload do áudio
+    audioElement.load();
+
+    // Estado do jogo
+    let usedCards = new Set();
+    let history = [];
+    const maxHistory = 10;
+
+    // Nomes das cartas
+    const cardNames = {
+      1: 'Ás', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7',
+      8: '8', 9: '9', 10: '10', 11: 'Valete', 12: 'Dama', 13: 'Rei'
+    };
+    
+    const suitNames = ['Ouros', 'Espadas', 'Paus', 'Copas'];
+    const suitSymbols = ['♦', '♠', '♣', '♥'];
+
+    // Elementos DOM
+    const elements = {
+      button: document.getElementById('cardsrun'),
+      select: document.getElementById('cardstype'),
+      checkbox: document.getElementById('limitdeck'),
+      cardElement: document.getElementById('cardshow'),
+      cardName: document.getElementById('cardname'),
+      deckStatus: document.getElementById('deckstatus'),
+      history: document.getElementById('history'),
+      clearBtn: document.getElementById('clearhistory')
+    };
+
+    // Função para gerar carta
+    function generateCard() {
+      const limitDeck = elements.checkbox.checked;
+      
+      // Verificar se o baralho acabou
+      if (limitDeck && usedCards.size >= 52) {
+        alert('Todas as 52 cartas foram usadas! Limpando o baralho...');
+        resetDeck();
+        return;
+      }
+
+      let suit = elements.select.value;
+      let cardNumber;
+      let attempts = 0;
+      const maxAttempts = 100;
+
+      // Gerar carta válida
+      do {
+        if (suit === 'random') {
+          suit = Math.floor(4 * Math.random());
+        }
+        cardNumber = Math.floor(13 * Math.random()) + 1;
+        attempts++;
+        
+        if (attempts > maxAttempts) {
+          alert('Não há mais cartas disponíveis neste naipe!');
+          return;
+        }
+      } while (limitDeck && usedCards.has(`${suit}-${cardNumber}`));
+
+      // Adicionar aos usados se limitado
+      if (limitDeck) {
+        usedCards.add(`${suit}-${cardNumber}`);
+      }
+
+      // Tocar áudio
+      audioElement.currentTime = 0;
+      audioElement.play().catch(e => console.log('Áudio não pode ser tocado:', e));
+
+      // Atualizar imagem com animação
+      const cardimg = `/api/poker-card/${suit}-${cardNumber}.webp`;
+      elements.cardElement.classList.add('flip');
+      
+      setTimeout(() => {
+        elements.cardElement.src = cardimg;
+      }, 150);
+      
+      setTimeout(() => {
+        elements.cardElement.classList.remove('flip');
+      }, 500);
+
+      // Atualizar nome da carta
+      const name = `${cardNames[cardNumber]} de ${suitNames[suit]} ${suitSymbols[suit]}`;
+      elements.cardName.textContent = name;
+
+      // Atualizar status do baralho
+      if (limitDeck) {
+        const remaining = 52 - usedCards.size;
+        elements.deckStatus.textContent = `${remaining} cartas restantes no baralho`;
+      } else {
+        elements.deckStatus.textContent = '';
+      }
+
+      // Adicionar ao histórico
+      addToHistory(name, suit, cardNumber);
     }
+
+    // Adicionar ao histórico
+    function addToHistory(name, suit, number) {
+      const newCard = { name, suit, number, time: new Date(), id: Date.now() };
+      history.push(newCard);
+      
+      // Se exceder o máximo, remover a primeira carta
+      if (history.length > maxHistory) {
+        const firstCard = elements.history.querySelector('[data-card-id]');
+        if (firstCard) {
+          firstCard.classList.add('fade-out-up');
+          setTimeout(() => {
+            history.shift();
+            if (firstCard.parentNode) {
+              firstCard.remove();
+            }
+          }, 300);
+        } else {
+          history.shift();
+        }
+      }
+      
+      // Adicionar apenas a nova carta
+      addCardToDisplay(newCard);
+    }
+
+    // Adicionar uma carta ao display
+    function addCardToDisplay(card) {
+      // Remover mensagem vazia se existir
+      const emptyAlert = elements.history.querySelector('.alert');
+      if (emptyAlert) {
+        emptyAlert.parentElement.remove();
+      }
+
+      // Criar elemento da nova carta
+      const colDiv = document.createElement('div');
+      colDiv.className = 'col';
+      colDiv.setAttribute('data-card-id', card.id);
+      
+      colDiv.innerHTML = `
+        <div class="card bg-dark border-secondary h-100 position-relative card-item-hover">
+          <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 remove-card-btn" 
+                  aria-label="Devolver ${card.name} ao baralho"
+                  title="Devolver ao baralho">
+            <i class="bi bi-x-circle-fill"></i>
+          </button>
+          <div class="card-body p-2 text-center">
+            <img src="/api/poker-card/${card.suit}-${card.number}.webp" 
+                 alt="${card.name}" 
+                 class="img-fluid rounded mb-2 card-img-history"
+                 loading="lazy"
+                 data-suit="${card.suit}"
+                 data-number="${card.number}">
+            <h6 class="card-title text-white small mb-1">${card.name}</h6>
+          </div>
+        </div>
+      `;
+
+      // Adicionar event listener para o botão de remover
+      const removeBtn = colDiv.querySelector('.remove-card-btn');
+      removeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const cardId = parseInt(colDiv.dataset.cardId);
+        removeCardFromHistory(cardId);
+      });
+
+      // Adicionar ao histórico
+      elements.history.appendChild(colDiv);
+      
+      // Forçar reflow para garantir que a animação funcione
+      void colDiv.offsetWidth;
+      
+      // Adicionar classe de animação após estar no DOM
+      requestAnimationFrame(() => {
+        colDiv.classList.add('card-col-enter');
+      });
+    }
+
+    // Atualizar display do histórico (usado apenas para limpar)
+    function updateHistoryDisplay() {
+      if (history.length === 0) {
+        elements.history.innerHTML = `
+          <div class="col">
+            <div class="alert alert-secondary text-center mb-0" role="alert">
+              <i class="bi bi-info-circle me-2"></i>
+              Nenhuma carta gerada ainda
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // Recriar tudo apenas quando necessário (ex: limpar histórico)
+      elements.history.innerHTML = history.map((card) => `
+        <div class="col" data-card-id="${card.id}">
+          <div class="card bg-dark border-secondary h-100 position-relative card-item-hover">
+            <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 remove-card-btn" 
+                    aria-label="Devolver ${card.name} ao baralho"
+                    title="Devolver ao baralho">
+              <i class="bi bi-x-circle-fill"></i>
+            </button>
+            <div class="card-body p-2 text-center">
+              <img src="/api/poker-card/${card.suit}-${card.number}.webp" 
+                   alt="${card.name}" 
+                   class="img-fluid rounded mb-2 card-img-history"
+                   loading="lazy"
+                   data-suit="${card.suit}"
+                   data-number="${card.number}">
+              <h6 class="card-title text-white small mb-1">${card.name}</h6>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Adicionar event listeners para remover cartas
+      document.querySelectorAll('.remove-card-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const col = this.closest('[data-card-id]');
+          const cardId = parseInt(col.dataset.cardId);
+          removeCardFromHistory(cardId);
+        });
+      });
+    }
+
+    // Remover carta do histórico e devolver ao baralho
+    function removeCardFromHistory(cardId) {
+      const cardIndex = history.findIndex(card => card.id === cardId);
+      if (cardIndex === -1) return;
+
+      const card = history[cardIndex];
+      const cardKey = `${card.suit}-${card.number}`;
+      
+      // Remover do set de cartas usadas (devolver ao baralho)
+      if (elements.checkbox.checked && usedCards.has(cardKey)) {
+        usedCards.delete(cardKey);
+        
+        // Atualizar status do baralho
+        const remaining = 52 - usedCards.size;
+        elements.deckStatus.textContent = `${remaining} cartas restantes no baralho`;
+      }
+      
+      // Feedback visual com animação Bootstrap
+      const col = document.querySelector(`[data-card-id="${cardId}"]`);
+      if (col) {
+        col.classList.add('fade-out-up');
+        setTimeout(() => {
+          history.splice(cardIndex, 1);
+          updateHistoryDisplay();
+        }, 300);
+      } else {
+        history.splice(cardIndex, 1);
+        updateHistoryDisplay();
+      }
+    }
+
+    // Formatar tempo
+    function formatTime(date) {
+      const now = new Date();
+      const diff = Math.floor((now - date) / 1000);
+      
+      if (diff < 60) return 'agora';
+      if (diff < 3600) return `${Math.floor(diff / 60)}m atrás`;
+      return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Limpar histórico
+    function clearHistory() {
+      if (history.length === 0) return;
+      
+      if (confirm('Deseja limpar todo o histórico de cartas?')) {
+        history = [];
+        updateHistoryDisplay();
+      }
+    }
+
+    // Resetar baralho
+    function resetDeck() {
+      usedCards.clear();
+      elements.deckStatus.textContent = '52 cartas disponíveis';
+    }
+
+    // Event Listeners
+    elements.button.addEventListener('click', generateCard);
+    elements.clearBtn.addEventListener('click', clearHistory);
+    elements.checkbox.addEventListener('change', () => {
+      if (elements.checkbox.checked) {
+        resetDeck();
+      } else {
+        elements.deckStatus.textContent = '';
+      }
+    });
+
+    // Suporte para Enter no select
+    elements.select.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        generateCard();
+      }
+    });
+
+    // Suporte para Enter no botão
+    elements.button.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        generateCard();
+      }
+    });
+
+    // Não salvar histórico - limpa ao recarregar a página
   </script>
-    <style>
+  <style>
     @keyframes flip {
-  0% { transform: rotateY(0deg); }
-  50% { transform: rotateY(180deg); }
-  100% { transform: rotateY(360deg); }
-}
+      0% { 
+        transform: rotateY(0deg) scale(1);
+        filter: brightness(1);
+      }
+      50% { 
+        transform: rotateY(90deg) scale(0.95);
+        filter: brightness(1.2);
+      }
+      100% { 
+        transform: rotateY(180deg) scale(1);
+        filter: brightness(1);
+      }
+    }
 
-.CardPoker {
-  transform-style: flat;
-  transition: transform 0.3s; /* Transição rápida */
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
+    @keyframes flipBack {
+      0% { 
+        transform: rotateY(180deg);
+      }
+      100% { 
+        transform: rotateY(360deg);
+      }
+    }
 
-.flip {
-  animation: flip 0.3s linear; /* Animação rápida */
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
+    .card-container {
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .CardPoker {
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      backface-visibility: hidden;
+      will-change: transform;
+    }
+
+    .CardPoker:hover {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .flip {
+      animation: flip 0.5s ease-in-out, flipBack 0.5s ease-in-out 0.5s;
+    }
+
+    /* Histórico com Bootstrap */
+    .card-item-hover {
+      transition: all 0.3s ease;
+    }
+
+    /* Estado inicial antes da animação */
+    #history .col {
+      opacity: 0;
+      transform: translateY(30px) scale(0.8);
+    }
+
+    /* Animação de entrada das cartas */
+    .card-col-enter {
+      animation: cardSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes cardSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.8) rotateX(-15deg);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.02);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0);
+      }
+    }
+
+    /* Animação de saída das cartas */
+    .fade-out-up {
+      animation: cardSlideOut 0.4s cubic-bezier(0.55, 0.09, 0.68, 0.53) forwards;
+    }
+
+    @keyframes cardSlideOut {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateZ(0deg);
+      }
+      30% {
+        transform: translateY(-10px) scale(1.05) rotateZ(-5deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.7) rotateZ(-10deg);
+      }
+    }
+
+    .card-item-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6) !important;
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .card-img-history {
+      max-width: 100%;
+      height: auto;
+      max-height: 180px;
+      object-fit: contain;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .card-item-hover:hover .card-img-history {
+      transform: scale(1.05);
+    }
+
+    .remove-card-btn {
+      z-index: 10;
+      opacity: 0.9;
+      transition: all 0.2s ease;
+      padding: 0.25rem 0.5rem;
+      line-height: 1;
+    }
+
+    .remove-card-btn:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    #history .card-body {
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-check-input:checked {
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+
+    #cardname {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      min-height: 2rem;
+    }
+
+    #deckstatus {
+      min-height: 1.5rem;
+    }
+
+    /* Animação de pulso no botão quando hover */
+    #cardsrun:hover {
+      animation: pulse 0.5s ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .card-img-history {
+        max-height: 150px;
+      }
+
+      #history .card-body {
+        min-height: 180px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .card-img-history {
+        max-height: 130px;
+      }
+
+      #history .card-body {
+        min-height: 160px;
+      }
+
+      .remove-card-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.875rem;
+      }
+
+      .card-item-hover:hover {
+        transform: translateY(-3px);
+      }
+    }
   </style>
 </Layout>

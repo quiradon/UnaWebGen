@@ -408,15 +408,17 @@ const iconMap: Record<string, any> = {
     }
 
     private init() {
-      // Hover para abrir/fechar (apenas desktop sem touch)
-      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      // Detecta se é mobile pelo tamanho da tela
+      const isMobile = window.innerWidth < 992;
       
-      if (!isTouchDevice) {
+      // Em desktop (mesmo com touch), habilita hover E click
+      if (!isMobile) {
+        // Hover para abrir/fechar
         this.element.addEventListener('mouseenter', () => this.open());
         this.element.addEventListener('mouseleave', () => this.close());
       }
       
-      // Click para toggle
+      // Click para toggle (funciona em todos os casos)
       this.toggle.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();

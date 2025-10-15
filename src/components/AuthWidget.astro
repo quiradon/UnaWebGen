@@ -1,0 +1,313 @@
+---
+import type { Translations } from '@lib/i18n';
+import config from '../config.json';
+
+interface Props {
+  t: Translations;
+  variant?: 'desktop' | 'mobile';
+}
+
+const { t, variant = 'desktop' } = Astro.props;
+const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/, '');
+
+const loginLabel = (t?.nav?.auth?.login as string | undefined) ?? 'Login';
+const logoutLabel = (t?.nav?.auth?.logout as string | undefined) ?? 'Logout';
+
+const loginClasses = variant === 'desktop'
+  ? 'btn btn-primary fw-bold link-light border rounded border-0 d-none d-lg-inline-flex align-items-center gap-2 px-3'
+  : 'btn btn-primary w-100 mb-3 d-flex d-lg-none justify-content-center align-items-center gap-2';
+
+const userContainerClasses = variant === 'desktop'
+  ? 'auth-widget__user dropdown d-none d-lg-inline-flex align-items-center position-relative'
+  : 'auth-widget__user dropdown d-flex d-lg-none flex-column align-items-stretch w-100';
+
+const toggleClasses = variant === 'desktop'
+  ? 'auth-widget__toggle btn btn-outline-light border-0 d-flex align-items-center gap-2'
+  : 'auth-widget__toggle btn btn-outline-light d-flex justify-content-between align-items-center gap-3 mb-2';
+
+const dropdownClasses = variant === 'desktop'
+  ? 'auth-widget__dropdown dropdown-menu dropdown-menu-end show'
+  : 'auth-widget__dropdown dropdown-menu show position-static w-100 mt-0';
+
+const avatarSize = variant === 'desktop' ? 32 : 40;
+---
+<div
+  class={`auth-widget auth-widget--${variant}`}
+  data-auth-widget
+  data-variant={variant}
+  data-api={apiBase}
+  data-login-label={loginLabel}
+  data-logout-label={logoutLabel}
+>
+  <a data-auth-login class={loginClasses} href={`${apiBase}/auth/discord`} rel="nofollow" hidden>
+    <span class="auth-widget__login-label">{loginLabel}</span>
+  </a>
+
+  <div data-auth-user class={userContainerClasses} hidden>
+    <button data-auth-toggle class={toggleClasses} type="button" aria-haspopup="true" aria-expanded="false">
+      <img
+        data-auth-avatar
+        class="auth-widget__avatar"
+        width={avatarSize}
+        height={avatarSize}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+      <span data-auth-name class="fw-semibold text-truncate"></span>
+      <span class="auth-widget__chevron" aria-hidden="true">&#9662;</span>
+    </button>
+    <div data-auth-dropdown class={dropdownClasses} hidden>
+      <button data-auth-logout class="dropdown-item text-danger fw-semibold" type="button">
+        {logoutLabel}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    if (typeof window === 'undefined') return;
+
+    if (window.__krakenAuthWidgetInit) {
+      return;
+    }
+    window.__krakenAuthWidgetInit = true;
+
+    const initWidget = (container) => {
+      if (!container || container.dataset.authInitialized === 'true') {
+        return;
+      }
+
+      container.dataset.authInitialized = 'true';
+
+      const loginAnchor = container.querySelector('[data-auth-login]');
+      const userBlock = container.querySelector('[data-auth-user]');
+      const nameElement = container.querySelector('[data-auth-name]');
+      const avatarElement = container.querySelector('[data-auth-avatar]');
+      const logoutButton = container.querySelector('[data-auth-logout]');
+      const toggleButton = container.querySelector('[data-auth-toggle]');
+      const dropdown = container.querySelector('[data-auth-dropdown]');
+
+      if (!loginAnchor || !logoutButton || !userBlock || !nameElement || !avatarElement || !toggleButton || !dropdown) {
+        return;
+      }
+
+      const apiBase = container.dataset.api || '';
+      if (!apiBase) return;
+
+      const trimmedBase = apiBase.endsWith('/') ? apiBase.slice(0, -1) : apiBase;
+      const sessionEndpoint = `${trimmedBase}/auth/session`;
+      const loginEndpoint = `${trimmedBase}/auth/discord`;
+      const logoutEndpoint = `${trimmedBase}/auth/logout`;
+
+      const setLoginView = () => {
+        loginAnchor.hidden = false;
+        loginAnchor.style.display = '';
+        userBlock.hidden = true;
+        userBlock.style.display = 'none';
+        userBlock.classList.remove('is-open');
+        dropdown.hidden = true;
+        toggleButton.setAttribute('aria-expanded', 'false');
+      };
+
+      const setUserView = (user) => {
+        if (!user) {
+          setLoginView();
+          return;
+        }
+
+        loginAnchor.hidden = true;
+        loginAnchor.style.display = 'none';
+        userBlock.hidden = false;
+        userBlock.style.display = '';
+
+        const displayName = user.display_name || user.username || 'Discord User';
+        nameElement.textContent = displayName;
+        avatarElement.src = user.avatar_url || '';
+        avatarElement.alt = displayName;
+        toggleButton.setAttribute('aria-expanded', 'false');
+        dropdown.hidden = true;
+        userBlock.classList.remove('is-open');
+      };
+
+      const updateLoginLink = () => {
+        try {
+          const loginTarget = new URL(loginEndpoint);
+          loginTarget.searchParams.set('redirect', window.location.href);
+          loginAnchor.href = loginTarget.toString();
+        } catch {
+          loginAnchor.href = loginEndpoint;
+        }
+      };
+
+      const tidyUrl = () => {
+        try {
+          const current = new URL(window.location.href);
+          let mutated = false;
+
+          if (current.searchParams.has('login')) {
+            current.searchParams.delete('login');
+            mutated = true;
+          }
+
+          if (current.searchParams.has('login_error')) {
+            current.searchParams.delete('login_error');
+            mutated = true;
+          }
+
+          if (mutated) {
+            window.history.replaceState(window.history.state, document.title, current.toString());
+          }
+        } catch {
+          // ignore URL cleanup issues
+        }
+      };
+
+      const fetchSession = async () => {
+        try {
+          container.setAttribute('data-auth-loading', 'true');
+          const response = await fetch(sessionEndpoint, {
+            credentials: 'include',
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+
+          if (!response.ok) {
+            throw new Error(`Session response not ok: ${response.status}`);
+          }
+
+          const payload = await response.json();
+          if (payload && payload.authenticated) {
+            setUserView(payload.user);
+          } else {
+            setLoginView();
+          }
+        } catch (error) {
+          console.error('Failed to load auth session', error);
+          setLoginView();
+        } finally {
+          tidyUrl();
+          container.removeAttribute('data-auth-loading');
+        }
+      };
+
+      const logout = async () => {
+        logoutButton.disabled = true;
+        try {
+          await fetch(logoutEndpoint, {
+            method: 'POST',
+            credentials: 'include'
+          });
+        } catch (error) {
+          console.error('Failed to logout', error);
+        } finally {
+          logoutButton.disabled = false;
+          window.location.reload();
+        }
+      };
+
+      const closeDropdown = () => {
+        userBlock.classList.remove('is-open');
+        dropdown.hidden = true;
+        toggleButton.setAttribute('aria-expanded', 'false');
+      };
+
+      const toggleDropdown = () => {
+        const isOpen = userBlock.classList.toggle('is-open');
+        dropdown.hidden = !isOpen;
+        toggleButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      };
+
+      toggleButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleDropdown();
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!userBlock.classList.contains('is-open')) return;
+        if (!userBlock.contains(event.target)) {
+          closeDropdown();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeDropdown();
+        }
+      });
+
+      updateLoginLink();
+      fetchSession();
+
+      logoutButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        logout();
+      });
+    };
+
+    const initAll = () => {
+      document.querySelectorAll('[data-auth-widget]').forEach((container) => {
+        initWidget(container);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll, { once: true });
+    } else {
+      initAll();
+    }
+  })();
+</script>
+
+<style>
+  .auth-widget__avatar {
+    border-radius: 999px;
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .auth-widget__user span {
+    font-size: 0.95rem;
+  }
+
+  .auth-widget__toggle {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--bs-light, #fff);
+    padding-inline: 0.75rem;
+  }
+
+  .auth-widget__toggle .auth-widget__avatar {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+  }
+
+  .auth-widget__chevron {
+    font-size: 0.8rem;
+    opacity: 0.75;
+  }
+
+  .auth-widget__dropdown {
+    min-width: 160px;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(6px);
+  }
+
+  .auth-widget__user.is-open .auth-widget__toggle {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 991.98px) {
+    .auth-widget__user span {
+      font-size: 1rem;
+    }
+
+    .auth-widget__dropdown {
+      border-radius: 0.75rem;
+      padding: 0;
+    }
+  }
+</style>

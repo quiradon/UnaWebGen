@@ -4,7 +4,8 @@ import type { Translations } from '@lib/i18n';
 import { loadT } from '@lib/i18n';
 import config from '../config.json';
 import { getLocale, getAllLocaleUrls } from "astro-i18n-aut";
-import { Shapes, Wrench, Network, Wand, FileText, Book, Package, Fingerprint, Heart, Eye, Briefcase, MessageCircle, Crown, ChevronDown, Menu, X, Globe } from '@lucide/astro';
+import { Shapes, Wrench, Network, Wand, FileText, Book, Package, Fingerprint, Heart, Eye, Briefcase, MessageCircle, ChevronDown, Menu, X, Globe, Crown } from '@lucide/astro';
+import AuthWidget from './AuthWidget.astro';
 
 interface Props { t: Translations; route: string }
 
@@ -693,9 +694,7 @@ const iconMap: Record<string, any> = {
             </div>
           </li>
         </ul>
-        <a class="btn btn-primary fw-bold link-light border rounded border-0 d-lg-flex d-xxl-flex align-items-lg-center justify-content-xxl-center align-items-xxl-center px-3" role="button" href={`${lang}/#premium`}>
-          <Crown size={20} />{t.nav.donate}
-        </a>
+        <AuthWidget t={t} variant="desktop" />
       </div>
       
       <!-- Botão para abrir menu mobile (visível apenas em mobile) -->
@@ -719,8 +718,11 @@ const iconMap: Record<string, any> = {
       </svg>
     </button>
   </div>
-  
+
   <div class="mobile-sidebar-content">
+    <div class="mobile-section d-lg-none">
+      <AuthWidget t={t} variant="mobile" />
+    </div>
     <!-- Seções dinâmicas: Guide e Tools -->
     {menuSections.map((section) => {
       const SectionIcon = iconMap[section.icon];

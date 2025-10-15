@@ -239,6 +239,10 @@
   },
   "nav": {
     "acervo": "Collection",
+    "auth": {
+      "login": "Log in",
+      "logout": "Log out"
+    },
     "add": "Add App",
     "dices": {
       "desc": "Test and learn how to roll.",

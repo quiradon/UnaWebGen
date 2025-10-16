@@ -112,6 +112,23 @@ interface KrakenWindow extends Window {
       }
     };
 
+    // Se o frontend recebeu redirect de login com ?login=success, setamos
+    // uma flag em sessionStorage para indicar que o cookie httpOnly foi criado
+    // no backend. Isso funciona como fallback porque o cookie real é httpOnly
+    // e não aparece em document.cookie.
+    try {
+      const _u = new URL(window.location.href);
+      if (_u.searchParams.get('login') === 'success') {
+        sessionStorage.setItem('kraken_session_present', '1');
+      }
+      if (_u.searchParams.has('login_error')) {
+        // caso de erro de login, removemos qualquer flag existente
+        sessionStorage.removeItem('kraken_session_present');
+      }
+    } catch {
+      // ignore URL parse issues
+    }
+
     const closeDropdown = (): void => {
       if (!elements.dropdown || !elements.toggleButton) return;
       elements.dropdown.hidden = true;
@@ -219,6 +236,8 @@ interface KrakenWindow extends Window {
             method: 'POST',
             credentials: 'include',
           });
+          // limpar a flag local que indica presença de sessão
+          try { sessionStorage.removeItem('kraken_session_present'); } catch {}
         } catch (error) {
           console.error('Failed to logout', error);
         } finally {
@@ -289,9 +308,25 @@ interface KrakenWindow extends Window {
       bindUserInteractions();
     };
 
+    const hasCookie = (name: string): boolean => {
+      return document.cookie.split(';').some((cookie) => {
+        return cookie.trim().startsWith(`${name}=`);
+      });
+    };
+
     const getSession = async (): Promise<SessionResponse | null> => {
       // Se já temos cache, retornar imediatamente
       if (cachedSession !== null) {
+        return cachedSession;
+      }
+
+      // OTIMIZAÇÃO: Se não existe cookie visível de sessão E não existe a flag
+      // de presença em sessionStorage, não fazer requisição. Note que o
+      // cookie real (`kraken_session`) é httpOnly, então não aparece em
+      // document.cookie; por isso usamos o fallback sessionStorage.
+      const sessionFlag = sessionStorage.getItem('kraken_session_present') === '1';
+      if (!hasCookie('kraken_session') && !sessionFlag) {
+        cachedSession = { authenticated: false };
         return cachedSession;
       }
 
@@ -337,8 +372,12 @@ interface KrakenWindow extends Window {
         const payload = await getSession();
         
         if (payload && payload.authenticated && payload.user) {
+          // garante flag local quando autenticado
+          try { sessionStorage.setItem('kraken_session_present', '1'); } catch {}
           renderUserView(payload.user);
         } else {
+          // se não autenticado, limpar flag local
+          try { sessionStorage.removeItem('kraken_session_present'); } catch {}
           renderLoginView();
         }
       } catch (error) {

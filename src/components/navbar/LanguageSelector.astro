@@ -1,0 +1,183 @@
+---
+import { getLocale, getAllLocaleUrls } from "astro-i18n-aut";
+import { loadT } from '../../lib/i18n';
+import { ChevronDown } from '@lucide/astro';
+
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
+const allUrls = getAllLocaleUrls(Astro.url);
+
+const lang_FLAGS: Record<string, string> = {
+  pt: '/img/flags/br.svg',
+  en: '/img/flags/en.svg',
+  es: '/img/flags/es.svg',
+  de: '/img/flags/de.svg',
+  fr: '/img/flags/fr.svg',
+  zh: '/img/flags/cn.svg',
+  ja: '/img/flags/jp.svg',
+  ru: '/img/flags/ru.svg',
+  ko: '/img/flags/ko.svg',
+  it: '/img/flags/it.svg',
+  pl: '/img/flags/pl.svg',
+  tr: '/img/flags/tr.svg',
+  hu: '/img/flags/hu.svg',
+  id: '/img/flags/id.svg',
+  da: '/img/flags/dk.svg',
+  hr: '/img/flags/hr.svg',
+};
+
+const lang_LABELS: Record<string, string> = {
+  en: 'English',
+  zh: '中文',
+  es: 'Español',
+  fr: 'Français',
+  de: 'Deutsch',
+  pt: 'Português',
+  ru: 'Русский',
+  ja: '日本語',
+  ko: '한국어',
+  it: 'Italiano',
+  tr: 'Türkçe',
+  pl: 'Polski',
+  hu: 'Magyar',
+  da: 'Danish',
+  hr: 'Croatian',
+  id: 'Indonesian',
+};
+---
+
+<li class="nav-item auto-open dropdown">
+  <button 
+    aria-label={`${t.lang} Selected in Lang Selector`} 
+    class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" 
+    aria-expanded="false" 
+    data-bs-toggle="dropdown" 
+    type="button"
+  >
+    <img 
+      class="img-fluid me-1" 
+      src={lang_FLAGS[t.lang]} 
+      width="25" 
+      height="25" 
+      alt={`${t.lang} Flag`} 
+    />
+    <ChevronDown size={16} />
+  </button>
+  <div class="dropdown-menu shadow overflow-auto">
+    {Object.keys(lang_FLAGS).map((code) => (
+      <a 
+        class="dropdown-item d-flex" 
+        href={allUrls[code] || allUrls['en']} 
+        aria-label={`${t.lang} - ${lang_LABELS[code]}`}
+      >
+        <span>
+          <img 
+            class="img-fluid me-2" 
+            src={lang_FLAGS[code]} 
+            width="25" 
+            height="25" 
+            alt={`${lang_LABELS[code]} Lang selector`} 
+          />
+          {lang_LABELS[code]}
+        </span>
+      </a>
+    ))}
+  </div>
+</li>
+
+<style>
+  .dropdown-menu {
+    display: block !important;
+    position: absolute;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+    transform-origin: top;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .dropdown-menu.show {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+</style>
+
+<script is:inline>
+  // Função de inicialização do seletor de idioma
+  function initLanguageSelector() {
+    const languageDropdown = document.querySelector('.nav-item.auto-open.dropdown:has([aria-label*="Selected in Lang Selector"])');
+    
+    if (!languageDropdown) return;
+    
+    const toggle = languageDropdown.querySelector('[data-bs-toggle="dropdown"]');
+    const menu = languageDropdown.querySelector('.dropdown-menu');
+    
+    if (!toggle || !menu) return;
+    
+    // Previne comportamento padrão do Bootstrap
+    toggle.removeAttribute('data-bs-toggle');
+    
+    let hoverTimeout;
+    
+    // Detecta se é dispositivo touch
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Hover para abrir (apenas em dispositivos não-touch e desktop)
+    if (!isTouchDevice && window.innerWidth >= 992) {
+      languageDropdown.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimeout);
+        menu.classList.add('show');
+        toggle.setAttribute('aria-expanded', 'true');
+      });
+      
+      languageDropdown.addEventListener('mouseleave', () => {
+        hoverTimeout = setTimeout(() => {
+          menu.classList.remove('show');
+          toggle.setAttribute('aria-expanded', 'false');
+        }, 100);
+      });
+    }
+    
+    // Click para toggle (funciona sempre)
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const isOpen = menu.classList.contains('show');
+      
+      if (!isOpen) {
+        menu.classList.add('show');
+        toggle.setAttribute('aria-expanded', 'true');
+      } else {
+        menu.classList.remove('show');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    
+    // Previne fechar ao clicar dentro do menu
+    menu.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    // Fecha ao clicar fora
+    document.addEventListener('click', (e) => {
+      if (!languageDropdown.contains(e.target)) {
+        menu.classList.remove('show');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+  
+  // Tenta inicializar imediatamente se o DOM já estiver carregado
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLanguageSelector);
+  } else {
+    initLanguageSelector();
+  }
+  
+  // Também tenta após um pequeno delay para garantir que tudo está carregado
+  setTimeout(initLanguageSelector, 100);
+</script>

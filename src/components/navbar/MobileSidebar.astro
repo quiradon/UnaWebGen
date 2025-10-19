@@ -1,0 +1,293 @@
+---
+import { Globe } from '@lucide/astro';
+import type { MenuSection } from './MenuTypes';
+
+interface Props {
+  sections: MenuSection[];
+  additionalLinks: any[];
+  iconMap: Record<string, any>;
+  t: any;
+  lang_FLAGS: Record<string, string>;
+  lang_LABELS: Record<string, string>;
+  allUrls: Record<string, string>;
+}
+
+const { sections, additionalLinks, iconMap, t, lang_FLAGS, lang_LABELS, allUrls } = Astro.props;
+---
+
+<!-- Overlay do sidebar mobile -->
+<div class="mobile-sidebar-overlay"></div>
+
+<!-- Sidebar mobile -->
+<aside class="mobile-sidebar">
+  <div class="mobile-sidebar-header">
+    <span class="fs-4 fw-bold">Menu</span>
+    <button class="mobile-sidebar-close" aria-label="Fechar menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="24" height="24" fill="currentColor">
+        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="mobile-sidebar-content">
+    <!-- Seções dinâmicas: Guide e Tools -->
+    {sections.map((section) => {
+      const SectionIcon = iconMap[section.icon];
+      return (
+        <div class="mobile-section">
+          <div class="mobile-section-title">
+            <SectionIcon class="me-2" size={16} />
+            {section.title}
+          </div>
+          
+          {section.items.map((item) => {
+            const ItemIcon = iconMap[item.icon];
+            return (
+              <a 
+                class="mobile-menu-item" 
+                href={item.href}
+                target={item.target}
+                rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+                aria-label={`${item.title} - ${item.description}`}
+              >
+                <ItemIcon class={`fs-3 ${item.iconColor || 'text-primary'}`} size={32} />
+                <div class="mobile-menu-item-content">
+                  <div class="mobile-menu-item-title">
+                    {item.title}
+                    {item.badge && <span class="badge bg-primary">{item.badge}</span>}
+                  </div>
+                  <p class="mobile-menu-item-desc">{item.description}</p>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+      )
+    })}
+
+    <!-- Seção Links Rápidos -->
+    <div class="mobile-section">
+      <div class="mobile-section-title">Links</div>
+      
+      {additionalLinks.map((link) => {
+        const LinkIcon = iconMap[link.icon];
+        return (
+          <a 
+            class="mobile-menu-item" 
+            href={link.href}
+            target={link.target}
+            rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
+            aria-label={`${link.title} - ${link.description}`}
+          >
+            <LinkIcon class={`fs-3 ${link.iconColor || 'text-primary'}`} size={32} />
+            <div class="mobile-menu-item-content">
+              <div class="mobile-menu-item-title">{link.title}</div>
+              <p class="mobile-menu-item-desc">{link.description}</p>
+            </div>
+          </a>
+        )
+      })}
+    </div>
+
+    <!-- Seletor de idioma -->
+    <div class="mobile-section">
+      <div class="mobile-section-title">
+        <Globe class="me-2" size={16} />
+        {t.lang}
+      </div>
+      
+      <div class="language-grid">
+        {Object.keys(lang_FLAGS).map((code) => (
+          <a class="language-item" href={allUrls[code] || allUrls['en']} aria-label={`${t.lang} - ${lang_LABELS[code]}`}>
+            <img class="flag-img" src={lang_FLAGS[code]} width="20" height="20" alt={`${lang_LABELS[code]}`} />
+            <span class="language-label">{lang_LABELS[code]}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  @media (max-width: 992px) {
+    .mobile-sidebar {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 85%;
+      max-width: 400px;
+      height: 100vh;
+      background: rgba(11, 9, 16, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 9999;
+      transition: right 0.3s ease-out;
+      overflow-y: auto;
+      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .mobile-sidebar.show {
+      right: 0;
+    }
+
+    .mobile-sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+    }
+
+    .mobile-sidebar-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mobile-sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(103, 125, 181, 0.18);
+      position: sticky;
+      top: 0;
+      background: rgba(11, 9, 16, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 10;
+    }
+
+    .mobile-sidebar-close {
+      background: none;
+      border: none;
+      color: var(--bs-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+
+    .mobile-sidebar-close:hover {
+      transform: scale(1.1);
+    }
+
+    .mobile-sidebar-content {
+      padding: 1rem;
+    }
+
+    .mobile-section {
+      margin-bottom: 2rem;
+    }
+
+    .mobile-section-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--bs-primary);
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .mobile-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 0.875rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--bs-light);
+      transition: background 0.2s, transform 0.2s;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .mobile-menu-item:hover,
+    .mobile-menu-item:focus {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--bs-light);
+      transform: translateX(5px);
+    }
+
+    .mobile-menu-item svg {
+      flex-shrink: 0;
+      margin-right: 1rem;
+    }
+
+    .mobile-menu-item-content {
+      flex: 1;
+    }
+
+    .mobile-menu-item-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .mobile-menu-item-desc {
+      font-size: 0.875rem;
+      color: var(--bs-secondary);
+      margin: 0;
+    }
+
+    /* Language selector */
+    .language-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .language-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--bs-light);
+      transition: all 0.2s;
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+    }
+
+    .language-item:hover,
+    .language-item:focus {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--bs-light);
+      transform: translateY(-2px);
+    }
+
+    .language-item:active {
+      transform: scale(0.98);
+    }
+
+    .flag-img {
+      flex-shrink: 0;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .language-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-left: 0.5rem;
+      white-space: nowrap;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .mobile-sidebar {
+      display: none !important;
+    }
+    
+    .mobile-sidebar-overlay {
+      display: none !important;
+    }
+  }
+</style>

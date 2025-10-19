@@ -1,0 +1,220 @@
+---
+import { ChevronDown } from '@lucide/astro';
+import type { MenuSection } from './MenuTypes';
+
+interface Props {
+  sections: MenuSection[];
+  iconMap: Record<string, any>;
+}
+
+const { sections, iconMap } = Astro.props;
+---
+
+{sections.map(section => {
+  const SectionIcon = iconMap[section.icon];
+  return (
+    <li class="nav-item dropdown auto-open animations-select">
+      <button 
+        class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" 
+        aria-expanded="false" 
+        data-bs-toggle="dropdown" 
+        type="button" 
+        aria-label={`${section.title} - Menu`}
+      >
+        <SectionIcon class="me-1" size={16} />
+        {section.title}
+        <ChevronDown size={16} />
+      </button>
+      <div class="dropdown-menu shadow">
+        {section.items.map(item => {
+          const ItemIcon = iconMap[item.icon];
+          return (
+            <a 
+              class="dropdown-item d-flex justify-content-sm-start" 
+              href={item.href}
+              target={item.target}
+              rel="help"
+              aria-label={`${item.title} - ${item.description}`}
+            >
+              <div class="d-flex justify-content-center align-items-center m-2">
+                <ItemIcon 
+                  class={`fs-1 ${item.iconColor || 'text-primary'} border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background`}
+                  size={48}
+                />
+                <div class="d-flex flex-column">
+                  <span class="focus-ring focus-ring-primary fs-5">
+                    {item.title}
+                    {item.badge && <span class="badge rounded-pill bg-primary ms-1">{item.badge}</span>}
+                  </span>
+                  <span class="text-secondary lh-0">{item.description}</span>
+                </div>
+              </div>
+            </a>
+          )
+        })}
+      </div>
+    </li>
+  )
+})}
+
+<style>
+  .dropdown-menu {
+    display: block !important;
+    position: absolute;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+    transform-origin: top;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .dropdown-menu.show {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+</style>
+
+<script is:inline>
+  // Função de inicialização dos dropdowns
+  function initDesktopDropdowns() {
+    const dropdowns = document.querySelectorAll('.nav-item.dropdown.auto-open.animations-select');
+    
+    if (dropdowns.length === 0) return;
+    
+    // Detecta se é dispositivo touch
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    dropdowns.forEach(dropdown => {
+      const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
+      const menu = dropdown.querySelector('.dropdown-menu');
+      
+      if (!toggle || !menu) return;
+      
+      // Previne comportamento padrão do Bootstrap
+      toggle.removeAttribute('data-bs-toggle');
+      
+      let hoverTimeout;
+      let mouseEnterHandler = null;
+      let mouseLeaveHandler = null;
+      
+      // Função para configurar hover
+      const setupHover = () => {
+        const isDesktop = window.innerWidth >= 992;
+        
+        // Remove listeners antigos se existirem
+        if (mouseEnterHandler) {
+          dropdown.removeEventListener('mouseenter', mouseEnterHandler);
+          dropdown.removeEventListener('mouseleave', mouseLeaveHandler);
+        }
+        
+        // Adiciona hover apenas em desktop não-touch
+        if (!isTouchDevice && isDesktop) {
+          mouseEnterHandler = () => {
+            clearTimeout(hoverTimeout);
+            // Fecha outros dropdowns
+            dropdowns.forEach(otherDropdown => {
+              if (otherDropdown !== dropdown) {
+                const otherMenu = otherDropdown.querySelector('.dropdown-menu');
+                const otherToggle = otherDropdown.querySelector('button[aria-expanded]');
+                if (otherMenu && otherToggle) {
+                  otherMenu.classList.remove('show');
+                  otherToggle.setAttribute('aria-expanded', 'false');
+                }
+              }
+            });
+            
+            // Abre o dropdown atual
+            menu.classList.add('show');
+            toggle.setAttribute('aria-expanded', 'true');
+          };
+          
+          mouseLeaveHandler = () => {
+            hoverTimeout = setTimeout(() => {
+              menu.classList.remove('show');
+              toggle.setAttribute('aria-expanded', 'false');
+            }, 100);
+          };
+          
+          dropdown.addEventListener('mouseenter', mouseEnterHandler);
+          dropdown.addEventListener('mouseleave', mouseLeaveHandler);
+        }
+      };
+      
+      // Configura hover inicial
+      setupHover();
+      
+      // Click para toggle (funciona sempre)
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const isOpen = menu.classList.contains('show');
+        
+        // Fecha todos os outros dropdowns
+        dropdowns.forEach(otherDropdown => {
+          if (otherDropdown !== dropdown) {
+            const otherMenu = otherDropdown.querySelector('.dropdown-menu');
+            const otherToggle = otherDropdown.querySelector('button[aria-expanded]');
+            if (otherMenu && otherToggle) {
+              otherMenu.classList.remove('show');
+              otherToggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+        
+        // Toggle do dropdown atual
+        if (!isOpen) {
+          menu.classList.add('show');
+          toggle.setAttribute('aria-expanded', 'true');
+        } else {
+          menu.classList.remove('show');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+      
+      // Previne fechar ao clicar dentro do menu
+      menu.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+      
+      // Reconfigura hover ao redimensionar
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          // Fecha dropdown
+          menu.classList.remove('show');
+          toggle.setAttribute('aria-expanded', 'false');
+          
+          // Reconfigura hover
+          setupHover();
+        }, 150);
+      });
+    });
+    
+    // Fecha dropdowns ao clicar fora
+    document.addEventListener('click', (e) => {
+      dropdowns.forEach(dropdown => {
+        const menu = dropdown.querySelector('.dropdown-menu');
+        const toggle = dropdown.querySelector('button[aria-expanded]');
+        if (menu && toggle && !dropdown.contains(e.target)) {
+          menu.classList.remove('show');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  }
+  
+  // Tenta inicializar imediatamente se o DOM já estiver carregado
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDesktopDropdowns);
+  } else {
+    initDesktopDropdowns();
+  }
+  
+  // Também tenta após um pequeno delay para garantir que tudo está carregado
+  setTimeout(initDesktopDropdowns, 100);
+</script>

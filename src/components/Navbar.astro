@@ -1,76 +1,59 @@
 ---
 import { idiomaR} from '@lib/routes';
-import type { Translations } from '@lib/i18n';
 import { loadT } from '@lib/i18n';
 import config from '../config.json';
 import { getLocale, getAllLocaleUrls } from "astro-i18n-aut";
-import { Shapes, Wrench, Network, Wand, FileText, Book, Package, Fingerprint, Heart, Eye, Briefcase, MessageCircle, ChevronDown, Menu, X, Globe, Crown } from '@lucide/astro';
+import { Shapes, Wrench, Network, Wand, FileText, Book, Package, Fingerprint, Heart, Eye, Briefcase, MessageCircle, Crown, ChevronDown, Menu, X, Globe } from '@lucide/astro';
+import LanguageSelector from './navbar/LanguageSelector.astro';
+import DesktopMenu from './navbar/DesktopMenu.astro';
+import MobileSidebar from './navbar/MobileSidebar.astro';
+import type { MenuSection, MenuItem } from './navbar/MenuTypes';
 import AuthWidget from './AuthWidget.astro';
-
-interface Props { t: Translations; route: string }
 
 const locale = getLocale(Astro.url)
 const t = loadT(locale);
 const lang = idiomaR(t);
 const allUrls = getAllLocaleUrls(Astro.url);
 
-
-const lang_FLAGS: Record<string, string> = {
-  pt: '/img/flags/br.svg',
-  en: '/img/flags/en.svg',
-  es: '/img/flags/es.svg',
-  de: '/img/flags/de.svg',
-  fr: '/img/flags/fr.svg',
-  zh: '/img/flags/cn.svg',
-  ja: '/img/flags/jp.svg',
-  ru: '/img/flags/ru.svg',
-  ko: '/img/flags/ko.svg',
-  it: '/img/flags/it.svg',
-  pl: '/img/flags/pl.svg',
-  tr: '/img/flags/tr.svg',
-  hu: '/img/flags/hu.svg',
-  id: '/img/flags/id.svg',
-  da: '/img/flags/dk.svg',
-  hr: '/img/flags/hr.svg',
-};
-
-const lang_LABELS: Record<string, string> = {
-  en: 'English',
-  zh: '中文',
-  es: 'Español',
-  fr: 'Français',
-  de: 'Deutsch',
-  pt: 'Português',
-  ru: 'Русский',
-  ja: '日本語',
-  ko: '한국어',
-  it: 'Italiano',
-  tr: 'Türkçe',
-  pl: 'Polski',
-  hu: 'Magyar',
-  da: 'Danish',
-  hr: 'Croatian',
-  id: 'Indonesian',
-};
-
-// ===== ESTRUTURA DE DADOS CENTRALIZADA =====
-// Edite aqui e os itens aparecerão automaticamente no desktop E no mobile
-interface MenuItem {
-  title: string;
-  description: string;
-  href: string;
-  icon: string; // Nome do ícone Lucide (ex: 'Network', 'Wand')
-  iconColor?: string; // Classe de cor (text-primary, text-danger, etc)
-  target?: string; // _blank para links externos
-  badge?: string; // Texto do badge (ex: "NEW")
+export const brandNames: Record<string, string> = {
+  "en": "Mini Kraken",
+  "es": "Mini Kraken", 
+  "fr": "Mini Kraken",
+  "pt": "Mini Kraken",
+  "de": "Mini Kraken",
+  "da": "Mini Kraken",
+  "hr": "Mini Kraken",
+  "hu": "Mini Kraken",
+  "id": "Mini Kraken",
+  "it": "Mini Kraken",
+  "ja": "ミニクラーケン",
+  "ko": "미니 크라켄",
+  "pl": "Mini Kraken",
+  "ru": "Мини Кракен",
+  "tr": "Mini Kraken",
+  "zh": "迷你克拉肯"
 }
 
-interface MenuSection {
-  id: string;
-  title: string;
-  icon: string; // Nome do ícone Lucide para a seção
-  items: MenuItem[];
-}
+// Mapeamento de nomes de ícones para componentes Lucide
+const iconMap: Record<string, any> = {
+  'Shapes': Shapes,
+  'Wrench': Wrench,
+  'Network': Network,
+  'Wand': Wand,
+  'FileText': FileText,
+  'Book': Book,
+  'Package': Package,
+  'Fingerprint': Fingerprint,
+  'Heart': Heart,
+  'Eye': Eye,
+  'Briefcase': Briefcase,
+  'MessageCircle': MessageCircle,
+  'Crown': Crown,
+  'ChevronDown': ChevronDown,
+  'Menu': Menu,
+  'X': X,
+  'Globe': Globe
+};
 
 // SEÇÃO GUIDE
 const guideSection: MenuSection = {
@@ -170,527 +153,150 @@ const additionalLinks: MenuItem[] = [
 
 // Array com todas as seções para facilitar iteração
 const menuSections = [guideSection, toolsSection];
-
-// Mapeamento de nomes de ícones para componentes Lucide
-const iconMap: Record<string, any> = {
-  'Shapes': Shapes,
-  'Wrench': Wrench,
-  'Network': Network,
-  'Wand': Wand,
-  'FileText': FileText,
-  'Book': Book,
-  'Package': Package,
-  'Fingerprint': Fingerprint,
-  'Heart': Heart,
-  'Eye': Eye,
-  'Briefcase': Briefcase,
-  'MessageCircle': MessageCircle,
-  'Crown': Crown,
-  'ChevronDown': ChevronDown,
-  'Menu': Menu,
-  'X': X,
-  'Globe': Globe
-};
 ---
 
 <style>
-    .navbar {
-      border-radius: 8px;
-      border: 1px solid rgba(103,125,181,0.18);
-      backdrop-filter: opacity(1) blur(10px) saturate(100%) sepia(0%);
-      background: rgba(11,9,16,0.85);
-      padding: auto;
+  .navbar {
+    border-radius: 8px;
+    border: 1px solid rgba(103,125,181,0.18);
+    backdrop-filter: opacity(1) blur(10px) saturate(100%) sepia(0%);
+    background: rgba(11,9,16,0.85);
+    padding: auto;
   }
 
-  /* ===== DESKTOP STYLES ===== */
+  .nav-link[type="button"] {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    text-align: left;
+  }
+
+  .nav-link[type="button"]:hover {
+    background: none;
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border: none;
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .mobile-menu-toggle:hover {
+    background: rgba(var(--bs-primary-rgb), 0.2);
+    transform: scale(1.05);
+  }
+
   @media (min-width: 992px) {
-    .dropdown-menu {
-      display: block !important;
-      position: absolute;
-      transform: scale(0.95);
-      opacity: 0;
-      transition: transform 0.15s ease-out, opacity 0.15s ease-out;
-      transform-origin: top;
-      pointer-events: none;
-      visibility: hidden;
-    }
-
-    .dropdown-menu.show {
-      transform: scale(1);
-      opacity: 1;
-      pointer-events: auto;
-      visibility: visible;
-    }
-
-    /* Sidebar escondido no desktop */
-    .mobile-sidebar {
-      display: none !important;
-    }
-  }
-
-  /* ===== MOBILE STYLES ===== */
-  @media (max-width: 992px) {
-    /* Esconde dropdowns tradicionais no mobile */
-    .dropdown-menu {
-      display: none !important;
-    }
-
-    /* Sidebar para mobile */
-    .mobile-sidebar {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 85%;
-      max-width: 400px;
-      height: 100vh;
-      background: rgba(11, 9, 16, 0.98);
-      backdrop-filter: blur(20px);
-      z-index: 9999;
-      transition: right 0.3s ease-out;
-      overflow-y: auto;
-      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
-    }
-
-    .mobile-sidebar.show {
-      right: 0;
-    }
-
-    .mobile-sidebar-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 9998;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-    }
-
-    .mobile-sidebar-overlay.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .mobile-sidebar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem;
-      border-bottom: 1px solid rgba(103, 125, 181, 0.18);
-      position: sticky;
-      top: 0;
-      background: rgba(11, 9, 16, 0.98);
-      backdrop-filter: blur(20px);
-      z-index: 10;
-    }
-
-    .mobile-sidebar-close {
-      background: none;
-      border: none;
-      color: var(--bs-light);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s;
-    }
-
-    .mobile-sidebar-close:hover {
-      transform: scale(1.1);
-    }
-
-    .mobile-sidebar-content {
-      padding: 1rem;
-    }
-
-    .mobile-section {
-      margin-bottom: 2rem;
-    }
-
-    .mobile-section-title {
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: var(--bs-primary);
-      margin-bottom: 0.75rem;
-      padding-left: 0.5rem;
-      letter-spacing: 0.05em;
-    }
-
-    .mobile-menu-item {
-      display: flex;
-      align-items: center;
-      padding: 0.875rem;
-      margin-bottom: 0.5rem;
-      border-radius: 8px;
-      text-decoration: none;
-      color: var(--bs-light);
-      transition: background 0.2s, transform 0.2s;
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .mobile-menu-item:hover,
-    .mobile-menu-item:focus {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--bs-light);
-      transform: translateX(5px);
-    }
-
-    .mobile-menu-item svg {
-      flex-shrink: 0;
-      margin-right: 1rem;
-    }
-
-    .mobile-menu-item-content {
-      flex: 1;
-    }
-
-    .mobile-menu-item-title {
-      font-size: 1rem;
-      font-weight: 500;
-      margin-bottom: 0.25rem;
-    }
-
-    .mobile-menu-item-desc {
-      font-size: 0.875rem;
-      color: var(--bs-secondary);
-      margin: 0;
-    }
-
-    /* Botão para abrir sidebar no mobile */
     .mobile-menu-toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem;
-      border: none;
-      background: rgba(var(--bs-primary-rgb), 0.1);
-      color: var(--bs-primary);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .mobile-menu-toggle:hover {
-      background: rgba(var(--bs-primary-rgb), 0.2);
-      transform: scale(1.05);
-    }
-
-    /* Oculta o texto dos nav-links no mobile, mostra apenas ícones */
-    .nav-link-text-mobile {
-      display: none;
+      display: none !important;
     }
   }
 </style>
 
 <script>
-  // ===== GERENCIADOR DE DROPDOWNS (DESKTOP) =====
-  class DropdownManager {
-    private element: HTMLElement;
-    private toggle: HTMLElement;
-    private menu: HTMLElement;
-
-    constructor(element: HTMLElement) {
-      this.element = element;
-      this.toggle = element.querySelector<HTMLElement>('[data-bs-toggle="dropdown"]')!;
-      this.menu = element.querySelector<HTMLElement>('.dropdown-menu')!;
-      this.init();
-    }
-
-    private init() {
-      // Detecta se é mobile pelo tamanho da tela
-      const isMobile = window.innerWidth < 992;
-      
-      // Em desktop (mesmo com touch), habilita hover E click
-      if (!isMobile) {
-        // Hover para abrir/fechar
-        this.element.addEventListener('mouseenter', () => this.open());
-        this.element.addEventListener('mouseleave', () => this.close());
-      }
-      
-      // Click para toggle (funciona em todos os casos)
-      this.toggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const isOpen = this.isOpen();
-        DropdownManager.closeAll(this);
-        
-        if (!isOpen) {
-          this.open();
-        }
-      });
-      
-      // Previne fechar ao clicar dentro do menu
-      this.menu.addEventListener('click', (e) => e.stopPropagation());
-    }
-
-    public open() {
-      this.menu.classList.add('show');
-      this.toggle.setAttribute('aria-expanded', 'true');
-    }
-
-    public close() {
-      this.menu.classList.remove('show');
-      this.toggle.setAttribute('aria-expanded', 'false');
-    }
-
-    public isOpen(): boolean {
-      return this.menu.classList.contains('show');
-    }
-
-    private static instances: DropdownManager[] = [];
-    
-    public static register(instance: DropdownManager) {
-      this.instances.push(instance);
-    }
-
-    public static closeAll(except?: DropdownManager) {
-      this.instances.forEach(instance => {
-        if (instance !== except && instance.isOpen()) {
-          instance.close();
-        }
-      });
-    }
-  }
-
-  // ===== GERENCIADOR DO SIDEBAR (MOBILE) =====
-  class SidebarManager {
-    private sidebar: HTMLElement | null;
-    private overlay: HTMLElement | null;
-    private openButtons: NodeListOf<HTMLElement>;
-    private closeButton: HTMLElement | null;
-
-    constructor() {
-      this.sidebar = document.querySelector('.mobile-sidebar');
-      this.overlay = document.querySelector('.mobile-sidebar-overlay');
-      this.openButtons = document.querySelectorAll('.mobile-menu-toggle');
-      this.closeButton = document.querySelector('.mobile-sidebar-close');
-      this.init();
-    }
-
-    private init() {
-      // Botões para abrir
-      this.openButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          this.open();
-        });
-      });
-
-      // Botão para fechar
-      this.closeButton?.addEventListener('click', () => this.close());
-
-      // Overlay para fechar
-      this.overlay?.addEventListener('click', () => this.close());
-
-      // ESC para fechar
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.isOpen()) {
-          this.close();
-        }
-      });
-
-      // Fecha ao clicar em um link interno
-      this.sidebar?.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          setTimeout(() => this.close(), 300);
-        });
-      });
-    }
-
-    public open() {
-      this.sidebar?.classList.add('show');
-      this.overlay?.classList.add('show');
-      document.body.style.overflow = 'hidden'; // Previne scroll no body
-    }
-
-    public close() {
-      this.sidebar?.classList.remove('show');
-      this.overlay?.classList.remove('show');
-      document.body.style.overflow = ''; // Restaura scroll
-    }
-
-    public isOpen(): boolean {
-      return this.sidebar?.classList.contains('show') || false;
-    }
-  }
-
+  // JavaScript simplificado para melhor performance no dev mode
   document.addEventListener('DOMContentLoaded', () => {
-    const isDesktop = window.matchMedia("(min-width: 992px)").matches;
-    
-    // ===== INICIALIZAÇÃO DESKTOP =====
-    if (isDesktop) {
-      const dropdownElements = document.querySelectorAll<HTMLElement>('.auto-open');
-      
-      dropdownElements.forEach((element) => {
-        const toggle = element.querySelector<HTMLElement>('[data-bs-toggle="dropdown"]');
-        const menu = element.querySelector<HTMLElement>('.dropdown-menu');
-        
-        if (toggle && menu) {
-          const manager = new DropdownManager(element);
-          DropdownManager.register(manager);
-        }
-      });
+    // Gerenciamento básico do sidebar mobile
+    const sidebarOverlay = document.querySelector('.mobile-sidebar-overlay');
+    const sidebar = document.querySelector('.mobile-sidebar');
+    const openButtons = document.querySelectorAll('.mobile-menu-toggle');
+    const closeButton = document.querySelector('.mobile-sidebar-close');
 
-      // Fecha dropdowns ao clicar fora
-      document.addEventListener('click', () => {
-        DropdownManager.closeAll();
-      });
-    }
-    
-    // ===== INICIALIZAÇÃO MOBILE =====
-    if (!isDesktop) {
-      new SidebarManager();
+    function openSidebar() {
+      sidebar?.classList.add('show');
+      sidebarOverlay?.classList.add('show');
+      document.body.style.overflow = 'hidden';
     }
 
-    // Re-inicializa ao redimensionar (de mobile para desktop ou vice-versa)
-    let resizeTimer: ReturnType<typeof setTimeout>;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        const nowDesktop = window.matchMedia("(min-width: 992px)").matches;
-        if (nowDesktop !== isDesktop) {
-          location.reload(); // Recarrega para aplicar configuração correta
-        }
-      }, 250);
+    function closeSidebar() {
+      sidebar?.classList.remove('show');
+      sidebarOverlay?.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    // Event listeners
+    openButtons.forEach(button => {
+      button.addEventListener('click', openSidebar);
     });
 
-    // Disable mobile animations
-    if (window.innerWidth < 992) {
-      document.querySelectorAll<HTMLElement>('[data-bss-disabled-mobile]').forEach((elem) => {
-        elem.classList.remove('animated');
-        elem.removeAttribute('data-bss-hover-animate');
-        elem.removeAttribute('data-aos');
-        elem.removeAttribute('data-bss-parallax-bg');
-        elem.removeAttribute('data-bss-scroll-zoom');
-      });
-    }
+    closeButton?.addEventListener('click', closeSidebar);
+    sidebarOverlay?.addEventListener('click', closeSidebar);
 
-    // Hover animations
-    document.querySelectorAll<HTMLElement>('[data-bss-hover-animate]').forEach((element) => {
-      const animationClass = element.dataset.bssHoverAnimate;
-      if (!animationClass) return;
+    // Fechar com ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidebar();
+    });
 
-      element.addEventListener('mouseenter', () => {
-        element.classList.add('animated', animationClass);
-      });
-
-      element.addEventListener('mouseleave', () => {
-        element.classList.remove('animated', animationClass);
+    // Fechar ao clicar em links
+    sidebar?.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        setTimeout(closeSidebar, 100);
       });
     });
 
-    // Toast triggers
-    document.querySelectorAll<HTMLElement>('[data-bs-toggle="toast"]').forEach((trigger) => {
-      trigger.addEventListener('click', () => {
-        const toastSelector = trigger.getAttribute('data-bs-target');
-        if (!toastSelector) return;
+    // Animações hover simples (apenas desktop)
+    if (window.innerWidth >= 992) {
+      document.querySelectorAll('[data-bss-hover-animate]').forEach((element) => {
+        const htmlElement = element as HTMLElement;
+        const animationClass = htmlElement.dataset.bssHoverAnimate;
+        if (!animationClass) return;
 
-        const toastEl = document.querySelector<HTMLElement>(toastSelector);
-        if (!toastEl) return;
+        element.addEventListener('mouseenter', () => {
+          element.classList.add('animated', animationClass);
+        });
 
-        try {
-          const toast = new (window as any).bootstrap.Toast(toastEl);
-          toast.show();
-        } catch (e) {
-          console.error('Toast error:', e);
-        }
+        element.addEventListener('mouseleave', () => {
+          element.classList.remove('animated', animationClass);
+        });
       });
-    });
+    }
   });
 </script>
 
 <nav class="sticky-top p-2">
   <div class="navbar navbar-expand-lg mx-1 mx-md-4 px-2 mt-2">
     <div class="container-fluid">
-      <a class="navbar-brand fs-2 fw-bold d-flex align-items-center" href={`${lang}/`}>
-        <span class="fs-3 fw-bold" style="font-family: Roboto, sans-serif;">Mini Kraken</span>
+      <a class="navbar-brand fs-2 fw-bold d-flex align-items-center" href={`${lang}/`} aria-label={`${brandNames[locale] ?? brandNames["en"]} - ${t.nav.guide || 'Home'}`}>
+        <span class="fs-3 fw-bold" style="font-family: Roboto, sans-serif;">{brandNames[locale] ?? brandNames["en"]}</span>
       </a>
+      
       <div id="navcol-2" class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
-          <!-- Dropdowns dinâmicos baseados em menuSections -->
-          {menuSections.map(section => {
-            const SectionIcon = iconMap[section.icon];
-            return (
-          <li class="nav-item dropdown auto-open animations-select">
-            <a class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#">
-              <SectionIcon class="me-1" size={16} />
-              {section.title}
-              <ChevronDown size={16} />
-            </a>
-            <div class="dropdown-menu shadow">
-              {section.items.map(item => {
-                const ItemIcon = iconMap[item.icon];
-                return (
-                <a 
-                  class="dropdown-item d-flex justify-content-sm-start" 
-                  href={item.href}
-                  target={item.target}
-                  rel="help"
-                >
-                  <div class="d-flex justify-content-center align-items-center m-2">
-                    <ItemIcon 
-                      class={`fs-1 ${item.iconColor || 'text-primary'} border rounded border-0 p-2 me-2 d-none d-md-flex nav_icon_background`}
-                      size={48}
-                    />
-                    <div class="d-flex flex-column">
-                      <span class="focus-ring focus-ring-primary fs-5">
-                        {item.title}
-                        {item.badge && <span class="badge rounded-pill bg-primary ms-1">{item.badge}</span>}
-                      </span>
-                      <span class="text-secondary lh-0">{item.description}</span>
-                    </div>
-                  </div>
-                </a>
-              )})}
-            </div>
-          </li>
-          )})}
+          <DesktopMenu sections={menuSections} iconMap={iconMap} />
           
           <!-- Links adicionais (Support, etc) -->
           {additionalLinks.map(link => {
             const LinkIcon = iconMap[link.icon];
             return (
-            <li class="nav-item">
-              <a 
-                class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" 
-                target={link.target}
-                href={link.href}
-              >
-                <LinkIcon class="me-1" size={16} />
-                {link.title}
-              </a>
-            </li>
-          )})}
-
-          <!-- Language selector dropdown -->
-          <li class="nav-item auto-open dropdown">
-            <a aria-label={`${t.lang} Selected in Lang Selector`} class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" aria-expanded="false" data-bs-toggle="dropdown" href="#">
-              <img class="img-fluid me-1" src={lang_FLAGS[t.lang]} width="25" height="25" alt={`${t.lang} Flag`} />
-              <ChevronDown size={16} />
-            </a>
-            <div class="dropdown-menu shadow overflow-auto">
-              {Object.keys(lang_FLAGS).map((code) => (
-                <a class="dropdown-item d-flex" href={allUrls[code] || allUrls['en']}>
-                  <span>
-                    <img class="img-fluid me-2" src={lang_FLAGS[code]} width="25" height="25" alt={`${lang_LABELS[code]} Lang selector`} />
-                    {lang_LABELS[code]}
-                  </span>
+              <li class="nav-item">
+                <a 
+                  class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" 
+                  target={link.target}
+                  href={link.href}
+                  aria-label={`${link.title} - ${link.description}`}
+                >
+                  <LinkIcon class="me-1" size={16} />
+                  {link.title}
                 </a>
-              ))}
-            </div>
-          </li>
+              </li>
+            )
+          })}
+
+          <LanguageSelector />
+          
         </ul>
-        <AuthWidget t={t} variant="desktop" />
+        <AuthWidget t={t}/>
       </div>
       
-      <!-- Botão para abrir menu mobile (visível apenas em mobile) -->
+      <!-- Botão para abrir menu mobile -->
       <button class="mobile-menu-toggle d-lg-none" aria-label="Abrir menu">
         <Menu size={24} />
       </button>
@@ -698,95 +304,46 @@ const iconMap: Record<string, any> = {
   </div>
 </nav>
 
-<!-- Overlay do sidebar mobile -->
-<div class="mobile-sidebar-overlay"></div>
-
-<!-- Sidebar mobile -->
-<aside class="mobile-sidebar">
-  <div class="mobile-sidebar-header">
-    <span class="fs-4 fw-bold">Menu</span>
-    <button class="mobile-sidebar-close" aria-label="Fechar menu">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="24" height="24" fill="currentColor">
-        <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-      </svg>
-    </button>
-  </div>
-
-  <div class="mobile-sidebar-content">
-    <div class="mobile-section d-lg-none">
-      <AuthWidget t={t} variant="mobile" />
-    </div>
-    <!-- Seções dinâmicas: Guide e Tools -->
-    {menuSections.map((section) => {
-      const SectionIcon = iconMap[section.icon];
-      return (
-      <div class="mobile-section">
-        <div class="mobile-section-title">
-          <SectionIcon class="me-2" size={16} />
-          {section.title}
-        </div>
-        
-        {section.items.map((item) => {
-          const ItemIcon = iconMap[item.icon];
-          return (
-          <a 
-            class="mobile-menu-item" 
-            href={item.href}
-            target={item.target}
-            rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
-          >
-            <ItemIcon class={`fs-3 ${item.iconColor || 'text-primary'}`} size={32} />
-            <div class="mobile-menu-item-content">
-              <div class="mobile-menu-item-title">
-                {item.title}
-                {item.badge && <span class="badge bg-primary">{item.badge}</span>}
-              </div>
-              <p class="mobile-menu-item-desc">{item.description}</p>
-            </div>
-          </a>
-        )})}
-      </div>
-    )})}
-
-    <!-- Seção Links Rápidos -->
-    <div class="mobile-section">
-      <div class="mobile-section-title">Links</div>
-      
-      {additionalLinks.map((link) => {
-        const LinkIcon = iconMap[link.icon];
-        return (
-        <a 
-          class="mobile-menu-item" 
-          href={link.href}
-          target={link.target}
-          rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
-        >
-          <LinkIcon class={`fs-3 ${link.iconColor || 'text-primary'}`} size={32} />
-          <div class="mobile-menu-item-content">
-            <div class="mobile-menu-item-title">{link.title}</div>
-            <p class="mobile-menu-item-desc">{link.description}</p>
-          </div>
-        </a>
-      )})}
-    </div>
-
-    <!-- Seletor de idioma -->
-    <div class="mobile-section">
-      <div class="mobile-section-title">
-        <Globe class="me-2" size={16} />
-          <path d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64H348.7c2.2 20.4 3.3 41.8 3.3 64zm28.8-64H503.9c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0H18.6C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192H131.2c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6H344.3c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352H135.3zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6H493.4z"/>
-        </svg>
-        {t.lang}
-      </div>
-      
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;">
-        {Object.keys(lang_FLAGS).map((code) => (
-          <a class="mobile-menu-item" href={allUrls[code] || allUrls['en']} style="padding: 0.5rem;">
-            <img class="img-fluid" src={lang_FLAGS[code]} width="20" height="20" alt={`${lang_LABELS[code]}`} />
-            <span class="ms-2" style="font-size: 0.875rem;">{lang_LABELS[code]}</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </div>
-</aside>
+<MobileSidebar 
+  sections={menuSections} 
+  additionalLinks={additionalLinks} 
+  iconMap={iconMap} 
+  t={t}
+  lang_FLAGS={{
+    pt: '/img/flags/br.svg',
+    en: '/img/flags/en.svg',
+    es: '/img/flags/es.svg',
+    de: '/img/flags/de.svg',
+    fr: '/img/flags/fr.svg',
+    zh: '/img/flags/cn.svg',
+    ja: '/img/flags/jp.svg',
+    ru: '/img/flags/ru.svg',
+    ko: '/img/flags/ko.svg',
+    it: '/img/flags/it.svg',
+    pl: '/img/flags/pl.svg',
+    tr: '/img/flags/tr.svg',
+    hu: '/img/flags/hu.svg',
+    id: '/img/flags/id.svg',
+    da: '/img/flags/dk.svg',
+    hr: '/img/flags/hr.svg',
+  }}
+  lang_LABELS={{
+    en: 'English',
+    zh: '中文',
+    es: 'Español',
+    fr: 'Français',
+    de: 'Deutsch',
+    pt: 'Português',
+    ru: 'Русский',
+    ja: '日本語',
+    ko: '한국어',
+    it: 'Italiano',
+    tr: 'Türkçe',
+    pl: 'Polski',
+    hu: 'Magyar',
+    da: 'Danish',
+    hr: 'Croatian',
+    id: 'Indonesian',
+  }}
+  allUrls={allUrls}
+/>

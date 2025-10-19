@@ -6,20 +6,41 @@ import type { Translations } from '@lib/i18n';
 
 interface Props {
   t: Translations;
-  route: string;
   title: string;
   desc?: string;
   pictureURL?: string;
 }
 
-const { t, route, title, desc, pictureURL } = Astro.props as Props;
+const { t, title, desc, pictureURL } = Astro.props as Props;
 ---
 <html lang={t.lang} data-bs-theme="dark">
-  <Head route={t.lang + route} title={title} desc={desc} pictureURL={pictureURL} />
+  <Head title={title} desc={desc} pictureURL={pictureURL} />
   <body>
-    <Navbar t={t} route={route} />
-    <slot />
-    <Footer t={t} route={route} />
+    <Navbar t={t}/>
+    <main class="main-content">
+      <slot />
+    </main>
+    <Footer t={t}/>
     <script is:inline src="/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>
+
+<style is:global>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  
+  footer {
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+  
+</style>

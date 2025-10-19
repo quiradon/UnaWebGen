@@ -4,15 +4,15 @@ import { getLanguages } from '@lib/i18n';
 import siteConfig from '../config.json';
 
 interface Props {
-  route: string;
   title: string;
   desc?: string;
   pictureURL?: string;
 }
 
-const { route, title, desc, pictureURL } = Astro.props as Props;
+const { title, desc, pictureURL } = Astro.props as Props;
+const Newroute = Astro.url.pathname;
 const languages = getLanguages();
-let rotaRoot = extrairRotaSemIdioma(route);
+let rotaRoot = extrairRotaSemIdioma(Newroute);
 const description = desc ?? '';
 const image = pictureURL ?? '/img/banners/default.webp';
 const url = siteConfig.url;
@@ -23,7 +23,7 @@ const alternates = languages
     return `<link rel="alternate" hreflang="${lang}" href="${url}${langPath}${rotaRoot}">`;
   })
   .join('\n');
-const canonicalLink = route.includes('en/') ? `<link rel="canonical" href="${url}${rotaRoot.replace('index','')}">` : '';
+const canonicalLink = Newroute.includes('en/') ? `<link rel="canonical" href="${url}${rotaRoot.replace('index','')}">` : '';
 ---
 <head>
   <meta charset="UTF-8" />

@@ -1,13 +1,14 @@
 ---
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { loadT, getStaticPaths } from '@lib/i18n';
-export { getStaticPaths };
-const lang = Astro.params.locales as string;
+import { loadT  } from '@lib/i18n';
 
-const t = loadT(lang);
+import { getLocale } from "astro-i18n-aut";
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
+
 ---
-<Layout t={t} route="/dices" title={t.dices?.title} desc={t.dices?.desc}>
+<Layout t={t} title={t.dices?.title} desc={t.dices?.desc}>
   <script src="https://unpkg.com/mathjs@11.8.2/lib/browser/math.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/random-js@2.1.0/dist/random-js.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@dice-roller/rpg-dice-roller/lib/umd/bundle.min.js"></script>

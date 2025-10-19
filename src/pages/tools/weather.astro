@@ -4,20 +4,17 @@ import Layout from '@layouts/Layout.astro';
 import { loadT } from '@lib/i18n';
 import { CloudSun, Sliders, Shuffle, Snowflake, CloudRain, Sun, RefreshCw, AlertTriangle, Thermometer, Wind, CloudSnow, CloudLightning, CloudDrizzle, CloudFog, CloudHail, BookOpen, Copy, Check } from '@lucide/astro';
 import weatherNarratives from '../../../data/weather-narratives.json';
-
 import { getLocale } from "astro-i18n-aut";
 const currentLocale = getLocale(Astro.url);
 const t = loadT(currentLocale);
-const route = '/tools/weather';
-
 // Get narratives for current language, fallback to English, then Portuguese
 const narrativeLang = (weatherNarratives as any)[currentLocale] || weatherNarratives.en || weatherNarratives.pt;
 ---
-<Layout t={t} route={route} title={t.tools?.clima?.pageTitle} desc={t.tools?.clima?.pageDesc}>
+<Layout t={t} title={t.tools?.clima?.pageTitle} desc={t.tools?.clima?.pageDesc}>
   <section class="weather-section pt-2 mt-4 mb-5">
     <div class="container">
       <!-- Header -->
-      <div class="col-12 mb-4 text-center">
+      <div class="col-12 mb-4 text-center mt-5">
         <h1 class="display-4 fw-bold text-white mb-3">
           <CloudSun size={40} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
           {t.tools?.clima?.pageTitle}
@@ -25,9 +22,9 @@ const narrativeLang = (weatherNarratives as any)[currentLocale] || weatherNarrat
         <p class="lead text-secondary">{t.tools?.clima?.pageDesc}</p>
       </div>
 
-      <div class="row justify-content-center g-4">
+      <div class="row justify-content-center g-4 mb-5">
         <!-- Control Panel -->
-        <div class="col-lg-5 col-md-12">
+        <div class="col-lg-5 col-md-12 mb-5">
           <div class="weather-card glass-card">
             <div class="card-body p-4">
               <h5 class="card-title mb-4 d-flex align-items-center">
@@ -63,7 +60,7 @@ const narrativeLang = (weatherNarratives as any)[currentLocale] || weatherNarrat
         </div>
 
         <!-- Results Panel / Mockup -->
-        <div class="col-lg-5 col-md-12">
+        <div class="col-lg-5 col-md-12 mb-5">
           <!-- Mockup inicial -->
           <div class="weather-card glass-card mockup-card" id="mockupCard">
             <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center h-100">

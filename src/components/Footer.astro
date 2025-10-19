@@ -1,49 +1,398 @@
 ---
-import { idiomaR, roteador } from '@lib/routes';
-import type { Translations } from '@lib/i18n';
-import config from '../config.json';
 
-interface Props { t: Translations; route: string }
-const { t, route } = Astro.props as Props;
-const lang = idiomaR(t);
-const r = roteador(route);
+import { loadT } from '@lib/i18n';
+import { getLocale } from "astro-i18n-aut";
+import {Image} from 'astro:assets';
+const locale = getLocale(Astro.url)
+const t = loadT(locale);
+import icon from "../assets/logos/arkanus.svg"
 ---
-<footer class="container py-4 py-lg-5">
-  <div class="row justify-content-center">
-    <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-      <b class="fs-6 mb-0 pb-0">{t.footer?.util ?? 'Util'}</b>
-      <ul class="list-unstyled">
-        <li><a href="https://rpg.arkanus.app">{t.footer?.start ?? 'Start'}</a></li>
-        <li><a href="https://rpg.arkanus.app/sitemap.xml">{t.footer?.map ?? 'Sitemap'}</a></li>
+<footer class="modern-footer" id="main-footer">
+  <div class="footer-content container py-5">
+    <div class="row justify-content-center g-4">
+      <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column footer-column" style="animation-delay: 0.1s">
+        <b class="footer-title fs-6 mb-3">{t.footer?.util ?? 'Util'}</b>
+        <ul class="list-unstyled footer-links">
+          <li><a href="/" class="footer-link">{t.footer?.start ?? 'Start'}</a></li>
+          <li><a href="/sitemap.xml" class="footer-link">{t.footer?.map ?? 'Sitemap'}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column footer-column" style="animation-delay: 0.2s">
+        <b class="footer-title fs-6 mb-3">{t.footer?.about ?? 'About'}</b>
+        <ul class="list-unstyled footer-links">
+          <li><a href="https://arkanus.app/about" class="footer-link">{t.footer?.team ?? 'Team'}</a></li>
+          <li><a href="https://arkanus.app/about" class="footer-link">{t.footer?.quest ?? 'Mission'}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column footer-column" style="animation-delay: 0.3s">
+        <b class="footer-title fs-6 mb-3">{t.footer?.legal ?? 'Legal'}</b>
+        <ul class="list-unstyled footer-links">
+          <li><a href={`/${locale}/tos/`} class="footer-link">{t.footer?.tos ?? 'ToS'}</a></li>
+          <li><a href={`/${locale}/privacy/`} class="footer-link">{t.footer?.priv ?? 'Privacy'}</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last footer-column footer-brand" style="animation-delay: 0s">
+        <div class="fw-bold d-flex align-items-center brand-logo">
+          <Image alt="Logo From Arkanus in White Color" width="30" height="30" loading="eager" src={icon} class="logo-spin" />
+          <span class="ms-2">Powered by Arkanus</span>
+        </div>
+        <p class="text-muted copyright mt-2">{t.footer?.arkanus?.desc ?? ''}</p>
+      </div>
+    </div>
+    
+    <hr class="footer-divider" />
+    
+    <div class="footer-bottom d-flex justify-content-between align-items-center pt-3 flex-wrap gap-3">
+      <p class="text-muted mb-0 footer-credits">{t.comunity_from}</p>
+      <ul class="list-inline mb-0 social-links">
+        <li class="list-inline-item">
+          <a aria-label="Fortuna Twitter Icon" title="twitter" href="https://twitter.com/MiniKrakenBOT" class="social-link">
+            <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor">
+              <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path>
+            </svg>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a aria-label="Fortuna Tiktok Link" title="Tiktok" href="https://www.tiktok.com/@minikrakenbot" class="social-link">
+            <svg xmlns="https://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+              <path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"></path>
+            </svg>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a aria-label="Fortuna Instagram link" title="instagram" href="https://www.instagram.com/una_rpg/" class="social-link">
+            <svg xmlns="https://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+              <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
+            </svg>
+          </a>
+        </li>
       </ul>
     </div>
-    <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-      <b class="fs-6 mb-0 pb-0">{t.footer?.about ?? 'About'}</b>
-      <ul class="list-unstyled">
-        <li><a href="https://arkanus.app/about">{t.footer?.team ?? 'Team'}</a></li>
-        <li><a href="https://arkanus.app/about">{t.footer?.quest ?? 'Mission'}</a></li>
-      </ul>
-    </div>
-    <div class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column item">
-      <b class="fs-6 mb-0 pb-0">{t.footer?.legal ?? 'Legal'}</b>
-      <ul class="list-unstyled">
-        <li><a href={`${lang}/tos`}>{t.footer?.tos ?? 'ToS'}</a></li>
-        <li><a href={`${lang}/privacy`}>{t.footer?.priv ?? 'Privacy'}</a></li>
-      </ul>
-    </div>
-    <div class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last item social">
-      <div class="fw-bold d-flex align-items-center"><img alt="Logo From Arkanus in White Color" width="30" height="30" loading="lazy" src="/img/icons/arkanus.svg" /><span class="ms-2">Powered by Arkanus</span></div>
-      <p class="text-muted copyright">{t.footer?.arkanus?.desc ?? ''}</p>
-    </div>
-  </div>
-  <hr class="text-primary" />
-  <div class="d-flex justify-content-between align-items-center pt-3">
-    <p class="text-muted mb-0">{t.comunity_from}</p>
-    <ul class="list-inline mb-0">
-      <li class="list-inline-item"><a aria-label="Fortuna Twitter Icon" title="twitter" alt="Twitter" href="https://twitter.com/MiniKrakenBOT"><svg class="text-primary" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path></svg></a></li>
-      <li class="list-inline-item"><a aria-label="Fortuna Tiktok Link" title="Tiktok" alt="TikTok" href="https://www.tiktok.com/@minikrakenbot"><svg class="text-primary" xmlns="https://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor"><path d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z"></path></svg></a></li>
-      <li class="list-inline-item"><a aria-label="Fortuna Instagram link" title="instagram" alt="Instagram" href="https://www.instagram.com/una_rpg/"><svg class="text-primary" xmlns="https://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg></a></li>
-    </ul>
   </div>
 </footer>
+
+<style>
+  .modern-footer {
+    position: relative;
+    margin-top: auto;
+    background: linear-gradient(180deg, rgba(248, 7, 82, 0.03) 0%, rgba(248, 7, 82, 0.08) 100%);
+    border-top: 1px solid rgba(248, 7, 82, 0.1);
+    overflow: hidden;
+  }
+
+  .modern-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(248, 7, 82, 0.5) 50%, 
+      transparent 100%);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .footer-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-column {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .footer-title {
+    font-weight: 700;
+    background: linear-gradient(135deg, #f80752 0%, #c00541 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    padding-bottom: 8px;
+  }
+
+  .footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #f80752, transparent);
+    border-radius: 2px;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    padding: 4px 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.95rem;
+  }
+
+  .footer-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #f80752, #c00541);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 2px;
+  }
+
+  .footer-link:hover {
+    color: #fff;
+    transform: translateX(5px);
+    text-shadow: 0 0 20px rgba(248, 7, 82, 0.5);
+  }
+
+  .footer-link:hover::before {
+    width: 100%;
+  }
+
+  .footer-brand .brand-logo {
+    padding: 12px 20px;
+    background: rgba(248, 7, 82, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(248, 7, 82, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+  }
+
+  .footer-brand .brand-logo:hover {
+    background: rgba(248, 7, 82, 0.1);
+    border-color: rgba(248, 7, 82, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(248, 7, 82, 0.15);
+  }
+
+  .logo-spin {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .footer-brand .brand-logo:hover .logo-spin {
+    transform: rotate(360deg) scale(1.1);
+  }
+
+  .copyright {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    max-width: 280px;
+  }
+
+  .footer-divider {
+    margin: 2rem 0;
+    opacity: 0;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(248, 7, 82, 0.3) 50%, 
+      transparent 100%);
+    height: 1px;
+    border: none;
+    animation: dividerFade 1s ease 0.6s forwards;
+  }
+
+  @keyframes dividerFade {
+    from {
+      opacity: 0;
+      transform: scaleX(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  .footer-bottom {
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.8s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .footer-credits {
+    font-size: 0.9rem;
+    position: relative;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 12px;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(248, 7, 82, 0.08);
+    border: 1px solid rgba(248, 7, 82, 0.15);
+    color: #f80752;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .social-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #f80752, #c00541);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  .social-link:hover {
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 28px rgba(248, 7, 82, 0.3);
+  }
+
+  .social-link:hover::before {
+    opacity: 1;
+  }
+
+  .social-link svg {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .social-link:hover svg {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  .social-link:active {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  @media (max-width: 768px) {
+    .footer-title::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .modern-footer {
+      margin-top: 3rem;
+    }
+    
+    .footer-bottom {
+      justify-content: center !important;
+      text-align: center;
+    }
+    
+    .social-links {
+      justify-content: center;
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-column,
+    .footer-divider,
+    .footer-bottom,
+    .modern-footer {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    
+    .footer-link,
+    .social-link,
+    .brand-logo {
+      transition: none;
+    }
+  }
+
+  /* Animação de aparição do footer */
+  .modern-footer {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  .modern-footer.footer-visible {
+    animation: footerSlideUp 0.8s ease-out forwards;
+  }
+
+  @keyframes footerSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  // Observador de interseção para animar o footer quando aparecer na tela
+  const observeFooter = () => {
+    const footer = document.getElementById('main-footer');
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            footer.classList.add('footer-visible');
+            observer.unobserve(footer);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    observer.observe(footer);
+  };
+
+  // Executar quando o DOM estiver pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeFooter);
+  } else {
+    observeFooter();
+  }
+</script>
 

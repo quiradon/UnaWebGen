@@ -65,6 +65,26 @@
     },
     "title": "支付已批准 - 兑换您的Premium\n"
   },
+  "cards": {
+    "btn": {
+      "roll": "点击抽取"
+    },
+    "deck": {
+      "Espadas": "锹",
+      "ace": "王牌",
+      "card_limits_msg": "52张牌限制 - 每张牌只出现一次。",
+      "cartas_restantes": "可用卡片",
+      "clubs": "俱乐部",
+      "diamond": "钻石",
+      "hearth": "心",
+      "king": "国王",
+      "queen": "女王",
+      "realism": "逼真的牌组",
+      "restantes": "牌组中剩余的牌",
+      "valete": "再见"
+    },
+    "random": "随机"
+  },
   "changelogs": {
     "desc": "通过我们的更新日志页面了解我们项目的所有最新更新和改进。随时了解每个新版本、错误修复和新增功能。",
     "title": "更新"
@@ -86,6 +106,7 @@
     "texto": "文本"
   },
   "comum": {
+    "copied": "已复制!",
     "copy": "复制"
   },
   "comunity_from": "由RPG社区为社区制作",
@@ -235,6 +256,11 @@
       "male": "男性",
       "seo": "书籍、角色扮演游戏和电子游戏角色姓名生成器。为您的创作找到完美的名字。",
       "title": "姓名生成器"
+    },
+    "loading": "正在生成名称...",
+    "null": {
+      "desc": "点击上方按钮生成随机名称。",
+      "title": "尚未生成名称。"
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "强度：严重"
       },
       "intensidade": "强度",
+      "label": "选择一种天气类型。",
+      "label2": "点击“生成天气”以查看结果。",
       "options": {
         "blizzard": "暴风雪",
         "clear": "晴朗的天空",
@@ -528,9 +556,7 @@
         "desert": "沙漠地区",
         "temperate": "温带地区"
       },
-      "vento": "风速",
-      "label": "选择一种天气类型。",
-      "label2": "点击“生成天气”以查看结果。"
+      "vento": "风速"
     },
     "morse": {
       "btn1": "播放声音",

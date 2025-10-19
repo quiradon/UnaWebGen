@@ -65,6 +65,26 @@
     },
     "title": "Pago Aprobado - Canjea Tu Premium"
   },
+  "cards": {
+    "btn": {
+      "roll": "Haz clic para sortear"
+    },
+    "deck": {
+      "Espadas": "Pala",
+      "ace": "As",
+      "card_limits_msg": "Límite de 52 cartas - cada carta solo aparece una vez.",
+      "cartas_restantes": "cartas disponibles",
+      "clubs": "Clubes",
+      "diamond": "Diamante",
+      "hearth": "Corazón",
+      "king": "Rey",
+      "queen": "Reina",
+      "realism": "Baraja Realista",
+      "restantes": "cartas restantes en el mazo",
+      "valete": "Adiós"
+    },
+    "random": "Aleatorio"
+  },
   "changelogs": {
     "desc": "Descubre todas las últimas actualizaciones y mejoras de nuestro proyecto a través de nuestra página de registro de cambios. Mantente informado sobre cada nueva versión, correcciones de errores y características añadidas.",
     "title": "Actualizaciones"
@@ -86,6 +106,7 @@
     "texto": "Texto"
   },
   "comum": {
+    "copied": "Copiado!",
     "copy": "Copiar"
   },
   "comunity_from": "Hecho por la comunidad RPG para la comunidad",
@@ -235,6 +256,11 @@
       "male": "Masculino",
       "seo": "Generador de nombres para personajes de libros, juegos de rol y videojuegos. Encuentra el nombre perfecto para tu creación.",
       "title": "Generador de nombres"
+    },
+    "loading": "Generando Nombres...",
+    "null": {
+      "desc": "Haz clic en el botón de arriba para generar nombres aleatorios.",
+      "title": "Aún no se ha generado ningún nombre."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Severa"
       },
       "intensidade": "Intensidad",
+      "label": "Seleccione un tipo de clima.",
+      "label2": "Haga clic en \"Generar Clima\" para ver los resultados.",
       "options": {
         "blizzard": "Blizzard",
         "clear": "Cielo despejado",
@@ -528,9 +556,7 @@
         "desert": "Región desértica",
         "temperate": "Región templada"
       },
-      "vento": "Velocidad del viento",
-      "label": "Seleccione un tipo de clima.",
-      "label2": "Haga clic en \"Generar Clima\" para ver los resultados."
+      "vento": "Velocidad del viento"
     },
     "morse": {
       "btn1": "Reproducir sonido",

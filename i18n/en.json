@@ -65,6 +65,26 @@
     },
     "title": "Payment Approved - Claim Your Premium"
   },
+  "cards": {
+    "btn": {
+      "roll": "Click to draw"
+    },
+    "deck": {
+      "Espadas": "Spade",
+      "ace": "Ace",
+      "card_limits_msg": "52-card limit - each card appears only once.",
+      "cartas_restantes": "available cards",
+      "clubs": "Clubs",
+      "diamond": "Diamond",
+      "hearth": "Heart",
+      "king": "King",
+      "queen": "Queen",
+      "realism": "Realistic Deck",
+      "restantes": "remaining cards in the deck",
+      "valete": "Farewell"
+    },
+    "random": "Random"
+  },
   "changelogs": {
     "desc": "Discover all the latest updates and improvements to our project via our changelogs page. Stay informed about each new version, bug fixes and added features.",
     "title": "Updates"
@@ -86,6 +106,7 @@
     "texto": "Text"
   },
   "comum": {
+    "copied": "Copied!",
     "copy": "Copy"
   },
   "comunity_from": "Made by the RPG community for the community",
@@ -235,14 +256,15 @@
       "male": "Male",
       "seo": "Character name generator for books, RPGs, and games. Find the perfect name for your creation.",
       "title": "Name Generator"
+    },
+    "loading": "Generating Names...",
+    "null": {
+      "desc": "Click the button above to generate random names.",
+      "title": "No name generated yet."
     }
   },
   "nav": {
     "acervo": "Collection",
-    "auth": {
-      "login": "Log in",
-      "logout": "Log out"
-    },
     "add": "Add App",
     "dices": {
       "desc": "Test and learn how to roll.",
@@ -511,6 +533,8 @@
         "severe": "Severe"
       },
       "intensidade": "Intensity",
+      "label": "Select a weather type.",
+      "label2": "Click on \"Generate Weather\" to see the results.",
       "options": {
         "blizzard": "Blizzard",
         "clear": "Clear sky",
@@ -532,9 +556,7 @@
         "desert": "Desert region",
         "temperate": "Temperate Region"
       },
-      "vento": "Wind Speed",
-      "label": "Select a weather type.",
-      "label2": "Click on \"Generate Weather\" to see the results."
+      "vento": "Wind Speed"
     },
     "morse": {
       "btn1": "Play sound",

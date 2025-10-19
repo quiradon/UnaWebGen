@@ -1,19 +1,12 @@
 ---
-export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
-import { idiomaR } from '@lib/routes';
-
-export async function getStaticPaths() {
-  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
-}
-
-const lang = Astro.params.lang as string;
-const t = loadT(lang);
-const base = idiomaR(t);
+import { getLocale } from "astro-i18n-aut";
+import { loadT } from '@lib/i18n';
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
 const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
 ---
-<Layout t={t} route="/systems" title={t.systems?.title} desc={t.systems?.desc} pictureURL="/img/bg/newbg2.webp">
+<Layout t={t} title={t.systems?.title} desc={t.systems?.desc} pictureURL="/img/bg/newbg2.webp">
   <div class="container">
     <h1 class="display-5 fw-bold mt-0">{t.systems?.title}</h1>
     <p class="lead text-secondary">{t.systems?.desc}</p>
@@ -24,7 +17,7 @@ const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
         {sistemas.map((sistema) => (
           <div class="col d-flex">
             <div class="card w-100 d-flex flex-column shadow-lg border-1 p-3 position-relative">
-              <a href={`${base}/systems/${sistema.path}`} class="link-unstyled">
+              <a href={`/${locale}/systems/${sistema.path}/`} class="link-unstyled">
                 <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-2 bs-icon">
                   <img class="img-fluid user-select-none" alt={`${sistema.card.title} Icon`} src={sistema.icon} />
                 </div>

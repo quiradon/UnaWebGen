@@ -65,6 +65,26 @@
     },
     "title": "Zahlung genehmigt - Lösen Sie Ihr Premium ein"
   },
+  "cards": {
+    "btn": {
+      "roll": "Klicken zum Ziehen"
+    },
+    "deck": {
+      "Espadas": "Spaten",
+      "ace": "Ass",
+      "card_limits_msg": "52-Karten-Limit - jede Karte erscheint nur einmal.",
+      "cartas_restantes": "verfügbare Karten",
+      "clubs": "Clubs",
+      "diamond": "Diamant",
+      "hearth": "Herz",
+      "king": "König",
+      "queen": "Königin",
+      "realism": "Realistisches Kartendeck",
+      "restantes": "verbleibende Karten im Deck",
+      "valete": "Lebt wohl"
+    },
+    "random": "Zufällig"
+  },
   "changelogs": {
     "desc": "Entdecken Sie alle neuesten Updates und Verbesserungen unseres Projekts über unsere Changelog-Seite. Bleiben Sie über jede neue Version, Fehlerbehebungen und hinzugefügte Funktionen informiert.",
     "title": "Updates"
@@ -86,6 +106,7 @@
     "texto": "Text"
   },
   "comum": {
+    "copied": "Kopiert!",
     "copy": "Kopieren"
   },
   "comunity_from": "Erstellt von der RPG-Community für die Community",
@@ -235,6 +256,11 @@
       "male": "Männlich",
       "seo": "Namensgenerator für Buchfiguren, Rollenspiele und Spiele. Finde den perfekten Namen für deine Kreation.",
       "title": "Name Generator"
+    },
+    "loading": "Namen werden generiert...",
+    "null": {
+      "desc": "Klicken Sie auf die obige Schaltfläche, um zufällige Namen zu generieren.",
+      "title": "Es wurde noch kein Name generiert."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Intensität: Stark"
       },
       "intensidade": "Intensität",
+      "label": "Wählen Sie einen Wettertyp.",
+      "label2": "Klicken Sie auf \"Wetter generieren\", um die Ergebnisse anzuzeigen.",
       "options": {
         "blizzard": "Blizzard",
         "clear": "Klarer Himmel",
@@ -528,9 +556,7 @@
         "desert": "Wüstenregion",
         "temperate": "Gemäßigte Zone"
       },
-      "vento": "Windgeschwindigkeit",
-      "label": "Wählen Sie einen Wettertyp.",
-      "label2": "Klicken Sie auf \"Wetter generieren\", um die Ergebnisse anzuzeigen."
+      "vento": "Windgeschwindigkeit"
     },
     "morse": {
       "btn1": "Ton abspielen",

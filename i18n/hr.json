@@ -65,6 +65,26 @@
     },
     "title": "Uplata Odobrena - Otključajte svoj Premium"
   },
+  "cards": {
+    "btn": {
+      "roll": "Kliknite za izvlačenje"
+    },
+    "deck": {
+      "Espadas": "Lopata",
+      "ace": "As",
+      "card_limits_msg": "Ograničenje od 52 karte - svaka se karta pojavljuje samo jednom.",
+      "cartas_restantes": "dostupne karte",
+      "clubs": "Klubovi",
+      "diamond": "Dijamant",
+      "hearth": "Srce",
+      "king": "Kralj",
+      "queen": "Kraljica",
+      "realism": "Realističan špil",
+      "restantes": "preostale karte u špilu",
+      "valete": "Zbogom"
+    },
+    "random": "Slučajno"
+  },
   "changelogs": {
     "desc": "Otkrijte sve najnovije ažuriranja i poboljšanja našeg projekta putem naše stranice s zapisima promjena. Budite u tijeku sa svakom novom verzijom, ispravkom pogrešaka i dodanim značajkama.\n",
     "title": "Ažuriranja\n"
@@ -86,6 +106,7 @@
     "texto": "Tekst"
   },
   "comum": {
+    "copied": "Kopirano!",
     "copy": "Kopiraj\n"
   },
   "comunity_from": "Napravljeno od RPG zajednice za zajednicu",
@@ -235,6 +256,11 @@
       "male": "Muško",
       "seo": "Generator imena za likove iz knjiga, RPG-a i igara. Pronađite savršeno ime za svoju kreaciju.",
       "title": "Generator Imena"
+    },
+    "loading": "Generiranje imena...",
+    "null": {
+      "desc": "Kliknite na gumb iznad za generiranje nasumičnih imena.",
+      "title": "Još nije generirano nijedno ime."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Intenzitet: Jaka"
       },
       "intensidade": "Intenzitet",
+      "label": "Odaberite vrstu vremena.",
+      "label2": "Kliknite na \"Generiraj vrijeme\" za prikaz rezultata.",
       "options": {
         "blizzard": "Snježna mećava",
         "clear": "Vedro nebo",
@@ -528,9 +556,7 @@
         "desert": "Pustinjska regija",
         "temperate": "Umjerena regija"
       },
-      "vento": "Brzina vjetra",
-      "label": "Odaberite vrstu vremena.",
-      "label2": "Kliknite na \"Generiraj vrijeme\" za prikaz rezultata."
+      "vento": "Brzina vjetra"
     },
     "morse": {
       "btn1": "Pusti zvuk",

@@ -65,6 +65,26 @@
     },
     "title": "Płatność Zatwierdzona - Odbierz Swoje Premium\n"
   },
+  "cards": {
+    "btn": {
+      "roll": "Kliknij, aby wylosować"
+    },
+    "deck": {
+      "Espadas": "Szpadel",
+      "ace": "As",
+      "card_limits_msg": "Limit 52 kart - każda karta pojawia się tylko raz.",
+      "cartas_restantes": "dostępne karty",
+      "clubs": "Kluby",
+      "diamond": "Diament",
+      "hearth": "Serce",
+      "king": "Król",
+      "queen": "Królowa",
+      "realism": "Realistyczna talia",
+      "restantes": "pozostałe karty w talii",
+      "valete": "Żegnajcie"
+    },
+    "random": "Losowy"
+  },
   "changelogs": {
     "desc": "Odkryj najnowsze aktualizacje i ulepszenia naszego projektu na stronie zmian. Bądź na bieżąco z każdą nową wersją, poprawkami błędów i dodanymi funkcjami.",
     "title": "Aktualizacje"
@@ -86,6 +106,7 @@
     "texto": "Tekst"
   },
   "comum": {
+    "copied": "Skopiowano!",
     "copy": "Kopiuj"
   },
   "comunity_from": "Zrobione przez społeczność RPG dla społeczności",
@@ -235,6 +256,11 @@
       "male": "Mężczyzna",
       "seo": "Generator imion dla postaci z książek, gier RPG i gier. Znajdź idealne imię dla swojej kreacji.",
       "title": "Generator Imion"
+    },
+    "loading": "Generowanie nazw...",
+    "null": {
+      "desc": "Kliknij przycisk powyżej, aby wygenerować losowe nazwy.",
+      "title": "Jeszcze nie wygenerowano żadnej nazwy."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Intensywność: Ostra"
       },
       "intensidade": "Intensywność",
+      "label": "Wybierz typ pogody.",
+      "label2": "Kliknij \"Generuj pogodę\", aby zobaczyć wyniki.",
       "options": {
         "blizzard": "śnieżyca",
         "clear": "Czyste niebo",
@@ -528,9 +556,7 @@
         "desert": "Region pustynny",
         "temperate": "Strefa umiarkowana"
       },
-      "vento": "Prędkość wiatru",
-      "label": "Wybierz typ pogody.",
-      "label2": "Kliknij \"Generuj pogodę\", aby zobaczyć wyniki."
+      "vento": "Prędkość wiatru"
     },
     "morse": {
       "btn1": "Odtwarzaj dźwięk",

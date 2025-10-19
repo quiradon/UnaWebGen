@@ -65,6 +65,26 @@
     },
     "title": "Pagamento Aprovado - Resgate Seu Premium"
   },
+  "cards": {
+    "btn": {
+      "roll": "Clique para sortear"
+    },
+    "deck": {
+      "Espadas": "Espadas",
+      "ace": "Ás",
+      "card_limits_msg": "Limite de 52 cartas - cada carta só aparece uma vez.",
+      "cartas_restantes": "cartas disponíveis",
+      "clubs": "Paus",
+      "diamond": "Ouros",
+      "hearth": "Copas",
+      "king": "Rei",
+      "queen": "Dama",
+      "realism": "Baralho Realista",
+      "restantes": "cartas restantes no baralho",
+      "valete": "Valete"
+    },
+    "random": "Aleatório"
+  },
   "changelogs": {
     "desc": "Descubra todas as últimas atualizações e melhorias em nosso projeto através da nossa página de changelogs. Mantenha-se informado sobre cada nova versão, correção de bugs e recursos adicionados.",
     "title": "Atualizações"
@@ -86,6 +106,7 @@
     "texto": "Texto"
   },
   "comum": {
+    "copied": "Copiado!",
     "copy": "Copiar"
   },
   "comunity_from": "Feito pela comunidade RPG para a comunidade",
@@ -235,14 +256,15 @@
       "male": "Masculino",
       "seo": "Gerador de nomes para personagens de livros, RPGs e jogos. Encontre o nome perfeito para sua criação.",
       "title": "Gerador de Nomes"
+    },
+    "loading": "Gerando Nomes...",
+    "null": {
+      "desc": "Clique no botão acima para gerar nomes aleatórios.",
+      "title": "Nenhum nome gerado ainda."
     }
   },
   "nav": {
     "acervo": "Acervo",
-    "auth": {
-      "login": "Entrar",
-      "logout": "Sair"
-    },
     "add": "Adicionar App",
     "dices": {
       "desc": "Teste e aprenda como rolar.",
@@ -511,6 +533,8 @@
         "severe": "Severa"
       },
       "intensidade": "Intensidade",
+      "label": "Selecione um tipo de clima.",
+      "label2": "Clique em \"Gerar Clima\" para ver os resultados.",
       "options": {
         "blizzard": "Nevasca",
         "clear": "Céu limpo",
@@ -532,9 +556,7 @@
         "desert": "Região desértica",
         "temperate": "Região temperada"
       },
-      "vento": "Velocidade do vento",
-      "label": "Selecione um tipo de clima.",
-      "label2": "Clique em \"Gerar Clima\" para ver os resultados."
+      "vento": "Velocidade do vento"
     },
     "morse": {
       "btn1": "Reproduzir som",

@@ -65,6 +65,26 @@
     },
     "title": "Paiement Approuvé - Récupérez Votre Premium"
   },
+  "cards": {
+    "btn": {
+      "roll": "Cliquez pour tirer au sort"
+    },
+    "deck": {
+      "Espadas": "Bêche",
+      "ace": "As",
+      "card_limits_msg": "Limite de 52 cartes - chaque carte n'apparaît qu'une seule fois.",
+      "cartas_restantes": "cartes disponibles",
+      "clubs": "Clubs",
+      "diamond": "Diamant",
+      "hearth": "Cœur",
+      "king": "Roi",
+      "queen": "Reine",
+      "realism": "Jeu de cartes réaliste",
+      "restantes": "cartes restantes dans le paquet",
+      "valete": "Adieu"
+    },
+    "random": "Aléatoire"
+  },
   "changelogs": {
     "desc": "Découvrez toutes les dernières mises à jour et améliorations de notre projet via notre page des journaux de modifications. Restez informé de chaque nouvelle version, des corrections de bogues et des fonctionnalités ajoutées.",
     "title": "Mises à jour"
@@ -86,6 +106,7 @@
     "texto": "Texte"
   },
   "comum": {
+    "copied": "Copié !",
     "copy": "Copier"
   },
   "comunity_from": "Créé par la communauté RPG pour la communauté",
@@ -235,6 +256,11 @@
       "male": "Homme",
       "seo": "Générateur de noms pour personnages de livres, JDR et jeux vidéo. Trouvez le nom parfait pour votre création.",
       "title": "Générateur de Noms"
+    },
+    "loading": "Génération de noms...",
+    "null": {
+      "desc": "Cliquez sur le bouton ci-dessus pour générer des noms aléatoires.",
+      "title": "Aucun nom n'a été généré pour l'instant."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Intensité : Sévère"
       },
       "intensidade": "Intensité",
+      "label": "Sélectionnez un type de météo.",
+      "label2": "Cliquez sur \"Générer la Météo\" pour voir les résultats.",
       "options": {
         "blizzard": "Blizzard",
         "clear": "Ciel clair",
@@ -528,9 +556,7 @@
         "desert": "Région désertique",
         "temperate": "Région tempérée"
       },
-      "vento": "Vitesse du vent",
-      "label": "Sélectionnez un type de météo.",
-      "label2": "Cliquez sur \"Générer la Météo\" pour voir les résultats."
+      "vento": "Vitesse du vent"
     },
     "morse": {
       "btn1": "Lire le son",

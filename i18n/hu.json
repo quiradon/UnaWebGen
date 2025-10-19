@@ -65,6 +65,26 @@
     },
     "title": "Fizetés Jóváhagyva - Aktiváld a Prémiumodat"
   },
+  "cards": {
+    "btn": {
+      "roll": "Kattints a sorsoláshoz"
+    },
+    "deck": {
+      "Espadas": "Ásó",
+      "ace": "Ász",
+      "card_limits_msg": "52 lapos limit - minden lap csak egyszer jelenik meg.",
+      "cartas_restantes": "elérhető kártyák",
+      "clubs": "Klubok",
+      "diamond": "Gyémánt",
+      "hearth": "Szív",
+      "king": "Király",
+      "queen": "Királynő",
+      "realism": "Realista pakli",
+      "restantes": "hátralévő kártyák a pakliban",
+      "valete": "Isten veletek"
+    },
+    "random": "Véletlenszerű"
+  },
   "changelogs": {
     "desc": "Fedezd fel a projekt legújabb frissítéseit és fejlesztéseit a változásnaplónk oldalán. Maradj tájékozott minden új verzióról, hibajavításról és hozzáadott funkcióról.",
     "title": "Frissítések"
@@ -86,6 +106,7 @@
     "texto": "Szöveg"
   },
   "comum": {
+    "copied": "Másolva!",
     "copy": "Másolás"
   },
   "comunity_from": "RPG közösség által, a közösségért",
@@ -235,6 +256,11 @@
       "male": "Férfi",
       "seo": "Karakternevek generátor könyvek, szerepjátékok és játékok számára. Találd meg a tökéletes nevet a kreációdnak!",
       "title": "Névgenerátor"
+    },
+    "loading": "Nevek generálása...",
+    "null": {
+      "desc": "Kattintson a fenti gombra véletlenszerű nevek generálásához.",
+      "title": "Még nem generáltak nevet."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Intenzitás: Súlyos"
       },
       "intensidade": "Intenzitás",
+      "label": "Válasszon időjárás típust.",
+      "label2": "Kattintson a \"Időjárás generálása\" lehetőségre az eredmények megtekintéséhez.",
       "options": {
         "blizzard": "Hóvihar",
         "clear": "Tiszta ég",
@@ -528,9 +556,7 @@
         "desert": "Sivatagi régió",
         "temperate": "Mérsékelt öv"
       },
-      "vento": "Szélerősség",
-      "label": "Válasszon időjárás típust.",
-      "label2": "Kattintson a \"Időjárás generálása\" lehetőségre az eredmények megtekintéséhez."
+      "vento": "Szélerősség"
     },
     "morse": {
       "btn1": "Hang lejátszása",

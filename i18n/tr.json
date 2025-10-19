@@ -65,6 +65,26 @@
     },
     "title": "Ödeme Onaylandı - Premium'unuzu Talep Edin\n"
   },
+  "cards": {
+    "btn": {
+      "roll": "Çekiliş yapmak için tıklayın"
+    },
+    "deck": {
+      "Espadas": "Kürek",
+      "ace": "As",
+      "card_limits_msg": "52 kart sınırı - her kart yalnızca bir kez görünür.",
+      "cartas_restantes": "mevcut kartlar",
+      "clubs": "Kulüpler",
+      "diamond": "Pırlanta",
+      "hearth": "Kalp",
+      "king": "Kral",
+      "queen": "Kraliçe",
+      "realism": "Gerçekçi Deste",
+      "restantes": "destedeki kalan kartlar",
+      "valete": "Hoşça kalın"
+    },
+    "random": "Rastgele"
+  },
   "changelogs": {
     "desc": "Değişiklik kayıtları sayfamız aracılığıyla projemizdeki tüm en son güncellemeleri ve iyileştirmeleri keşfedin. Her yeni sürüm, hata düzeltmeleri ve eklenen özellikler hakkında bilgilendirilmeye devam edin.",
     "title": "Güncellemeler"
@@ -86,6 +106,7 @@
     "texto": "Metin"
   },
   "comum": {
+    "copied": "Kopyalandı!",
     "copy": "Kopyala"
   },
   "comunity_from": "RPG topluluğu tarafından topluluk için yapıldı",
@@ -235,6 +256,11 @@
       "male": "Erkek",
       "seo": "Kitap, RPG ve oyun karakterleri için isim üreteci. Yaratımınız için mükemmel ismi bulun.",
       "title": "İsim Üretici"
+    },
+    "loading": "İsimler Oluşturuluyor...",
+    "null": {
+      "desc": "Rastgele isimler oluşturmak için yukarıdaki düğmeye tıklayın.",
+      "title": "Henüz bir isim oluşturulmadı."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Şiddet: Şiddetli"
       },
       "intensidade": "Yoğunluk",
+      "label": "Bir hava durumu türü seçin.",
+      "label2": "Sonuçları görmek için \"Hava Durumu Oluştur\"a tıklayın.",
       "options": {
         "blizzard": "kar fırtınası",
         "clear": "Açık gökyüzü",
@@ -528,9 +556,7 @@
         "desert": "Çöl bölgesi",
         "temperate": "Ilıman bölge"
       },
-      "vento": "Rüzgar hızı",
-      "label": "Bir hava durumu türü seçin.",
-      "label2": "Sonuçları görmek için \"Hava Durumu Oluştur\"a tıklayın."
+      "vento": "Rüzgar hızı"
     },
     "morse": {
       "btn1": "Sesi çal",

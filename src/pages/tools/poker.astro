@@ -1,110 +1,124 @@
 ---
-export const prerender = true;
-import { getLocale } from "astro-i18n-aut";
+import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
 import { loadT } from '@lib/i18n';
+import { Shuffle, Dice5, ChevronDown, Layers, CheckCircle2, Diamond, Spade, Club, Heart } from '@lucide/astro';
+import { getLocale } from "astro-i18n-aut";
 const t = loadT(getLocale(Astro.url));
-const route = '/tools/poker';
 ---
-<Layout t={t} route={route} title={t.poker?.title} desc={t.poker?.desc}>
-  <section class="d-lg-flex justify-content-lg-center my-5">
+<Layout t={t} title={t.poker?.title} desc={t.poker?.desc}>
+  <section class="hero-section py-5">
     <div class="container">
-      <div class="row">
-        <div class="col-md-6 order-first order-md-last p-5 pt-2 pb-0">
-          <div class="p-5">
+      <div class="row g-4 align-items-center">
+        <!-- Card Display -->
+        <div class="col-lg-6 order-lg-2">
+          <div class="card-display-wrapper">
+            <div class="card-glow"></div>
             <div class="card-container">
-              <img id="cardshow" class="rounded img-fluid w-100 h-100 fit-cover CardPoker" src="/api/poker-card/2-10.webp" loading="eager" alt="Random playing card" />
+              <Image 
+                id="cardshow" 
+                class="card-poker" 
+                src="/api/poker-card/2-10.webp" 
+                loading="eager" 
+                alt="Random playing card"
+                width={500}
+                height={726}
+                inferSize
+              />
             </div>
-            <div class="text-center mt-3">
-              <p id="cardname" class="h5 text-white mb-0" aria-live="polite"></p>
-              <p id="deckstatus" class="text-secondary small mt-1" aria-live="polite"></p>
+            <div class="card-info text-center mt-4">
+              <p id="cardname" class="card-name mb-2" aria-live="polite">
+                <Diamond class="icon-inline me-2" size={20} fill="currentColor" />
+                {t.cards.btn.roll}
+              </p>
+              <p id="deckstatus" class="deck-status" aria-live="polite"></p>
             </div>
           </div>
         </div>
-        <div class="col d-flex justify-content-center align-items-center align-content-center order-last">
-          <div class="text-white">
-            <h1 class="display-5 fw-bold text-white">{t.poker?.article?.title}</h1>
-            <p class="lead text-secondary">{t.poker?.article?.desc}</p>
+
+        <!-- Controls -->
+        <div class="col-lg-6 order-lg-1">
+          <div class="controls-wrapper">
+            <h1 class="display-4 fw-bold text-white mb-3 animate-fade-in">
+              {t.poker?.article?.title}
+            </h1>
+            <p class="lead text-secondary mb-4 animate-fade-in-delay">
+              {t.poker?.article?.desc}
+            </p>
             
-            <div class="mb-3">
-              <div class="input-group mb-2">
+            <div class="controls-card p-4 animate-slide-up">
+              <!-- Botão e Select -->
+              <div class="d-flex gap-2 mb-3">
                 <button 
-                  class="text-wrap btn btn-primary link-light p-2" 
+                  class="btn btn-primary btn-generate flex-shrink-0" 
                   id="cardsrun" 
-                  style="white-space: nowrap;" 
                   type="button"
                   aria-label={t.misc?.btn?.gencard}
                 >
-                  {t.misc?.btn?.gencard}
+                  <Shuffle class="icon-inline me-2" size={20} />
+                  <span>{t.misc?.btn?.gencard}</span>
                 </button>
-                <select 
-                  class="form-select" 
-                  id="cardstype" 
-                  name="card"
-                  aria-label="Selecionar tipo de carta"
-                >
-                  <option value="random" selected>{t.poker?.cards?.type?.["0"]}</option>
-                  <option value="0">{t.poker?.cards?.type?.["4"]} (♦)</option>
-                  <option value="1">{t.poker?.cards?.type?.["1"]} (♠)</option>
-                  <option value="2">{t.poker?.cards?.type?.["2"]} (♣)</option>
-                  <option value="3">{t.poker?.cards?.type?.["3"]} (♥)</option>
-                </select>
-              </div>
-              
-              <div class="form-check mb-3">
-                <input 
-                  class="form-check-input" 
-                  type="checkbox" 
-                  id="limitdeck" 
-                  aria-describedby="limitdeckhelp"
-                >
-                <label class="form-check-label text-white" for="limitdeck">
-                  Limitar a 52 cartas (Baralho Realista)
-                </label>
-                <div id="limitdeckhelp" class="form-text">
-                  Simula um baralho real - cada carta só pode ser gerada uma vez
-                </div>
-              </div>
-            </div>
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Seção de Histórico -->
-  <section class="bg-dark bg-opacity-25">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <!-- Header -->
-          <div class="card bg-dark border-secondary mb-3">
-            <div class="card-header d-flex justify-content-between align-items-center">
-              <div>
-                <h5 class="mb-0 text-white">
-                  <i class="bi bi-collection-fill me-2"></i>
-                  Histórico de Cartas
-                </h5>
-                <small class="text-muted">Clique no X para devolver a carta ao baralho</small>
-              </div>
-              <button 
-                id="clearhistory" 
-                class="btn btn-sm btn-outline-danger"
-                aria-label="Limpar todas as cartas"
-              >
-                <i class="bi bi-trash"></i> Limpar Tudo
-              </button>
-            </div>
-            <div class="card-body bg-dark bg-opacity-50 p-3">
-              <div id="history" class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-3">
-                <div class="col">
-                  <div class="alert alert-secondary text-center mb-0" role="alert">
-                    <i class="bi bi-info-circle me-2"></i>
-                    Nenhuma carta gerada ainda
+                <!-- Select Customizado de Naipes -->
+                <div class="custom-select-wrapper flex-grow-1">
+                  <div class="custom-select" id="suit-select">
+                    <div class="custom-select-trigger">
+                      <span class="selected-suit" data-value="random">
+                        <Dice5 class="icon-inline" size={20} />
+                        <span>{t.cards.random}</span>
+                      </span>
+                      <ChevronDown class="chevron-icon" size={18} />
+                    </div>
+                    <div class="custom-select-options">
+                      <div class="custom-option active" data-value="random">
+                        <Dice5 class="icon-inline" size={20} />
+                        <span>{t.cards.random}</span>
+                      </div>
+                      <div class="custom-option" data-value="0">
+                        <Diamond class="icon-inline suit-diamonds" size={20} fill="currentColor" />
+                        <span>{t.cards.deck.diamond}</span>
+                      </div>
+                      <div class="custom-option" data-value="1">
+                        <Spade class="icon-inline suit-spades" size={20} fill="currentColor" />
+                        <span>{t.cards.deck.Espadas}</span>
+                      </div>
+                      <div class="custom-option" data-value="2">
+                        <Club class="icon-inline suit-clubs" size={20} fill="currentColor" />
+                        <span>{t.cards.deck.clubs}</span>
+                      </div>
+                      <div class="custom-option" data-value="3">
+                        <Heart class="icon-inline suit-hearts" size={20} fill="currentColor" />
+                        <span>{t.cards.deck.hearth}</span>
+                      </div>
+                    </div>
+                    <input type="hidden" id="cardstype" value="random">
                   </div>
                 </div>
               </div>
+              
+              <!-- Toggle Button -->
+              <button 
+                type="button"
+                class="btn-deck-toggle" 
+                id="limitdeck" 
+                aria-pressed="false"
+                aria-label="Ativar baralho realista"
+              >
+                <div class="toggle-content">
+                  <div class="toggle-icon">
+                    <Layers size={24} />
+                  </div>
+                  <div class="toggle-text">
+                    <strong class="d-block">{t.cards.deck.realism}</strong>
+                    <span class="small text-muted">
+                      {t.cards.deck.card_limits_msg}
+                    </span>
+                  </div>
+                  <div class="toggle-indicator">
+                    <CheckCircle2 size={24} />
+                  </div>
+                </div>
+              </button>
             </div>
           </div>
         </div>
@@ -112,67 +126,131 @@ const route = '/tools/poker';
     </div>
   </section>
 
-  <script is:inline>
+
+
+  <script is:inline define:vars={{"translation": t}}>
+
     // Configurações
-    const audio = "/audio/play-card.mp3";
+    const audio = "/audio/play_card.webm";
     const audioElement = new Audio(audio);
     audioElement.volume = 0.5;
     
     // Preload do áudio
     audioElement.load();
-
     // Estado do jogo
     let usedCards = new Set();
-    let history = [];
-    const maxHistory = 10;
-
+    let isAnimating = false;
+    
     // Nomes das cartas
     const cardNames = {
-      1: 'Ás', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7',
-      8: '8', 9: '9', 10: '10', 11: 'Valete', 12: 'Dama', 13: 'Rei'
+      1: translation.cards.deck.ace, 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7',
+      8: '8', 9: '9', 10: '10', 11: translation.cards.deck.valete, 12: translation.cards.deck.queen, 13: translation.cards.deck.king
     };
     
-    const suitNames = ['Ouros', 'Espadas', 'Paus', 'Copas'];
+    const suitNames = [translation.cards.deck.diamond, translation.cards.deck.Espadas, translation.cards.deck.clubs, translation.cards.deck.hearth];
     const suitSymbols = ['♦', '♠', '♣', '♥'];
 
     // Elementos DOM
     const elements = {
       button: document.getElementById('cardsrun'),
       select: document.getElementById('cardstype'),
-      checkbox: document.getElementById('limitdeck'),
+      toggleBtn: document.getElementById('limitdeck'),
       cardElement: document.getElementById('cardshow'),
       cardName: document.getElementById('cardname'),
-      deckStatus: document.getElementById('deckstatus'),
-      history: document.getElementById('history'),
-      clearBtn: document.getElementById('clearhistory')
+      deckStatus: document.getElementById('deckstatus')
     };
+
+    // Estado do toggle
+    let isDeckLimited = false;
+
+    // Custom Select
+    const customSelect = document.getElementById('suit-select');
+    const selectTrigger = customSelect.querySelector('.custom-select-trigger');
+    const selectOptions = customSelect.querySelector('.custom-select-options');
+    const options = customSelect.querySelectorAll('.custom-option');
+    const selectedSuitDisplay = customSelect.querySelector('.selected-suit');
+
+    // Toggle dropdown
+    selectTrigger.addEventListener('click', () => {
+      customSelect.classList.toggle('open');
+    });
+
+    // Fechar ao clicar fora
+    document.addEventListener('click', (e) => {
+      if (!customSelect.contains(e.target)) {
+        customSelect.classList.remove('open');
+      }
+    });
+
+    // Selecionar opção
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        const value = option.dataset.value;
+        const icon = option.querySelector('svg, .suit-icon').cloneNode(true);
+        const text = option.querySelector('span:last-child').textContent;
+        
+        // Atualizar visual
+        selectedSuitDisplay.innerHTML = '';
+        selectedSuitDisplay.appendChild(icon);
+        selectedSuitDisplay.innerHTML += `<span>${text}</span>`;
+        selectedSuitDisplay.dataset.value = value;
+        
+        // Atualizar input hidden
+        elements.select.value = value;
+        
+        // Atualizar classe active
+        options.forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        
+        // Fechar dropdown
+        customSelect.classList.remove('open');
+      });
+    });
 
     // Função para gerar carta
     function generateCard() {
-      const limitDeck = elements.checkbox.checked;
+      // Bloquear se já estiver animando
+      if (isAnimating) return;
+      
+      isAnimating = true;
+      elements.button.disabled = true;
+      elements.button.style.opacity = '0.6';
+      elements.button.style.cursor = 'not-allowed';
+      
+      const limitDeck = isDeckLimited;
       
       // Verificar se o baralho acabou
       if (limitDeck && usedCards.size >= 52) {
-        alert('Todas as 52 cartas foram usadas! Limpando o baralho...');
         resetDeck();
+        isAnimating = false;
+        elements.button.disabled = false;
+        elements.button.style.opacity = '1';
+        elements.button.style.cursor = 'pointer';
         return;
       }
 
-      let suit = elements.select.value;
+      let selectedSuit = elements.select.value;
+      let suit;
       let cardNumber;
       let attempts = 0;
       const maxAttempts = 100;
 
       // Gerar carta válida
       do {
-        if (suit === 'random') {
+        if (selectedSuit === 'random') {
           suit = Math.floor(4 * Math.random());
+        } else {
+          suit = parseInt(selectedSuit);
         }
         cardNumber = Math.floor(13 * Math.random()) + 1;
         attempts++;
         
         if (attempts > maxAttempts) {
           alert('Não há mais cartas disponíveis neste naipe!');
+          isAnimating = false;
+          elements.button.disabled = false;
+          elements.button.style.opacity = '1';
+          elements.button.style.cursor = 'pointer';
           return;
         }
       } while (limitDeck && usedCards.has(`${suit}-${cardNumber}`));
@@ -188,218 +266,66 @@ const route = '/tools/poker';
 
       // Atualizar imagem com animação
       const cardimg = `/api/poker-card/${suit}-${cardNumber}.webp`;
-      elements.cardElement.classList.add('flip');
       
-      setTimeout(() => {
-        elements.cardElement.src = cardimg;
-      }, 150);
+      // Preload da nova imagem antes de iniciar animação
+      const preloadImg = new Image();
+      preloadImg.src = cardimg;
       
+      // Usar requestAnimationFrame para sincronizar com o browser e evitar reflows
+      requestAnimationFrame(() => {
+        elements.cardElement.classList.add('flip');
+      });
+      
+      // Trocar a carta exatamente quando está invisível (no meio do giro)
       setTimeout(() => {
-        elements.cardElement.classList.remove('flip');
-      }, 500);
+        requestAnimationFrame(() => {
+          elements.cardElement.src = cardimg;
+        });
+      }, 300);
+      
+      // Remover a classe após a animação completa e destravar
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          elements.cardElement.classList.remove('flip');
+          isAnimating = false;
+          elements.button.disabled = false;
+          elements.button.style.opacity = '1';
+          elements.button.style.cursor = 'pointer';
+        });
+      }, 600);
 
       // Atualizar nome da carta
-      const name = `${cardNames[cardNumber]} de ${suitNames[suit]} ${suitSymbols[suit]}`;
+      const name = `${cardNames[cardNumber]} ${suitNames[suit]} ${suitSymbols[suit]}`;
       elements.cardName.textContent = name;
 
       // Atualizar status do baralho
       if (limitDeck) {
         const remaining = 52 - usedCards.size;
-        elements.deckStatus.textContent = `${remaining} cartas restantes no baralho`;
+        elements.deckStatus.textContent = `${remaining} ${translation.cards.deck.restantes}`;
       } else {
         elements.deckStatus.textContent = '';
       }
-
-      // Adicionar ao histórico
-      addToHistory(name, suit, cardNumber);
     }
 
-    // Adicionar ao histórico
-    function addToHistory(name, suit, number) {
-      const newCard = { name, suit, number, time: new Date(), id: Date.now() };
-      history.push(newCard);
-      
-      // Se exceder o máximo, remover a primeira carta
-      if (history.length > maxHistory) {
-        const firstCard = elements.history.querySelector('[data-card-id]');
-        if (firstCard) {
-          firstCard.classList.add('fade-out-up');
-          setTimeout(() => {
-            history.shift();
-            if (firstCard.parentNode) {
-              firstCard.remove();
-            }
-          }, 300);
-        } else {
-          history.shift();
-        }
-      }
-      
-      // Adicionar apenas a nova carta
-      addCardToDisplay(newCard);
-    }
 
-    // Adicionar uma carta ao display
-    function addCardToDisplay(card) {
-      // Remover mensagem vazia se existir
-      const emptyAlert = elements.history.querySelector('.alert');
-      if (emptyAlert) {
-        emptyAlert.parentElement.remove();
-      }
-
-      // Criar elemento da nova carta
-      const colDiv = document.createElement('div');
-      colDiv.className = 'col';
-      colDiv.setAttribute('data-card-id', card.id);
-      
-      colDiv.innerHTML = `
-        <div class="card bg-dark border-secondary h-100 position-relative card-item-hover">
-          <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 remove-card-btn" 
-                  aria-label="Devolver ${card.name} ao baralho"
-                  title="Devolver ao baralho">
-            <i class="bi bi-x-circle-fill"></i>
-          </button>
-          <div class="card-body p-2 text-center">
-            <img src="/api/poker-card/${card.suit}-${card.number}.webp" 
-                 alt="${card.name}" 
-                 class="img-fluid rounded mb-2 card-img-history"
-                 loading="lazy"
-                 data-suit="${card.suit}"
-                 data-number="${card.number}">
-            <h6 class="card-title text-white small mb-1">${card.name}</h6>
-          </div>
-        </div>
-      `;
-
-      // Adicionar event listener para o botão de remover
-      const removeBtn = colDiv.querySelector('.remove-card-btn');
-      removeBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const cardId = parseInt(colDiv.dataset.cardId);
-        removeCardFromHistory(cardId);
-      });
-
-      // Adicionar ao histórico
-      elements.history.appendChild(colDiv);
-      
-      // Forçar reflow para garantir que a animação funcione
-      void colDiv.offsetWidth;
-      
-      // Adicionar classe de animação após estar no DOM
-      requestAnimationFrame(() => {
-        colDiv.classList.add('card-col-enter');
-      });
-    }
-
-    // Atualizar display do histórico (usado apenas para limpar)
-    function updateHistoryDisplay() {
-      if (history.length === 0) {
-        elements.history.innerHTML = `
-          <div class="col">
-            <div class="alert alert-secondary text-center mb-0" role="alert">
-              <i class="bi bi-info-circle me-2"></i>
-              Nenhuma carta gerada ainda
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      // Recriar tudo apenas quando necessário (ex: limpar histórico)
-      elements.history.innerHTML = history.map((card) => `
-        <div class="col" data-card-id="${card.id}">
-          <div class="card bg-dark border-secondary h-100 position-relative card-item-hover">
-            <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 remove-card-btn" 
-                    aria-label="Devolver ${card.name} ao baralho"
-                    title="Devolver ao baralho">
-              <i class="bi bi-x-circle-fill"></i>
-            </button>
-            <div class="card-body p-2 text-center">
-              <img src="/api/poker-card/${card.suit}-${card.number}.webp" 
-                   alt="${card.name}" 
-                   class="img-fluid rounded mb-2 card-img-history"
-                   loading="lazy"
-                   data-suit="${card.suit}"
-                   data-number="${card.number}">
-              <h6 class="card-title text-white small mb-1">${card.name}</h6>
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      // Adicionar event listeners para remover cartas
-      document.querySelectorAll('.remove-card-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          const col = this.closest('[data-card-id]');
-          const cardId = parseInt(col.dataset.cardId);
-          removeCardFromHistory(cardId);
-        });
-      });
-    }
-
-    // Remover carta do histórico e devolver ao baralho
-    function removeCardFromHistory(cardId) {
-      const cardIndex = history.findIndex(card => card.id === cardId);
-      if (cardIndex === -1) return;
-
-      const card = history[cardIndex];
-      const cardKey = `${card.suit}-${card.number}`;
-      
-      // Remover do set de cartas usadas (devolver ao baralho)
-      if (elements.checkbox.checked && usedCards.has(cardKey)) {
-        usedCards.delete(cardKey);
-        
-        // Atualizar status do baralho
-        const remaining = 52 - usedCards.size;
-        elements.deckStatus.textContent = `${remaining} cartas restantes no baralho`;
-      }
-      
-      // Feedback visual com animação Bootstrap
-      const col = document.querySelector(`[data-card-id="${cardId}"]`);
-      if (col) {
-        col.classList.add('fade-out-up');
-        setTimeout(() => {
-          history.splice(cardIndex, 1);
-          updateHistoryDisplay();
-        }, 300);
-      } else {
-        history.splice(cardIndex, 1);
-        updateHistoryDisplay();
-      }
-    }
-
-    // Formatar tempo
-    function formatTime(date) {
-      const now = new Date();
-      const diff = Math.floor((now - date) / 1000);
-      
-      if (diff < 60) return 'agora';
-      if (diff < 3600) return `${Math.floor(diff / 60)}m atrás`;
-      return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    }
-
-    // Limpar histórico
-    function clearHistory() {
-      if (history.length === 0) return;
-      
-      if (confirm('Deseja limpar todo o histórico de cartas?')) {
-        history = [];
-        updateHistoryDisplay();
-      }
-    }
 
     // Resetar baralho
     function resetDeck() {
       usedCards.clear();
-      elements.deckStatus.textContent = '52 cartas disponíveis';
+      elements.deckStatus.textContent = `52 ${translation.cards.deck.cartas_restantes}`;
     }
 
     // Event Listeners
     elements.button.addEventListener('click', generateCard);
-    elements.clearBtn.addEventListener('click', clearHistory);
-    elements.checkbox.addEventListener('change', () => {
-      if (elements.checkbox.checked) {
+    elements.cardElement.addEventListener('click', generateCard);
+    
+    // Toggle button
+    elements.toggleBtn.addEventListener('click', () => {
+      isDeckLimited = !isDeckLimited;
+      elements.toggleBtn.classList.toggle('active', isDeckLimited);
+      elements.toggleBtn.setAttribute('aria-pressed', isDeckLimited);
+      
+      if (isDeckLimited) {
         resetDeck();
       } else {
         elements.deckStatus.textContent = '';
@@ -419,202 +345,602 @@ const route = '/tools/poker';
         generateCard();
       }
     });
-
-    // Não salvar histórico - limpa ao recarregar a página
   </script>
   <style>
-    @keyframes flip {
-      0% { 
-        transform: rotateY(0deg) scale(1);
-        filter: brightness(1);
-      }
-      50% { 
-        transform: rotateY(90deg) scale(0.95);
-        filter: brightness(1.2);
-      }
-      100% { 
-        transform: rotateY(180deg) scale(1);
-        filter: brightness(1);
-      }
+    /* ========== ÍCONES LUCIDE ========== */
+    .icon-inline {
+      display: inline-block;
+      vertical-align: middle;
     }
 
-    @keyframes flipBack {
-      0% { 
-        transform: rotateY(180deg);
-      }
-      100% { 
-        transform: rotateY(360deg);
-      }
-    }
-
-    .card-container {
-      perspective: 1000px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .CardPoker {
-      transform-style: preserve-3d;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      backface-visibility: hidden;
-      will-change: transform;
-    }
-
-    .CardPoker:hover {
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .flip {
-      animation: flip 0.5s ease-in-out, flipBack 0.5s ease-in-out 0.5s;
-    }
-
-    /* Histórico com Bootstrap */
-    .card-item-hover {
-      transition: all 0.3s ease;
-    }
-
-    /* Estado inicial antes da animação */
-    #history .col {
-      opacity: 0;
-      transform: translateY(30px) scale(0.8);
-    }
-
-    /* Animação de entrada das cartas */
-    .card-col-enter {
-      animation: cardSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-
-    @keyframes cardSlideIn {
-      0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.8) rotateX(-15deg);
-      }
-      60% {
-        opacity: 1;
-        transform: translateY(-5px) scale(1.02);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1) rotateX(0);
-      }
-    }
-
-    /* Animação de saída das cartas */
-    .fade-out-up {
-      animation: cardSlideOut 0.4s cubic-bezier(0.55, 0.09, 0.68, 0.53) forwards;
-    }
-
-    @keyframes cardSlideOut {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1) rotateZ(0deg);
-      }
-      30% {
-        transform: translateY(-10px) scale(1.05) rotateZ(-5deg);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-50px) scale(0.7) rotateZ(-10deg);
-      }
-    }
-
-    .card-item-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6) !important;
-      border-color: rgba(255, 255, 255, 0.3) !important;
-    }
-
-    .card-img-history {
-      max-width: 100%;
-      height: auto;
-      max-height: 180px;
-      object-fit: contain;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    .chevron-icon {
       transition: transform 0.3s ease;
     }
 
-    .card-item-hover:hover .card-img-history {
-      transform: scale(1.05);
+    /* ========== SEÇÃO HERO ========== */
+    .hero-section {
+      background: rgba(0, 0, 0, 0.1);
+      min-height: 70vh;
+      position: relative;
+      overflow: hidden;
     }
 
-    .remove-card-btn {
-      z-index: 10;
-      opacity: 0.9;
-      transition: all 0.2s ease;
-      padding: 0.25rem 0.5rem;
-      line-height: 1;
+    /* ========== CARD DISPLAY ========== */
+    .card-display-wrapper {
+      position: relative;
+      padding: 2rem;
     }
 
-    .remove-card-btn:hover {
+    .card-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: rgba(248, 7, 82, 0.2);
+      filter: blur(50px);
+      opacity: 0.4;
+      animation: pulse 3s ease-in-out infinite;
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .card-container {
+      perspective: 1500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-poker {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      aspect-ratio: 5/7;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(248, 7, 82, 0.3);
+      transform-style: preserve-3d;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      backface-visibility: hidden;
+      contain: layout style paint;
+    }
+
+    .card-poker:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 50px rgba(248, 7, 82, 0.5);
+    }
+
+    .flip {
+      animation: cardFlip 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    @keyframes cardFlip {
+      0% { 
+        transform: rotateY(0deg) scale(1);
+      }
+      49.99% { 
+        transform: rotateY(90deg) scale(0.8);
+      }
+      50% { 
+        transform: rotateY(-90deg) scale(0.8);
+      }
+      100% { 
+        transform: rotateY(0deg) scale(1);
+      }
+    }
+
+    .card-info {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .deck-status {
+      color: #6c757d;
+      font-size: 0.95rem;
+      font-weight: 500;
+      min-height: 1.5rem;
+      animation: fadeIn 0.5s ease 0.1s both;
+    }
+
+    /* ========== CONTROLES ========== */
+    .controls-wrapper {
+      padding: 1rem;
+    }
+
+    .controls-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-generate {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.75rem 1.25rem;
+      border: none;
+      transition: all 0.3s ease;
+      background: #f80752;
+      box-shadow: 0 4px 15px rgba(248, 7, 82, 0.3);
+      white-space: nowrap;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(248, 7, 82, 0.5);
+      background: #d60645;
+    }
+
+    .btn-generate:active {
+      transform: translateY(0);
+    }
+
+    /* Custom Select */
+    .custom-select-wrapper {
+      position: relative;
+      min-width: 0;
+    }
+
+    .custom-select {
+      position: relative;
+      width: 100%;
+      user-select: none;
+    }
+
+    .custom-select-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0.85rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .custom-select-trigger:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .custom-select.open .custom-select-trigger {
+      border-color: #f80752;
+      background: rgba(248, 7, 82, 0.1);
+    }
+
+    .custom-select.open .custom-select-trigger .chevron-icon {
+      transform: rotate(180deg);
+    }
+
+    .selected-suit {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .selected-suit i,
+    .selected-suit .suit-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .custom-select-trigger .chevron-icon {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .custom-select-options {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      left: 0;
+      right: 0;
+      max-height: 240px;
+      overflow-y: auto;
+      background: rgba(30, 30, 35, 0.98);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .custom-select-options::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .custom-select-options::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    .custom-select-options::-webkit-scrollbar-thumb {
+      background: rgba(248, 7, 82, 0.5);
+      border-radius: 4px;
+    }
+
+    .custom-select-options::-webkit-scrollbar-thumb:hover {
+      background: rgba(248, 7, 82, 0.7);
+    }
+
+    .custom-select.open .custom-select-options {
       opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .custom-option {
+      display: flex;
+      gap: 0.6rem;
+      padding: 0.6rem 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: rgba(255, 255, 255, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.95rem;
+    }
+
+    .custom-option:last-child {
+      border-bottom: none;
+    }
+
+    .custom-option:hover {
+      background: rgba(248, 7, 82, 0.15);
+      color: #fff;
+    }
+
+    .custom-option.active {
+      background: rgba(248, 7, 82, 0.2);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .custom-option i,
+    .custom-option .suit-icon {
+      font-size: 1.2rem;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+
+    .btn-deck-toggle {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-deck-toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(248, 7, 82, 0.1);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-deck-toggle:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .btn-deck-toggle.active {
+      background: rgba(248, 7, 82, 0.15);
+      border-color: #f80752;
+      box-shadow: 
+        0 0 0 3px rgba(248, 7, 82, 0.2),
+        0 0 20px rgba(248, 7, 82, 0.3),
+        inset 0 0 20px rgba(248, 7, 82, 0.1);
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
+
+    .btn-deck-toggle.active::before {
+      opacity: 1;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% {
+        box-shadow: 
+          0 0 0 3px rgba(248, 7, 82, 0.2),
+          0 0 20px rgba(248, 7, 82, 0.3),
+          inset 0 0 20px rgba(248, 7, 82, 0.1);
+      }
+      50% {
+        box-shadow: 
+          0 0 0 3px rgba(248, 7, 82, 0.3),
+          0 0 30px rgba(248, 7, 82, 0.5),
+          inset 0 0 30px rgba(248, 7, 82, 0.15);
+      }
+    }
+
+    .toggle-content {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .toggle-icon {
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-deck-toggle.active .toggle-icon {
+      color: #f80752;
       transform: scale(1.1);
     }
 
-    #history .card-body {
-      min-height: 200px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .toggle-text {
+      flex: 1;
+      text-align: left;
+      color: #fff;
     }
 
-    .form-check-input:checked {
-      background-color: #0d6efd;
-      border-color: #0d6efd;
+    .toggle-text strong {
+      color: rgba(255, 255, 255, 0.9);
     }
 
-    #cardname {
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      min-height: 2rem;
+    .btn-deck-toggle.active .toggle-text strong {
+      color: #fff;
     }
 
-    #deckstatus {
-      min-height: 1.5rem;
+    .toggle-indicator {
+      font-size: 1.5rem;
+      color: rgba(32, 29, 39, 0.2);
+      transition: all 0.3s ease;
+      flex-shrink: 0;
     }
 
-    /* Animação de pulso no botão quando hover */
-    #cardsrun:hover {
-      animation: pulse 0.5s ease-in-out;
+    .btn-deck-toggle.active .toggle-indicator {
+      color: #f80752;
+      transform: scale(1.2) rotate(360deg);
+    }
+
+
+
+    /* ========== ANIMAÇÕES ========== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.9);
+      }
     }
 
     @keyframes pulse {
       0%, 100% {
         transform: scale(1);
+        opacity: 0.5;
       }
       50% {
         transform: scale(1.05);
+        opacity: 0.7;
       }
     }
 
-    /* Responsividade */
+    /* ========== ANIMAÇÕES DE ENTRADA ========== */
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .animate-fade-in-delay {
+      animation: fadeIn 0.8s ease-out 0.2s both;
+    }
+
+    .animate-slide-up {
+      animation: slideUp 0.8s ease-out 0.4s both;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========== RESPONSIVIDADE ========== */
     @media (max-width: 768px) {
-      .card-img-history {
-        max-height: 150px;
+      .hero-section {
+        min-height: auto;
       }
 
-      #history .card-body {
-        min-height: 180px;
+      .card-poker {
+        max-width: 320px;
+      }
+
+      .card-name {
+        font-size: 1.25rem;
+      }
+
+      .controls-card {
+        padding: 1.5rem !important;
+      }
+
+      .btn-generate {
+        font-size: 0.95rem;
+        padding: 0.65rem 1rem;
+      }
+
+      .selected-suit {
+        font-size: 0.9rem;
+      }
+
+      .selected-suit i,
+      .selected-suit .suit-icon {
+        font-size: 1rem;
+      }
+
+      .custom-option {
+        font-size: 0.9rem;
+        padding: 0.55rem 0.75rem;
+      }
+
+      .toggle-icon,
+      .toggle-indicator {
+        font-size: 1.25rem;
+      }
+
+      .toggle-text strong {
+        font-size: 0.95rem;
+      }
+
+      .toggle-text .small {
+        font-size: 0.75rem;
       }
     }
-    
+
     @media (max-width: 576px) {
-      .card-img-history {
-        max-height: 130px;
+      .card-display-wrapper {
+        padding: 1rem;
       }
 
-      #history .card-body {
-        min-height: 160px;
+      .card-poker {
+        max-width: 280px;
       }
 
-      .remove-card-btn {
-        padding: 0.2rem 0.4rem;
-        font-size: 0.875rem;
+      .card-name {
+        font-size: 1.1rem;
       }
 
-      .card-item-hover:hover {
-        transform: translateY(-3px);
+      .controls-card {
+        padding: 1.25rem !important;
+      }
+
+      .d-flex.gap-2 {
+        gap: 0.5rem !important;
+      }
+
+      .btn-generate {
+        font-size: 0.9rem;
+        padding: 0.6rem 0.85rem;
+      }
+
+      .btn-generate span {
+        display: none;
+      }
+
+      .btn-generate svg {
+        margin: 0 !important;
+      }
+
+      .custom-select-wrapper {
+        min-width: 48px;
+      }
+
+      .custom-select-trigger {
+        padding: 0.6rem 0.5rem;
+        min-width: 48px;
+      }
+
+      .selected-suit {
+        font-size: 0.85rem;
+        justify-content: center;
+      }
+
+      .selected-suit span {
+        display: none;
+      }
+
+      .selected-suit .icon-inline {
+        margin: 0;
+      }
+
+      .chevron-icon {
+        display: none;
+      }
+
+      .custom-option {
+        padding: 0.65rem 0.75rem;
+        font-size: 0.85rem;
+      }
+
+      .custom-option .icon-inline {
+        width: 20px;
+        height: 20px;
+      }
+
+      .btn-deck-toggle {
+        padding: 0.75rem;
+      }
+
+      .toggle-icon,
+      .toggle-indicator {
+        font-size: 1.1rem;
+      }
+
+      .toggle-content {
+        gap: 0.75rem;
+      }
+
+      .toggle-text strong {
+        font-size: 0.9rem;
+      }
+
+      .toggle-text .small {
+        font-size: 0.7rem;
       }
     }
   </style>

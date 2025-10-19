@@ -1,25 +1,37 @@
 ---
 export const prerender = true;
-import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
-import { markdownToHtml } from '@components/Markdown';
-const lang = Astro.params.locales as string;
 
+import Layout from '@layouts/Layout.astro';
+import { markdownToHtml } from '@components/Markdown';
+import { getLocale } from "astro-i18n-aut";
+import { loadT } from '@lib/i18n';
 
 export async function getStaticPaths() {
-  // Gera todas as combinações de idioma (exceto en) e systems a partir das traduções
-  const langs = getLanguages().filter((l) => l !== 'en');
-  const paths: any[] = [];
-  for (const lang of langs) {
-    const t = loadT(lang);
+  // Lista de locales suportados
+  const locales = ['en', 'pt', 'es', 'fr', 'de', 'ja', 'ko', 'ru', 'zh', 'it', 'pl', 'tr', 'hu', 'da', 'hr', 'id'];
+  
+  const paths = [];
+  
+  for (const locale of locales) {
+    const t = loadT(locale);
     const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
-    for (const s of sistemas) paths.push({ params: { lang, system: s.path } });
+    
+    for (const sistema of sistemas) {
+      if (sistema.path) {
+        paths.push({
+          params: { system: sistema.path }
+        });
+      }
+    }
   }
+  
   return paths;
 }
 
-const slug = Astro.params.system as string;
-const t = loadT(lang);
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
+
+const { system: slug } = Astro.params;
 const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
 const sistema = sistemas.find((s: any) => s.path === slug);
 if (!sistema) throw new Error(`System not found: ${slug}`);
@@ -29,7 +41,7 @@ const desc = t.system?.default?.desc?.replaceAll('%system%', sistema.card.title)
 const mdHtml = markdownToHtml(sistema.md ?? '');
 const linkReplacer = (str: string) => str.replace(/\[(.*?)\]\((.*?)\)/gm, '<a href="$2">$1</a>');
 ---
-<Layout t={t} route={`/systems/${slug}`} title={title} desc={desc} pictureURL={sistema.bg ?? sistema.icon}>
+<Layout t={t} title={title} desc={desc} pictureURL={sistema.bg ?? sistema.icon}>
   <section class="container-lg d-flex justify-content-center my-5" style="max-width: 1100px;">
     <div class="card border-0 shadow-sm w-100">
       {sistema.bg && (

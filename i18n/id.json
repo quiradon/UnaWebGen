@@ -65,6 +65,26 @@
     },
     "title": "Pembayaran Disetujui - Klaim Premium Anda"
   },
+  "cards": {
+    "btn": {
+      "roll": "Klik untuk mengundi"
+    },
+    "deck": {
+      "Espadas": "Sekop",
+      "ace": "As",
+      "card_limits_msg": "Batas 52 kartu - setiap kartu hanya muncul sekali.",
+      "cartas_restantes": "kartu tersedia",
+      "clubs": "Klub",
+      "diamond": "Berlian",
+      "hearth": "Hati",
+      "king": "Raja",
+      "queen": "Ratu",
+      "realism": "Dek Realistis",
+      "restantes": "kartu tersisa di dek",
+      "valete": "Selamat tinggal"
+    },
+    "random": "Acak"
+  },
   "changelogs": {
     "desc": "Temukan semua pembaruan dan peningkatan terbaru untuk proyek kami melalui halaman catatan rilis kami. Tetap terinformasi tentang setiap versi baru, perbaikan bug, dan fitur yang ditambahkan.",
     "title": "Pembaruan"
@@ -86,6 +106,7 @@
     "texto": "Teks"
   },
   "comum": {
+    "copied": "Disalin!",
     "copy": "Salin"
   },
   "comunity_from": "Dibuat oleh komunitas RPG untuk komunitas",
@@ -235,6 +256,11 @@
       "male": "Laki-laki",
       "seo": "Generator nama karakter untuk buku, RPG, dan game. Temukan nama yang sempurna untuk kreasi Anda.",
       "title": "Generator Nama"
+    },
+    "loading": "Membuat Nama...",
+    "null": {
+      "desc": "Klik tombol di atas untuk menghasilkan nama acak.",
+      "title": "Belum ada nama yang dihasilkan."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Intensitas: Parah"
       },
       "intensidade": "Intensitas",
+      "label": "Pilih jenis cuaca.",
+      "label2": "Klik \"Hasilkan Cuaca\" untuk melihat hasilnya.",
       "options": {
         "blizzard": "Badai salju",
         "clear": "Langit cerah",
@@ -528,9 +556,7 @@
         "desert": "Wilayah gurun",
         "temperate": "Daerah beriklim sedang"
       },
-      "vento": "Kecepatan Angin",
-      "label": "Pilih jenis cuaca.",
-      "label2": "Klik \"Hasilkan Cuaca\" untuk melihat hasilnya."
+      "vento": "Kecepatan Angin"
     },
     "morse": {
       "btn1": "Putar suara",

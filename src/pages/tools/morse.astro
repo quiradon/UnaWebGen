@@ -1,46 +1,120 @@
 ---
-export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { loadT, getStaticPaths } from '@lib/i18n';
-export { getStaticPaths };
-const lang = Astro.params.locales as string;
-const t = loadT(lang);
-const route = '/tools/morse';
+import { loadT } from '@lib/i18n';
+import { Radio, Volume2, Download, PlayCircle } from '@lucide/astro';
+
+import { getLocale } from "astro-i18n-aut";
+const t = loadT(getLocale(Astro.url));
 ---
-<Layout t={t} route={route} title={t.tools?.morse?.title} desc={t.tools?.morse?.desc}>
-  <section class="justify-content-lg-center pt-2 mt-4 mb-4">
+<Layout t={t} title={t.tools?.morse?.title} desc={t.tools?.morse?.desc}>
+  <section class="morse-section pt-2 mt-4 mb-5">
     <div class="container">
-      <div class="col-12 mb-2">
-        <h1 class="display-5 fw-bold text-white mb-3">{t.tools?.morse?.title}</h1>
+      <!-- Header -->
+      <div class="text-center mb-5 animate-fade-in">
+        <h1 class="display-4 fw-bold text-white mb-3">
+          <Radio size={40} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
+          {t.tools?.morse?.title}
+        </h1>
         <p class="lead text-secondary">{t.tools?.morse?.desc}</p>
       </div>
+
       <div class="row justify-content-center">
-        <div class="col-md-8">
-          <div class="card">
-            <div class="card-body">
-              <div class="mb-3">
-                <label for="morseText" class="form-label">{t.common?.texto}</label>
-                <textarea id="morseText" class="form-control" rows="3">SOS</textarea>
+        <div class="col-lg-8">
+          <!-- Main Card -->
+          <div class="morse-card p-4 p-md-5 mb-4 animate-slide-up">
+            <!-- Input Text -->
+            <div class="mb-4">
+              <label for="morseText" class="form-label text-white fw-semibold mb-2">
+                {t.common?.texto}
+              </label>
+              <textarea 
+                id="morseText" 
+                class="form-control morse-input" 
+                rows="4" 
+                placeholder="Digite seu texto aqui..."
+              >SOS</textarea>
+            </div>
+
+            <!-- Output Morse -->
+            <div class="mb-4">
+              <label for="morseOutput" class="form-label text-white fw-semibold mb-2">
+                <Volume2 size={18} class="me-1 d-inline-block" style="color: var(--bs-primary);" />
+                {t.tools?.morse?.title}
+              </label>
+              <textarea 
+                id="morseOutput" 
+                class="form-control morse-output" 
+                rows="4" 
+                readonly
+                placeholder="Código Morse aparecerá aqui..."
+              ></textarea>
+            </div>
+
+            <!-- Sound Style Selector -->
+            <div class="mb-4">
+              <label for="morseStyle" class="form-label text-white fw-semibold mb-3">
+                {t.tools?.morse?.types?.title}
+              </label>
+              <div class="style-grid">
+                <div class="style-option active" data-value="classic">
+                  <Radio size={20} />
+                  <span>{t.tools?.morse?.types?.["0"]}</span>
+                </div>
+                <div class="style-option" data-value="sonar">
+                  <Radio size={20} />
+                  <span>{t.tools?.morse?.types?.["1"]}</span>
+                </div>
+                <div class="style-option" data-value="ovni">
+                  <Radio size={20} />
+                  <span>{t.tools?.morse?.types?.["2"]}</span>
+                </div>
+                <div class="style-option" data-value="terror">
+                  <Radio size={20} />
+                  <span>{t.tools?.morse?.types?.["3"]}</span>
+                </div>
+                <div class="style-option" data-value="tribal">
+                  <Radio size={20} />
+                  <span>{t.tools?.morse?.types?.["4"]}</span>
+                </div>
+                <div class="style-option" data-value="space">
+                  <Radio size={20} />
+                  <span>{t.tools?.morse?.types?.["5"]}</span>
+                </div>
+                <div class="style-option" data-value="underwater">
+                  <Radio size={20} />
+                  <span>{t.tools?.morse?.types?.["6"]}</span>
+                </div>
+                <div class="style-option" data-value="wind">
+                  <Radio size={20} />
+                  <span>{t.tools?.morse?.types?.["7"]}</span>
+                </div>
               </div>
-              <div class="mb-3">
-                <label for="morseOutput" class="form-label">{t.tools?.morse?.title}</label>
-                <textarea id="morseOutput" class="form-control" rows="3" readonly></textarea>
+              <select id="morseStyle" class="d-none">
+                <option value="classic">{t.tools?.morse?.types?.["0"]}</option>
+                <option value="sonar">{t.tools?.morse?.types?.["1"]}</option>
+                <option value="ovni">{t.tools?.morse?.types?.["2"]}</option>
+                <option value="terror">{t.tools?.morse?.types?.["3"]}</option>
+                <option value="tribal">{t.tools?.morse?.types?.["4"]}</option>
+                <option value="space">{t.tools?.morse?.types?.["5"]}</option>
+                <option value="underwater">{t.tools?.morse?.types?.["6"]}</option>
+                <option value="wind">{t.tools?.morse?.types?.["7"]}</option>
+              </select>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="row g-3">
+              <div class="col-md-6">
+                <button class="btn btn-primary w-100 btn-action" onclick="playMorse()">
+                  <PlayCircle size={20} class="me-2" />
+                  <span>{t.tools?.morse?.btn1}</span>
+                </button>
               </div>
-              <div class="mb-3">
-                <label for="morseStyle" class="form-label">{t.tools?.morse?.types?.title}</label>
-                <select id="morseStyle" class="form-select">
-                  <option value="classic">{t.tools?.morse?.types?.["0"]}</option>
-                  <option value="sonar">{t.tools?.morse?.types?.["1"]}</option>
-                  <option value="ovni">{t.tools?.morse?.types?.["2"]}</option>
-                  <option value="terror">{t.tools?.morse?.types?.["3"]}</option>
-                  <option value="tribal">{t.tools?.morse?.types?.["4"]}</option>
-                  <option value="space">{t.tools?.morse?.types?.["5"]}</option>
-                  <option value="underwater">{t.tools?.morse?.types?.["6"]}</option>
-                  <option value="wind">{t.tools?.morse?.types?.["7"]}</option>
-                </select>
+              <div class="col-md-6">
+                <button class="btn btn-secondary w-100 btn-action" onclick="exportMorse()">
+                  <Download size={20} class="me-2" />
+                  <span>{t.tools?.morse?.btn2}</span>
+                </button>
               </div>
-              <button class="btn btn-primary w-100 mb-2" onclick="playMorse()">{t.tools?.morse?.btn1}</button>
-              <button class="btn btn-secondary w-100" onclick="exportMorse()">{t.tools?.morse?.btn2}</button>
             </div>
           </div>
         </div>
@@ -48,7 +122,172 @@ const route = '/tools/morse';
     </div>
   </section>
 
+  <style>
+    .morse-section {
+      min-height: 70vh;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in { animation: fadeIn 0.8s ease-out; }
+    .animate-slide-up { animation: slideUp 0.8s ease-out 0.2s both; }
+
+    /* Main Card */
+    .morse-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Input/Output Areas */
+    .morse-input,
+    .morse-output {
+      background: rgba(0, 0, 0, 0.3) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      padding: 1rem;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+
+    .morse-input:focus,
+    .morse-output:focus {
+      background: rgba(0, 0, 0, 0.4) !important;
+      border-color: var(--bs-primary) !important;
+      box-shadow: 0 0 0 0.2rem rgba(248, 7, 82, 0.15) !important;
+      outline: none;
+    }
+
+    .morse-output {
+      letter-spacing: 2px;
+    }
+
+    /* Style Grid */
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .style-option {
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .style-option svg {
+      color: var(--bs-primary);
+      transition: all 0.3s ease;
+    }
+
+    .style-option span {
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .style-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--bs-primary);
+      transform: translateY(-2px);
+    }
+
+    .style-option.active {
+      background: linear-gradient(135deg, var(--bs-primary), rgba(248, 7, 82, 0.6));
+      border-color: var(--bs-primary);
+      box-shadow: 0 4px 16px rgba(248, 7, 82, 0.4);
+    }
+
+    .style-option.active svg {
+      color: white !important;
+      transform: scale(1.1);
+    }
+
+    .style-option.active span {
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Action Buttons */
+    .btn-action {
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(248, 7, 82, 0.4);
+    }
+
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .morse-card {
+        padding: 1.5rem !important;
+      }
+
+      .style-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .style-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .style-option {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 10px 14px;
+      }
+    }
+  </style>
+
   <script is:inline>
+    // Style selector interaction
+    document.querySelectorAll('.style-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.style-option').forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        const select = document.getElementById('morseStyle');
+        select.value = this.getAttribute('data-value');
+      });
+    });
+
     // Read optional input from query parameter 'input' (base64)
     (function initFromQuery(){
       try {

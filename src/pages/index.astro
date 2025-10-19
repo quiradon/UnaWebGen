@@ -3,7 +3,6 @@ import { Image } from 'astro:assets';
 export const prerender = true;
 import { getLocale } from "astro-i18n-aut";
 import Layout from '@layouts/Layout.astro';
-import icons from '@components/icons';
 import { loadT} from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
 import config from '../config.json';
@@ -20,12 +19,18 @@ const langPrefix = idiomaR(t);
 const landingHTML = (t.index?.landing?.text ?? '').replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1<\/span>');
 const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 ---
-<Layout t={t} route="/index" title={t.index?.name ?? 'Mini Kraken'}>
+<Layout t={t} title={t.index?.name ?? 'Mini Kraken'}>
+  <head>
+    <link rel="preload" as="image" href="/img/bg/pattern-square.svg" type="image/svg+xml">
+  </head>
   <style>
     .bgImg2 {
       background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)),
                   linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%),
                   url('/img/bg/dnd.webp') center / cover repeat-x;
+    }
+    .hero-bg {
+      background: url('/img/bg/pattern-square.svg') top / auto repeat-x;
     }
   </style>
   <script >
@@ -90,7 +95,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
     });
 </script>
   <!-- Hero -->
-  <section id="inicio" style="background: url('/img/bg/pattern-square.svg') top / auto repeat-x;">
+  <section id="inicio" class="hero-bg">
     <div class="container d-lg-flex align-items-lg-center py-4 py-xl-5">
       <div class="row gy-2 gy-md-0 row-cols-1 row-cols-lg-2 my-3 py-3">
         <div class="col-auto col-xl-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">

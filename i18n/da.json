@@ -65,6 +65,26 @@
     },
     "title": "Betaling Godkendt - Indløs Dit Premium"
   },
+  "cards": {
+    "btn": {
+      "roll": "Klik for at trække"
+    },
+    "deck": {
+      "Espadas": "Spade",
+      "ace": "Es",
+      "card_limits_msg": "52-korts grænse - hvert kort optræder kun én gang.",
+      "cartas_restantes": "tilgængelige kort",
+      "clubs": "Klubber",
+      "diamond": "Diamant",
+      "hearth": "Hjerte",
+      "king": "Konge",
+      "queen": "Dronning",
+      "realism": "Realistisk dæk",
+      "restantes": "resterende kort i bunken",
+      "valete": "Farvel"
+    },
+    "random": "Tilfældig"
+  },
   "changelogs": {
     "desc": "Oplev alle de seneste opdateringer og forbedringer i vores projekt via vores changelog-side. Hold dig opdateret om hver ny version, fejlrettelser og tilføjede funktioner.",
     "title": "Opdateringer"
@@ -86,6 +106,7 @@
     "texto": "Tekst"
   },
   "comum": {
+    "copied": "Kopieret!",
     "copy": "Kopiér"
   },
   "comunity_from": "Lavet af RPG-fællesskabet for fællesskabet",
@@ -235,6 +256,11 @@
       "male": "Mand",
       "seo": "Navnegenerator til bogpersoner, rollespil og spil. Find det perfekte navn til din kreation.",
       "title": "Navnegenerator"
+    },
+    "loading": "Genererer Navne...",
+    "null": {
+      "desc": "Klik på knappen ovenfor for at generere tilfældige navne.",
+      "title": "Ingen navn er genereret endnu."
     }
   },
   "nav": {
@@ -507,6 +533,8 @@
         "severe": "Intensitet: Alvorlig"
       },
       "intensidade": "Intensitet",
+      "label": "Vælg en vejrtype.",
+      "label2": "Klik på \"Generer vejr\" for at se resultaterne.",
       "options": {
         "blizzard": "Sneveinstorm",
         "clear": "Klar himmel",
@@ -528,9 +556,7 @@
         "desert": "Ørkenregion",
         "temperate": "Tempereret region"
       },
-      "vento": "Vindhastighed",
-      "label": "Vælg en vejrtype.",
-      "label2": "Klik på \"Generer vejr\" for at se resultaterne."
+      "vento": "Vindhastighed"
     },
     "morse": {
       "btn1": "Afspil lyd",

@@ -1,115 +1,590 @@
 ---
-export const prerender = true;
+
 import Layout from '@layouts/Layout.astro';
-
 import namesData from '../../../data/names.json';
+import { loadT, } from '@lib/i18n';
+import { Sparkles, Sprout, Users, User, UserCircle, Shuffle } from '@lucide/astro';
+import {Image} from 'astro:assets';
+import { getLocale } from "astro-i18n-aut";
+const t = loadT(getLocale(Astro.url));
+import image from "../../assets/img/landing/names_generate.webp";
 
-import { loadT, getStaticPaths } from '@lib/i18n';
-export { getStaticPaths };
-const lang = Astro.params.locales as string;
-const t = loadT(lang);
-const route = '/tools/names';
 ---
-<Layout t={t} route={route} title={t.names?.article?.title} desc={t.names?.article?.desc}>
-  <section class="py-4 py-xl-5">
+
+<Layout t={t} title={t.names?.article?.title} desc={t.names?.article?.desc}>
+  <section class="names-section pt-2 mt-4 mb-5">
     <div class="container">
-      <div class="row row-cols-md-2 d-flex flex-grow-1">
-        <div class="col-auto col-sm-12 col-md-6 d-flex align-self-baseline order-first order-md-last">
-          <img class="img-fluid d-flex" src="/img/misc/blobs/names_generate.webp" alt="Names generator" loading="lazy" />
-        </div>
-        <div class="col-md-6 col-xl-6 order-last mt-5">
-          <div class="text-white">
-            <h1 class="display-5 fw-bold text-white mb-3">{t.names?.article?.title}</h1>
-            <p class="mb-4 lead text-secondary">{t.names?.article?.desc}</p>
-            <div class="custom-control custom-radio">
-              <input id="customRadio1" class="custom-control-input form-check-input" type="radio" name="config" checked />
-              <label class="form-label custom-control-label ms-1" for="customRadio1">{t.misc?.gen?.all}</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input id="customRadio2" class="custom-control-input form-check-input" type="radio" name="config" />
-              <label class="form-label custom-control-label ms-1" for="customRadio2">{t.misc?.gen?.male}</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input id="customRadio3" class="custom-control-input form-check-input" type="radio" name="config" />
-              <label class="form-label custom-control-label ms-1" for="customRadio3">{t.misc?.gen?.fem}</label>
-            </div>
+      <div class="row g-4 align-items-center">
+        <!-- Image Display -->
+        <div class="col-lg-6 order-lg-1">
+          <div class="image-wrapper animate-fade-in">
+            <div class="image-glow"></div>
+            <Image 
+              class="names-image" 
+              src={image} 
+              alt="Names generator" 
+              loading="eager"
+              width={500}
+              height={500}
+              inferSize={true}
+              style="width: 100%; height: auto;"
+            />
           </div>
-          <div>
-            <button id="gerar" class="btn btn-primary link-light mt-2 mb-2" type="button">{t.names?.article?.btn}</button>
+        </div>
+        <!-- Controls -->
+        <div class="col-lg-6 order-lg-2">
+          <div class="controls-wrapper">
+            <h1 class="display-4 fw-bold text-white mb-3 animate-fade-in">
+              <Sprout size={40} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
+              {t.names?.article?.title}
+            </h1>
+            <p class="lead text-secondary mb-4 animate-fade-in-delay">
+              {t.names?.article?.desc}
+            </p>
+            
+            <div class="controls-card p-4 animate-slide-up">
+              <!-- Gender Options -->
+              <div class="gender-options mb-4">
+                <div class="gender-option active" data-type="all">
+                  <Users size={24} class="gender-icon" />
+                  <span>{t.misc?.gen?.all}</span>
+                  <input type="radio" id="customRadio1" name="config" value="all" checked hidden />
+                </div>
+                <div class="gender-option" data-type="male">
+                  <User size={24} class="gender-icon" />
+                  <span>{t.misc?.gen?.male}</span>
+                  <input type="radio" id="customRadio2" name="config" value="male" hidden />
+                </div>
+                <div class="gender-option" data-type="female">
+                  <UserCircle size={24} class="gender-icon" />
+                  <span>{t.misc?.gen?.fem}</span>
+                  <input type="radio" id="customRadio3" name="config" value="female" hidden />
+                </div>
+              </div>
+              
+              <!-- Generate Button -->
+              <button 
+                class="btn btn-primary btn-generate w-100" 
+                id="gerar" 
+                type="button"
+              >
+                <Shuffle size={20} class="me-2" />
+                <span>{t.names?.article?.btn}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="container">
-      <div class="d-flex justify-content-center align-items-center">
-        <span id="fake_load" class="d-none spinner-border text-primary mt-1" role="status"></span>
+
+      <!-- Results Section -->
+      <div class="results-section mt-5">
+        <!-- Loading Spinner -->
+        <div class="d-flex justify-content-center align-items-center mb-4">
+          <div id="fake_load" class="spinner-container d-none">
+            <Sparkles size={32} class="spinner-icon" />
+            <span class="spinner-text">{t.names.loading}</span>
+          </div>
+        </div>
+
+        <!-- Names List -->
+        <div id="cardsList" class="names-grid"></div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state text-center">
+          <Sprout size={48} class="empty-icon mb-3" />
+          <h3 class="text-white mb-2">{t.names.null.title}</h3>
+          <p class="text-secondary">{t.names.null.desc}</p>
+        </div>
       </div>
-      <div id="cardsList" class="row g-0 d-xl-flex justify-content-xl-center align-items-xl-center"></div>
     </div>
   </section>
 
-  <style is:global>
-    .fade-in.delay-1 {animation-delay: 0.2s;}
-    .fade-in.delay-2 {animation-delay: 0.4s;}
-    .fade-in.delay-3 {animation-delay: 0.6s;}
-    .fade-in.delay-4 {animation-delay: 0.8s;}
-    .fade-in.delay-5 {animation-delay: 1s;}
-    @keyframes fadeIn { 0% {opacity: 0;} 100% {opacity: 1;} }
-    .fade-in { animation: fadeIn 1s; animation-fill-mode: both; }
+  <style>
+    .names-section {
+      min-height: 70vh;
+      position: relative;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.05); opacity: 0.7; }
+    }
+
+    .animate-fade-in { animation: fadeIn 0.8s ease-out; }
+    .animate-fade-in-delay { animation: fadeIn 0.8s ease-out 0.2s both; }
+    .animate-slide-up { animation: slideUp 0.8s ease-out 0.4s both; }
+
+    /* Image Section */
+    .image-wrapper {
+      position: relative;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 80%;
+      background: rgba(248, 7, 82, 0.15);
+      filter: blur(60px);
+      opacity: 0.6;
+      animation: pulse 4s ease-in-out infinite;
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .names-image {
+      position: relative;
+      z-index: 1;
+      max-width: 500px;
+      filter: drop-shadow(0 10px 40px rgba(248, 7, 82, 0.3));
+      transition: transform 0.4s ease;
+    }
+
+    .names-image:hover {
+      transform: scale(1.02) translateY(-5px);
+    }
+
+    /* Controls */
+    .controls-wrapper {
+      padding: 1rem;
+    }
+
+    .controls-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Gender Options */
+    .gender-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .gender-option {
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .gender-icon {
+      color: var(--bs-primary);
+      transition: all 0.3s ease;
+    }
+
+    .gender-option span {
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .gender-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--bs-primary);
+      transform: translateY(-2px);
+    }
+
+    .gender-option.active {
+      background: linear-gradient(135deg, var(--bs-primary), rgba(248, 7, 82, 0.6));
+      border-color: var(--bs-primary);
+      box-shadow: 0 4px 16px rgba(248, 7, 82, 0.4);
+    }
+
+    .gender-option.active .gender-icon {
+      color: white !important;
+      transform: scale(1.1);
+    }
+
+    .gender-option.active span {
+      color: white;
+      font-weight: 600;
+    }
+
+    /* Generate Button */
+    .btn-generate {
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(248, 7, 82, 0.5);
+    }
+
+    .btn-generate:active {
+      transform: scale(0.98);
+    }
+
+    .btn-generate:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Loading Spinner */
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem;
+    }
+
+    .spinner-icon {
+      color: var(--bs-primary);
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .spinner-text {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* Names Grid */
+    .names-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Name Card */
+    .name-card {
+      background: rgba(29, 26, 45, 0.6) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px !important;
+      padding: 1.5rem !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 1rem !important;
+      transition: all 0.3s ease !important;
+      opacity: 0;
+      animation: slideInUp 0.5s ease-out forwards;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .name-card:hover {
+      transform: translateY(-4px) !important;
+      border-color: rgba(248, 7, 82, 0.3) !important;
+      box-shadow: 0 8px 24px rgba(248, 7, 82, 0.2) !important;
+    }
+
+    .name-text {
+      font-size: 1.25rem !important;
+      font-weight: 600 !important;
+      color: #fff !important;
+      margin: 0 !important;
+      flex: 1 !important;
+    }
+
+    .copy-btn {
+      padding: 0.5rem 1rem !important;
+      background: rgba(248, 7, 82, 0.1) !important;
+      border: 1px solid rgba(248, 7, 82, 0.3) !important;
+      color: var(--bs-primary) !important;
+      border-radius: 8px !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+      font-weight: 500 !important;
+      white-space: nowrap !important;
+    }
+
+    .copy-btn:hover {
+      background: rgba(248, 7, 82, 0.2) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 12px rgba(248, 7, 82, 0.3) !important;
+    }
+
+    .copy-btn.copied {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 3rem 1rem;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .empty-state.hidden {
+      display: none;
+    }
+
+    .empty-icon {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .gender-options {
+        grid-template-columns: 1fr;
+      }
+
+      .gender-option {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 12px 16px;
+      }
+
+      .image-wrapper {
+        padding: 1rem;
+      }
+
+      .names-image {
+        max-width: 400px;
+      }
+
+      .name-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .copy-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .controls-card {
+        padding: 1.25rem !important;
+      }
+
+      .name-text {
+        font-size: 1.1rem;
+      }
+
+      .names-image {
+        max-width: 300px;
+      }
+    }
   </style>
 
-  <script define:vars={{ namesData, copyLabel: t.comum?.copy ?? 'Copy' }}>
-    function copyToClipboard(text) {
-      const el = document.createElement('textarea');
-      el.value = text;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
+  <style is:global>
+    /* Global styles for dynamically generated name cards */
+    .name-card {
+      background: rgba(255, 255, 255, 0.05) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      border: 2px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 12px !important;
+      transition: all 0.3s ease !important;
+      opacity: 0;
+      animation: slideInUp 0.5s ease-out forwards;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+      min-height: 60px !important;
     }
-    function genCard(name) {
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .name-card:hover {
+      transform: translateY(-2px) !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      border-color: var(--bs-primary) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .copy-btn {
+      background: rgba(248, 7, 82, 0.1) !important;
+      border: 1px solid rgba(248, 7, 82, 0.3) !important;
+      color: var(--bs-primary) !important;
+      border-radius: 6px !important;
+      transition: all 0.3s ease !important;
+      font-size: 0.875rem !important;
+      min-width: 80px !important;
+    }
+
+    .copy-btn svg {
+      width: 14px !important;
+      height: 14px !important;
+    }
+
+    .copy-btn:hover {
+      background: rgba(248, 7, 82, 0.2) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 2px 8px rgba(248, 7, 82, 0.3) !important;
+    }
+
+    .copy-btn.copied {
+      background: rgba(34, 197, 94, 0.2) !important;
+      border-color: #22c55e !important;
+      color: #22c55e !important;
+    }
+  </style>
+
+  <script is:inline define:vars={{ namesData, copyLabel: t.comum?.copy ?? 'Copy', copiedLabel: t.comum?.copied ?? 'Copied!' }}>
+    // Gender selection
+    document.querySelectorAll('.gender-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.gender-option').forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        const radio = this.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+      });
+    });
+
+    // Copy to clipboard function
+    window.copyToClipboard = function(text, buttonId) {
+      const button = document.getElementById(buttonId);
+      if (!button) return;
+      
+      const originalHTML = button.innerHTML;
+      
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          button.classList.add('copied');
+          button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>${copiedLabel}</span>`;
+          
+          setTimeout(() => {
+            button.classList.remove('copied');
+            button.innerHTML = originalHTML;
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy:', err);
+        });
+      }
+    };
+
+    // Generate name card HTML
+    function genCard(name, index) {
+      const buttonId = `copy-btn-${Date.now()}-${index}`;
       return `
-      <div class="card m-1">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-9 col-lg-10 col-xl-10 d-flex justify-content-center align-items-center">
-              <h4 class="text-primary d-flex flex-grow-1 justify-content-sm-center justify-content-lg-start mb-0">${name}</h4>
-            </div>
-            <div class="col d-flex justify-content-center align-items-center justify-content-md-end">
-              <button onclick="copyToClipboard('${name.replace(/'/g, "\\'")}')" class="btn btn-primary mt-1" type="button">${copyLabel}</button>
-            </div>
-          </div>
-        </div>
-      </div>`;
+        <div class="name-card d-flex align-items-center justify-content-between gap-3 p-3" style="animation-delay: ${index * 0.1}s">
+          <h4 class="text-white fw-semibold mb-0" style="flex: 1 1 auto;">${name}</h4>
+          <button 
+            id="${buttonId}"
+            class="copy-btn btn d-flex align-items-center gap-2 px-4 py-2 fw-normal text-nowrap" 
+            style="flex: 0 0 auto;"
+            type="button"
+            data-name="${name.replace(/"/g, '&quot;')}"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            <span>${copyLabel}</span>
+          </button>
+        </div>`;
     }
+
     const CardsList = document.getElementById('cardsList');
-    function showLoad(){document.getElementById('fake_load').classList.remove('d-none')}
-    function hideLoad(){document.getElementById('fake_load').classList.add('d-none')}
+    const emptyState = document.getElementById('emptyState');
+    const fakeLoad = document.getElementById('fake_load');
+
+    function showLoad() {
+      fakeLoad.classList.remove('d-none');
+    }
+
+    function hideLoad() {
+      fakeLoad.classList.add('d-none');
+    }
+
     function randomName(sex) {
       const pool = sex === 'm' ? namesData.m : sex === 'f' ? namesData.f : namesData.m.concat(namesData.f);
       const name = pool[Math.floor(Math.random() * pool.length)];
       const lastname = namesData.l[Math.floor(Math.random() * namesData.l.length)];
       return `${name} ${lastname}`;
     }
-    function getType(){
+
+    function getType() {
+      const r1 = document.getElementById('customRadio1');
       const r2 = document.getElementById('customRadio2');
       const r3 = document.getElementById('customRadio3');
+      
       if (r2.checked) return 'm';
       if (r3.checked) return 'f';
       return 't';
     }
-    document.getElementById('gerar').addEventListener('click', function(){
+
+    document.getElementById('gerar').addEventListener('click', function() {
       CardsList.innerHTML = '';
+      emptyState.classList.add('hidden');
       showLoad();
-      for (let i = 0; i < 5; i++) {
-        const card = genCard(randomName(getType()));
-        const el = document.createElement('div');
-        el.innerHTML = card;
-        el.classList.add('fade-in');
-        el.classList.add('delay-' + (i + 1));
-        CardsList.appendChild(el);
-      }
-      setTimeout(hideLoad, 500);
+
+      setTimeout(() => {
+        for (let i = 0; i < 5; i++) {
+          const card = genCard(randomName(getType()), i);
+          CardsList.innerHTML += card;
+        }
+        hideLoad();
+        
+        // Add event listeners to copy buttons
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const name = this.getAttribute('data-name');
+            const buttonId = this.id;
+            copyToClipboard(name, buttonId);
+          });
+        });
+      }, 500);
     });
   </script>
 </Layout>

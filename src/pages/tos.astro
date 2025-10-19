@@ -1,18 +1,15 @@
 ---
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
+import { loadT } from '@lib/i18n';
 import { markdownToHtml } from '@components/Markdown';
 
-export async function getStaticPaths() {
-  return getLanguages().filter((l) => l !== 'en').map((lang) => ({ params: { lang } }));
-}
-
-const lang = Astro.params.lang as string;
-const t = loadT(lang);
+import { getLocale } from "astro-i18n-aut";
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
 const html = markdownToHtml(t.tos?.md ?? '');
 ---
-<Layout t={t} route="/tos" title={t.tos?.title} desc={t.tos?.desc} pictureURL="/img/banners/terms_of_service_banner.webp">
+<Layout t={t} title={t.tos?.title} desc={t.tos?.desc} pictureURL="/img/banners/terms_of_service_banner.webp">
   <section class="container-lg d-flex justify-content-center my-5" style="max-width: 1100px;">
     <div class="card border-0 shadow-sm w-100">
       <div class="position-relative">

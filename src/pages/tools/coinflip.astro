@@ -1,14 +1,14 @@
 ---
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
-import { getLanguages, loadT } from '@lib/i18n';
+import { loadT } from '@lib/i18n';
 import { getLocale } from "astro-i18n-aut";
 
 const currentLocale = getLocale(Astro.url);
 const t = loadT(currentLocale);
-const route = '/tools/coinflip';
+
 ---
-<Layout t={t} route={route} title={t.flip_coin?.title} desc={t.flip_coin?.description}>
+<Layout t={t} title={t.flip_coin?.title} desc={t.flip_coin?.description}>
   <section class="justify-content-lg-center pt-2 mt-3 mb-4">
     <div class="container align-items-center">
       <div class="text-white">
@@ -59,16 +59,10 @@ const route = '/tools/coinflip';
       transform: translateY(-5px) scale(1.05);
     }
     .coin:hover:not(.spinning) .side {
-      filter: drop-shadow(0 0 20px rgba(253, 13, 85, 0.6));
-      box-shadow: 0 8px 16px rgba(253, 13, 85, 0.3), 0 4px 8px rgba(0, 0, 0, 0.4);
+      filter: drop-shadow(0 0 20px rgba(253, 13, 85, 0.1));
     }
     .coin:active:not(.spinning) {
       transform: translateY(-2px) scale(1.02);
-    }
-    .coin:focus {
-      outline: 2px solid #fd0d55;
-      outline-offset: 4px;
-      border-radius: 50%;
     }
     .coin .side {
       width: 100%;

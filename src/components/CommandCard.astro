@@ -1,0 +1,276 @@
+---
+interface Props {
+  command: string;
+  description: string;
+  options?: string;
+  optionsDescriptions?: string;
+}
+
+const { command, description, options = '', optionsDescriptions = '' } = Astro.props;
+---
+
+<div class="command-card glass-card">
+  <div class="card-body p-4">
+    <div class="command-header mb-3">
+      <div class="command-name-wrapper">
+        <span class="command-prefix">/</span>
+        <h3 class="command-name">{command}</h3>
+      </div>
+      {options && (
+        <div class="command-options" set:html={options}></div>
+      )}
+    </div>
+    
+    <div class="command-description" set:html={description}></div>
+    
+    {optionsDescriptions && (
+      <div class="options-details mt-3" set:html={optionsDescriptions}></div>
+    )}
+  </div>
+</div>
+
+<style>
+  .command-card {
+    background: rgba(29, 26, 45, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .command-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(248, 7, 82, 0.1), rgba(248, 7, 82, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .command-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    border-color: rgba(248, 7, 82, 0.3);
+  }
+
+  .command-card:hover::before {
+    opacity: 1;
+  }
+
+  .command-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .command-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .command-prefix {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f80752;
+    text-shadow: 0 0 10px rgba(248, 7, 82, 0.5);
+  }
+
+  .command-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .command-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .command-options :global(.badge) {
+    background: linear-gradient(135deg, #f80752, #c00541) !important;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(248, 7, 82, 0.3);
+  }
+
+  .command-options :global(.badge:hover) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(248, 7, 82, 0.5);
+  }
+
+  .command-description {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .command-description :global(br) {
+    margin-bottom: 0.5rem;
+  }
+
+  .command-description :global(strong) {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .command-description :global(.text-primary) {
+    color: #f80752 !important;
+    font-weight: 500;
+  }
+
+  .command-description :global(.text-bg-primary) {
+    background: rgba(248, 7, 82, 0.2) !important;
+    color: #fff !important;
+    padding: 0.2rem 0.4rem;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    border: 1px solid rgba(248, 7, 82, 0.3);
+  }
+
+  .command-description :global(a) {
+    color: #f80752;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .command-description :global(a:hover) {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(248, 7, 82, 0.8);
+  }
+
+  .command-description :global(a::after) {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #f80752, #c00541);
+    transition: width 0.3s ease;
+  }
+
+  .command-description :global(a:hover::after) {
+    width: 100%;
+  }
+
+  .options-details {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .options-details :global(br) {
+    margin-bottom: 0.3rem;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .command-card {
+      border-radius: 16px;
+      margin-bottom: 1rem;
+    }
+
+    .card-body {
+      padding: 1.25rem !important;
+    }
+
+    .command-name {
+      font-size: 1.25rem;
+    }
+
+    .command-prefix {
+      font-size: 1.25rem;
+    }
+
+    .command-description {
+      font-size: 0.95rem;
+    }
+
+    .options-details {
+      font-size: 0.85rem;
+      padding: 0.75rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .command-card {
+      border-radius: 12px;
+    }
+
+    .card-body {
+      padding: 1rem !important;
+    }
+
+    .command-header {
+      gap: 0.75rem;
+    }
+
+    .command-name {
+      font-size: 1.1rem;
+    }
+
+    .command-prefix {
+      font-size: 1.1rem;
+    }
+
+    .command-options :global(.badge) {
+      font-size: 0.7rem;
+      padding: 0.3rem 0.6rem;
+    }
+  }
+
+  /* Filter transition - improved for search functionality */
+  .command-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .command-card.hidden {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+    pointer-events: none;
+    margin-bottom: 0 !important;
+    max-height: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  /* Ensure proper spacing when cards are filtered */
+  .command-card:not(.hidden) {
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .command-card:not(.hidden) {
+      margin-bottom: 1rem;
+    }
+  }
+</style>

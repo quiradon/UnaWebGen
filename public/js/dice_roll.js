@@ -1,5 +1,5 @@
 
-audio = new Audio('/audio/dice.mp3');
+audio = new Audio('/audio/dice.webm');
 //caso alguém aperte enter no input diceString chame a função getD 
 let lastResultDiv = null;
 let removeTimeout = null;

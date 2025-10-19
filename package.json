@@ -10,7 +10,7 @@
     "pages:dev": "wrangler pages dev dist/",
     "clean": "rimraf dist"
   },
-  "author": "",
+  "author": "Quiradon",
   "license": "ISC",
   "packageManager": "bun@1.3.0",
   "engines": {

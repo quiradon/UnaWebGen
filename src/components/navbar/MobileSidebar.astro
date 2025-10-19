@@ -1,6 +1,7 @@
 ---
 import { Globe } from '@lucide/astro';
 import type { MenuSection } from './MenuTypes';
+import AuthWidget from '../AuthWidget.astro';
 
 interface Props {
   sections: MenuSection[];
@@ -30,6 +31,7 @@ const { sections, additionalLinks, iconMap, t, lang_FLAGS, lang_LABELS, allUrls 
   </div>
   
   <div class="mobile-sidebar-content">
+    <AuthWidget variant="mobile" t={t} />
     <!-- Seções dinâmicas: Guide e Tools -->
     {sections.map((section) => {
       const SectionIcon = iconMap[section.icon];

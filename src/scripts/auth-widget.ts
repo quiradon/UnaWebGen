@@ -308,25 +308,9 @@ interface KrakenWindow extends Window {
       bindUserInteractions();
     };
 
-    const hasCookie = (name: string): boolean => {
-      return document.cookie.split(';').some((cookie) => {
-        return cookie.trim().startsWith(`${name}=`);
-      });
-    };
-
     const getSession = async (): Promise<SessionResponse | null> => {
       // Se já temos cache, retornar imediatamente
       if (cachedSession !== null) {
-        return cachedSession;
-      }
-
-      // OTIMIZAÇÃO: Se não existe cookie visível de sessão E não existe a flag
-      // de presença em sessionStorage, não fazer requisição. Note que o
-      // cookie real (`kraken_session`) é httpOnly, então não aparece em
-      // document.cookie; por isso usamos o fallback sessionStorage.
-      const sessionFlag = sessionStorage.getItem('kraken_session_present') === '1';
-      if (!hasCookie('kraken_session') && !sessionFlag) {
-        cachedSession = { authenticated: false };
         return cachedSession;
       }
 

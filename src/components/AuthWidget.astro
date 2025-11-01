@@ -1,5 +1,6 @@
 ---
 import type { Translations } from '@lib/i18n';
+import { idiomaR } from '@lib/routes';
 import config from '../config.json';
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 
 const { t, variant = 'desktop' } = Astro.props as Props;
 const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/, '');
+const langPrefix = idiomaR(t);
 
 const loginLabel = "Dashboard"; // (t?.nav?.auth?.login as string | undefined) ?? 'Login with Discord';
 const logoutLabel = (t?.nav?.auth?.logout as string | undefined) ?? 'Logout';
@@ -48,7 +50,7 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
     
     <div data-auth-dropdown class="auth-widget__dropdown" hidden>
       <div class="auth-widget__dropdown-header" data-auth-name></div>
-      <a href="/dashboard" class="auth-widget__dropdown-item auth-widget__dropdown-link">
+      <a href={`${langPrefix}/dashboard`} class="auth-widget__dropdown-item auth-widget__dropdown-link">
         Dashboard
       </a>
       <button data-auth-logout class="auth-widget__dropdown-item" type="button">

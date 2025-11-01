@@ -2,11 +2,16 @@
 export const prerender = true;
 import Layout from '@layouts/Layout.astro';
 import { getLocale } from "astro-i18n-aut";
-import { loadT } from '@lib/i18n';
+import { loadT, getStaticPaths } from '@lib/i18n';
+import { idiomaR } from '@lib/routes';
 import config from '../config.json';
 import { User, BookText } from '@lucide/astro';
 
-const t = loadT(getLocale(Astro.url));
+export { getStaticPaths };
+
+const Locale = getLocale(Astro.url);
+const t = loadT(Locale);
+const langPrefix = idiomaR(t);
 const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/, '');
 ---
 
@@ -273,7 +278,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
         <!-- Sheets Card -->
         <div class="col-lg-6 fade-in-up" style="animation-delay: 0.1s;">
-          <a href="/tools" class="tool-card">
+          <a href={`${langPrefix}/tools`} class="tool-card">
             <div class="card-body p-4 h-100 d-flex flex-column">
               <div class="icon-container mb-3">
                 <BookText size={32} class="tool-icon text-primary" />
@@ -296,7 +301,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     </div>
   </section>
 
-  <script define:vars={{ apiBase }}>
+  <script define:vars={{ apiBase, langPrefix }}>
     (async function() {
       const loadingState = document.getElementById('loading-state');
       const dashboardContent = document.getElementById('dashboard-content');
@@ -318,7 +323,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
         // Se não estiver autenticado, redirecionar para home
         if (!sessionData.authenticated || !sessionData.user) {
-          window.location.href = '/';
+          window.location.href = langPrefix || '/';
           return;
         }
 
@@ -353,7 +358,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       } catch (error) {
         console.error('Failed to load dashboard:', error);
         // Em caso de erro, redirecionar para home
-        window.location.href = '/';
+        window.location.href = langPrefix || '/';
       }
     })();
 
@@ -369,10 +374,10 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
           sessionStorage.removeItem('kraken_session_present'); 
         } catch {}
         
-        window.location.href = '/';
+        window.location.href = langPrefix || '/';
       } catch (error) {
         console.error('Failed to logout', error);
-        window.location.href = '/';
+        window.location.href = langPrefix || '/';
       }
     });
   </script>

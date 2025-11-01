@@ -8,11 +8,11 @@ import { Dices, Heart, Eye, Sprout, CircleDollarSign, CloudRain, Wrench, Music }
 
 export { getStaticPaths };
 
-let Locale = getLocale(Astro.url);
+const Locale = getLocale(Astro.url);
 const t = loadT(Locale);
-if (Locale == 'en') {
-  Locale = ''
-}
+
+const pathPrefix = Locale === 'en' ? '/' : `/${Locale}`;
+
 
 ---
 <Layout t={t} title={t.tools?.section?.title} desc={t.tools?.section?.desc}>
@@ -30,7 +30,7 @@ if (Locale == 'en') {
       <!-- Tools Grid -->
       <div class="row g-4 justify-content-center">
         <ToolCard 
-          href={`/${Locale}/dices/`}
+          href={`${pathPrefix}/dices/`}
           title={t.nav?.dices?.title}
           description={t.nav?.dices?.desc}
           icon={Dices}
@@ -38,7 +38,7 @@ if (Locale == 'en') {
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/poker/`}
+          href={`${pathPrefix}/tools/poker/`}
           title={t.nav?.tools?.poker?.name}
           description={t.nav?.tools?.poker?.desc}
           icon={Heart}
@@ -46,7 +46,7 @@ if (Locale == 'en') {
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/tarot/`}
+          href={`${pathPrefix}/tools/tarot/`}
           title={t.nav?.tools?.tarot?.name}
           description={t.nav?.tools?.tarot?.desc}
           icon={Eye}
@@ -54,7 +54,7 @@ if (Locale == 'en') {
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/names/`}
+          href={`${pathPrefix}/tools/names/`}
           title={t.nav?.tools?.names?.title}
           description={t.nav?.tools?.names?.desc}
           icon={Sprout}
@@ -62,7 +62,7 @@ if (Locale == 'en') {
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/coinflip/`}
+          href={`${pathPrefix}/tools/coinflip/`}
           title={t.flip_coin?.title}
           description={t.flip_coin?.description}
           icon={CircleDollarSign}
@@ -70,7 +70,7 @@ if (Locale == 'en') {
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/weather/`}
+          href={`${pathPrefix}/tools/weather/`}
           title={t.tools?.clima?.pageTitle}
           description={t.tools?.clima?.pageDesc}
           icon={CloudRain}
@@ -78,7 +78,7 @@ if (Locale == 'en') {
         />
 
          <ToolCard 
-          href={`/${Locale}/tools/morse/`}
+          href={`${pathPrefix}/tools/morse/`}
           title={t.tools?.morse?.title}
           description={t.tools?.morse?.desc}
           icon={Music}

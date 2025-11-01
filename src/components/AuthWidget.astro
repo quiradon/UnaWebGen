@@ -48,6 +48,9 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
     
     <div data-auth-dropdown class="auth-widget__dropdown" hidden>
       <div class="auth-widget__dropdown-header" data-auth-name></div>
+      <a href="/dashboard" class="auth-widget__dropdown-item auth-widget__dropdown-link">
+        Dashboard
+      </a>
       <button data-auth-logout class="auth-widget__dropdown-item" type="button">
         {logoutLabel}
       </button>
@@ -180,6 +183,17 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    display: block;
+  }
+
+  .auth-widget__dropdown-link {
+    color: var(--bs-light, #fff);
+    text-decoration: none;
+  }
+
+  .auth-widget__dropdown-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--bs-light, #fff);
   }
 
   .auth-widget__dropdown-item:hover {

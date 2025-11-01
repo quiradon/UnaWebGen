@@ -4,6 +4,7 @@ import Layout from '@layouts/Layout.astro';
 import { getLocale } from "astro-i18n-aut";
 import { loadT } from '@lib/i18n';
 import config from '../config.json';
+import { User, BookText } from '@lucide/astro';
 
 const t = loadT(getLocale(Astro.url));
 const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/, '');
@@ -11,122 +12,205 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
 <Layout t={t} title="Dashboard">
   <style>
-    .vintage-card {
-      background: linear-gradient(135deg, #f5f0e8 0%, #e8dcc8 100%);
-      border: 3px solid #8b7355;
-      border-radius: 10px;
-      box-shadow: 
-        0 8px 16px rgba(0, 0, 0, 0.3),
-        inset 0 0 20px rgba(139, 115, 85, 0.1),
-        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    .dashboard-section {
+      min-height: 80vh;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .user-profile-card {
+      background: rgba(29, 26, 45, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
 
-    .vintage-card::before {
+    .user-profile-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: 
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 2px,
-          rgba(139, 115, 85, 0.03) 2px,
-          rgba(139, 115, 85, 0.03) 4px
-        );
+      background: linear-gradient(135deg, rgba(248, 7, 82, 0.05), rgba(248, 7, 82, 0.02));
       pointer-events: none;
     }
 
-    .vintage-card::after {
-      content: '';
+    .avatar-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+    }
+
+    .avatar-ring {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(ellipse at center, transparent 0%, rgba(101, 67, 33, 0.05) 100%);
-      pointer-events: none;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--bs-primary), rgba(248, 7, 82, 0.5));
+      animation: pulse-ring 2s ease-in-out infinite;
     }
 
-    .vintage-header {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      font-weight: bold;
-      color: #5a4a3a;
-      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
-      letter-spacing: 2px;
-      border-bottom: 2px solid #8b7355;
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    .avatar-img {
       position: relative;
       z-index: 1;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid rgba(20, 20, 30, 0.9);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
 
-    .vintage-content {
-      position: relative;
-      z-index: 1;
-      color: #4a3a2a;
+    .user-info-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      transition: all 0.3s ease;
     }
 
-    .vintage-label {
-      font-family: 'Georgia', 'Times New Roman', serif;
+    .user-info-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(248, 7, 82, 0.2);
+      transform: translateX(4px);
+    }
+
+    .info-label {
+      font-size: 0.85rem;
       font-weight: 600;
-      color: #6a5a4a;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.6);
       text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
     }
 
-    .vintage-value {
-      font-family: 'Courier New', monospace;
-      color: #3a2a1a;
+    .info-value {
       font-size: 1.1rem;
       font-weight: 500;
+      color: rgba(255, 255, 255, 0.95);
     }
 
-    .vintage-ornament {
-      color: #8b7355;
-      opacity: 0.6;
-      font-size: 1.5rem;
-    }
-
-    .paper-texture {
-      background-image: 
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-    }
-
-    .stamp-effect {
+    /* Tool card style */
+    .tool-card {
+      background: rgba(29, 26, 45, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
       position: relative;
-      display: inline-block;
+      overflow: hidden;
+      min-height: 240px;
+      text-decoration: none;
+      display: block;
     }
 
-    .stamp-effect::before {
-      content: '✓';
+    .tool-card::before {
+      content: '';
       position: absolute;
-      top: -10px;
-      right: -10px;
-      background: rgba(139, 69, 19, 0.1);
-      border: 2px solid #8b4513;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(248, 7, 82, 0.1), rgba(248, 7, 82, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+      border-color: rgba(248, 7, 82, 0.3);
+    }
+
+    .tool-card:hover::before {
+      opacity: 1;
+    }
+
+    .icon-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #8b4513;
-      font-weight: bold;
-      transform: rotate(15deg);
+      width: 64px;
+      height: 64px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
-    .hero-bg {
-      background: url('/img/bg/pattern-square.svg') top / auto repeat-x;
+    .tool-card:hover .icon-container {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
+    .tool-icon {
+      transition: all 0.3s ease;
+    }
+
+    .tool-card:hover .tool-icon {
+      transform: scale(1.1);
+      filter: drop-shadow(0 2px 8px rgba(248, 7, 82, 0.3));
+    }
+
+    .card-footer-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+      color: var(--bs-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .tool-card:hover .card-footer-indicator {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .arrow-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .tool-card:hover .arrow-icon {
+      transform: translateX(4px);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
     }
   </style>
 
   <!-- Loading State -->
-  <div id="loading-state" class="hero-bg py-5">
+  <div id="loading-state" class="dashboard-section">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-center">
@@ -140,80 +224,90 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   </div>
 
   <!-- Dashboard Content (hidden by default) -->
-  <section id="dashboard-content" class="hero-bg py-5" style="display: none;">
+  <section id="dashboard-content" class="dashboard-section" style="display: none;">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8">
-          <!-- Vintage Card -->
-          <div class="vintage-card paper-texture p-4 p-md-5 my-4">
-            <div class="vintage-header text-center pb-3 mb-4">
-              <span class="vintage-ornament">⚜</span>
-              <h1 class="d-inline mx-3 mb-0">DASHBOARD</h1>
-              <span class="vintage-ornament">⚜</span>
+      <!-- Header -->
+      <div class="col-12 mb-5 text-center fade-in-up">
+        <h1 class="display-4 fw-bold text-white mb-3">
+          <User size={40} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
+          Dashboard
+        </h1>
+        <p class="lead text-secondary">Gerencie seu perfil e acesse suas ferramentas</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- User Profile Card -->
+        <div class="col-lg-6 fade-in-up">
+          <div class="user-profile-card p-4 h-100">
+            <div class="text-center mb-4">
+              <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                <img 
+                  id="user-avatar"
+                  src="" 
+                  alt="User Avatar"
+                  class="avatar-img"
+                />
+              </div>
+              <h3 class="text-white mt-3 mb-1" id="user-display-name">-</h3>
+              <p class="text-secondary mb-0" id="user-username-display">@-</p>
             </div>
 
-            <div class="vintage-content">
-              <!-- User Avatar Section -->
-              <div class="text-center mb-4">
-                <div class="stamp-effect d-inline-block">
-                  <img 
-                    id="user-avatar"
-                    src="" 
-                    alt="User Avatar"
-                    class="rounded-circle border border-3 border-dark"
-                    width="120"
-                    height="120"
-                    style="box-shadow: 0 4px 8px rgba(0,0,0,0.3);"
-                  />
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="user-info-item">
+                  <div class="info-label">Usuário Discord</div>
+                  <div class="info-value" id="user-username">-</div>
                 </div>
               </div>
 
-              <!-- User Information -->
-              <div class="row g-3">
-                <div class="col-12">
-                  <div class="d-flex justify-content-between align-items-center border-bottom border-2 pb-2 mb-2" style="border-color: rgba(139, 115, 85, 0.3) !important;">
-                    <span class="vintage-label">Nome:</span>
-                    <span class="vintage-value" id="user-display-name">-</span>
-                  </div>
+              <div class="col-12">
+                <div class="user-info-item">
+                  <div class="info-label">ID Discord</div>
+                  <div class="info-value" id="user-id">-</div>
                 </div>
-
-                <div class="col-12">
-                  <div class="d-flex justify-content-between align-items-center border-bottom border-2 pb-2 mb-2" style="border-color: rgba(139, 115, 85, 0.3) !important;">
-                    <span class="vintage-label">Usuário:</span>
-                    <span class="vintage-value" id="user-username">-</span>
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <div class="d-flex justify-content-between align-items-center border-bottom border-2 pb-2 mb-2" style="border-color: rgba(139, 115, 85, 0.3) !important;">
-                    <span class="vintage-label">ID Discord:</span>
-                    <span class="vintage-value" id="user-id">-</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Ornamental Footer -->
-              <div class="text-center mt-5 pt-4" style="border-top: 2px solid #8b7355;">
-                <p class="vintage-label mb-0" style="opacity: 0.7;">
-                  ⚔ Bem-vindo ao Mini Kraken RPG ⚔
-                </p>
               </div>
             </div>
-          </div>
 
-          <!-- Action Buttons -->
-          <div class="text-center mt-4">
-            <a href="/" class="btn btn-outline-primary me-2 fw-bold">
-              ← Voltar para Home
-            </a>
-            <button 
-              id="logout-btn"
-              class="btn btn-outline-danger fw-bold"
-            >
-              Sair
-            </button>
+            <div class="text-center mt-4">
+              <button 
+                id="logout-btn"
+                class="btn btn-outline-danger fw-bold w-100"
+              >
+                Sair da Conta
+              </button>
+            </div>
           </div>
         </div>
+
+        <!-- Sheets Card -->
+        <div class="col-lg-6 fade-in-up" style="animation-delay: 0.1s;">
+          <a href="/tools" class="tool-card">
+            <div class="card-body p-4 h-100 d-flex flex-column">
+              <div class="icon-container mb-3">
+                <BookText size={32} class="tool-icon text-primary" />
+              </div>
+              <h4 class="card-title text-white mb-2">Consultar Fichas Antigas</h4>
+              <p class="card-text text-secondary flex-grow-1">
+                Acesse e visualize suas fichas de personagens antigas. Explore seu histórico de aventuras e personagens memoráveis.
+              </p>
+              <div class="card-footer-indicator mt-auto">
+                <span class="explore-text">Explorar</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+                  <path d="M5 12h14"/>
+                  <path d="m12 5 7 7-7 7"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Back to Home Button -->
+      <div class="text-center mt-5 fade-in-up" style="animation-delay: 0.2s;">
+        <a href="/" class="btn btn-outline-primary fw-bold px-5">
+          ← Voltar para Home
+        </a>
       </div>
     </div>
   </section>
@@ -257,8 +351,15 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
           avatarImg.alt = user.display_name || 'User Avatar';
         }
         
-        if (displayNameEl) displayNameEl.textContent = user.display_name || user.username || 'Discord User';
-        if (usernameEl) usernameEl.textContent = '@' + (user.username || 'unknown');
+        const displayName = user.display_name || user.username || 'Discord User';
+        const username = user.username || 'unknown';
+        
+        if (displayNameEl) displayNameEl.textContent = displayName;
+        
+        const usernameDisplayEl = document.getElementById('user-username-display');
+        if (usernameDisplayEl) usernameDisplayEl.textContent = '@' + username;
+        
+        if (usernameEl) usernameEl.textContent = username;
         if (userIdEl) userIdEl.textContent = user.id || '-';
 
         // Mostrar dashboard

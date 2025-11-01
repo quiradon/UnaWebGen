@@ -278,7 +278,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
         <!-- Sheets Card -->
         <div class="col-lg-6 fade-in-up" style="animation-delay: 0.1s;">
-          <a href={`${langPrefix}/tools`} class="tool-card">
+          <a href={langPrefix ? `${langPrefix}/tools` : '/tools'} class="tool-card">
             <div class="card-body p-4 h-100 d-flex flex-column">
               <div class="icon-container mb-3">
                 <BookText size={32} class="tool-icon text-primary" />

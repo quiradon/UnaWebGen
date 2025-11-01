@@ -4,12 +4,14 @@ import { getLocale } from "astro-i18n-aut";
 import Layout from '@layouts/Layout.astro';
 import ToolCard from '@components/ToolCard.astro';
 import { loadT, getStaticPaths } from '@lib/i18n';
+import { idiomaR } from '@lib/routes';
 import { Dices, Heart, Eye, Sprout, CircleDollarSign, CloudRain, Wrench, Music } from '@lucide/astro';
 
 export { getStaticPaths };
 
 const Locale = getLocale(Astro.url);
 const t = loadT(Locale);
+const langPrefix = idiomaR(t);
 
 ---
 <Layout t={t} title={t.tools?.section?.title} desc={t.tools?.section?.desc}>
@@ -27,7 +29,7 @@ const t = loadT(Locale);
       <!-- Tools Grid -->
       <div class="row g-4 justify-content-center">
         <ToolCard 
-          href={`/${Locale}/dices/`}
+          href={langPrefix ? `${langPrefix}/dices/` : '/dices/'}
           title={t.nav?.dices?.title}
           description={t.nav?.dices?.desc}
           icon={Dices}
@@ -35,7 +37,7 @@ const t = loadT(Locale);
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/poker/`}
+          href={langPrefix ? `${langPrefix}/tools/poker/` : '/tools/poker/'}
           title={t.nav?.tools?.poker?.name}
           description={t.nav?.tools?.poker?.desc}
           icon={Heart}
@@ -43,7 +45,7 @@ const t = loadT(Locale);
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/tarot/`}
+          href={langPrefix ? `${langPrefix}/tools/tarot/` : '/tools/tarot/'}
           title={t.nav?.tools?.tarot?.name}
           description={t.nav?.tools?.tarot?.desc}
           icon={Eye}
@@ -51,7 +53,7 @@ const t = loadT(Locale);
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/names/`}
+          href={langPrefix ? `${langPrefix}/tools/names/` : '/tools/names/'}
           title={t.nav?.tools?.names?.title}
           description={t.nav?.tools?.names?.desc}
           icon={Sprout}
@@ -59,7 +61,7 @@ const t = loadT(Locale);
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/coinflip/`}
+          href={langPrefix ? `${langPrefix}/tools/coinflip/` : '/tools/coinflip/'}
           title={t.flip_coin?.title}
           description={t.flip_coin?.description}
           icon={CircleDollarSign}
@@ -67,7 +69,7 @@ const t = loadT(Locale);
         />
 
         <ToolCard 
-          href={`/${Locale}/tools/weather/`}
+          href={langPrefix ? `${langPrefix}/tools/weather/` : '/tools/weather/'}
           title={t.tools?.clima?.pageTitle}
           description={t.tools?.clima?.pageDesc}
           icon={CloudRain}
@@ -75,7 +77,7 @@ const t = loadT(Locale);
         />
 
          <ToolCard 
-          href={`/${Locale}/tools/morse/`}
+          href={langPrefix ? `${langPrefix}/tools/morse/` : '/tools/morse/'}
           title={t.tools?.morse?.title}
           description={t.tools?.morse?.desc}
           icon={Music}

@@ -11,7 +11,7 @@ export { getStaticPaths };
 const Locale = getLocale(Astro.url);
 const t = loadT(Locale);
 
-const pathPrefix = Locale === 'en' ? '/' : `/${Locale}`;
+const pathPrefix = Locale === 'en' ? '' : `/${Locale}`;
 
 
 ---

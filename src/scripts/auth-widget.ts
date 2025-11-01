@@ -286,9 +286,9 @@ interface KrakenWindow extends Window {
       elements.avatarElement.src = user.avatar_url || '';
       elements.avatarElement.alt = displayName;
 
-      // Configurar badge premium (exibir se level > 1)
-      if (elements.premiumBadge && session.premium && session.premium.level > 1) {
-        const level = Math.min(session.premium.level, 4); // Limitar a 4
+      // Configurar badge premium (exibir se level >= 1)
+      if (elements.premiumBadge && session.premium && session.premium.level >= 1 && session.premium.active) {
+        const level = Math.min(Math.max(session.premium.level, 1), 4); // Limitar entre 1 e 4
         elements.premiumBadge.src = `/img/tiers_premium/${level}.webp`;
         elements.premiumBadge.style.display = 'block';
       } else if (elements.premiumBadge) {

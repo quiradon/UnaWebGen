@@ -1,0 +1,28 @@
+# Headers for Cloudflare optimization
+/*
+  # Permitir credenciais para requisições de sessão
+  Access-Control-Allow-Credentials: true
+  
+  # Otimizar cache de assets estáticos
+  Cache-Control: public, max-age=31536000, immutable
+  
+/_astro/*
+  # Cache mais agressivo para assets do Astro
+  Cache-Control: public, max-age=31536000, immutable
+  
+  # Crossorigin para módulos JS
+  Access-Control-Allow-Origin: https://rpg.arkanus.app
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  Access-Control-Allow-Headers: *
+  
+/img/*
+  # Cache para imagens
+  Cache-Control: public, max-age=2592000, immutable
+  
+/*.js
+  # Desabilitar Rocket Loader para scripts específicos
+  cf-rocket-loader: manual
+  
+/api/*
+  # Sem cache para API
+  Cache-Control: no-cache, no-store, must-revalidate

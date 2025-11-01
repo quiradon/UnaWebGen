@@ -28,7 +28,8 @@ export default defineConfig({
   build: {
     format: "directory",
     inlineStylesheets: "auto",
-    minify: true
+    minify: true,
+    assets: '_astro'
   },
   vite: {
     build: {
@@ -48,8 +49,16 @@ export default defineConfig({
         output: {
           manualChunks: {
             vendor: ['astro']
+          },
+          // Adicionar crossorigin aos módulos
+          assetFileNames: (assetInfo) => {
+            return '_astro/[name]-[hash][extname]';
           }
         }
+      },
+      // Forçar crossorigin nos módulos
+      modulePreload: {
+        polyfill: false
       }
     },
     resolve: {

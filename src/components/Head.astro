@@ -34,6 +34,10 @@ const canonicalLink = Newroute.includes('en/') ? `<link rel="canonical" href="${
   <link rel="stylesheet" href="/css/bs-theme-overrides.css" />
   <link rel="stylesheet" href="/css/styles.css" />
   <meta name="theme-color" content="#f80752" />
+  <!-- Instrução para Cloudflare não usar Rocket Loader -->
+  <meta http-equiv="x-dns-prefetch-control" content="on" />
+  <link rel="dns-prefetch" href="https://rpg.arkanus.app" />
+  <link rel="preconnect" href="https://rpg.arkanus.app" crossorigin />
   <link rel="icon" type="image/png" sizes="512x512" href="/img/icons/logo.svg" />
   <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/logo.svg" />
   <link rel="icon" type="image/png" sizes="180x180" href="/img/icons/logo.svg" />

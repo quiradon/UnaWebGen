@@ -50,10 +50,18 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     }
 
     .avatar-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 0 auto;
+      width: fit-content;
+    }
+
+    .avatar-wrapper {
       position: relative;
       width: 120px;
       height: 120px;
-      margin: 0 auto;
     }
 
     .avatar-ring {
@@ -83,22 +91,30 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     }
 
     .premium-badge {
-      position: absolute;
-      left: -15px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(15, 15, 15, 0.95);
-      padding: 4px;
-      box-shadow: 0 4px 16px rgba(248, 7, 82, 0.4);
-      z-index: 2;
+      width: auto;
+      height: 120px;
+      max-width: 160px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 16px rgba(248, 7, 82, 0.6));
       display: none;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
     }
 
     .premium-badge.active {
       display: block;
+      animation: fadeInScale 0.6s ease-out;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .user-info-item {
@@ -259,19 +275,21 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
           <div class="user-profile-card p-4 h-100">
             <div class="text-center mb-4">
               <div class="avatar-container">
-                <div class="avatar-ring"></div>
                 <img 
                   id="premium-badge"
                   src="" 
                   alt="Premium"
                   class="premium-badge"
                 />
-                <img 
-                  id="user-avatar"
-                  src="" 
-                  alt="User Avatar"
-                  class="avatar-img"
-                />
+                <div class="avatar-wrapper">
+                  <div class="avatar-ring"></div>
+                  <img 
+                    id="user-avatar"
+                    src="" 
+                    alt="User Avatar"
+                    class="avatar-img"
+                  />
+                </div>
               </div>
               <h3 class="text-white mt-3 mb-1" id="user-display-name">-</h3>
               <p class="text-secondary mb-0" id="user-username-display">@-</p>
@@ -332,8 +350,10 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   <script>
     import { getSession, clearSessionCache } from '../scripts/session-manager';
     
-    const apiBase = (document.querySelector('[data-api-base]') as HTMLElement)?.dataset.apiBase || '';
-    const langPrefix = (document.querySelector('[data-lang-prefix]') as HTMLElement)?.dataset.langPrefix || '';
+    const apiBaseEl = document.querySelector('[data-api-base]') as HTMLElement | null;
+    const langPrefixEl = document.querySelector('[data-lang-prefix]') as HTMLElement | null;
+    const apiBase = apiBaseEl?.dataset.apiBase || '';
+    const langPrefix = langPrefixEl?.dataset.langPrefix || '';
 
     (async function() {
       const loadingState = document.getElementById('loading-state');
@@ -362,10 +382,10 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
           avatarImg.alt = user.display_name || 'User Avatar';
         }
 
-        // Configurar badge premium (exibir se level > 1)
+        // Configurar badge premium (exibir se level >= 1)
         const premiumBadge = document.getElementById('premium-badge') as HTMLImageElement | null;
-        if (premiumBadge && sessionData.premium && sessionData.premium.level > 1) {
-          const level = Math.min(sessionData.premium.level, 4); // Limitar a 4
+        if (premiumBadge && sessionData.premium && sessionData.premium.level >= 1 && sessionData.premium.active) {
+          const level = Math.min(Math.max(sessionData.premium.level, 1), 4); // Limitar entre 1 e 4
           premiumBadge.src = `/img/tiers_premium/${level}.webp`;
           premiumBadge.classList.add('active');
         }

@@ -38,6 +38,14 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
     >
       <div class="auth-widget__avatar-container">
         <img
+          data-auth-premium-badge
+          class="auth-widget__premium-badge"
+          alt="Premium"
+          loading="lazy"
+          decoding="async"
+          style="display: none;"
+        />
+        <img
           data-auth-avatar
           class="auth-widget__avatar"
           width={avatarSize}
@@ -45,14 +53,6 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
           alt=""
           loading="lazy"
           decoding="async"
-        />
-        <img
-          data-auth-premium-badge
-          class="auth-widget__premium-badge"
-          alt="Premium"
-          loading="lazy"
-          decoding="async"
-          style="display: none;"
         />
       </div>
       <span data-auth-username class="auth-widget__username"></span>

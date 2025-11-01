@@ -51,9 +51,9 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
     .avatar-container {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
       margin: 0 auto;
       width: fit-content;
     }
@@ -62,6 +62,9 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       position: relative;
       width: 120px;
       height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .avatar-ring {
@@ -92,13 +95,15 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
     .premium-badge {
       width: auto;
-      height: 120px;
-      max-width: 160px;
+      height: 65px;
+      max-width: 90px;
       object-fit: contain;
       filter: drop-shadow(0 4px 16px rgba(248, 7, 82, 0.6));
       display: none;
       transition: all 0.3s ease;
-      flex-shrink: 0;
+      margin-top: -25px;
+      z-index: 3;
+      position: relative;
     }
 
     .premium-badge.active {
@@ -275,12 +280,6 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
           <div class="user-profile-card p-4 h-100">
             <div class="text-center mb-4">
               <div class="avatar-container">
-                <img 
-                  id="premium-badge"
-                  src="" 
-                  alt="Premium"
-                  class="premium-badge"
-                />
                 <div class="avatar-wrapper">
                   <div class="avatar-ring"></div>
                   <img 
@@ -288,6 +287,12 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
                     src="" 
                     alt="User Avatar"
                     class="avatar-img"
+                  />
+                  <img 
+                    id="premium-badge"
+                    src="" 
+                    alt="Premium"
+                    class="premium-badge"
                   />
                 </div>
               </div>

@@ -16,6 +16,9 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 ---
 
 <Layout t={t} title="Dashboard">
+  <!-- Hidden data attributes for script -->
+  <div style="display: none;" data-api-base={apiBase} data-lang-prefix={langPrefix}></div>
+  
   <style>
     .dashboard-section {
       min-height: 80vh;
@@ -77,6 +80,25 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       border-radius: 50%;
       border: 4px solid rgba(20, 20, 30, 0.9);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .premium-badge {
+      position: absolute;
+      left: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(15, 15, 15, 0.95);
+      padding: 4px;
+      box-shadow: 0 4px 16px rgba(248, 7, 82, 0.4);
+      z-index: 2;
+      display: none;
+    }
+
+    .premium-badge.active {
+      display: block;
     }
 
     .user-info-item {
@@ -239,6 +261,12 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
               <div class="avatar-container">
                 <div class="avatar-ring"></div>
                 <img 
+                  id="premium-badge"
+                  src="" 
+                  alt="Premium"
+                  class="premium-badge"
+                />
+                <img 
                   id="user-avatar"
                   src="" 
                   alt="User Avatar"
@@ -301,25 +329,19 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     </div>
   </section>
 
-  <script define:vars={{ apiBase, langPrefix }}>
+  <script>
+    import { getSession, clearSessionCache } from '../scripts/session-manager';
+    
+    const apiBase = (document.querySelector('[data-api-base]') as HTMLElement)?.dataset.apiBase || '';
+    const langPrefix = (document.querySelector('[data-lang-prefix]') as HTMLElement)?.dataset.langPrefix || '';
+
     (async function() {
       const loadingState = document.getElementById('loading-state');
       const dashboardContent = document.getElementById('dashboard-content');
 
       try {
-        // Verificar sessão
-        const response = await fetch(`${apiBase}/auth/session`, {
-          credentials: 'include',
-          headers: {
-            'Accept': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch session');
-        }
-
-        const sessionData = await response.json();
+        // Usar o session manager centralizado
+        const sessionData = await getSession(apiBase);
 
         // Se não estiver autenticado, redirecionar para home
         if (!sessionData.authenticated || !sessionData.user) {
@@ -330,7 +352,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
         // Preencher dados do usuário
         const user = sessionData.user;
         
-        const avatarImg = document.getElementById('user-avatar');
+        const avatarImg = document.getElementById('user-avatar') as HTMLImageElement | null;
         const displayNameEl = document.getElementById('user-display-name');
         const usernameEl = document.getElementById('user-username');
         const userIdEl = document.getElementById('user-id');
@@ -338,6 +360,14 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
         if (avatarImg) {
           avatarImg.src = user.avatar_url || '';
           avatarImg.alt = user.display_name || 'User Avatar';
+        }
+
+        // Configurar badge premium (exibir se level > 1)
+        const premiumBadge = document.getElementById('premium-badge') as HTMLImageElement | null;
+        if (premiumBadge && sessionData.premium && sessionData.premium.level > 1) {
+          const level = Math.min(sessionData.premium.level, 4); // Limitar a 4
+          premiumBadge.src = `/img/tiers_premium/${level}.webp`;
+          premiumBadge.classList.add('active');
         }
         
         const displayName = user.display_name || user.username || 'Discord User';
@@ -370,9 +400,8 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
           credentials: 'include',
         });
         
-        try { 
-          sessionStorage.removeItem('kraken_session_present'); 
-        } catch {}
+        // Limpar o cache de sessão
+        clearSessionCache();
         
         window.location.href = langPrefix || '/';
       } catch (error) {

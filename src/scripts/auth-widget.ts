@@ -1,13 +1,4 @@
-interface User {
-  display_name?: string;
-  username?: string;
-  avatar_url?: string;
-}
-
-interface SessionResponse {
-  authenticated: boolean;
-  user?: User;
-}
+import { getSession, clearSessionCache, type SessionResponse, type User } from './session-manager';
 
 interface WidgetElements {
   loginAnchor: HTMLAnchorElement | null;
@@ -15,6 +6,7 @@ interface WidgetElements {
   nameElement: HTMLElement | null;
   usernameElement: HTMLElement | null;
   avatarElement: HTMLImageElement | null;
+  premiumBadge: HTMLImageElement | null;
   logoutButton: HTMLButtonElement | null;
   toggleButton: HTMLElement | null;
   dropdown: HTMLElement | null;
@@ -22,7 +14,6 @@ interface WidgetElements {
 
 interface KrakenWindow extends Window {
   __krakenAuthWidgetInit?: boolean;
-  __krakenAuthSessionPromise?: Promise<SessionResponse | null>;
 }
 
 (function () {
@@ -34,10 +25,6 @@ interface KrakenWindow extends Window {
     return;
   }
   win.__krakenAuthWidgetInit = true;
-
-  // Cache compartilhado de sessão para todas as instâncias
-  let cachedSession: SessionResponse | null = null;
-  let sessionFetchPromise: Promise<SessionResponse | null> | null = null;
 
   const initWidget = (root: HTMLElement): void => {
     if (!root || root.dataset.authInitialized === 'true') {
@@ -73,6 +60,7 @@ interface KrakenWindow extends Window {
       nameElement: null,
       usernameElement: null,
       avatarElement: null,
+      premiumBadge: null,
       logoutButton: null,
       toggleButton: null,
       dropdown: null,
@@ -198,6 +186,7 @@ interface KrakenWindow extends Window {
       elements.nameElement = null;
       elements.usernameElement = null;
       elements.avatarElement = null;
+      elements.premiumBadge = null;
       elements.logoutButton = null;
       elements.toggleButton = null;
       elements.dropdown = null;
@@ -236,8 +225,8 @@ interface KrakenWindow extends Window {
             method: 'POST',
             credentials: 'include',
           });
-          // limpar a flag local que indica presença de sessão
-          try { sessionStorage.removeItem('kraken_session_present'); } catch {}
+          // Limpar o cache de sessão
+          clearSessionCache();
         } catch (error) {
           console.error('Failed to logout', error);
         } finally {
@@ -246,7 +235,9 @@ interface KrakenWindow extends Window {
       });
     };
 
-    const renderUserView = (user: User): void => {
+    const renderUserView = (session: SessionResponse): void => {
+      const user = session.user;
+      if (!user) return;
       // DESTRUIÇÃO TOTAL antes de renderizar
       destroyRoot();
       
@@ -259,6 +250,7 @@ interface KrakenWindow extends Window {
       // Buscar elementos APENAS do usuário
       elements.userBlock = root.querySelector<HTMLElement>('[data-auth-user]');
       elements.avatarElement = root.querySelector<HTMLImageElement>('[data-auth-avatar]');
+      elements.premiumBadge = root.querySelector<HTMLImageElement>('[data-auth-premium-badge]');
       elements.nameElement = root.querySelector<HTMLElement>('[data-auth-name]');
       elements.usernameElement = root.querySelector<HTMLElement>('[data-auth-username]');
       elements.toggleButton = root.querySelector<HTMLElement>('[data-auth-toggle]');
@@ -294,6 +286,15 @@ interface KrakenWindow extends Window {
       elements.avatarElement.src = user.avatar_url || '';
       elements.avatarElement.alt = displayName;
 
+      // Configurar badge premium (exibir se level > 1)
+      if (elements.premiumBadge && session.premium && session.premium.level > 1) {
+        const level = Math.min(session.premium.level, 4); // Limitar a 4
+        elements.premiumBadge.src = `/img/tiers_premium/${level}.webp`;
+        elements.premiumBadge.style.display = 'block';
+      } else if (elements.premiumBadge) {
+        elements.premiumBadge.style.display = 'none';
+      }
+
       // Configurar nome completo no dropdown
       elements.nameElement.textContent = displayName;
       
@@ -308,60 +309,16 @@ interface KrakenWindow extends Window {
       bindUserInteractions();
     };
 
-    const getSession = async (): Promise<SessionResponse | null> => {
-      // Se já temos cache, retornar imediatamente
-      if (cachedSession !== null) {
-        return cachedSession;
-      }
-
-      // Se já há uma requisição em andamento, reutilizar
-      if (sessionFetchPromise) {
-        return sessionFetchPromise;
-      }
-
-      // Criar nova requisição compartilhada
-      sessionFetchPromise = (async () => {
-        try {
-          const response = await fetch(sessionEndpoint, {
-            credentials: 'include',
-            headers: {
-              'Accept': 'application/json',
-            },
-          });
-
-          if (!response.ok) {
-            throw new Error(`Session response not ok: ${response.status}`);
-          }
-
-          const payload: SessionResponse = await response.json();
-          cachedSession = payload;
-          return payload;
-        } catch (error) {
-          console.error('Failed to load auth session', error);
-          cachedSession = { authenticated: false };
-          return cachedSession;
-        } finally {
-          // Limpar a promise após completar
-          sessionFetchPromise = null;
-        }
-      })();
-
-      return sessionFetchPromise;
-    };
-
     const fetchSession = async (): Promise<void> => {
       try {
         root.setAttribute('data-auth-loading', 'true');
         
-        const payload = await getSession();
+        // Usar o session manager centralizado
+        const payload = await getSession(trimmedBase);
         
         if (payload && payload.authenticated && payload.user) {
-          // garante flag local quando autenticado
-          try { sessionStorage.setItem('kraken_session_present', '1'); } catch {}
-          renderUserView(payload.user);
+          renderUserView(payload);
         } else {
-          // se não autenticado, limpar flag local
-          try { sessionStorage.removeItem('kraken_session_present'); } catch {}
           renderLoginView();
         }
       } catch (error) {

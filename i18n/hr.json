@@ -591,5 +591,29 @@
       "desc": "Podignite svoje Discord RPG sesije na višu razinu uz naprednu personalizaciju karata i žetona izravno u Discordu. Uređujte scenarije, prilagođavajte pozicije i prilagođavajte okruženje igre u stvarnom vremenu, bez napuštanja svog poslužitelja. Potpuna kontrola za voditelje i igrače, sve integrirano u vaš Discord prostor za igru.",
       "title": "Prilagodi karte i mreže"
     }
+  },
+  "Dashbaord": {
+    "loading": "Učitavanje...",
+    "authing": "Provjeravam autentičnost...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Discord korisnik"
+        },
+        "id": {
+          "label": "Discord ID"
+        }
+      },
+      "logout": {
+        "label": "Odspoji račun"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Pregledaj stare zapise",
+        "description": "Pristupite i pregledajte svoje stare Kraken listove likova kako biste dohvatili podatke."
+      },
+      "explore": "Istražiti"
+    }
   }
 }

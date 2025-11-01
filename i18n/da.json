@@ -591,5 +591,29 @@
       "desc": "Tag dine Discord-RPG-sessioner op med avanceret kort- og tokentilpasning direkte i Discord. Rediger scenarier, juster positioner, og tilpas spilmiljøet i realtid, alt sammen uden at forlade din server. Fuldstændig kontrol for mestre og spillere, alt integreret i dit Discord-spilområde.",
       "title": "Tilpas kort og gitter"
     }
+  },
+  "Dashbaord": {
+    "loading": "Indlæser...",
+    "authing": "Kontrollerer godkendelse...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Discord-bruger"
+        },
+        "id": {
+          "label": "Discord-ID"
+        }
+      },
+      "logout": {
+        "label": "Frakobl konto"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Konsulter gamle optegnelser",
+        "description": "Adgang til og se dine gamle Kraken-karakterark for at gendanne dataene."
+      },
+      "explore": "Udforsk"
+    }
   }
 }

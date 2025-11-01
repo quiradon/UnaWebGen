@@ -591,5 +591,29 @@
       "desc": "Hebe deine Discord-Rollenspiel-Sitzungen auf ein neues Level mit erweiterter Karten- und Token-Anpassung direkt in Discord. Bearbeite Szenarien, passe Positionen an und passe die Spielumgebung in Echtzeit an, alles ohne deinen Server zu verlassen. Volle Kontrolle für Spielleiter und Spieler, alles integriert in deinen Discord-Spielbereich.",
       "title": "Karten und Raster anpassen"
     }
+  },
+  "Dashbaord": {
+    "loading": "Lädt...",
+    "authing": "Authentifizierung wird überprüft...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Discord-Benutzer"
+        },
+        "id": {
+          "label": "Discord-ID"
+        }
+      },
+      "logout": {
+        "label": "Konto trennen"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Alte Aufzeichnungen einsehen",
+        "description": "Greifen Sie auf Ihre alten Kraken-Charakterbögen zu und sehen Sie diese an, um die Daten wiederherzustellen."
+      },
+      "explore": "Erkunden"
+    }
   }
 }

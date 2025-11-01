@@ -591,5 +591,29 @@
       "desc": "Eleve suas sessões de RPG no Discord para outro nível com personalização avançada de mapas e tokens diretamente no Discord. Edite cenários, ajuste posições e adapte o ambiente de jogo em tempo real, sem sair do seu servidor. Controle total para mestres e jogadores, tudo integrado ao seu espaço de jogo no Discord.",
       "title": "Personalize mapas e tokens no VTT"
     }
+  },
+  "Dashbaord": {
+    "loading": "Carregando...",
+    "authing": "Verificando autenticação...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Usuário Discord"
+        },
+        "id": {
+          "label": "ID Discord"
+        }
+      },
+      "logout": {
+        "label": "Desconectar conta"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Consultar Fichas Antigas",
+        "description": "Acesse e visualize suas fichas de personagens antigas da Kraken, para recuperar os dados."
+      },
+      "explore": "Explorar"
+    }
   }
 }

@@ -591,5 +591,29 @@
       "desc": "Podnieś swoje sesje RPG na Discordzie na wyższy poziom dzięki zaawansowanej personalizacji map i żetonów bezpośrednio na Discordzie. Edytuj scenariusze, dostosuj pozycje i zmieniaj otoczenie gry w czasie rzeczywistym, bez opuszczania serwera. Pełna kontrola dla Mistrzów Gry i graczy, wszystko zintegrowane z Waszą przestrzenią gry na Discordzie.",
       "title": "Dostosuj mapy i siatki"
     }
+  },
+  "Dashbaord": {
+    "loading": "Ładowanie...",
+    "authing": "Sprawdzanie uwierzytelnienia...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Użytkownik Discorda"
+        },
+        "id": {
+          "label": "ID Discord"
+        }
+      },
+      "logout": {
+        "label": "Odłącz konto"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Przeglądaj stare zapisy",
+        "description": "Uzyskaj dostęp i przeglądaj swoje stare karty postaci Kraken, aby odzyskać dane."
+      },
+      "explore": "Eksploruj"
+    }
   }
 }

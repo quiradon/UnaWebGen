@@ -591,5 +591,29 @@
       "desc": "使用Discord内直接的高级地图和标记自定义功能，将您的Discord角色扮演游戏会话提升到一个新的水平。编辑场景，调整位置，并实时调整游戏环境，而无需离开您的服务器。GM和玩家拥有完全的控制权，所有这些都集成到您的Discord游戏空间中。",
       "title": "自定义地图和网格"
     }
+  },
+  "Dashbaord": {
+    "loading": "加载中...",
+    "authing": "正在验证身份...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Discord 用户"
+        },
+        "id": {
+          "label": "Discord ID"
+        }
+      },
+      "logout": {
+        "label": "断开账户"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "查看旧记录",
+        "description": "访问并查看您旧的 Kraken 角色表，以恢复数据。"
+      },
+      "explore": "探索"
+    }
   }
 }

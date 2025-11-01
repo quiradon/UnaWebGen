@@ -591,5 +591,29 @@
       "desc": "Porta le tue sessioni di GDR su Discord a un livello superiore con la personalizzazione avanzata di mappe e token direttamente su Discord. Modifica gli scenari, regola le posizioni e adatta l'ambiente di gioco in tempo reale, senza lasciare il tuo server. Controllo totale per i GM e i giocatori, tutto integrato nel tuo spazio di gioco su Discord.",
       "title": "Personalizza mappe e griglie"
     }
+  },
+  "Dashbaord": {
+    "loading": "Caricamento...",
+    "authing": "Verifica autenticazione...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Utente Discord"
+        },
+        "id": {
+          "label": "ID Discord"
+        }
+      },
+      "logout": {
+        "label": "Disconnetti account"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Consultare Vecchie Schede",
+        "description": "Accedi e visualizza le tue vecchie schede personaggio di Kraken per recuperare i dati."
+      },
+      "explore": "Esplorare"
+    }
   }
 }

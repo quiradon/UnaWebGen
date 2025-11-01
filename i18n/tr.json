@@ -591,5 +591,29 @@
       "desc": "Discord RPG oturumlarınızı, doğrudan Discord içinde gelişmiş harita ve token özelleştirmesiyle bir üst seviyeye taşıyın. Senaryoları düzenleyin, konumları ayarlayın ve oyun ortamını gerçek zamanlı olarak uyarlayın, sunucudan çıkmadan. GM'ler ve oyuncular için tam kontrol, hepsi Discord oyun alanınıza entegre edilmiş.",
       "title": "Haritaları ve Izgaraları Özelleştir"
     }
+  },
+  "Dashbaord": {
+    "loading": "Yükleniyor...",
+    "authing": "Kimlik doğrulanıyor...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Discord Kullanıcısı"
+        },
+        "id": {
+          "label": "Discord Kimliği"
+        }
+      },
+      "logout": {
+        "label": "Hesabın bağlantısını kes"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Eski Kayıtları İncele",
+        "description": "Verileri kurtarmak için eski Kraken karakter sayfalarınıza erişin ve görüntüleyin."
+      },
+      "explore": "Keşfetmek"
+    }
   }
 }

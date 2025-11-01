@@ -591,5 +591,29 @@
       "desc": "Améliorez vos sessions de JdR sur Discord grâce à une personnalisation avancée des cartes et des jetons directement sur Discord. Modifiez les scénarios, ajustez les positions et adaptez l'environnement de jeu en temps réel, sans quitter votre serveur. Contrôle total pour les MJ et les joueurs, le tout intégré à votre espace de jeu sur Discord.",
       "title": "Personnaliser les cartes et les grilles"
     }
+  },
+  "Dashbaord": {
+    "loading": "Chargement...",
+    "authing": "Vérification de l'authentification...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Utilisateur Discord"
+        },
+        "id": {
+          "label": "ID Discord"
+        }
+      },
+      "logout": {
+        "label": "Déconnecter le compte"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Consulter les anciennes fiches",
+        "description": "Accédez et visualisez vos anciennes fiches de personnage Kraken pour récupérer les données."
+      },
+      "explore": "Explorer"
+    }
   }
 }

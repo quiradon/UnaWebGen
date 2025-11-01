@@ -591,5 +591,29 @@
       "desc": "Tingkatkan sesi RPG Discord Anda ke level berikutnya dengan kustomisasi peta dan token tingkat lanjut langsung di Discord. Edit skenario, sesuaikan posisi, dan sesuaikan lingkungan game secara real time, tanpa meninggalkan server Anda. Kontrol penuh untuk GM dan pemain, semuanya terintegrasi ke dalam ruang permainan Discord Anda.",
       "title": "Sesuaikan Peta dan Kisi-kisi"
     }
+  },
+  "Dashbaord": {
+    "loading": "Memuat...",
+    "authing": "Memverifikasi autentikasi...",
+    "user": {
+      "discord": {
+        "name": {
+          "label": "Pengguna Discord"
+        },
+        "id": {
+          "label": "ID Discord"
+        }
+      },
+      "logout": {
+        "label": "Putuskan sambungan akun"
+      }
+    },
+    "actions": {
+      "old": {
+        "title": "Lihat Catatan Lama",
+        "description": "Akses dan lihat lembar karakter Kraken lama Anda untuk memulihkan data."
+      },
+      "explore": "Jelajahi"
+    }
   }
 }

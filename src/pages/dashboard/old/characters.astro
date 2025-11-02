@@ -1,0 +1,409 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getLocale } from "astro-i18n-aut";
+import { loadT } from '@lib/i18n';
+import config from '../../../config.json';
+
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
+const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/, '');
+---
+
+<Layout title="Personagens Antigos" t={t}>
+  <!-- Hidden data attributes for script -->
+  <div style="display: none;" data-api-base={apiBase}></div>
+  
+  <main class="container py-5">
+    <div class="row mb-4">
+      <div class="col-12">
+        <h1 class="mb-2">Personagens Antigos</h1>
+        <p class="text-muted">Visualize e faça download de suas fichas de personagem</p>
+      </div>
+    </div>
+
+    <div id="loading" class="alert alert-info">
+      <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+      Carregando personagens...
+    </div>
+
+    <div id="error-container"></div>
+    <div id="empty-container" class="d-none">
+      <div class="alert alert-info">
+        Você não possui personagens salvos.
+      </div>
+    </div>
+    
+    <div id="characters-container" class="row d-none"></div>
+  </main>
+</Layout>
+
+<script>
+  import { getSession } from '@lib/session-manager';
+
+  interface Character {
+    id: string;
+    nome: string;
+    system: number;
+    image_url?: string;
+    ultima_modificacao: number;
+  }
+
+  const apiBaseEl = document.querySelector('[data-api-base]') as HTMLElement | null;
+  const API_BASE = apiBaseEl?.dataset.apiBase || 'https://una-api.arkanus.app';
+
+  const formatDate = (timestamp: number) => {
+    return new Date(timestamp * 1000).toLocaleDateString("pt-BR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const getSystemName = (systemId: number) => {
+    const systems: Record<number, string> = {
+      1: "D&D 5e",
+      2: "Tormenta 20",
+      3: "Pathfinder",
+      1014: "Customizado",
+    };
+    return systems[systemId] || `Sistema ${systemId}`;
+  };
+
+  const renderCharacters = (characters: Character[]) => {
+    const container = document.getElementById('characters-container');
+    if (!container) return;
+
+    if (characters.length === 0) {
+      document.getElementById('empty-container')?.classList.remove('d-none');
+      container.classList.add('d-none');
+      return;
+    }
+
+    container.innerHTML = characters.map(character => `
+      <div class="col-12 col-md-6 col-lg-4 mb-4">
+        <div class="character-card">
+            <div class="character-card-body">
+              <div class="character-image-container">
+                ${character.image_url ? `
+                  <img
+                    src="${character.image_url}"
+                    class="character-image"
+                    alt="${character.nome}"
+                  />
+                ` : `
+                  <div class="character-image-placeholder">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                      <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                  </div>
+                `}
+              </div>
+              <div class="character-details">
+                <h3 class="character-name">${character.nome}</h3>
+                <p class="character-description">
+                  ${getSystemName(character.system)}
+                </p>
+                <p class="character-date">${formatDate(character.ultima_modificacao)}</p>
+                            <button
+              class="character-download-btn download-btn"
+              data-character-id="${character.id}"
+              data-character-name="${character.nome}"
+              title="Baixar Ficha"
+            >
+              Baixar Ficha
+            </button>
+              </div>
+            </div>
+        </div>
+      </div>
+    `).join('');
+
+    container.classList.remove('d-none');
+    
+    // Adicionar event listeners aos botões
+    container.querySelectorAll('.download-btn').forEach(button => {
+      button.addEventListener('click', handleDownload);
+    });
+  };
+
+  const showError = (message: string) => {
+    const errorContainer = document.getElementById('error-container');
+    if (errorContainer) {
+      errorContainer.innerHTML = `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `;
+    }
+  };
+
+  const handleDownload = async (e: Event) => {
+    const button = e.target as HTMLElement;
+    const characterId = button.closest('button')?.getAttribute('data-character-id');
+    const characterName = button.closest('button')?.getAttribute('data-character-name');
+
+    if (!characterId) return;
+
+    try {
+      button.setAttribute('disabled', 'disabled');
+      
+      const response = await fetch(`${API_BASE}/character/${characterId}/download`, {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao baixar ficha");
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${characterName || "ficha"}.json`;
+      link.click();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Erro ao baixar:", err);
+      showError("Erro ao baixar ficha. Tente novamente.");
+    } finally {
+      button.removeAttribute('disabled');
+    }
+  };
+
+  const loadCharacters = async () => {
+    try {
+      const session = await getSession(API_BASE);
+      if (!session?.authenticated) {
+        showError("Você precisa estar autenticado para acessar esta página.");
+        document.getElementById('loading')?.classList.add('d-none');
+        return;
+      }
+      const response = await fetch(`${API_BASE}/characters`, {
+        method: 'GET',
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('[Characters] Error response:', errorData);
+        throw new Error("Falha ao carregar personagens");
+      }
+
+      const data = await response.json();
+      console.log('[Characters] Data received:', data);
+      
+      // Lidar com a estrutura aninhada: characters.get_user_sheets_json ou characters (array direto)
+      let characters: Character[] = [];
+      
+      if (data.characters) {
+        if (Array.isArray(data.characters)) {
+          // Se characters já é um array
+          characters = data.characters;
+        } else if (data.characters.get_user_sheets_json && Array.isArray(data.characters.get_user_sheets_json)) {
+          // Se characters tem a propriedade get_user_sheets_json
+          characters = data.characters.get_user_sheets_json;
+        }
+      }
+
+      renderCharacters(characters);
+      document.getElementById('loading')?.classList.add('d-none');
+    } catch (err) {
+      console.error("Erro ao carregar personagens:", err);
+      showError("Erro ao carregar personagens. Tente novamente.");
+      document.getElementById('loading')?.classList.add('d-none');
+    }
+  };
+
+  // Carregar personagens ao iniciar
+  loadCharacters();
+</script>
+
+<style is:global>
+  .character-card {
+    background: rgba(29, 26, 45, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease-out;
+    height: 100%;
+    min-height: 150px;
+  }
+
+  .character-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(248, 7, 82, 0.05), rgba(248, 7, 82, 0.02));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .character-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    border-color: rgba(248, 7, 82, 0.3);
+  }
+
+
+
+  .card-icon {
+    color: rgba(248, 7, 82, 0.9);
+    flex-shrink: 0;
+  }
+
+  .card-header-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: capitalize;
+  }
+
+  .character-card-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .character-card-body {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding: 16px;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .character-image-container {
+    flex-shrink: 0;
+    width: 128px;
+    height: 128px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .character-image {
+    width: 128px;
+    height: 128px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .character-card:hover .character-image {
+    transform: scale(1.05);
+  }
+
+  .character-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(248, 7, 82, 0.15), rgba(30, 30, 40, 0.9));
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .character-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .character-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  .character-description {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 2px 0 0 0;
+    line-height: 1.4;
+  }
+
+  .character-date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .character-download-btn {
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    padding: 10px 24px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--bs-primary), rgba(248, 7, 82, 0.8));
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(248, 7, 82, 0.4);
+  }
+character-card
+  .character-download-btn:hover {
+    background: linear-gradient(135deg, rgba(248, 7, 82, 0.95), var(--bs-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(248, 7, 82, 0.6);
+  }
+
+  .character-download-btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    transform: none;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .col-12:nth-child(1) .character-card { animation-delay: 0s; }
+  .col-12:nth-child(2) .character-card { animation-delay: 0.05s; }
+  .col-12:nth-child(3) .character-card { animation-delay: 0.1s; }
+  .col-12:nth-child(4) .character-card { animation-delay: 0.15s; }
+  .col-12:nth-child(5) .character-card { animation-delay: 0.2s; }
+  .col-12:nth-child(6) .character-card { animation-delay: 0.25s; }
+
+ 
+</style>

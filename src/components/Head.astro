@@ -45,7 +45,7 @@ const canonicalLink = Newroute.includes('en/') ? `<link rel="canonical" href="${
   <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/logo.svg" />
   <Fragment set:html={canonicalLink} />
   <Fragment set:html={alternates} />
-  <link rel="alternate" hreflang="x-default" href={`${url}${rotaRoot}`} />
+  <Fragment set:html={`<link rel="alternate" hreflang="x-default" href="${url}${rotaRoot}" />`} />
   <meta property="og:url" content={`${url}${rotaRoot}`} />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />

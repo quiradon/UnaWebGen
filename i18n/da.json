@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Udforsk",
+      "old": {
+        "description": "Adgang til og se dine gamle Kraken-karakterark for at gendanne dataene.",
+        "title": "Konsulter gamle optegnelser"
+      }
+    },
+    "authing": "Kontrollerer godkendelse...",
+    "loading": "Indlæser...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "Discord-ID"
+        },
+        "name": {
+          "label": "Discord-bruger"
+        }
+      },
+      "logout": {
+        "label": "Frakobl konto"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Tilbage til forsiden",
     "desc": "Ups! Det ser ud som om du har fundet en side, der ikke længere eksisterer. Bare rolig, det sker sommetider under navigation. I mellemtiden kan du udforske andre dele af vores hjemmeside for at finde det, du leder efter.",
@@ -110,6 +134,20 @@
     "copy": "Kopiér"
   },
   "comunity_from": "Lavet af RPG-fællesskabet for fællesskabet",
+  "dashboard": {
+    "action": {
+      "login": "Dashboard"
+    },
+    "characters": {
+      "download": "Download",
+      "old": {
+        "description": "Se og download dine gamle karakterark. Vi beder dig om at migrere til det nye karaktersystem for at få den bedste oplevelse med værktøjet.",
+        "label": "Forældede karakterer"
+      },
+      "error": "Fejl ved indlæsning af karakterer. Prøv igen."
+    },
+    "logout": "Frakobl"
+  },
   "default": {
     "desc": "Mini Kraken er et RPG-websted, der tilbyder værktøjer, artikler og indhold til RPG-spillere og -game masters. Her finder du information om Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling og andre RPG-systemer."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Tag dine Discord-RPG-sessioner op med avanceret kort- og tokentilpasning direkte i Discord. Rediger scenarier, juster positioner, og tilpas spilmiljøet i realtid, alt sammen uden at forlade din server. Fuldstændig kontrol for mestre og spillere, alt integreret i dit Discord-spilområde.",
       "title": "Tilpas kort og gitter"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Indlæser...",
-    "authing": "Kontrollerer godkendelse...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Discord-bruger"
-        },
-        "id": {
-          "label": "Discord-ID"
-        }
-      },
-      "logout": {
-        "label": "Frakobl konto"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Konsulter gamle optegnelser",
-        "description": "Adgang til og se dine gamle Kraken-karakterark for at gendanne dataene."
-      },
-      "explore": "Udforsk"
     }
   }
 }

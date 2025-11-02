@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Explore",
+      "old": {
+        "description": "Access and view your old Kraken character sheets to recover the data.",
+        "title": "Consult Old Records"
+      }
+    },
+    "authing": "Checking authentication...",
+    "loading": "Loading...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "Discord ID"
+        },
+        "name": {
+          "label": "Discord User"
+        }
+      },
+      "logout": {
+        "label": "Disconnect account"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Back to Start",
     "desc": "Oops! It looks like you found a page that no longer exists. Don't worry, sometimes this happens while browsing. In the meantime, explore other parts of our site to find what you're looking for.",
@@ -110,6 +134,20 @@
     "copy": "Copy"
   },
   "comunity_from": "Made by the RPG community for the community",
+  "dashboard": {
+    "action": {
+      "login": "Dashboard"
+    },
+    "characters": {
+      "download": "Download",
+      "old": {
+        "description": "View and download your old character sheets. We ask you to migrate to the new character sheet system to enjoy the best experience of the tool.",
+        "label": "Outdated Characters"
+      },
+      "error": "Error loading characters. Please try again."
+    },
+    "logout": "Disconnect"
+  },
   "default": {
     "desc": "Mini Kraken is an RPG website offering tools, articles, and content for RPG players and DMs. Here you will find information about Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling, and other RPG systems."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Level up your Discord RPG sessions with advanced map and token customization directly within Discord. Edit scenarios, adjust positions, and adapt the game environment in real time, all without leaving your server. Full control for GMs and players, all integrated into your Discord game space.",
       "title": "Customize Maps and Grids"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Loading...",
-    "authing": "Checking authentication...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Discord User"
-        },
-        "id": {
-          "label": "Discord ID"
-        }
-      },
-      "logout": {
-        "label": "Disconnect account"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Consult Old Records",
-        "description": "Access and view your old Kraken character sheets to recover the data."
-      },
-      "explore": "Explore"
     }
   }
 }

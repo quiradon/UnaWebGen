@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Erkunden",
+      "old": {
+        "description": "Greifen Sie auf Ihre alten Kraken-Charakterbögen zu und sehen Sie diese an, um die Daten wiederherzustellen.",
+        "title": "Alte Aufzeichnungen einsehen"
+      }
+    },
+    "authing": "Authentifizierung wird überprüft...",
+    "loading": "Lädt...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "Discord-ID"
+        },
+        "name": {
+          "label": "Discord-Benutzer"
+        }
+      },
+      "logout": {
+        "label": "Konto trennen"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Zurück zum Start",
     "desc": "Hoppla! Es sieht so aus, als hätten Sie eine Seite gefunden, die nicht mehr existiert. Keine Sorge, das passiert beim Browsen manchmal. In der Zwischenzeit können Sie andere Bereiche unserer Website erkunden, um das zu finden, wonach Sie suchen.",
@@ -110,6 +134,20 @@
     "copy": "Kopieren"
   },
   "comunity_from": "Erstellt von der RPG-Community für die Community",
+  "dashboard": {
+    "action": {
+      "login": "Dashboard"
+    },
+    "characters": {
+      "download": "Herunterladen",
+      "old": {
+        "description": "Sehen und laden Sie Ihre alten Charakterbögen herunter. Wir bitten Sie, zum neuen Charakterbogensystem zu migrieren, um das beste Erlebnis mit dem Tool zu nutzen.",
+        "label": "Veraltete Charaktere"
+      },
+      "error": "Fehler beim Laden der Charaktere. Bitte versuchen Sie es erneut."
+    },
+    "logout": "Trennen"
+  },
   "default": {
     "desc": "Mini Kraken ist eine RPG-Website, die Tools, Artikel und Inhalte für RPG-Spieler und Spielleiter bietet. Hier finden Sie Informationen zu Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling und anderen RPG-Systemen."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Hebe deine Discord-Rollenspiel-Sitzungen auf ein neues Level mit erweiterter Karten- und Token-Anpassung direkt in Discord. Bearbeite Szenarien, passe Positionen an und passe die Spielumgebung in Echtzeit an, alles ohne deinen Server zu verlassen. Volle Kontrolle für Spielleiter und Spieler, alles integriert in deinen Discord-Spielbereich.",
       "title": "Karten und Raster anpassen"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Lädt...",
-    "authing": "Authentifizierung wird überprüft...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Discord-Benutzer"
-        },
-        "id": {
-          "label": "Discord-ID"
-        }
-      },
-      "logout": {
-        "label": "Konto trennen"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Alte Aufzeichnungen einsehen",
-        "description": "Greifen Sie auf Ihre alten Kraken-Charakterbögen zu und sehen Sie diese an, um die Daten wiederherzustellen."
-      },
-      "explore": "Erkunden"
     }
   }
 }

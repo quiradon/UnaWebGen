@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Istražiti",
+      "old": {
+        "description": "Pristupite i pregledajte svoje stare Kraken listove likova kako biste dohvatili podatke.",
+        "title": "Pregledaj stare zapise"
+      }
+    },
+    "authing": "Provjeravam autentičnost...",
+    "loading": "Učitavanje...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "Discord ID"
+        },
+        "name": {
+          "label": "Discord korisnik"
+        }
+      },
+      "logout": {
+        "label": "Odspoji račun"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Povratak na početak\n",
     "desc": "Ups! Čini se da ste naišli na stranicu koja više ne postoji. Nemojte se brinuti, to se ponekad dogodi tijekom pregledavanja. U međuvremenu, istražite druge dijelove naše web-stranice kako biste pronašli ono što tražite.\n",
@@ -110,6 +134,20 @@
     "copy": "Kopiraj\n"
   },
   "comunity_from": "Napravljeno od RPG zajednice za zajednicu",
+  "dashboard": {
+    "action": {
+      "login": "Nadzorna ploča"
+    },
+    "characters": {
+      "download": "Preuzeti",
+      "old": {
+        "description": "Pregledajte i preuzmite svoje stare listove likova. Molimo vas da migrirate na novi sustav listova likova kako biste uživali u najboljem iskustvu alata.",
+        "label": "Zastarjeli likovi"
+      },
+      "error": "Greška pri učitavanju likova. Pokušajte ponovo."
+    },
+    "logout": "Odspoji"
+  },
   "default": {
     "desc": "Mini Kraken je RPG web stranica koja nudi alate, članke i sadržaj za igrače i voditelje igara uloga. Ovdje možete pronaći informacije o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling i drugim RPG sustavima.\n"
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Podignite svoje Discord RPG sesije na višu razinu uz naprednu personalizaciju karata i žetona izravno u Discordu. Uređujte scenarije, prilagođavajte pozicije i prilagođavajte okruženje igre u stvarnom vremenu, bez napuštanja svog poslužitelja. Potpuna kontrola za voditelje i igrače, sve integrirano u vaš Discord prostor za igru.",
       "title": "Prilagodi karte i mreže"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Učitavanje...",
-    "authing": "Provjeravam autentičnost...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Discord korisnik"
-        },
-        "id": {
-          "label": "Discord ID"
-        }
-      },
-      "logout": {
-        "label": "Odspoji račun"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Pregledaj stare zapise",
-        "description": "Pristupite i pregledajte svoje stare Kraken listove likova kako biste dohvatili podatke."
-      },
-      "explore": "Istražiti"
     }
   }
 }

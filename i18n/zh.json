@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "探索",
+      "old": {
+        "description": "访问并查看您旧的 Kraken 角色表，以恢复数据。",
+        "title": "查看旧记录"
+      }
+    },
+    "authing": "正在验证身份...",
+    "loading": "加载中...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "Discord ID"
+        },
+        "name": {
+          "label": "Discord 用户"
+        }
+      },
+      "logout": {
+        "label": "断开账户"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "返回开始",
     "desc": "哎呀！看起来您找到的页面已不存在。别担心，浏览时有时会发生这种情况。同时，您可以探索我们网站的其他部分来查找您需要的内容。",
@@ -110,6 +134,20 @@
     "copy": "复制"
   },
   "comunity_from": "由RPG社区为社区制作",
+  "dashboard": {
+    "action": {
+      "login": "仪表盘"
+    },
+    "characters": {
+      "download": "下载",
+      "old": {
+        "description": "查看并下载您的旧角色卡。我们恳请您迁移到新的角色卡系统，以享受工具的最佳体验。",
+        "label": "过时的人物"
+      },
+      "error": "加载角色时出错。请重试。"
+    },
+    "logout": "断开连接"
+  },
   "default": {
     "desc": "Mini Kraken 是一个角色扮演游戏网站，提供适用于角色扮演游戏玩家和 DM 的工具、文章和内容。在这里，您将找到有关龙与地下城、克苏鲁的呼唤、GURPS、FATE、故事讲述和其他角色扮演游戏系统的信息。"
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "使用Discord内直接的高级地图和标记自定义功能，将您的Discord角色扮演游戏会话提升到一个新的水平。编辑场景，调整位置，并实时调整游戏环境，而无需离开您的服务器。GM和玩家拥有完全的控制权，所有这些都集成到您的Discord游戏空间中。",
       "title": "自定义地图和网格"
-    }
-  },
-  "Dashbaord": {
-    "loading": "加载中...",
-    "authing": "正在验证身份...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Discord 用户"
-        },
-        "id": {
-          "label": "Discord ID"
-        }
-      },
-      "logout": {
-        "label": "断开账户"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "查看旧记录",
-        "description": "访问并查看您旧的 Kraken 角色表，以恢复数据。"
-      },
-      "explore": "探索"
     }
   }
 }

@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Explorar",
+      "old": {
+        "description": "Acceda y visualice sus antiguas fichas de personaje de Kraken para recuperar los datos.",
+        "title": "Consultar Fichas Antiguas"
+      }
+    },
+    "authing": "Verificando autenticación...",
+    "loading": "Cargando...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "ID de Discord"
+        },
+        "name": {
+          "label": "Usuario de Discord"
+        }
+      },
+      "logout": {
+        "label": "Desconectar cuenta"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Volver al inicio",
     "desc": "¡Ups! Parece que has encontrado una página que ya no existe. No te preocupes, a veces esto sucede mientras navegas. Mientras tanto, explora otras partes de nuestro sitio para encontrar lo que buscas.",
@@ -110,6 +134,20 @@
     "copy": "Copiar"
   },
   "comunity_from": "Hecho por la comunidad RPG para la comunidad",
+  "dashboard": {
+    "action": {
+      "login": "Panel de control"
+    },
+    "characters": {
+      "download": "Descargar",
+      "old": {
+        "description": "Visualiza y descarga tus antiguas fichas de personaje. Te pedimos que migres al nuevo sistema de fichas para aprovechar la mejor experiencia de la herramienta.",
+        "label": "Personajes Desactualizados"
+      },
+      "error": "Error al cargar personajes. Inténtalo de nuevo."
+    },
+    "logout": "Desconectar"
+  },
   "default": {
     "desc": "Mini Kraken es un sitio web de RPG que ofrece herramientas, artículos y contenido para jugadores y DMs de RPG. Aquí encontrarás información sobre Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling y otros sistemas de RPG."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Eleva tus sesiones de RPG de Discord a otro nivel con personalización avanzada de mapas y fichas directamente en Discord. Edita escenarios, ajusta posiciones y adapta el entorno del juego en tiempo real, sin salir de tu servidor. Control total para maestros y jugadores, todo integrado en tu espacio de juego de Discord.",
       "title": "Personalizar mapas y cuadrículas"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Cargando...",
-    "authing": "Verificando autenticación...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Usuario de Discord"
-        },
-        "id": {
-          "label": "ID de Discord"
-        }
-      },
-      "logout": {
-        "label": "Desconectar cuenta"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Consultar Fichas Antiguas",
-        "description": "Acceda y visualice sus antiguas fichas de personaje de Kraken para recuperar los datos."
-      },
-      "explore": "Explorar"
     }
   }
 }

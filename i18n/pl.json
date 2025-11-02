@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Eksploruj",
+      "old": {
+        "description": "Uzyskaj dostęp i przeglądaj swoje stare karty postaci Kraken, aby odzyskać dane.",
+        "title": "Przeglądaj stare zapisy"
+      }
+    },
+    "authing": "Sprawdzanie uwierzytelnienia...",
+    "loading": "Ładowanie...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "ID Discord"
+        },
+        "name": {
+          "label": "Użytkownik Discorda"
+        }
+      },
+      "logout": {
+        "label": "Odłącz konto"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Powrót na początek",
     "desc": "Ups! Wygląda na to, że znalazłeś stronę, która już nie istnieje. Nie martw się, czasem tak się zdarza podczas przeglądania. W międzyczasie możesz przeglądać inne części naszej strony, aby znaleźć to, czego szukasz.",
@@ -110,6 +134,20 @@
     "copy": "Kopiuj"
   },
   "comunity_from": "Zrobione przez społeczność RPG dla społeczności",
+  "dashboard": {
+    "action": {
+      "login": "Panel"
+    },
+    "characters": {
+      "download": "Pobierz",
+      "old": {
+        "description": "Wyświetl i pobierz swoje stare karty postaci. Prosimy o migrację do nowego systemu kart, aby cieszyć się najlepszym doświadczeniem narzędzia.",
+        "label": "Przestarzałe postacie"
+      },
+      "error": "Błąd podczas ładowania postaci. Spróbuj ponownie."
+    },
+    "logout": "Rozłącz"
+  },
   "default": {
     "desc": "Mini Kraken to strona RPG oferująca narzędzia, artykuły i treści dla graczy RPG i Mistrzów Gry. Znajdziesz tu informacje o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, opowiadaniu historii i innych systemach RPG."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Podnieś swoje sesje RPG na Discordzie na wyższy poziom dzięki zaawansowanej personalizacji map i żetonów bezpośrednio na Discordzie. Edytuj scenariusze, dostosuj pozycje i zmieniaj otoczenie gry w czasie rzeczywistym, bez opuszczania serwera. Pełna kontrola dla Mistrzów Gry i graczy, wszystko zintegrowane z Waszą przestrzenią gry na Discordzie.",
       "title": "Dostosuj mapy i siatki"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Ładowanie...",
-    "authing": "Sprawdzanie uwierzytelnienia...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Użytkownik Discorda"
-        },
-        "id": {
-          "label": "ID Discord"
-        }
-      },
-      "logout": {
-        "label": "Odłącz konto"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Przeglądaj stare zapisy",
-        "description": "Uzyskaj dostęp i przeglądaj swoje stare karty postaci Kraken, aby odzyskać dane."
-      },
-      "explore": "Eksploruj"
     }
   }
 }

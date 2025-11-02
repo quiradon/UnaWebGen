@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Felfedezni",
+      "old": {
+        "description": "Hozzáférhet és megtekintheti régi Kraken karakterlapjait az adatok helyreállításához.",
+        "title": "Régi feljegyzések megtekintése"
+      }
+    },
+    "authing": "Hitelesítés ellenőrzése...",
+    "loading": "Betöltés...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "Discord azonosító"
+        },
+        "name": {
+          "label": "Discord felhasználó"
+        }
+      },
+      "logout": {
+        "label": "Fiók leválasztása"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Vissza a kezdőlapra",
     "desc": "Ups! Úgy tűnik, egy már nem létező oldalra bukkantál. Ne aggódj, néha előfordul böngészés közben. Addig is, nézz körül a weboldalunkon, hogy megtaláld, amit keresel.",
@@ -110,6 +134,20 @@
     "copy": "Másolás"
   },
   "comunity_from": "RPG közösség által, a közösségért",
+  "dashboard": {
+    "action": {
+      "login": "Műszerfal"
+    },
+    "characters": {
+      "download": "Letöltés",
+      "old": {
+        "description": "Tekintse meg és töltse le régi karakterlapjait. Kérjük, hogy migráljon az új karakterlap-rendszerre, hogy élvezhesse az eszköz legjobb élményét.",
+        "label": "Elavult karakterek"
+      },
+      "error": "Hiba a karakterek betöltésekor. Kérjük, próbálja újra."
+    },
+    "logout": "Leválasztás"
+  },
   "default": {
     "desc": "A Mini Kraken egy szerepjáték weboldal, amely eszközöket, cikkeket és tartalmakat kínál szerepjátékosok és mesterek számára. Itt találsz információkat a Dungeons and Dragons, a Call of Cthulhu, a GURPS, a FATE, a történetmesélés és más szerepjáték rendszerekről."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Emeld a Discord szerepjátékos üléseid egy új szintre a térképek és zsetonok fejlett testreszabásával közvetlenül a Discordon belül. Szerkeszd a forgatókönyveket, állítsd be a pozíciókat, és igazítsd a játék környezetét valós időben, anélkül, hogy elhagynád a szerveredet. Teljes kontroll a mesterek és a játékosok számára, minden integrálva a Discord játéktéredbe.",
       "title": "Térképek és rácsos megjelenítés testreszabása"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Betöltés...",
-    "authing": "Hitelesítés ellenőrzése...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Discord felhasználó"
-        },
-        "id": {
-          "label": "Discord azonosító"
-        }
-      },
-      "logout": {
-        "label": "Fiók leválasztása"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Régi feljegyzések megtekintése",
-        "description": "Hozzáférhet és megtekintheti régi Kraken karakterlapjait az adatok helyreállításához."
-      },
-      "explore": "Felfedezni"
     }
   }
 }

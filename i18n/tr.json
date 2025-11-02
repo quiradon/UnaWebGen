@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Keşfetmek",
+      "old": {
+        "description": "Verileri kurtarmak için eski Kraken karakter sayfalarınıza erişin ve görüntüleyin.",
+        "title": "Eski Kayıtları İncele"
+      }
+    },
+    "authing": "Kimlik doğrulanıyor...",
+    "loading": "Yükleniyor...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "Discord Kimliği"
+        },
+        "name": {
+          "label": "Discord Kullanıcısı"
+        }
+      },
+      "logout": {
+        "label": "Hesabın bağlantısını kes"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Başlangıca Dön",
     "desc": "Oops! Görünüşe göre artık mevcut olmayan bir sayfa buldunuz. Endişelenmeyin, bu bazen gezinirken olur. Bu arada, aradığınızı bulmak için sitemizin diğer bölümlerini keşfedin.",
@@ -110,6 +134,20 @@
     "copy": "Kopyala"
   },
   "comunity_from": "RPG topluluğu tarafından topluluk için yapıldı",
+  "dashboard": {
+    "action": {
+      "login": "Kontrol Paneli"
+    },
+    "characters": {
+      "download": "İndir",
+      "old": {
+        "description": "Eski karakter sayfalarınızı görüntüleyin ve indirin. Aracın en iyi deneyiminden yararlanmak için yeni karakter sayfası sistemine geçiş yapmanızı rica ediyoruz.",
+        "label": "Güncel olmayan karakterler"
+      },
+      "error": "Karakterler yüklenirken hata oluştu. Lütfen tekrar deneyin."
+    },
+    "logout": "Bağlantıyı Kes"
+  },
   "default": {
     "desc": "Mini Kraken, RPG oyuncuları ve DM'ler için araçlar, makaleler ve içerik sunan bir RPG web sitesidir. Burada Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Hikaye Anlatımı ve diğer RPG sistemleri hakkında bilgi bulacaksınız."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Discord RPG oturumlarınızı, doğrudan Discord içinde gelişmiş harita ve token özelleştirmesiyle bir üst seviyeye taşıyın. Senaryoları düzenleyin, konumları ayarlayın ve oyun ortamını gerçek zamanlı olarak uyarlayın, sunucudan çıkmadan. GM'ler ve oyuncular için tam kontrol, hepsi Discord oyun alanınıza entegre edilmiş.",
       "title": "Haritaları ve Izgaraları Özelleştir"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Yükleniyor...",
-    "authing": "Kimlik doğrulanıyor...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Discord Kullanıcısı"
-        },
-        "id": {
-          "label": "Discord Kimliği"
-        }
-      },
-      "logout": {
-        "label": "Hesabın bağlantısını kes"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Eski Kayıtları İncele",
-        "description": "Verileri kurtarmak için eski Kraken karakter sayfalarınıza erişin ve görüntüleyin."
-      },
-      "explore": "Keşfetmek"
     }
   }
 }

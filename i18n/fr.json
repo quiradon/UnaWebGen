@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Explorer",
+      "old": {
+        "description": "Accédez et visualisez vos anciennes fiches de personnage Kraken pour récupérer les données.",
+        "title": "Consulter les anciennes fiches"
+      }
+    },
+    "authing": "Vérification de l'authentification...",
+    "loading": "Chargement...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "ID Discord"
+        },
+        "name": {
+          "label": "Utilisateur Discord"
+        }
+      },
+      "logout": {
+        "label": "Déconnecter le compte"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Retour au début",
     "desc": "Oups ! Il semble que vous ayez trouvé une page qui n’existe plus. Ne vous inquiétez pas, cela arrive parfois lors de la navigation. En attendant, explorez d’autres parties de notre site pour trouver ce que vous recherchez.",
@@ -110,6 +134,20 @@
     "copy": "Copier"
   },
   "comunity_from": "Créé par la communauté RPG pour la communauté",
+  "dashboard": {
+    "action": {
+      "login": "Tableau de bord"
+    },
+    "characters": {
+      "download": "Télécharger",
+      "old": {
+        "description": "Visualisez et téléchargez vos anciennes fiches de personnage. Nous vous demandons de migrer vers le nouveau système de fiches pour profiter de la meilleure expérience de l'outil.",
+        "label": "Personnages obsolètes"
+      },
+      "error": "Erreur lors du chargement des personnages. Veuillez réessayer."
+    },
+    "logout": "Déconnecter"
+  },
   "default": {
     "desc": "Mini Kraken est un site web de JdR proposant des outils, des articles et du contenu pour les joueurs et les MJ de JdR. Vous trouverez ici des informations sur Donjons et Dragons, Appel de Cthulhu, GURPS, FATE, la narration et d’autres systèmes de JdR."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Améliorez vos sessions de JdR sur Discord grâce à une personnalisation avancée des cartes et des jetons directement sur Discord. Modifiez les scénarios, ajustez les positions et adaptez l'environnement de jeu en temps réel, sans quitter votre serveur. Contrôle total pour les MJ et les joueurs, le tout intégré à votre espace de jeu sur Discord.",
       "title": "Personnaliser les cartes et les grilles"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Chargement...",
-    "authing": "Vérification de l'authentification...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Utilisateur Discord"
-        },
-        "id": {
-          "label": "ID Discord"
-        }
-      },
-      "logout": {
-        "label": "Déconnecter le compte"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Consulter les anciennes fiches",
-        "description": "Accédez et visualisez vos anciennes fiches de personnage Kraken pour récupérer les données."
-      },
-      "explore": "Explorer"
     }
   }
 }

@@ -1,4 +1,28 @@
 {
+  "Dashbaord": {
+    "actions": {
+      "explore": "Jelajahi",
+      "old": {
+        "description": "Akses dan lihat lembar karakter Kraken lama Anda untuk memulihkan data.",
+        "title": "Lihat Catatan Lama"
+      }
+    },
+    "authing": "Memverifikasi autentikasi...",
+    "loading": "Memuat...",
+    "user": {
+      "discord": {
+        "id": {
+          "label": "ID Discord"
+        },
+        "name": {
+          "label": "Pengguna Discord"
+        }
+      },
+      "logout": {
+        "label": "Putuskan sambungan akun"
+      }
+    }
+  },
   "PageNotFound": {
     "btn": "Kembali ke Awal",
     "desc": "Ups! Sepertinya Anda menemukan halaman yang sudah tidak ada. Jangan khawatir, terkadang hal ini terjadi saat menjelajah. Sementara itu, jelajahi bagian lain situs kami untuk menemukan apa yang Anda cari.",
@@ -110,6 +134,20 @@
     "copy": "Salin"
   },
   "comunity_from": "Dibuat oleh komunitas RPG untuk komunitas",
+  "dashboard": {
+    "action": {
+      "login": "Dasbor"
+    },
+    "characters": {
+      "download": "Unduh",
+      "old": {
+        "description": "Lihat dan unduh lembar karakter lama Anda. Kami meminta Anda untuk bermigrasi ke sistem lembar karakter yang baru untuk menikmati pengalaman terbaik dari alat ini.",
+        "label": "Karakter Usang"
+      },
+      "error": "Gagal memuat karakter. Silakan coba lagi."
+    },
+    "logout": "Putuskan sambungan"
+  },
   "default": {
     "desc": "Mini Kraken adalah situs web RPG yang menawarkan alat, artikel, dan konten untuk pemain RPG dan DM. Di sini Anda akan menemukan informasi tentang Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling, dan sistem RPG lainnya."
   },
@@ -590,30 +628,6 @@
     "index": {
       "desc": "Tingkatkan sesi RPG Discord Anda ke level berikutnya dengan kustomisasi peta dan token tingkat lanjut langsung di Discord. Edit skenario, sesuaikan posisi, dan sesuaikan lingkungan game secara real time, tanpa meninggalkan server Anda. Kontrol penuh untuk GM dan pemain, semuanya terintegrasi ke dalam ruang permainan Discord Anda.",
       "title": "Sesuaikan Peta dan Kisi-kisi"
-    }
-  },
-  "Dashbaord": {
-    "loading": "Memuat...",
-    "authing": "Memverifikasi autentikasi...",
-    "user": {
-      "discord": {
-        "name": {
-          "label": "Pengguna Discord"
-        },
-        "id": {
-          "label": "ID Discord"
-        }
-      },
-      "logout": {
-        "label": "Putuskan sambungan akun"
-      }
-    },
-    "actions": {
-      "old": {
-        "title": "Lihat Catatan Lama",
-        "description": "Akses dan lihat lembar karakter Kraken lama Anda untuk memulihkan data."
-      },
-      "explore": "Jelajahi"
     }
   }
 }

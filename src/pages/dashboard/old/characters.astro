@@ -11,25 +11,35 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
 <Layout title="Personagens Antigos" t={t}>
   <!-- Hidden data attributes for script -->
-  <div style="display: none;" data-api-base={apiBase}></div>
+  <div 
+    style="display: none;" 
+    data-api-base={apiBase}
+    data-loading-text={t.Dashbaord.loading}
+    data-empty-text={t.dashboard.characters.old.description}
+    data-error-auth={"Você precisa estar autenticado para acessar esta página."}
+    data-error-load={t.dashboard.characters.error}
+    data-error-download={"Erro ao baixar ficha. Tente novamente."}
+    data-download-label={t.dashboard.characters.download}
+    data-system-custom={"Customized System"}
+  ></div>
   
   <main class="container py-5">
     <div class="row mb-4">
       <div class="col-12">
-        <h1 class="mb-2">Personagens Antigos</h1>
-        <p class="text-muted">Visualize e faça download de suas fichas de personagem</p>
+        <h1 class="mb-2">{t.dashboard.characters.old.label}</h1>
+        <p class="text-muted">{t.dashboard.characters.old.description}</p>
       </div>
     </div>
 
     <div id="loading" class="alert alert-info">
       <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-      Carregando personagens...
+      {t.Dashbaord.loading}
     </div>
 
     <div id="error-container"></div>
     <div id="empty-container" class="d-none">
       <div class="alert alert-info">
-        Você não possui personagens salvos.
+        {t.dashboard.characters.old.description}
       </div>
     </div>
     
@@ -37,9 +47,8 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   </main>
 </Layout>
 
-<script>
+<script >
   import { getSession } from '@lib/session-manager';
-
   interface Character {
     id: string;
     nome: string;
@@ -48,8 +57,19 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     ultima_modificacao: number;
   }
 
-  const apiBaseEl = document.querySelector('[data-api-base]') as HTMLElement | null;
-  const API_BASE = apiBaseEl?.dataset.apiBase || 'https://una-api.arkanus.app';
+  const dataEl = document.querySelector('[data-api-base]') as HTMLElement | null;
+  const API_BASE = dataEl?.dataset.apiBase || 'https://una-api.arkanus.app';
+  
+  // Traduções
+  const translations = {
+    loading: dataEl?.dataset.loadingText || 'Loading...',
+    emptyText: dataEl?.dataset.emptyText || 'No characters found.',
+    errorAuth: dataEl?.dataset.errorAuth || 'You need to be authenticated.',
+    errorLoad: dataEl?.dataset.errorLoad || 'Error loading characters.',
+    errorDownload: dataEl?.dataset.errorDownload || 'Error downloading sheet.',
+    downloadLabel: dataEl?.dataset.downloadLabel || 'Download',
+    systemCustom: dataEl?.dataset.systemCustom || 'Customized System'
+  };
 
   const formatDate = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleDateString("pt-BR", {
@@ -64,11 +84,20 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   const getSystemName = (systemId: number) => {
     const systems: Record<number, string> = {
       1: "D&D 5e",
-      2: "Tormenta 20",
-      3: "Pathfinder",
-      1014: "Customizado",
+      2: "Ordem Paranormal",
+      3: "Tormenta 20",
+      4: "Carbon 2185",
+      5: "GAIA: O Prelúdio",
+      6: "3DeT Victory",
+      7: "Pathfinder 2e",
+      8: "Feiticeiros e Maldições",
+      9: "Old Dragon 2º",
+      10: "Dharmar",
+      11: "ICONS Superpowered",
+      12: "Wilder Feast",
+      13: "Enxerto"
     };
-    return systems[systemId] || `Sistema ${systemId}`;
+    return systems[systemId] || `${translations.systemCustom} (${systemId})`;
   };
 
   const renderCharacters = (characters: Character[]) => {
@@ -111,9 +140,9 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
               class="character-download-btn download-btn"
               data-character-id="${character.id}"
               data-character-name="${character.nome}"
-              title="Baixar Ficha"
+              title="${translations.downloadLabel}"
             >
-              Baixar Ficha
+              ${translations.downloadLabel}
             </button>
               </div>
             </div>
@@ -168,7 +197,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Erro ao baixar:", err);
-      showError("Erro ao baixar ficha. Tente novamente.");
+      showError(translations.errorDownload);
     } finally {
       button.removeAttribute('disabled');
     }
@@ -178,7 +207,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     try {
       const session = await getSession(API_BASE);
       if (!session?.authenticated) {
-        showError("Você precisa estar autenticado para acessar esta página.");
+        showError(translations.errorAuth);
         document.getElementById('loading')?.classList.add('d-none');
         return;
       }
@@ -215,7 +244,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       document.getElementById('loading')?.classList.add('d-none');
     } catch (err) {
       console.error("Erro ao carregar personagens:", err);
-      showError("Erro ao carregar personagens. Tente novamente.");
+      showError(translations.errorLoad);
       document.getElementById('loading')?.classList.add('d-none');
     }
   };

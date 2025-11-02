@@ -1,6 +1,6 @@
 {
-    "url" : "http://localhost:4321",
-    "api_url" : "http://localhost:6970",
+    "url" : "https://rpg.arkanus.app",
+    "api_url" : "https://una-api.arkanus.app",
     "discord_invite" : "https://discord.com/invite/Nm3CypkQaq",
     "bot_invite" : "https://discord.com/oauth2/authorize?client_id=899421595125288961",
     "version" : "1"

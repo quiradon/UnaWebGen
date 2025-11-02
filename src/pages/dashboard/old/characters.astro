@@ -255,12 +255,9 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   }
 
   .character-card:hover {
-    transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
     border-color: rgba(248, 7, 82, 0.3);
   }
-
-
 
   .card-icon {
     color: rgba(248, 7, 82, 0.9);
@@ -290,22 +287,23 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   }
 
   .character-image-container {
-    flex-shrink: 0;
     width: 128px;
     height: 128px;
     border-radius: 12px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.4);
     border: 2px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
   }
   
   .character-image {
-    width: 128px;
-    height: 128px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
   }
 
   .character-card:hover .character-image {
@@ -386,24 +384,5 @@ character-card
     pointer-events: none;
     transform: none;
   }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .col-12:nth-child(1) .character-card { animation-delay: 0s; }
-  .col-12:nth-child(2) .character-card { animation-delay: 0.05s; }
-  .col-12:nth-child(3) .character-card { animation-delay: 0.1s; }
-  .col-12:nth-child(4) .character-card { animation-delay: 0.15s; }
-  .col-12:nth-child(5) .character-card { animation-delay: 0.2s; }
-  .col-12:nth-child(6) .character-card { animation-delay: 0.25s; }
-
  
 </style>

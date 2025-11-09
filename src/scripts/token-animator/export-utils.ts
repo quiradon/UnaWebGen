@@ -22,11 +22,22 @@ export class ExportUtils {
     
     this.setExportingState(true, 'Preparando exportação GIF...');
     
+    // Limitar dimensões máximas para 512x512 mantendo aspect ratio
+    const maxSize = 512;
+    let exportWidth = this.canvas.width;
+    let exportHeight = this.canvas.height;
+    
+    if (exportWidth > maxSize || exportHeight > maxSize) {
+      const scale = Math.min(maxSize / exportWidth, maxSize / exportHeight);
+      exportWidth = Math.floor(exportWidth * scale);
+      exportHeight = Math.floor(exportHeight * scale);
+    }
+    
     const gif = new (window as any).GIF({
       workers: 2,
       quality: quality,
-      width: this.canvas.width,
-      height: this.canvas.height,
+      width: exportWidth,
+      height: exportHeight,
       workerScript: '/js/libs/gif.worker.js',
       transparent: 0x000000, // Habilitar transparência
       background: 0x000000  // Fundo transparente
@@ -44,33 +55,35 @@ export class ExportUtils {
     const minSpeed = Math.min(...activeEffects.map((e: any) => e.speed || 1.5));
     const breathingPeriod = (2 * Math.PI) / minSpeed; // período completo em segundos
     
-    // Usar a duração do ciclo completo ou a duração especificada
+    // Usar a duração do ciclo completo para loop perfeito
     const exportDuration = breathingPeriod;
     const totalFrames = Math.round(fps * exportDuration);
     const frameDuration = 1000 / fps; // delay entre frames em ms
     
     console.log(`[ExportGIF] Exportando ${totalFrames} frames a ${fps} FPS`);
-    console.log(`[ExportGIF] Duração: ${exportDuration.toFixed(2)}s, Delay: ${frameDuration.toFixed(2)}ms`);
+    console.log(`[ExportGIF] Duração: ${exportDuration.toFixed(2)}s (1 ciclo completo), Delay: ${frameDuration.toFixed(2)}ms`);
+    console.log(`[ExportGIF] Dimensões: ${exportWidth}x${exportHeight} (max 512p)`);
     console.log(`[ExportGIF] Transparência habilitada`);
     
-    // Renderizar frames sequencialmente ao longo do tempo
+    // Renderizar frames sequencialmente ao longo do tempo para loop perfeito
     for (let i = 0; i < totalFrames; i++) {
-      // Calcular o tempo em segundos para cada frame
-      const frameTime = (i / fps);
+      // Calcular o tempo exato dentro do ciclo de respiração (0 a breathingPeriod)
+      const frameTime = (i / totalFrames) * breathingPeriod;
       
       // Renderizar o frame no tempo específico
       this.renderer.render(frameTime, true);
       
-      // Copiar o frame para o GIF mantendo transparência
+      // Copiar o frame para o GIF mantendo transparência e redimensionando
       const frameCanvas = document.createElement('canvas');
-      frameCanvas.width = this.canvas.width;
-      frameCanvas.height = this.canvas.height;
+      frameCanvas.width = exportWidth;
+      frameCanvas.height = exportHeight;
       const frameCtx = frameCanvas.getContext('2d', { alpha: true });
       
       if (frameCtx) {
         // Não desenhar fundo, manter transparência
         frameCtx.clearRect(0, 0, frameCanvas.width, frameCanvas.height);
-        frameCtx.drawImage(this.canvas, 0, 0);
+        // Desenhar com redimensionamento
+        frameCtx.drawImage(this.canvas, 0, 0, exportWidth, exportHeight);
         gif.addFrame(frameCanvas, { delay: frameDuration, transparent: true });
       }
       
@@ -104,12 +117,52 @@ export class ExportUtils {
       return;
     }
     
-    this.setExportingState(true, 'Gravando vídeo...');
+    this.setExportingState(true, 'Preparando exportação WebM...');
     
-    const stream = this.canvas.captureStream(fps);
+    // Calcular a duração baseada no ciclo de respiração como no GIF
+    const activeEffects = this.effectsManager.getActiveEffects();
+    
+    if (activeEffects.length === 0) {
+      this.effectsManager.showNotification('Adicione pelo menos um efeito!', 'warning');
+      this.setExportingState(false);
+      return;
+    }
+    
+    const minSpeed = Math.min(...activeEffects.map((e: any) => e.speed || 1.5));
+    const breathingPeriod = (2 * Math.PI) / minSpeed;
+    const exportDuration = breathingPeriod;
+    
+    // Limitar dimensões máximas para 2K (2560x1440) mantendo aspect ratio
+    const maxWidth = 2560;
+    const maxHeight = 1440;
+    let exportWidth = this.canvas.width;
+    let exportHeight = this.canvas.height;
+    
+    if (exportWidth > maxWidth || exportHeight > maxHeight) {
+      const scale = Math.min(maxWidth / exportWidth, maxHeight / exportHeight);
+      exportWidth = Math.floor(exportWidth * scale);
+      exportHeight = Math.floor(exportHeight * scale);
+    }
+    
+    console.log(`[ExportWebM] Duração: ${exportDuration.toFixed(2)}s (1 ciclo completo) a ${fps} FPS`);
+    console.log(`[ExportWebM] Dimensões: ${exportWidth}x${exportHeight} (max 2K)`);
+    
+    // Criar canvas de exportação com tamanho ajustado
+    const exportCanvas = document.createElement('canvas');
+    exportCanvas.width = exportWidth;
+    exportCanvas.height = exportHeight;
+    const exportCtx = exportCanvas.getContext('2d', { alpha: true });
+    
+    if (!exportCtx) {
+      this.effectsManager.showNotification('Erro ao criar contexto de exportação.', 'error');
+      this.setExportingState(false);
+      return;
+    }
+    
+    const stream = exportCanvas.captureStream(fps);
     const mediaRecorder = new MediaRecorder(stream, {
       mimeType: 'video/webm;codecs=vp9',
-      videoBitsPerSecond: 2500000
+      videoBitsPerSecond: 5000000
     });
     
     const chunks: Blob[] = [];
@@ -130,22 +183,38 @@ export class ExportUtils {
     
     mediaRecorder.start();
     
-    // Simular progresso baseado no tempo
-    const startTime = Date.now();
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min((elapsed / (duration * 1000)) * 100, 99);
-      this.updateExportProgress(Math.round(progress), `Gravando: ${Math.round(progress)}%`);
-      
-      if (elapsed >= duration * 1000) {
-        clearInterval(interval);
-      }
-    }, 100);
+    // Renderizar frames manualmente para garantir loop perfeito
+    const totalFrames = Math.round(fps * exportDuration);
+    let currentFrame = 0;
     
-    setTimeout(() => {
-      mediaRecorder.stop();
-      clearInterval(interval);
-    }, duration * 1000);
+    const renderFrame = () => {
+      if (currentFrame >= totalFrames) {
+        mediaRecorder.stop();
+        return;
+      }
+      
+      // Calcular o tempo exato dentro do ciclo de respiração (0 a breathingPeriod)
+      const frameTime = (currentFrame / totalFrames) * breathingPeriod;
+      
+      // Renderizar no canvas original
+      this.renderer.render(frameTime, true);
+      
+      // Copiar para canvas de exportação com redimensionamento
+      exportCtx.clearRect(0, 0, exportWidth, exportHeight);
+      exportCtx.drawImage(this.canvas, 0, 0, exportWidth, exportHeight);
+      
+      // Atualizar progresso
+      const progress = Math.round((currentFrame / totalFrames) * 100);
+      this.updateExportProgress(progress, `Gravando: ${currentFrame}/${totalFrames} frames`);
+      
+      currentFrame++;
+      
+      // Próximo frame no intervalo correto
+      setTimeout(renderFrame, 1000 / fps);
+    };
+    
+    // Iniciar renderização
+    renderFrame();
   }
 
   private setExportingState(isExporting: boolean, message?: string): void {

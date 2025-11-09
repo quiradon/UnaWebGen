@@ -22,14 +22,34 @@ export class ExportUtils {
     
     this.setExportingState(true, 'Preparando exportação GIF...');
     
+    // Detectar mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Otimizações para mobile
+    const maxWidth = isMobile ? 512 : this.canvas.width;
+    const maxHeight = isMobile ? 512 : this.canvas.height;
+    const workers = isMobile ? 1 : 2; // 1 worker em mobile para evitar travamento
+    const exportQuality = isMobile ? 20 : quality; // Qualidade reduzida em mobile
+    
+    // Redimensionar canvas se necessário
+    let scale = 1;
+    if (this.canvas.width > maxWidth || this.canvas.height > maxHeight) {
+      scale = Math.min(maxWidth / this.canvas.width, maxHeight / this.canvas.height);
+    }
+    
+    const exportWidth = Math.round(this.canvas.width * scale);
+    const exportHeight = Math.round(this.canvas.height * scale);
+    
+    console.log(`[ExportGIF] Mobile: ${isMobile}, Resolution: ${exportWidth}x${exportHeight}, Workers: ${workers}`);
+    
     const gif = new (window as any).GIF({
-      workers: 2,
-      quality: quality,
-      width: this.canvas.width,
-      height: this.canvas.height,
+      workers: workers,
+      quality: exportQuality,
+      width: exportWidth,
+      height: exportHeight,
       workerScript: '/js/libs/gif.worker.js',
-      transparent: 0x000000, // Habilitar transparência
-      background: 0x000000  // Fundo transparente
+      transparent: 0x000000,
+      background: 0x000000
     });
     
     const activeEffects = this.effectsManager.getActiveEffects();
@@ -42,42 +62,60 @@ export class ExportUtils {
     
     // Calcular a duração de um ciclo completo de respiração baseado no efeito mais lento
     const minSpeed = Math.min(...activeEffects.map((e: any) => e.speed || 1.5));
-    const breathingPeriod = (2 * Math.PI) / minSpeed; // período completo em segundos
+    const breathingPeriod = (2 * Math.PI) / minSpeed;
     
-    // Usar a duração do ciclo completo ou a duração especificada
     const exportDuration = breathingPeriod;
-    const totalFrames = Math.round(fps * exportDuration);
-    const frameDuration = 1000 / fps; // delay entre frames em ms
+    const exportFps = isMobile ? Math.min(fps, 15) : fps; // Reduzir FPS em mobile (máx 15)
+    const totalFrames = Math.round(exportFps * exportDuration);
+    const frameDuration = 1000 / exportFps;
     
-    console.log(`[ExportGIF] Exportando ${totalFrames} frames a ${fps} FPS`);
+    console.log(`[ExportGIF] Exportando ${totalFrames} frames a ${exportFps} FPS`);
     console.log(`[ExportGIF] Duração: ${exportDuration.toFixed(2)}s, Delay: ${frameDuration.toFixed(2)}ms`);
-    console.log(`[ExportGIF] Transparência habilitada`);
     
-    // Renderizar frames sequencialmente ao longo do tempo
-    for (let i = 0; i < totalFrames; i++) {
-      // Calcular o tempo em segundos para cada frame
-      const frameTime = (i / fps);
+    // Canvas temporário para redimensionamento
+    const frameCanvas = document.createElement('canvas');
+    frameCanvas.width = exportWidth;
+    frameCanvas.height = exportHeight;
+    const frameCtx = frameCanvas.getContext('2d', { 
+      alpha: true,
+      willReadFrequently: true // Otimização para múltiplas leituras
+    });
+    
+    if (!frameCtx) {
+      this.effectsManager.showNotification('Erro ao criar contexto de canvas', 'error');
+      this.setExportingState(false);
+      return;
+    }
+    
+    // Renderizar frames com delay entre cada um em mobile
+    const renderFrame = async (i: number) => {
+      const frameTime = (i / exportFps);
       
-      // Renderizar o frame no tempo específico
       this.renderer.render(frameTime, true);
       
-      // Copiar o frame para o GIF mantendo transparência
-      const frameCanvas = document.createElement('canvas');
-      frameCanvas.width = this.canvas.width;
-      frameCanvas.height = this.canvas.height;
-      const frameCtx = frameCanvas.getContext('2d', { alpha: true });
+      frameCtx.clearRect(0, 0, exportWidth, exportHeight);
+      frameCtx.drawImage(this.canvas, 0, 0, exportWidth, exportHeight);
+      gif.addFrame(frameCanvas, { delay: frameDuration, transparent: true });
       
-      if (frameCtx) {
-        // Não desenhar fundo, manter transparência
-        frameCtx.clearRect(0, 0, frameCanvas.width, frameCanvas.height);
-        frameCtx.drawImage(this.canvas, 0, 0);
-        gif.addFrame(frameCanvas, { delay: frameDuration, transparent: true });
-      }
-      
-      // Atualizar progresso durante a captura de frames
-      if (i % 5 === 0) {
+      if (i % 3 === 0) {
         const captureProgress = Math.round((i / totalFrames) * 50);
-        this.updateExportProgress(captureProgress, `Capturando frames: ${i}/${totalFrames}`);
+        this.updateExportProgress(captureProgress, `Capturando: ${i}/${totalFrames}`);
+      }
+    };
+    
+    // Processar frames com delay em mobile para não travar
+    if (isMobile) {
+      for (let i = 0; i < totalFrames; i++) {
+        await renderFrame(i);
+        // Pequeno delay a cada 5 frames para dar respiro ao navegador
+        if (i % 5 === 0) {
+          await new Promise(resolve => setTimeout(resolve, 10));
+        }
+      }
+    } else {
+      // Desktop: processar tudo de uma vez
+      for (let i = 0; i < totalFrames; i++) {
+        await renderFrame(i);
       }
     }
     
@@ -90,7 +128,7 @@ export class ExportUtils {
     
     gif.on('progress', (progress: number) => {
       const percentage = 50 + Math.round(progress * 50);
-      this.updateExportProgress(percentage, `Renderizando GIF: ${percentage}%`);
+      this.updateExportProgress(percentage, `Renderizando: ${percentage}%`);
     });
     
     gif.render();
@@ -106,10 +144,29 @@ export class ExportUtils {
     
     this.setExportingState(true, 'Gravando vídeo...');
     
-    const stream = this.canvas.captureStream(fps);
+    // Detectar mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Otimizações para mobile
+    const exportFps = isMobile ? Math.min(fps, 24) : fps; // Máx 24 FPS em mobile
+    const bitrate = isMobile ? 1500000 : 2500000; // Bitrate reduzido em mobile
+    
+    const stream = this.canvas.captureStream(exportFps);
+    
+    // Tentar diferentes codecs
+    let mimeType = 'video/webm;codecs=vp9';
+    if (isMobile && !MediaRecorder.isTypeSupported(mimeType)) {
+      mimeType = 'video/webm;codecs=vp8'; // Fallback para VP8 em mobile
+      if (!MediaRecorder.isTypeSupported(mimeType)) {
+        mimeType = 'video/webm'; // Fallback genérico
+      }
+    }
+    
+    console.log(`[ExportWebM] Mobile: ${isMobile}, FPS: ${exportFps}, Bitrate: ${bitrate}, Codec: ${mimeType}`);
+    
     const mediaRecorder = new MediaRecorder(stream, {
-      mimeType: 'video/webm;codecs=vp9',
-      videoBitsPerSecond: 2500000
+      mimeType: mimeType,
+      videoBitsPerSecond: bitrate
     });
     
     const chunks: Blob[] = [];

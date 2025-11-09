@@ -4,7 +4,7 @@ import { getLocale } from "astro-i18n-aut";
 import Layout from '@layouts/Layout.astro';
 import ToolCard from '@components/ToolCard.astro';
 import { loadT, getStaticPaths } from '@lib/i18n';
-import { Dices, Heart, Eye, Sprout, CircleDollarSign, CloudRain, Wrench, Music } from '@lucide/astro';
+import { Dices, Heart, Eye, Sprout, CircleDollarSign, CloudRain, Wrench, Music, Sparkles } from '@lucide/astro';
 
 export { getStaticPaths };
 
@@ -82,6 +82,14 @@ const pathPrefix = Locale === 'en' ? '' : `/${Locale}`;
           title={t.tools?.morse?.title}
           description={t.tools?.morse?.desc}
           icon={Music}
+          iconColor="text-primary"
+        />
+
+        <ToolCard 
+          href={`${pathPrefix}/tools/tokens-animator/`}
+          title="Token Animator"
+          description="Adicione efeitos de respiração animados aos seus tokens de RPG"
+          icon={Sparkles}
           iconColor="text-primary"
         />
       </div>

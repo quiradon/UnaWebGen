@@ -1,0 +1,1859 @@
+---
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { loadT } from '@lib/i18n';
+import { getLocale } from "astro-i18n-aut";
+import { Sparkles, Wind, Download, FileImage, Film, X, Check, Upload, Lock, Star, Zap, PieChart, Users, Gift } from '@lucide/astro';
+import config from '../../config.json';
+
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
+const apiBase = config.api_url;
+
+const copy = {
+  title: "Token Animator",
+  description: "Adicione efeitos de respiração animados aos seus tokens de RPG",
+  uploadLabel: "Carregar Imagem",
+  uploadHint: "ou arraste e solte o arquivo aqui",
+  uploadReady: "Imagem carregada! Adicione efeitos de respiração.",
+  resetBtn: "Resetar",
+  animationOn: "ON",
+  animationOff: "OFF",
+  addBreathing: "Adicionar Respiração",
+  exportAnimation: "Exportar Animação",
+  exportTitle: "Exportar Animação",
+  exportGif: "GIF (Qualidade Média)",
+  exportWebM: "WebM (Alta Qualidade)",
+  exportGifDesc: "Formato universal com transparência",
+  exportWebMDesc: "Melhor qualidade, requer Premium Rank",
+  premiumRequired: "Premium Rank",
+  premiumBenefits: "Benefícios Premium",
+  premiumBenefit1: "Exportação WebM de alta qualidade",
+  premiumBenefit2: "Sem marca d'água nas exportações",
+  premiumBenefit3: "Suporte prioritário",
+  premiumBenefit4: "Acesso antecipado a novos recursos",
+  upgradePremium: "Fazer Upgrade",
+  effectsTitle: "Efeitos Ativos",
+  noEffects: "Nenhum efeito adicionado.",
+  brushTools: "Ferramentas de Pincel",
+  brushSize: "Tamanho",
+  brushHardness: "Dureza",
+  brushMode: "Pincel",
+  eraserMode: "Borracha",
+  clearMask: "Limpar Máscara",
+  tipTitle: "Dica",
+  };
+---
+
+<Layout t={t} title={copy.title} desc={copy.description}>
+  <section class="token-animator-section pt-2 mt-4 mb-5" data-api-base={apiBase}>
+    <div class="container">
+      <!-- Header -->
+      <div class="row justify-content-center mb-4">
+        <div class="col-xl-10">
+          <div class="text-center animate-fade-in">
+            <h1 class="display-4 fw-bold text-white mb-3">
+              <Sparkles size={40} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
+              {copy.title}
+            </h1>
+            <p class="lead text-secondary mb-4 animate-fade-in-delay">
+              {copy.description}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="row g-4">
+        <!-- Canvas Area -->
+        <div class="col-lg-8">
+          <div class="canvas-card animate-slide-up">
+
+            <div id="canvasContainer" class="canvas-container">
+              <div id="canvasPlaceholder" class="canvas-placeholder">
+                <input type="file" id="file-input" accept="image/png,image/webp" class="d-none" />
+                <div class="upload-label">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" x2="12" y1="3" y2="15"/>
+                  </svg>
+                  <h4 class="text-white mb-2">{copy.uploadLabel}</h4>
+                  <p class="text-secondary mb-0">{copy.uploadHint}</p>
+                </div>
+              </div>
+              
+              <div id="scrollArea" class="scroll-area">
+                <div id="stage">
+                  <canvas id="canvas" class="main-canvas d-none"></canvas>
+                  <canvas id="overlay" class="overlay d-none"></canvas>
+                </div>
+              </div>
+              
+              <div id="loading" class="loading-overlay d-none">
+                <div class="loading-content">
+                  <div class="loader"></div>
+                  <p id="loadingText" class="loading-text">Gerando animação...</p>
+                  <div class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar-fill"></div>
+                  </div>
+                  <p id="progressText" class="progress-text">0%</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Player Controls Bar -->
+            <div class="player-controls">
+              <button id="animationToggle" class="player-btn play-pause" title="Play/Pause">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" class="pause-icon">
+                  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" class="play-icon d-none">
+                  <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+                </svg>
+              </button>
+              <button id="resetBtn" class="player-btn" title="Reset">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
+                  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
+                </svg>
+              </button>
+              <div class="player-info">
+                <span id="effectCount">0 efeitos</span>
+                <span class="separator">•</span>
+                <span id="animationStatus" class="status-playing">Reproduzindo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls Sidebar -->
+        <div class="col-lg-4">
+          <div class="d-flex flex-column h-100 gap-3 animate-slide-up-delay">
+            
+            <!-- Brush Tools Panel -->
+            <div id="brushToolsPanel" class="controls-card d-none">
+              <div class="card-header-custom">
+                <h6 class="mb-0">🎨 {copy.brushTools}</h6>
+              </div>
+              <div class="card-body-custom">
+                <!-- Brush Preview -->
+                <div class="brush-preview-wrapper mb-3">
+                  <canvas id="brushPreview" width="100" height="100" class="brush-preview"></canvas>
+                  <div class="text-center text-secondary small mt-2">Preview</div>
+                </div>
+                
+                <!-- Brush Controls -->
+                <div class="row g-2 mb-3">
+                  <div class="col-6">
+                    <label class="form-label small text-secondary">{copy.brushSize}</label>
+                    <input type="range" id="brushSize" class="form-range" 
+                           min="1" max="100" step="1" value="20">
+                    <div id="brushSizeDisplay" class="text-center small text-white">20px</div>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label small text-secondary">{copy.brushHardness}</label>
+                    <input type="range" id="brushHardness" class="form-range" 
+                           min="0.1" max="1.0" step="0.1" value="1.0">
+                    <div id="brushHardnessDisplay" class="text-center small text-white">100%</div>
+                  </div>
+                </div>
+                
+                <!-- Brush Mode -->
+                <div class="d-flex gap-2 mb-3">
+                  <button id="brushModeBtn" class="btn btn-outline-light btn-sm flex-fill active">
+                    ✏️ {copy.brushMode}
+                  </button>
+                  <button id="eraserModeBtn" class="btn btn-outline-warning btn-sm flex-fill">
+                    🧽 {copy.eraserMode}
+                  </button>
+                </div>
+                
+                <!-- Actions -->
+                <div class="d-flex gap-2">
+                  <button id="clearCurrentMask" class="btn btn-outline-danger btn-sm flex-fill">
+                    🗑️ {copy.clearMask}
+                  </button>
+                  <button id="closeBrushTools" class="btn btn-outline-secondary btn-sm">
+                    ✖️
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Effects Panel -->
+            <div class="controls-card flex-grow-1">
+              <div class="card-header-effects">
+                <div class="d-flex align-items-center justify-content-center gap-2">
+                  <Wind size={20} class="text-primary" />
+                  <h6 class="mb-0 text-white fw-semibold">{copy.effectsTitle}</h6>
+                </div>
+              </div>
+              <div class="card-body-custom d-flex flex-column">
+                <div id="active-effects-list" class="effects-list flex-grow-1">
+                  <div id="no-effects-text" class="empty-effects-state text-center">
+                    <Wind size={32} class="empty-icon mb-2" style="color: #3d4349;" />
+                    <p class="text-secondary mb-0">{copy.noEffects}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="actions-wrapper">
+              <button type="button" class="btn btn-primary w-100 mb-2" onclick="addBreathingEffect()">
+                <Wind size={18} class="me-2" />
+                <span>{copy.addBreathing}</span>
+              </button>
+              <button type="button" id="exportBtn" class="btn btn-success w-100" onclick="openExportModal()">
+                <Download size={18} class="me-2" />
+                <span>{copy.exportAnimation}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Modal Customizado -->
+    <div id="exportModal" class="export-modal-overlay" style="display: none;">
+      <div class="export-modal-container">
+        <div class="export-modal-content">
+          <div class="export-modal-header">
+            <h5 class="export-modal-title">
+              <Download size={24} style="margin-right: 0.5rem;" />
+              {copy.exportTitle}
+            </h5>
+            <button type="button" class="export-modal-close" onclick="closeExportModal()">
+              <X size={24} />
+            </button>
+          </div>
+          <div class="export-modal-body">
+            
+            <div class="export-options-grid">
+              <div class="export-option-wrapper">
+                <!-- GIF Export Option -->
+                <div class="export-option" onclick="exportGIF(); closeExportModal();">
+                  <div class="export-option-header">
+                    <div class="export-option-icon gif-icon">
+                      <FileImage size={32} />
+                    </div>
+                    <div class="export-option-badge free-badge">Grátis</div>
+                  </div>
+                  <div class="export-option-content">
+                    <h6 class="export-option-title">{copy.exportGif}</h6>
+                    <p class="export-option-desc">{copy.exportGifDesc}</p>
+                    <div class="export-option-features">
+                      <div class="feature-item">
+                        <Check size={14} />
+                        <span>Suporte a transparência</span>
+                      </div>
+                      <div class="feature-item">
+                        <Check size={14} />
+                        <span>Compatível com tudo</span>
+                      </div>
+                      <div class="feature-item">
+                        <Check size={14} />
+                        <span>24 FPS</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="export-option-footer">
+                    <span class="download-text">
+                      <Download size={16} />
+                      Baixar GIF
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="export-option-wrapper">
+                <!-- WebM Export Option (Premium) -->
+                <div id="webmExportOption" class="export-option export-option-premium locked">
+                  <div class="export-option-header">
+                    <div class="export-option-icon webm-icon">
+                      <Film size={32} />
+                    </div>
+                    <div class="export-option-badge premium-badge-small">
+                      <Star size={10} />
+                      Premium
+                    </div>
+                  </div>
+                  <div class="export-option-content">
+                    <h6 id="webmTitle" class="export-option-title">{copy.exportWebM}</h6>
+                    <p id="webmDesc" class="export-option-desc">{copy.exportWebMDesc}</p>
+                    <div class="export-option-features">
+                      <div class="feature-item">
+                        <Check size={14} />
+                        <span>Qualidade superior</span>
+                      </div>
+                      <div class="feature-item">
+                        <Check size={14} />
+                        <span>60 FPS fluidos</span>
+                      </div>
+                      <div class="feature-item">
+                        <Check size={14} />
+                        <span>Menor tamanho</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="export-option-footer">
+                    <span class="locked-text">
+                      <Star size={14} />
+                      Adquirir Rank Premium
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import '../../scripts/token-animator/app.ts';
+  </script>
+  
+  <script is:inline src="/js/libs/gif.js"></script>
+  
+  <script>
+    import { getSession } from '../../scripts/session-manager';
+    
+    // Armazenar sessão globalmente
+    let userSession: any = null;
+    
+    // Carregar sessão no início
+    (async function loadSession() {
+      const section = document.querySelector('[data-api-base]') as HTMLElement;
+      const apiBase = section?.dataset.apiBase || '';
+      
+      if (!apiBase) return;
+      
+      try {
+        userSession = await getSession(apiBase);
+        console.log('🔍 Sessão carregada:', userSession);
+      } catch (error) {
+        console.error('❌ Erro ao carregar sessão:', error);
+      }
+    })();
+    
+    // Função para verificar e configurar opção WebM
+    (window as any).updateWebMAccess = function() {
+      const webmOption = document.getElementById('webmExportOption');
+      const webmFooter = webmOption?.querySelector('.export-option-footer');
+      const webmTitle = document.getElementById('webmTitle');
+      const webmDesc = document.getElementById('webmDesc');
+      
+      if (!webmOption) return;
+      
+      // Verificar se tem Premium Rank (level >= 1 E active = true)
+      const hasPremium = userSession?.authenticated === true && 
+                        userSession?.premium?.active === true && 
+                        (userSession?.premium?.level ?? 0) >= 1;
+      
+      console.log('✅ Tem Premium?', hasPremium);
+      console.log('📊 Level:', userSession?.premium?.level, 'Active:', userSession?.premium?.active);
+      
+      if (hasPremium) {
+        console.log('🎉 Liberando acesso WebM...');
+        
+        // Remover classe locked
+        webmOption.classList.remove('locked');
+        webmOption.style.cursor = 'pointer';
+        
+        // Atualizar título
+        if (webmTitle) {
+          webmTitle.textContent = 'WebM (Alta Qualidade)';
+        }
+        
+        // Atualizar descrição
+        if (webmDesc) {
+          webmDesc.textContent = 'Melhor qualidade, 60 FPS, arquivo menor';
+        }
+        
+        // Atualizar footer para mostrar download
+        if (webmFooter) {
+          // Usar ícone Download do Lucide (inline SVG)
+          webmFooter.innerHTML = `
+            <span class="download-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" x2="12" y1="15" y2="3"/>
+              </svg>
+              Baixar WebM
+            </span>
+          `;
+        }
+        
+        // Configurar click para exportar
+        webmOption.onclick = function() {
+          console.log('🚀 Exportando WebM...');
+          (window as any).exportWebM();
+          (window as any).closeExportModal();
+        };
+        
+        console.log('✅ WebM liberado com sucesso!');
+      } else {
+        console.log('🔒 WebM bloqueado - sem premium');
+        
+        // Manter classe locked
+        webmOption.classList.add('locked');
+        webmOption.style.cursor = 'pointer';
+        
+        // Configurar click para redirecionar
+        webmOption.onclick = function() {
+          window.location.href = '/#premium';
+        };
+      }
+    };
+  </script>
+  
+  <script is:inline>
+    // Funções para controlar o modal customizado
+    function openExportModal() {
+      const modal = document.getElementById('exportModal');
+      if (modal) {
+        // Atualizar acesso WebM quando modal abrir
+        if (window.updateWebMAccess) {
+          window.updateWebMAccess();
+        }
+        
+        modal.style.display = 'flex';
+        // Pequeno delay para permitir a transição
+        setTimeout(() => {
+          modal.classList.add('active');
+        }, 10);
+        // Prevenir scroll do body
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeExportModal() {
+      const modal = document.getElementById('exportModal');
+      if (modal) {
+        modal.classList.remove('active');
+        // Aguardar a animação antes de esconder
+        setTimeout(() => {
+          modal.style.display = 'none';
+          // Restaurar scroll do body
+          document.body.style.overflow = '';
+        }, 300);
+      }
+    }
+
+    // Fechar modal ao clicar fora
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('exportModal');
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            closeExportModal();
+          }
+        });
+      }
+
+      // Fechar modal com ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeExportModal();
+        }
+      });
+    });
+  </script>
+
+  <style is:global>
+    
+    .token-animator-section {
+      min-height: 70vh;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .animate-fade-in { animation: fadeIn 0.8s ease-out; }
+    .animate-fade-in-delay { animation: fadeIn 0.8s ease-out 0.2s both; }
+    .animate-fade-in-delay-2 { animation: fadeIn 0.8s ease-out 0.4s both; }
+    .animate-slide-up { animation: slideUp 0.8s ease-out 0.4s both; }
+    .animate-slide-up-delay { animation: slideUp 0.8s ease-out 0.6s both; }
+
+    /* Canvas Card */
+    /* Canvas Card */
+    .canvas-card {
+      background: #1a1d23;
+      backdrop-filter: blur(10px);
+      border: 1px solid #2d3139;
+      border-radius: 20px;
+      padding: 0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .canvas-container {
+      position: relative;
+      border: 2px dashed #3d4349;
+      height: 600px;
+      border-radius: 0;
+      background: #2a2e35;
+      background-image: repeating-conic-gradient(#2f3339 0% 25%, #2a2e35 0% 50%);
+      transition: border-color 0.3s ease;
+      overflow: hidden;
+    }
+
+    .canvas-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .canvas-placeholder.d-none {
+      display: none !important;
+    }
+
+    .canvas-container.drag-over {
+      border-color: var(--bs-primary);
+      border-style: solid;
+      background: #2d1820;
+    }
+
+    .upload-label {
+      cursor: pointer;
+      padding: 3rem 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      border-radius: 12px;
+    }
+
+    .upload-label:hover {
+      background: #1f2329;
+    }
+
+    .upload-label svg {
+      color: var(--bs-primary);
+      transition: transform 0.3s ease;
+    }
+
+    .upload-label:hover svg {
+      transform: translateY(-5px);
+    }
+
+    .scroll-area {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #stage {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .main-canvas {
+      display: block;
+      border-radius: 0;
+      max-width: 100%;
+      max-height: 600px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(13, 15, 18, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      background: #1a1d23;
+      border: 1px solid #2d3139;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      min-width: 300px;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #3d4349;
+      border-top: 6px solid var(--bs-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .loading-text {
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: center;
+      margin: 0;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: #2d3139;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--bs-primary), #ff0958);
+      border-radius: 4px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      color: var(--bs-primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    /* Player Controls */
+    .player-controls {
+      background: #15171c;
+      border-top: 1px solid #2d3139;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .player-btn {
+      background: #2d3139;
+      border: 1px solid #3d4349;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    .player-btn:hover:not(:disabled) {
+      background: #3d4349;
+      border-color: var(--bs-primary);
+      transform: scale(1.05);
+    }
+
+    .player-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      background: #1a1d23;
+      border-color: #2d3139;
+    }
+
+    .player-btn.play-pause {
+      background: var(--bs-primary);
+      border-color: var(--bs-primary);
+      width: 48px;
+      height: 48px;
+    }
+
+    .player-btn.play-pause:hover:not(:disabled) {
+      background: #ff0958;
+      border-color: #ff0958;
+      box-shadow: 0 0 0 4px rgba(248, 7, 82, 0.2);
+    }
+
+    .player-btn.play-pause:disabled {
+      background: #2d1820;
+      border-color: #3d2830;
+      opacity: 0.3;
+    }
+
+    .player-btn svg {
+      flex-shrink: 0;
+    }
+
+    .player-info {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #b3b3b3;
+      font-size: 0.9rem;
+      margin-left: auto;
+    }
+
+    .player-info .separator {
+      color: #3d4349;
+    }
+
+    #effectCount {
+      color: white;
+      font-weight: 600;
+    }
+
+    .status-playing {
+      color: var(--bs-primary);
+      font-weight: 600;
+    }
+
+    .status-paused {
+      color: #6c757d;
+    }
+
+    /* Controls Card */
+    .controls-card {
+      background: #1a1d23;
+      backdrop-filter: blur(10px);
+      border: 1px solid #2d3139;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .controls-card:hover {
+      box-shadow: 0 12px 40px rgba(248, 7, 82, 0.15);
+      border-color: #3d4349;
+    }
+
+    .card-header-custom {
+      padding: 1rem;
+      border-bottom: 1px solid #2d3139;
+      background: #1f2329;
+    }
+
+    .card-header-custom h6 {
+      color: white;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .card-header-effects {
+      padding: 1.25rem;
+      border-bottom: 1px solid rgba(45, 49, 57, 0.5);
+      background: linear-gradient(135deg, #2d1820 0%, #1f1318 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header-effects::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--bs-primary), transparent);
+      opacity: 0.5;
+    }
+
+    .card-header-effects h6 {
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .card-body-custom {
+      padding: 1.5rem;
+      min-height: 200px;
+      background: linear-gradient(180deg, #1a1d23 0%, #15171c 100%);
+    }
+
+    /* Brush Tools */
+    .brush-preview-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .brush-preview {
+      background: #2d3236;
+      border: 1px solid #3d4349;
+    }
+
+    /* Effects List */
+    .effects-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+
+    .empty-effects-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+
+    .empty-effects-state:hover {
+      opacity: 0.7;
+    }
+
+    .empty-effects-state.hidden {
+      display: none;
+    }
+
+    .empty-effects-state .empty-icon {
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .empty-effects-state p {
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .effects-list::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .effects-list::-webkit-scrollbar-track {
+      background: #15171c;
+      border-radius: 4px;
+    }
+
+    .effects-list::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #f80752, #c00540);
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .effects-list::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #ff0958, #f80752);
+    }
+
+    /* Accordion Styles */
+    .accordion {
+      padding: 0.5rem;
+    }
+
+    .accordion-item {
+      background: #1f2329 !important;
+      border: 1px solid #2d3139 !important;
+      border-radius: 16px !important;
+      margin-bottom: 0.875rem !important;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .accordion-item:hover {
+      background: #252932 !important;
+      border-color: #f80752 !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(248, 7, 82, 0.15);
+    }
+
+    .accordion-button {
+      background: transparent !important;
+      color: white !important;
+      border: none !important;
+      padding: 1rem 1.25rem !important;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.02em;
+    }
+
+    .accordion-button svg {
+      flex-shrink: 0;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+    }
+
+    .accordion-button:not(.collapsed) svg {
+      opacity: 1;
+      stroke: var(--bs-primary);
+    }
+
+    .accordion-button:not(.collapsed) {
+      background: linear-gradient(135deg, #2d1820 0%, #1f1318 100%) !important;
+      box-shadow: none !important;
+      color: var(--bs-primary) !important;
+    }
+
+    .accordion-button:focus {
+      box-shadow: none !important;
+      border-color: transparent !important;
+    }
+
+    .accordion-button::after {
+      filter: brightness(0) invert(1);
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-button:not(.collapsed)::after {
+      filter: brightness(0) saturate(100%) invert(34%) sepia(95%) saturate(6291%) hue-rotate(338deg) brightness(98%) contrast(98%);
+    }
+
+    .accordion-body {
+      background: linear-gradient(180deg, #15171c 0%, #12141a 100%) !important;
+      color: #f0f0f0 !important;
+      padding: 1.5rem !important;
+      border-top: 1px solid rgba(45, 49, 57, 0.5);
+      position: relative;
+    }
+
+    .accordion-body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(248, 7, 82, 0.3), transparent);
+    }
+
+    .accordion-collapse {
+      border: none !important;
+    }
+
+    /* Form Controls dentro do Accordion */
+    .accordion-body .form-range {
+      height: 6px;
+      background: linear-gradient(to right, #2d3139, #3d4349);
+      border-radius: 6px;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .accordion-body .form-range::-webkit-slider-thumb {
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(135deg, #ff0958, #f80752);
+      border: 2px solid #15171c;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(248, 7, 82, 0.4);
+    }
+
+    .accordion-body .form-range::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 6px rgba(248, 7, 82, 0.15), 0 4px 12px rgba(248, 7, 82, 0.6);
+      background: linear-gradient(135deg, #ff1565, #ff0958);
+    }
+
+    .accordion-body .form-range::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(135deg, #ff0958, #f80752);
+      border: 2px solid #15171c;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(248, 7, 82, 0.4);
+    }
+
+    .accordion-body .form-range::-moz-range-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 6px rgba(248, 7, 82, 0.15), 0 4px 12px rgba(248, 7, 82, 0.6);
+      background: linear-gradient(135deg, #ff1565, #ff0958);
+    }
+
+    .accordion-body .form-label {
+      color: #b3b3b3;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .accordion-body .form-label .text-white {
+      background: linear-gradient(135deg, #f80752, #ff0958);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .accordion-body .form-label::after {
+      content: attr(data-property);
+      display: none;
+    }
+
+    .accordion-body > div:not(:last-child) {
+      margin-bottom: 1.125rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(45, 49, 57, 0.3);
+    }
+
+    .accordion-body > div:last-child {
+      margin-bottom: 0;
+    }
+
+    .accordion-body .mb-3 {
+      background: rgba(26, 29, 35, 0.4);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid rgba(45, 49, 57, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .accordion-body .mb-3:hover {
+      background: rgba(26, 29, 35, 0.6);
+      border-color: rgba(248, 7, 82, 0.2);
+      transform: translateX(2px);
+    }
+
+    .accordion-body .d-flex.gap-2 {
+      padding: 0.75rem;
+      background: rgba(26, 29, 35, 0.3);
+      border-radius: 10px;
+      margin-bottom: 1.25rem !important;
+      border: 1px solid rgba(45, 49, 57, 0.3);
+    }
+
+    .accordion-body .form-check-input {
+      background-color: #3d4349;
+      border-color: #4d5359;
+    }
+
+    .accordion-body .form-check-input:checked {
+      background-color: var(--bs-primary);
+      border-color: var(--bs-primary);
+    }
+
+    .accordion-body .form-check-label {
+      color: #cccccc;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .accordion-body .btn {
+      font-size: 0.85rem;
+      padding: 0.625rem 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .accordion-body .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+
+    .accordion-body .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .accordion-body .btn svg {
+      transition: transform 0.25s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .accordion-body .btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .accordion-body .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .accordion-body .btn:hover svg {
+      transform: scale(1.1);
+    }
+
+    .accordion-body .btn:active {
+      transform: translateY(0);
+    }
+
+    .accordion-body .btn-outline-secondary {
+      border-color: #3d4349;
+      color: #cccccc;
+      background: rgba(45, 49, 57, 0.2);
+    }
+
+    .accordion-body .btn-outline-secondary:hover {
+      background: linear-gradient(135deg, #2d3139, #3d4349);
+      border-color: #5d6369;
+      color: white;
+      box-shadow: 0 6px 16px rgba(61, 67, 73, 0.4);
+    }
+
+    .accordion-body .btn-primary {
+      background: linear-gradient(135deg, var(--bs-primary), #ff0958);
+      border-color: var(--bs-primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(248, 7, 82, 0.3);
+    }
+
+    .accordion-body .btn-primary:hover {
+      background: linear-gradient(135deg, #ff0958, #ff1565);
+      border-color: #ff0958;
+      box-shadow: 0 6px 20px rgba(248, 7, 82, 0.5);
+    }
+
+    .accordion-body .btn-outline-danger {
+      border-color: rgba(220, 53, 69, 0.3);
+      color: #ea868f;
+      background: rgba(45, 24, 32, 0.2);
+    }
+
+    .accordion-body .btn-outline-danger:hover {
+      background: linear-gradient(135deg, rgba(45, 24, 32, 0.8), rgba(132, 32, 41, 0.3));
+      border-color: #dc3545;
+      color: #ff6b7a;
+      box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+    }
+
+    .accordion-body .btn-outline-danger svg {
+      filter: drop-shadow(0 0 4px rgba(220, 53, 69, 0.3));
+    }
+
+
+    .export-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .export-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .export-modal-container {
+      max-width: 900px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .export-modal-overlay.active .export-modal-container {
+      transform: scale(1) translateY(0);
+    }
+
+    .export-modal-content {
+      background: linear-gradient(180deg, #1a1d23 0%, #15171c 100%);
+      border: 1px solid rgba(248, 7, 82, 0.2);
+      border-radius: 24px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(248, 7, 82, 0.1);
+      overflow: hidden;
+    }
+
+    .export-modal-header {
+      background: linear-gradient(135deg, #2d1820 0%, #1f1318 100%);
+      border-bottom: 1px solid rgba(248, 7, 82, 0.3);
+      padding: 1.75rem 2rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .export-modal-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--bs-primary), transparent);
+      opacity: 0.6;
+    }
+
+    .export-modal-title {
+      color: white;
+      font-weight: 700;
+      font-size: 1.35rem;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .export-modal-title svg {
+      color: var(--bs-primary);
+      filter: drop-shadow(0 0 8px rgba(248, 7, 82, 0.5));
+      flex-shrink: 0;
+    }
+
+    .export-modal-close {
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    .export-modal-close:hover {
+      opacity: 1;
+      background: rgba(248, 7, 82, 0.1);
+      transform: rotate(90deg);
+    }
+
+    .export-modal-close svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .export-modal-body {
+      padding: 2rem;
+    }
+
+    /* Grid de opções de exportação */
+    .export-options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .export-option-wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 768px) {
+      .export-options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Scrollbar customizado para o modal */
+    .export-modal-container::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .export-modal-container::-webkit-scrollbar-track {
+      background: #15171c;
+      border-radius: 10px;
+    }
+
+    .export-modal-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #f80752, #c00540);
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .export-modal-container::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #ff0958, #f80752);
+    }
+
+
+    .export-option {
+      background: linear-gradient(135deg, #1f2329 0%, #1a1d23 100%);
+      border: 2px solid #2d3139;
+      border-radius: 20px;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .export-option::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at top right, rgba(248, 7, 82, 0.08), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .export-option:hover::before {
+      opacity: 1;
+    }
+
+    .export-option:hover {
+      border-color: var(--bs-primary);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(248, 7, 82, 0.25), 0 0 0 1px rgba(248, 7, 82, 0.3);
+    }
+
+    .export-option-header {
+      padding: 1.5rem 1.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .export-option-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .export-option-icon::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 18px;
+      padding: 2px;
+      background: linear-gradient(135deg, currentColor, transparent);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .export-option:hover .export-option-icon::after {
+      opacity: 0.5;
+    }
+
+    .gif-icon {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.05));
+      border: 2px solid rgba(34, 197, 94, 0.4);
+      color: #22c55e;
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .webm-icon {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.05));
+      border: 2px solid rgba(139, 92, 246, 0.4);
+      color: #8b5cf6;
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .export-option:hover .export-option-icon {
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: 0 12px 30px rgba(34, 197, 94, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .export-option-premium:hover .webm-icon {
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .export-option-badge {
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .free-badge {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
+    }
+
+    .premium-badge-small {
+      background: linear-gradient(135deg, rgba(248, 7, 82, 0.25), rgba(255, 9, 88, 0.15));
+      border: 1px solid rgba(248, 7, 82, 0.4);
+      color: var(--bs-primary);
+      animation: premiumPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes premiumPulse {
+      0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(248, 7, 82, 0.4);
+      }
+      50% { 
+        box-shadow: 0 0 0 4px rgba(248, 7, 82, 0);
+      }
+    }
+
+    .export-option-content {
+      padding: 0 1.5rem;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .export-option-title {
+      color: white;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .export-option-desc {
+      color: #b3b3b3;
+      font-size: 0.9rem;
+      margin: 0 0 1rem 0;
+      line-height: 1.5;
+    }
+
+    .export-option-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #e0e0e0;
+      font-size: 0.85rem;
+    }
+
+    .feature-item svg {
+      color: #22c55e;
+      flex-shrink: 0;
+    }
+
+    .export-option-premium .feature-item svg {
+      color: #8b5cf6;
+    }
+
+    .export-option-footer {
+      padding: 1.25rem 1.5rem;
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2));
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .download-text {
+      color: #22c55e;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .export-option:hover .download-text {
+      transform: translateX(4px);
+    }
+
+    .locked-text {
+      color: #9ca3af;
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .locked-text svg {
+      color: var(--bs-primary);
+    }
+
+    .export-option-premium {
+      position: relative;
+    }
+
+    .export-option-premium::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, rgba(248, 7, 82, 0.3), rgba(139, 92, 246, 0.3));
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .export-option-premium:hover::after {
+      opacity: 0.3;
+    }
+
+    .export-option-premium.locked {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .export-option-premium.locked:hover {
+      transform: none;
+      border-color: #2d3139;
+      box-shadow: none;
+    }
+
+    .export-option-premium.locked::before {
+      opacity: 0 !important;
+    }
+
+    .export-option-premium.locked::after {
+      opacity: 0 !important;
+    }
+
+    .export-option-premium.locked:hover .export-option-icon {
+      transform: none;
+    }
+
+    /* Premium Benefits Section */
+    .premium-benefits-section {
+      background: linear-gradient(135deg, rgba(45, 24, 32, 0.4), rgba(31, 19, 24, 0.2));
+      border: 1px solid rgba(248, 7, 82, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .premium-benefits-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(248, 7, 82, 0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .benefits-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .benefits-header .star-icon {
+      color: var(--bs-primary);
+      animation: rotateStar 20s linear infinite;
+      filter: drop-shadow(0 0 8px rgba(248, 7, 82, 0.5));
+    }
+
+    @keyframes rotateStar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .benefits-header h6 {
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .benefit-card {
+      background: linear-gradient(135deg, rgba(26, 29, 35, 0.6), rgba(21, 23, 28, 0.4));
+      border: 1px solid rgba(248, 7, 82, 0.15);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      transition: all 0.3s ease;
+    }
+
+    .benefit-card:hover {
+      border-color: rgba(248, 7, 82, 0.4);
+      background: linear-gradient(135deg, rgba(26, 29, 35, 0.8), rgba(21, 23, 28, 0.6));
+      transform: translateY(-2px);
+    }
+
+    .benefit-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(248, 7, 82, 0.2), rgba(248, 7, 82, 0.05));
+      border: 1px solid rgba(248, 7, 82, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--bs-primary);
+    }
+
+    .benefit-card p {
+      color: #e0e0e0;
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.5;
+      padding-top: 0.5rem;
+    }
+
+    .upgrade-cta {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-upgrade {
+      background: linear-gradient(135deg, var(--bs-primary), #ff0958);
+      border: none;
+      color: white;
+      padding: 0.875rem 2rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(248, 7, 82, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-upgrade::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-upgrade:hover::before {
+      left: 100%;
+    }
+
+    .btn-upgrade:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(248, 7, 82, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-upgrade:active {
+      transform: translateY(0);
+    }
+
+    .btn-upgrade svg {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Action Buttons */
+    .actions-wrapper button {
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .actions-wrapper .btn-primary:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(248, 7, 82, 0.5);
+    }
+
+    .actions-wrapper .btn-success:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(34, 197, 94, 0.5);
+    }
+
+    .actions-wrapper button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: grayscale(0.7);
+    }
+
+    .actions-wrapper .btn-primary:disabled {
+      background: #2d1820;
+      border-color: #3d2830;
+    }
+
+    .actions-wrapper .btn-success:disabled {
+      background: #1a2e23;
+      border-color: #2d4339;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .scroll-area {
+        height: 500px;
+      }
+
+      .canvas-container {
+        height: 500px;
+      }
+
+      .main-canvas {
+        max-height: 500px;
+      }
+
+      .animate-slide-up-delay {
+        animation-delay: 0.2s;
+      }
+
+      .player-info {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .canvas-card {
+        padding: 0;
+      }
+
+      .upload-label {
+        padding: 2rem 1rem;
+      }
+
+      .scroll-area {
+        height: 400px;
+      }
+
+      .canvas-container {
+        height: 400px;
+      }
+
+      .main-canvas {
+        max-height: 400px;
+      }
+
+      .player-controls {
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+      }
+
+      .player-btn {
+        width: 36px;
+        height: 36px;
+      }
+
+      .player-btn.play-pause {
+        width: 42px;
+        height: 42px;
+      }
+
+      .player-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        font-size: 0.8rem;
+      }
+
+      .player-info .separator {
+        display: none;
+      }
+    }
+
+  </style>
+</Layout>

@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro';
 import { getLocale } from "astro-i18n-aut";
 import { loadT, getStaticPaths } from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
-import config from '../config.json';
+import config from '../../config.json';
 import { User, BookText } from '@lucide/astro';
 
 export { getStaticPaths };
@@ -180,7 +180,6 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     }
 
     .tool-card:hover {
-      transform: translateY(-8px);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
       border-color: rgba(248, 7, 82, 0.3);
     }
@@ -236,9 +235,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       transition: transform 0.3s ease;
     }
 
-    .tool-card:hover .arrow-icon {
-      transform: translateX(4px);
-    }
+
 
     @keyframes fadeInUp {
       from {
@@ -313,46 +310,59 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
                   <div class="info-value" id="user-id">-</div>
                 </div>
               </div>
-            </div>
 
-            <div class="text-center mt-4">
-              <button 
-                id="logout-btn"
-                class="btn btn-outline-danger fw-bold w-100"
-              >
-                {t.Dashbaord.user.logout.label}
-              </button>
             </div>
           </div>
         </div>
 
         <!-- Sheets Card -->
         <div class="col-lg-6 fade-in-up" style="animation-delay: 0.1s;">
-          <a href={langPrefix ? `${langPrefix}/dashboard/old/characters/` : '/dashboard/old/characters/'} class="tool-card">
-            <div class="card-body p-4 h-100 d-flex flex-column">
-              <div class="icon-container mb-3">
-                <BookText size={32} class="tool-icon text-primary" />
+          <div class="d-flex flex-column justify-content-between h-100 gap-3">
+            <a href={langPrefix ? `${langPrefix}/dashboard/old/characters/` : '/dashboard/old/characters/'} class="tool-card">
+              <div class="card-body p-4 h-100 d-flex flex-column">
+          <div class="icon-container mb-3">
+            <BookText size={32} class="tool-icon text-primary" />
+          </div>
+          <h4 class="card-title text-white mb-2">{t.Dashbaord.actions.old.title}</h4>
+          <p class="card-text text-secondary flex-grow-1">
+            {t.Dashbaord.actions.old.description}
+          </p>
+          <div class="card-footer-indicator mt-auto">
+            <span class="explore-text">{t.Dashbaord.actions.explore}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </div>
               </div>
-              <h4 class="card-title text-white mb-2">{t.Dashbaord.actions.old.title}</h4>
-              <p class="card-text text-secondary flex-grow-1">
-                {t.Dashbaord.actions.old.description}
-              </p>
-              <div class="card-footer-indicator mt-auto">
-                <span class="explore-text">{t.Dashbaord.actions.explore}</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
-                  <path d="M5 12h14"/>
-                  <path d="m12 5 7 7-7 7"/>
-                </svg>
+            </a>
+            <a href={langPrefix ? `${langPrefix}/dashboard/old/characters/` : '/dashboard/old/characters/'} class="tool-card">
+              <div class="card-body p-4 h-100 d-flex flex-column">
+          <div class="icon-container mb-3">
+            <BookText size={32} class="tool-icon text-primary" />
+          </div>
+          <h4 class="card-title text-white mb-2">{t.Dashbaord.actions.old.title}</h4>
+          <p class="card-text text-secondary flex-grow-1">
+            {t.Dashbaord.actions.old.description}
+          </p>
+          <div class="card-footer-indicator mt-auto">
+            <span class="explore-text">{t.Dashbaord.actions.explore}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
+        
       </div>
     </div>
   </section>
 
   <script>
-    import { getSession, clearSessionCache } from '../scripts/session-manager';
+    import { getSession, clearSessionCache } from '../../scripts/session-manager';
     
     const apiBaseEl = document.querySelector('[data-api-base]') as HTMLElement | null;
     const langPrefixEl = document.querySelector('[data-lang-prefix]') as HTMLElement | null;

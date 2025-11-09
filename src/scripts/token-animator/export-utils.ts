@@ -67,10 +67,10 @@ export class ExportUtils {
     const exportDuration = breathingPeriod;
     const exportFps = isMobile ? Math.min(fps, 15) : fps; // Reduzir FPS em mobile (máx 15)
     const totalFrames = Math.round(exportFps * exportDuration);
-    const frameDuration = 1000 / exportFps;
+    const frameDuration = Math.round(100 / exportFps); // delay em centissegundos (1/100 seg)
     
     console.log(`[ExportGIF] Exportando ${totalFrames} frames a ${exportFps} FPS`);
-    console.log(`[ExportGIF] Duração: ${exportDuration.toFixed(2)}s, Delay: ${frameDuration.toFixed(2)}ms`);
+    console.log(`[ExportGIF] Duração: ${exportDuration.toFixed(2)}s, Delay: ${frameDuration} centissegundos`);
     
     // Canvas temporário para redimensionamento
     const frameCanvas = document.createElement('canvas');

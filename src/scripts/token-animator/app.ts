@@ -91,7 +91,7 @@ class TokenAnimatorApp {
         this.effectsManager.showNotification('Carregue uma imagem primeiro!', 'warning');
         return;
       }
-      this.exportUtils.exportAsGIF({ fps: 24, duration: 2, quality: 10 });
+      this.exportUtils.exportAsGIF({ quality: 10 });
     };
 
     window.exportWebM = () => {
@@ -101,7 +101,7 @@ class TokenAnimatorApp {
       }
       
       // Não fazer verificação de premium aqui - já é feita no modal
-      this.exportUtils.exportAsWebM({ fps: 30, duration: 2 });
+      this.exportUtils.exportAsWebM({});
     };
     
     // Modal de exportação é configurado no Astro

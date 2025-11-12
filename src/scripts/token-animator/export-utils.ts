@@ -94,11 +94,11 @@ export class ExportUtils {
   }
 
   async exportAsGIF(options: ExportOptions): Promise<void> {
-    const { fps = 24, quality = 10 } = options;
+    const { quality = 10 } = options;
     const config: ExportConfig = {
-      fps,
-      maxWidth: 512,
-      maxHeight: 512,
+      fps: 24,
+      maxWidth: 1920,
+      maxHeight: 1080,
       formatName: 'GIF'
     };
     
@@ -167,11 +167,10 @@ export class ExportUtils {
   }
 
   async exportAsWebM(options: ExportOptions): Promise<void> {
-    const { fps = 30 } = options;
     const config: ExportConfig = {
-      fps,
-      maxWidth: 2560,
-      maxHeight: 1440,
+      fps: 24,
+      maxWidth: 1920,
+      maxHeight: 1080,
       formatName: 'WebM'
     };
     
@@ -231,32 +230,33 @@ export class ExportUtils {
     
     mediaRecorder.start();
     
-    let currentFrame = 0;
-    
-    const renderFrame = () => {
-      if (currentFrame >= totalFrames) {
-        mediaRecorder.stop();
-        return;
+    // Renderizar todos os frames sequencialmente com timing preciso
+    const renderAllFrames = async () => {
+      const frameInterval = 1000 / config.fps;
+      
+      for (let currentFrame = 0; currentFrame < totalFrames; currentFrame++) {
+        // Calcular o tempo exato dentro do ciclo de respiração
+        const frameTime = (currentFrame / totalFrames) * breathingPeriod;
+        
+        // Renderizar frame diretamente no canvas de exportação
+        this.renderFrameAtTime(frameTime, exportWidth, exportHeight, exportCanvas);
+        
+        // Atualizar progresso
+        const progress = Math.round((currentFrame / totalFrames) * 100);
+        this.updateExportProgress(progress, `Gravando: ${currentFrame}/${totalFrames} frames`);
+        
+        // Aguardar o intervalo entre frames para sincronizar com o MediaRecorder
+        await new Promise(resolve => setTimeout(resolve, frameInterval));
       }
       
-      // Calcular o tempo exato dentro do ciclo de respiração
-      const frameTime = (currentFrame / totalFrames) * breathingPeriod;
+      // Pequeno delay para garantir que o último frame seja capturado
+      await new Promise(resolve => setTimeout(resolve, frameInterval * 2));
       
-      // Renderizar frame diretamente no canvas de exportação
-      this.renderFrameAtTime(frameTime, exportWidth, exportHeight, exportCanvas);
-      
-      // Atualizar progresso
-      const progress = Math.round((currentFrame / totalFrames) * 100);
-      this.updateExportProgress(progress, `Gravando: ${currentFrame}/${totalFrames} frames`);
-      
-      currentFrame++;
-      
-      // Próximo frame no intervalo correto
-      setTimeout(renderFrame, 1000 / config.fps);
+      mediaRecorder.stop();
     };
     
     // Iniciar renderização
-    renderFrame();
+    renderAllFrames();
   }
 
   private setExportingState(isExporting: boolean, message?: string): void {

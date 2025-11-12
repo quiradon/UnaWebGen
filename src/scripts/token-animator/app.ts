@@ -175,10 +175,58 @@ class TokenAnimatorApp {
     reader.onload = (e) => {
       const result = e.target?.result;
       if (typeof result === 'string') {
-        this.loadImage(result);
+        this.resizeAndLoadImage(result);
       }
     };
     reader.readAsDataURL(file);
+  }
+
+  private resizeAndLoadImage(src: string): void {
+    const img = new Image();
+    img.onload = () => {
+      const maxSize = 1920;
+      let width = img.width;
+      let height = img.height;
+
+      // Verificar se precisa redimensionar
+      if (width > maxSize || height > maxSize) {
+        const scale = Math.min(maxSize / width, maxSize / height);
+        width = Math.floor(width * scale);
+        height = Math.floor(height * scale);
+
+        console.log(`[ImageResize] Original: ${img.width}x${img.height} → Redimensionado: ${width}x${height}`);
+        
+        // Criar canvas temporário para redimensionar
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = width;
+        tempCanvas.height = height;
+        const tempCtx = tempCanvas.getContext('2d', { alpha: true });
+
+        if (tempCtx) {
+          // Redimensionar com qualidade
+          tempCtx.imageSmoothingEnabled = true;
+          tempCtx.imageSmoothingQuality = 'high';
+          tempCtx.drawImage(img, 0, 0, width, height);
+
+          // Converter de volta para data URL
+          const resizedSrc = tempCanvas.toDataURL('image/png');
+          this.loadImage(resizedSrc);
+        } else {
+          // Fallback: carregar imagem original
+          this.loadImage(src);
+        }
+      } else {
+        console.log(`[ImageResize] Imagem dentro do limite: ${width}x${height}`);
+        // Imagem já está dentro do limite
+        this.loadImage(src);
+      }
+    };
+
+    img.onerror = () => {
+      this.effectsManager.showNotification('Erro ao processar imagem.', 'error');
+    };
+
+    img.src = src;
   }
 
   private async loadImage(src: string): Promise<void> {

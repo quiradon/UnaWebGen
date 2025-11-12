@@ -4,4 +4,5 @@ export
 /dist
 .vscode
 /.vscode
+/.astro/
 src/astro_tmp_pages_*/

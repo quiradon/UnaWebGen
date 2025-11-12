@@ -12,8 +12,6 @@ interface FrameRenderData {
   breathingPeriod: number;
   totalFrames: number;
   exportDuration: number;
-  exportWidth: number;
-  exportHeight: number;
 }
 
 export class ExportUtils {
@@ -30,7 +28,7 @@ export class ExportUtils {
   /**
    * Calcula os parâmetros de renderização para exportação com loop perfeito
    */
-  private calculateRenderParameters(fps: number, maxWidth: number, maxHeight: number): FrameRenderData | null {
+  private calculateRenderParameters(fps: number): { breathingPeriod: number; totalFrames: number; exportDuration: number } | null {
     const activeEffects = this.effectsManager.getActiveEffects();
     
     if (activeEffects.length === 0) {
@@ -48,35 +46,17 @@ export class ExportUtils {
     const totalFrames = Math.max(Math.round(fps * breathingPeriod), fps); // Mínimo de 1 segundo
     const exportDuration = totalFrames / fps; // Duração real ajustada aos frames
     
-    // Calcular dimensões de exportação mantendo aspect ratio
-    let exportWidth = this.canvas.width;
-    let exportHeight = this.canvas.height;
-    
-    if (exportWidth > maxWidth || exportHeight > maxHeight) {
-      const scale = Math.min(maxWidth / exportWidth, maxHeight / exportHeight);
-      exportWidth = Math.floor(exportWidth * scale);
-      exportHeight = Math.floor(exportHeight * scale);
-    }
-    
     return {
       breathingPeriod,
       totalFrames,
-      exportDuration,
-      exportWidth,
-      exportHeight
+      exportDuration
     };
   }
 
   /**
-   * Cria uma versão redimensionada do canvas para otimizar processamento
+   * Calcula dimensões de exportação mantendo aspect ratio
    */
-  private async createResizedCanvas(maxWidth: number, maxHeight: number): Promise<{
-    canvas: HTMLCanvasElement;
-    renderer: any;
-    width: number;
-    height: number;
-  }> {
-    // Calcular dimensões mantendo aspect ratio
+  private calculateExportDimensions(maxWidth: number, maxHeight: number): { width: number; height: number } {
     let width = this.canvas.width;
     let height = this.canvas.height;
     
@@ -86,69 +66,33 @@ export class ExportUtils {
       height = Math.floor(height * scale);
     }
     
-    // Criar canvas redimensionado
-    const resizedCanvas = document.createElement('canvas');
-    resizedCanvas.width = width;
-    resizedCanvas.height = height;
-    const ctx = resizedCanvas.getContext('2d', { alpha: true });
-    
-    if (!ctx) {
-      throw new Error('Não foi possível criar contexto 2D');
-    }
-    
-    // Copiar imagem redimensionada
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(this.canvas, 0, 0, width, height);
-    
-    // Criar um renderer temporário com o canvas redimensionado
-    const { Canvas2DRenderer } = await import('./canvas2d-renderer');
-    const tempRenderer = new Canvas2DRenderer(resizedCanvas);
-    
-    // Carregar a imagem redimensionada no renderer temporário
-    const resizedImageData = ctx.getImageData(0, 0, width, height);
-    (tempRenderer as any).canvas = resizedCanvas;
-    (tempRenderer as any).imageData = resizedImageData;
-    (tempRenderer as any).userImage = this.renderer.image;
-    
-    // Configurar canvas temporário interno
-    (tempRenderer as any).tempCanvas = document.createElement('canvas');
-    (tempRenderer as any).tempCanvas.width = width;
-    (tempRenderer as any).tempCanvas.height = height;
-    const tempCtx = (tempRenderer as any).tempCanvas.getContext('2d', { alpha: true });
-    tempCtx.putImageData(resizedImageData, 0, 0);
-    (tempRenderer as any).tempCtx = tempCtx;
-    
-    return { canvas: resizedCanvas, renderer: tempRenderer, width, height };
+    return { width, height };
   }
 
   /**
-   * Renderiza um frame específico no tempo dado
+   * Renderiza um frame específico no tempo dado e redimensiona
    */
   private renderFrameAtTime(
     frameTime: number,
     exportWidth: number,
     exportHeight: number,
-    targetCanvas?: HTMLCanvasElement,
-    customRenderer?: any
+    targetCanvas?: HTMLCanvasElement
   ): HTMLCanvasElement {
-    // Usar renderer customizado se fornecido, senão usar o original
-    const rendererToUse = customRenderer || this.renderer;
-    const canvasToUse = customRenderer ? customRenderer.canvas : this.canvas;
+    // SEMPRE renderizar no canvas original para garantir consistência
+    this.renderer.render(frameTime, true);
     
-    // Renderizar no canvas
-    rendererToUse.render(frameTime, true);
-    
-    // Criar canvas temporário se necessário
+    // Criar canvas de saída com dimensões de exportação
     const frameCanvas = targetCanvas || document.createElement('canvas');
     frameCanvas.width = exportWidth;
     frameCanvas.height = exportHeight;
     const frameCtx = frameCanvas.getContext('2d', { alpha: true });
     
     if (frameCtx) {
-      // Limpar e desenhar
+      // Limpar e redimensionar
       frameCtx.clearRect(0, 0, exportWidth, exportHeight);
-      frameCtx.drawImage(canvasToUse, 0, 0, exportWidth, exportHeight);
+      frameCtx.imageSmoothingEnabled = true;
+      frameCtx.imageSmoothingQuality = 'high';
+      frameCtx.drawImage(this.canvas, 0, 0, exportWidth, exportHeight);
     }
     
     return frameCanvas;
@@ -171,13 +115,17 @@ export class ExportUtils {
     
     this.setExportingState(true, 'Preparando exportação GIF...');
     
-    // Criar canvas redimensionado para otimizar processamento
-    const resized = await this.createResizedCanvas(config.maxWidth, config.maxHeight);
-    const exportWidth = resized.width;
-    const exportHeight = resized.height;
+    // Pausar animação principal e resetar para tempo 0
+    const wasAnimating = this.effectsManager.animationEnabled;
+    this.effectsManager.animationEnabled = false;
+    this.renderer.render(0, true); // Forçar render no tempo 0
     
-    const renderData = this.calculateRenderParameters(config.fps, exportWidth, exportHeight);
+    // Calcular dimensões de exportação (512p máximo)
+    const { width: exportWidth, height: exportHeight } = this.calculateExportDimensions(config.maxWidth, config.maxHeight);
+    
+    const renderData = this.calculateRenderParameters(config.fps);
     if (!renderData) {
+      this.effectsManager.animationEnabled = wasAnimating;
       this.setExportingState(false);
       return;
     }
@@ -213,8 +161,8 @@ export class ExportUtils {
         console.log(`[ExportGIF] Frame ${i}/${totalFrames}: t=${frameTime.toFixed(3)}s, breath=${breathValue.toFixed(3)}`);
       }
       
-      // Renderizar frame com dimensões de exportação usando canvas redimensionado
-      const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight, undefined, resized.renderer);
+      // Renderizar frame usando canvas original e redimensionar na cópia
+      const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight);
       gif.addFrame(frameCanvas, { delay: frameDuration, transparent: true });
       
       // Atualizar progresso
@@ -228,6 +176,9 @@ export class ExportUtils {
       const url = URL.createObjectURL(blob);
       this.downloadFile(url, 'token-animation.gif');
       this.effectsManager.showNotification('GIF exportado com sucesso!', 'success');
+      
+      // Restaurar estado da animação
+      this.effectsManager.animationEnabled = wasAnimating;
       this.setExportingState(false);
     });
     
@@ -256,13 +207,17 @@ export class ExportUtils {
     
     this.setExportingState(true, 'Preparando exportação WebM...');
     
-    // Criar canvas redimensionado para otimizar processamento
-    const resized = await this.createResizedCanvas(config.maxWidth, config.maxHeight);
-    const exportWidth = resized.width;
-    const exportHeight = resized.height;
+    // Pausar animação principal e resetar para tempo 0 (MESMA LÓGICA DO GIF)
+    const wasAnimating = this.effectsManager.animationEnabled;
+    this.effectsManager.animationEnabled = false;
+    this.renderer.render(0, true); // Forçar render no tempo 0
     
-    const renderData = this.calculateRenderParameters(config.fps, exportWidth, exportHeight);
+    // Calcular dimensões de exportação (1080p máximo)
+    const { width: exportWidth, height: exportHeight } = this.calculateExportDimensions(config.maxWidth, config.maxHeight);
+    
+    const renderData = this.calculateRenderParameters(config.fps);
     if (!renderData) {
+      this.effectsManager.animationEnabled = wasAnimating;
       this.setExportingState(false);
       return;
     }
@@ -327,8 +282,8 @@ export class ExportUtils {
           console.log(`[ExportWebM] Frame ${i}/${totalFrames}: t=${frameTime.toFixed(3)}s, breath=${breathValue.toFixed(3)}`);
         }
         
-        // Renderizar frame com dimensões de exportação usando canvas redimensionado
-        const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight, undefined, resized.renderer);
+        // Renderizar frame usando canvas original e redimensionar na cópia (MESMA LÓGICA DO GIF)
+        const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight);
         
         // Converter para ImageBitmap e encodar
         const bitmap = await createImageBitmap(frameCanvas);
@@ -375,11 +330,17 @@ export class ExportUtils {
       const url = URL.createObjectURL(blob);
       this.downloadFile(url, 'token-animation.webm');
       this.effectsManager.showNotification('WebM exportado com sucesso!', 'success');
+      
+      // Restaurar estado da animação
+      this.effectsManager.animationEnabled = wasAnimating;
       this.setExportingState(false);
       
     } catch (error) {
       console.error('WebM encoding failed:', error);
       this.effectsManager.showNotification('Erro ao compilar WebM. Tente novamente.', 'error');
+      
+      // Restaurar estado da animação mesmo em caso de erro
+      this.effectsManager.animationEnabled = wasAnimating;
       this.setExportingState(false);
     }
   }

@@ -18,6 +18,8 @@ export class ExportUtils {
   private canvas: HTMLCanvasElement;
   private renderer: any;
   private effectsManager: any;
+  private tempExportCanvas: HTMLCanvasElement | null = null;
+  private tempExportCtx: CanvasRenderingContext2D | null = null;
 
   constructor(canvas: HTMLCanvasElement, renderer: any, effectsManager: any) {
     this.canvas = canvas;
@@ -81,17 +83,34 @@ export class ExportUtils {
     // SEMPRE renderizar no canvas original para garantir consistência
     this.renderer.render(frameTime, true);
     
-    // Criar canvas de saída com dimensões de exportação
-    const frameCanvas = targetCanvas || document.createElement('canvas');
-    frameCanvas.width = exportWidth;
-    frameCanvas.height = exportHeight;
-    const frameCtx = frameCanvas.getContext('2d', { alpha: true });
+    // Reusar canvas temporário para GIF (evita criar/destruir objetos)
+    let frameCanvas: HTMLCanvasElement;
+    let frameCtx: CanvasRenderingContext2D | null;
+    
+    if (targetCanvas) {
+      // WebM: usar canvas fornecido
+      frameCanvas = targetCanvas;
+      frameCtx = frameCanvas.getContext('2d', { alpha: true, willReadFrequently: false });
+    } else {
+      // GIF: reusar canvas em cache
+      if (!this.tempExportCanvas || this.tempExportCanvas.width !== exportWidth || this.tempExportCanvas.height !== exportHeight) {
+        this.tempExportCanvas = document.createElement('canvas');
+        this.tempExportCanvas.width = exportWidth;
+        this.tempExportCanvas.height = exportHeight;
+        this.tempExportCtx = this.tempExportCanvas.getContext('2d', { alpha: true, willReadFrequently: false });
+      }
+      frameCanvas = this.tempExportCanvas;
+      frameCtx = this.tempExportCtx;
+    }
     
     if (frameCtx) {
-      // Limpar e redimensionar
-      frameCtx.clearRect(0, 0, exportWidth, exportHeight);
-      frameCtx.imageSmoothingEnabled = true;
-      frameCtx.imageSmoothingQuality = 'high';
+      // Não precisa de clearRect - drawImage sobrescreve tudo
+      // Smoothing HIGH apenas se redimensionando significativamente
+      const needsSmoothing = (exportWidth < this.canvas.width * 0.8) || (exportHeight < this.canvas.height * 0.8);
+      frameCtx.imageSmoothingEnabled = needsSmoothing;
+      if (needsSmoothing) {
+        frameCtx.imageSmoothingQuality = 'high';
+      }
       frameCtx.drawImage(this.canvas, 0, 0, exportWidth, exportHeight);
     }
     
@@ -150,7 +169,7 @@ export class ExportUtils {
       background: 0x000000
     });
     
-    // Renderizar frames sequencialmente
+    // Renderizar frames sequencialmente de forma assíncrona (não trava a UI)
     for (let i = 0; i < totalFrames; i++) {
       // Calcular o tempo exato dentro do ciclo de respiração
       const frameTime = (i / totalFrames) * breathingPeriod;
@@ -165,10 +184,12 @@ export class ExportUtils {
       const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight);
       gif.addFrame(frameCanvas, { delay: frameDuration, transparent: true });
       
-      // Atualizar progresso
-      if (i % 5 === 0) {
+      // Atualizar progresso e liberar a UI periodicamente
+      if (i % 5 === 0 || i === totalFrames - 1) {
         const captureProgress = Math.round((i / totalFrames) * 50);
-        this.updateExportProgress(captureProgress, `Capturando frames: ${i}/${totalFrames}`);
+        this.updateExportProgress(captureProgress, `Capturando: ${i + 1}/${totalFrames}`);
+        // Permite que a UI atualize a cada 5 frames - balanceamento entre UX e performance
+        await new Promise(resolve => setTimeout(resolve, 0));
       }
     }
     
@@ -252,7 +273,7 @@ export class ExportUtils {
       
       await output.start();
       
-      // Renderizar e adicionar frames sequencialmente (MESMA LÓGICA DO GIF)
+      // Renderizar e adicionar frames sequencialmente de forma assíncrona (MESMA LÓGICA DO GIF)
       for (let i = 0; i < totalFrames; i++) {
         // Calcular o tempo exato dentro do ciclo de respiração (MESMA FÓRMULA DO GIF)
         const frameTime = (i / totalFrames) * breathingPeriod;
@@ -273,12 +294,12 @@ export class ExportUtils {
         // Adicionar frame ao vídeo (CanvasSource captura o estado atual do canvas)
         await videoSource.add(timestamp, duration);
         
-        // Atualizar progresso
-        if (i % 5 === 0) {
+        // Atualizar progresso e liberar a UI periodicamente
+        if (i % 3 === 0 || i === totalFrames - 1) {
           const progress = Math.round((i / totalFrames) * 100);
-          this.updateExportProgress(progress, `Encodando: ${i + 1}/${totalFrames} frames`);
+          this.updateExportProgress(progress, `Encodando: ${i + 1}/${totalFrames}`);
           
-          // Permitir que a UI atualize a cada 5 frames
+          // Permite que a UI atualize a cada 3 frames - balanceamento entre UX e performance
           await new Promise(resolve => setTimeout(resolve, 0));
         }
       }
@@ -379,5 +400,11 @@ export class ExportUtils {
     setTimeout(() => {
       URL.revokeObjectURL(url);
     }, 100);
+  }
+
+  // Liberar recursos
+  dispose(): void {
+    this.tempExportCanvas = null;
+    this.tempExportCtx = null;
   }
 }

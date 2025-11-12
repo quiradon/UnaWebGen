@@ -216,51 +216,63 @@ export class Canvas2DRenderer {
       return (-Math.cos(time * speed + phase) * 0.5 + 0.5);
     });
     
+    // Pre-calcular parâmetros dos efeitos (evitar lookups repetidos)
+    const effectParams = effects.map(effect => ({
+      marker: effect.marker || { x: 0.5, y: 0.5 },
+      strength: (effect.strength || 0.03) * width, // Pre-multiplicar
+      strengthY: (effect.strength || 0.03) * height,
+      radius: effect.radius || 0.4,
+      radiusSq: (effect.radius || 0.4) ** 2, // Pre-calcular quadrado
+      softness: Math.max(0.001, effect.softness || 0.4),
+      breathCycle: breathCycles[effects.indexOf(effect)]
+    }));
+    
     for (let y = 0; y < height; y++) {
       const ny = y * invHeight;
+      const rowOffset = y * width;
       
       for (let x = 0; x < width; x++) {
         const nx = x * invWidth;
-        const dstIdx = (y * width + x) * 4;
+        const dstIdx = (rowOffset + x) * 4;
         
         let totalDisplacementX = 0;
         let totalDisplacementY = 0;
+        let hasDisplacement = false;
         
-        for (let i = 0; i < effects.length; i++) {
-          const effect = effects[i];
-          const marker = effect.marker || { x: 0.5, y: 0.5 };
-          const strength = effect.strength || 0.03;
-          const radius = effect.radius || 0.4;
-          const softness = Math.max(0.001, effect.softness || 0.4);
-          const breathCycle = breathCycles[i];
+        // Loop otimizado: early exit se fora do raio
+        for (let i = 0; i < effectParams.length; i++) {
+          const params = effectParams[i];
           
-          const dx = (nx - marker.x) * aspectCorrectionX;
-          const dy = (ny - marker.y) * aspectCorrectionY;
+          const dx = (nx - params.marker.x) * aspectCorrectionX;
+          const dy = (ny - params.marker.y) * aspectCorrectionY;
           const distanceSq = dx * dx + dy * dy;
+          
+          // Early exit: fora do raio (usando distância ao quadrado - mais rápido)
+          if (distanceSq >= params.radiusSq || distanceSq < 0.000001) continue;
+          
           const distance = Math.sqrt(distanceSq);
-          
-          if (distance >= radius || distance < 0.001) continue;
-          
-          const t = (radius - distance) / radius;
+          const t = (params.radius - distance) / params.radius;
           const bulgeFalloff = t * t * (3 - 2 * t);
           
-          const radiusSoftness = radius * softness;
+          const radiusSoftness = params.radius * params.softness;
           const centerDist = distance / radiusSoftness;
           const centerT = Math.min(1, centerDist);
           const centerSoftness = centerT * centerT * (3 - 2 * centerT);
           
-          const displacementAmount = centerSoftness * bulgeFalloff * breathCycle;
+          const displacementAmount = centerSoftness * bulgeFalloff * params.breathCycle;
           
           const invDistance = 1.0 / distance;
           const dirX = dx * invDistance;
           const dirY = dy * invDistance;
           
-          totalDisplacementX += dirX * displacementAmount * strength * width;
-          totalDisplacementY += dirY * displacementAmount * strength * height;
+          totalDisplacementX += dirX * displacementAmount * params.strength;
+          totalDisplacementY += dirY * displacementAmount * params.strengthY;
+          hasDisplacement = true;
         }
         
-        if (totalDisplacementX === 0 && totalDisplacementY === 0) {
-          const srcIdx = (y * width + x) * 4;
+        // Cópia direta se não há deslocamento (mais rápido que verificar === 0)
+        if (!hasDisplacement) {
+          const srcIdx = (rowOffset + x) * 4;
           dstData[dstIdx] = srcData[srcIdx];
           dstData[dstIdx + 1] = srcData[srcIdx + 1];
           dstData[dstIdx + 2] = srcData[srcIdx + 2];
@@ -278,19 +290,25 @@ export class Canvas2DRenderer {
         const fx = srcXFloat - x0;
         const fy = srcYFloat - y0;
         
+        // Interpolação bilinear (apenas se dentro dos limites)
         if (x0 >= 0 && x1 < width && y0 >= 0 && y1 < height) {
           const idx00 = (y0 * width + x0) * 4;
           const idx10 = (y0 * width + x1) * 4;
           const idx01 = (y1 * width + x0) * 4;
           const idx11 = (y1 * width + x1) * 4;
           
+          const fx1 = 1 - fx;
+          const fy1 = 1 - fy;
+          
+          // Otimização: calcular uma vez e reusar
           for (let c = 0; c < 4; c++) {
-            const top = srcData[idx00 + c] * (1 - fx) + srcData[idx10 + c] * fx;
-            const bottom = srcData[idx01 + c] * (1 - fx) + srcData[idx11 + c] * fx;
-            dstData[dstIdx + c] = top * (1 - fy) + bottom * fy;
+            const top = srcData[idx00 + c] * fx1 + srcData[idx10 + c] * fx;
+            const bottom = srcData[idx01 + c] * fx1 + srcData[idx11 + c] * fx;
+            dstData[dstIdx + c] = top * fy1 + bottom * fy;
           }
         } else {
-          const srcIdx = (y * width + x) * 4;
+          // Fallback: copiar pixel original
+          const srcIdx = (rowOffset + x) * 4;
           dstData[dstIdx] = srcData[srcIdx];
           dstData[dstIdx + 1] = srcData[srcIdx + 1];
           dstData[dstIdx + 2] = srcData[srcIdx + 2];

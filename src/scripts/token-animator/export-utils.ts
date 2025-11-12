@@ -125,6 +125,7 @@ export class ExportUtils {
     console.log(`[Export${config.formatName}] Duração final: ${exportDuration.toFixed(3)}s (1 ciclo completo)`);
     console.log(`[Export${config.formatName}] Delay entre frames: ${frameDuration.toFixed(2)}ms`);
     console.log(`[Export${config.formatName}] Dimensões: ${exportWidth}x${exportHeight} (max ${config.maxWidth}p)`);
+    console.log(`[Export${config.formatName}] Ciclo: t=0s (sem efeito) → t=${(breathingPeriod/2).toFixed(2)}s (máximo) → t=${breathingPeriod.toFixed(2)}s (sem efeito)`);
     
     const gif = new (window as any).GIF({
       workers: 2,
@@ -140,6 +141,12 @@ export class ExportUtils {
     for (let i = 0; i < totalFrames; i++) {
       // Calcular o tempo exato dentro do ciclo de respiração
       const frameTime = (i / totalFrames) * breathingPeriod;
+      
+      // Log de debug para alguns frames chave
+      if (i === 0 || i === Math.floor(totalFrames / 2) || i === totalFrames - 1) {
+        const breathValue = (-Math.cos(frameTime * (2 * Math.PI / breathingPeriod)) * 0.5 + 0.5);
+        console.log(`[ExportGIF] Frame ${i}/${totalFrames}: t=${frameTime.toFixed(3)}s, breath=${breathValue.toFixed(3)}`);
+      }
       
       // Renderizar e adicionar frame
       const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight);
@@ -198,30 +205,10 @@ export class ExportUtils {
     console.log(`[Export${config.formatName}] Duração final: ${exportDuration.toFixed(3)}s (1 ciclo completo)`);
     console.log(`[Export${config.formatName}] Delay entre frames: ${frameDuration.toFixed(2)}ms`);
     console.log(`[Export${config.formatName}] Dimensões: ${exportWidth}x${exportHeight} (max ${config.maxWidth}p)`);
-    
-    // Renderizar todos os frames primeiro (mesmo método do GIF)
-    const frames: ImageBitmap[] = [];
-    
-    for (let i = 0; i < totalFrames; i++) {
-      // Calcular o tempo exato dentro do ciclo de respiração
-      const frameTime = (i / totalFrames) * breathingPeriod;
-      
-      // Renderizar frame
-      const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight);
-      const bitmap = await createImageBitmap(frameCanvas);
-      frames.push(bitmap);
-      
-      // Atualizar progresso
-      if (i % 5 === 0) {
-        const captureProgress = Math.round((i / totalFrames) * 50);
-        this.updateExportProgress(captureProgress, `Capturando frames: ${i}/${totalFrames}`);
-      }
-    }
-    
-    this.updateExportProgress(50, 'Compilando vídeo WebM...');
+    console.log(`[Export${config.formatName}] Ciclo: t=0s (sem efeito) → t=${(breathingPeriod/2).toFixed(2)}s (máximo) → t=${breathingPeriod.toFixed(2)}s (sem efeito)`);
     
     try {
-      // Criar muxer WebM com configurações para loop perfeito
+      // Criar muxer WebM
       const muxer = new Muxer({
         target: new ArrayBufferTarget(),
         video: {
@@ -231,7 +218,6 @@ export class ExportUtils {
           frameRate: config.fps,
           alpha: true
         },
-        type: 'matroska', // ou 'webm'
         firstTimestampBehavior: 'strict'
       });
       
@@ -256,26 +242,41 @@ export class ExportUtils {
         latencyMode: 'quality'
       });
       
-      // Encodar cada frame com timing preciso
       const frameDurationMicros = Math.round(1_000_000 / config.fps);
       
-      for (let i = 0; i < frames.length; i++) {
-        const videoFrame = new VideoFrame(frames[i], {
+      // Renderizar e encodar frames sequencialmente (MESMO MÉTODO DO GIF)
+      for (let i = 0; i < totalFrames; i++) {
+        // Calcular o tempo exato dentro do ciclo de respiração (MESMA FÓRMULA DO GIF)
+        const frameTime = (i / totalFrames) * breathingPeriod;
+        
+        // Log de debug para alguns frames chave
+        if (i === 0 || i === Math.floor(totalFrames / 2) || i === totalFrames - 1) {
+          const breathValue = (-Math.cos(frameTime * (2 * Math.PI / breathingPeriod)) * 0.5 + 0.5);
+          console.log(`[ExportWebM] Frame ${i}/${totalFrames}: t=${frameTime.toFixed(3)}s, breath=${breathValue.toFixed(3)}`);
+        }
+        
+        // Renderizar frame (MESMO MÉTODO DO GIF)
+        const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight);
+        
+        // Converter para ImageBitmap e encodar
+        const bitmap = await createImageBitmap(frameCanvas);
+        const videoFrame = new VideoFrame(bitmap, {
           timestamp: i * frameDurationMicros,
           duration: frameDurationMicros,
           alpha: 'keep'
         });
         
-        // Keyframe no primeiro frame para melhor compatibilidade
+        // Keyframe apenas no primeiro frame
         const isKeyFrame = i === 0;
         videoEncoder.encode(videoFrame, { keyFrame: isKeyFrame });
+        
         videoFrame.close();
-        frames[i].close();
+        bitmap.close();
         
         // Atualizar progresso
         if (i % 5 === 0) {
-          const encodeProgress = 50 + Math.round((i / frames.length) * 50);
-          this.updateExportProgress(encodeProgress, `Encodando: ${i + 1}/${frames.length} frames`);
+          const progress = Math.round((i / totalFrames) * 100);
+          this.updateExportProgress(progress, `Encodando: ${i + 1}/${totalFrames} frames`);
         }
       }
       

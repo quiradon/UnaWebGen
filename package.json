@@ -23,7 +23,8 @@
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
     "html-minifier": "^4.0.0",
-    "p-limit": "^6.2.0"
+    "p-limit": "^6.2.0",
+    "webm-muxer": "^5.1.4"
   },
   "devDependencies": {
     "astro": "5.15.4",

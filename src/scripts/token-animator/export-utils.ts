@@ -1,4 +1,5 @@
 import type { ExportOptions } from './types';
+import { Muxer, ArrayBufferTarget } from 'webm-muxer';
 
 interface ExportConfig {
   fps: number;
@@ -177,7 +178,7 @@ export class ExportUtils {
     // Verificar suporte ao WebCodecs
     if (typeof VideoEncoder === 'undefined' || typeof VideoFrame === 'undefined') {
       this.effectsManager.showNotification('WebCodecs não suportado. Use um navegador moderno (Chrome/Edge 94+).', 'error');
-      console.error('WebCodecs API not supported. Falling back to MediaRecorder would be needed.');
+      console.error('WebCodecs API not supported.');
       return;
     }
     
@@ -219,18 +220,27 @@ export class ExportUtils {
     
     this.updateExportProgress(50, 'Compilando vídeo WebM...');
     
-    // Encodar frames diretamente em WebM usando WebCodecs
-    const chunks: Uint8Array<ArrayBuffer>[] = [];
-    let videoEncoder: VideoEncoder;
-    
     try {
-      videoEncoder = new VideoEncoder({
-        output: (chunk: any, metadata: any) => {
-          const data = new Uint8Array(chunk.byteLength);
-          chunk.copyTo(data);
-          chunks.push(data);
+      // Criar muxer WebM com configurações para loop perfeito
+      const muxer = new Muxer({
+        target: new ArrayBufferTarget(),
+        video: {
+          codec: 'V_VP9',
+          width: exportWidth,
+          height: exportHeight,
+          frameRate: config.fps,
+          alpha: true
         },
-        error: (error: Error) => {
+        type: 'matroska', // ou 'webm'
+        firstTimestampBehavior: 'strict'
+      });
+      
+      // Criar encoder de vídeo
+      const videoEncoder = new VideoEncoder({
+        output: (chunk, metadata) => {
+          muxer.addVideoChunk(chunk, metadata);
+        },
+        error: (error) => {
           console.error('VideoEncoder error:', error);
           this.effectsManager.showNotification('Erro ao encodar vídeo.', 'error');
         }
@@ -242,11 +252,12 @@ export class ExportUtils {
         height: exportHeight,
         bitrate: 5_000_000,
         framerate: config.fps,
-        alpha: 'keep'
+        alpha: 'keep',
+        latencyMode: 'quality'
       });
       
-      // Encodar cada frame
-      const frameDurationMicros = (1_000_000 / config.fps);
+      // Encodar cada frame com timing preciso
+      const frameDurationMicros = Math.round(1_000_000 / config.fps);
       
       for (let i = 0; i < frames.length; i++) {
         const videoFrame = new VideoFrame(frames[i], {
@@ -255,29 +266,38 @@ export class ExportUtils {
           alpha: 'keep'
         });
         
-        videoEncoder.encode(videoFrame, { keyFrame: i === 0 });
+        // Keyframe no primeiro frame para melhor compatibilidade
+        const isKeyFrame = i === 0;
+        videoEncoder.encode(videoFrame, { keyFrame: isKeyFrame });
         videoFrame.close();
         frames[i].close();
         
         // Atualizar progresso
         if (i % 5 === 0) {
           const encodeProgress = 50 + Math.round((i / frames.length) * 50);
-          this.updateExportProgress(encodeProgress, `Encodando: ${i}/${frames.length} frames`);
+          this.updateExportProgress(encodeProgress, `Encodando: ${i + 1}/${frames.length} frames`);
         }
       }
       
+      // Finalizar encoding
       await videoEncoder.flush();
       videoEncoder.close();
       
-      // Combinar chunks em blob
-      const blob = new Blob(chunks, { type: 'video/webm; codecs=vp9' });
+      // Finalizar muxer e obter arquivo
+      muxer.finalize();
+      const buffer = (muxer.target as ArrayBufferTarget).buffer;
+      
+      console.log(`[ExportWebM] WebM criado: ${(buffer.byteLength / 1024).toFixed(2)} KB`);
+      
+      // Criar blob e download
+      const blob = new Blob([buffer], { type: 'video/webm' });
       const url = URL.createObjectURL(blob);
       this.downloadFile(url, 'token-animation.webm');
       this.effectsManager.showNotification('WebM exportado com sucesso!', 'success');
       this.setExportingState(false);
       
     } catch (error) {
-      console.error('WebCodecs encoding failed:', error);
+      console.error('WebM encoding failed:', error);
       this.effectsManager.showNotification('Erro ao compilar WebM. Tente novamente.', 'error');
       this.setExportingState(false);
     }

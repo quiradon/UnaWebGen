@@ -1,5 +1,5 @@
 import type { ExportOptions } from './types';
-import { Muxer, ArrayBufferTarget } from 'webm-muxer';
+import { Output, WebMOutputFormat, BufferTarget, CanvasSource, QUALITY_HIGH } from 'mediabunny';
 
 interface ExportConfig {
   fps: number;
@@ -198,13 +198,6 @@ export class ExportUtils {
       formatName: 'WebM'
     };
     
-    // Verificar suporte ao WebCodecs
-    if (typeof VideoEncoder === 'undefined' || typeof VideoFrame === 'undefined') {
-      this.effectsManager.showNotification('WebCodecs não suportado. Use um navegador moderno (Chrome/Edge 94+).', 'error');
-      console.error('WebCodecs API not supported.');
-      return;
-    }
-    
     this.setExportingState(true, 'Preparando exportação WebM...');
     
     // Pausar animação principal e resetar para tempo 0 (MESMA LÓGICA DO GIF)
@@ -233,45 +226,33 @@ export class ExportUtils {
     console.log(`[Export${config.formatName}] Ciclo: t=0s (sem efeito) → t=${(breathingPeriod/2).toFixed(2)}s (máximo) → t=${breathingPeriod.toFixed(2)}s (sem efeito)`);
     
     try {
-      // Criar muxer WebM
-      const muxer = new Muxer({
-        target: new ArrayBufferTarget(),
-        video: {
-          codec: 'V_VP9',
-          width: exportWidth,
-          height: exportHeight,
-          frameRate: config.fps,
-          alpha: true
-        },
-        firstTimestampBehavior: 'strict',
-        streaming: false // Garantir que todos os frames sejam processados
+      // Criar canvas de exportação redimensionado
+      const exportCanvas = document.createElement('canvas');
+      exportCanvas.width = exportWidth;
+      exportCanvas.height = exportHeight;
+      
+      // Criar output WebM com mediabunny
+      const output = new Output({
+        format: new WebMOutputFormat(),
+        target: new BufferTarget(),
       });
       
-      // Criar encoder de vídeo
-      const videoEncoder = new VideoEncoder({
-        output: (chunk, metadata) => {
-          muxer.addVideoChunk(chunk, metadata);
-        },
-        error: (error) => {
-          console.error('VideoEncoder error:', error);
-          this.effectsManager.showNotification('Erro ao encodar vídeo.', 'error');
-        }
-      });
-      
-      videoEncoder.configure({
-        codec: 'vp09.00.10.08',
-        width: exportWidth,
-        height: exportHeight,
-        bitrate: 5_000_000,
-        framerate: config.fps,
+      // Criar fonte de vídeo do canvas
+      const videoSource = new CanvasSource(exportCanvas, {
+        codec: 'vp9',
+        bitrate: QUALITY_HIGH,
         alpha: 'keep',
-        latencyMode: 'quality',
-        bitrateMode: 'constant'
+        bitrateMode: 'constant',
+        latencyMode: 'quality'
       });
       
-      const frameDurationMicros = 1_000_000 / config.fps; // Duração exata sem arredondamento
+      output.addVideoTrack(videoSource, { 
+        frameRate: config.fps 
+      });
       
-      // Renderizar e encodar frames sequencialmente (MESMO MÉTODO DO GIF)
+      await output.start();
+      
+      // Renderizar e adicionar frames sequencialmente (MESMA LÓGICA DO GIF)
       for (let i = 0; i < totalFrames; i++) {
         // Calcular o tempo exato dentro do ciclo de respiração (MESMA FÓRMULA DO GIF)
         const frameTime = (i / totalFrames) * breathingPeriod;
@@ -282,30 +263,17 @@ export class ExportUtils {
           console.log(`[ExportWebM] Frame ${i}/${totalFrames}: t=${frameTime.toFixed(3)}s, breath=${breathValue.toFixed(3)}`);
         }
         
-        // Renderizar frame usando canvas original e redimensionar na cópia (MESMA LÓGICA DO GIF)
-        const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight);
+        // Renderizar frame no canvas original e copiar para canvas de exportação
+        this.renderFrameAtTime(frameTime, exportWidth, exportHeight, exportCanvas);
         
-        // Converter para ImageBitmap e encodar
-        const bitmap = await createImageBitmap(frameCanvas);
+        // Calcular timestamp e duração em segundos
+        const timestamp = (i / config.fps);
+        const duration = (1 / config.fps);
         
-        // Timestamp preciso em microsegundos
-        const timestamp = Math.round(i * frameDurationMicros);
-        const duration = Math.round(frameDurationMicros);
+        // Adicionar frame ao vídeo (CanvasSource captura o estado atual do canvas)
+        await videoSource.add(timestamp, duration);
         
-        const videoFrame = new VideoFrame(bitmap, {
-          timestamp: timestamp,
-          duration: duration,
-          alpha: 'keep'
-        });
-        
-        // Keyframe apenas no primeiro frame
-        const isKeyFrame = i === 0;
-        videoEncoder.encode(videoFrame, { keyFrame: isKeyFrame });
-        
-        videoFrame.close();
-        bitmap.close();
-        
-        // Atualizar progresso e dar tempo para a UI respirar
+        // Atualizar progresso
         if (i % 5 === 0) {
           const progress = Math.round((i / totalFrames) * 100);
           this.updateExportProgress(progress, `Encodando: ${i + 1}/${totalFrames} frames`);
@@ -315,13 +283,16 @@ export class ExportUtils {
         }
       }
       
-      // Finalizar encoding
-      await videoEncoder.flush();
-      videoEncoder.close();
+      // Fechar fonte de vídeo e finalizar output
+      videoSource.close();
+      await output.finalize();
       
-      // Finalizar muxer e obter arquivo
-      muxer.finalize();
-      const buffer = (muxer.target as ArrayBufferTarget).buffer;
+      // Obter buffer do arquivo
+      const buffer = output.target.buffer;
+      
+      if (!buffer) {
+        throw new Error('Falha ao obter buffer do WebM');
+      }
       
       console.log(`[ExportWebM] WebM criado: ${(buffer.byteLength / 1024).toFixed(2)} KB`);
       

@@ -97,8 +97,8 @@ export class ExportUtils {
     const { quality = 10 } = options;
     const config: ExportConfig = {
       fps: 24,
-      maxWidth: 1920,
-      maxHeight: 1080,
+      maxWidth: 512,
+      maxHeight: 512,
       formatName: 'GIF'
     };
     
@@ -169,13 +169,15 @@ export class ExportUtils {
   async exportAsWebM(options: ExportOptions): Promise<void> {
     const config: ExportConfig = {
       fps: 24,
-      maxWidth: 1920,
+      maxWidth: 1080,
       maxHeight: 1080,
       formatName: 'WebM'
     };
     
-    if (!this.canvas.captureStream) {
-      this.effectsManager.showNotification('Gravação de vídeo não suportada neste navegador.', 'error');
+    // Verificar suporte ao WebCodecs
+    if (typeof VideoEncoder === 'undefined' || typeof VideoFrame === 'undefined') {
+      this.effectsManager.showNotification('WebCodecs não suportado. Use um navegador moderno (Chrome/Edge 94+).', 'error');
+      console.error('WebCodecs API not supported. Falling back to MediaRecorder would be needed.');
       return;
     }
     
@@ -188,75 +190,97 @@ export class ExportUtils {
     }
     
     const { breathingPeriod, totalFrames, exportDuration, exportWidth, exportHeight } = renderData;
+    const frameDuration = 1000 / config.fps;
     
     console.log(`[Export${config.formatName}] Período de respiração: ${breathingPeriod.toFixed(3)}s`);
     console.log(`[Export${config.formatName}] Frames: ${totalFrames} a ${config.fps} FPS`);
     console.log(`[Export${config.formatName}] Duração final: ${exportDuration.toFixed(3)}s (1 ciclo completo)`);
+    console.log(`[Export${config.formatName}] Delay entre frames: ${frameDuration.toFixed(2)}ms`);
     console.log(`[Export${config.formatName}] Dimensões: ${exportWidth}x${exportHeight} (max ${config.maxWidth}p)`);
     
-    // Criar canvas de exportação
-    const exportCanvas = document.createElement('canvas');
-    exportCanvas.width = exportWidth;
-    exportCanvas.height = exportHeight;
-    const exportCtx = exportCanvas.getContext('2d', { alpha: true });
+    // Renderizar todos os frames primeiro (mesmo método do GIF)
+    const frames: ImageBitmap[] = [];
     
-    if (!exportCtx) {
-      this.effectsManager.showNotification('Erro ao criar contexto de exportação.', 'error');
-      this.setExportingState(false);
-      return;
+    for (let i = 0; i < totalFrames; i++) {
+      // Calcular o tempo exato dentro do ciclo de respiração
+      const frameTime = (i / totalFrames) * breathingPeriod;
+      
+      // Renderizar frame
+      const frameCanvas = this.renderFrameAtTime(frameTime, exportWidth, exportHeight);
+      const bitmap = await createImageBitmap(frameCanvas);
+      frames.push(bitmap);
+      
+      // Atualizar progresso
+      if (i % 5 === 0) {
+        const captureProgress = Math.round((i / totalFrames) * 50);
+        this.updateExportProgress(captureProgress, `Capturando frames: ${i}/${totalFrames}`);
+      }
     }
     
-    const stream = exportCanvas.captureStream(config.fps);
-    const mediaRecorder = new MediaRecorder(stream, {
-      mimeType: 'video/webm;codecs=vp9',
-      videoBitsPerSecond: 5000000
-    });
+    this.updateExportProgress(50, 'Compilando vídeo WebM...');
     
-    const chunks: Blob[] = [];
+    // Encodar frames diretamente em WebM usando WebCodecs
+    const chunks: Uint8Array<ArrayBuffer>[] = [];
+    let videoEncoder: VideoEncoder;
     
-    mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0) {
-        chunks.push(event.data);
+    try {
+      videoEncoder = new VideoEncoder({
+        output: (chunk: any, metadata: any) => {
+          const data = new Uint8Array(chunk.byteLength);
+          chunk.copyTo(data);
+          chunks.push(data);
+        },
+        error: (error: Error) => {
+          console.error('VideoEncoder error:', error);
+          this.effectsManager.showNotification('Erro ao encodar vídeo.', 'error');
+        }
+      });
+      
+      videoEncoder.configure({
+        codec: 'vp09.00.10.08',
+        width: exportWidth,
+        height: exportHeight,
+        bitrate: 5_000_000,
+        framerate: config.fps,
+        alpha: 'keep'
+      });
+      
+      // Encodar cada frame
+      const frameDurationMicros = (1_000_000 / config.fps);
+      
+      for (let i = 0; i < frames.length; i++) {
+        const videoFrame = new VideoFrame(frames[i], {
+          timestamp: i * frameDurationMicros,
+          duration: frameDurationMicros,
+          alpha: 'keep'
+        });
+        
+        videoEncoder.encode(videoFrame, { keyFrame: i === 0 });
+        videoFrame.close();
+        frames[i].close();
+        
+        // Atualizar progresso
+        if (i % 5 === 0) {
+          const encodeProgress = 50 + Math.round((i / frames.length) * 50);
+          this.updateExportProgress(encodeProgress, `Encodando: ${i}/${frames.length} frames`);
+        }
       }
-    };
-    
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(chunks, { type: 'video/webm' });
+      
+      await videoEncoder.flush();
+      videoEncoder.close();
+      
+      // Combinar chunks em blob
+      const blob = new Blob(chunks, { type: 'video/webm; codecs=vp9' });
       const url = URL.createObjectURL(blob);
       this.downloadFile(url, 'token-animation.webm');
       this.effectsManager.showNotification('WebM exportado com sucesso!', 'success');
       this.setExportingState(false);
-    };
-    
-    mediaRecorder.start();
-    
-    // Renderizar todos os frames sequencialmente com timing preciso
-    const renderAllFrames = async () => {
-      const frameInterval = 1000 / config.fps;
       
-      for (let currentFrame = 0; currentFrame < totalFrames; currentFrame++) {
-        // Calcular o tempo exato dentro do ciclo de respiração
-        const frameTime = (currentFrame / totalFrames) * breathingPeriod;
-        
-        // Renderizar frame diretamente no canvas de exportação
-        this.renderFrameAtTime(frameTime, exportWidth, exportHeight, exportCanvas);
-        
-        // Atualizar progresso
-        const progress = Math.round((currentFrame / totalFrames) * 100);
-        this.updateExportProgress(progress, `Gravando: ${currentFrame}/${totalFrames} frames`);
-        
-        // Aguardar o intervalo entre frames para sincronizar com o MediaRecorder
-        await new Promise(resolve => setTimeout(resolve, frameInterval));
-      }
-      
-      // Pequeno delay para garantir que o último frame seja capturado
-      await new Promise(resolve => setTimeout(resolve, frameInterval * 2));
-      
-      mediaRecorder.stop();
-    };
-    
-    // Iniciar renderização
-    renderAllFrames();
+    } catch (error) {
+      console.error('WebCodecs encoding failed:', error);
+      this.effectsManager.showNotification('Erro ao compilar WebM. Tente novamente.', 'error');
+      this.setExportingState(false);
+    }
   }
 
   private setExportingState(isExporting: boolean, message?: string): void {

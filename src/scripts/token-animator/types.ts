@@ -33,4 +33,8 @@ export interface ExportOptions {
   fps?: number;
   duration?: number;
   quality?: number;
+  maxWidth?: number;
+  maxHeight?: number;
+  ext?: string; // 'webm' | 'webp'
+  filename?: string;
 }

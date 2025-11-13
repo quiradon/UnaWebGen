@@ -22,10 +22,10 @@ const copy = {
   addBreathing: "Adicionar Respiração",
   exportAnimation: "Exportar Animação",
   exportTitle: "Exportar Animação",
-  exportGif: "GIF (Qualidade Média)",
-  exportWebM: "WebM (Alta Qualidade)",
-  exportGifDesc: "Formato universal com transparência",
-  exportWebMDesc: "Melhor qualidade, requer Premium Rank",
+  exportGif: "WebM (Qualidade Média)",
+  exportWebM: "WebM (Qualidade Alta)",
+  exportGifDesc: "Formato WebM - versão média (nerf)",
+  exportWebMDesc: "Formato WebM - alta qualidade (Premium)",
   premiumRequired: "Premium Rank",
   premiumBenefits: "Benefícios Premium",
   premiumBenefit1: "Exportação WebM de alta qualidade",
@@ -233,7 +233,7 @@ const copy = {
             <div class="export-options-grid">
               <div class="export-option-wrapper">
                 <!-- GIF Export Option -->
-                <div class="export-option" onclick="exportGIF(); closeExportModal();">
+                <div class="export-option" onclick="exportWebMMedium(); closeExportModal();">
                   <div class="export-option-header">
                     <div class="export-option-icon gif-icon">
                       <FileImage size={32} />
@@ -250,7 +250,7 @@ const copy = {
                       </div>
                       <div class="feature-item">
                         <Check size={14} />
-                        <span>Compatível com tudo</span>
+                        <span>Compatível com a maioria dos players modernos</span>
                       </div>
                       <div class="feature-item">
                         <Check size={14} />
@@ -261,14 +261,14 @@ const copy = {
                   <div class="export-option-footer">
                     <span class="download-text">
                       <Download size={16} />
-                      Baixar GIF
+                      Baixar WebM
                     </span>
                   </div>
                 </div>
               </div>
 
               <div class="export-option-wrapper">
-                <!-- WebM Export Option (Premium) -->
+                <!-- WebM Alta Qualidade (Premium) -->
                 <div id="webmExportOption" class="export-option export-option-premium locked">
                   <div class="export-option-header">
                     <div class="export-option-icon webm-icon">
@@ -289,11 +289,11 @@ const copy = {
                       </div>
                       <div class="feature-item">
                         <Check size={14} />
-                        <span>60 FPS fluidos</span>
+                        <span>24 FPS (exportações padrão)</span>
                       </div>
                       <div class="feature-item">
                         <Check size={14} />
-                        <span>Menor tamanho</span>
+                        <span>Maior resolução e qualidade</span>
                       </div>
                     </div>
                   </div>
@@ -371,7 +371,7 @@ const copy = {
         
         // Atualizar descrição
         if (webmDesc) {
-          webmDesc.textContent = 'Melhor qualidade, 60 FPS, arquivo menor';
+          webmDesc.textContent = 'Melhor qualidade, 24 FPS, arquivo otimizado';
         }
         
         // Atualizar footer para mostrar download
@@ -389,10 +389,10 @@ const copy = {
           `;
         }
         
-        // Configurar click para exportar
+        // Configurar click para exportar (WebM Alta qualidade)
         webmOption.onclick = function() {
-          console.log('🚀 Exportando WebM...');
-          (window as any).exportWebM();
+          console.log('🚀 Exportando WebM (Alta qualidade)...');
+          (window as any).exportWebMHigh();
           (window as any).closeExportModal();
         };
         

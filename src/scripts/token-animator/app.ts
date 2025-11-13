@@ -11,6 +11,8 @@ declare global {
     resetCanvas: () => void;
     exportGIF: () => void;
     exportWebM: () => void;
+    exportWebMHigh: () => void;
+    exportWebMMedium: () => void;
   }
 }
 
@@ -91,6 +93,7 @@ class TokenAnimatorApp {
         this.effectsManager.showNotification('Carregue uma imagem primeiro!', 'warning');
         return;
       }
+      // Mantido para compatibilidade (gera GIF)
       this.exportUtils.exportAsGIF({ quality: 10 });
     };
 
@@ -102,6 +105,25 @@ class TokenAnimatorApp {
       
       // Não fazer verificação de premium aqui - já é feita no modal
       this.exportUtils.exportAsWebM({});
+    };
+    
+    // Novas funções: exportar como WebM (perfis High/Medium)
+    window.exportWebMHigh = () => {
+      if (!this.renderer.hasImage) {
+        this.effectsManager.showNotification('Carregue uma imagem primeiro!', 'warning');
+        return;
+      }
+      // Alta qualidade: maior resolução e qualidade
+      this.exportUtils.exportAsWebM({ fps: 24, maxWidth: 1080, maxHeight: 1080, quality: 10, ext: 'webm', filename: 'token-animation-high.webm' });
+    };
+
+    window.exportWebMMedium = () => {
+      if (!this.renderer.hasImage) {
+        this.effectsManager.showNotification('Carregue uma imagem primeiro!', 'warning');
+        return;
+      }
+      // Qualidade média (nerf): resolução reduzida e qualidade menor
+      this.exportUtils.exportAsWebM({ fps: 24, maxWidth: 512, maxHeight: 512, quality: 5, ext: 'webm', filename: 'token-animation-medium.webm' });
     };
     
     // Modal de exportação é configurado no Astro

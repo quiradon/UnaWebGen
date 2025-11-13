@@ -213,13 +213,14 @@ export class ExportUtils {
 
   async exportAsWebM(options: ExportOptions): Promise<void> {
     const config: ExportConfig = {
-      fps: 24,
-      maxWidth: 1080,
-      maxHeight: 1080,
-      formatName: 'WebM'
+      fps: options.fps || 24,
+      maxWidth: options.maxWidth || 1080,
+      maxHeight: options.maxHeight || 1080,
+      formatName: options.ext === 'webp' ? 'WebP' : 'WebM'
     };
     
-    this.setExportingState(true, 'Preparando exportação WebM...');
+    const preparingMessage = config.formatName === 'WebP' ? 'Preparando exportação WebP...' : 'Preparando exportação WebM...';
+    this.setExportingState(true, preparingMessage);
     
     // Pausar animação principal e resetar para tempo 0 (MESMA LÓGICA DO GIF)
     const wasAnimating = this.effectsManager.animationEnabled;
@@ -252,7 +253,7 @@ export class ExportUtils {
       exportCanvas.width = exportWidth;
       exportCanvas.height = exportHeight;
       
-      // Criar output WebM com mediabunny
+      // Criar output (WebM). Atualmente usamos mediabunny WebM encoder.
       const output = new Output({
         format: new WebMOutputFormat(),
         target: new BufferTarget(),
@@ -315,12 +316,14 @@ export class ExportUtils {
         throw new Error('Falha ao obter buffer do WebM');
       }
       
-      console.log(`[ExportWebM] WebM criado: ${(buffer.byteLength / 1024).toFixed(2)} KB`);
+      const outName = options.filename || (config.formatName === 'WebP' ? 'token-animation.webp' : 'token-animation.webm');
+      console.log(`[Export${config.formatName}] Arquivo criado: ${(buffer.byteLength / 1024).toFixed(2)} KB`);
       
-      // Criar blob e download
-      const blob = new Blob([buffer], { type: 'video/webm' });
+      // Criar blob e download (WebM)
+      const mimeType = 'video/webm';
+      const blob = new Blob([buffer], { type: mimeType });
       const url = URL.createObjectURL(blob);
-      this.downloadFile(url, 'token-animation.webm');
+      this.downloadFile(url, outName);
       this.effectsManager.showNotification('WebM exportado com sucesso!', 'success');
       
       // Restaurar estado da animação

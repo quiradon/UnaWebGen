@@ -16,9 +16,6 @@ interface WidgetElements {
 interface KrakenWindow extends Window {
   __krakenAuthWidgetInit?: boolean;
 }
-
-const DISCORD_CLIENT_ID = '899421595125288961';
-
 (async () => {
   if (typeof window === 'undefined') return;
 
@@ -35,13 +32,13 @@ const DISCORD_CLIENT_ID = '899421595125288961';
     }
 
     root.dataset.authInitialized = 'true';
-
+    let client
     // Detectar se está no ambiente do Discord
     let isInDiscord = false;
-    let discordSdk: DiscordSDK | null = null;
     try {
-      discordSdk = new DiscordSDK(DISCORD_CLIENT_ID);
-      await discordSdk.ready();
+      client = new DiscordSDK("899421595125288961");
+      console.log(client)
+      await client.ready();
       isInDiscord = true;
       console.log('Aplicativo rodando no Discord');
     } catch (error) {

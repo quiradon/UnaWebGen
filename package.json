@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun --bun astro dev --host --port 4321",
     "start": "bun --bun astro dev --host --port 4321",
-    "build": "bun astro build",
+    "build": "bun install && bun astro build",
     "pages:dev": "wrangler pages dev dist/",
     "clean": "rimraf dist"
   },

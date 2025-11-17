@@ -374,17 +374,28 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       const dashboardContent = document.getElementById('dashboard-content');
 
       try {
-        // Sempre buscar sessão atualizada ao entrar no dashboard (SPA mantém transição)
-        const sessionData = await getSession(apiBase, true);
+        // Tentar cache para render rápido, depois revalidar em background
+        let sessionData = (window as any).__KRKN_DASH_CACHE || null;
+        let renderedFromCache = false;
 
-        // Se não estiver autenticado, redirecionar para home
+        if (!sessionData) {
+          sessionData = await getSession(apiBase);
+        } else {
+          renderedFromCache = true;
+        }
+
         if (!sessionData.authenticated || !sessionData.user) {
-          window.location.href = langPrefix || '/';
-          return;
+          // fallback: tenta revalidar se cache negativo
+          const fresh = await getSession(apiBase, true);
+          if (!fresh.authenticated || !fresh.user) {
+            window.location.href = langPrefix || '/';
+            return;
+          }
+          sessionData = fresh;
         }
 
         // Preencher dados do usuário
-        const user = sessionData.user;
+        const user = sessionData.user!;
         
         const avatarImg = document.getElementById('user-avatar') as HTMLImageElement | null;
         const displayNameEl = document.getElementById('user-display-name');
@@ -418,6 +429,14 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
         // Mostrar dashboard
         if (loadingState) loadingState.style.display = 'none';
         if (dashboardContent) dashboardContent.style.display = 'block';
+
+        // Revalidar em background se renderizamos de cache
+        if (renderedFromCache) {
+          getSession(apiBase, true).catch(() => {});
+        }
+
+        // Guardar cache local do dashboard
+        (window as any).__KRKN_DASH_CACHE = sessionData;
 
       } catch (error) {
         console.error('Failed to load dashboard:', error);

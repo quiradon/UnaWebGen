@@ -7,6 +7,18 @@ const locale = getLocale(Astro.url);
 const t = loadT(locale);
 const allUrls = getAllLocaleUrls(Astro.url);
 
+// Forçar caminhos relativos para manter ViewTransitions (evita trocas de host)
+const localePaths = Object.fromEntries(
+  Object.entries(allUrls).map(([code, url]) => {
+    try {
+      const u = new URL(url, Astro.url);
+      return [code, u.pathname];
+    } catch {
+      return [code, url];
+    }
+  })
+);
+
 const lang_FLAGS: Record<string, string> = {
   pt: '/img/flags/br.svg',
   en: '/img/flags/en.svg',
@@ -70,7 +82,7 @@ const lang_LABELS: Record<string, string> = {
     {Object.keys(lang_FLAGS).map((code) => (
       <a 
         class="dropdown-item d-flex" 
-        href={allUrls[code] || allUrls['en']} 
+        href={localePaths[code] || localePaths['en']} 
         aria-label={`${t.lang} - ${lang_LABELS[code]}`}
       >
         <span>

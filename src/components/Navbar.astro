@@ -14,6 +14,16 @@ const locale = getLocale(Astro.url)
 const t = loadT(locale);
 const lang = idiomaR(t);
 const allUrls = getAllLocaleUrls(Astro.url);
+const localePaths = Object.fromEntries(
+  Object.entries(allUrls).map(([code, url]) => {
+    try {
+      const u = new URL(url, Astro.url);
+      return [code, u.pathname];
+    } catch {
+      return [code, url];
+    }
+  })
+);
 
 export const brandNames: Record<string, string> = {
   "en": "Mini Kraken",
@@ -348,6 +358,6 @@ const menuSections = [guideSection, toolsSection];
     hr: 'Croatian',
     id: 'Indonesian',
   }}
-  allUrls={allUrls}
+  allUrls={localePaths}
 />
 </div>

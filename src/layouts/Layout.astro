@@ -5,6 +5,8 @@ import Footer from '@components/Footer.astro';
 import { ViewTransitions } from 'astro:transitions';
 import type { Translations } from '@lib/i18n';
 import config from '../config';
+import authWidgetSrc from '../scripts/auth-widget.ts?url';
+import sessionPrimeSrc from '../scripts/session-prime.ts?url';
 interface Props {
   t: Translations;
   title: string;
@@ -26,12 +28,8 @@ const { t, title, desc, pictureURL } = Astro.props as Props;
       <Footer t={t}/>
     </div>
     <script is:inline src="/bootstrap/js/bootstrap.min.js"></script>
-    <script type="module">
-      import '../scripts/session-prime.ts';
-    </script>
-    <script type="module">
-      import '../scripts/auth-widget.ts';
-    </script>
+    <script type="module" src={sessionPrimeSrc}></script>
+    <script type="module" src={authWidgetSrc}></script>
 
   </body>
 </html>

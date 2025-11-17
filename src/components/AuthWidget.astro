@@ -2,6 +2,7 @@
 import type { Translations } from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
 import config from '../config';
+import widgetSrc from '../scripts/auth-widget.ts?url';
 
 interface Props {
   t: Translations;
@@ -85,9 +86,7 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
   class="auth-widget__root auth-widget__root--loading"
 ></span>
 
-<script>
-  import '../scripts/auth-widget.ts';
-</script>
+<script type="module" src={widgetSrc}></script>
 
 <style>
   /* Root base - Componente raiz inline */

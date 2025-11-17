@@ -1,4 +1,5 @@
 import { getSession, clearSessionCache, type SessionResponse, type User } from './session-manager';
+import {DiscordSDK} from "@discord/embedded-app-sdk"
 
 interface WidgetElements {
   loginAnchor: HTMLAnchorElement | null;
@@ -16,7 +17,9 @@ interface KrakenWindow extends Window {
   __krakenAuthWidgetInit?: boolean;
 }
 
-(function () {
+const DISCORD_CLIENT_ID = '899421595125288961';
+
+(async () => {
   if (typeof window === 'undefined') return;
 
   const win = window as KrakenWindow;
@@ -26,12 +29,24 @@ interface KrakenWindow extends Window {
   }
   win.__krakenAuthWidgetInit = true;
 
-  const initWidget = (root: HTMLElement): void => {
+  const initWidget = async (root: HTMLElement): Promise<void> => {
     if (!root || root.dataset.authInitialized === 'true') {
       return;
     }
 
     root.dataset.authInitialized = 'true';
+
+    // Detectar se está no ambiente do Discord
+    let isInDiscord = false;
+    let discordSdk: DiscordSDK | null = null;
+    try {
+      discordSdk = new DiscordSDK(DISCORD_CLIENT_ID);
+      await discordSdk.ready();
+      isInDiscord = true;
+      console.log('Aplicativo rodando no Discord');
+    } catch (error) {
+      console.log('Não está no ambiente do Discord', error);
+    }
 
     // Buscar templates no documento (não mais dentro de um container)
     const variant = root.dataset.variant || 'desktop';
@@ -43,7 +58,7 @@ interface KrakenWindow extends Window {
       return;
     }
 
-    const apiBase = root.dataset.api || '';
+    const apiBase = isInDiscord ? '/api' : (root.dataset.api || '');
     if (!apiBase) {
       console.warn('AuthWidget: Missing API base URL');
       return;
@@ -334,14 +349,15 @@ interface KrakenWindow extends Window {
     fetchSession();
   };
 
-  const initAll = (): void => {
-    document.querySelectorAll<HTMLElement>('[data-auth-root]').forEach((root) => {
-      initWidget(root);
-    });
+  const initAll = async (): Promise<void> => {
+    const roots = document.querySelectorAll<HTMLElement>('[data-auth-root]');
+    for (const root of roots) {
+      await initWidget(root);
+    }
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAll, { once: true });
+    document.addEventListener('DOMContentLoaded', () => initAll(), { once: true });
   } else {
     initAll();
   }

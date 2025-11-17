@@ -35,10 +35,6 @@ export default defineConfig({
     build: {
       minify: 'terser',
       terserOptions: {
-        compress: {
-          drop_debugger: true,
-          pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
-        },
         mangle: true,
         format: {
           comments: false

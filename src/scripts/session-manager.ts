@@ -33,6 +33,8 @@ const win = (typeof window !== 'undefined' ? window : {}) as SessionManagerWindo
 let cachedSession: SessionResponse | null = null;
 let sessionPromise: Promise<SessionResponse> | null = null;
 
+const SESSION_STORAGE_KEY = 'kraken_session_payload';
+
 const normalizeBase = (apiBase: string): string =>
   apiBase && apiBase.endsWith('/') ? apiBase.slice(0, -1) : apiBase;
 
@@ -45,6 +47,25 @@ export async function getSession(apiBase: string, forceRefresh = false): Promise
     sessionPromise = null;
     win.__krakenSessionCache = null;
     win.__krakenSessionPromise = null;
+
+    try {
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+  }
+
+  // Tentar hidratar do sessionStorage se ainda não temos cache
+  if (!cachedSession && typeof sessionStorage !== 'undefined') {
+    try {
+      const stored = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      if (stored) {
+        cachedSession = JSON.parse(stored) as SessionResponse;
+        win.__krakenSessionCache = cachedSession;
+      }
+    } catch {
+      // ignore parse errors
+    }
   }
 
   if (win.__krakenSessionCache) {
@@ -86,8 +107,10 @@ export async function getSession(apiBase: string, forceRefresh = false): Promise
       try {
         if (payload.authenticated) {
           sessionStorage.setItem('kraken_session_present', '1');
+          sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(payload));
         } else {
           sessionStorage.removeItem('kraken_session_present');
+          sessionStorage.removeItem(SESSION_STORAGE_KEY);
         }
       } catch {
         // ignore storage errors
@@ -101,6 +124,7 @@ export async function getSession(apiBase: string, forceRefresh = false): Promise
       win.__krakenSessionCache = errorPayload;
       try {
         sessionStorage.removeItem('kraken_session_present');
+        sessionStorage.removeItem(SESSION_STORAGE_KEY);
       } catch {
         // ignore storage errors
       }
@@ -118,6 +142,17 @@ export async function getSession(apiBase: string, forceRefresh = false): Promise
 
 export function getCachedSession(): SessionResponse | null {
   if (win.__krakenSessionCache) return win.__krakenSessionCache;
+  if (!cachedSession && typeof sessionStorage !== 'undefined') {
+    try {
+      const stored = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      if (stored) {
+        cachedSession = JSON.parse(stored) as SessionResponse;
+        win.__krakenSessionCache = cachedSession;
+      }
+    } catch {
+      // ignore
+    }
+  }
   return cachedSession;
 }
 
@@ -135,6 +170,7 @@ export function clearSessionCache(): void {
   win.__krakenSessionPromise = null;
   try {
     sessionStorage.removeItem('kraken_session_present');
+    sessionStorage.removeItem(SESSION_STORAGE_KEY);
   } catch {
     // ignore storage errors
   }

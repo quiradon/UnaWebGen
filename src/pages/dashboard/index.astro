@@ -362,7 +362,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   </section>
 
   <script>
-    import { getSession, clearSessionCache } from '../../scripts/session-manager';
+    import { getSession, getCachedSession, clearSessionCache } from '../../scripts/session-manager';
     
     const apiBaseEl = document.querySelector('[data-api-base]') as HTMLElement | null;
     const langPrefixEl = document.querySelector('[data-lang-prefix]') as HTMLElement | null;
@@ -374,24 +374,17 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       const dashboardContent = document.getElementById('dashboard-content');
 
       try {
-        // Tentar cache para render rápido, depois revalidar em background
-        let sessionData = (window as any).__KRKN_DASH_CACHE || null;
-        let renderedFromCache = false;
+        // Tentar cache persistente (sessionStorage) para renderizar rápido
+        let sessionData = getCachedSession() || (window as any).__KRKN_DASH_CACHE || null;
+        const hadCache = !!(sessionData && sessionData.authenticated && sessionData.user);
 
-        if (!sessionData) {
+        if (!hadCache) {
+          // Sem cache válido: buscar sessão atual
           sessionData = await getSession(apiBase);
-        } else {
-          renderedFromCache = true;
-        }
-
-        if (!sessionData.authenticated || !sessionData.user) {
-          // fallback: tenta revalidar se cache negativo
-          const fresh = await getSession(apiBase, true);
-          if (!fresh.authenticated || !fresh.user) {
+          if (!sessionData.authenticated || !sessionData.user) {
             window.location.href = langPrefix || '/';
             return;
           }
-          sessionData = fresh;
         }
 
         // Preencher dados do usuário
@@ -430,13 +423,17 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
         if (loadingState) loadingState.style.display = 'none';
         if (dashboardContent) dashboardContent.style.display = 'block';
 
-        // Revalidar em background se renderizamos de cache
-        if (renderedFromCache) {
-          getSession(apiBase, true).catch(() => {});
-        }
-
         // Guardar cache local do dashboard
         (window as any).__KRKN_DASH_CACHE = sessionData;
+
+        // Revalidar em background se usamos cache
+        if (hadCache) {
+          getSession(apiBase, true).then((fresh) => {
+            if (fresh?.authenticated && fresh.user) {
+              (window as any).__KRKN_DASH_CACHE = fresh;
+            }
+          }).catch(() => {});
+        }
 
       } catch (error) {
         console.error('Failed to load dashboard:', error);

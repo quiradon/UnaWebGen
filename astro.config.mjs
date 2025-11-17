@@ -32,6 +32,7 @@ export default defineConfig({
     assets: '_astro'
   },
   vite: {
+    base: '/',
     server: {
       host: true,
       allowedHosts: ['atividade.arkanus.app', 'atividadeapi.arkanus.app'],

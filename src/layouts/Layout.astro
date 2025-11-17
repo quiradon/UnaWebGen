@@ -2,8 +2,9 @@
 import Head from '@components/Head.astro';
 import Navbar from '@components/Navbar.astro';
 import Footer from '@components/Footer.astro';
+import { ViewTransitions } from 'astro:transitions';
 import type { Translations } from '@lib/i18n';
-
+import config from '../config';
 interface Props {
   t: Translations;
   title: string;
@@ -16,12 +17,24 @@ const { t, title, desc, pictureURL } = Astro.props as Props;
 <html lang={t.lang} data-bs-theme="dark">
   <Head title={title} desc={desc} pictureURL={pictureURL} />
   <body>
+    <ViewTransitions />
     <Navbar t={t}/>
-    <main class="main-content">
+    <main class="main-content" data-astro-transition-scope="page">
       <slot />
     </main>
-    <Footer t={t}/>
+    <div data-astro-transition-persist="footer-shell" style="display: contents;">
+      <Footer t={t}/>
+    </div>
     <script is:inline src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="module">
+      import { primeSessionCache } from '/src/scripts/session-manager.ts';
+
+      const defaults = (window).__KRAKEN_AUTH_DEFAULTS;
+      if (defaults?.apiBase) {
+        primeSessionCache(defaults.apiBase);
+      }
+    </script>
+
   </body>
 </html>
 

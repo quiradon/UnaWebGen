@@ -4,9 +4,9 @@
   "description": "A Static HTML page generator",
   "main": "index.js",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "bun install && astro build",
+    "dev": "bun --bun astro dev --host --port 4321",
+    "start": "bun --bun astro dev --host --port 4321",
+    "build": "bun astro build",
     "pages:dev": "wrangler pages dev dist/",
     "clean": "rimraf dist"
   },

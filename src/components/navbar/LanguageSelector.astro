@@ -46,7 +46,7 @@ const lang_LABELS: Record<string, string> = {
 };
 ---
 
-<li class="nav-item auto-open dropdown">
+<li class="nav-item auto-open dropdown" data-astro-transition-persist="language-selector">
   <button 
     aria-label={`${t.lang} Selected in Lang Selector`} 
     class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" 
@@ -60,6 +60,9 @@ const lang_LABELS: Record<string, string> = {
       width="25" 
       height="25" 
       alt={`${t.lang} Flag`} 
+      loading="lazy"
+      fetchpriority="low"
+      decoding="async"
     />
     <ChevronDown size={16} />
   </button>
@@ -71,13 +74,16 @@ const lang_LABELS: Record<string, string> = {
         aria-label={`${t.lang} - ${lang_LABELS[code]}`}
       >
         <span>
-          <img 
-            class="img-fluid me-2" 
-            src={lang_FLAGS[code]} 
-            width="25" 
-            height="25" 
-            alt={`${lang_LABELS[code]} Lang selector`} 
-          />
+      <img 
+        class="img-fluid me-2" 
+        src={lang_FLAGS[code]} 
+        width="25" 
+        height="25" 
+        alt={`${lang_LABELS[code]} Lang selector`} 
+        loading="lazy"
+        fetchpriority="low"
+        decoding="async"
+      />
           {lang_LABELS[code]}
         </span>
       </a>
@@ -181,3 +187,5 @@ const lang_LABELS: Record<string, string> = {
   // Também tenta após um pequeno delay para garantir que tudo está carregado
   setTimeout(initLanguageSelector, 100);
 </script>
+
+

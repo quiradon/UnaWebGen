@@ -18,11 +18,8 @@
 /img/*
   # Cache para imagens
   Cache-Control: public, max-age=2592000, immutable
+
+/img/flags/*
+  # Bandeiras: evitar revalidaA��o em SPA
+  Cache-Control: public, max-age=31536000, immutable
   
-/*.js
-  # Desabilitar Rocket Loader para scripts específicos
-  cf-rocket-loader: manual
-  
-/api/*
-  # Sem cache para API
-  Cache-Control: no-cache, no-store, must-revalidate

@@ -1,7 +1,7 @@
 ---
 import type { Translations } from '@lib/i18n';
 import { idiomaR } from '@lib/routes';
-import config from '../config.json';
+import config from '../config';
 
 interface Props {
   t: Translations;
@@ -10,6 +10,8 @@ interface Props {
 
 const { t, variant = 'desktop' } = Astro.props as Props;
 const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/, '');
+const discordClientId = (config.discord_client_id ?? '').toString();
+const activityApiBase = '/api';
 const langPrefix = idiomaR(t);
 
 const loginLabel = t.dashboard.action.login; // (t?.nav?.auth?.login as string | undefined) ?? 'Login with Discord';
@@ -76,6 +78,8 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
   data-auth-widget 
   data-variant={variant} 
   data-api={apiBase}
+  data-activity-api={activityApiBase}
+  data-client-id={discordClientId}
   data-login-label={loginLabel}
   data-logout-label={logoutLabel}
   class="auth-widget__root auth-widget__root--loading"

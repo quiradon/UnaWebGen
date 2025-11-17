@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import { getLocale } from "astro-i18n-aut";
 import { loadT } from '@lib/i18n';
-import config from '../../../config.json';
+import config from '../../../config';
 
 const locale = getLocale(Astro.url);
 const t = loadT(locale);
@@ -48,7 +48,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 </Layout>
 
 <script >
-  import { getSession } from '@lib/session-manager';
+  import { getCachedSession, getSession } from "@/scripts/session-manager";
   interface Character {
     id: string;
     nome: string;
@@ -205,7 +205,11 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
   const loadCharacters = async () => {
     try {
-      const session = await getSession(API_BASE);
+      let session = getCachedSession();
+      if (!session) {
+        session = await getSession(API_BASE);
+      }
+
       if (!session?.authenticated) {
         showError(translations.errorAuth);
         document.getElementById('loading')?.classList.add('d-none');

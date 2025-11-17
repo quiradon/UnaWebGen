@@ -32,6 +32,10 @@ export default defineConfig({
     assets: '_astro'
   },
   vite: {
+    server: {
+      host: true,
+      allowedHosts: ['atividade.arkanus.app', 'atividadeapi.arkanus.app'],
+    },
     build: {
       minify: 'terser',
       terserOptions: {

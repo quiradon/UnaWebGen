@@ -1,7 +1,7 @@
 ---
 import { idiomaR} from '@lib/routes';
 import { loadT } from '@lib/i18n';
-import config from '../config.json';
+import config from '../config';
 import { getLocale, getAllLocaleUrls } from "astro-i18n-aut";
 import { Shapes, Wrench, Network, Wand, FileText, Book, Package, Fingerprint, Heart, Eye, Briefcase, MessageCircle, Crown, ChevronDown, Menu, X, Globe } from '@lucide/astro';
 import LanguageSelector from './navbar/LanguageSelector.astro';
@@ -261,6 +261,7 @@ const menuSections = [guideSection, toolsSection];
   });
 </script>
 
+<div data-astro-transition-persist="navbar-shell" style="display: contents;">
 <nav class="sticky-top p-2">
   <div class="navbar navbar-expand-lg mx-1 mx-md-4 px-2 mt-2">
     <div class="container-fluid">
@@ -293,7 +294,9 @@ const menuSections = [guideSection, toolsSection];
           <LanguageSelector />
           
         </ul>
-        <AuthWidget t={t}/>
+        <div data-astro-transition-persist="auth-widget" style="display: contents;">
+          <AuthWidget t={t}/>
+        </div>
       </div>
       
       <!-- Botão para abrir menu mobile -->
@@ -347,3 +350,4 @@ const menuSections = [guideSection, toolsSection];
   }}
   allUrls={allUrls}
 />
+</div>

@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro';
 import { loadT } from '@lib/i18n';
 import { getLocale } from "astro-i18n-aut";
 import { Sparkles, Wind, Download, FileImage, Film, X, Check, Upload, Lock, Star, Zap, PieChart, Users, Gift } from '@lucide/astro';
-import config from '../../config.json';
+import config from '../../config';
 
 const locale = getLocale(Astro.url);
 const t = loadT(locale);
@@ -320,7 +320,7 @@ const copy = {
   <script is:inline src="/js/libs/gif.js"></script>
   
   <script>
-    import { getSession } from '../../scripts/session-manager';
+    import { getSession, getCachedSession } from '../../scripts/session-manager';
     
     // Armazenar sessão globalmente
     let userSession: any = null;
@@ -330,13 +330,16 @@ const copy = {
       const section = document.querySelector('[data-api-base]') as HTMLElement;
       const apiBase = section?.dataset.apiBase || '';
       
-      if (!apiBase) return;
-      
+            if (!apiBase) return;
+
       try {
-        userSession = await getSession(apiBase);
-        console.log('🔍 Sessão carregada:', userSession);
+        userSession = getCachedSession();
+        if (!userSession) {
+          userSession = await getSession(apiBase);
+        }
+        console.log('Session carregada:', userSession);
       } catch (error) {
-        console.error('❌ Erro ao carregar sessão:', error);
+        console.error('Erro ao carregar sessao:', error);
       }
     })();
     
@@ -1857,3 +1860,7 @@ const copy = {
 
   </style>
 </Layout>
+
+
+
+

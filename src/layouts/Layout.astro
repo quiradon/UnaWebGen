@@ -5,6 +5,9 @@ import Footer from '@components/Footer.astro';
 import { ViewTransitions } from 'astro:transitions';
 import type { Translations } from '@lib/i18n';
 import config from '../config';
+const authWidgetSrc = '/src/scripts/auth-widget.ts';
+const framePreserverSrc = '/src/scripts/frame-id-preserver.ts';
+const sessionPrimeSrc = '/src/scripts/session-prime.ts';
 interface Props {
   t: Translations;
   title: string;
@@ -26,14 +29,10 @@ const { t, title, desc, pictureURL } = Astro.props as Props;
       <Footer t={t}/>
     </div>
     <script is:inline src="/bootstrap/js/bootstrap.min.js"></script>
-    <script type="module">
-      import { primeSessionCache } from '/src/scripts/session-manager.ts';
-
-      const defaults = (window).__KRAKEN_AUTH_DEFAULTS;
-      if (defaults?.apiBase) {
-        primeSessionCache(defaults.apiBase);
-      }
-    </script>
+    <script type="module" src={sessionPrimeSrc}></script>
+    <script src="/src/scripts/auth-handler.ts" type="module"></script>
+    <script src={framePreserverSrc} type="module"></script>
+    <script src={authWidgetSrc} type="module"></script>
 
   </body>
 </html>

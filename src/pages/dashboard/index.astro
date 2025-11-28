@@ -364,14 +364,18 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   <script>
     import { getSession, getCachedSession, clearSessionCache } from '../../scripts/session-manager';
     
-    const apiBaseEl = document.querySelector('[data-api-base]') as HTMLElement | null;
-    const langPrefixEl = document.querySelector('[data-lang-prefix]') as HTMLElement | null;
-    const apiBase = apiBaseEl?.dataset.apiBase || '';
-    const langPrefix = langPrefixEl?.dataset.langPrefix || '';
+    async function initDashboard() {
+      const apiBaseEl = document.querySelector('[data-api-base]') as HTMLElement | null;
+      const langPrefixEl = document.querySelector('[data-lang-prefix]') as HTMLElement | null;
+      const apiBase = apiBaseEl?.dataset.apiBase || '';
+      const langPrefix = langPrefixEl?.dataset.langPrefix || '';
 
-    (async function() {
       const loadingState = document.getElementById('loading-state');
       const dashboardContent = document.getElementById('dashboard-content');
+
+      // Reset para estado inicial quando re-entramos na página
+      if (loadingState) loadingState.style.display = 'block';
+      if (dashboardContent) dashboardContent.style.display = 'none';
 
       try {
         // Tentar cache persistente (sessionStorage) para renderizar rápido
@@ -406,6 +410,8 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
           const level = Math.min(Math.max(sessionData.premium.level, 1), 4); // Limitar entre 1 e 4
           premiumBadge.src = `/img/tiers_premium/${level}.webp`;
           premiumBadge.classList.add('active');
+        } else if (premiumBadge) {
+          premiumBadge.classList.remove('active');
         }
         
         const displayName = user.display_name || user.username || 'Discord User';
@@ -440,23 +446,47 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
         // Em caso de erro, redirecionar para home
         window.location.href = langPrefix || '/';
       }
-    })();
+    }
 
     // Handler de logout
-    document.getElementById('logout-btn')?.addEventListener('click', async () => {
-      try {
-        await fetch(`${apiBase}/auth/logout`, {
-          method: 'POST',
-          credentials: 'include',
+    function setupLogoutHandler() {
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn && !(logoutBtn as any).__logoutHandlerAttached) {
+        (logoutBtn as any).__logoutHandlerAttached = true;
+        const apiBaseEl = document.querySelector('[data-api-base]') as HTMLElement | null;
+        const langPrefixEl = document.querySelector('[data-lang-prefix]') as HTMLElement | null;
+        const apiBase = apiBaseEl?.dataset.apiBase || '';
+        const langPrefix = langPrefixEl?.dataset.langPrefix || '';
+        
+        logoutBtn.addEventListener('click', async () => {
+          try {
+            await fetch(`${apiBase}/auth/logout`, {
+              method: 'POST',
+              credentials: 'include',
+            });
+            
+            // Limpar o cache de sessão
+            clearSessionCache();
+            
+            window.location.href = langPrefix || '/';
+          } catch (error) {
+            console.error('Failed to logout', error);
+            window.location.href = langPrefix || '/';
+          }
         });
-        
-        // Limpar o cache de sessão
-        clearSessionCache();
-        
-        window.location.href = langPrefix || '/';
-      } catch (error) {
-        console.error('Failed to logout', error);
-        window.location.href = langPrefix || '/';
+      }
+    }
+
+    // Executar na carga inicial
+    initDashboard();
+    setupLogoutHandler();
+
+    // Executar quando a página for carregada via ViewTransitions
+    document.addEventListener('astro:page-load', () => {
+      // Verificar se estamos na página do dashboard
+      if (window.location.pathname.includes('/dashboard')) {
+        initDashboard();
+        setupLogoutHandler();
       }
     });
   </script>

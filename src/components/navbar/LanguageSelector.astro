@@ -58,13 +58,15 @@ const lang_LABELS: Record<string, string> = {
 };
 ---
 
-<li class="nav-item auto-open dropdown" data-astro-transition-persist="language-selector">
+<li class="nav-item auto-open dropdown" id="language-selector-dropdown">
   <button 
     aria-label={`${t.lang} Selected in Lang Selector`} 
     class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" 
     aria-expanded="false" 
     data-bs-toggle="dropdown" 
     type="button"
+    id="lang-selector-toggle"
+    data-current-lang={t.lang}
   >
     <img 
       class="img-fluid me-1" 
@@ -75,15 +77,17 @@ const lang_LABELS: Record<string, string> = {
       loading="lazy"
       fetchpriority="low"
       decoding="async"
+      id="lang-selector-current-flag"
     />
     <ChevronDown size={16} />
   </button>
   <div class="dropdown-menu shadow overflow-auto">
     {Object.keys(lang_FLAGS).map((code) => (
       <a 
-        class="dropdown-item d-flex" 
+        class="dropdown-item d-flex lang-option" 
         href={localePaths[code] || localePaths['en']} 
         aria-label={`${t.lang} - ${lang_LABELS[code]}`}
+        data-lang-code={code}
       >
         <span>
       <img 
@@ -124,11 +128,96 @@ const lang_LABELS: Record<string, string> = {
 </style>
 
 <script is:inline>
+  // Lista de idiomas suportados
+  const SUPPORTED_LANGS = ['pt', 'en', 'es', 'de', 'fr', 'zh', 'ja', 'ru', 'ko', 'it', 'pl', 'tr', 'hu', 'id', 'da', 'hr'];
+  const DEFAULT_LANG = 'en';
+  
+  // Mapeamento de bandeiras
+  const LANG_FLAGS = {
+    pt: '/img/flags/br.svg',
+    en: '/img/flags/en.svg',
+    es: '/img/flags/es.svg',
+    de: '/img/flags/de.svg',
+    fr: '/img/flags/fr.svg',
+    zh: '/img/flags/cn.svg',
+    ja: '/img/flags/jp.svg',
+    ru: '/img/flags/ru.svg',
+    ko: '/img/flags/ko.svg',
+    it: '/img/flags/it.svg',
+    pl: '/img/flags/pl.svg',
+    tr: '/img/flags/tr.svg',
+    hu: '/img/flags/hu.svg',
+    id: '/img/flags/id.svg',
+    da: '/img/flags/dk.svg',
+    hr: '/img/flags/hr.svg',
+  };
+
+  // Extrai o idioma atual do pathname
+  function getCurrentLangFromPath() {
+    const pathname = window.location.pathname;
+    const segments = pathname.split('/').filter(Boolean);
+    if (segments.length > 0 && SUPPORTED_LANGS.includes(segments[0])) {
+      return segments[0];
+    }
+    return DEFAULT_LANG;
+  }
+
+  // Remove o prefixo de idioma do pathname
+  function getPathWithoutLang() {
+    const pathname = window.location.pathname;
+    const segments = pathname.split('/').filter(Boolean);
+    if (segments.length > 0 && SUPPORTED_LANGS.includes(segments[0])) {
+      segments.shift();
+    }
+    return '/' + segments.join('/') + (pathname.endsWith('/') && segments.length > 0 ? '/' : '');
+  }
+
+  // Gera o path para um idioma específico
+  function getPathForLang(langCode) {
+    const basePath = getPathWithoutLang();
+    if (langCode === DEFAULT_LANG) {
+      return basePath || '/';
+    }
+    // Garantir trailing slash
+    const cleanBase = basePath.replace(/\/$/, '') || '';
+    return '/' + langCode + cleanBase + '/';
+  }
+
+  // Atualiza os hrefs dos links de idioma
+  function updateLanguageLinks() {
+    const langOptions = document.querySelectorAll('.lang-option');
+    const currentFlag = document.getElementById('lang-selector-current-flag');
+    const toggle = document.getElementById('lang-selector-toggle');
+    const currentLang = getCurrentLangFromPath();
+    
+    // Atualiza bandeira atual
+    if (currentFlag && LANG_FLAGS[currentLang]) {
+      currentFlag.src = LANG_FLAGS[currentLang];
+      currentFlag.alt = currentLang + ' Flag';
+    }
+    
+    // Atualiza data-current-lang no toggle
+    if (toggle) {
+      toggle.dataset.currentLang = currentLang;
+    }
+    
+    // Atualiza todos os links
+    langOptions.forEach((link) => {
+      const langCode = link.dataset.langCode;
+      if (langCode) {
+        link.href = getPathForLang(langCode);
+      }
+    });
+  }
+
   // Função de inicialização do seletor de idioma
   function initLanguageSelector() {
-    const languageDropdown = document.querySelector('.nav-item.auto-open.dropdown:has([aria-label*="Selected in Lang Selector"])');
+    const languageDropdown = document.getElementById('language-selector-dropdown');
     
     if (!languageDropdown) return;
+    
+    // Atualizar links com base no pathname atual
+    updateLanguageLinks();
     
     const toggle = languageDropdown.querySelector('[data-bs-toggle="dropdown"]');
     const menu = languageDropdown.querySelector('.dropdown-menu');
@@ -198,6 +287,11 @@ const lang_LABELS: Record<string, string> = {
   
   // Também tenta após um pequeno delay para garantir que tudo está carregado
   setTimeout(initLanguageSelector, 100);
+  
+  // Listener para ViewTransitions - atualiza links quando a página muda
+  document.addEventListener('astro:page-load', () => {
+    updateLanguageLinks();
+  });
 </script>
 
 

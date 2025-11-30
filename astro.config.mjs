@@ -24,6 +24,7 @@ const locales = {
 };
 
 export default defineConfig({
+  prefetch: true,
   trailingSlash: "always",
   site: "https://rpg.arkanus.app",
   build: {

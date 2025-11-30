@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import { i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
 import sitemap from "@astrojs/sitemap";
+import svelte from "@astrojs/svelte";
 
 const defaultLocale = "en";
 const locales = {
@@ -78,7 +79,7 @@ export default defineConfig({
     i18n({
       locales,
       defaultLocale,
-      
+
     }),
     sitemap({
       i18n: {
@@ -87,5 +88,6 @@ export default defineConfig({
       },
       filter: filterSitemapByDefaultLocale({ defaultLocale }),
     }),
+    svelte(),
   ],
 });

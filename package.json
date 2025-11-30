@@ -18,21 +18,23 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/svelte": "^7.2.2",
     "@discord/embedded-app-sdk": "^2.4.0",
-    "@lucide/astro": "^0.544.0",
+    "@lucide/astro": "^0.555.0",
     "astro-i18n-aut": "^0.7.3",
     "fast-glob": "^3.3.3",
-    "fs-extra": "^11.3.0",
+    "fs-extra": "^11.3.2",
     "html-minifier": "^4.0.0",
-    "mediabunny": "^1.24.6",
-    "p-limit": "^6.2.0"
+    "mediabunny": "^1.25.3",
+    "p-limit": "^6.2.0",
+    "svelte": "^5.45.2"
   },
   "devDependencies": {
-    "astro": "5.15.4",
-    "autoprefixer": "^10.4.21",
-    "cssnano": "^7.1.1",
-    "rimraf": "^5.0.5",
-    "terser": "^5.44.0",
-    "wrangler": "^4.19.1"
+    "astro": "^5.16.3",
+    "autoprefixer": "^10.4.22",
+    "cssnano": "^7.1.2",
+    "rimraf": "^5.0.10",
+    "terser": "^5.44.1",
+    "wrangler": "^4.51.0"
   }
 }

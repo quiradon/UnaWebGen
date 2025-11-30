@@ -1,10 +1,10 @@
 ---
-import Head from '@components/Head.astro';
-import Navbar from '@components/Navbar.astro';
-import Footer from '@components/Footer.astro';
-import { ViewTransitions } from 'astro:transitions';
-import type { Translations } from '@lib/i18n';
-import config from '../config';
+import Head from "@components/Head.astro";
+import Navbar from "@components/Navbar.astro";
+import Footer from "@components/Footer.astro";
+import { ClientRouter } from "astro:transitions";
+import type { Translations } from "@lib/i18n";
+import config from "../config";
 
 interface Props {
   t: Translations;
@@ -15,41 +15,43 @@ interface Props {
 
 const { t, title, desc, pictureURL } = Astro.props as Props;
 ---
+
 <html lang={t.lang} data-bs-theme="dark">
   <Head title={title} desc={desc} pictureURL={pictureURL} />
   <body>
-    <ViewTransitions />
-    <Navbar t={t}/>
-    <main class="main-content" data-astro-transition-scope="page">
+    <ClientRouter />
+    <Navbar t={t} />
+    <main class="main-content" transition:animate="fade">
       <slot />
     </main>
-    <div data-astro-transition-persist="footer-shell" style="display: contents;">
-      <Footer t={t}/>
+    <div
+      data-astro-transition-persist="footer-shell"
+      style="display: contents;"
+    >
+      <Footer t={t} />
     </div>
     <script is:inline src="/bootstrap/js/bootstrap.min.js"></script>
     <!-- Carrega versões já geradas em public/scripts para evitar MIME errado -->
     <script type="module" src="/scripts/session-prime.js"></script>
     <script type="module" src="/scripts/auth-widget.js"></script>
-
   </body>
 </html>
 
 <style is:global>
-  html, body {
+  html,
+  body {
     height: 100%;
     margin: 0;
   }
-  
+
   body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
   }
 
-  
   footer {
     flex-shrink: 0;
     margin-top: auto;
   }
-  
 </style>

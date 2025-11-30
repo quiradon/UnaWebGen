@@ -1,7 +1,7 @@
 ---
 import { getLocale, getAllLocaleUrls } from "astro-i18n-aut";
-import { loadT } from '../../lib/i18n';
-import { ChevronDown } from '@lucide/astro';
+import { loadT } from "../../lib/i18n";
+import { ChevronDown } from "@lucide/astro";
 
 const locale = getLocale(Astro.url);
 const t = loadT(locale);
@@ -16,64 +16,64 @@ const localePaths = Object.fromEntries(
     } catch {
       return [code, url];
     }
-  })
+  }),
 );
 
 const lang_FLAGS: Record<string, string> = {
-  pt: '/img/flags/br.svg',
-  en: '/img/flags/en.svg',
-  es: '/img/flags/es.svg',
-  de: '/img/flags/de.svg',
-  fr: '/img/flags/fr.svg',
-  zh: '/img/flags/cn.svg',
-  ja: '/img/flags/jp.svg',
-  ru: '/img/flags/ru.svg',
-  ko: '/img/flags/ko.svg',
-  it: '/img/flags/it.svg',
-  pl: '/img/flags/pl.svg',
-  tr: '/img/flags/tr.svg',
-  hu: '/img/flags/hu.svg',
-  id: '/img/flags/id.svg',
-  da: '/img/flags/dk.svg',
-  hr: '/img/flags/hr.svg',
+  pt: "/img/flags/br.svg",
+  en: "/img/flags/en.svg",
+  es: "/img/flags/es.svg",
+  de: "/img/flags/de.svg",
+  fr: "/img/flags/fr.svg",
+  zh: "/img/flags/cn.svg",
+  ja: "/img/flags/jp.svg",
+  ru: "/img/flags/ru.svg",
+  ko: "/img/flags/ko.svg",
+  it: "/img/flags/it.svg",
+  pl: "/img/flags/pl.svg",
+  tr: "/img/flags/tr.svg",
+  hu: "/img/flags/hu.svg",
+  id: "/img/flags/id.svg",
+  da: "/img/flags/dk.svg",
+  hr: "/img/flags/hr.svg",
 };
 
 const lang_LABELS: Record<string, string> = {
-  en: 'English',
-  zh: '中文',
-  es: 'Español',
-  fr: 'Français',
-  de: 'Deutsch',
-  pt: 'Português',
-  ru: 'Русский',
-  ja: '日本語',
-  ko: '한국어',
-  it: 'Italiano',
-  tr: 'Türkçe',
-  pl: 'Polski',
-  hu: 'Magyar',
-  da: 'Danish',
-  hr: 'Croatian',
-  id: 'Indonesian',
+  en: "English",
+  zh: "中文",
+  es: "Español",
+  fr: "Français",
+  de: "Deutsch",
+  pt: "Português",
+  ru: "Русский",
+  ja: "日本語",
+  ko: "한국어",
+  it: "Italiano",
+  tr: "Türkçe",
+  pl: "Polski",
+  hu: "Magyar",
+  da: "Danish",
+  hr: "Croatian",
+  id: "Indonesian",
 };
 ---
 
 <li class="nav-item auto-open dropdown" id="language-selector-dropdown">
-  <button 
-    aria-label={`${t.lang} Selected in Lang Selector`} 
-    class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center" 
-    aria-expanded="false" 
-    data-bs-toggle="dropdown" 
+  <button
+    aria-label={`${t.lang} Selected in Lang Selector`}
+    class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center"
+    aria-expanded="false"
+    data-bs-toggle="dropdown"
     type="button"
     id="lang-selector-toggle"
     data-current-lang={t.lang}
   >
-    <img 
-      class="img-fluid me-1" 
-      src={lang_FLAGS[t.lang]} 
-      width="25" 
-      height="25" 
-      alt={`${t.lang} Flag`} 
+    <img
+      class="img-fluid me-1"
+      src={lang_FLAGS[t.lang]}
+      width="25"
+      height="25"
+      alt={`${t.lang} Flag`}
       loading="lazy"
       fetchpriority="low"
       decoding="async"
@@ -82,28 +82,30 @@ const lang_LABELS: Record<string, string> = {
     <ChevronDown size={16} />
   </button>
   <div class="dropdown-menu shadow overflow-auto">
-    {Object.keys(lang_FLAGS).map((code) => (
-      <a 
-        class="dropdown-item d-flex lang-option" 
-        href={localePaths[code] || localePaths['en']} 
-        aria-label={`${t.lang} - ${lang_LABELS[code]}`}
-        data-lang-code={code}
-      >
-        <span>
-      <img 
-        class="img-fluid me-2" 
-        src={lang_FLAGS[code]} 
-        width="25" 
-        height="25" 
-        alt={`${lang_LABELS[code]} Lang selector`} 
-        loading="lazy"
-        fetchpriority="low"
-        decoding="async"
-      />
-          {lang_LABELS[code]}
-        </span>
-      </a>
-    ))}
+    {
+      Object.keys(lang_FLAGS).map((code) => (
+        <a
+          class="dropdown-item d-flex lang-option"
+          href={localePaths[code] || localePaths["en"]}
+          aria-label={`${t.lang} - ${lang_LABELS[code]}`}
+          data-lang-code={code}
+        >
+          <span>
+            <img
+              class="img-fluid me-2"
+              src={lang_FLAGS[code]}
+              width="25"
+              height="25"
+              alt={`${lang_LABELS[code]} Lang selector`}
+              loading="lazy"
+              fetchpriority="low"
+              decoding="async"
+            />
+            {lang_LABELS[code]}
+          </span>
+        </a>
+      ))
+    }
   </div>
 </li>
 
@@ -113,7 +115,9 @@ const lang_LABELS: Record<string, string> = {
     position: absolute;
     transform: scale(0.95);
     opacity: 0;
-    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+    transition:
+      transform 0.15s ease-out,
+      opacity 0.15s ease-out;
     transform-origin: top;
     pointer-events: none;
     visibility: hidden;
@@ -129,33 +133,50 @@ const lang_LABELS: Record<string, string> = {
 
 <script is:inline>
   // Lista de idiomas suportados
-  const SUPPORTED_LANGS = ['pt', 'en', 'es', 'de', 'fr', 'zh', 'ja', 'ru', 'ko', 'it', 'pl', 'tr', 'hu', 'id', 'da', 'hr'];
-  const DEFAULT_LANG = 'en';
-  
+  const SUPPORTED_LANGS = [
+    "pt",
+    "en",
+    "es",
+    "de",
+    "fr",
+    "zh",
+    "ja",
+    "ru",
+    "ko",
+    "it",
+    "pl",
+    "tr",
+    "hu",
+    "id",
+    "da",
+    "hr",
+  ];
+  const DEFAULT_LANG = "en";
+
   // Mapeamento de bandeiras
   const LANG_FLAGS = {
-    pt: '/img/flags/br.svg',
-    en: '/img/flags/en.svg',
-    es: '/img/flags/es.svg',
-    de: '/img/flags/de.svg',
-    fr: '/img/flags/fr.svg',
-    zh: '/img/flags/cn.svg',
-    ja: '/img/flags/jp.svg',
-    ru: '/img/flags/ru.svg',
-    ko: '/img/flags/ko.svg',
-    it: '/img/flags/it.svg',
-    pl: '/img/flags/pl.svg',
-    tr: '/img/flags/tr.svg',
-    hu: '/img/flags/hu.svg',
-    id: '/img/flags/id.svg',
-    da: '/img/flags/dk.svg',
-    hr: '/img/flags/hr.svg',
+    pt: "/img/flags/br.svg",
+    en: "/img/flags/en.svg",
+    es: "/img/flags/es.svg",
+    de: "/img/flags/de.svg",
+    fr: "/img/flags/fr.svg",
+    zh: "/img/flags/cn.svg",
+    ja: "/img/flags/jp.svg",
+    ru: "/img/flags/ru.svg",
+    ko: "/img/flags/ko.svg",
+    it: "/img/flags/it.svg",
+    pl: "/img/flags/pl.svg",
+    tr: "/img/flags/tr.svg",
+    hu: "/img/flags/hu.svg",
+    id: "/img/flags/id.svg",
+    da: "/img/flags/dk.svg",
+    hr: "/img/flags/hr.svg",
   };
 
   // Extrai o idioma atual do pathname
   function getCurrentLangFromPath() {
     const pathname = window.location.pathname;
-    const segments = pathname.split('/').filter(Boolean);
+    const segments = pathname.split("/").filter(Boolean);
     if (segments.length > 0 && SUPPORTED_LANGS.includes(segments[0])) {
       return segments[0];
     }
@@ -165,42 +186,46 @@ const lang_LABELS: Record<string, string> = {
   // Remove o prefixo de idioma do pathname
   function getPathWithoutLang() {
     const pathname = window.location.pathname;
-    const segments = pathname.split('/').filter(Boolean);
+    const segments = pathname.split("/").filter(Boolean);
     if (segments.length > 0 && SUPPORTED_LANGS.includes(segments[0])) {
       segments.shift();
     }
-    return '/' + segments.join('/') + (pathname.endsWith('/') && segments.length > 0 ? '/' : '');
+    return (
+      "/" +
+      segments.join("/") +
+      (pathname.endsWith("/") && segments.length > 0 ? "/" : "")
+    );
   }
 
   // Gera o path para um idioma específico
   function getPathForLang(langCode) {
     const basePath = getPathWithoutLang();
     if (langCode === DEFAULT_LANG) {
-      return basePath || '/';
+      return basePath || "/";
     }
     // Garantir trailing slash
-    const cleanBase = basePath.replace(/\/$/, '') || '';
-    return '/' + langCode + cleanBase + '/';
+    const cleanBase = basePath.replace(/\/$/, "") || "";
+    return "/" + langCode + cleanBase + "/";
   }
 
   // Atualiza os hrefs dos links de idioma
   function updateLanguageLinks() {
-    const langOptions = document.querySelectorAll('.lang-option');
-    const currentFlag = document.getElementById('lang-selector-current-flag');
-    const toggle = document.getElementById('lang-selector-toggle');
+    const langOptions = document.querySelectorAll(".lang-option");
+    const currentFlag = document.getElementById("lang-selector-current-flag");
+    const toggle = document.getElementById("lang-selector-toggle");
     const currentLang = getCurrentLangFromPath();
-    
+
     // Atualiza bandeira atual
     if (currentFlag && LANG_FLAGS[currentLang]) {
       currentFlag.src = LANG_FLAGS[currentLang];
-      currentFlag.alt = currentLang + ' Flag';
+      currentFlag.alt = currentLang + " Flag";
     }
-    
+
     // Atualiza data-current-lang no toggle
     if (toggle) {
       toggle.dataset.currentLang = currentLang;
     }
-    
+
     // Atualiza todos os links
     langOptions.forEach((link) => {
       const langCode = link.dataset.langCode;
@@ -212,86 +237,100 @@ const lang_LABELS: Record<string, string> = {
 
   // Função de inicialização do seletor de idioma
   function initLanguageSelector() {
-    const languageDropdown = document.getElementById('language-selector-dropdown');
-    
+    const languageDropdown = document.getElementById(
+      "language-selector-dropdown",
+    );
+
     if (!languageDropdown) return;
-    
+
     // Atualizar links com base no pathname atual
     updateLanguageLinks();
-    
-    const toggle = languageDropdown.querySelector('[data-bs-toggle="dropdown"]');
-    const menu = languageDropdown.querySelector('.dropdown-menu');
-    
+
+    const toggle = languageDropdown.querySelector(
+      '[data-bs-toggle="dropdown"]',
+    );
+    const menu = languageDropdown.querySelector(".dropdown-menu");
+
     if (!toggle || !menu) return;
-    
+
     // Previne comportamento padrão do Bootstrap
-    toggle.removeAttribute('data-bs-toggle');
-    
+    toggle.removeAttribute("data-bs-toggle");
+
     let hoverTimeout;
-    
+
     // Detecta se é dispositivo touch
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    
+    const isTouchDevice =
+      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
     // Hover para abrir (apenas em dispositivos não-touch e desktop)
     if (!isTouchDevice && window.innerWidth >= 992) {
-      languageDropdown.addEventListener('mouseenter', () => {
+      languageDropdown.addEventListener("mouseenter", () => {
         clearTimeout(hoverTimeout);
-        menu.classList.add('show');
-        toggle.setAttribute('aria-expanded', 'true');
+        menu.classList.add("show");
+        toggle.setAttribute("aria-expanded", "true");
       });
-      
-      languageDropdown.addEventListener('mouseleave', () => {
+
+      languageDropdown.addEventListener("mouseleave", () => {
         hoverTimeout = setTimeout(() => {
-          menu.classList.remove('show');
-          toggle.setAttribute('aria-expanded', 'false');
+          menu.classList.remove("show");
+          toggle.setAttribute("aria-expanded", "false");
         }, 100);
       });
     }
-    
+
     // Click para toggle (funciona sempre)
-    toggle.addEventListener('click', (e) => {
+    toggle.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
-      
-      const isOpen = menu.classList.contains('show');
-      
+
+      const isOpen = menu.classList.contains("show");
+
       if (!isOpen) {
-        menu.classList.add('show');
-        toggle.setAttribute('aria-expanded', 'true');
+        menu.classList.add("show");
+        toggle.setAttribute("aria-expanded", "true");
       } else {
-        menu.classList.remove('show');
-        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.remove("show");
+        toggle.setAttribute("aria-expanded", "false");
       }
     });
-    
+
     // Previne fechar ao clicar dentro do menu
+    // Removido stopPropagation para permitir que o ClientRouter detecte cliques em links
+    /*
     menu.addEventListener('click', (e) => {
       e.stopPropagation();
     });
-    
+    */
+
+    // Fecha o menu ao clicar em um link
+    menu.addEventListener("click", (e) => {
+      if (e.target.closest("a")) {
+        menu.classList.remove("show");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+
     // Fecha ao clicar fora
-    document.addEventListener('click', (e) => {
+    document.addEventListener("click", (e) => {
       if (!languageDropdown.contains(e.target)) {
-        menu.classList.remove('show');
-        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.remove("show");
+        toggle.setAttribute("aria-expanded", "false");
       }
     });
   }
-  
+
   // Tenta inicializar imediatamente se o DOM já estiver carregado
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLanguageSelector);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLanguageSelector);
   } else {
     initLanguageSelector();
   }
-  
+
   // Também tenta após um pequeno delay para garantir que tudo está carregado
   setTimeout(initLanguageSelector, 100);
-  
+
   // Listener para ViewTransitions - atualiza links quando a página muda
-  document.addEventListener('astro:page-load', () => {
+  document.addEventListener("astro:page-load", () => {
     updateLanguageLinks();
   });
 </script>
-
-

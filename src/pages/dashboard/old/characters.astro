@@ -1,18 +1,21 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { getLocale } from "astro-i18n-aut";
-import { loadT } from '@lib/i18n';
-import config from '../../../config';
+import { loadT } from "@lib/i18n";
+import config from "../../../config";
 
 const locale = getLocale(Astro.url);
 const t = loadT(locale);
-const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/, '');
+const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
+  /\/$/,
+  "",
+);
 ---
 
 <Layout title="Personagens Antigos" t={t}>
   <!-- Hidden data attributes for script -->
-  <div 
-    style="display: none;" 
+  <div
+    style="display: none;"
     data-api-base={apiBase}
     data-loading-text={t.Dashbaord.loading}
     data-empty-text={t.dashboard.characters.old.description}
@@ -21,8 +24,9 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     data-error-download={"Erro ao baixar ficha. Tente novamente."}
     data-download-label={t.dashboard.characters.download}
     data-system-custom={"Customized System"}
-  ></div>
-  
+  >
+  </div>
+
   <main class="container py-5">
     <div class="row mb-4">
       <div class="col-12">
@@ -32,7 +36,10 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     </div>
 
     <div id="loading" class="alert alert-info">
-      <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+      <span
+        class="spinner-border spinner-border-sm me-2"
+        role="status"
+        aria-hidden="true"></span>
       {t.Dashbaord.loading}
     </div>
 
@@ -42,12 +49,12 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
         {t.dashboard.characters.old.description}
       </div>
     </div>
-    
+
     <div id="characters-container" class="row d-none"></div>
   </main>
 </Layout>
 
-<script >
+<script>
   import { getCachedSession, getSession } from "@/scripts/session-manager";
   interface Character {
     id: string;
@@ -57,18 +64,20 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     ultima_modificacao: number;
   }
 
-  const dataEl = document.querySelector('[data-api-base]') as HTMLElement | null;
-  const API_BASE = dataEl?.dataset.apiBase || 'https://una-api.arkanus.app';
-  
+  const dataEl = document.querySelector(
+    "[data-api-base]",
+  ) as HTMLElement | null;
+  const API_BASE = dataEl?.dataset.apiBase || "https://api-rpg.arkanus.app";
+
   // Traduções
   const translations = {
-    loading: dataEl?.dataset.loadingText || 'Loading...',
-    emptyText: dataEl?.dataset.emptyText || 'No characters found.',
-    errorAuth: dataEl?.dataset.errorAuth || 'You need to be authenticated.',
-    errorLoad: dataEl?.dataset.errorLoad || 'Error loading characters.',
-    errorDownload: dataEl?.dataset.errorDownload || 'Error downloading sheet.',
-    downloadLabel: dataEl?.dataset.downloadLabel || 'Download',
-    systemCustom: dataEl?.dataset.systemCustom || 'Customized System'
+    loading: dataEl?.dataset.loadingText || "Loading...",
+    emptyText: dataEl?.dataset.emptyText || "No characters found.",
+    errorAuth: dataEl?.dataset.errorAuth || "You need to be authenticated.",
+    errorLoad: dataEl?.dataset.errorLoad || "Error loading characters.",
+    errorDownload: dataEl?.dataset.errorDownload || "Error downloading sheet.",
+    downloadLabel: dataEl?.dataset.downloadLabel || "Download",
+    systemCustom: dataEl?.dataset.systemCustom || "Customized System",
   };
 
   const formatDate = (timestamp: number) => {
@@ -95,40 +104,46 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       10: "Dharmar",
       11: "ICONS Superpowered",
       12: "Wilder Feast",
-      13: "Enxerto"
+      13: "Enxerto",
     };
     return systems[systemId] || `${translations.systemCustom} (${systemId})`;
   };
 
   const renderCharacters = (characters: Character[]) => {
-    const container = document.getElementById('characters-container');
+    const container = document.getElementById("characters-container");
     if (!container) return;
 
     if (characters.length === 0) {
-      document.getElementById('empty-container')?.classList.remove('d-none');
-      container.classList.add('d-none');
+      document.getElementById("empty-container")?.classList.remove("d-none");
+      container.classList.add("d-none");
       return;
     }
 
-    container.innerHTML = characters.map(character => `
+    container.innerHTML = characters
+      .map(
+        (character) => `
       <div class="col-12 col-md-6 col-lg-4 mb-4">
         <div class="character-card">
             <div class="character-card-body">
               <div class="character-image-container">
-                ${character.image_url ? `
+                ${
+                  character.image_url
+                    ? `
                   <img
                     src="${character.image_url}"
                     class="character-image"
                     alt="${character.nome}"
                   />
-                ` : `
+                `
+                    : `
                   <div class="character-image-placeholder">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
                       <circle cx="12" cy="7" r="4"/>
                     </svg>
                   </div>
-                `}
+                `
+                }
               </div>
               <div class="character-details">
                 <h3 class="character-name">${character.nome}</h3>
@@ -148,18 +163,20 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
             </div>
         </div>
       </div>
-    `).join('');
+    `,
+      )
+      .join("");
 
-    container.classList.remove('d-none');
-    
+    container.classList.remove("d-none");
+
     // Adicionar event listeners aos botões
-    container.querySelectorAll('.download-btn').forEach(button => {
-      button.addEventListener('click', handleDownload);
+    container.querySelectorAll(".download-btn").forEach((button) => {
+      button.addEventListener("click", handleDownload);
     });
   };
 
   const showError = (message: string) => {
-    const errorContainer = document.getElementById('error-container');
+    const errorContainer = document.getElementById("error-container");
     if (errorContainer) {
       errorContainer.innerHTML = `
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -172,17 +189,24 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
   const handleDownload = async (e: Event) => {
     const button = e.target as HTMLElement;
-    const characterId = button.closest('button')?.getAttribute('data-character-id');
-    const characterName = button.closest('button')?.getAttribute('data-character-name');
+    const characterId = button
+      .closest("button")
+      ?.getAttribute("data-character-id");
+    const characterName = button
+      .closest("button")
+      ?.getAttribute("data-character-name");
 
     if (!characterId) return;
 
     try {
-      button.setAttribute('disabled', 'disabled');
-      
-      const response = await fetch(`${API_BASE}/character/${characterId}/download`, {
-        credentials: "include",
-      });
+      button.setAttribute("disabled", "disabled");
+
+      const response = await fetch(
+        `${API_BASE}/character/${characterId}/download`,
+        {
+          credentials: "include",
+        },
+      );
 
       if (!response.ok) {
         throw new Error("Erro ao baixar ficha");
@@ -199,7 +223,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
       console.error("Erro ao baixar:", err);
       showError(translations.errorDownload);
     } finally {
-      button.removeAttribute('disabled');
+      button.removeAttribute("disabled");
     }
   };
 
@@ -212,44 +236,47 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
 
       if (!session?.authenticated) {
         showError(translations.errorAuth);
-        document.getElementById('loading')?.classList.add('d-none');
+        document.getElementById("loading")?.classList.add("d-none");
         return;
       }
       const response = await fetch(`${API_BASE}/characters`, {
-        method: 'GET',
+        method: "GET",
         credentials: "include",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('[Characters] Error response:', errorData);
+        console.error("[Characters] Error response:", errorData);
         throw new Error("Falha ao carregar personagens");
       }
 
       const data = await response.json();
-      console.log('[Characters] Data received:', data);
-      
+      console.log("[Characters] Data received:", data);
+
       // Lidar com a estrutura aninhada: characters.get_user_sheets_json ou characters (array direto)
       let characters: Character[] = [];
-      
+
       if (data.characters) {
         if (Array.isArray(data.characters)) {
           // Se characters já é um array
           characters = data.characters;
-        } else if (data.characters.get_user_sheets_json && Array.isArray(data.characters.get_user_sheets_json)) {
+        } else if (
+          data.characters.get_user_sheets_json &&
+          Array.isArray(data.characters.get_user_sheets_json)
+        ) {
           // Se characters tem a propriedade get_user_sheets_json
           characters = data.characters.get_user_sheets_json;
         }
       }
 
       renderCharacters(characters);
-      document.getElementById('loading')?.classList.add('d-none');
+      document.getElementById("loading")?.classList.add("d-none");
     } catch (err) {
       console.error("Erro ao carregar personagens:", err);
       showError(translations.errorLoad);
-      document.getElementById('loading')?.classList.add('d-none');
+      document.getElementById("loading")?.classList.add("d-none");
     }
   };
 
@@ -274,13 +301,17 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
   }
 
   .character-card::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(248, 7, 82, 0.05), rgba(248, 7, 82, 0.02));
+    background: linear-gradient(
+      135deg,
+      rgba(248, 7, 82, 0.05),
+      rgba(248, 7, 82, 0.02)
+    );
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -329,7 +360,7 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     flex-shrink: 0;
   }
-  
+
   .character-image {
     width: 100%;
     height: 100%;
@@ -349,7 +380,11 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(248, 7, 82, 0.15), rgba(30, 30, 40, 0.9));
+    background: linear-gradient(
+      135deg,
+      rgba(248, 7, 82, 0.15),
+      rgba(30, 30, 40, 0.9)
+    );
     color: rgba(255, 255, 255, 0.3);
   }
 
@@ -398,16 +433,23 @@ const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/,
     font-size: 0.9rem;
     border-radius: 8px;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, var(--bs-primary), rgba(248, 7, 82, 0.8));
+    background: linear-gradient(
+      135deg,
+      var(--bs-primary),
+      rgba(248, 7, 82, 0.8)
+    );
     color: white;
     border: none;
     cursor: pointer;
     z-index: 2;
     box-shadow: 0 2px 8px rgba(248, 7, 82, 0.4);
   }
-character-card
-  .character-download-btn:hover {
-    background: linear-gradient(135deg, rgba(248, 7, 82, 0.95), var(--bs-primary));
+  character-card .character-download-btn:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(248, 7, 82, 0.95),
+      var(--bs-primary)
+    );
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(248, 7, 82, 0.6);
   }
@@ -417,5 +459,4 @@ character-card
     pointer-events: none;
     transform: none;
   }
- 
 </style>

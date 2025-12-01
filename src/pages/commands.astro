@@ -1,10 +1,10 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import CommandCard from '@components/CommandCard.astro';
+import Layout from "@layouts/Layout.astro";
+import CommandCard from "@components/CommandCard.astro";
 
-import { Terminal, Code2, Sparkles, Search } from '@lucide/astro';
+import { Terminal, Search, Hash, ChevronRight } from "@lucide/astro";
 import { getLocale } from "astro-i18n-aut";
-import { loadT } from '@lib/i18n';
+import { loadT } from "@lib/i18n";
 const locale = getLocale(Astro.url);
 const t = loadT(locale);
 
@@ -18,7 +18,7 @@ type Cmd = {
 type CmdOption = Cmd & { type: number };
 
 async function getCommands(): Promise<Cmd[]> {
-  const url = 'https://una-api.arkanus.app/commands';
+  const url = "https://api-rpg.arkanus.app/bot/commands";
   const res = await fetch(url);
   const data = (await res.json()) as Cmd[];
   return Array.isArray(data) ? data : [];
@@ -32,27 +32,35 @@ function formatDescription(cmd: Cmd, lang: string) {
   return cmd.description_localizations?.[lang] ?? cmd.description;
 }
 
-function replaceText(text = '') {
+function replaceText(text = "") {
   return text
-    .replace(/\n/g, '<br />')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, "<br />")
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
     .replace(/@(\w+)/g, '<span class="text-primary">@$1</span>')
     .replace(/`(.*?)`/g, '<span class="text-bg-primary">$1</span>')
     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
 }
 
-function processCommand(cmd: Cmd, lang: string, parentName = ''): { command: string; description: string; options: string; optionsDescriptions: string } | null {
-  
-  let optionsSpans = '';
-  let optionsDescriptions = '';
-  
+function processCommand(
+  cmd: Cmd,
+  lang: string,
+  parentName = "",
+): {
+  command: string;
+  description: string;
+  options: string;
+  optionsDescriptions: string;
+} | null {
+  let optionsSpans = "";
+  let optionsDescriptions = "";
+
   if (cmd.options) {
     optionsSpans = cmd.options
       .map((option) => {
         const optionName = formatName(option, lang);
         return `<span class="badge rounded-pill bg-primary me-1">${optionName}</span>`;
       })
-      .join('');
+      .join("");
 
     optionsDescriptions = cmd.options
       .map((option) => {
@@ -60,48 +68,80 @@ function processCommand(cmd: Cmd, lang: string, parentName = ''): { command: str
         const optionDescription = replaceText(formatDescription(option, lang));
         return `<strong>${optionName}:</strong> ${optionDescription}`;
       })
-      .join('<br />');
+      .join("<br />");
   }
 
   const name = formatName(cmd, lang);
   const description = replaceText(formatDescription(cmd, lang));
   const fullName = parentName ? `${parentName} ${name}` : name;
-  const isFinal = !cmd.options || cmd.options.every((o) => o.type !== 1 && o.type !== 2);
-  
+  const isFinal =
+    !cmd.options || cmd.options.every((o) => o.type !== 1 && o.type !== 2);
+
   if (isFinal) {
     return {
       command: fullName, // Mantém os espaços no nome completo
       description,
       options: optionsSpans,
-      optionsDescriptions
+      optionsDescriptions,
     };
   }
-  
+
   return null;
 }
 
-function getAllFinalCommands(commands: Cmd[], lang: string): Array<{ command: string; description: string; options: string; optionsDescriptions: string }> {
-  const finalCommands: Array<{ command: string; description: string; options: string; optionsDescriptions: string }> = [];
-  
-  function processRecursively(cmd: Cmd, parentName = '') {
+function getAllFinalCommands(
+  commands: Cmd[],
+  lang: string,
+): Array<{
+  command: string;
+  description: string;
+  options: string;
+  optionsDescriptions: string;
+}> {
+  const finalCommands: Array<{
+    command: string;
+    description: string;
+    options: string;
+    optionsDescriptions: string;
+  }> = [];
+
+  function processRecursively(cmd: Cmd, parentName = "") {
     const processed = processCommand(cmd, lang, parentName);
     if (processed) {
       finalCommands.push(processed);
     } else if (cmd.options) {
-      const currentName = parentName ? `${parentName} ${formatName(cmd, lang)}` : formatName(cmd, lang);
+      const currentName = parentName
+        ? `${parentName} ${formatName(cmd, lang)}`
+        : formatName(cmd, lang);
       cmd.options
         .filter((o) => o.type === 1 || o.type === 2)
         .forEach((o) => processRecursively(o, currentName));
     }
   }
-  
-  commands.forEach(cmd => processRecursively(cmd));
+
+  commands.forEach((cmd) => processRecursively(cmd));
   return finalCommands;
 }
 
-const apiLang = t.lang === 'pt' ? 'pt-BR' : 'en-US';
+const apiLang = t.lang === "pt" ? "pt-BR" : "en-US";
 const commands = await getCommands();
 const finalCommands = getAllFinalCommands(commands, apiLang);
+
+// Group commands by their root name (first word)
+const groupedCommands = finalCommands.reduce(
+  (acc, cmd) => {
+    const root = cmd.command.split(" ")[0];
+    const key = root.charAt(0).toUpperCase() + root.slice(1); // Capitalize
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(cmd);
+    return acc;
+  },
+  {} as Record<string, typeof finalCommands>,
+);
+
+const sortedGroups = Object.keys(groupedCommands).sort();
 ---
 
 <Layout t={t} title={t.cmds?.title} desc={t.cmds?.seo}>
@@ -110,47 +150,117 @@ const finalCommands = getAllFinalCommands(commands, apiLang);
       <!-- Header -->
       <div class="commands-header text-center mb-5 mt-5">
         <h1 class="display-4 fw-bold text-white mb-3 animate-fade-in">
-          <Terminal size={40} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
+          <Terminal
+            size={40}
+            class="me-2 d-inline-block"
+            style="color: var(--bs-primary);"
+          />
           {t.cmds?.title}
         </h1>
         <p class="lead text-secondary animate-fade-in-delay">{t.cmds?.desc}</p>
-        
+
         <!-- Search Bar -->
         <div class="search-container mt-4 animate-slide-up">
           <div class="search-wrapper">
             <Search size={20} class="search-icon" />
-            <input 
-              type="text" 
-              id="commandSearch" 
+            <input
+              type="text"
+              id="commandSearch"
               class="search-input"
-              placeholder="Buscar comandos..."
+              placeholder={t.misc?.search_placeholder ?? "Search commands..."}
               autocomplete="off"
             />
           </div>
         </div>
       </div>
 
-      <!-- Commands Stats -->
-      <div class="commands-stats mb-5 animate-slide-up-delay">
-        <div class="row g-5 justify-content-center">
+      <div class="row g-4">
+        <!-- Sidebar Navigation -->
+        <div class="col-lg-3 d-none d-lg-block">
+          <div class="sidebar-wrapper animate-slide-up-delay">
+            <nav class="sidebar-nav" id="sidebarNav">
+              <div class="sidebar-header">
+                <Hash size={16} class="me-2" />
+                <span>Groups</span>
+              </div>
+              <ul class="nav flex-column">
+                {
+                  sortedGroups.map((group) => (
+                    <li class="nav-item">
+                      <a
+                        href={`#group-${group}`}
+                        class="nav-link group-link"
+                        data-group={group}
+                      >
+                        <span>{group}</span>
+                        <span class="badge bg-secondary-subtle text-secondary rounded-pill ms-auto">
+                          {groupedCommands[group].length}
+                        </span>
+                        <ChevronRight size={14} class="arrow-icon ms-2" />
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9">
+          <div class="commands-content" id="commandsGrid">
+            {
+              sortedGroups.map((group, index) => (
+                <div
+                  class="command-group mb-5 animate-slide-up"
+                  style={`animation-delay: ${0.1 * index}s`}
+                  id={`group-${group}`}
+                  data-group-name={group}
+                >
+                  <div class="group-header mb-4">
+                    <h2 class="group-title">
+                      <span class="text-primary">/</span> {group}
+                    </h2>
+                    <div class="group-divider" />
+                  </div>
+
+                  <div class="commands-grid">
+                    {groupedCommands[group].map((cmd) => (
+                      <CommandCard
+                        command={cmd.command}
+                        description={cmd.description}
+                        options={cmd.options}
+                        optionsDescriptions={cmd.optionsDescriptions}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))
+            }
+
+            <!-- No results message -->
+            <div
+              id="noResults"
+              class="no-results text-center py-5"
+              style="display: none;"
+            >
+              <div class="mb-3">
+                <Search size={48} class="text-secondary opacity-50" />
+              </div>
+              <h3 class="text-white h5">No commands found</h3>
+              <p class="text-secondary">Try searching for something else</p>
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- Commands Grid -->
-      <div class="commands-grid" id="commandsGrid">
-        {finalCommands.map((cmd) => (
-          <CommandCard
-            command={cmd.command}
-            description={cmd.description}
-            options={cmd.options}
-            optionsDescriptions={cmd.optionsDescriptions}
-          />
-        ))}
-      </div>
+    </div>
   </section>
 
   <style>
+    html {
+      scroll-padding-top: 120px;
+    }
+
     .commands-section {
       min-height: 70vh;
       position: relative;
@@ -182,22 +292,19 @@ const finalCommands = getAllFinalCommands(commands, apiLang);
     .animate-fade-in {
       animation: fadeIn 0.8s ease-out;
     }
-
     .animate-fade-in-delay {
       animation: fadeIn 0.8s ease-out 0.2s both;
     }
-
     .animate-slide-up {
       animation: slideUp 0.8s ease-out 0.4s both;
     }
-
     .animate-slide-up-delay {
       animation: slideUp 0.8s ease-out 0.6s both;
     }
 
     /* Search container */
     .search-container {
-      max-width: 500px;
+      max-width: 800px;
       margin: 0 auto;
     }
 
@@ -237,51 +344,101 @@ const finalCommands = getAllFinalCommands(commands, apiLang);
       box-shadow: 0 0 0 4px rgba(248, 7, 82, 0.2);
     }
 
-    /* Stats cards */
-    .commands-stats {
-      opacity: 0;
-      animation: slideUp 0.8s ease-out 0.6s both;
+    /* Sidebar Navigation */
+    .sidebar-wrapper {
+      position: sticky;
+      top: 100px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
     }
 
-    .stat-card {
+    .sidebar-wrapper::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidebar-wrapper::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(248, 7, 82, 0.3);
+      border-radius: 4px;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-left: 0.75rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.75rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      background: rgba(248, 7, 82, 0.1);
+      color: #f80752;
+    }
+
+    .nav-link.active .badge {
+      background: #f80752 !important;
+      color: white !important;
+    }
+
+    .arrow-icon {
+      opacity: 0;
+      transition: all 0.2s ease;
+      transform: translateX(-5px);
+    }
+
+    .nav-link:hover .arrow-icon,
+    .nav-link.active .arrow-icon {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Group Headers */
+    .group-header {
       display: flex;
       align-items: center;
       gap: 1rem;
-      padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
     }
 
-    .stat-card:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(248, 7, 82, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .stat-icon {
-      color: #f80752;
-      flex-shrink: 0;
-    }
-
-    .stat-content {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .stat-number {
-      font-size: 1.5rem;
+    .group-title {
+      margin: 0;
+      font-size: 1.75rem;
       font-weight: 700;
       color: white;
-      line-height: 1;
+      white-space: nowrap;
     }
 
-    .stat-label {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-top: 0.25rem;
+    .group-divider {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), transparent);
     }
 
     /* Commands grid */
@@ -289,35 +446,10 @@ const finalCommands = getAllFinalCommands(commands, apiLang);
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
     }
-
-    /* Initial animation for command cards */
-    .commands-grid .command-card {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideInUp 0.6s ease-out forwards;
-    }
-
-    @keyframes slideInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Stagger animation delay for multiple cards */
-    .commands-grid .command-card:nth-child(1) { animation-delay: 0.8s; }
-    .commands-grid .command-card:nth-child(2) { animation-delay: 0.9s; }
-    .commands-grid .command-card:nth-child(3) { animation-delay: 1.0s; }
-    .commands-grid .command-card:nth-child(4) { animation-delay: 1.1s; }
-    .commands-grid .command-card:nth-child(5) { animation-delay: 1.2s; }
-    .commands-grid .command-card:nth-child(n+6) { animation-delay: 1.3s; }
 
     /* No results */
     .no-results {
-      padding: 3rem 1rem;
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.4s ease;
@@ -328,11 +460,13 @@ const finalCommands = getAllFinalCommands(commands, apiLang);
       transform: translateY(0);
     }
 
-    .no-results-icon {
-      color: rgba(255, 255, 255, 0.3);
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .sidebar-wrapper {
+        display: none;
+      }
     }
 
-    /* Responsive adjustments */
     @media (max-width: 768px) {
       .commands-header {
         margin-top: 2rem !important;
@@ -349,111 +483,176 @@ const finalCommands = getAllFinalCommands(commands, apiLang);
         width: 18px;
         height: 18px;
       }
-
-      .stat-card {
-        padding: 1.25rem;
-      }
-
-      .stat-number {
-        font-size: 1.25rem;
-      }
-
-      .stat-label {
-        font-size: 0.85rem;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .commands-grid {
-        gap: 1rem;
-      }
-
-      .search-container {
-        max-width: 100%;
-      }
-    }
-
-    /* Filter transition */
-    .commands-grid .command-card {
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .commands-grid .command-card.hidden {
-      opacity: 0;
-      transform: scale(0.95) translateY(20px);
-      pointer-events: none;
-      margin-bottom: 0;
-      max-height: 0;
-      overflow: hidden;
     }
   </style>
 
   <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Search functionality
-      const searchInput = document.getElementById('commandSearch');
-      const commandsGrid = document.getElementById('commandsGrid');
-      const noResults = document.getElementById('noResults');
-      
-      if (!searchInput || !commandsGrid || !noResults) return;
-      
+    document.addEventListener("astro:page-load", () => {
+      const searchInput = document.getElementById("commandSearch");
+      const commandsContent = document.getElementById("commandsGrid");
+      const noResults = document.getElementById("noResults");
+      const sidebarLinks = document.querySelectorAll(".group-link");
+
+      if (!searchInput || !commandsContent || !noResults) return;
+
+      // Filter function
       function filterCommands() {
         const searchTerm = searchInput.value.toLowerCase().trim();
-        const commandCards = commandsGrid.querySelectorAll('.command-card');
-        let visibleCount = 0;
+        const groups = commandsContent.querySelectorAll(".command-group");
+        let totalVisibleCount = 0;
 
-        commandCards.forEach((card) => {
-          const commandName = card.querySelector('.command-name')?.textContent?.toLowerCase() || '';
-          const description = card.querySelector('.command-description')?.textContent?.toLowerCase() || '';
-          const options = card.querySelector('.command-options')?.textContent?.toLowerCase() || '';
-          
-          const isVisible = 
-            commandName.includes(searchTerm) || 
-            description.includes(searchTerm) || 
-            options.includes(searchTerm);
+        groups.forEach((group) => {
+          const commandCards = group.querySelectorAll(".command-card");
+          let groupVisibleCount = 0;
 
-          if (isVisible) {
-            card.classList.remove('hidden');
-            visibleCount++;
+          commandCards.forEach((card) => {
+            const commandName =
+              card.querySelector(".command-name")?.textContent?.toLowerCase() ||
+              "";
+            const description =
+              card
+                .querySelector(".command-description")
+                ?.textContent?.toLowerCase() || "";
+            const options =
+              card
+                .querySelector(".command-options")
+                ?.textContent?.toLowerCase() || "";
+            const optionsDetails =
+              card
+                .querySelector(".options-details")
+                ?.textContent?.toLowerCase() || "";
+
+            const isVisible =
+              commandName.includes(searchTerm) ||
+              description.includes(searchTerm) ||
+              options.includes(searchTerm) ||
+              optionsDetails.includes(searchTerm);
+
+            if (isVisible) {
+              card.style.display = "";
+              groupVisibleCount++;
+              totalVisibleCount++;
+            } else {
+              card.style.display = "none";
+            }
+          });
+
+          // Toggle group visibility
+          const groupName = group.getAttribute("data-group-name");
+          const link = document.querySelector(
+            `.group-link[data-group="${groupName}"]`,
+          );
+
+          if (groupVisibleCount === 0) {
+            group.style.display = "none";
+            if (link) link.parentElement.style.display = "none";
           } else {
-            card.classList.add('hidden');
+            group.style.display = "";
+            if (link) link.parentElement.style.display = "";
           }
         });
 
-        // Show/hide no results message
-        if (visibleCount === 0 && searchTerm !== '') {
-          noResults.style.display = 'block';
-          setTimeout(() => noResults.classList.add('show'), 10);
+        // Toggle no results message
+        if (totalVisibleCount === 0 && searchTerm !== "") {
+          noResults.style.display = "block";
+          requestAnimationFrame(() => noResults.classList.add("show"));
         } else {
-          noResults.classList.remove('show');
+          noResults.classList.remove("show");
           setTimeout(() => {
-            if (!noResults.classList.contains('show')) {
-              noResults.style.display = 'none';
+            if (!noResults.classList.contains("show")) {
+              noResults.style.display = "none";
             }
           }, 400);
         }
       }
 
-      // Add event listener for search
-      searchInput.addEventListener('input', filterCommands);
+      // Event Listeners
+      searchInput.addEventListener("input", filterCommands);
 
-      // Clear search on escape
-      searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          searchInput.value = '';
+      const handleEscape = (e) => {
+        if (e.key === "Escape") {
+          searchInput.value = "";
           filterCommands();
           searchInput.blur();
         }
-      });
-      
-      // Focus search with Ctrl+K or Cmd+K
-      document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      };
+      searchInput.addEventListener("keydown", handleEscape);
+
+      const handleGlobalKeydown = (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === "k") {
           e.preventDefault();
           searchInput.focus();
         }
+      };
+      document.addEventListener("keydown", handleGlobalKeydown);
+
+      // Scroll Spy
+      const observerOptions = {
+        root: null,
+        rootMargin: "-15% 0px -70% 0px",
+        threshold: 0,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("id");
+            sidebarLinks.forEach((link) => {
+              link.classList.remove("active");
+              if (link.getAttribute("href") === `#${id}`) {
+                link.classList.add("active");
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".command-group").forEach((section) => {
+        observer.observe(section);
       });
+
+      // Smooth Scroll
+      const handleLinkClick = (e) => {
+        e.preventDefault();
+        const link = e.currentTarget;
+        const targetId = link.getAttribute("href");
+        if (!targetId || targetId === "#") return;
+
+        const id = targetId.substring(1);
+        const targetSection = document.getElementById(id);
+
+        if (targetSection) {
+          sidebarLinks.forEach((l) => l.classList.remove("active"));
+          link.classList.add("active");
+
+          const headerOffset = 120;
+          const elementPosition = targetSection.getBoundingClientRect().top;
+          const offsetPosition =
+            elementPosition + window.scrollY - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      };
+
+      sidebarLinks.forEach((link) => {
+        link.addEventListener("click", handleLinkClick);
+      });
+
+      // Cleanup function for View Transitions
+      const cleanup = () => {
+        document.removeEventListener("keydown", handleGlobalKeydown);
+        observer.disconnect();
+        sidebarLinks.forEach((link) => {
+          link.removeEventListener("click", handleLinkClick);
+        });
+        searchInput.removeEventListener("input", filterCommands);
+        searchInput.removeEventListener("keydown", handleEscape);
+      };
+
+      document.addEventListener("astro:before-swap", cleanup, { once: true });
     });
   </script>
 </Layout>
-

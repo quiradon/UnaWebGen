@@ -1,35 +1,55 @@
 ---
-import type { Translations } from '@lib/i18n';
-import { idiomaR } from '@lib/routes';
-import config from '../config';
+import type { Translations } from "@lib/i18n";
+import { idiomaR } from "@lib/routes";
+import config from "../config";
 
 interface Props {
   t: Translations;
-  variant?: 'desktop' | 'mobile';
+  variant?: "desktop" | "mobile";
 }
 
-const { t, variant = 'desktop' } = Astro.props as Props;
-const apiBase = (config.api_url ?? 'https://una-api.arkanus.app').replace(/\/$/, '');
-const discordClientId = (config.discord_client_id ?? '').toString();
-const activityApiBase = '/api';
+const { t, variant = "desktop" } = Astro.props as Props;
+const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
+  /\/$/,
+  "",
+);
+const discordClientId = (config.discord_client_id ?? "").toString();
+const activityApiBase = "/api";
 const langPrefix = idiomaR(t);
 
 const loginLabel = t.dashboard.action.login; // (t?.nav?.auth?.login as string | undefined) ?? 'Login with Discord';
-const logoutLabel = t.dashboard.logout
+const logoutLabel = t.dashboard.logout;
 
-
-const avatarSize = variant === 'desktop' ? 32 : 40;
+const avatarSize = variant === "desktop" ? 32 : 40;
 ---
+
 <!-- Templates ocultos -->
-<template data-auth-template="login" data-auth-widget data-variant={variant} data-api={apiBase} style="display: none;">
-  <a data-auth-login class='btn btn-primary fw-bold link-light border rounded border-0 d-inline-flex align-items-center gap-2 px-3' href={`${apiBase}/auth/discord`} rel="nofollow">
+<template
+  data-auth-template="login"
+  data-auth-widget
+  data-variant={variant}
+  data-api={apiBase}
+  style="display: none;"
+>
+  <a
+    data-auth-login
+    class="btn btn-primary fw-bold link-light border rounded border-0 d-inline-flex align-items-center gap-2 px-3"
+    href={`${apiBase}/auth/discord`}
+    rel="nofollow"
+  >
     <span class="auth-widget__login-label">{loginLabel}</span>
   </a>
 </template>
 
-<template data-auth-template="user" data-auth-widget data-variant={variant} data-api={apiBase} style="display: none;">
+<template
+  data-auth-template="user"
+  data-auth-widget
+  data-variant={variant}
+  data-api={apiBase}
+  style="display: none;"
+>
   <div data-auth-user class="auth-widget__user-container">
-    <div 
+    <div
       data-auth-toggle
       class="auth-widget__toggle-wrapper"
       role="button"
@@ -59,10 +79,13 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
       </div>
       <span data-auth-username class="auth-widget__username"></span>
     </div>
-    
+
     <div data-auth-dropdown class="auth-widget__dropdown" hidden>
       <div class="auth-widget__dropdown-header" data-auth-name></div>
-      <a href={`${langPrefix}/dashboard/`} class="auth-widget__dropdown-item auth-widget__dropdown-link">
+      <a
+        href={`${langPrefix}/dashboard/`}
+        class="auth-widget__dropdown-item auth-widget__dropdown-link"
+      >
         {loginLabel}
       </a>
       <button data-auth-logout class="auth-widget__dropdown-item" type="button">
@@ -73,18 +96,16 @@ const avatarSize = variant === 'desktop' ? 32 : 40;
 </template>
 
 <!-- Container onde o componente será renderizado -->
-<span 
-  data-auth-root 
-  data-auth-widget 
-  data-variant={variant} 
+<span
+  data-auth-root
+  data-auth-widget
+  data-variant={variant}
   data-api={apiBase}
   data-activity-api={activityApiBase}
   data-client-id={discordClientId}
   data-login-label={loginLabel}
   data-logout-label={logoutLabel}
-  class="auth-widget__root auth-widget__root--loading"
-></span>
-
+  class="auth-widget__root auth-widget__root--loading"></span>
 
 <style>
   /* Root base - Componente raiz inline */

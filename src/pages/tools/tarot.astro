@@ -1,61 +1,366 @@
 ---
-export const prerender = true;
+import { Image } from "astro:assets";
+import Layout from "@layouts/Layout.astro";
+import { loadT } from "@lib/i18n";
+import { Shuffle, Sparkles } from "@lucide/astro";
 import { getLocale } from "astro-i18n-aut";
-import Layout from '@layouts/Layout.astro';
-import { loadT } from '@lib/i18n';
 const t = loadT(getLocale(Astro.url));
 ---
+
 <Layout t={t} title={t.tarot?.title} desc={t.tarot?.desc}>
-  <section class="justify-content-lg-center pt-2 mt-4 mb-4">
+  <section class="hero-section py-5">
     <div class="container">
-      <div class="row g-0 d-flex justify-content-center">
-        <div class="col-10 col-md-5 order-first order-md-last">
-          <img class="img-fluid p-5 w-100 h-100 fit-cover CardPoker" id="cardshow" src="/api/tarot-card/20.webp" loading="lazy" alt="Random Tarot card" />
+      <div class="row g-4 align-items-center">
+        <!-- Card Display -->
+        <div class="col-lg-6 order-lg-2">
+          <div class="card-display-wrapper">
+            <div class="card-glow"></div>
+            <div class="card-container">
+              <Image
+                id="cardshow"
+                class="card-tarot"
+                src="/api/tarot-card/20.webp"
+                loading="eager"
+                alt="Random Tarot card"
+                width={350}
+                height={600}
+                inferSize
+              />
+            </div>
+            <div class="card-info text-center mt-4">
+              <p id="cardname" class="card-name mb-2" aria-live="polite">
+                <Sparkles
+                  class="icon-inline me-2"
+                  size={20}
+                  fill="currentColor"
+                />
+                {t.cards?.btn?.roll ?? "Generate Card"}
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="col-12 col-md-7 d-flex justify-content-center align-items-center align-content-center order-last p-4">
-          <div class="text-white">
-            <h1 class="display-5 fw-bold text-white">{t.tarot?.article?.title}</h1>
-            <p class="lead text-secondary">{t.tarot?.article?.desc}</p>
-            <div class="d-lg-flex justify-content-lg-start align-items-lg-center">
-              <button class="btn btn-primary btn-lg link-light m-2 ms-0" id="cardsrun" type="button">{t.misc?.btn?.gencard}</button>
+
+        <!-- Controls -->
+        <div class="col-lg-6 order-lg-1">
+          <div class="controls-wrapper">
+            <h1 class="display-4 fw-bold text-white mb-3 animate-fade-in">
+              {t.tarot?.article?.title}
+            </h1>
+            <p class="lead text-secondary mb-4 animate-fade-in-delay">
+              {t.tarot?.article?.desc}
+            </p>
+
+            <div class="d-flex gap-2 mb-3 animate-slide-up">
+              <button
+                class="btn btn-primary btn-generate flex-grow-1"
+                id="cardsrun"
+                type="button"
+                aria-label={t.misc?.btn?.gencard}
+              >
+                <Shuffle class="icon-inline me-2" size={20} />
+                <span>{t.misc?.btn?.gencard}</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <script is:inline>
+
+  <script is:inline define:vars={{ translation: t }}>
+    // Configurações
     const audio = "/audio/play_card.webm";
-    const cardsrun = document.getElementById('cardsrun');
-    const cardshow = document.getElementById('cardshow');
-    cardsrun.addEventListener('click', () => {
-      const audioElement = new Audio(audio);
-      audioElement.volume = 0.5;
-      audioElement.play();
-      const randomCard = Math.floor(Math.random() * 22);
-      cardshow.src = '/api/tarot-card/' + randomCard + '.webp';
-      cardshow.classList.add('flip');
-      setTimeout(() => cardshow.classList.remove('flip'), 300);
+    const audioElement = new Audio(audio);
+    audioElement.volume = 0.5;
+
+    // Preload do áudio
+    audioElement.load();
+
+    // Estado do jogo
+    let isAnimating = false;
+
+    // Nomes das cartas (Arcanos Maiores)
+    const tarotNames = {
+      0: "The Fool",
+      1: "The Magician",
+      2: "The High Priestess",
+      3: "The Empress",
+      4: "The Emperor",
+      5: "The Hierophant",
+      6: "The Lovers",
+      7: "The Chariot",
+      8: "Strength",
+      9: "The Hermit",
+      10: "Wheel of Fortune",
+      11: "Justice",
+      12: "The Hanged Man",
+      13: "Death",
+      14: "Temperance",
+      15: "The Devil",
+      16: "The Tower",
+      17: "The Star",
+      18: "The Moon",
+      19: "The Sun",
+      20: "Judgement",
+      21: "The World",
+    };
+
+    // Elementos DOM
+    const elements = {
+      button: document.getElementById("cardsrun"),
+      cardElement: document.getElementById("cardshow"),
+      cardName: document.getElementById("cardname"),
+    };
+
+    // Função para gerar carta
+    function generateCard() {
+      // Bloquear se já estiver animando
+      if (isAnimating) return;
+
+      isAnimating = true;
+      elements.button.disabled = true;
+      elements.button.style.opacity = "0.6";
+      elements.button.style.cursor = "not-allowed";
+
+      let cardNumber = Math.floor(Math.random() * 22); // 0 a 21
+
+      // Tocar áudio
+      audioElement.currentTime = 0;
+      audioElement
+        .play()
+        .catch((e) => console.log("Áudio não pode ser tocado:", e));
+
+      // Atualizar imagem com animação
+      const cardimg = `/api/tarot-card/${cardNumber}.webp`;
+
+      // Preload da nova imagem antes de iniciar animação
+      const preloadImg = new Image();
+      preloadImg.src = cardimg;
+
+      // Usar requestAnimationFrame para sincronizar com o browser e evitar reflows
+      requestAnimationFrame(() => {
+        elements.cardElement.classList.add("flip");
+      });
+
+      // Trocar a carta exatamente quando está invisível (no meio do giro)
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          elements.cardElement.src = cardimg;
+        });
+      }, 300);
+
+      // Remover a classe após a animação completa e destravar
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          elements.cardElement.classList.remove("flip");
+          isAnimating = false;
+          elements.button.disabled = false;
+          elements.button.style.opacity = "1";
+          elements.button.style.cursor = "pointer";
+        });
+      }, 600);
+
+      // Atualizar nome da carta
+      const name =
+        translation.tarot?.cards?.[cardNumber] ||
+        tarotNames[cardNumber] ||
+        `Arcana ${cardNumber}`;
+      elements.cardName.textContent = name;
+    }
+
+    // Event Listeners
+    elements.button.addEventListener("click", generateCard);
+    elements.cardElement.addEventListener("click", generateCard);
+
+    // Suporte para Enter no botão
+    elements.button.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        generateCard();
+      }
     });
   </script>
+
   <style>
-    @keyframes flip {
-  0% { transform: rotateY(0deg); }
-  50% { transform: rotateY(180deg); }
-  100% { transform: rotateY(360deg); }
-}
+    /* ========== ÍCONES LUCIDE ========== */
+    .icon-inline {
+      display: inline-block;
+      vertical-align: middle;
+    }
 
-.CardPoker {
-  transform-style: flat;
-  transition: transform 0.3s; /* Transição rápida */
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
+    /* ========== SEÇÃO HERO ========== */
+    .hero-section {
+      background: rgba(0, 0, 0, 0.1);
+      min-height: 70vh;
+      position: relative;
+      overflow: hidden;
+    }
 
-.flip {
-  animation: flip 0.3s linear; /* Animação rápida */
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
+    /* ========== CARD DISPLAY ========== */
+    .card-display-wrapper {
+      position: relative;
+      padding: 2rem;
+    }
+
+    .card-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: rgba(248, 7, 82, 0.2);
+      filter: blur(50px);
+      opacity: 0.4;
+      animation: pulse 3s ease-in-out infinite;
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .card-container {
+      perspective: 1500px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-tarot {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      aspect-ratio: 5/8;
+      object-fit: contain;
+      border-radius: 12px;
+      /* Removed drop shadow as requested */
+      transform-style: preserve-3d;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      backface-visibility: hidden;
+      contain: layout style paint;
+    }
+
+    .card-tarot:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+
+    .flip {
+      animation: cardFlip 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    @keyframes cardFlip {
+      0% {
+        transform: rotateY(0deg) scale(1);
+      }
+      49.99% {
+        transform: rotateY(90deg) scale(0.8);
+      }
+      50% {
+        transform: rotateY(-90deg) scale(0.8);
+      }
+      100% {
+        transform: rotateY(0deg) scale(1);
+      }
+    }
+
+    .card-info {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    /* ========== CONTROLES ========== */
+    .controls-wrapper {
+      padding: 1rem;
+    }
+
+    .controls-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-generate {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.75rem 1.25rem;
+      border: none;
+      transition: all 0.3s ease;
+      background: #f80752;
+      box-shadow: 0 4px 15px rgba(248, 7, 82, 0.3);
+      white-space: nowrap;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(248, 7, 82, 0.5);
+      background: #d60645;
+    }
+
+    .btn-generate:active {
+      transform: translateY(0);
+    }
+
+    /* ========== ANIMAÇÕES ========== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.7;
+      }
+    }
+
+    /* ========== ANIMAÇÕES DE ENTRADA ========== */
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .animate-fade-in-delay {
+      animation: fadeIn 0.8s ease-out 0.2s both;
+    }
+
+    .animate-slide-up {
+      animation: slideUp 0.8s ease-out 0.4s both;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </Layout>

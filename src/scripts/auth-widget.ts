@@ -1,5 +1,5 @@
 import { getSession, clearSessionCache, type SessionResponse, type User } from './session-manager';
-import {DiscordSDK} from "@discord/embedded-app-sdk"
+import { DiscordSDK } from "@discord/embedded-app-sdk"
 
 interface WidgetElements {
   loginAnchor: HTMLAnchorElement | null;
@@ -21,10 +21,7 @@ interface KrakenWindow extends Window {
 
   const win = window as KrakenWindow;
 
-  if (win.__krakenAuthWidgetInit) {
-    return;
-  }
-  win.__krakenAuthWidgetInit = true;
+
 
   const initWidget = async (root: HTMLElement): Promise<void> => {
     if (!root || root.dataset.authInitialized === 'true') {
@@ -164,13 +161,13 @@ interface KrakenWindow extends Window {
     const destroyRoot = (): void => {
       // Destruição COMPLETA - remove absolutamente tudo
       root.innerHTML = '';
-      
+
       // Remove TODAS as classes
       root.className = '';
-      
+
       // Remove TODOS os atributos inline
       root.removeAttribute('style');
-      
+
       // Remove TODOS os data-attributes (exceto data-auth-root)
       const attributes = Array.from(root.attributes);
       attributes.forEach(attr => {
@@ -183,16 +180,16 @@ interface KrakenWindow extends Window {
     const renderLoginView = (): void => {
       // DESTRUIÇÃO TOTAL antes de renderizar
       destroyRoot();
-      
+
       // Clone LIMPO do template de login
       const fragment = loginTemplate.content.cloneNode(true) as DocumentFragment;
-      
+
       // Injetar DIRETAMENTE no root (substituição completa)
       root.appendChild(fragment);
-      
+
       // Buscar elementos APENAS do login
       elements.loginAnchor = root.querySelector<HTMLAnchorElement>('[data-auth-login]');
-      
+
       // DESTRUIR todas as referências do usuário
       elements.userBlock = null;
       elements.nameElement = null;
@@ -202,7 +199,7 @@ interface KrakenWindow extends Window {
       elements.logoutButton = null;
       elements.toggleButton = null;
       elements.dropdown = null;
-      
+
       updateLoginLink();
     };
 
@@ -228,10 +225,10 @@ interface KrakenWindow extends Window {
       // Handle logout
       elements.logoutButton.addEventListener('click', async (event: MouseEvent) => {
         event.preventDefault();
-        
+
         if (!elements.logoutButton) return;
         elements.logoutButton.disabled = true;
-        
+
         try {
           await fetch(logoutEndpoint, {
             method: 'POST',
@@ -252,10 +249,10 @@ interface KrakenWindow extends Window {
       if (!user) return;
       // DESTRUIÇÃO TOTAL antes de renderizar
       destroyRoot();
-      
+
       // Clone LIMPO do template de usuário
       const fragment = userTemplate.content.cloneNode(true) as DocumentFragment;
-      
+
       // Injetar DIRETAMENTE no root (substituição completa)
       root.appendChild(fragment);
 
@@ -268,7 +265,7 @@ interface KrakenWindow extends Window {
       elements.toggleButton = root.querySelector<HTMLElement>('[data-auth-toggle]');
       elements.dropdown = root.querySelector<HTMLElement>('[data-auth-dropdown]');
       elements.logoutButton = root.querySelector<HTMLButtonElement>('[data-auth-logout]');
-      
+
       // DESTRUIR todas as referências do login
       elements.loginAnchor = null;
 
@@ -288,10 +285,10 @@ interface KrakenWindow extends Window {
       }
 
       const displayName = user.display_name || user.username || 'Discord User';
-      
+
       // Truncar para 15 caracteres
-      const truncatedName = displayName.length > 15 
-        ? displayName.substring(0, 15) 
+      const truncatedName = displayName.length > 15
+        ? displayName.substring(0, 15)
         : displayName;
 
       // Configurar avatar
@@ -309,7 +306,7 @@ interface KrakenWindow extends Window {
 
       // Configurar nome completo no dropdown
       elements.nameElement.textContent = displayName;
-      
+
       // Configurar nome truncado ao lado do avatar
       elements.usernameElement.textContent = truncatedName;
 
@@ -324,10 +321,10 @@ interface KrakenWindow extends Window {
     const fetchSession = async (): Promise<void> => {
       try {
         root.setAttribute('data-auth-loading', 'true');
-        
+
         // Usar o session manager centralizado
         const payload = await getSession(trimmedBase);
-        
+
         if (payload && payload.authenticated && payload.user) {
           renderUserView(payload);
         } else {
@@ -353,6 +350,12 @@ interface KrakenWindow extends Window {
     }
   };
 
+  // Support for Astro View Transitions
+  document.addEventListener('astro:page-load', () => {
+    initAll();
+  });
+
+  // Fallback for non-Astro environments or if event missed
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => initAll(), { once: true });
   } else {

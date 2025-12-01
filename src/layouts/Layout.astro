@@ -24,16 +24,11 @@ const { t, title, desc, pictureURL } = Astro.props as Props;
     <main class="main-content" transition:animate="fade">
       <slot />
     </main>
-    <div
-      data-astro-transition-persist="footer-shell"
-      style="display: contents;"
-    >
-      <Footer t={t} />
-    </div>
+    <Footer t={t} />
     <script is:inline src="/bootstrap/js/bootstrap.min.js"></script>
     <!-- Carrega versões já geradas em public/scripts para evitar MIME errado -->
     <script type="module" src="/scripts/session-prime.js"></script>
-    <script type="module" src="/scripts/auth-widget.js"></script>
+    <script src="../scripts/auth-widget.ts"></script>
   </body>
 </html>
 

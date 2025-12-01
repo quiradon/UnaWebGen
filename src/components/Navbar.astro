@@ -1,16 +1,34 @@
 ---
-import { idiomaR} from '@lib/routes';
-import { loadT } from '@lib/i18n';
-import config from '../config';
+import { idiomaR } from "@lib/routes";
+import { loadT } from "@lib/i18n";
+import config from "../config";
 import { getLocale, getAllLocaleUrls } from "astro-i18n-aut";
-import { Shapes, Wrench, Network, Wand, FileText, Book, Package, Fingerprint, Heart, Eye, Briefcase, MessageCircle, Crown, ChevronDown, Menu, X, Globe } from '@lucide/astro';
-import LanguageSelector from './navbar/LanguageSelector.astro';
-import DesktopMenu from './navbar/DesktopMenu.astro';
-import MobileSidebar from './navbar/MobileSidebar.astro';
-import type { MenuSection, MenuItem } from './navbar/MenuTypes';
-import AuthWidget from './AuthWidget.astro';
+import {
+  Shapes,
+  Wrench,
+  Network,
+  Wand,
+  FileText,
+  Book,
+  Package,
+  Fingerprint,
+  Heart,
+  Eye,
+  Briefcase,
+  MessageCircle,
+  Crown,
+  ChevronDown,
+  Menu,
+  X,
+  Globe,
+} from "@lucide/astro";
+import LanguageSelector from "./navbar/LanguageSelector.astro";
+import DesktopMenu from "./navbar/DesktopMenu.astro";
+import MobileSidebar from "./navbar/MobileSidebar.astro";
+import type { MenuSection, MenuItem } from "./navbar/MenuTypes";
+import AuthWidget from "./AuthWidget.astro";
 
-const locale = getLocale(Astro.url)
+const locale = getLocale(Astro.url);
 const t = loadT(locale);
 const lang = idiomaR(t);
 const allUrls = getAllLocaleUrls(Astro.url);
@@ -22,143 +40,143 @@ const localePaths = Object.fromEntries(
     } catch {
       return [code, url];
     }
-  })
+  }),
 );
 
 export const brandNames: Record<string, string> = {
-  "en": "Mini Kraken",
-  "es": "Mini Kraken", 
-  "fr": "Mini Kraken",
-  "pt": "Mini Kraken",
-  "de": "Mini Kraken",
-  "da": "Mini Kraken",
-  "hr": "Mini Kraken",
-  "hu": "Mini Kraken",
-  "id": "Mini Kraken",
-  "it": "Mini Kraken",
-  "ja": "ミニクラーケン",
-  "ko": "미니 크라켄",
-  "pl": "Mini Kraken",
-  "ru": "Мини Кракен",
-  "tr": "Mini Kraken",
-  "zh": "迷你克拉肯"
-}
+  en: "Mini Kraken",
+  es: "Mini Kraken",
+  fr: "Mini Kraken",
+  pt: "Mini Kraken",
+  de: "Mini Kraken",
+  da: "Mini Kraken",
+  hr: "Mini Kraken",
+  hu: "Mini Kraken",
+  id: "Mini Kraken",
+  it: "Mini Kraken",
+  ja: "ミニクラーケン",
+  ko: "미니 크라켄",
+  pl: "Mini Kraken",
+  ru: "Мини Кракен",
+  tr: "Mini Kraken",
+  zh: "迷你克拉肯",
+};
 
 // Mapeamento de nomes de ícones para componentes Lucide
 const iconMap: Record<string, any> = {
-  'Shapes': Shapes,
-  'Wrench': Wrench,
-  'Network': Network,
-  'Wand': Wand,
-  'FileText': FileText,
-  'Book': Book,
-  'Package': Package,
-  'Fingerprint': Fingerprint,
-  'Heart': Heart,
-  'Eye': Eye,
-  'Briefcase': Briefcase,
-  'MessageCircle': MessageCircle,
-  'Crown': Crown,
-  'ChevronDown': ChevronDown,
-  'Menu': Menu,
-  'X': X,
-  'Globe': Globe
+  Shapes: Shapes,
+  Wrench: Wrench,
+  Network: Network,
+  Wand: Wand,
+  FileText: FileText,
+  Book: Book,
+  Package: Package,
+  Fingerprint: Fingerprint,
+  Heart: Heart,
+  Eye: Eye,
+  Briefcase: Briefcase,
+  MessageCircle: MessageCircle,
+  Crown: Crown,
+  ChevronDown: ChevronDown,
+  Menu: Menu,
+  X: X,
+  Globe: Globe,
 };
 
 // SEÇÃO GUIDE
 const guideSection: MenuSection = {
-  id: 'guide',
+  id: "guide",
   title: t.nav.guide,
-  icon: 'Shapes',
+  icon: "Shapes",
   items: [
     {
       title: t.nav.vtt.title,
       description: t.nav.vtt.desc,
-      href: 'https://discord.com/discovery/applications/1300850389846855734',
-      icon: 'Network',
-      iconColor: 'text-danger',
-      target: '_blank',
-      badge: t.new
+      href: "https://discord.com/discovery/applications/1300850389846855734",
+      icon: "Network",
+      iconColor: "text-danger",
+      target: "_blank",
+      badge: t.new,
     },
     {
       title: t.nav.docs.cmds.title,
       description: t.nav.docs.cmds.docs,
       href: `${lang}/commands/`,
-      icon: 'Wand',
-      iconColor: 'text-primary'
+      icon: "Wand",
+      iconColor: "text-primary",
     },
     {
       title: t.nav.docs.dices.names,
       description: t.nav.docs.dices.desc,
-      href: 'https://dice-roller.github.io/documentation/guide/notation/',
-      icon: 'FileText',
-      iconColor: 'text-danger',
-      target: '_blank'
-    }
-  ]
+      href: "https://dice-roller.github.io/documentation/guide/notation/",
+      icon: "FileText",
+      iconColor: "text-danger",
+      target: "_blank",
+    },
+  ],
 };
 
 // SEÇÃO TOOLS
 const toolsSection: MenuSection = {
-  id: 'tools',
+  id: "tools",
   title: t.nav.tools.title,
-  icon: 'Wrench',
+  icon: "Wrench",
   items: [
     {
       title: t.nav.dices.title,
       description: t.nav.dices.desc,
       href: `${lang}/dices/`,
-      icon: 'Package',
-      iconColor: 'text-primary'
+      icon: "Package",
+      iconColor: "text-primary",
     },
     {
       title: t.nav.tools.names.title,
       description: t.nav.tools.names.desc,
       href: `${lang}/tools/names/`,
-      icon: 'Fingerprint',
-      iconColor: 'text-primary'
+      icon: "Fingerprint",
+      iconColor: "text-primary",
     },
     {
       title: t.nav.tools.poker.name,
       description: t.nav.tools.poker.desc,
       href: `${lang}/tools/poker/`,
-      icon: 'Heart',
-      iconColor: 'text-primary'
+      icon: "Heart",
+      iconColor: "text-primary",
     },
     {
       title: t.nav.tools.tarot.name,
       description: t.nav.tools.tarot.desc,
       href: `${lang}/tools/tarot/`,
-      icon: 'Eye',
-      iconColor: 'text-primary'
+      icon: "Eye",
+      iconColor: "text-primary",
     },
     {
       title: t.tools.all.title,
       description: t.tools.all.subtitle,
       href: `${lang}/tools/`,
-      icon: 'Briefcase',
-      iconColor: 'text-primary'
-    }
-  ]
+      icon: "Briefcase",
+      iconColor: "text-primary",
+    },
+  ],
 };
 
 // LINKS ADICIONAIS (Support, Premium, etc)
 const additionalLinks: MenuItem[] = [
   {
     title: t.nav.support,
-    description: 'Discord',
+    description: "Discord",
     href: config.discord_invite,
-    icon: 'MessageCircle',
-    iconColor: 'text-primary',
-    target: '_blank'
+    icon: "MessageCircle",
+    iconColor: "text-primary",
+    target: "_blank",
   },
   {
     title: t.nav.donate,
-    description: 'Premium',
+    description: "Premium",
     href: `${lang}/#premium`,
-    icon: 'Crown',
-    iconColor: 'text-primary'
-  }
+    icon: "Crown",
+    iconColor: "text-primary",
+  },
 ];
 
 // Array com todas as seções para facilitar iteração
@@ -168,9 +186,9 @@ const menuSections = [guideSection, toolsSection];
 <style>
   .navbar {
     border-radius: 8px;
-    border: 1px solid rgba(103,125,181,0.18);
+    border: 1px solid rgba(103, 125, 181, 0.18);
     backdrop-filter: opacity(1) blur(10px) saturate(100%) sepia(0%);
-    background: rgba(11,9,16,0.85);
+    background: rgba(11, 9, 16, 0.85);
     padding: auto;
   }
 
@@ -213,102 +231,108 @@ const menuSections = [guideSection, toolsSection];
 
 <script>
   // JavaScript simplificado para melhor performance no dev mode
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     // Gerenciamento básico do sidebar mobile
-    const sidebarOverlay = document.querySelector('.mobile-sidebar-overlay');
-    const sidebar = document.querySelector('.mobile-sidebar');
-    const openButtons = document.querySelectorAll('.mobile-menu-toggle');
-    const closeButton = document.querySelector('.mobile-sidebar-close');
+    const sidebarOverlay = document.querySelector(".mobile-sidebar-overlay");
+    const sidebar = document.querySelector(".mobile-sidebar");
+    const openButtons = document.querySelectorAll(".mobile-menu-toggle");
+    const closeButton = document.querySelector(".mobile-sidebar-close");
 
     function openSidebar() {
-      sidebar?.classList.add('show');
-      sidebarOverlay?.classList.add('show');
-      document.body.style.overflow = 'hidden';
+      sidebar?.classList.add("show");
+      sidebarOverlay?.classList.add("show");
+      document.body.style.overflow = "hidden";
     }
 
     function closeSidebar() {
-      sidebar?.classList.remove('show');
-      sidebarOverlay?.classList.remove('show');
-      document.body.style.overflow = '';
+      sidebar?.classList.remove("show");
+      sidebarOverlay?.classList.remove("show");
+      document.body.style.overflow = "";
     }
 
     // Event listeners
-    openButtons.forEach(button => {
-      button.addEventListener('click', openSidebar);
+    openButtons.forEach((button) => {
+      button.addEventListener("click", openSidebar);
     });
 
-    closeButton?.addEventListener('click', closeSidebar);
-    sidebarOverlay?.addEventListener('click', closeSidebar);
+    closeButton?.addEventListener("click", closeSidebar);
+    sidebarOverlay?.addEventListener("click", closeSidebar);
 
     // Fechar com ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeSidebar();
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeSidebar();
     });
 
     // Fechar ao clicar em links
-    sidebar?.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+    sidebar?.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
         setTimeout(closeSidebar, 100);
       });
     });
 
     // Animações hover simples (apenas desktop)
     if (window.innerWidth >= 992) {
-      document.querySelectorAll('[data-bss-hover-animate]').forEach((element) => {
-        const htmlElement = element as HTMLElement;
-        const animationClass = htmlElement.dataset.bssHoverAnimate;
-        if (!animationClass) return;
+      document
+        .querySelectorAll("[data-bss-hover-animate]")
+        .forEach((element) => {
+          const htmlElement = element as HTMLElement;
+          const animationClass = htmlElement.dataset.bssHoverAnimate;
+          if (!animationClass) return;
 
-        element.addEventListener('mouseenter', () => {
-          element.classList.add('animated', animationClass);
-        });
+          element.addEventListener("mouseenter", () => {
+            element.classList.add("animated", animationClass);
+          });
 
-        element.addEventListener('mouseleave', () => {
-          element.classList.remove('animated', animationClass);
+          element.addEventListener("mouseleave", () => {
+            element.classList.remove("animated", animationClass);
+          });
         });
-      });
     }
   });
 </script>
 
-<div data-astro-transition-persist="navbar-shell" style="display: contents;">
 <nav class="sticky-top p-2">
   <div class="navbar navbar-expand-lg mx-1 mx-md-4 px-2 mt-2">
     <div class="container-fluid">
-      <a class="navbar-brand fs-2 fw-bold d-flex align-items-center" href={`${lang}/`} aria-label={`${brandNames[locale] ?? brandNames["en"]} - ${t.nav.guide || 'Home'}`}>
-        <span class="fs-3 fw-bold" style="font-family: Roboto, sans-serif;">{brandNames[locale] ?? brandNames["en"]}</span>
+      <a
+        class="navbar-brand fs-2 fw-bold d-flex align-items-center"
+        href={`${lang}/`}
+        aria-label={`${brandNames[locale] ?? brandNames["en"]} - ${t.nav.guide || "Home"}`}
+      >
+        <span class="fs-3 fw-bold" style="font-family: Roboto, sans-serif;"
+          >{brandNames[locale] ?? brandNames["en"]}</span
+        >
       </a>
-      
+
       <div id="navcol-2" class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
           <DesktopMenu sections={menuSections} iconMap={iconMap} />
-          
+
           <!-- Links adicionais (Support, etc) -->
-          {additionalLinks.map(link => {
-            const LinkIcon = iconMap[link.icon];
-            return (
-              <li class="nav-item">
-                <a 
-                  class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center" 
-                  target={link.target}
-                  href={link.href}
-                  aria-label={`${link.title} - ${link.description}`}
-                >
-                  <LinkIcon class="me-1" size={16} />
-                  {link.title}
-                </a>
-              </li>
-            )
-          })}
+          {
+            additionalLinks.map((link) => {
+              const LinkIcon = iconMap[link.icon];
+              return (
+                <li class="nav-item">
+                  <a
+                    class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center"
+                    target={link.target}
+                    href={link.href}
+                    aria-label={`${link.title} - ${link.description}`}
+                  >
+                    <LinkIcon class="me-1" size={16} />
+                    {link.title}
+                  </a>
+                </li>
+              );
+            })
+          }
 
           <LanguageSelector />
-          
         </ul>
-        <div data-astro-transition-persist="auth-widget" style="display: contents;">
-          <AuthWidget t={t}/>
-        </div>
+        <AuthWidget t={t} />
       </div>
-      
+
       <!-- Botão para abrir menu mobile -->
       <button class="mobile-menu-toggle d-lg-none" aria-label="Abrir menu">
         <Menu size={24} />
@@ -317,47 +341,46 @@ const menuSections = [guideSection, toolsSection];
   </div>
 </nav>
 
-<MobileSidebar 
-  sections={menuSections} 
-  additionalLinks={additionalLinks} 
-  iconMap={iconMap} 
+<MobileSidebar
+  sections={menuSections}
+  additionalLinks={additionalLinks}
+  iconMap={iconMap}
   t={t}
   lang_FLAGS={{
-    pt: '/img/flags/br.svg',
-    en: '/img/flags/en.svg',
-    es: '/img/flags/es.svg',
-    de: '/img/flags/de.svg',
-    fr: '/img/flags/fr.svg',
-    zh: '/img/flags/cn.svg',
-    ja: '/img/flags/jp.svg',
-    ru: '/img/flags/ru.svg',
-    ko: '/img/flags/ko.svg',
-    it: '/img/flags/it.svg',
-    pl: '/img/flags/pl.svg',
-    tr: '/img/flags/tr.svg',
-    hu: '/img/flags/hu.svg',
-    id: '/img/flags/id.svg',
-    da: '/img/flags/dk.svg',
-    hr: '/img/flags/hr.svg',
+    pt: "/img/flags/br.svg",
+    en: "/img/flags/en.svg",
+    es: "/img/flags/es.svg",
+    de: "/img/flags/de.svg",
+    fr: "/img/flags/fr.svg",
+    zh: "/img/flags/cn.svg",
+    ja: "/img/flags/jp.svg",
+    ru: "/img/flags/ru.svg",
+    ko: "/img/flags/ko.svg",
+    it: "/img/flags/it.svg",
+    pl: "/img/flags/pl.svg",
+    tr: "/img/flags/tr.svg",
+    hu: "/img/flags/hu.svg",
+    id: "/img/flags/id.svg",
+    da: "/img/flags/dk.svg",
+    hr: "/img/flags/hr.svg",
   }}
   lang_LABELS={{
-    en: 'English',
-    zh: '中文',
-    es: 'Español',
-    fr: 'Français',
-    de: 'Deutsch',
-    pt: 'Português',
-    ru: 'Русский',
-    ja: '日本語',
-    ko: '한국어',
-    it: 'Italiano',
-    tr: 'Türkçe',
-    pl: 'Polski',
-    hu: 'Magyar',
-    da: 'Danish',
-    hr: 'Croatian',
-    id: 'Indonesian',
+    en: "English",
+    zh: "中文",
+    es: "Español",
+    fr: "Français",
+    de: "Deutsch",
+    pt: "Português",
+    ru: "Русский",
+    ja: "日本語",
+    ko: "한국어",
+    it: "Italiano",
+    tr: "Türkçe",
+    pl: "Polski",
+    hu: "Magyar",
+    da: "Danish",
+    hr: "Croatian",
+    id: "Indonesian",
   }}
   allUrls={localePaths}
 />
-</div>

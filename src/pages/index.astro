@@ -33,65 +33,72 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       background: url('/img/bg/pattern-square.svg') top / auto repeat-x;
     }
   </style>
-  <script >
-    // Auto Scroll esse elemento deve estar presente somente na landing page
-    document.querySelectorAll('#auto-scroll').forEach(function(element) {
-      const htmlElement = element as HTMLElement;
-      let isMouseOver = false;
-      let isDragging = false;
-      let startX: number = 0;
-      let scrollLeft: number = 0;
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      // Auto Scroll esse elemento deve estar presente somente na landing page
+      document.querySelectorAll('#auto-scroll').forEach(function(element) {
+        const htmlElement = element as HTMLElement;
+        let isMouseOver = false;
+        let isDragging = false;
+        let startX = 0;
+        let scrollLeft = 0;
 
-      element.addEventListener('mouseenter', function() {
-        isMouseOver = true;
-      });
+        element.addEventListener('mouseenter', function() {
+          isMouseOver = true;
+        });
 
-      element.addEventListener('mouseleave', function() {
-        isMouseOver = false;
-      });
+        element.addEventListener('mouseleave', function() {
+          isMouseOver = false;
+        });
 
-      element.addEventListener('mousedown', function(e) {
-        const mouseEvent = e as MouseEvent;
-        isDragging = true;
-        startX = mouseEvent.pageX - htmlElement.offsetLeft;
-        scrollLeft = htmlElement.scrollLeft;
-        element.classList.add('active');
-      });
+        element.addEventListener('mousedown', function(e) {
+          const mouseEvent = e as MouseEvent;
+          isDragging = true;
+          startX = mouseEvent.pageX - htmlElement.offsetLeft;
+          scrollLeft = htmlElement.scrollLeft;
+          element.classList.add('active');
+        });
 
-      element.addEventListener('mouseleave', function() {
-        isDragging = false;
-        element.classList.remove('active');
-      });
+        element.addEventListener('mouseleave', function() {
+          isDragging = false;
+          element.classList.remove('active');
+        });
 
-      element.addEventListener('mouseup', function() {
-        isDragging = false;
-        element.classList.remove('active');
-      });
+        element.addEventListener('mouseup', function() {
+          isDragging = false;
+          element.classList.remove('active');
+        });
 
-      element.addEventListener('mousemove', function(e) {
-        if (!isDragging) return;
-        e.preventDefault();
-        const mouseEvent = e as MouseEvent;
-        const x = mouseEvent.pageX - htmlElement.offsetLeft;
-        const walk = (x - startX) * 2; // Multiplique por 2 para aumentar a velocidade de arrasto
-        htmlElement.scrollLeft = scrollLeft - walk;
-      });
+        element.addEventListener('mousemove', function(e) {
+          if (!isDragging) return;
+          e.preventDefault();
+          const mouseEvent = e as MouseEvent;
+          const x = mouseEvent.pageX - htmlElement.offsetLeft;
+          const walk = (x - startX) * 2; // Multiplique por 2 para aumentar a velocidade de arrasto
+          htmlElement.scrollLeft = scrollLeft - walk;
+        });
 
-      function scrollRight() {
-        if (!isMouseOver) {
-          const card = element.querySelector('.card') as HTMLElement;
-          if (card) {
-            const cardWidth = card.offsetWidth;
-            if (htmlElement.scrollLeft < htmlElement.scrollWidth - htmlElement.clientWidth) {
-              htmlElement.scrollBy({ left: cardWidth, behavior: 'smooth' });
-            } else {
-              htmlElement.scrollTo({ left: 0, behavior: 'smooth' });
+        function scrollRight() {
+          if (!isMouseOver) {
+            const card = element.querySelector('.card') as HTMLElement;
+            if (card) {
+              const cardWidth = card.offsetWidth;
+              if (htmlElement.scrollLeft < htmlElement.scrollWidth - htmlElement.clientWidth) {
+                htmlElement.scrollBy({ left: cardWidth, behavior: 'smooth' });
+              } else {
+                htmlElement.scrollTo({ left: 0, behavior: 'smooth' });
+              }
             }
           }
         }
-      }
-
-      setInterval(scrollRight, 2000); // Ajuste o intervalo conforme necessário
+        
+        const intervalId = setInterval(scrollRight, 2000); 
+        
+        // Cleanup on page swap
+        document.addEventListener('astro:before-swap', () => {
+          clearInterval(intervalId);
+        }, { once: true });
+      });
     });
 </script>
   <!-- Hero -->
@@ -475,42 +482,40 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
   <!-- Page specific scripts -->
   <script is:inline>
-    const scrollContainer = document.getElementById('auto-scroll');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    if (prevBtn && nextBtn && scrollContainer) {
-      prevBtn.addEventListener('click', () => scrollContainer.scrollBy({ left: -300, behavior: 'smooth' }));
-      nextBtn.addEventListener('click', () => scrollContainer.scrollBy({ left: 300, behavior: 'smooth' }));
-    }
-
-    function openModal() {
-      const modal = document.getElementById('premium_modal');
-      if (!modal) return;
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      modal.setAttribute('aria-modal', 'true');
-      modal.removeAttribute('aria-hidden');
-      const backdrop = document.createElement('div');
-      backdrop.className = 'modal-backdrop fade show';
-      document.body.appendChild(backdrop);
-      const closeBtn = modal.querySelector('[data-bs-dismiss="modal"]');
-      if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-          modal.classList.remove('show');
-          modal.style.display = 'none';
-          modal.setAttribute('aria-hidden', 'true');
-          modal.removeAttribute('aria-modal');
-          document.body.removeChild(backdrop);
-          window.location.hash = '#premium';
-        });
+    document.addEventListener('astro:page-load', () => {
+      // Carousel Navigation Buttons
+      const scrollContainer = document.getElementById('auto-scroll');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      
+      if (prevBtn && nextBtn && scrollContainer) {
+        // Remove old listeners if any (though new elements are fresh)
+        prevBtn.onclick = () => scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+        nextBtn.onclick = () => scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
       }
-    }
 
-    if (window.location.hash === '#premium_modal') {
-      openModal();
-    }
-    window.addEventListener('hashchange', () => {
-      if (window.location.hash === '#premium_modal') openModal();
+      // Move modal to body to fix z-index issues with backdrop
+      const modalEl = document.getElementById('premium_modal');
+      if (modalEl && modalEl.parentElement !== document.body) {
+        document.body.appendChild(modalEl);
+      }
+
+      // Modal Deep Linking
+      const handleHashModal = () => {
+        if (window.location.hash === '#premium_modal') {
+          if (modalEl && window.bootstrap) {
+            // Check if instance exists or create new
+            const modal = window.bootstrap.Modal.getInstance(modalEl) || new window.bootstrap.Modal(modalEl);
+            modal.show();
+          }
+        }
+      };
+
+      // Check on load
+      handleHashModal();
+
+      // Check on hash change (if user clicks link on same page)
+      window.addEventListener('hashchange', handleHashModal);
     });
   </script>
   </Layout>

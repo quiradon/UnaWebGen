@@ -15,7 +15,6 @@ import icon from "../assets/logos/arkanus.svg";
     <div class="row justify-content-center g-4">
       <div
         class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column footer-column"
-        style="animation-delay: 0.1s"
       >
         <b class="footer-title fs-6 mb-3">{t.footer?.util ?? "Util"}</b>
         <ul class="list-unstyled footer-links">
@@ -31,7 +30,6 @@ import icon from "../assets/logos/arkanus.svg";
       </div>
       <div
         class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column footer-column"
-        style="animation-delay: 0.2s"
       >
         <b class="footer-title fs-6 mb-3">{t.footer?.about ?? "About"}</b>
         <ul class="list-unstyled footer-links">
@@ -49,7 +47,6 @@ import icon from "../assets/logos/arkanus.svg";
       </div>
       <div
         class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column footer-column"
-        style="animation-delay: 0.3s"
       >
         <b class="footer-title fs-6 mb-3">{t.footer?.legal ?? "Legal"}</b>
         <ul class="list-unstyled footer-links">
@@ -67,7 +64,6 @@ import icon from "../assets/logos/arkanus.svg";
       </div>
       <div
         class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last footer-column footer-brand"
-        style="animation-delay: 0s"
       >
         <a
           href="https://arkanus.app"
@@ -205,22 +201,6 @@ import icon from "../assets/logos/arkanus.svg";
     z-index: 1;
   }
 
-  .footer-column {
-    opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   .footer-title {
     font-weight: 700;
     background: linear-gradient(135deg, #f80752 0%, #c00541 100%);
@@ -314,7 +294,6 @@ import icon from "../assets/logos/arkanus.svg";
 
   .footer-divider {
     margin: 2rem 0;
-    opacity: 0;
     background: linear-gradient(
       90deg,
       transparent 0%,
@@ -323,29 +302,6 @@ import icon from "../assets/logos/arkanus.svg";
     );
     height: 1px;
     border: none;
-    animation: dividerFade 1s ease 0.6s forwards;
-  }
-
-  @keyframes dividerFade {
-    from {
-      opacity: 0;
-      transform: scaleX(0.5);
-    }
-    to {
-      opacity: 1;
-      transform: scaleX(1);
-    }
-  }
-
-  .footer-bottom {
-    opacity: 0;
-    animation: fadeIn 0.8s ease 0.8s forwards;
-  }
-
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
   }
 
   .footer-credits {
@@ -431,72 +387,10 @@ import icon from "../assets/logos/arkanus.svg";
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .footer-column,
-    .footer-divider,
-    .footer-bottom,
-    .modern-footer {
-      animation: none !important;
-      opacity: 1 !important;
-      transform: none !important;
-    }
-
     .footer-link,
     .social-link,
     .brand-logo {
       transition: none;
     }
   }
-
-  /* Animação de aparição do footer */
-  .modern-footer {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  .modern-footer.footer-visible {
-    animation: footerSlideUp 0.8s ease-out forwards;
-  }
-
-  @keyframes footerSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 </style>
-
-<script>
-  // Observador de interseção para animar o footer quando aparecer na tela
-  const observeFooter = () => {
-    const footer = document.getElementById("main-footer");
-    if (!footer) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            footer.classList.add("footer-visible");
-            observer.unobserve(footer);
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      },
-    );
-
-    observer.observe(footer);
-  };
-
-  // Executar quando o DOM estiver pronto
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", observeFooter);
-  } else {
-    observeFooter();
-  }
-</script>

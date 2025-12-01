@@ -113,12 +113,14 @@ const lang_LABELS: Record<string, string> = {
   .dropdown-menu {
     display: block !important;
     position: absolute;
+    right: 0;
+    left: auto;
     transform: scale(0.95);
     opacity: 0;
     transition:
       transform 0.15s ease-out,
       opacity 0.15s ease-out;
-    transform-origin: top;
+    transform-origin: top right;
     pointer-events: none;
     visibility: hidden;
   }

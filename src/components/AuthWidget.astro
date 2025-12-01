@@ -31,6 +31,10 @@ const avatarSize = variant === "desktop" ? 32 : 40;
   data-api={apiBase}
   style="display: none;"
 >
+  <a href={`${langPrefix}/#premium`} class="auth-widget__support-btn">
+    {t.nav.donate || "Support"}
+  </a>
+
   <a
     data-auth-login
     class="btn btn-primary fw-bold link-light border rounded border-0 d-inline-flex align-items-center gap-2 px-3"
@@ -67,6 +71,14 @@ const avatarSize = variant === "desktop" ? 32 : 40;
           decoding="async"
           style="display: none;"
         />
+        <a
+          data-auth-support-btn
+          href={`${langPrefix}/#premium`}
+          class="auth-widget__support-btn"
+          style="display: none;"
+        >
+          {t.nav.donate || "Support"}
+        </a>
         <img
           data-auth-avatar
           class="auth-widget__avatar"
@@ -282,5 +294,47 @@ const avatarSize = variant === "desktop" ? 32 : 40;
     .auth-widget__user-container {
       position: relative;
     }
+  }
+  /* Botão de Apoiar Projeto (substituto da badge para não-premium) */
+  @keyframes support-shine {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .auth-widget__support-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, #ffd700, #fdb931, #ffd700);
+    background-size: 200% 200%;
+    color: #000 !important;
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    height: 30px;
+    animation: support-shine 3s infinite linear;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    margin-right: 0.5rem;
+  }
+
+  .auth-widget__support-btn:hover {
+    transform: translateY(-1px) scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+    background: linear-gradient(45deg, #ffed4a, #ffd700, #ffed4a);
+    background-size: 200% 200%;
+    color: #000 !important;
   }
 </style>

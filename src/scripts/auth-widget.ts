@@ -8,6 +8,7 @@ interface WidgetElements {
   usernameElement: HTMLElement | null;
   avatarElement: HTMLImageElement | null;
   premiumBadge: HTMLImageElement | null;
+  supportButton: HTMLElement | null;
   logoutButton: HTMLButtonElement | null;
   toggleButton: HTMLElement | null;
   dropdown: HTMLElement | null;
@@ -70,6 +71,7 @@ interface KrakenWindow extends Window {
       usernameElement: null,
       avatarElement: null,
       premiumBadge: null,
+      supportButton: null,
       logoutButton: null,
       toggleButton: null,
       dropdown: null,
@@ -196,6 +198,7 @@ interface KrakenWindow extends Window {
       elements.usernameElement = null;
       elements.avatarElement = null;
       elements.premiumBadge = null;
+      elements.supportButton = null;
       elements.logoutButton = null;
       elements.toggleButton = null;
       elements.dropdown = null;
@@ -260,6 +263,7 @@ interface KrakenWindow extends Window {
       elements.userBlock = root.querySelector<HTMLElement>('[data-auth-user]');
       elements.avatarElement = root.querySelector<HTMLImageElement>('[data-auth-avatar]');
       elements.premiumBadge = root.querySelector<HTMLImageElement>('[data-auth-premium-badge]');
+      elements.supportButton = root.querySelector<HTMLElement>('[data-auth-support-btn]');
       elements.nameElement = root.querySelector<HTMLElement>('[data-auth-name]');
       elements.usernameElement = root.querySelector<HTMLElement>('[data-auth-username]');
       elements.toggleButton = root.querySelector<HTMLElement>('[data-auth-toggle]');
@@ -295,13 +299,18 @@ interface KrakenWindow extends Window {
       elements.avatarElement.src = user.avatar_url || '';
       elements.avatarElement.alt = displayName;
 
-      // Configurar badge premium (exibir se level >= 1)
       if (elements.premiumBadge && session.premium && session.premium.level >= 1 && session.premium.active) {
         const level = Math.min(Math.max(session.premium.level, 1), 4); // Limitar entre 1 e 4
         elements.premiumBadge.src = `/img/tiers_premium/${level}.webp`;
         elements.premiumBadge.style.display = 'block';
-      } else if (elements.premiumBadge) {
-        elements.premiumBadge.style.display = 'none';
+
+        // Esconder botão de suporte se for premium
+        if (elements.supportButton) elements.supportButton.style.display = 'none';
+      } else {
+        if (elements.premiumBadge) elements.premiumBadge.style.display = 'none';
+
+        // Mostrar botão de suporte se NÃO for premium
+        if (elements.supportButton) elements.supportButton.style.display = 'flex';
       }
 
       // Configurar nome completo no dropdown

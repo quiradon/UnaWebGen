@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Letöltés",
+      "error": "Hiba a karakterek betöltésekor. Kérjük, próbálja újra.",
       "old": {
         "description": "Tekintse meg és töltse le régi karakterlapjait. Kérjük, hogy migráljon az új karakterlap-rendszerre, hogy élvezhesse az eszköz legjobb élményét.",
         "label": "Elavult karakterek"
-      },
-      "error": "Hiba a karakterek betöltésekor. Kérjük, próbálja újra."
+      }
     },
     "logout": "Leválasztás"
   },
@@ -268,7 +268,8 @@
       "desc": "Szerezz hozzáférést dedikált eszközökhöz kedvenc rendszereid néhányához, így RPG-d kényelmesebbé válik. (Nincs kapcsolatban a rendszerekkel vagy a kiadóikkal.)\n",
       "subtitle": "Szerszámokkal rendelkező rendszerek\n",
       "title": "Automatikus karakterlapok a kalandjaidhoz!"
-    }
+    },
+    "desc": "RPG eszköz, csökkenti a számításokat és javítja a szerepjátékot. A Mini Kraken optimalizált rendszereket, intelligens parancsokat és fejlett játékélményt kínál automatikus karakterlapokkal."
   },
   "join_server_btn": "Csatlakozz a hivatalos céhhez",
   "lang": "hu",

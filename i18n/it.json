@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Scarica",
+      "error": "Errore durante il caricamento dei personaggi. Riprova.",
       "old": {
         "description": "Visualizza e scarica le tue vecchie schede personaggio. Ti chiediamo di migrare al nuovo sistema di schede per sfruttare la migliore esperienza dello strumento.",
         "label": "Personaggi obsoleti"
-      },
-      "error": "Errore durante il caricamento dei personaggi. Riprova."
+      }
     },
     "logout": "Disconnetti"
   },
@@ -268,7 +268,8 @@
       "desc": "Accedi a strumenti dedicati per alcuni dei tuoi sistemi preferiti, offrendo maggiore praticità per il tuo GDR. (Non abbiamo alcuna affiliazione con i sistemi o i loro editori.)\n",
       "subtitle": "Sistemi che hanno strumenti\n",
       "title": "¡Fichas Automáticas para tus aventuras!"
-    }
+    },
+    "desc": "Strumento di RPG, riduce i calcoli e migliora il gioco di ruolo. Mini Kraken offre sistemi ottimizzati, comandi intelligenti e un'esperienza di gioco avanzata con schede automatiche."
   },
   "join_server_btn": "Únete a la Guild Oficial",
   "lang": "it",

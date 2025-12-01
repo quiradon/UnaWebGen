@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Pobierz",
+      "error": "Błąd podczas ładowania postaci. Spróbuj ponownie.",
       "old": {
         "description": "Wyświetl i pobierz swoje stare karty postaci. Prosimy o migrację do nowego systemu kart, aby cieszyć się najlepszym doświadczeniem narzędzia.",
         "label": "Przestarzałe postacie"
-      },
-      "error": "Błąd podczas ładowania postaci. Spróbuj ponownie."
+      }
     },
     "logout": "Rozłącz"
   },
@@ -268,7 +268,8 @@
       "desc": "Zyskaj dostęp do dedykowanych narzędzi dla niektórych z Twoich ulubionych systemów, oferując większą wygodę w Twojej grze RPG. (Nie mamy żadnych powiązań z systemami ani ich wydawcami.)\n",
       "subtitle": "Systemy posiadające narzędzia\n",
       "title": "Automatyczne Karty do Twoich przygód!"
-    }
+    },
+    "desc": "Narzędzie RPG, redukuje obliczenia i poprawia roleplay. Mini Kraken oferuje zoptymalizowane systemy, inteligentne komendy i zaawansowane doświadczenie w grze z automatycznymi kartami postaci."
   },
   "join_server_btn": "Dołącz do Oficjalnej Gildii",
   "lang": "pl",

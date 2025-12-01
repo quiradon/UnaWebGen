@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Preuzeti",
+      "error": "Greška pri učitavanju likova. Pokušajte ponovo.",
       "old": {
         "description": "Pregledajte i preuzmite svoje stare listove likova. Molimo vas da migrirate na novi sustav listova likova kako biste uživali u najboljem iskustvu alata.",
         "label": "Zastarjeli likovi"
-      },
-      "error": "Greška pri učitavanju likova. Pokušajte ponovo."
+      }
     },
     "logout": "Odspoji"
   },
@@ -268,7 +268,8 @@
       "desc": "Pristupite alatima namijenjenim nekim od vaših omiljenih sustava, što će uvelike olakšati igranje vaših RPG igara. (Nemamo nikakve veze s tim sustavima ili njihovim izdavačima.)",
       "subtitle": "Sustavi s dostupnim alatima",
       "title": "Automatizirane kartice za vaše avanture!"
-    }
+    },
+    "desc": "RPG alat, smanjuje izračune i poboljšava igranje uloga. Mini Kraken nudi optimizirane sustave, pametne naredbe i napredno iskustvo igranja s automatskim karticama likova."
   },
   "join_server_btn": "Pridruži se poslužitelju",
   "lang": "hr",

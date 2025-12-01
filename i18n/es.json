@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Descargar",
+      "error": "Error al cargar personajes. Inténtalo de nuevo.",
       "old": {
         "description": "Visualiza y descarga tus antiguas fichas de personaje. Te pedimos que migres al nuevo sistema de fichas para aprovechar la mejor experiencia de la herramienta.",
         "label": "Personajes Desactualizados"
-      },
-      "error": "Error al cargar personajes. Inténtalo de nuevo."
+      }
     },
     "logout": "Desconectar"
   },
@@ -268,7 +268,8 @@
       "desc": "Obtén acceso a herramientas dedicadas para algunos de tus sistemas favoritos, ofreciendo mayor comodidad para tu juego de rol. (No tenemos afiliación con los sistemas o sus editores.)\n",
       "subtitle": "Sistemas que poseen herramientas\n",
       "title": "¡Hojas automáticas para tus aventuras!"
-    }
+    },
+    "desc": "Herramienta de RPG, reduce cálculos y mejora el roleplay. Mini Kraken ofrece sistemas optimizados, comandos inteligentes y una experiencia de juego avanzada con fichas automáticas."
   },
   "join_server_btn": "Unirse al gremio oficial",
   "lang": "es",

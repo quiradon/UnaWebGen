@@ -19,7 +19,7 @@ const langPrefix = idiomaR(t);
 const landingHTML = (t.index?.landing?.text ?? '').replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1<\/span>');
 const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 ---
-<Layout t={t} title={t.index?.name ?? 'Mini Kraken'}>
+<Layout t={t} title={t.index?.name ?? 'Mini Kraken'} desc={t.index?.desc?? "test"}>
   <head>
     <link rel="preload" as="image" href="/img/bg/pattern-square.svg" type="image/svg+xml">
   </head>

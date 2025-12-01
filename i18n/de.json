@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Herunterladen",
+      "error": "Fehler beim Laden der Charaktere. Bitte versuchen Sie es erneut.",
       "old": {
         "description": "Sehen und laden Sie Ihre alten Charakterbögen herunter. Wir bitten Sie, zum neuen Charakterbogensystem zu migrieren, um das beste Erlebnis mit dem Tool zu nutzen.",
         "label": "Veraltete Charaktere"
-      },
-      "error": "Fehler beim Laden der Charaktere. Bitte versuchen Sie es erneut."
+      }
     },
     "logout": "Trennen"
   },
@@ -268,7 +268,8 @@
       "desc": "Erhalten Sie Zugriff auf spezielle Tools für einige Ihrer Lieblingssysteme und vereinfachen Sie so Ihr Rollenspiel. (Wir haben keine Verbindung zu den Systemen oder ihren Herausgebern.)\n",
       "subtitle": "Systeme mit Werkzeugen\n",
       "title": "Automatische Charakterbögen für deine Abenteuer!"
-    }
+    },
+    "desc": "RPG-Tool, das Berechnungen reduziert und das Rollenspiel verbessert. Mini Kraken bietet optimierte Systeme, intelligente Befehle und ein fortschrittliches Spielerlebnis mit automatischen Charakterbögen."
   },
   "join_server_btn": "Offizielle Gilde beitreten",
   "lang": "de",

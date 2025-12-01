@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Download",
+      "error": "Error loading characters. Please try again.",
       "old": {
         "description": "View and download your old character sheets. We ask you to migrate to the new character sheet system to enjoy the best experience of the tool.",
         "label": "Outdated Characters"
-      },
-      "error": "Error loading characters. Please try again."
+      }
     },
     "logout": "Disconnect"
   },
@@ -268,7 +268,8 @@
       "desc": "Gain access to dedicated tools for some of your favorite systems, offering more convenience for your RPG. (We have no affiliation with the systems or their publishers.)",
       "subtitle": "Systems that have tools",
       "title": "Automatic Sheets for your adventures!"
-    }
+    },
+    "desc": "RPG tool, reduces calculations and improves roleplay. Mini Kraken offers optimized systems, intelligent commands, and an advanced gaming experience with automatic character sheets."
   },
   "join_server_btn": "Join Oficial Guild",
   "lang": "en",

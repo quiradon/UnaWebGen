@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "İndir",
+      "error": "Karakterler yüklenirken hata oluştu. Lütfen tekrar deneyin.",
       "old": {
         "description": "Eski karakter sayfalarınızı görüntüleyin ve indirin. Aracın en iyi deneyiminden yararlanmak için yeni karakter sayfası sistemine geçiş yapmanızı rica ediyoruz.",
         "label": "Güncel olmayan karakterler"
-      },
-      "error": "Karakterler yüklenirken hata oluştu. Lütfen tekrar deneyin."
+      }
     },
     "logout": "Bağlantıyı Kes"
   },
@@ -268,7 +268,8 @@
       "desc": "En sevdiğiniz sistemlerden bazılarında özel araçlara erişim sağlayarak, RPG'niz için daha fazla kolaylık sunuyoruz. (Sistemler veya yayıncılarıyla hiçbir bağlantımız yoktur.)\n",
       "subtitle": "Araçlara sahip sistemler",
       "title": "Maceralarınız için Otomatik Karakter Sayfaları!"
-    }
+    },
+    "desc": "RPG aracı, hesaplamaları azaltır ve rol yapmayı geliştirir. Mini Kraken optimize edilmiş sistemler, akıllı komutlar ve otomatik karakter sayfaları ile gelişmiş bir oyun deneyimi sunar."
   },
   "join_server_btn": "Resmi Loncaya Katılın",
   "lang": "tr",

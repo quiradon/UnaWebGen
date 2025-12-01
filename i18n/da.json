@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Download",
+      "error": "Fejl ved indlæsning af karakterer. Prøv igen.",
       "old": {
         "description": "Se og download dine gamle karakterark. Vi beder dig om at migrere til det nye karaktersystem for at få den bedste oplevelse med værktøjet.",
         "label": "Forældede karakterer"
-      },
-      "error": "Fejl ved indlæsning af karakterer. Prøv igen."
+      }
     },
     "logout": "Frakobl"
   },
@@ -268,7 +268,8 @@
       "desc": "Få adgang til dedikerede værktøjer til nogle af dine yndlingssystemer, hvilket giver mere praktisk anvendelse til din rollespil. (Vi har ingen tilknytning til systemerne eller deres udgivere.)",
       "subtitle": "Systemer med værktøjer",
       "title": "Automatiske figurblad til dine eventyr!"
-    }
+    },
+    "desc": "RPG-værktøj, reducerer beregninger og forbedrer rollespillet. Mini Kraken tilbyder optimerede systemer, intelligente kommandoer og en avanceret spiloplevelse med automatiske karakterark."
   },
   "join_server_btn": "Deltag i serveren",
   "lang": "da",

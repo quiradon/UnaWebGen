@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Unduh",
+      "error": "Gagal memuat karakter. Silakan coba lagi.",
       "old": {
         "description": "Lihat dan unduh lembar karakter lama Anda. Kami meminta Anda untuk bermigrasi ke sistem lembar karakter yang baru untuk menikmati pengalaman terbaik dari alat ini.",
         "label": "Karakter Usang"
-      },
-      "error": "Gagal memuat karakter. Silakan coba lagi."
+      }
     },
     "logout": "Putuskan sambungan"
   },
@@ -268,7 +268,8 @@
       "desc": "Dapatkan akses ke alat khusus untuk beberapa sistem favorit Anda, menawarkan lebih banyak kemudahan untuk RPG Anda. (Kami tidak berafiliasi dengan sistem atau penerbitnya.)",
       "subtitle": "Sistem yang memiliki alat",
       "title": "Lembar Otomatis untuk petualangan Anda!"
-    }
+    },
+    "desc": "Alat RPG, mengurangi perhitungan dan meningkatkan roleplay. Mini Kraken menawarkan sistem yang dioptimalkan, perintah cerdas, dan pengalaman bermain game tingkat lanjut dengan lembar karakter otomatis."
   },
   "join_server_btn": "Gabung Guild Resmi",
   "lang": "id",

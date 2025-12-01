@@ -140,11 +140,11 @@
     },
     "characters": {
       "download": "Télécharger",
+      "error": "Erreur lors du chargement des personnages. Veuillez réessayer.",
       "old": {
         "description": "Visualisez et téléchargez vos anciennes fiches de personnage. Nous vous demandons de migrer vers le nouveau système de fiches pour profiter de la meilleure expérience de l'outil.",
         "label": "Personnages obsolètes"
-      },
-      "error": "Erreur lors du chargement des personnages. Veuillez réessayer."
+      }
     },
     "logout": "Déconnecter"
   },
@@ -268,7 +268,8 @@
       "desc": "Accédez à des outils dédiés pour certains de vos systèmes préférés, offrant plus de commodité pour votre JdR. (Nous n'avons aucun lien avec les systèmes ou leurs éditeurs.)\n",
       "subtitle": "Systèmes disposant d'outils.\n",
       "title": "Fiches Automatiques pour vos aventures !"
-    }
+    },
+    "desc": "Outil de JdR, réduit les calculs et améliore le jeu de rôle. Mini Kraken propose des systèmes optimisés, des commandes intelligentes et une expérience de jeu avancée avec des fiches automatiques."
   },
   "join_server_btn": "Rejoindre la Guilde Officielle",
   "lang": "fr",

@@ -209,6 +209,13 @@ interface KrakenWindow extends Window {
     const bindUserInteractions = (): void => {
       if (!elements.toggleButton || !elements.logoutButton) return;
 
+      // Prevent toggle when clicking support button
+      if (elements.supportButton) {
+        elements.supportButton.addEventListener('click', (event: MouseEvent) => {
+          event.stopPropagation();
+        });
+      }
+
       // Handle toggle button click
       elements.toggleButton.addEventListener('click', (event: MouseEvent) => {
         event.preventDefault();

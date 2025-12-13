@@ -141,11 +141,13 @@ const loopRow2 = [...row2, ...row2, ...row2, ...row2];
         display: flex;
         width: max-content;
         gap: 1.5rem; /* Gap handled here instead of margins */
-        /* animation: scroll 60s linear infinite; -- Replaced by JS */
+        animation: scroll 60s linear infinite;
         padding-left: 1.5rem; /* Initial offset */
         will-change: transform;
     }
 
+    /* Pause animation on hover */
+    /* Pause only the specific track being hovered to avoid stopping when reading header texts */
     .marquee-track:hover {
         animation-play-state: paused;
     }
@@ -316,109 +318,3 @@ const loopRow2 = [...row2, ...row2, ...row2, ...row2];
         }
     }
 </style>
-
-<script>
-    const section = document.getElementById("multi-systems-section");
-    const tracks = section?.querySelectorAll(".marquee-track");
-
-    if (section && tracks && tracks.length >= 2) {
-        const track1 = tracks[0] as HTMLElement;
-        const track2 = tracks[1] as HTMLElement;
-
-        let lastScrollY = window.scrollY;
-        let scrollVelocity = 0;
-        let baseSpeed = 0.5; // Base speed pixels per frame
-        let isHovering = false;
-        let isInView = false;
-
-        // State positions
-        let pos1 = 0;
-        let pos2 = 0;
-        let initialized = false;
-
-        // Observer to only animate when in view
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    isInView = entry.isIntersecting;
-                });
-            },
-            { threshold: 0 },
-        );
-        observer.observe(section);
-
-        // Hover listeners
-        section.addEventListener("mouseenter", () => (isHovering = true));
-        section.addEventListener("mouseleave", () => (isHovering = false));
-
-        // Animation Loop
-        function animate() {
-            if (!initialized) {
-                if (track2.scrollWidth > 0) {
-                    pos2 = -(track2.scrollWidth / 2);
-                    initialized = true;
-                }
-            }
-
-            if (isInView && initialized) {
-                // Calculate Speed
-                scrollVelocity *= 0.95;
-                if (Math.abs(scrollVelocity) < 0.01) scrollVelocity = 0;
-
-                // While hovering, we want TOTAL stillness (no base speed, no boost)
-                if (isHovering) {
-                    // We also damp the velocity so it doesn't explode when you mouse out
-                    scrollVelocity = 0;
-                    requestAnimationFrame(animate);
-                    return;
-                }
-
-                const boost = Math.min(Math.abs(scrollVelocity), 8);
-                const currentBase = baseSpeed;
-
-                // Parallax Logic:
-                // Row 1 (Left): Standard speed
-                const speed1 = currentBase + boost;
-
-                // Row 2 (Right): 85% speed (slower) for parallax depth
-                const speed2 = currentBase * 0.85 + boost * 0.85;
-
-                const halfWidth1 = track1.scrollWidth / 2;
-                const halfWidth2 = track2.scrollWidth / 2;
-
-                // Update Track 1
-                pos1 -= speed1;
-                if (pos1 <= -halfWidth1) {
-                    pos1 += halfWidth1;
-                }
-                track1.style.transform = `translate3d(${pos1}px, 0, 0)`;
-
-                // Update Track 2
-                pos2 += speed2;
-                if (pos2 >= 0) {
-                    pos2 -= halfWidth2;
-                }
-                track2.style.transform = `translate3d(${pos2}px, 0, 0)`;
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        // Scroll Listener for Velocity
-        window.addEventListener(
-            "scroll",
-            () => {
-                if (!isInView) return;
-
-                const currentScrollY = window.scrollY;
-                const delta = currentScrollY - lastScrollY;
-                scrollVelocity += Math.abs(delta) * 0.15;
-
-                lastScrollY = currentScrollY;
-            },
-            { passive: true },
-        );
-
-        requestAnimationFrame(animate);
-    }
-</script>

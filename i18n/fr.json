@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Aléatoire",
-    "texto": "Texte"
+    "texto": "Texte",
+    "users": "Membres"
   },
   "comum": {
     "copied": "Copié !",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Cliquez ici pour voir la liste complète"
     },
+    "desc": "Outil de JdR, réduit les calculs et améliore le jeu de rôle. Mini Kraken propose des systèmes optimisés, des commandes intelligentes et une expérience de jeu avancée avec des fiches automatiques.",
     "dices": {
       "desc": "Le lancer de dés est un élément essentiel des aventures de JdR sur table. Il apporte le frisson de l’imprévisible, où le destin d’un personnage peut changer avec un seul lancer. Laissez Mini Kraken s’en occuper pour vous via /d",
       "subtitle": "Vous avez des dés à la maison ? Non ? Pas de problème !",
@@ -268,8 +270,7 @@
       "desc": "Accédez à des outils dédiés pour certains de vos systèmes préférés, offrant plus de commodité pour votre JdR. (Nous n'avons aucun lien avec les systèmes ou leurs éditeurs.)\n",
       "subtitle": "Systèmes disposant d'outils.\n",
       "title": "Fiches Automatiques pour vos aventures !"
-    },
-    "desc": "Outil de JdR, réduit les calculs et améliore le jeu de rôle. Mini Kraken propose des systèmes optimisés, des commandes intelligentes et une expérience de jeu avancée avec des fiches automatiques."
+    }
   },
   "join_server_btn": "Rejoindre la Guilde Officielle",
   "lang": "fr",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Outils en ligne"
     }
+  },
+  "parceiros": {
+    "desc1": "Recommandé",
+    "desc2": "Initiatives et communautés qui utilisent nos solutions, profitez du meilleur côté du jeu de rôle sur table !",
+    "titulo": "Communautés en Vedette"
   },
   "poker": {
     "article": {

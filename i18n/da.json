@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Tilfældig",
-    "texto": "Tekst"
+    "texto": "Tekst",
+    "users": "Medlemmer"
   },
   "comum": {
     "copied": "Kopieret!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Klik her for at se den komplette liste"
     },
+    "desc": "RPG-værktøj, reducerer beregninger og forbedrer rollespillet. Mini Kraken tilbyder optimerede systemer, intelligente kommandoer og en avanceret spiloplevelse med automatiske karakterark.",
     "dices": {
       "desc": "Ternings af terninger er en essentiel del af eventyr i rollespil. Det tilføjer spændingen ved det uforudsigelige, hvor en figurs skæbne kan ændre sig med et enkelt slag. Lad Mini Kraken klare det for dig via /d \n",
       "subtitle": "Har du hjemmebanefordel? Nej? Intet problem!\n",
@@ -268,8 +270,7 @@
       "desc": "Få adgang til dedikerede værktøjer til nogle af dine yndlingssystemer, hvilket giver mere praktisk anvendelse til din rollespil. (Vi har ingen tilknytning til systemerne eller deres udgivere.)",
       "subtitle": "Systemer med værktøjer",
       "title": "Automatiske figurblad til dine eventyr!"
-    },
-    "desc": "RPG-værktøj, reducerer beregninger og forbedrer rollespillet. Mini Kraken tilbyder optimerede systemer, intelligente kommandoer og en avanceret spiloplevelse med automatiske karakterark."
+    }
   },
   "join_server_btn": "Deltag i serveren",
   "lang": "da",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Onlineværktøjer"
     }
+  },
+  "parceiros": {
+    "desc1": "Anbefalet",
+    "desc2": "Initiativer og fællesskaber, der bruger vores løsninger, nyd det bedste ved bordrollespil!",
+    "titulo": "Fremhævede Fællesskaber"
   },
   "poker": {
     "article": {

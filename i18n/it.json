@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Casuale",
-    "texto": "Testo"
+    "texto": "Testo",
+    "users": "Membri"
   },
   "comum": {
     "copied": "Copiato!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Clicca qui per vedere l'elenco completo"
     },
+    "desc": "Strumento di RPG, riduce i calcoli e migliora il gioco di ruolo. Mini Kraken offre sistemi ottimizzati, comandi intelligenti e un'esperienza di gioco avanzata con schede automatiche.",
     "dices": {
       "desc": "Rolagem de dados é uma parte essencial das aventuras de RPG de mesa. Traz a emoção do imprevisível, onde o destino de um personagem pode mudar com uma única rolagem. Deixe o Mini Kraken cuidar disso para você através de /d",
       "subtitle": "Tem dados em casa? Não? Sem problemas!",
@@ -268,8 +270,7 @@
       "desc": "Accedi a strumenti dedicati per alcuni dei tuoi sistemi preferiti, offrendo maggiore praticità per il tuo GDR. (Non abbiamo alcuna affiliazione con i sistemi o i loro editori.)\n",
       "subtitle": "Sistemi che hanno strumenti\n",
       "title": "¡Fichas Automáticas para tus aventuras!"
-    },
-    "desc": "Strumento di RPG, riduce i calcoli e migliora il gioco di ruolo. Mini Kraken offre sistemi ottimizzati, comandi intelligenti e un'esperienza di gioco avanzata con schede automatiche."
+    }
   },
   "join_server_btn": "Únete a la Guild Oficial",
   "lang": "it",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Strumenti online"
     }
+  },
+  "parceiros": {
+    "desc1": "Consigliati",
+    "desc2": "Iniziative e comunità che utilizzano le nostre soluzioni, godetevi il lato migliore del gioco di ruolo da tavolo!",
+    "titulo": "Comunità in Evidenza"
   },
   "poker": {
     "article": {

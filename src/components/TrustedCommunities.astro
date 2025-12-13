@@ -1,0 +1,294 @@
+---
+import { Users, BadgeCheck } from "@lucide/astro";
+interface Props {
+    title: string;
+    desc: string;
+    desc2: string;
+    members: string;
+}
+const { title, desc, desc2, members } = Astro.props as Props;
+const communities = [
+    {
+        name: "Jambo Editora",
+        members: "8k+",
+        color: "bg-danger",
+        image: "/img/guilds/icons/jambo.webp",
+        url: "https://jamboeditora.com.br/",
+        verified: true,
+    },
+    {
+        name: "Insurgentes RPG",
+        members: "2.5k+",
+        color: "bg-white",
+        image: "/img/guilds/icons/insurgentes.webp",
+        url: "https://discord.gg/cdWvS4rJAd",
+        verified: true,
+    },
+    {
+        name: "C.R.I.S",
+        members: "16k+",
+        color: "bg-warning",
+        image: "/img/guilds/icons/cris.webp",
+        url: "https://crisordemparanormal.com/",
+        verified: false,
+    },
+    {
+        name: "Torre Espiral",
+        members: "750+",
+        color: "bg-primary",
+        image: "/img/guilds/icons/torre.webp",
+        url: "https://discord.gg/frpVyuEP5D",
+        verified: false,
+    },
+    {
+        name: "PlayRay",
+        members: "115k+",
+        color: "bg-info",
+        image: "/img/guilds/icons/ray.webp",
+        url: "https://discord.com/invite/playray",
+        verified: false,
+    },
+    {
+        name: "Multiverso Celeste",
+        members: "1k+",
+        color: "bg-secondary",
+        image: "/img/guilds/icons/celeste.webp",
+        url: "https://discord.com/invite/RmrXzDXPsf",
+        verified: false,
+    },
+    {
+        name: "Torre Do Mago",
+        members: "2k+",
+        color: "bg-secondary",
+        image: "/img/guilds/icons/torre_do_mago.webp",
+        url: "https://discord.gg/invite/torre-do-mago-713403470551711786",
+        verified: false,
+    },
+];
+
+// Duplicate 4x to ensure smooth loop
+const loopCommunities = [
+    ...communities,
+    ...communities,
+    ...communities,
+    ...communities,
+];
+---
+
+<section class="py-5 overflow-hidden">
+    <div class="container mb-4 text-center">
+        <h4 class="fw-semibold text-primary mb-2">{title}</h4>
+        <h2 class="display-5 fw-bold text-white">{desc}</h2>
+        <p class="lead text-secondary">
+            {desc2}
+        </p>
+    </div>
+
+    <div class="marquee-container">
+        <div class="marquee-track">
+            {
+                loopCommunities.map((c, i) => (
+                    <a
+                        href={c.url}
+                        target="_blank"
+                        class="text-decoration-none"
+                    >
+                        <div
+                            class={`community-card mx-2 mx-md-3 d-flex flex-column align-items-center justify-content-center p-3 p-md-4 text-center position-relative`}
+                        >
+                            <div
+                                class={`avatar mb-2 mb-md-3 bg-dark rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 position-relative border-2 border-secondary`}
+                                style="border-style: solid;"
+                            >
+                                {c.image ? (
+                                    <img
+                                        src={c.image}
+                                        alt={c.name}
+                                        class="w-100 h-100 rounded-circle object-fit-cover"
+                                    />
+                                ) : (
+                                    <Users class={`icon-size text-secondary`} />
+                                )}
+
+                                {c.verified && (
+                                    <div
+                                        class="verified-badge"
+                                        title="Parceiro Verificado"
+                                    >
+                                        <BadgeCheck
+                                            class="text-primary"
+                                            size={20}
+                                            fill="#1a1d21"
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            <h5
+                                class="text-white fw-bold mb-1 card-title-text d-flex align-items-center justify-content-center w-100"
+                                style="min-height: 2.5rem;"
+                            >
+                                {c.name}
+                            </h5>
+                            <span class="text-white-50 small d-block badge bg-dark px-3 py-1 rounded-pill mt-2 border border-secondary text-secondary">
+                                {c.members} {members}
+                            </span>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .marquee-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 10px 0;
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 15%,
+            black 85%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 15%,
+            black 85%,
+            transparent
+        );
+    }
+
+    .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: scroll 60s linear infinite;
+    }
+
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .community-card {
+        min-width: 180px;
+        width: 180px;
+        height: 210px;
+        border-radius: 24px;
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        user-select: none;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        /* Default solid background fallback */
+        background: #111;
+        border: 2px solid transparent; /* Essential for border-box bg trick */
+    }
+
+    /* Gradient Borders Logic */
+    .community-card {
+        background:
+            linear-gradient(#111, #111) padding-box,
+            linear-gradient(135deg, #333, #555) border-box;
+    }
+
+    @media (min-width: 768px) {
+        .community-card {
+            min-width: 220px;
+            width: 220px;
+            height: 250px;
+        }
+    }
+
+    .community-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+        z-index: 10;
+        background:
+            linear-gradient(#15151a, #15151a) padding-box,
+            linear-gradient(135deg, #ea1854, #e2204a) border-box; /* Brighter gradient */
+    }
+
+    .avatar {
+        width: 80px;
+        height: 80px;
+        padding: 4px;
+        transition:
+            transform 0.3s ease,
+            border-color 0.3s ease;
+    }
+
+    .community-card:hover .avatar {
+        transform: scale(1.05);
+        border-color: var(--bs-primary) !important;
+    }
+
+    @media (min-width: 768px) {
+        .avatar {
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .verified-badge {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: #111;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border: 2px solid #111;
+    }
+
+    .icon-size {
+        width: 32px;
+        height: 32px;
+    }
+    @media (min-width: 768px) {
+        .icon-size {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .card-title-text {
+        font-size: 1.1rem;
+        line-height: 1.2;
+        transition: color 0.3s ease;
+    }
+
+    .community-card:hover .card-title-text {
+        color: var(--bs-primary) !important;
+    }
+
+    @media (min-width: 768px) {
+        .card-title-text {
+            font-size: 1.35rem;
+        }
+    }
+
+    /* Contextual tweaks */
+    .bg-dark {
+        background-color: #0d0d0d !important;
+    }
+    .text-secondary {
+        color: #888 !important;
+    }
+</style>

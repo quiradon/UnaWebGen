@@ -1,0 +1,424 @@
+---
+import { Image } from "astro:assets";
+interface Props {
+    sistemas: Record<string, any>;
+    langPrefix: string;
+    title: string;
+    desc: string;
+    subtitle: string;
+    allSystemsText: string;
+}
+const { sistemas, langPrefix, title, desc, subtitle, allSystemsText } =
+    Astro.props as Props;
+
+const systemsList = Object.keys(sistemas).map((key) => {
+    const s = sistemas[key];
+    return {
+        ...s,
+        url: `${langPrefix}/systems/${s.path}`,
+    };
+});
+
+// Duplicate to ensure smooth loop
+// Split into two rows
+const half = Math.ceil(systemsList.length / 2);
+const row1 = systemsList.slice(0, half);
+const row2 = systemsList.slice(half);
+
+// Duplicate to ensure smooth loop
+const loopRow1 = [...row1, ...row1, ...row1, ...row1];
+const loopRow2 = [...row2, ...row2, ...row2, ...row2];
+---
+
+<section id="multi-systems-section" class="py-5 overflow-hidden">
+    <div class="container mb-4 text-center">
+        <h4 class="fw-semibold text-primary mb-2">{subtitle}</h4>
+        <h2 class="display-5 fw-bold text-white">{title}</h2>
+        <p class="lead text-secondary">
+            {desc}
+        </p>
+    </div>
+
+    <div class="marquee-container">
+        <div class="marquee-track">
+            {
+                loopRow1.map((s, i) => (
+                    <a href={s.url} class="text-decoration-none">
+                        <div
+                            class={`system-card mx-2 mx-md-3 d-flex flex-column gap-1 px-3 pb-3 pt-2 px-md-4 pb-md-4 pt-md-3 text-start position-relative`}
+                        >
+                            <div>
+                                <div
+                                    class={`avatar d-flex align-items-center justify-content-center flex-shrink-0 position-relative`}
+                                >
+                                    <Image
+                                        src={s.icon}
+                                        alt={`${s.card?.title} Icon`}
+                                        width="70"
+                                        height="70"
+                                        class="image-icon"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <h5 class="text-primary fw-bold mb-2 card-title-text">
+                                    {s.card?.title}
+                                </h5>
+                                <p class="card-desc-text">{s.card?.desc}</p>
+                            </div>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+
+    <div class="marquee-container">
+        <div class="marquee-track reverse-track">
+            {
+                loopRow2.map((s, i) => (
+                    <a href={s.url} class="text-decoration-none">
+                        <div
+                            class={`system-card mx-2 mx-md-3 d-flex flex-column gap-1 px-3 pb-3 pt-2 px-md-4 pb-md-4 pt-md-3 text-start position-relative`}
+                        >
+                            <div>
+                                <div
+                                    class={`avatar d-flex align-items-center justify-content-center flex-shrink-0 position-relative`}
+                                >
+                                    <Image
+                                        src={s.icon}
+                                        alt={`${s.card?.title} Icon`}
+                                        width="70"
+                                        height="70"
+                                        class="image-icon"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <h5 class="text-primary fw-bold mb-2 card-title-text">
+                                    {s.card?.title}
+                                </h5>
+                                <p class="card-desc-text">{s.card?.desc}</p>
+                            </div>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+    <div class="container mt-1 text-center">
+        <a href={`${langPrefix}/systems/`} class="view-all-link">
+            {allSystemsText}
+        </a>
+    </div>
+</section>
+
+<style>
+    .marquee-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 10px 0; /* Reduced spacing */
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            #0b0910 10%,
+            #0b0910 90%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            #0b0910 10%,
+            #0b0910 90%,
+            transparent
+        );
+    }
+
+    .marquee-track {
+        display: flex;
+        width: max-content;
+        gap: 1.5rem; /* Gap handled here instead of margins */
+        /* animation: scroll 60s linear infinite; -- Replaced by JS */
+        padding-left: 1.5rem; /* Initial offset */
+        will-change: transform;
+    }
+
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    .reverse-track {
+        animation-direction: reverse;
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    /* Card Base Styles */
+    .system-card {
+        width: 300px; /* Compress width slightly for modern look */
+        min-height: 140px; /* Reduce height */
+        padding: 1.25rem;
+
+        background: rgba(18, 18, 20, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.75rem;
+
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+        position: relative;
+        overflow: hidden;
+        user-select: none;
+        text-decoration: none;
+    }
+
+    /* Glow Effect Background */
+    .system-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.03),
+            transparent
+        );
+        transition: left 0.5s ease;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* Hover Effects */
+    .system-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        background: rgba(22, 22, 26, 0.9);
+        border-color: rgba(var(--bs-primary-rgb), 0.5);
+        box-shadow:
+            0 10px 30px -10px rgba(0, 0, 0, 0.8),
+            0 0 15px -3px rgba(var(--bs-primary-rgb), 0.3); /* Colored Glow */
+        z-index: 10;
+    }
+
+    .system-card:hover::before {
+        left: 100%; /* Shine effect on hover */
+        transition: left 0.5s ease;
+    }
+
+    /* Avatar/Icon Styling */
+    .avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 8px;
+        transition:
+            transform 0.4s ease,
+            background 0.4s ease;
+    }
+
+    .system-card:hover .avatar {
+        transform: scale(1.1) rotate(5deg);
+        background: rgba(var(--bs-primary-rgb), 0.1);
+    }
+
+    .image-icon {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    /* Text Styling */
+    .card-title-text {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0;
+        color: white;
+        transition: color 0.3s ease;
+    }
+
+    .system-card:hover .card-title-text {
+        color: var(--bs-primary);
+    }
+
+    .card-desc-text {
+        font-size: 0.85rem;
+        color: #999;
+        line-height: 1.4;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: color 0.3s ease;
+    }
+
+    .system-card:hover .card-desc-text {
+        color: #bbb;
+    }
+
+    /* Link Styling */
+    .view-all-link {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .view-all-link:hover {
+        color: var(--bs-primary);
+    }
+
+    .view-all-link .arrow {
+        transition: transform 0.3s ease;
+    }
+
+    .view-all-link:hover .arrow {
+        transform: translateX(5px);
+    }
+
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+        .system-card {
+            width: 340px;
+            min-height: 150px;
+            padding: 1.5rem;
+        }
+
+        .avatar {
+            width: 56px;
+            height: 56px;
+        }
+
+        .card-title-text {
+            font-size: 1.25rem;
+        }
+    }
+</style>
+
+<script>
+    const section = document.getElementById("multi-systems-section");
+    const tracks = section?.querySelectorAll(".marquee-track");
+
+    if (section && tracks && tracks.length >= 2) {
+        const track1 = tracks[0] as HTMLElement;
+        const track2 = tracks[1] as HTMLElement;
+
+        let lastScrollY = window.scrollY;
+        let scrollVelocity = 0;
+        let baseSpeed = 0.5; // Base speed pixels per frame
+        let isHovering = false;
+        let isInView = false;
+
+        // State positions
+        let pos1 = 0;
+        let pos2 = 0;
+        let initialized = false;
+
+        // Observer to only animate when in view
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    isInView = entry.isIntersecting;
+                });
+            },
+            { threshold: 0 },
+        );
+        observer.observe(section);
+
+        // Hover listeners
+        section.addEventListener("mouseenter", () => (isHovering = true));
+        section.addEventListener("mouseleave", () => (isHovering = false));
+
+        // Animation Loop
+        function animate() {
+            if (!initialized) {
+                if (track2.scrollWidth > 0) {
+                    pos2 = -(track2.scrollWidth / 2);
+                    initialized = true;
+                }
+            }
+
+            if (isInView && initialized) {
+                // Calculate Speed
+                scrollVelocity *= 0.95;
+                if (Math.abs(scrollVelocity) < 0.01) scrollVelocity = 0;
+
+                // While hovering, we want TOTAL stillness (no base speed, no boost)
+                if (isHovering) {
+                    // We also damp the velocity so it doesn't explode when you mouse out
+                    scrollVelocity = 0;
+                    requestAnimationFrame(animate);
+                    return;
+                }
+
+                const boost = Math.min(Math.abs(scrollVelocity), 8);
+                const currentBase = baseSpeed;
+
+                // Parallax Logic:
+                // Row 1 (Left): Standard speed
+                const speed1 = currentBase + boost;
+
+                // Row 2 (Right): 85% speed (slower) for parallax depth
+                const speed2 = currentBase * 0.85 + boost * 0.85;
+
+                const halfWidth1 = track1.scrollWidth / 2;
+                const halfWidth2 = track2.scrollWidth / 2;
+
+                // Update Track 1
+                pos1 -= speed1;
+                if (pos1 <= -halfWidth1) {
+                    pos1 += halfWidth1;
+                }
+                track1.style.transform = `translate3d(${pos1}px, 0, 0)`;
+
+                // Update Track 2
+                pos2 += speed2;
+                if (pos2 >= 0) {
+                    pos2 -= halfWidth2;
+                }
+                track2.style.transform = `translate3d(${pos2}px, 0, 0)`;
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Scroll Listener for Velocity
+        window.addEventListener(
+            "scroll",
+            () => {
+                if (!isInView) return;
+
+                const currentScrollY = window.scrollY;
+                const delta = currentScrollY - lastScrollY;
+                scrollVelocity += Math.abs(delta) * 0.15;
+
+                lastScrollY = currentScrollY;
+            },
+            { passive: true },
+        );
+
+        requestAnimationFrame(animate);
+    }
+</script>

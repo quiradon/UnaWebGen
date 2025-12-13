@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Losowy",
-    "texto": "Tekst"
+    "texto": "Tekst",
+    "users": "Członkowie"
   },
   "comum": {
     "copied": "Skopiowano!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Kliknij tutaj, aby zobaczyć pełną listę"
     },
+    "desc": "Narzędzie RPG, redukuje obliczenia i poprawia roleplay. Mini Kraken oferuje zoptymalizowane systemy, inteligentne komendy i zaawansowane doświadczenie w grze z automatycznymi kartami postaci.",
     "dices": {
       "desc": "Rzucanie kośćmi jest niezbędną częścią przygód RPG na stole. Wprowadza dreszczyk nieprzewidywalności, gdzie los postaci może zmienić się wraz z jednym rzutem. Pozwól, aby Mini Kraken zajął się tym za Ciebie za pomocą /d",
       "subtitle": "Masz kostki w domu? Nie? Żaden problem!",
@@ -268,8 +270,7 @@
       "desc": "Zyskaj dostęp do dedykowanych narzędzi dla niektórych z Twoich ulubionych systemów, oferując większą wygodę w Twojej grze RPG. (Nie mamy żadnych powiązań z systemami ani ich wydawcami.)\n",
       "subtitle": "Systemy posiadające narzędzia\n",
       "title": "Automatyczne Karty do Twoich przygód!"
-    },
-    "desc": "Narzędzie RPG, redukuje obliczenia i poprawia roleplay. Mini Kraken oferuje zoptymalizowane systemy, inteligentne komendy i zaawansowane doświadczenie w grze z automatycznymi kartami postaci."
+    }
   },
   "join_server_btn": "Dołącz do Oficjalnej Gildii",
   "lang": "pl",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Narzędzia online"
     }
+  },
+  "parceiros": {
+    "desc1": "Polecane",
+    "desc2": "Inicjatywy i społeczności korzystające z naszych rozwiązań, cieszcie się najlepszą stroną gier RPG stołowych!",
+    "titulo": "Polecane Społeczności"
   },
   "poker": {
     "article": {

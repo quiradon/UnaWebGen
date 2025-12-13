@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Aleatorio",
-    "texto": "Texto"
+    "texto": "Texto",
+    "users": "Miembros"
   },
   "comum": {
     "copied": "Copiado!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Haz clic aquí para ver la lista completa"
     },
+    "desc": "Herramienta de RPG, reduce cálculos y mejora el roleplay. Mini Kraken ofrece sistemas optimizados, comandos inteligentes y una experiencia de juego avanzada con fichas automáticas.",
     "dices": {
       "desc": "Tirar dados es una parte esencial de las aventuras de RPG de mesa. Aporta la emoción de lo impredecible, donde el destino de un personaje puede cambiar con una sola tirada. Deja que Mini Kraken se encargue de ello por ti a través de /d",
       "subtitle": "¿Tienes dados en casa? ¿No? ¡No hay problema!",
@@ -268,8 +270,7 @@
       "desc": "Obtén acceso a herramientas dedicadas para algunos de tus sistemas favoritos, ofreciendo mayor comodidad para tu juego de rol. (No tenemos afiliación con los sistemas o sus editores.)\n",
       "subtitle": "Sistemas que poseen herramientas\n",
       "title": "¡Hojas automáticas para tus aventuras!"
-    },
-    "desc": "Herramienta de RPG, reduce cálculos y mejora el roleplay. Mini Kraken ofrece sistemas optimizados, comandos inteligentes y una experiencia de juego avanzada con fichas automáticas."
+    }
   },
   "join_server_btn": "Unirse al gremio oficial",
   "lang": "es",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Herramientas en línea"
     }
+  },
+  "parceiros": {
+    "desc1": "Recomendados",
+    "desc2": "Iniciativas y comunidades que utilizan nuestras soluciones, ¡disfruten el mejor lado del RPG de mesa!",
+    "titulo": "Comunidades Destacadas"
   },
   "poker": {
     "article": {

@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Véletlenszerű",
-    "texto": "Szöveg"
+    "texto": "Szöveg",
+    "users": "Tagok"
   },
   "comum": {
     "copied": "Másolva!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Kattintson ide a teljes lista megtekintéséhez"
     },
+    "desc": "RPG eszköz, csökkenti a számításokat és javítja a szerepjátékot. A Mini Kraken optimalizált rendszereket, intelligens parancsokat és fejlett játékélményt kínál automatikus karakterlapokkal.",
     "dices": {
       "desc": "A kockadobás a szerepjátékos kalandok elengedhetetlen része. Hozzáadja a kiszámíthatatlanság izgalmát, ahol egy karakter sorsa egyetlen dobás során megváltozhat. Hadd gondoskodjon erről a Mini Kraken a /d paranccsal.",
       "subtitle": "Van otthon kockád? Nincs? Nem probléma!",
@@ -268,8 +270,7 @@
       "desc": "Szerezz hozzáférést dedikált eszközökhöz kedvenc rendszereid néhányához, így RPG-d kényelmesebbé válik. (Nincs kapcsolatban a rendszerekkel vagy a kiadóikkal.)\n",
       "subtitle": "Szerszámokkal rendelkező rendszerek\n",
       "title": "Automatikus karakterlapok a kalandjaidhoz!"
-    },
-    "desc": "RPG eszköz, csökkenti a számításokat és javítja a szerepjátékot. A Mini Kraken optimalizált rendszereket, intelligens parancsokat és fejlett játékélményt kínál automatikus karakterlapokkal."
+    }
   },
   "join_server_btn": "Csatlakozz a hivatalos céhhez",
   "lang": "hu",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Online eszközök"
     }
+  },
+  "parceiros": {
+    "desc1": "Ajánlott",
+    "desc2": "Kezdeményezések és közösségek, amelyek a mi megoldásainkat használják, élvezzék az asztali szerepjáték legjobb oldalát!",
+    "titulo": "Kiemelt Közösségek"
   },
   "poker": {
     "article": {

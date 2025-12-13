@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Rastgele",
-    "texto": "Metin"
+    "texto": "Metin",
+    "users": "Üyeler"
   },
   "comum": {
     "copied": "Kopyalandı!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Tam listeyi görmek için buraya tıklayın"
     },
+    "desc": "RPG aracı, hesaplamaları azaltır ve rol yapmayı geliştirir. Mini Kraken optimize edilmiş sistemler, akıllı komutlar ve otomatik karakter sayfaları ile gelişmiş bir oyun deneyimi sunar.",
     "dices": {
       "desc": "Zar atma, masaüstü RPG maceralarının önemli bir parçasıdır. Tek bir atışla bir karakterin kaderinin değişebileceği, öngörülemeyen heyecanı getirir. Mini Kraken bunu sizin için /d aracılığıyla halletsin",
       "subtitle": "Evde zarınız mı var? Yok mu? Sorun değil!",
@@ -268,8 +270,7 @@
       "desc": "En sevdiğiniz sistemlerden bazılarında özel araçlara erişim sağlayarak, RPG'niz için daha fazla kolaylık sunuyoruz. (Sistemler veya yayıncılarıyla hiçbir bağlantımız yoktur.)\n",
       "subtitle": "Araçlara sahip sistemler",
       "title": "Maceralarınız için Otomatik Karakter Sayfaları!"
-    },
-    "desc": "RPG aracı, hesaplamaları azaltır ve rol yapmayı geliştirir. Mini Kraken optimize edilmiş sistemler, akıllı komutlar ve otomatik karakter sayfaları ile gelişmiş bir oyun deneyimi sunar."
+    }
   },
   "join_server_btn": "Resmi Loncaya Katılın",
   "lang": "tr",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Çevrimiçi Araçlar"
     }
+  },
+  "parceiros": {
+    "desc1": "Önerilenler",
+    "desc2": "Çözümlerimizi kullanan girişimler ve topluluklar, masa üstü RPG'nin en iyi yönünün tadını çıkarın!",
+    "titulo": "Öne Çıkan Topluluklar"
   },
   "poker": {
     "article": {

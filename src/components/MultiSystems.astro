@@ -1,0 +1,238 @@
+---
+import { Image } from "astro:assets";
+interface Props {
+    sistemas: Record<string, any>;
+    langPrefix: string;
+    title: string;
+    desc: string;
+    subtitle: string;
+    allSystemsText: string;
+}
+const { sistemas, langPrefix, title, desc, subtitle, allSystemsText } =
+    Astro.props as Props;
+
+const systemsList = Object.keys(sistemas).map((key) => {
+    const s = sistemas[key];
+    return {
+        ...s,
+        url: `${langPrefix}/systems/${s.path}`,
+    };
+});
+
+// Duplicate to ensure smooth loop
+// Split into two rows
+const half = Math.ceil(systemsList.length / 2);
+const row1 = systemsList.slice(0, half);
+const row2 = systemsList.slice(half);
+
+// Duplicate to ensure smooth loop
+const loopRow1 = [...row1, ...row1, ...row1, ...row1];
+const loopRow2 = [...row2, ...row2, ...row2, ...row2];
+---
+
+<section class="py-5 overflow-hidden">
+    <div class="container mb-4 text-center">
+        <h4 class="fw-semibold text-primary mb-2">{subtitle}</h4>
+        <h2 class="display-5 fw-bold text-white">{title}</h2>
+        <p class="lead text-secondary">
+            {desc}
+        </p>
+    </div>
+
+    <div class="marquee-container">
+        <div class="marquee-track">
+            {
+                loopRow1.map((s, i) => (
+                    <a href={s.url} class="text-decoration-none">
+                        <div
+                            class={`system-card mx-2 mx-md-3 d-flex flex-column gap-1 px-3 pb-3 pt-2 px-md-4 pb-md-4 pt-md-3 text-start position-relative`}
+                        >
+                            <div>
+                                <div
+                                    class={`avatar d-flex align-items-center justify-content-center flex-shrink-0 position-relative`}
+                                >
+                                    <Image
+                                        src={s.icon}
+                                        alt={`${s.card?.title} Icon`}
+                                        width="70"
+                                        height="70"
+                                        class="w-100 h-100 object-fit-contain"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <h5 class="text-primary fw-bold mb-2 card-title-text">
+                                    {s.card?.title}
+                                </h5>
+                                <p
+                                    class="text-white-50 small d-block mb-0 text-secondary"
+                                    style="max-width: 100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
+                                >
+                                    {s.card?.desc}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+
+    <div class="marquee-container">
+        <div class="marquee-track reverse-track">
+            {
+                loopRow2.map((s, i) => (
+                    <a href={s.url} class="text-decoration-none">
+                        <div
+                            class={`system-card mx-2 mx-md-3 d-flex flex-column gap-1 px-3 pb-3 pt-2 px-md-4 pb-md-4 pt-md-3 text-start position-relative`}
+                        >
+                            <div>
+                                <div
+                                    class={`avatar d-flex align-items-center justify-content-center flex-shrink-0 position-relative`}
+                                >
+                                    <Image
+                                        src={s.icon}
+                                        alt={`${s.card?.title} Icon`}
+                                        width="70"
+                                        height="70"
+                                        class="w-100 h-100 object-fit-contain"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <h5 class="text-primary fw-bold mb-2 card-title-text">
+                                    {s.card?.title}
+                                </h5>
+                                <p
+                                    class="text-white-50 small d-block mb-0 text-secondary"
+                                    style="max-width: 100%; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"
+                                >
+                                    {s.card?.desc}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .marquee-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 5px 0;
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 15%,
+            black 85%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 15%,
+            black 85%,
+            transparent
+        );
+    }
+
+    .marquee-track {
+        display: flex;
+        width: max-content;
+        animation: scroll 60s linear infinite;
+    }
+
+    .marquee-track:hover {
+        animation-play-state: paused;
+    }
+
+    .reverse-track {
+        animation-direction: reverse;
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .system-card {
+        min-width: 360px;
+        width: 360px;
+        height: 160px;
+        border-radius: 16px;
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        user-select: none;
+        overflow: hidden;
+        position: relative;
+
+        /* Default solid background fallback */
+        background: #111;
+        border: 1px solid #333;
+    }
+
+    /* Gradient Borders Logic */
+    .system-card {
+        background: #131316;
+    }
+
+        .system-card {
+            min-width: 380px;
+            width: 380px;
+            height: 180px;
+        }
+    }
+
+    .system-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+        z-index: 10;
+        border-color: var(--bs-primary);
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        transition: transform 0.3s ease;
+    }
+
+    .system-card:hover .avatar {
+        transform: scale(1.05);
+    }
+
+    @media (min-width: 768px) {
+        .avatar {
+            width: 55px;
+            height: 55px;
+        }
+    }
+
+    .card-title-text {
+        font-size: 1.25rem;
+        line-height: 1.2;
+        transition: color 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+        .card-title-text {
+            font-size: 1.4rem;
+        }
+    }
+
+    /* Contextual tweaks */
+    .bg-dark {
+        background-color: #0d0d0d !important;
+    }
+    .text-secondary {
+        color: #888 !important;
+    }
+</style>

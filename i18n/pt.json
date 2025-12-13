@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Aleatório",
-    "texto": "Texto"
+    "texto": "Texto",
+    "users": "Membros"
   },
   "comum": {
     "copied": "Copiado!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Clique aqui para ver a lista completa"
     },
+    "desc": "Ferramenta de RPG, reduz cálculos e melhora o roleplay. Mini Kraken oferece sistemas otimizados, comandos inteligentes e experiência de jogo avançada com fichas automaticas.",
     "dices": {
       "desc": "A rolagem de dados é uma parte essencial das aventuras em RPG de mesa. Ela traz a emoção do imprevisível, onde o destino de um personagem pode mudar com uma única rolada. Deixe que a Mini Kraken cuide disso pra você através do /d ",
       "subtitle": "Tem dado em Casa? Não? sem problemas!",
@@ -268,8 +270,7 @@
       "desc": "Tenha acesso a ferramentas dedicadas para alguns dos seus sistemas favoritos, proporcionando mais praticidade ao seu RPG. (Não possuímos qualquer vínculo com os sistemas ou suas editoras.)",
       "subtitle": "Sistemas que possuem ferramentas",
       "title": "Fichas Automáticas para suas aventuras!"
-    },
-    "desc": "Ferramenta de RPG, reduz cálculos e melhora o roleplay. Mini Kraken oferece sistemas otimizados, comandos inteligentes e experiência de jogo avançada com fichas automaticas."
+    }
   },
   "join_server_btn": "Entrar no servidor",
   "lang": "pt",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Ferramentas online"
     }
+  },
+  "parceiros": {
+    "desc1": "Recomendados",
+    "desc2": "Iniciativas e comunidades que utilizam nossas soluções, aproveite o melhor lado do RPG de mesa!",
+    "titulo": "Comunidades em Destaque"
   },
   "poker": {
     "article": {

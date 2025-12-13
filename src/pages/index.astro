@@ -1,13 +1,35 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
 export const prerender = true;
 import { getLocale } from "astro-i18n-aut";
-import Layout from '@layouts/Layout.astro';
-import { loadT} from '@lib/i18n';
-import { idiomaR } from '@lib/routes';
-import config from '../config';
-import { Heart, Gem, Clipboard, Grid3x3, Users, Circle, Layers, CreditCard, Database, User, MessageCircle, Key, Coins, Dices, Tags, BookText, Palette, Package, Info, Crown } from '@lucide/astro';
-import TrustedCommunities from '@components/TrustedCommunities.astro';
+import Layout from "@layouts/Layout.astro";
+import { loadT } from "@lib/i18n";
+import { idiomaR } from "@lib/routes";
+import config from "../config";
+import {
+  Heart,
+  Gem,
+  Clipboard,
+  Grid3x3,
+  Users,
+  Circle,
+  Layers,
+  CreditCard,
+  Database,
+  User,
+  MessageCircle,
+  Key,
+  Coins,
+  Dices,
+  Tags,
+  BookText,
+  Palette,
+  Package,
+  Info,
+  Crown,
+} from "@lucide/astro";
+import TrustedCommunities from "@components/TrustedCommunities.astro";
+import MultiSystems from "@components/MultiSystems.astro";
 
 import image1 from "../assets/img/landing/place.webp";
 import image2 from "../assets/img/landing/dices.webp";
@@ -17,163 +39,92 @@ import imageVTT from "../assets/img/landing/vtt2.webp";
 const t = loadT(getLocale(Astro.url));
 const langPrefix = idiomaR(t);
 
-const landingHTML = (t.index?.landing?.text ?? '').replace(/\*\*(.*?)\*\*/g, '<span class="text-primary">$1<\/span>');
+const landingHTML = (t.index?.landing?.text ?? "").replace(
+  /\*\*(.*?)\*\*/g,
+  '<span class="text-primary">$1<\/span>',
+);
 const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 ---
-<Layout t={t} title={t.index?.name ?? 'Mini Kraken'} desc={t.index?.desc?? "test"}>
+
+<Layout
+  t={t}
+  title={t.index?.name ?? "Mini Kraken"}
+  desc={t.index?.desc ?? "test"}
+>
   <head>
-    <link rel="preload" as="image" href="/img/bg/pattern-square.svg" type="image/svg+xml">
+    <link
+      rel="preload"
+      as="image"
+      href="/img/bg/pattern-square.svg"
+      type="image/svg+xml"
+    />
   </head>
   <style>
     .bgImg2 {
-      background: linear-gradient(var(--bs-dark) 0%, rgba(255,255,255,0)),
-                  linear-gradient(rgba(255,255,255,0) 65%, var(--bs-dark) 100%),
-                  url('/img/bg/dnd.webp') center / cover repeat-x;
+      background:
+        linear-gradient(var(--bs-dark) 0%, rgba(255, 255, 255, 0)),
+        linear-gradient(rgba(255, 255, 255, 0) 65%, var(--bs-dark) 100%),
+        url("/img/bg/dnd.webp") center / cover repeat-x;
     }
     .hero-bg {
-      background: url('/img/bg/pattern-square.svg') top / auto repeat-x;
+      background: url("/img/bg/pattern-square.svg") top / auto repeat-x;
     }
   </style>
   <script>
-    document.addEventListener('astro:page-load', () => {
-      // Auto Scroll esse elemento deve estar presente somente na landing page
-      document.querySelectorAll('#auto-scroll').forEach(function(element) {
-        const htmlElement = element as HTMLElement;
-        let isMouseOver = false;
-        let isDragging = false;
-        let startX = 0;
-        let scrollLeft = 0;
-
-        element.addEventListener('mouseenter', function() {
-          isMouseOver = true;
-        });
-
-        element.addEventListener('mouseleave', function() {
-          isMouseOver = false;
-        });
-
-        element.addEventListener('mousedown', function(e) {
-          const mouseEvent = e as MouseEvent;
-          isDragging = true;
-          startX = mouseEvent.pageX - htmlElement.offsetLeft;
-          scrollLeft = htmlElement.scrollLeft;
-          element.classList.add('active');
-        });
-
-        element.addEventListener('mouseleave', function() {
-          isDragging = false;
-          element.classList.remove('active');
-        });
-
-        element.addEventListener('mouseup', function() {
-          isDragging = false;
-          element.classList.remove('active');
-        });
-
-        element.addEventListener('mousemove', function(e) {
-          if (!isDragging) return;
-          e.preventDefault();
-          const mouseEvent = e as MouseEvent;
-          const x = mouseEvent.pageX - htmlElement.offsetLeft;
-          const walk = (x - startX) * 2; // Multiplique por 2 para aumentar a velocidade de arrasto
-          htmlElement.scrollLeft = scrollLeft - walk;
-        });
-
-        function scrollRight() {
-          if (!isMouseOver) {
-            const card = element.querySelector('.card') as HTMLElement;
-            if (card) {
-              const cardWidth = card.offsetWidth;
-              if (htmlElement.scrollLeft < htmlElement.scrollWidth - htmlElement.clientWidth) {
-                htmlElement.scrollBy({ left: cardWidth, behavior: 'smooth' });
-              } else {
-                htmlElement.scrollTo({ left: 0, behavior: 'smooth' });
-              }
-            }
-          }
-        }
-        
-        const intervalId = setInterval(scrollRight, 2000); 
-        
-        // Cleanup on page swap
-        document.addEventListener('astro:before-swap', () => {
-          clearInterval(intervalId);
-        }, { once: true });
-      });
+    document.addEventListener("astro:page-load", () => {
+      // Old manual scroll logic removed
     });
-</script>
+  </script>
   <!-- Hero -->
   <section id="inicio" class="hero-bg">
     <div class="container d-lg-flex align-items-lg-center py-4 py-xl-5">
       <div class="row gy-2 gy-md-0 row-cols-1 row-cols-lg-2 my-3 py-3">
-        <div class="col-auto col-xl-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+        <div
+          class="col-auto col-xl-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center"
+        >
           <div class="mb-5">
-            <h1 class="display-1 fw-bold"><Fragment set:html={landingHTML} /></h1>
+            <h1 class="display-1 fw-bold">
+              <Fragment set:html={landingHTML} />
+            </h1>
             <p class="text-secondary lead">{t.index?.start?.desc}</p>
-            <a class="btn btn-primary btn-lg mt-1 border-2 px-5 me-1 generic_grow fw-bold" href={config.bot_invite} target="_blank">{t.nav?.add}</a>
-            <a class="btn btn-primary btn-lg mt-1 border-2 px-4 generic_grow fw-bold" href={`${langPrefix}/tools/`}>{t.online?.tools?.btn}</a>
+            <a
+              class="btn btn-primary btn-lg mt-1 border-2 px-5 me-1 generic_grow fw-bold"
+              href={config.bot_invite}
+              target="_blank">{t.nav?.add}</a
+            >
+            <a
+              class="btn btn-primary btn-lg mt-1 border-2 px-4 generic_grow fw-bold"
+              href={`${langPrefix}/tools/`}>{t.online?.tools?.btn}</a
+            >
           </div>
         </div>
-        <div class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0">
-            <Image 
-              class="img-fluid generic_grow" 
-              alt="Mini Kraken RPG | Inanimalia Fortuna in Dungeon Background" 
-              width="600" 
-              height="400" 
-              src={image1} 
-              loading="eager"
-              fetchpriority="high"
-              decoding="sync"
-            />
+        <div
+          class="col-lg-6 col-xl-6 d-md-flex justify-content-md-center align-items-md-center p-0 m-0"
+        >
+          <Image
+            class="img-fluid generic_grow"
+            alt="Mini Kraken RPG | Inanimalia Fortuna in Dungeon Background"
+            width="600"
+            height="400"
+            src={image1}
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
+          />
         </div>
       </div>
     </div>
   </section>
 
   <!-- Systems carousel -->
-  <section class="py-3">
-    <div class="container">
-      <div class="mb-3">
-        <h4 class="fw-semibold text-primary mb-0">{t.index?.system?.subtitle}</h4>
-        <h1 class="display-5 fw-bold mt-0">{t.index?.system?.title}</h1>
-        <p class="lead text-secondary -3">{t.index?.system?.desc}</p>
-      </div>
-      <div class="position-relative">
-        <div class="top-0 start-auto end-0 gap-2 text-end">
-          <button class="btn btn-primary" id="prev-btn" aria-label="Previous">&#x2039;</button>
-          <button class="btn btn-primary" id="next-btn" aria-label="Next">&#x203A;</button>
-        </div>
-        <div class="d-inline-flex flex-row flex-grow-1 flex-fill py-3 px-2 overflow-scroll" id="auto-scroll" style="width: 100%;">
-          {Object.keys(sistemas).map((key, idx) => {
-            const s = sistemas[key];
-            const url = `${langPrefix}/systems/${s.path}`;
-            const showAuto = true; // manter badge ativo como no original por padrao
-            return (
-              <div class="col-9 col-sm-7 col-xl-3 col-xxl-3 d-flex me-3 system_card">
-                <div class="card d-flex flex-grow-1 card_system_card border-1 position-relative">
-                  {showAuto && (
-                    <div class="bg-secondary-subtle border rounded-circle border-0 position-absolute end-0 mt-3 me-3" title="Suporte a Fichas &amp; Rolagem Automatica">
-                      <svg class="text-secondary p-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em" fill="currentColor" style="font-size: 32px;"><path d="M176 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64c-35.3 0-64 28.7-64 64H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64v56H24c-13.3 0-24 10.7-24 24s10.7 24 24 24H64c0 35.3 28.7 64 64 64v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448h56v40c0 13.3 10.7 24 24 24s24-10.7 24-24V448c35.3 0 64-28.7 64-64h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V280h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448V176h40c13.3 0 24-10.7 24-24s-10.7-24-24-24H448c0-35.3-28.7-64-64-64V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H280V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H176V24zM160 128H352c17.7 0 32 14.3 32 32V352c0 17.7-14.3 32-32 32H160c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32zm192 32H160V352H352V160z"/></svg>
-                    </div>
-                  )}
-                  <div class="card-body d-flex flex-column py-2 px-3">
-                    <a href={url} class="link-unstyled">
-                      <div class="bs-icon-xl d-flex justify-content-center align-items-center d-inline-block mb-1 bs-icon">
-                        <Image  class="img-fluid user-select-none" alt={`${s.card?.title} Icon`} src={s.icon} width="80" height="80" />
-                      </div>
-                      <h4 class="card-title user-select-none text-primary">{s.card?.title}</h4>
-                    </a>
-                    <p class="card-text user-select-none flex-grow-1">{s.card?.desc}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div class="text-end"><a class="mt-1 border-2 generic_grow fw-bold" href={`${langPrefix}/systems`}>{t.index?.allSystems?.text}</a></div>
-    </div>
-  </section>
+  <MultiSystems
+    sistemas={sistemas}
+    langPrefix={langPrefix}
+    title={t.index?.system?.title}
+    desc={t.index?.system?.desc}
+    subtitle={t.index?.system?.subtitle}
+    allSystemsText={t.index?.allSystems?.text}
+  />
 
   <!-- Dice section -->
   <section>
@@ -181,17 +132,33 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       <div class="row py-5">
         <div class="col-lg-6 col-xl-6 d-lg-flex align-items-lg-center">
           <div class="mb-5">
-            <h4 class="fw-semibold text-primary mb-0">{t.index?.dices?.subtitle}</h4>
+            <h4 class="fw-semibold text-primary mb-0">
+              {t.index?.dices?.subtitle}
+            </h4>
             <h1 class="display-5 fw-bold mt-0">{t.index?.dices?.title}</h1>
             <p class="lead text-secondary">{t.index?.dices?.desc}</p>
           </div>
         </div>
         <div class="col-lg-6 col-xl-6">
-          <Image class="img-fluid generic_grow" alt="Mini Kraken RPG | Dice roll Illustration" inferSize={true} src={image2} loading="lazy" />
+          <Image
+            class="img-fluid generic_grow"
+            alt="Mini Kraken RPG | Dice roll Illustration"
+            inferSize={true}
+            src={image2}
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Trusted Communities -->
+  <TrustedCommunities
+    title={t.parceiros?.titulo}
+    desc={t.parceiros?.desc1}
+    desc2={t.parceiros?.desc2}
+    members={t.common.users}
+  />
 
   <!-- Sheets section -->
   <section>
@@ -199,13 +166,20 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       <div class="row py-5">
         <div class="col-lg-6 col-xl-6 d-lg-flex align-items-lg-center">
           <div class="mb-5">
-            <h4 class="fw-semibold text-primary mb-0">{t.character?.sheet?.subtitle}</h4>
+            <h4 class="fw-semibold text-primary mb-0">
+              {t.character?.sheet?.subtitle}
+            </h4>
             <h1 class="display-5 fw-bold mt-0">{t.character?.sheet?.title}</h1>
             <p class="lead text-secondary">{t.character?.sheet?.desc}</p>
           </div>
         </div>
         <div class="col-lg-6 col-xl-6">
-          <Image class="img-fluid p-4 generic_grow" inferSize={true} alt="RPG Characters Sheets" src={imageSheet} />
+          <Image
+            class="img-fluid p-4 generic_grow"
+            inferSize={true}
+            alt="RPG Characters Sheets"
+            src={imageSheet}
+          />
         </div>
       </div>
     </div>
@@ -214,21 +188,33 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
   <!-- Features cards -->
   <section class="bgImg2">
     <div class="container py-4 py-xl-5">
-      <h2 class="text-light display-5 fw-bold mt-0">{t.index?.features?.title}</h2>
+      <h2 class="text-light display-5 fw-bold mt-0">
+        {t.index?.features?.title}
+      </h2>
       <p class="lead text-secondary mt-1 mb-5">{t.index?.features?.desc}</p>
       <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3 d-flex">
         <!-- Card 0 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <Heart class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[0]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[0]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[0]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[0]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -236,16 +222,26 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
         <!-- Card 1 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <Gem class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[1]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[1]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[1]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[1]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -253,16 +249,26 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
         <!-- Card 2 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <Clipboard class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[2]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[2]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[2]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[2]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -270,16 +276,26 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
         <!-- Card 3 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <Grid3x3 class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[3]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[3]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[3]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[3]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -287,16 +303,26 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
         <!-- Card 4 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <Users class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[4]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[4]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[4]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[4]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -304,16 +330,26 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
         <!-- Card 5 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <Circle class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[5]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[5]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[5]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[5]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -321,16 +357,26 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
         <!-- Card 6 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <Layers class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[6]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[6]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[6]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[6]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -338,16 +384,26 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
         <!-- Card 7 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <CreditCard class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[7]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[7]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[7]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[7]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -355,16 +411,26 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
         <!-- Card 8 -->
         <div class="col d-flex mt-1 mb-3">
-          <div class="card border-white border-0 shadow glass-container cardBonito">
+          <div
+            class="card border-white border-0 shadow glass-container cardBonito"
+          >
             <div class="card-body p-4">
               <div>
-                <div class="d-flex justify-content-center align-items-center align-content-center">
-                  <div class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon">
+                <div
+                  class="d-flex justify-content-center align-items-center align-content-center"
+                >
+                  <div
+                    class="bs-icon-md bs-icon-circle d-flex justify-content-center align-items-center d-inline-block bs-icon"
+                  >
                     <Database class="text-primary" size={32} />
                   </div>
                 </div>
-                <h3 class="text-center text-white card-title">{t.index?.func?.card?.[8]?.title}</h3>
-                <p class="text-start text-light card-text">{t.index?.func?.card?.[8]?.desc}</p>
+                <h3 class="text-center text-white card-title">
+                  {t.index?.func?.card?.[8]?.title}
+                </h3>
+                <p class="text-start text-light card-text">
+                  {t.index?.func?.card?.[8]?.desc}
+                </p>
               </div>
             </div>
           </div>
@@ -372,9 +438,6 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       </div>
     </div>
   </section>
-
-  <!-- Trusted Communities -->
-  <TrustedCommunities />
 
   <!-- VTT section -->
   <section>
@@ -387,7 +450,12 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
           </div>
         </div>
         <div class="col-lg-6 col-xl-6 mb-5">
-          <Image class="img-fluid generic_grow" inferSize={true} alt="Mini Kraken VTT Ilustration" src={imageVTT} />
+          <Image
+            class="img-fluid generic_grow"
+            inferSize={true}
+            alt="Mini Kraken VTT Ilustration"
+            src={imageVTT}
+          />
         </div>
       </div>
     </div>
@@ -405,20 +473,51 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       <div class="row g-0 justify-content-center align-items-center">
         <div class="col-xxl-12 box pb-0 mb-5">
           <div class="content">
-            <h3>{t.premium?.[0]?.title} <Crown size={24} class="d-inline" /></h3>
+            <h3>
+              {t.premium?.[0]?.title}
+              <Crown size={24} class="d-inline" />
+            </h3>
             <p>{t.premium?.[0]?.desc}</p>
             <ul class="list-unstyled justify-content-xxl-start mb-1">
-              <li class="mb-1"><User size={16} class="d-inline me-1" /> {t.premium?.feat?.[10]}</li>
-              <li class="mb-1"><Coins size={16} class="d-inline me-1" /> 2 {t.premium?.feat?.[4]}</li>
-              <li class="mb-1"><Key size={16} class="d-inline me-1" /> {t.premium?.feat?.[6]} {t.premium?.feat?.[7]}</li>
-              <li class="mb-1"><MessageCircle size={16} class="d-inline me-1" /> {t.premium?.feat?.[5]}</li>
+              <li class="mb-1">
+                <User size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[10]}
+              </li>
+              <li class="mb-1">
+                <Coins size={16} class="d-inline me-1" /> 2 {
+                  t.premium?.feat?.[4]
+                }
+              </li>
+              <li class="mb-1">
+                <Key size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[6]}
+                {t.premium?.feat?.[7]}
+              </li>
+              <li class="mb-1">
+                <MessageCircle size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[5]}
+              </li>
               <li><hr /></li>
-              <li class="mb-1"><Dices size={16} class="d-inline me-1" /> {t.premium?.feat?.[0]}</li>
-              <li class="mb-1"><Tags size={16} class="d-inline me-1" /> {t.premium?.feat?.[1]}</li>
-              <li class="mb-1"><BookText size={16} class="d-inline me-1" /> {t.premium?.feat?.[2]}</li>
+              <li class="mb-1">
+                <Dices size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[0]}
+              </li>
+              <li class="mb-1">
+                <Tags size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[1]}
+              </li>
+              <li class="mb-1">
+                <BookText size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[2]}
+              </li>
             </ul>
             <h4 id="price-3" class="mt-3">{t.price?.[0]}</h4>
-            <a class="d-flex justify-content-center align-items-center mt-3" href="#premium_modal" data-bs-target="#premium_modal" data-bs-toggle="modal">{t.index?.donate?.btn}</a>
+            <a
+              class="d-flex justify-content-center align-items-center mt-3"
+              href="#premium_modal"
+              data-bs-target="#premium_modal"
+              data-bs-toggle="modal">{t.index?.donate?.btn}</a
+            >
           </div>
         </div>
         <div class="col-xxl-12 box pb-0 mb-5">
@@ -426,40 +525,112 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
             <h3>{t.premium?.[1]?.title} <User size={24} class="d-inline" /></h3>
             <p>{t.premium?.[1]?.desc}</p>
             <ul class="list-unstyled justify-content-xxl-start mb-1">
-              <li class="mb-1"><User size={16} class="d-inline me-1" /> {t.premium?.feat?.[10]}</li>
-              <li class="mb-1"><Coins size={16} class="d-inline me-1" /> 4 {t.premium?.feat?.[4]}</li>
-              <li class="mb-1"><Key size={16} class="d-inline me-1" /> {t.premium?.feat?.[6]} {t.premium?.feat?.[8]}</li>
-              <li class="mb-1"><MessageCircle size={16} class="d-inline me-1" /> {t.premium?.feat?.[5]}</li>
+              <li class="mb-1">
+                <User size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[10]}
+              </li>
+              <li class="mb-1">
+                <Coins size={16} class="d-inline me-1" /> 4 {
+                  t.premium?.feat?.[4]
+                }
+              </li>
+              <li class="mb-1">
+                <Key size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[6]}
+                {t.premium?.feat?.[8]}
+              </li>
+              <li class="mb-1">
+                <MessageCircle size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[5]}
+              </li>
               <li><hr /></li>
-              <li class="mb-1"><Dices size={16} class="d-inline me-1" /> {t.premium?.feat?.[0]}</li>
-              <li class="mb-1"><Tags size={16} class="d-inline me-1" /> {t.premium?.feat?.[1]}</li>
-              <li class="mb-1"><BookText size={16} class="d-inline me-1" /> {t.premium?.feat?.[2]}</li>
-              <li class="mb-1"><Palette size={16} class="d-inline me-1" /> {t.premium?.feat?.[3]}</li>
+              <li class="mb-1">
+                <Dices size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[0]}
+              </li>
+              <li class="mb-1">
+                <Tags size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[1]}
+              </li>
+              <li class="mb-1">
+                <BookText size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[2]}
+              </li>
+              <li class="mb-1">
+                <Palette size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[3]}
+              </li>
             </ul>
             <h4 id="price-1" class="mt-3">{t.price?.[1]}</h4>
-            <a class="d-flex justify-content-center align-items-center mt-3" href="#premium_modal" data-bs-target="#premium_modal" data-bs-toggle="modal">{t.index?.donate?.btn}</a>
+            <a
+              class="d-flex justify-content-center align-items-center mt-3"
+              href="#premium_modal"
+              data-bs-target="#premium_modal"
+              data-bs-toggle="modal">{t.index?.donate?.btn}</a
+            >
           </div>
         </div>
         <div class="col-xxl-12 box pb-0 mb-5">
           <div class="content">
-            <h3>{t.premium?.[2]?.title} <Crown size={24} class="d-inline" /></h3>
+            <h3>
+              {t.premium?.[2]?.title}
+              <Crown size={24} class="d-inline" />
+            </h3>
             <p>{t.premium?.[2]?.desc}</p>
             <ul class="list-unstyled justify-content-xxl-start mb-1">
-              <li class="mb-1"><User size={16} class="d-inline me-1" /> {t.premium?.feat?.[11]}</li>
-              <li class="mb-1"><Coins size={16} class="d-inline me-1" /> 10 {t.premium?.feat?.[4]}</li>
-              <li class="mb-1"><Key size={16} class="d-inline me-1" /> {t.premium?.feat?.[6]} {t.premium?.feat?.[12]}</li>
-              <li class="mb-1"><MessageCircle size={16} class="d-inline me-1" /> {t.premium?.feat?.[5]}</li>
-              <li class="mb-1"><Package size={16} class="d-inline me-1" /> {t.premium?.feat?.[9]}</li>
-              <li class="mb-1"><Info size={16} class="d-inline me-1" /> {t.premium?.feat?.[98]}</li>
-              <li class="mb-1"><Package size={16} class="d-inline me-1" /> {t.premium?.feat?.[99]}</li>
+              <li class="mb-1">
+                <User size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[11]}
+              </li>
+              <li class="mb-1">
+                <Coins size={16} class="d-inline me-1" /> 10 {
+                  t.premium?.feat?.[4]
+                }
+              </li>
+              <li class="mb-1">
+                <Key size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[6]}
+                {t.premium?.feat?.[12]}
+              </li>
+              <li class="mb-1">
+                <MessageCircle size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[5]}
+              </li>
+              <li class="mb-1">
+                <Package size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[9]}
+              </li>
+              <li class="mb-1">
+                <Info size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[98]}
+              </li>
+              <li class="mb-1">
+                <Package size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[99]}
+              </li>
               <li><hr /></li>
-              <li class="mb-1"><Dices size={16} class="d-inline me-1" /> {t.premium?.feat?.[0]}</li>
-              <li class="mb-1"><Tags size={16} class="d-inline me-1" /> {t.premium?.feat?.[1]}</li>
-              <li class="mb-1"><BookText size={16} class="d-inline me-1" /> {t.premium?.feat?.[2]}</li>
-              <li class="mb-1"><Palette size={16} class="d-inline me-1" /> {t.premium?.feat?.[3]}</li>
+              <li class="mb-1">
+                <Dices size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[0]}
+              </li>
+              <li class="mb-1">
+                <Tags size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[1]}
+              </li>
+              <li class="mb-1">
+                <BookText size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[2]}
+              </li>
+              <li class="mb-1">
+                <Palette size={16} class="d-inline me-1" />
+                {t.premium?.feat?.[3]}
+              </li>
             </ul>
             <h4 id="price-2" class="mt-3">{t.price?.[2]}</h4>
-            <a class="d-flex justify-content-center align-items-center mt-3" href="#premium_modal">{t.index?.donate?.btn}</a>
+            <a
+              class="d-flex justify-content-center align-items-center mt-3"
+              href="#premium_modal">{t.index?.donate?.btn}</a
+            >
           </div>
         </div>
       </div>
@@ -472,13 +643,23 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       <div class="modal-content">
         <div class="modal-header border-0">
           <h4 class="modal-title">{t.index?.donate?.btn}</h4>
-          <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+          <button
+            class="btn-close"
+            type="button"
+            aria-label="Close"
+            data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body d-inline-flex d-xl-flex flex-column justify-content-xl-center align-items-xl-center">
+        <div
+          class="modal-body d-inline-flex d-xl-flex flex-column justify-content-xl-center align-items-xl-center"
+        >
           <p class="mt-2">{t.donate_text}</p>
         </div>
         <div class="modal-footer border-0">
-          <a class="btn btn-primary fw-bold link-light" target="_blank" href={config.discord_invite}>{t.join_server_btn}</a>
+          <a
+            class="btn btn-primary fw-bold link-light"
+            target="_blank"
+            href={config.discord_invite}>{t.join_server_btn}</a
+          >
         </div>
       </div>
     </div>
@@ -486,30 +667,32 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 
   <!-- Page specific scripts -->
   <script is:inline>
-    document.addEventListener('astro:page-load', () => {
+    document.addEventListener("astro:page-load", () => {
       // Carousel Navigation Buttons
-      const scrollContainer = document.getElementById('auto-scroll');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      
+      const scrollContainer = document.getElementById("auto-scroll");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+
       if (prevBtn && nextBtn && scrollContainer) {
         // Remove old listeners if any (though new elements are fresh)
-        prevBtn.onclick = () => scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
-        nextBtn.onclick = () => scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+        // prevBtn.onclick = () => scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+        // nextBtn.onclick = () => scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
       }
 
       // Move modal to body to fix z-index issues with backdrop
-      const modalEl = document.getElementById('premium_modal');
+      const modalEl = document.getElementById("premium_modal");
       if (modalEl && modalEl.parentElement !== document.body) {
         document.body.appendChild(modalEl);
       }
 
       // Modal Deep Linking
       const handleHashModal = () => {
-        if (window.location.hash === '#premium_modal') {
+        if (window.location.hash === "#premium_modal") {
           if (modalEl && window.bootstrap) {
             // Check if instance exists or create new
-            const modal = window.bootstrap.Modal.getInstance(modalEl) || new window.bootstrap.Modal(modalEl);
+            const modal =
+              window.bootstrap.Modal.getInstance(modalEl) ||
+              new window.bootstrap.Modal(modalEl);
             modal.show();
           }
         }
@@ -519,8 +702,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
       handleHashModal();
 
       // Check on hash change (if user clicks link on same page)
-      window.addEventListener('hashchange', handleHashModal);
+      window.addEventListener("hashchange", handleHashModal);
     });
   </script>
-  </Layout>
-
+</Layout>

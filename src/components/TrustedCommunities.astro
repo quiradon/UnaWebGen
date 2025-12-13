@@ -1,13 +1,19 @@
 ---
 import { Users, BadgeCheck } from "@lucide/astro";
-
+interface Props {
+    title: string;
+    desc: string;
+    desc2: string;
+    members: string;
+}
+const { title, desc, desc2, members } = Astro.props as Props;
 const communities = [
     {
         name: "Jambo Editora",
         members: "8k+",
         color: "bg-danger",
         image: "/img/guilds/icons/jambo.webp",
-        url: "#",
+        url: "https://jamboeditora.com.br/",
         verified: true,
     },
     {
@@ -15,23 +21,23 @@ const communities = [
         members: "2.5k+",
         color: "bg-white",
         image: "/img/guilds/icons/insurgentes.webp",
-        url: "#",
+        url: "https://discord.gg/cdWvS4rJAd",
         verified: true,
     },
     {
         name: "C.R.I.S",
         members: "16k+",
         color: "bg-warning",
-        image: null,
-        url: "#",
+        image: "/img/guilds/icons/cris.webp",
+        url: "https://crisordemparanormal.com/",
         verified: false,
     },
     {
         name: "Torre Espiral",
         members: "750+",
         color: "bg-primary",
-        image: null,
-        url: "#",
+        image: "/img/guilds/icons/torre.webp",
+        url: "https://discord.gg/frpVyuEP5D",
         verified: false,
     },
     {
@@ -39,15 +45,23 @@ const communities = [
         members: "115k+",
         color: "bg-info",
         image: "/img/guilds/icons/ray.webp",
-        url: "#",
+        url: "https://discord.com/invite/playray",
         verified: false,
     },
     {
         name: "Multiverso Celeste",
         members: "1k+",
         color: "bg-secondary",
-        image: null,
-        url: "#",
+        image: "/img/guilds/icons/celeste.webp",
+        url: "https://discord.com/invite/RmrXzDXPsf",
+        verified: false,
+    },
+    {
+        name: "Torre Do Mago",
+        members: "2k+",
+        color: "bg-secondary",
+        image: "/img/guilds/icons/torre_do_mago.webp",
+        url: "https://discord.gg/invite/torre-do-mago-713403470551711786",
         verified: false,
     },
 ];
@@ -63,10 +77,10 @@ const loopCommunities = [
 
 <section class="py-5 overflow-hidden">
     <div class="container mb-4 text-center">
-        <h4 class="fw-semibold text-primary mb-2">Comunidade</h4>
-        <h2 class="display-5 fw-bold text-white">Parceiros Oficiais</h2>
+        <h4 class="fw-semibold text-primary mb-2">{title}</h4>
+        <h2 class="display-5 fw-bold text-white">{desc}</h2>
         <p class="lead text-secondary">
-            Projetos e comunidades que constroem o futuro do RPG conosco.
+            {desc2}
         </p>
     </div>
 
@@ -117,7 +131,7 @@ const loopCommunities = [
                                 {c.name}
                             </h5>
                             <span class="text-white-50 small d-block badge bg-dark px-3 py-1 rounded-pill mt-2 border border-secondary text-secondary">
-                                {c.members} Membros
+                                {c.members} {members}
                             </span>
                         </div>
                     </a>

@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Acak",
-    "texto": "Teks"
+    "texto": "Teks",
+    "users": "Anggota"
   },
   "comum": {
     "copied": "Disalin!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Klik di sini untuk melihat daftar lengkap"
     },
+    "desc": "Alat RPG, mengurangi perhitungan dan meningkatkan roleplay. Mini Kraken menawarkan sistem yang dioptimalkan, perintah cerdas, dan pengalaman bermain game tingkat lanjut dengan lembar karakter otomatis.",
     "dices": {
       "desc": "Melempar dadu merupakan bagian penting dari petualangan TTRPG. Ini menghadirkan sensasi ketidakpastian, di mana nasib karakter dapat berubah dengan sekali lempar. Biarkan Mini Kraken mengurusnya untuk Anda melalui /d",
       "subtitle": "Punya dadu di rumah? Tidak? Tidak masalah!",
@@ -268,8 +270,7 @@
       "desc": "Dapatkan akses ke alat khusus untuk beberapa sistem favorit Anda, menawarkan lebih banyak kemudahan untuk RPG Anda. (Kami tidak berafiliasi dengan sistem atau penerbitnya.)",
       "subtitle": "Sistem yang memiliki alat",
       "title": "Lembar Otomatis untuk petualangan Anda!"
-    },
-    "desc": "Alat RPG, mengurangi perhitungan dan meningkatkan roleplay. Mini Kraken menawarkan sistem yang dioptimalkan, perintah cerdas, dan pengalaman bermain game tingkat lanjut dengan lembar karakter otomatis."
+    }
   },
   "join_server_btn": "Gabung Guild Resmi",
   "lang": "id",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Alat Online"
     }
+  },
+  "parceiros": {
+    "desc1": "Direkomendasikan",
+    "desc2": "Inisiatif dan komunitas yang menggunakan solusi kami, nikmati sisi terbaik dari RPG meja!",
+    "titulo": "Komunitas Unggulan"
   },
   "poker": {
     "article": {

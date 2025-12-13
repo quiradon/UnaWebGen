@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Random",
-    "texto": "Text"
+    "texto": "Text",
+    "users": "Members"
   },
   "comum": {
     "copied": "Copied!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Click here to see the full list"
     },
+    "desc": "RPG tool, reduces calculations and improves roleplay. Mini Kraken offers optimized systems, intelligent commands, and an advanced gaming experience with automatic character sheets.",
     "dices": {
       "desc": "Dice rolling is an essential part of tabletop RPG adventures. It brings the thrill of the unpredictable, where a character's fate can change with a single roll. Let Mini Kraken take care of it for you through /d",
       "subtitle": "Got dice at home? No? No problem!",
@@ -268,8 +270,7 @@
       "desc": "Gain access to dedicated tools for some of your favorite systems, offering more convenience for your RPG. (We have no affiliation with the systems or their publishers.)",
       "subtitle": "Systems that have tools",
       "title": "Automatic Sheets for your adventures!"
-    },
-    "desc": "RPG tool, reduces calculations and improves roleplay. Mini Kraken offers optimized systems, intelligent commands, and an advanced gaming experience with automatic character sheets."
+    }
   },
   "join_server_btn": "Join Oficial Guild",
   "lang": "en",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Online Tools"
     }
+  },
+  "parceiros": {
+    "desc1": "Recommended",
+    "desc2": "Initiatives and communities that use our solutions, enjoy the best side of tabletop RPG!",
+    "titulo": "Featured Communities"
   },
   "poker": {
     "article": {

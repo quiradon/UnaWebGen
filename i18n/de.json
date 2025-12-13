@@ -127,7 +127,8 @@
   },
   "common": {
     "random": "Zufällig",
-    "texto": "Text"
+    "texto": "Text",
+    "users": "Mitglieder"
   },
   "comum": {
     "copied": "Kopiert!",
@@ -190,6 +191,7 @@
     "allSystems": {
       "text": "Klicken Sie hier, um die vollständige Liste anzuzeigen"
     },
+    "desc": "RPG-Tool, das Berechnungen reduziert und das Rollenspiel verbessert. Mini Kraken bietet optimierte Systeme, intelligente Befehle und ein fortschrittliches Spielerlebnis mit automatischen Charakterbögen.",
     "dices": {
       "desc": "Würfeln ist ein wesentlicher Bestandteil von Tabletop-RPG-Abenteuern. Es bringt den Nervenkitzel des Unvorhersehbaren mit sich, wo sich das Schicksal eines Charakters mit einem einzigen Wurf ändern kann. Lassen Sie Mini Kraken das für Sie erledigen durch /d",
       "subtitle": "Haben Sie Würfel zu Hause? Nein? Kein Problem!",
@@ -268,8 +270,7 @@
       "desc": "Erhalten Sie Zugriff auf spezielle Tools für einige Ihrer Lieblingssysteme und vereinfachen Sie so Ihr Rollenspiel. (Wir haben keine Verbindung zu den Systemen oder ihren Herausgebern.)\n",
       "subtitle": "Systeme mit Werkzeugen\n",
       "title": "Automatische Charakterbögen für deine Abenteuer!"
-    },
-    "desc": "RPG-Tool, das Berechnungen reduziert und das Rollenspiel verbessert. Mini Kraken bietet optimierte Systeme, intelligente Befehle und ein fortschrittliches Spielerlebnis mit automatischen Charakterbögen."
+    }
   },
   "join_server_btn": "Offizielle Gilde beitreten",
   "lang": "de",
@@ -355,6 +356,11 @@
     "tools": {
       "btn": "Online-Tools"
     }
+  },
+  "parceiros": {
+    "desc1": "Empfohlen",
+    "desc2": "Initiativen und Gemeinschaften, die unsere Lösungen nutzen, erleben Sie die beste Seite des Tabletop-Rollenspiels!",
+    "titulo": "Empfohlene Gemeinschaften"
   },
   "poker": {
     "article": {

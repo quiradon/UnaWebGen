@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import { getLocale } from "astro-i18n-aut";
 import { loadT } from "@lib/i18n";
+import Skeleton from "@components/ui-astro/Skeleton.astro";
 import config from "../../../config";
 
 const locale = getLocale(Astro.url);
@@ -42,12 +43,12 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
           <div class="col-12 col-md-6 col-lg-4 mb-4" data-skeleton-card={idx}>
             <div class="character-card character-card--skeleton">
               <div class="character-card-body">
-                <div class="character-image-container skeleton"></div>
+                <Skeleton as="div" class="character-image-container" />
                 <div class="character-details">
-                  <div class="skeleton skeleton-line skeleton-title"></div>
-                  <div class="skeleton skeleton-line skeleton-subtitle"></div>
-                  <div class="skeleton skeleton-line skeleton-date"></div>
-                  <div class="skeleton skeleton-btn"></div>
+                  <Skeleton as="div" class="skeleton-line skeleton-title" />
+                  <Skeleton as="div" class="skeleton-line skeleton-subtitle" />
+                  <Skeleton as="div" class="skeleton-line skeleton-date" />
+                  <Skeleton as="div" class="skeleton-btn" />
                 </div>
               </div>
             </div>
@@ -68,7 +69,7 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
 </Layout>
 
 <script>
-  import { getCachedSession, getSession } from "@/scripts/session-manager";
+  import { getSessionCachedFirst } from "@/scripts/session-manager";
   interface Character {
     id: string;
     nome: string;
@@ -242,10 +243,7 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
 
   const loadCharacters = async () => {
     try {
-      let session = getCachedSession();
-      if (!session) {
-        session = await getSession(API_BASE);
-      }
+      const session = await getSessionCachedFirst(API_BASE);
 
       if (!session?.authenticated) {
         showError(translations.errorAuth);
@@ -421,27 +419,6 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
     gap: 6px;
     min-width: 0;
     text-align: left;
-  }
-
-  .skeleton {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.06),
-      rgba(255, 255, 255, 0.14),
-      rgba(255, 255, 255, 0.06)
-    );
-    background-size: 200% 100%;
-    animation: skeleton-shimmer 1.2s ease-in-out infinite;
-    border-radius: 10px;
-  }
-
-  @keyframes skeleton-shimmer {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
   }
 
   .skeleton-line {

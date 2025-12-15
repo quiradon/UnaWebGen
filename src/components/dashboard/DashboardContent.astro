@@ -1,6 +1,6 @@
 ---
 import { BookText } from "@lucide/astro";
-import ToolCard from "./ToolCard.astro";
+import ToolCard from "@components/ToolCard.astro";
 import UserProfileCard from "./UserProfileCard.astro";
 
 interface Props {
@@ -46,6 +46,7 @@ const toolCards = [
                 title={card.title}
                 description={card.description}
                 exploreText={t.Dashbaord.actions.explore}
+                hoverLift={false}
               >
                 <card.Icon size={32} class="tool-icon text-primary" />
               </ToolCard>
@@ -79,4 +80,3 @@ const toolCards = [
     animation: fadeInUp 0.6s ease-out;
   }
 </style>
-

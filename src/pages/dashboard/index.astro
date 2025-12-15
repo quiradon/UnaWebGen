@@ -19,7 +19,6 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
 ---
 
 <Layout t={t} title="Dashboard">
-  <!-- Hidden data attributes for script -->
   <div
     style="display: none;"
     data-api-base={apiBase}
@@ -27,263 +26,12 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
   >
   </div>
 
-  <style>
-    .dashboard-section {
-      min-height: 80vh;
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-    }
-
-    .user-profile-card {
-      background: rgba(29, 26, 45, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .user-profile-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(248, 7, 82, 0.05),
-        rgba(248, 7, 82, 0.02)
-      );
-      pointer-events: none;
-    }
-
-    .avatar-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-      width: fit-content;
-    }
-
-    .avatar-wrapper {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .avatar-ring {
-      position: absolute;
-      top: -4px;
-      left: -4px;
-      right: -4px;
-      bottom: -4px;
-      border-radius: 50%;
-      background: linear-gradient(
-        135deg,
-        var(--bs-primary),
-        rgba(248, 7, 82, 0.5)
-      );
-      animation: pulse-ring 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-ring {
-      0%,
-      100% {
-        opacity: 0.7;
-        transform: scale(1);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.05);
-      }
-    }
-
-    .avatar-img {
-      position: relative;
-      z-index: 1;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid rgba(20, 20, 30, 0.9);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    .premium-badge {
-      width: auto;
-      height: 45px;
-      max-width: 55px;
-      object-fit: contain;
-      display: none;
-      transition: all 0.3s ease;
-      margin-top: -30px;
-      z-index: 3;
-      position: relative;
-    }
-
-    .premium-badge.active {
-      display: block;
-      animation: fadeInScale 0.6s ease-out;
-    }
-
-    @keyframes fadeInScale {
-      from {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .user-info-item {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      transition: all 0.3s ease;
-    }
-
-    .user-info-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(248, 7, 82, 0.2);
-      transform: translateX(4px);
-    }
-
-    .info-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.6);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.25rem;
-    }
-
-    .info-value {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.95);
-    }
-
-    /* Tool card style */
-    .tool-card {
-      background: rgba(29, 26, 45, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      min-height: 240px;
-      text-decoration: none;
-      display: block;
-    }
-
-    .tool-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(248, 7, 82, 0.1),
-        rgba(248, 7, 82, 0.05)
-      );
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-
-    .tool-card:hover {
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-      border-color: rgba(248, 7, 82, 0.3);
-    }
-
-    .tool-card:hover::before {
-      opacity: 1;
-    }
-
-    .icon-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 64px;
-      height: 64px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .tool-card:hover .icon-container {
-      background: rgba(255, 255, 255, 0.1);
-      transform: scale(1.1);
-    }
-
-    .tool-icon {
-      transition: all 0.3s ease;
-    }
-
-    .tool-card:hover .tool-icon {
-      transform: scale(1.1);
-      filter: drop-shadow(0 2px 8px rgba(248, 7, 82, 0.3));
-    }
-
-    .card-footer-indicator {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      transform: translateX(-10px);
-      transition: all 0.3s ease;
-      color: var(--bs-primary);
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .tool-card:hover .card-footer-indicator {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .arrow-icon {
-      transition: transform 0.3s ease;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-in-up {
-      animation: fadeInUp 0.6s ease-out;
-    }
-  </style>
-
   <DashboardContent t={t} langPrefix={langPrefix} />
 
   <script>
     import {
-      getSession,
-      getCachedSession,
+      getSessionCachedFirst,
+      revalidateSession,
       clearSessionCache,
     } from "../../scripts/session-manager";
 
@@ -292,6 +40,52 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
       if (!userCard) return;
       userCard.setAttribute("data-loading", isLoading ? "true" : "false");
       userCard.setAttribute("aria-busy", isLoading ? "true" : "false");
+    }
+
+    function applyUser(sessionData: any) {
+      if (!sessionData?.user) return;
+      const user = sessionData.user;
+
+      const avatarImg = document.getElementById(
+        "user-avatar",
+      ) as HTMLImageElement | null;
+      const displayNameEl = document.getElementById("user-display-name");
+      const usernameEl = document.getElementById("user-username");
+      const userIdEl = document.getElementById("user-id");
+
+      if (avatarImg) {
+        avatarImg.src = user.avatar_url || "";
+        avatarImg.alt = user.display_name || "User Avatar";
+      }
+
+      const premiumBadge = document.getElementById(
+        "premium-badge",
+      ) as HTMLImageElement | null;
+      if (
+        premiumBadge &&
+        sessionData.premium &&
+        sessionData.premium.level >= 1 &&
+        sessionData.premium.active
+      ) {
+        const level = Math.min(Math.max(sessionData.premium.level, 1), 4);
+        premiumBadge.src = `/img/tiers_premium/${level}.webp`;
+        premiumBadge.classList.add("active");
+      } else if (premiumBadge) {
+        premiumBadge.classList.remove("active");
+      }
+
+      const displayName = user.display_name || user.username || "Discord User";
+      const username = user.username || "unknown";
+
+      if (displayNameEl) displayNameEl.textContent = displayName;
+
+      const usernameDisplayEl = document.getElementById(
+        "user-username-display",
+      );
+      if (usernameDisplayEl) usernameDisplayEl.textContent = "@" + username;
+
+      if (usernameEl) usernameEl.textContent = username;
+      if (userIdEl) userIdEl.textContent = user.id || "-";
     }
 
     async function initDashboard() {
@@ -306,100 +100,31 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
 
       setUserCardLoading(true);
 
-      // Reset para estado inicial quando re-entramos na página
-
       try {
-        // Tentar cache persistente (sessionStorage) para renderizar rápido
-        let sessionData =
-          getCachedSession() || (window as any).__KRKN_DASH_CACHE || null;
-        const hadCache = !!(
-          sessionData &&
-          sessionData.authenticated &&
-          sessionData.user
-        );
-
-        if (!hadCache) {
-          // Sem cache válido: buscar sessão atual
-          sessionData = await getSession(apiBase);
-          if (!sessionData.authenticated || !sessionData.user) {
-            window.location.href = langPrefix || "/";
-            return;
-          }
+        const sessionData = await getSessionCachedFirst(apiBase);
+        if (!sessionData.authenticated || !sessionData.user) {
+          window.location.href = langPrefix || "/";
+          return;
         }
 
-        // Preencher dados do usuário
-        const user = sessionData.user!;
-
-        const avatarImg = document.getElementById(
-          "user-avatar",
-        ) as HTMLImageElement | null;
-        const displayNameEl = document.getElementById("user-display-name");
-        const usernameEl = document.getElementById("user-username");
-        const userIdEl = document.getElementById("user-id");
-
-        if (avatarImg) {
-          avatarImg.src = user.avatar_url || "";
-          avatarImg.alt = user.display_name || "User Avatar";
-        }
-
-        // Configurar badge premium (exibir se level >= 1)
-        const premiumBadge = document.getElementById(
-          "premium-badge",
-        ) as HTMLImageElement | null;
-        if (
-          premiumBadge &&
-          sessionData.premium &&
-          sessionData.premium.level >= 1 &&
-          sessionData.premium.active
-        ) {
-          const level = Math.min(Math.max(sessionData.premium.level, 1), 4); // Limitar entre 1 e 4
-          premiumBadge.src = `/img/tiers_premium/${level}.webp`;
-          premiumBadge.classList.add("active");
-        } else if (premiumBadge) {
-          premiumBadge.classList.remove("active");
-        }
-
-        const displayName =
-          user.display_name || user.username || "Discord User";
-        const username = user.username || "unknown";
-
-        if (displayNameEl) displayNameEl.textContent = displayName;
-
-        const usernameDisplayEl = document.getElementById(
-          "user-username-display",
-        );
-        if (usernameDisplayEl) usernameDisplayEl.textContent = "@" + username;
-
-        if (usernameEl) usernameEl.textContent = username;
-        if (userIdEl) userIdEl.textContent = user.id || "-";
-
+        applyUser(sessionData);
         setUserCardLoading(false);
 
-        // Guardar cache local do dashboard
-        (window as any).__KRKN_DASH_CACHE = sessionData;
-
-        // Revalidar em background se usamos cache
-        if (hadCache) {
-          getSession(apiBase, true)
-            .then((fresh) => {
-              if (fresh?.authenticated && fresh.user) {
-                (window as any).__KRKN_DASH_CACHE = fresh;
-              }
-            })
-            .catch(() => {});
-        }
+        revalidateSession(apiBase).then((fresh) => {
+          if (!fresh?.authenticated || !fresh.user) return;
+          applyUser(fresh);
+        });
       } catch (error) {
         console.error("Failed to load dashboard:", error);
-        // Em caso de erro, redirecionar para home
         window.location.href = langPrefix || "/";
       }
     }
 
-    // Handler de logout
     function setupLogoutHandler() {
       const logoutBtn = document.getElementById("logout-btn");
       if (logoutBtn && !(logoutBtn as any).__logoutHandlerAttached) {
         (logoutBtn as any).__logoutHandlerAttached = true;
+
         const apiBaseEl = document.querySelector(
           "[data-api-base]",
         ) as HTMLElement | null;
@@ -416,9 +141,7 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
               credentials: "include",
             });
 
-            // Limpar o cache de sessão
             clearSessionCache();
-
             window.location.href = langPrefix || "/";
           } catch (error) {
             console.error("Failed to logout", error);
@@ -428,13 +151,10 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
       }
     }
 
-    // Executar na carga inicial
     initDashboard();
     setupLogoutHandler();
 
-    // Executar quando a página for carregada via ViewTransitions
     document.addEventListener("astro:page-load", () => {
-      // Verificar se estamos na página do dashboard
       if (window.location.pathname.includes("/dashboard")) {
         initDashboard();
         setupLogoutHandler();
@@ -442,3 +162,4 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
     });
   </script>
 </Layout>
+

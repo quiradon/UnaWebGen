@@ -183,3 +183,46 @@ export function hasSessionIndicator(): boolean {
     return false;
   }
 }
+
+export async function getSessionCachedFirst(apiBase: string): Promise<SessionResponse> {
+  return getCachedSession() ?? getSession(apiBase);
+}
+
+export async function revalidateSession(apiBase: string): Promise<SessionResponse | null> {
+  const normalizedBase = normalizeBase(apiBase);
+  if (!normalizedBase) return null;
+
+  const sessionEndpoint = `${normalizedBase}/auth/session`;
+
+  try {
+    const response = await fetch(sessionEndpoint, {
+      credentials: 'include',
+      headers: { Accept: 'application/json' },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Session response not ok: ${response.status}`);
+    }
+
+    const payload: SessionResponse = await response.json();
+    cachedSession = payload;
+    win.__krakenSessionCache = payload;
+
+    try {
+      if (payload.authenticated) {
+        sessionStorage.setItem('kraken_session_present', '1');
+        sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(payload));
+      } else {
+        sessionStorage.removeItem('kraken_session_present');
+        sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      }
+    } catch {
+      // ignore storage errors
+    }
+
+    return payload;
+  } catch (error) {
+    console.error('Failed to revalidate auth session', error);
+    return null;
+  }
+}

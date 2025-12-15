@@ -1,4 +1,7 @@
 ---
+import GlassCard from "@components/ui-astro/GlassCard.astro";
+import Skeleton from "@components/ui-astro/Skeleton.astro";
+
 interface Props {
   t: any;
 }
@@ -6,7 +9,8 @@ interface Props {
 const { t } = Astro.props;
 ---
 
-<div
+<GlassCard
+  as="div"
   id="user-profile-card"
   class="user-profile-card p-4 h-100"
   data-loading="true"
@@ -28,7 +32,7 @@ const { t } = Astro.props;
           alt="Premium"
           class="premium-badge user-real-avatar"
         />
-        <div class="avatar-skeleton skeleton user-skeleton-avatar"></div>
+        <Skeleton as="div" class="avatar-skeleton user-skeleton-avatar" />
       </div>
     </div>
 
@@ -36,8 +40,8 @@ const { t } = Astro.props;
     <p class="text-secondary mb-0 user-real-handle" id="user-username-display">
       @-
     </p>
-    <div class="user-skeleton-name skeleton" aria-hidden="true"></div>
-    <div class="user-skeleton-handle skeleton" aria-hidden="true"></div>
+    <Skeleton class="user-skeleton-name" />
+    <Skeleton class="user-skeleton-handle" />
   </div>
 
   <div class="row g-3">
@@ -46,7 +50,7 @@ const { t } = Astro.props;
         <div class="info-label">{t.Dashbaord.user.discord.name.label}</div>
         <div class="info-value">
           <span class="user-real-value" id="user-username">-</span>
-          <span class="user-skeleton-value skeleton" aria-hidden="true"></span>
+          <Skeleton as="span" class="user-skeleton-value" />
         </div>
       </div>
     </div>
@@ -56,26 +60,14 @@ const { t } = Astro.props;
         <div class="info-label">{t.Dashbaord.user.discord.id.label}</div>
         <div class="info-value">
           <span class="user-real-value" id="user-id">-</span>
-          <span class="user-skeleton-value skeleton" aria-hidden="true"></span>
+          <Skeleton as="span" class="user-skeleton-value" />
         </div>
       </div>
     </div>
   </div>
-</div>
+</GlassCard>
 
 <style>
-  .user-profile-card {
-    background: rgba(29, 26, 45, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
   .user-profile-card::before {
     content: "";
     position: absolute;
@@ -201,26 +193,6 @@ const { t } = Astro.props;
     font-size: 1.1rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.95);
-  }
-
-  .skeleton {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.06),
-      rgba(255, 255, 255, 0.14),
-      rgba(255, 255, 255, 0.06)
-    );
-    background-size: 200% 100%;
-    animation: skeleton-shimmer 1.2s ease-in-out infinite;
-  }
-
-  @keyframes skeleton-shimmer {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
   }
 
   .avatar-skeleton {

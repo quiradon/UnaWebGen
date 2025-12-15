@@ -1,27 +1,40 @@
 ---
 export const prerender = true;
 import { getLocale } from "astro-i18n-aut";
-import Layout from '@layouts/Layout.astro';
-import ToolCard from '@components/ToolCard.astro';
-import { loadT, getStaticPaths } from '@lib/i18n';
-import { Dices, Heart, Eye, Sprout, CircleDollarSign, CloudRain, Wrench, Music, Sparkles } from '@lucide/astro';
+import Layout from "@layouts/Layout.astro";
+import ToolCard from "@components/ToolCard.astro";
+import { loadT, getStaticPaths } from "@lib/i18n";
+import {
+  Dices,
+  Heart,
+  Eye,
+  Sprout,
+  CircleDollarSign,
+  CloudRain,
+  Wrench,
+  Music,
+  Sparkles,
+} from "@lucide/astro";
 
 export { getStaticPaths };
 
 const Locale = getLocale(Astro.url);
 const t = loadT(Locale);
 
-const pathPrefix = Locale === 'en' ? '' : `/${Locale}`;
-
-
+const pathPrefix = Locale === "en" ? "" : `/${Locale}`;
 ---
+
 <Layout t={t} title={t.tools?.section?.title} desc={t.tools?.section?.desc}>
   <section class="tools-section pt-2 mt-4 mb-5">
     <div class="container">
       <!-- Header -->
       <div class="col-12 mb-5 text-center mt-5">
         <h1 class="display-4 fw-bold text-white mb-3">
-          <Wrench size={40} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
+          <Wrench
+            size={40}
+            class="me-2 d-inline-block"
+            style="color: var(--bs-primary);"
+          />
           {t.tools?.section?.title}
         </h1>
         <p class="lead text-secondary">{t.tools?.section?.desc}</p>
@@ -29,77 +42,95 @@ const pathPrefix = Locale === 'en' ? '' : `/${Locale}`;
 
       <!-- Tools Grid -->
       <div class="row g-4 justify-content-center">
-        <ToolCard 
-          href={`${pathPrefix}/dices/`}
-          title={t.nav?.dices?.title}
-          description={t.nav?.dices?.desc}
-          icon={Dices}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/dices/`}
+            title={t.nav?.dices?.title}
+            description={t.nav?.dices?.desc}
+            icon={Dices}
+            iconColor="text-primary"
+          />
+        </div>
 
-        <ToolCard 
-          href={`${pathPrefix}/tools/poker/`}
-          title={t.nav?.tools?.poker?.name}
-          description={t.nav?.tools?.poker?.desc}
-          icon={Heart}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/tools/poker/`}
+            title={t.nav?.tools?.poker?.name}
+            description={t.nav?.tools?.poker?.desc}
+            icon={Heart}
+            iconColor="text-primary"
+          />
+        </div>
 
-        <ToolCard 
-          href={`${pathPrefix}/tools/tarot/`}
-          title={t.nav?.tools?.tarot?.name}
-          description={t.nav?.tools?.tarot?.desc}
-          icon={Eye}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/tools/tarot/`}
+            title={t.nav?.tools?.tarot?.name}
+            description={t.nav?.tools?.tarot?.desc}
+            icon={Eye}
+            iconColor="text-primary"
+          />
+        </div>
 
-        <ToolCard 
-          href={`${pathPrefix}/tools/names/`}
-          title={t.nav?.tools?.names?.title}
-          description={t.nav?.tools?.names?.desc}
-          icon={Sprout}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/tools/names/`}
+            title={t.nav?.tools?.names?.title}
+            description={t.nav?.tools?.names?.desc}
+            icon={Sprout}
+            iconColor="text-primary"
+          />
+        </div>
 
-        <ToolCard 
-          href={`${pathPrefix}/tools/coinflip/`}
-          title={t.flip_coin?.title}
-          description={t.flip_coin?.description}
-          icon={CircleDollarSign}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/tools/coinflip/`}
+            title={t.flip_coin?.title}
+            description={t.flip_coin?.description}
+            icon={CircleDollarSign}
+            iconColor="text-primary"
+          />
+        </div>
 
-        <ToolCard 
-          href={`${pathPrefix}/tools/weather/`}
-          title={t.tools?.clima?.pageTitle}
-          description={t.tools?.clima?.pageDesc}
-          icon={CloudRain}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/tools/weather/`}
+            title={t.tools?.clima?.pageTitle}
+            description={t.tools?.clima?.pageDesc}
+            icon={CloudRain}
+            iconColor="text-primary"
+          />
+        </div>
 
-         <ToolCard 
-          href={`${pathPrefix}/tools/morse/`}
-          title={t.tools?.morse?.title}
-          description={t.tools?.morse?.desc}
-          icon={Music}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/tools/morse/`}
+            title={t.tools?.morse?.title}
+            description={t.tools?.morse?.desc}
+            icon={Music}
+            iconColor="text-primary"
+          />
+        </div>
 
-        <ToolCard 
-          href={`${pathPrefix}/tools/tokens-animator/`}
-          title="Token Animator"
-          description="Adicione efeitos de respiração animados aos seus tokens de RPG"
-          icon={Sparkles}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/tools/tokens-animator/`}
+            title="Token Animator"
+            description="Adicione efeitos de respiraAAśo animados aos seus tokens de RPG"
+            icon={Sparkles}
+            iconColor="text-primary"
+          />
+        </div>
 
-        <ToolCard
-          href={`${pathPrefix}/tools/editor_de_sistema/`}
-          title="Editor de Sistema"
-          description="Construtor visual para criar, validar e exportar sistemas (JSON)"
-          icon={Wrench}
-          iconColor="text-primary"
-        />
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
+            href={`${pathPrefix}/tools/editor_de_sistema/`}
+            title="Editor de Sistema"
+            description="Construtor visual para criar, validar e exportar sistemas (JSON)"
+            icon={Wrench}
+            iconColor="text-primary"
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -116,7 +147,7 @@ const pathPrefix = Locale === 'en' ? '' : `/${Locale}`;
       z-index: 1;
     }
 
-    /* Animações de entrada */
+    /* AnimaAAćes de entrada */
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -160,7 +191,7 @@ const pathPrefix = Locale === 'en' ? '' : `/${Locale}`;
       .tools-section {
         min-height: auto;
       }
-      
+
       .col-12.mb-5.text-center.mt-5 {
         margin-top: 2rem !important;
         margin-bottom: 3rem !important;
@@ -168,3 +199,4 @@ const pathPrefix = Locale === 'en' ? '' : `/${Locale}`;
     }
   </style>
 </Layout>
+

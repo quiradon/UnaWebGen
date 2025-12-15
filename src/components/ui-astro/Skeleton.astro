@@ -1,0 +1,60 @@
+---
+interface Props {
+  class?: string;
+  width?: string;
+  height?: string;
+  radius?: string;
+  as?: "span" | "div";
+  ariaHidden?: boolean;
+}
+
+const {
+  class: className,
+  width,
+  height,
+  radius,
+  as = "span",
+  ariaHidden = true,
+} = Astro.props;
+
+const Tag = as;
+const classes = className ? `kr-skeleton ${className}` : "kr-skeleton";
+const style = [
+  width ? `width:${width}` : "",
+  height ? `height:${height}` : "",
+  radius ? `border-radius:${radius}` : "",
+]
+  .filter(Boolean)
+  .join(";");
+---
+
+<Tag class={classes} style={style} aria-hidden={ariaHidden ? "true" : undefined}>
+  <slot />
+</Tag>
+
+<style is:global>
+  .kr-skeleton {
+    display: block;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0.06)
+    );
+    background-size: 200% 100%;
+    animation: kr-skeleton-shimmer 1.2s ease-in-out infinite;
+  }
+
+  span.kr-skeleton {
+    display: inline-block;
+  }
+
+  @keyframes kr-skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+</style>

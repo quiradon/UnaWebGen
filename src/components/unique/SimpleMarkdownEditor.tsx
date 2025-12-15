@@ -849,7 +849,12 @@ export function SimpleMarkdownEditor({
               Preview com Markdown
             </div>
             <div className="prose prose-sm max-w-none">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: ({node, ...props}) => <span {...props} style={{color: 'inherit', textDecoration: 'none'}} />
+                }}
+              >
                 {markdownResolved}
               </ReactMarkdown>
             </div>

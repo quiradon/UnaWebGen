@@ -666,43 +666,49 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
   </div>
 
   <!-- Page specific scripts -->
-  <script is:inline>
-    document.addEventListener("astro:page-load", () => {
-      // Carousel Navigation Buttons
-      const scrollContainer = document.getElementById("auto-scroll");
-      const prevBtn = document.getElementById("prev-btn");
-      const nextBtn = document.getElementById("next-btn");
+<script is:inline type="module">
+  let indexAbortController = null;
 
-      if (prevBtn && nextBtn && scrollContainer) {
-        // Remove old listeners if any (though new elements are fresh)
-        // prevBtn.onclick = () => scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
-        // nextBtn.onclick = () => scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
-      }
+  function initIndexPage() {
+    indexAbortController?.abort();
+    indexAbortController = new AbortController();
+    const { signal } = indexAbortController;
 
-      // Move modal to body to fix z-index issues with backdrop
-      const modalEl = document.getElementById("premium_modal");
-      if (modalEl && modalEl.parentElement !== document.body) {
-        document.body.appendChild(modalEl);
-      }
+    // Move modal to body to fix z-index issues with backdrop
+    const modalEl = document.getElementById("premium_modal");
+    if (modalEl && modalEl.parentElement !== document.body) {
+      document.body.appendChild(modalEl);
+    }
 
-      // Modal Deep Linking
-      const handleHashModal = () => {
-        if (window.location.hash === "#premium_modal") {
-          if (modalEl && window.bootstrap) {
-            // Check if instance exists or create new
-            const modal =
-              window.bootstrap.Modal.getInstance(modalEl) ||
-              new window.bootstrap.Modal(modalEl);
-            modal.show();
-          }
+    // Modal Deep Linking
+    const handleHashModal = () => {
+      if (window.location.hash === "#premium_modal") {
+        if (modalEl && window.bootstrap) {
+          const modal =
+            window.bootstrap.Modal.getInstance(modalEl) ||
+            new window.bootstrap.Modal(modalEl);
+          modal.show();
         }
-      };
+      }
+    };
 
-      // Check on load
-      handleHashModal();
+    // Check on load
+    handleHashModal();
 
-      // Check on hash change (if user clicks link on same page)
-      window.addEventListener("hashchange", handleHashModal);
-    });
-  </script>
+    // Retry once assets (Bootstrap) are loaded
+    window.addEventListener("load", handleHashModal, { once: true, signal });
+
+    // Check on hash change
+    window.addEventListener("hashchange", handleHashModal, { signal });
+  }
+
+  document.addEventListener("astro:page-load", initIndexPage);
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initIndexPage, { once: true });
+  } else {
+    initIndexPage();
+  }
+</script>
+
 </Layout>

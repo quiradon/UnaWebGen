@@ -233,7 +233,7 @@ const menuSections = [guideSection, toolsSection];
 <script>
   // JavaScript simplificado para melhor performance no dev mode
   let navbarAbortController: AbortController | null = null;
-  document.addEventListener("astro:page-load", () => {
+  function initNavbarInteractions() {
     navbarAbortController?.abort();
     navbarAbortController = new AbortController();
     const { signal } = navbarAbortController;
@@ -312,19 +312,17 @@ const menuSections = [guideSection, toolsSection];
           );
         });
     }
-  });
+  }
 
   // Garante init no primeiro carregamento (mesmo se astro:page-load nAœo disparar)
+  document.addEventListener("astro:page-load", initNavbarInteractions);
+
   if (document.readyState === "loading") {
-    document.addEventListener(
-      "DOMContentLoaded",
-      () => {
-        document.dispatchEvent(new Event("astro:page-load"));
-      },
-      { once: true },
-    );
+    document.addEventListener("DOMContentLoaded", initNavbarInteractions, {
+      once: true,
+    });
   } else {
-    document.dispatchEvent(new Event("astro:page-load"));
+    initNavbarInteractions();
   }
 </script>
 

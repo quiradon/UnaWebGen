@@ -18,7 +18,6 @@ const { sections, iconMap } = Astro.props;
         <button
           class="nav-link d-xxl-flex justify-content-xxl-center align-items-xxl-center"
           aria-expanded="false"
-          data-bs-toggle="dropdown"
           type="button"
           aria-label={`${section.title} - Menu`}
         >
@@ -85,7 +84,7 @@ const { sections, iconMap } = Astro.props;
   }
 </style>
 
-<script is:inline>
+<script is:inline type="module">
   // Função de inicialização dos dropdowns
   function initDesktopDropdowns(signal) {
     const dropdowns = document.querySelectorAll(
@@ -94,70 +93,19 @@ const { sections, iconMap } = Astro.props;
 
     if (dropdowns.length === 0) return;
 
-    // Detecta se é dispositivo touch
-    const isTouchDevice =
-      "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    // Dropdowns do desktop
+    // Menus abrem no click/tap (sem hover)
 
     dropdowns.forEach((dropdown) => {
-      const toggle = dropdown.querySelector('[data-bs-toggle="dropdown"]');
+      const toggle = dropdown.querySelector('button[aria-expanded]');
       const menu = dropdown.querySelector(".dropdown-menu");
 
       if (!toggle || !menu) return;
 
       // Previne comportamento padrão do Bootstrap
-      toggle.removeAttribute("data-bs-toggle");
+      // `data-bs-toggle` permanece para fallback do Bootstrap, se necessA¡rio
 
-      let hoverTimeout;
-      let mouseEnterHandler = null;
-      let mouseLeaveHandler = null;
-
-      // Função para configurar hover
-      const setupHover = () => {
-        const isDesktop = window.innerWidth >= 992;
-
-        // Remove listeners antigos se existirem
-        if (mouseEnterHandler) {
-          dropdown.removeEventListener("mouseenter", mouseEnterHandler);
-          dropdown.removeEventListener("mouseleave", mouseLeaveHandler);
-        }
-
-        // Adiciona hover apenas em desktop não-touch
-        if (!isTouchDevice && isDesktop) {
-          mouseEnterHandler = () => {
-            clearTimeout(hoverTimeout);
-            // Fecha outros dropdowns
-            dropdowns.forEach((otherDropdown) => {
-              if (otherDropdown !== dropdown) {
-                const otherMenu = otherDropdown.querySelector(".dropdown-menu");
-                const otherToggle = otherDropdown.querySelector(
-                  "button[aria-expanded]",
-                );
-                if (otherMenu && otherToggle) {
-                  otherMenu.classList.remove("show");
-                  otherToggle.setAttribute("aria-expanded", "false");
-                }
-              }
-            });
-
-            // Abre o dropdown atual
-            menu.classList.add("show");
-            toggle.setAttribute("aria-expanded", "true");
-          };
-
-          mouseLeaveHandler = () => {
-            hoverTimeout = setTimeout(() => {
-              menu.classList.remove("show");
-              toggle.setAttribute("aria-expanded", "false");
-            }, 100);
-          };
-
-          dropdown.addEventListener("mouseenter", mouseEnterHandler, { signal });
-          dropdown.addEventListener("mouseleave", mouseLeaveHandler, { signal });
-        }
-      };
-
-      // Configura hover inicial
-      setupHover();
+      // Hover removido: click/tap apenas
 
       // Click para toggle (funciona sempre)
       toggle.addEventListener("click", (e) => {
@@ -207,7 +155,7 @@ const { sections, iconMap } = Astro.props;
         }
       }, { signal });
 
-      // Reconfigura hover ao redimensionar
+      // Fecha dropdown ao redimensionar
       let resizeTimeout;
       window.addEventListener("resize", () => {
         clearTimeout(resizeTimeout);
@@ -215,9 +163,6 @@ const { sections, iconMap } = Astro.props;
           // Fecha dropdown
           menu.classList.remove("show");
           toggle.setAttribute("aria-expanded", "false");
-
-          // Reconfigura hover
-          setupHover();
         }, 150);
       }, { signal });
     });
@@ -236,19 +181,50 @@ const { sections, iconMap } = Astro.props;
   }
 
   // Tenta inicializar imediatamente se o DOM já estiver carregado
-  let controller = null;
-  function mount() {
-    if (controller) controller.abort();
-    controller = new AbortController();
-    initDesktopDropdowns(controller.signal);
+  // (controlled via global state)
+  function mountDesktopMenu() {
+    const __win = window;
+    const __stateKey = "__krakenDesktopMenuDropdowns";
+    const state =
+      __win[__stateKey] ||
+      (__win[__stateKey] = {
+        listenersAttached: false,
+        controller: null,
+      });
+
+    if (state.controller) state.controller.abort();
+    state.controller = new AbortController();
+
+    initDesktopDropdowns(state.controller.signal);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => state.controller?.abort(),
+      { signal: state.controller.signal },
+    );
   }
 
-  document.addEventListener("astro:page-load", mount);
+  const __desktopMenuState =
+    window.__krakenDesktopMenuDropdowns ||
+    (window.__krakenDesktopMenuDropdowns = {
+      listenersAttached: false,
+      controller: null,
+    });
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", mount, { once: true });
+  if (!__desktopMenuState.listenersAttached) {
+    __desktopMenuState.listenersAttached = true;
+
+    document.addEventListener("astro:page-load", mountDesktopMenu);
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", mountDesktopMenu, {
+        once: true,
+      });
+    } else {
+      mountDesktopMenu();
+    }
   } else {
-    mount();
+    mountDesktopMenu();
   }
 
   // Também tenta após um pequeno delay para garantir que tudo está carregado

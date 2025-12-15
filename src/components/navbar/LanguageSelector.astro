@@ -63,7 +63,6 @@ const lang_LABELS: Record<string, string> = {
     aria-label={`${t.lang} Selected in Lang Selector`}
     class="nav-link d-flex d-xxl-flex align-items-center justify-content-xxl-center align-items-xxl-center"
     aria-expanded="false"
-    data-bs-toggle="dropdown"
     type="button"
     id="lang-selector-toggle"
     data-current-lang={t.lang}
@@ -133,7 +132,7 @@ const lang_LABELS: Record<string, string> = {
   }
 </style>
 
-<script is:inline>
+<script is:inline type="module">
   // Lista de idiomas suportados
   const SUPPORTED_LANGS = [
     "pt",
@@ -248,37 +247,15 @@ const lang_LABELS: Record<string, string> = {
     // Atualizar links com base no pathname atual
     updateLanguageLinks();
 
-    const toggle = languageDropdown.querySelector(
-      '[data-bs-toggle="dropdown"]',
-    );
+    const toggle = languageDropdown.querySelector("#lang-selector-toggle");
     const menu = languageDropdown.querySelector(".dropdown-menu");
 
     if (!toggle || !menu) return;
 
     // Previne comportamento padrão do Bootstrap
-    toggle.removeAttribute("data-bs-toggle");
+    // `data-bs-toggle` permanece para fallback do Bootstrap, se necessA¡rio
 
-    let hoverTimeout;
-
-    // Detecta se é dispositivo touch
-    const isTouchDevice =
-      "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-    // Hover para abrir (apenas em dispositivos não-touch e desktop)
-    if (!isTouchDevice && window.innerWidth >= 992) {
-      languageDropdown.addEventListener("mouseenter", () => {
-        clearTimeout(hoverTimeout);
-        menu.classList.add("show");
-        toggle.setAttribute("aria-expanded", "true");
-      }, { signal });
-
-      languageDropdown.addEventListener("mouseleave", () => {
-        hoverTimeout = setTimeout(() => {
-          menu.classList.remove("show");
-          toggle.setAttribute("aria-expanded", "false");
-        }, 100);
-      }, { signal });
-    }
+    // Sem hover: abrir apenas via click/tap
 
     // Click para toggle (funciona sempre)
     toggle.addEventListener("click", (e) => {
@@ -322,20 +299,38 @@ const lang_LABELS: Record<string, string> = {
   }
 
   // Tenta inicializar imediatamente se o DOM já estiver carregado
-  let controller = null;
+  const __stateKey = "__krakenLanguageSelector";
+  const __langState =
+    window[__stateKey] ||
+    (window[__stateKey] = {
+      listenersAttached: false,
+      controller: null,
+    });
+
   function mount() {
-    if (controller) controller.abort();
-    controller = new AbortController();
-    initLanguageSelector(controller.signal);
+    if (__langState.controller) __langState.controller.abort();
+    __langState.controller = new AbortController();
+
+    initLanguageSelector(__langState.controller.signal);
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => __langState.controller?.abort(),
+      { signal: __langState.controller.signal },
+    );
   }
 
-  document.addEventListener("astro:page-load", mount);
+  if (!__langState.listenersAttached) {
+    __langState.listenersAttached = true;
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", mount, { once: true });
-  } else {
-    mount();
+    document.addEventListener("astro:page-load", mount);
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", mount, { once: true });
+    }
   }
+
+  mount();
 
   // Também tenta após um pequeno delay para garantir que tudo está carregado
 

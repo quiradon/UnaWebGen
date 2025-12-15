@@ -20,7 +20,7 @@
   "dependencies": {
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.6.0",
-    "@astrojs/svelte": "^7.2.2",
+    "@astrojs/svelte": "^7.2.3",
     "@dice-roller/rpg-dice-roller": "^5.5.1",
     "@discord/embedded-app-sdk": "^2.4.0",
     "@lucide/astro": "^0.555.0",
@@ -45,7 +45,7 @@
     "html-minifier": "^4.0.0",
     "lucide-react": "^0.561.0",
     "mathjs": "^15.1.0",
-    "mediabunny": "^1.25.3",
+    "mediabunny": "^1.26.0",
     "p-limit": "^6.2.0",
     "rc-mentions": "^2.20.0",
     "react": "^19.2.3",
@@ -53,21 +53,21 @@
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "sonner": "^2.0.7",
-    "svelte": "^5.45.2",
+    "svelte": "^5.46.0",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "astro": "^5.16.3",
-    "autoprefixer": "^10.4.22",
+    "astro": "^5.16.5",
+    "autoprefixer": "^10.4.23",
     "cssnano": "^7.1.2",
     "postcss": "^8.5.6",
     "rimraf": "^5.0.10",
     "tailwindcss": "3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "terser": "^5.44.1",
-    "wrangler": "^4.51.0"
+    "wrangler": "^4.54.0"
   }
 }

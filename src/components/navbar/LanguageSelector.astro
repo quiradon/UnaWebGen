@@ -238,7 +238,7 @@ const lang_LABELS: Record<string, string> = {
   }
 
   // Função de inicialização do seletor de idioma
-  function initLanguageSelector() {
+  function initLanguageSelector(signal) {
     const languageDropdown = document.getElementById(
       "language-selector-dropdown",
     );
@@ -270,14 +270,14 @@ const lang_LABELS: Record<string, string> = {
         clearTimeout(hoverTimeout);
         menu.classList.add("show");
         toggle.setAttribute("aria-expanded", "true");
-      });
+      }, { signal });
 
       languageDropdown.addEventListener("mouseleave", () => {
         hoverTimeout = setTimeout(() => {
           menu.classList.remove("show");
           toggle.setAttribute("aria-expanded", "false");
         }, 100);
-      });
+      }, { signal });
     }
 
     // Click para toggle (funciona sempre)
@@ -294,7 +294,7 @@ const lang_LABELS: Record<string, string> = {
         menu.classList.remove("show");
         toggle.setAttribute("aria-expanded", "false");
       }
-    });
+    }, { signal });
 
     // Previne fechar ao clicar dentro do menu
     // Removido stopPropagation para permitir que o ClientRouter detecte cliques em links
@@ -310,7 +310,7 @@ const lang_LABELS: Record<string, string> = {
         menu.classList.remove("show");
         toggle.setAttribute("aria-expanded", "false");
       }
-    });
+    }, { signal });
 
     // Fecha ao clicar fora
     document.addEventListener("click", (e) => {
@@ -318,21 +318,26 @@ const lang_LABELS: Record<string, string> = {
         menu.classList.remove("show");
         toggle.setAttribute("aria-expanded", "false");
       }
-    });
+    }, { signal });
   }
 
   // Tenta inicializar imediatamente se o DOM já estiver carregado
+  let controller = null;
+  function mount() {
+    if (controller) controller.abort();
+    controller = new AbortController();
+    initLanguageSelector(controller.signal);
+  }
+
+  document.addEventListener("astro:page-load", mount);
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initLanguageSelector);
+    document.addEventListener("DOMContentLoaded", mount, { once: true });
   } else {
-    initLanguageSelector();
+    mount();
   }
 
   // Também tenta após um pequeno delay para garantir que tudo está carregado
-  setTimeout(initLanguageSelector, 100);
 
   // Listener para ViewTransitions - atualiza links quando a página muda
-  document.addEventListener("astro:page-load", () => {
-    updateLanguageLinks();
-  });
 </script>

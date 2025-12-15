@@ -167,19 +167,18 @@ const t = loadT(currentLocale);
     const MAX_COINS = 24;
     const MIN_COINS = 1;
     const FLIP_DURATION = 1000;
-    const ANIMATION_DURATION = 300;
 
     // State
     let isFlipping = false;
 
-    // Elements
-    const coinsContainer = document.getElementById('coins-container');
-    const stackSizeInput = document.getElementById('stack-size');
-    const rerollBtn = document.getElementById('reroll-btn');
-    const decreaseBtn = document.getElementById('decrease-btn');
-    const increaseBtn = document.getElementById('increase-btn');
-    const headsCount = document.getElementById('heads-count');
-    const tailsCount = document.getElementById('tails-count');
+    // Elements (reatribuA-dos no mount para suportar Astro ClientRouter)
+    let coinsContainer;
+    let stackSizeInput;
+    let rerollBtn;
+    let decreaseBtn;
+    let increaseBtn;
+    let headsCount;
+    let tailsCount;
 
     // Utility Functions
     function updateResults() {
@@ -338,12 +337,6 @@ const t = loadT(currentLocale);
       }
     }
 
-    // Event Listeners
-    rerollBtn.addEventListener('click', rerollAll);
-    decreaseBtn.addEventListener('click', decreaseStack);
-    increaseBtn.addEventListener('click', increaseStack);
-
-    // Initialize
     function init() {
       // Clear container and add initial coin
       coinsContainer.innerHTML = '';
@@ -351,11 +344,47 @@ const t = loadT(currentLocale);
       updateStackSize();
     }
 
-    // Run initialization when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
-    } else {
+    function mountCoinflip() {
+      const nextCoinsContainer = document.getElementById('coins-container');
+      if (!nextCoinsContainer) return;
+
+      coinsContainer = nextCoinsContainer;
+      stackSizeInput = document.getElementById('stack-size');
+      rerollBtn = document.getElementById('reroll-btn');
+      decreaseBtn = document.getElementById('decrease-btn');
+      increaseBtn = document.getElementById('increase-btn');
+      headsCount = document.getElementById('heads-count');
+      tailsCount = document.getElementById('tails-count');
+
+      if (!stackSizeInput || !rerollBtn || !decreaseBtn || !increaseBtn || !headsCount || !tailsCount) {
+        return;
+      }
+
+      isFlipping = false;
+
+      // Event Listeners (uma vez por elemento)
+      if (!rerollBtn.dataset.coinflipBound) {
+        rerollBtn.dataset.coinflipBound = '1';
+        rerollBtn.addEventListener('click', rerollAll);
+      }
+      if (!decreaseBtn.dataset.coinflipBound) {
+        decreaseBtn.dataset.coinflipBound = '1';
+        decreaseBtn.addEventListener('click', decreaseStack);
+      }
+      if (!increaseBtn.dataset.coinflipBound) {
+        increaseBtn.dataset.coinflipBound = '1';
+        increaseBtn.addEventListener('click', increaseStack);
+      }
+
       init();
+    }
+
+    document.addEventListener('astro:page-load', mountCoinflip);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mountCoinflip, { once: true });
+    } else {
+      mountCoinflip();
     }
   </script>
 </Layout>

@@ -7,8 +7,23 @@ export class EffectsManager {
   private effectIdCounter: number = 1;
   animationEnabled: boolean = true;
   private elements: EffectsManagerElements;
+  private signal?: AbortSignal;
 
-  constructor() {
+  private handleWindowKeydown = (e: KeyboardEvent): void => {
+    if (e.key === 'Escape') {
+      this.cancelCurrentAction();
+    } else if (e.key === ' ' && !(e.target as HTMLElement).matches('input, textarea')) {
+      e.preventDefault();
+      this.toggleAnimation();
+    }
+  };
+
+  private handleAnimationToggleClick = (): void => {
+    this.toggleAnimation();
+  };
+
+  constructor(options?: { signal?: AbortSignal }) {
+    this.signal = options?.signal;
     this.elements = {
       activeEffectsList: document.getElementById('active-effects-list'),
       noEffectsText: document.getElementById('no-effects-text'),
@@ -22,20 +37,26 @@ export class EffectsManager {
   }
 
   private initializeEventListeners(): void {
+    const options = this.signal ? { signal: this.signal } : undefined;
+
     if (this.elements.animationToggle) {
-      this.elements.animationToggle.addEventListener('click', () => {
-        this.toggleAnimation();
-      });
+      this.elements.animationToggle.addEventListener('click', this.handleAnimationToggleClick, options);
     }
     
-    window.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        this.cancelCurrentAction();
-      } else if (e.key === ' ' && !(e.target as HTMLElement).matches('input, textarea')) {
-        e.preventDefault();
-        this.toggleAnimation();
-      }
-    });
+    window.addEventListener('keydown', this.handleWindowKeydown, options);
+  }
+
+  destroy(): void {
+    try {
+      this.elements.animationToggle?.removeEventListener('click', this.handleAnimationToggleClick);
+    } catch {
+      // ignore
+    }
+    try {
+      window.removeEventListener('keydown', this.handleWindowKeydown);
+    } catch {
+      // ignore
+    }
   }
 
   private createEffect(type: string): BreathingEffect | null {

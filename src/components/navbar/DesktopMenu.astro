@@ -87,7 +87,7 @@ const { sections, iconMap } = Astro.props;
 
 <script is:inline>
   // Função de inicialização dos dropdowns
-  function initDesktopDropdowns() {
+  function initDesktopDropdowns(signal) {
     const dropdowns = document.querySelectorAll(
       ".nav-item.dropdown.auto-open.animations-select",
     );
@@ -151,8 +151,8 @@ const { sections, iconMap } = Astro.props;
             }, 100);
           };
 
-          dropdown.addEventListener("mouseenter", mouseEnterHandler);
-          dropdown.addEventListener("mouseleave", mouseLeaveHandler);
+          dropdown.addEventListener("mouseenter", mouseEnterHandler, { signal });
+          dropdown.addEventListener("mouseleave", mouseLeaveHandler, { signal });
         }
       };
 
@@ -188,7 +188,7 @@ const { sections, iconMap } = Astro.props;
           menu.classList.remove("show");
           toggle.setAttribute("aria-expanded", "false");
         }
-      });
+      }, { signal });
 
       // Previne fechar ao clicar dentro do menu
       // Removido stopPropagation para permitir que o ClientRouter detecte cliques em links
@@ -205,7 +205,7 @@ const { sections, iconMap } = Astro.props;
           menu.classList.remove("show");
           toggle.setAttribute("aria-expanded", "false");
         }
-      });
+      }, { signal });
 
       // Reconfigura hover ao redimensionar
       let resizeTimeout;
@@ -219,7 +219,7 @@ const { sections, iconMap } = Astro.props;
           // Reconfigura hover
           setupHover();
         }, 150);
-      });
+      }, { signal });
     });
 
     // Fecha dropdowns ao clicar fora
@@ -232,16 +232,24 @@ const { sections, iconMap } = Astro.props;
           toggle.setAttribute("aria-expanded", "false");
         }
       });
-    });
+    }, { signal });
   }
 
   // Tenta inicializar imediatamente se o DOM já estiver carregado
+  let controller = null;
+  function mount() {
+    if (controller) controller.abort();
+    controller = new AbortController();
+    initDesktopDropdowns(controller.signal);
+  }
+
+  document.addEventListener("astro:page-load", mount);
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initDesktopDropdowns);
+    document.addEventListener("DOMContentLoaded", mount, { once: true });
   } else {
-    initDesktopDropdowns();
+    mount();
   }
 
   // Também tenta após um pequeno delay para garantir que tudo está carregado
-  setTimeout(initDesktopDropdowns, 100);
 </script>

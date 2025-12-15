@@ -21,6 +21,7 @@ class TokenAnimatorApp {
   private renderer!: Canvas2DRenderer;
   private effectsManager!: EffectsManager;
   private exportUtils!: ExportUtils;
+  private abortController = new AbortController();
 
   constructor() {
     const canvas = document.getElementById('canvas') as HTMLCanvasElement;
@@ -31,8 +32,9 @@ class TokenAnimatorApp {
 
     this.canvas = canvas;
     
-    this.renderer = new Canvas2DRenderer(canvas);
-    this.effectsManager = new EffectsManager();
+    const { signal } = this.abortController;
+    this.renderer = new Canvas2DRenderer(canvas, { signal });
+    this.effectsManager = new EffectsManager({ signal });
     this.exportUtils = new ExportUtils(canvas, this.renderer, this.effectsManager);
 
     window.canvas2dRenderer = this.renderer;
@@ -46,10 +48,41 @@ class TokenAnimatorApp {
     this.renderer.startAnimation();
   }
 
+  destroy(): void {
+    this.abortController.abort();
+
+    try {
+      this.renderer?.stopAnimation();
+      this.renderer?.destroy?.();
+    } catch {
+      // ignore
+    }
+
+    try {
+      this.effectsManager?.destroy?.();
+    } catch {
+      // ignore
+    }
+
+    try {
+      delete window.effectsManager;
+      delete window.canvas2dRenderer;
+      delete window.exportUtils;
+      delete window.addBreathingEffect;
+      delete window.resetCanvas;
+      delete window.exportGIF;
+      delete window.exportWebM;
+      delete window.exportWebMHigh;
+      delete window.exportWebMMedium;
+    } catch {
+      // ignore
+    }
+  }
+
   private setupEventListeners(): void {
     const resetBtn = document.getElementById('resetBtn');
     if (resetBtn) {
-      resetBtn.addEventListener('click', () => this.resetCanvas());
+      resetBtn.addEventListener('click', () => this.resetCanvas(), { signal: this.abortController.signal });
     }
     
     // Inicializar botões desabilitados
@@ -137,21 +170,23 @@ class TokenAnimatorApp {
 
     if (!dropZone || !fileInput) return;
 
+    const { signal } = this.abortController;
+
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      dropZone.addEventListener(eventName, this.preventDefaults, false);
-      document.body.addEventListener(eventName, this.preventDefaults, false);
+      dropZone.addEventListener(eventName, this.preventDefaults, { signal });
+      document.body.addEventListener(eventName, this.preventDefaults, { signal });
     });
 
     ['dragenter', 'dragover'].forEach(eventName => {
       dropZone.addEventListener(eventName, () => {
         document.getElementById('canvasContainer')?.classList.add('drag-over');
-      }, false);
+      }, { signal });
     });
 
     ['dragleave', 'drop'].forEach(eventName => {
       dropZone.addEventListener(eventName, () => {
         document.getElementById('canvasContainer')?.classList.remove('drag-over');
-      }, false);
+      }, { signal });
     });
 
     dropZone.addEventListener('drop', (e) => {
@@ -160,23 +195,23 @@ class TokenAnimatorApp {
         const files = dt.files;
         this.handleFiles(files);
       }
-    }, false);
+    }, { signal });
 
     dropZone.addEventListener('click', () => {
       fileInput.click();
-    });
+    }, { signal });
 
     fileInput.addEventListener('change', () => {
       if (fileInput.files) {
         this.handleFiles(fileInput.files);
       }
-    });
+    }, { signal });
   }
 
-  private preventDefaults(e: Event): void {
+  private preventDefaults = (e: Event): void => {
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
   private handleFiles(files: FileList): void {
     if (files.length === 0) return;
@@ -295,12 +330,30 @@ class TokenAnimatorApp {
   }
 }
 
-if (typeof window !== 'undefined' && document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    new TokenAnimatorApp();
-  });
-} else if (typeof window !== 'undefined') {
-  new TokenAnimatorApp();
+let currentApp: TokenAnimatorApp | null = null;
+
+function mountTokenAnimator(): void {
+  const canvas = document.getElementById('canvas');
+  if (!canvas) return;
+
+  currentApp?.destroy();
+  currentApp = new TokenAnimatorApp();
+}
+
+function unmountTokenAnimator(): void {
+  currentApp?.destroy();
+  currentApp = null;
+}
+
+if (typeof window !== 'undefined') {
+  document.addEventListener('astro:page-load', mountTokenAnimator);
+  document.addEventListener('astro:before-swap', unmountTokenAnimator);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountTokenAnimator, { once: true });
+  } else {
+    mountTokenAnimator();
+  }
 }
 
 export { TokenAnimatorApp };

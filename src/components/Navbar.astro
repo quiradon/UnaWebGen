@@ -232,7 +232,11 @@ const menuSections = [guideSection, toolsSection];
 
 <script>
   // JavaScript simplificado para melhor performance no dev mode
-  document.addEventListener("DOMContentLoaded", () => {
+  let navbarAbortController: AbortController | null = null;
+  document.addEventListener("astro:page-load", () => {
+    navbarAbortController?.abort();
+    navbarAbortController = new AbortController();
+    const { signal } = navbarAbortController;
     // Gerenciamento básico do sidebar mobile
     const sidebarOverlay = document.querySelector(".mobile-sidebar-overlay");
     const sidebar = document.querySelector(".mobile-sidebar");
@@ -253,22 +257,33 @@ const menuSections = [guideSection, toolsSection];
 
     // Event listeners
     openButtons.forEach((button) => {
-      button.addEventListener("click", openSidebar);
+      button.addEventListener("click", openSidebar, { signal });
     });
 
-    closeButton?.addEventListener("click", closeSidebar);
-    sidebarOverlay?.addEventListener("click", closeSidebar);
+    closeButton?.addEventListener("click", closeSidebar, { signal });
+    sidebarOverlay?.addEventListener("click", closeSidebar, { signal });
 
     // Fechar com ESC
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeSidebar();
-    });
+    document.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Escape") closeSidebar();
+      },
+      { signal },
+    );
 
     // Fechar ao clicar em links
     sidebar?.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        setTimeout(closeSidebar, 100);
-      });
+      link.addEventListener(
+        "click",
+        () => {
+          setTimeout(() => {
+            if (signal.aborted) return;
+            closeSidebar();
+          }, 100);
+        },
+        { signal },
+      );
     });
 
     // Animações hover simples (apenas desktop)
@@ -280,16 +295,37 @@ const menuSections = [guideSection, toolsSection];
           const animationClass = htmlElement.dataset.bssHoverAnimate;
           if (!animationClass) return;
 
-          element.addEventListener("mouseenter", () => {
-            element.classList.add("animated", animationClass);
-          });
+          element.addEventListener(
+            "mouseenter",
+            () => {
+              element.classList.add("animated", animationClass);
+            },
+            { signal },
+          );
 
-          element.addEventListener("mouseleave", () => {
-            element.classList.remove("animated", animationClass);
-          });
+          element.addEventListener(
+            "mouseleave",
+            () => {
+              element.classList.remove("animated", animationClass);
+            },
+            { signal },
+          );
         });
     }
   });
+
+  // Garante init no primeiro carregamento (mesmo se astro:page-load nAœo disparar)
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+        document.dispatchEvent(new Event("astro:page-load"));
+      },
+      { once: true },
+    );
+  } else {
+    document.dispatchEvent(new Event("astro:page-load"));
+  }
 </script>
 
 <nav id="site-navbar" class={`${fixed ? "fixed-top" : sticky ? "sticky-top" : ""} p-2`}>
@@ -353,7 +389,7 @@ const menuSections = [guideSection, toolsSection];
         document.documentElement.style.setProperty("--navbar-offset", height + "px");
       }
 
-      document.addEventListener("DOMContentLoaded", __updateNavbarOffset);
+      document.addEventListener("astro:page-load", __updateNavbarOffset);
       window.addEventListener("resize", __updateNavbarOffset);
       window.addEventListener("astro:after-swap", __updateNavbarOffset);
       window.addEventListener("load", __updateNavbarOffset);

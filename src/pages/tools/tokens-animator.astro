@@ -448,24 +448,38 @@ const copy = {
       }
     }
 
-    // Fechar modal ao clicar fora
-    document.addEventListener('DOMContentLoaded', function() {
-      const modal = document.getElementById('exportModal');
-      if (modal) {
+    (function () {
+      let controller = null;
+
+      function mountExportModalHandlers() {
+        const modal = document.getElementById('exportModal');
+        if (!modal) return;
+
+        if (controller) controller.abort();
+        controller = new AbortController();
+        const signal = controller.signal;
+
         modal.addEventListener('click', function(e) {
           if (e.target === modal) {
             closeExportModal();
           }
-        });
+        }, { signal });
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            closeExportModal();
+          }
+        }, { signal });
       }
 
-      // Fechar modal com ESC
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          closeExportModal();
-        }
-      });
-    });
+      document.addEventListener('astro:page-load', mountExportModalHandlers);
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', mountExportModalHandlers, { once: true });
+      } else {
+        mountExportModalHandlers();
+      }
+    })();
   </script>
 
   <style is:global>
@@ -1860,7 +1874,6 @@ const copy = {
 
   </style>
 </Layout>
-
 
 
 

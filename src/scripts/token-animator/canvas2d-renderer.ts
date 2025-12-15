@@ -16,7 +16,7 @@ export class Canvas2DRenderer {
   private tempCanvas: HTMLCanvasElement | null = null;
   private tempCtx: CanvasRenderingContext2D | null = null;
 
-  constructor(canvasElement: HTMLCanvasElement) {
+  constructor(canvasElement: HTMLCanvasElement, options?: { signal?: AbortSignal }) {
     this.canvas = canvasElement;
     const ctx = this.canvas.getContext('2d', { 
       willReadFrequently: true,
@@ -25,10 +25,11 @@ export class Canvas2DRenderer {
     if (!ctx) throw new Error('Não foi possível obter contexto 2D do canvas');
     this.ctx = ctx;
     
-    this.setupCanvasEvents();
+    this.setupCanvasEvents(options?.signal);
   }
 
-  private setupCanvasEvents(): void {
+  private setupCanvasEvents(signal?: AbortSignal): void {
+    const options = signal ? { signal } : undefined;
     this.canvas.addEventListener('click', (e: MouseEvent) => {
       if ((window as any).effectsManager && (window as any).effectsManager.settingPointForEffectId !== null) {
         const rect = this.canvas.getBoundingClientRect();
@@ -49,7 +50,7 @@ export class Canvas2DRenderer {
           (window as any).effectsManager.showNotification('Ponto definido!', 'success');
         }
       }
-    });
+    }, options);
   }
 
   loadImage(imageSource: string): Promise<void> {
@@ -141,6 +142,14 @@ export class Canvas2DRenderer {
     if (this.animationFrame) {
       cancelAnimationFrame(this.animationFrame);
     }
+  }
+
+  destroy(): void {
+    this.stopAnimation();
+    this.userImage = null;
+    this.imageData = null;
+    this.tempCanvas = null;
+    this.tempCtx = null;
   }
 
   private animate = (): void => {

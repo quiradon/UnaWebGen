@@ -1,0 +1,82 @@
+---
+import { BookText } from "@lucide/astro";
+import ToolCard from "./ToolCard.astro";
+import UserProfileCard from "./UserProfileCard.astro";
+
+interface Props {
+  t: any;
+  langPrefix: string;
+}
+
+const { t, langPrefix } = Astro.props;
+
+const hrefOldSheets = langPrefix
+  ? `${langPrefix}/dashboard/old/characters/`
+  : "/dashboard/old/characters/";
+
+const toolCards = [
+  {
+    href: hrefOldSheets,
+    title: t.Dashbaord.actions.old.title,
+    description: t.Dashbaord.actions.old.description,
+    Icon: BookText,
+  },
+  {
+    href: hrefOldSheets,
+    title: t.Dashbaord.actions.old.title,
+    description: t.Dashbaord.actions.old.description,
+    Icon: BookText,
+  },
+];
+---
+
+<section id="dashboard-content" class="dashboard-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-6 fade-in-up">
+        <UserProfileCard t={t} />
+      </div>
+
+      <div class="col-lg-6 fade-in-up" style="animation-delay: 0.1s;">
+        <div class="d-flex flex-column justify-content-between h-100 gap-3">
+          {
+            toolCards.map((card) => (
+              <ToolCard
+                href={card.href}
+                title={card.title}
+                description={card.description}
+                exploreText={t.Dashbaord.actions.explore}
+              >
+                <card.Icon size={32} class="tool-icon text-primary" />
+              </ToolCard>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dashboard-section {
+    min-height: 80vh;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+</style>
+

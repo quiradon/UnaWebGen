@@ -1,0 +1,275 @@
+---
+interface Props {
+  t: any;
+}
+
+const { t } = Astro.props;
+---
+
+<div
+  id="user-profile-card"
+  class="user-profile-card p-4 h-100"
+  data-loading="true"
+  aria-busy="true"
+>
+  <div class="text-center mb-4">
+    <div class="avatar-container">
+      <div class="avatar-wrapper">
+        <div class="avatar-ring user-real-avatar"></div>
+        <img
+          id="user-avatar"
+          src=""
+          alt="User Avatar"
+          class="avatar-img user-real-avatar"
+        />
+        <img
+          id="premium-badge"
+          src=""
+          alt="Premium"
+          class="premium-badge user-real-avatar"
+        />
+        <div class="avatar-skeleton skeleton user-skeleton-avatar"></div>
+      </div>
+    </div>
+
+    <h3 class="text-white mt-3 mb-1 user-real-name" id="user-display-name">-</h3>
+    <p class="text-secondary mb-0 user-real-handle" id="user-username-display">
+      @-
+    </p>
+    <div class="user-skeleton-name skeleton" aria-hidden="true"></div>
+    <div class="user-skeleton-handle skeleton" aria-hidden="true"></div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12">
+      <div class="user-info-item">
+        <div class="info-label">{t.Dashbaord.user.discord.name.label}</div>
+        <div class="info-value">
+          <span class="user-real-value" id="user-username">-</span>
+          <span class="user-skeleton-value skeleton" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="user-info-item">
+        <div class="info-label">{t.Dashbaord.user.discord.id.label}</div>
+        <div class="info-value">
+          <span class="user-real-value" id="user-id">-</span>
+          <span class="user-skeleton-value skeleton" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .user-profile-card {
+    background: rgba(29, 26, 45, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .user-profile-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(248, 7, 82, 0.05),
+      rgba(248, 7, 82, 0.02)
+    );
+    pointer-events: none;
+  }
+
+  .avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: fit-content;
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .avatar-ring {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      var(--bs-primary),
+      rgba(248, 7, 82, 0.5)
+    );
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%,
+    100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  .avatar-img {
+    position: relative;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid rgba(20, 20, 30, 0.9);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .premium-badge {
+    width: auto;
+    height: 45px;
+    max-width: 55px;
+    object-fit: contain;
+    display: none;
+    transition: all 0.3s ease;
+    margin-top: -30px;
+    z-index: 3;
+    position: relative;
+  }
+
+  .premium-badge.active {
+    display: block;
+    animation: fadeInScale 0.6s ease-out;
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .user-info-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    transition: all 0.3s ease;
+  }
+
+  .user-info-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(248, 7, 82, 0.2);
+    transform: translateX(4px);
+  }
+
+  .info-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+  }
+
+  .info-value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0.06)
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.2s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  .avatar-skeleton {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  .user-skeleton-name,
+  .user-skeleton-handle {
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+  }
+
+  .user-skeleton-name {
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    height: 1.75rem;
+    width: min(240px, 70%);
+  }
+
+  .user-skeleton-handle {
+    height: 1.1rem;
+    width: min(190px, 50%);
+    opacity: 0.85;
+  }
+
+  .user-skeleton-value {
+    display: inline-block;
+    height: 1.1rem;
+    width: min(260px, 85%);
+    border-radius: 8px;
+  }
+
+  /* Loading toggle */
+  .user-profile-card[data-loading="true"] .user-real-avatar,
+  .user-profile-card[data-loading="true"] .user-real-name,
+  .user-profile-card[data-loading="true"] .user-real-handle,
+  .user-profile-card[data-loading="true"] .user-real-value {
+    display: none !important;
+  }
+
+  .user-profile-card[data-loading="false"] .user-skeleton-avatar,
+  .user-profile-card[data-loading="false"] .user-skeleton-name,
+  .user-profile-card[data-loading="false"] .user-skeleton-handle,
+  .user-profile-card[data-loading="false"] .user-skeleton-value {
+    display: none !important;
+  }
+</style>
+

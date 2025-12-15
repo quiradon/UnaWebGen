@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .system-editor {
+    --background: 264 28% 5%;
+    --foreground: 210 40% 96%;
+    --card: 264 28% 8%;
+    --card-foreground: 210 40% 96%;
+    --popover: 264 28% 10%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 343 94% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 264 16% 14%;
+    --muted-foreground: 215 20% 70%;
+    --accent: 343 94% 50%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 343 94% 50%;
+    --destructive-foreground: 0 0% 0%;
+    --border: 264 14% 18%;
+    --input: 264 14% 18%;
+    --ring: 343 94% 50%;
+    --radius: 0.75rem;
+
+    --sidebar: 264 28% 7%;
+    --sidebar-foreground: 210 40% 92%;
+    --sidebar-primary: 343 94% 50%;
+    --sidebar-accent: 264 22% 12%;
+
+    color-scheme: dark;
+    font-family: var(--bs-font-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif);
+  }
+
+  /* Reset escopado (preflight do Tailwind está desativado neste projeto). */
+  .system-editor,
+  .system-editor *,
+  .system-editor *::before,
+  .system-editor *::after {
+    box-sizing: border-box;
+  }
+
+  .system-editor :where(h1, h2, h3, h4, h5, h6, p) {
+    margin: 0;
+  }
+
+  .system-editor :where(ul, ol) {
+    margin: 0;
+    padding: 0;
+  }
+
+  .system-editor :where(button, [type="button"], [type="reset"], [type="submit"]) {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    background-image: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+  }
+
+  .system-editor :where(button):not(:disabled) {
+    cursor: pointer;
+  }
+
+  .system-editor :where(input, textarea, select, optgroup) {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .system-editor {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  .system-editor *,
+  .system-editor *::before,
+  .system-editor *::after {
+    border-color: hsl(var(--border));
+  }
+}
+
+@layer utilities {
+  .shadow-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  .shadow-elevated {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .shadow-popover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Markdown (Tailwind Typography) em fundo escuro */
+  .system-editor .prose {
+    --tw-prose-body: hsl(var(--foreground) / 0.92);
+    --tw-prose-headings: hsl(var(--foreground));
+    --tw-prose-lead: hsl(var(--foreground) / 0.9);
+    --tw-prose-links: hsl(var(--primary));
+    --tw-prose-bold: hsl(var(--foreground));
+    --tw-prose-counters: hsl(var(--muted-foreground));
+    --tw-prose-bullets: hsl(var(--muted-foreground));
+    --tw-prose-hr: hsl(var(--border));
+    --tw-prose-quotes: hsl(var(--foreground));
+    --tw-prose-quote-borders: hsl(var(--border));
+    --tw-prose-captions: hsl(var(--muted-foreground));
+    --tw-prose-code: hsl(var(--foreground));
+    --tw-prose-pre-code: hsl(var(--foreground));
+    --tw-prose-pre-bg: hsl(var(--muted));
+    --tw-prose-th-borders: hsl(var(--border));
+    --tw-prose-td-borders: hsl(var(--border));
+    color: hsl(var(--foreground) / 0.92);
+  }
+
+  .system-editor .prose :where(p, li, blockquote, strong, em, h1, h2, h3, h4, h5, h6, td, th) {
+    color: hsl(var(--foreground) / 0.92);
+  }
+
+  .system-editor .prose :where(a) {
+    color: hsl(var(--primary));
+  }
+
+  .system-editor .prose :where(code):not(:where(pre code)) {
+    color: hsl(var(--foreground));
+    background: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
+  }
+
+  .system-editor .prose :where(pre) {
+    background: hsl(var(--muted));
+    border: 1px solid hsl(var(--border));
+  }
+}
+
+/* Scrollbars (escopado ao editor) */
+.system-editor *::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.system-editor *::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+  border-radius: 6px;
+}
+
+.system-editor *::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 6px;
+  border: 2px solid hsl(var(--background));
+  transition: background 0.2s;
+}
+
+.system-editor *::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+.system-editor *::-webkit-scrollbar-thumb:active {
+  background: hsl(var(--muted-foreground) / 0.7);
+}
+
+.system-editor * {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.3) hsl(var(--background));
+}

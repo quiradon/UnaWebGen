@@ -11,16 +11,25 @@ interface Props {
   title: string;
   desc?: string;
   pictureURL?: string;
+  navbarFixed?: boolean;
+  navbarSticky?: boolean;
 }
 
-const { t, title, desc, pictureURL } = Astro.props as Props;
+const {
+  t,
+  title,
+  desc,
+  pictureURL,
+  navbarFixed = false,
+  navbarSticky = true,
+} = Astro.props as Props;
 ---
 
 <html lang={t.lang} data-bs-theme="dark">
   <Head title={title} desc={desc} pictureURL={pictureURL} />
-  <body>
+  <body class:list={{ "navbar-fixed": navbarFixed }}>
     <ClientRouter />
-    <Navbar t={t} />
+    <Navbar t={t} fixed={navbarFixed} sticky={navbarSticky} />
     <main class="main-content" transition:animate="fade">
       <slot />
     </main>
@@ -43,6 +52,19 @@ const { t, title, desc, pictureURL } = Astro.props as Props;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+  }
+
+  body.navbar-fixed .main-content {
+    padding-top: calc(var(--navbar-offset, 72px) + 16px);
+  }
+
+  body.navbar-fixed #site-navbar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+    transform: none !important;
   }
 
   footer {

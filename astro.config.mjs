@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import { i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
+import react from "@astrojs/react";
 
 const defaultLocale = "en";
 const locales = {
@@ -35,6 +36,9 @@ export default defineConfig({
   },
   vite: {
     base: "",
+    optimizeDeps: {
+      include: ["sonner"],
+    },
     server: {
       host: true,
       allowedHosts: ['atividade.arkanus.app', 'atividadeapi.arkanus.app'],
@@ -90,5 +94,6 @@ export default defineConfig({
       filter: filterSitemapByDefaultLocale({ defaultLocale }),
     }),
     svelte(),
+    react(),
   ],
 });

@@ -1,0 +1,53 @@
+---
+export const prerender = true;
+
+import Layout from "@layouts/Layout.astro";
+import { loadT } from "@lib/i18n";
+import { getLocale } from "astro-i18n-aut";
+import { Wrench } from "@lucide/astro";
+import SystemEditorApp from "@/components/sistemaeditor/SystemEditorApp";
+import "@/styles/system-editor.css";
+
+const currentLocale = getLocale(Astro.url);
+const t = loadT(currentLocale);
+---
+
+<Layout
+  t={t}
+  title="Editor de Sistema"
+  desc="Editor visual para criar e validar sistemas"
+  navbarSticky={false}
+>
+  <section class="pt-3 pb-5">
+    <div class="container mb-3">
+      <h1 class="display-5 fw-bold text-white mb-2">
+        <Wrench size={36} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
+        Editor de Sistema
+      </h1>
+      <p class="text-secondary mb-0">
+        Construtor visual para configurar estatísticas, seções, integrações e exportar/importar JSON.
+      </p>
+    </div>
+
+    <div class="container-fluid px-0 px-md-3">
+      <div class="system-editor">
+        <div id="system-editor-portal-root" aria-hidden="true"></div>
+        <div class="system-editor-shell overflow-hidden">
+          <SystemEditorApp client:only="react" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .system-editor-shell {
+      min-height: 78vh;
+    }
+
+    @media (max-width: 768px) {
+      .system-editor-shell {
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+</Layout>

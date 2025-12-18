@@ -14,6 +14,7 @@ import {
   Wrench,
   Music,
   Sparkles,
+  FileText,
 } from "@lucide/astro";
 
 export { getStaticPaths };
@@ -124,6 +125,16 @@ const pathPrefix = Locale === "en" ? "" : `/${Locale}`;
 
         <div class="col-lg-6 col-xl-4 mb-4">
           <ToolCard
+            href={`${pathPrefix}/tools/handout-builder/`}
+            title="Gerador de Handouts"
+            description="Crie documentos/handouts de RPG e exporte em PNG/PDF"
+            icon={FileText}
+            iconColor="text-primary"
+          />
+        </div>
+
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <ToolCard
             href={`${pathPrefix}/tools/editor_de_sistema/`}
             title="Editor de Sistema"
             description="Construtor visual para criar, validar e exportar sistemas (JSON)"
@@ -199,4 +210,3 @@ const pathPrefix = Locale === "en" ? "" : `/${Locale}`;
     }
   </style>
 </Layout>
-

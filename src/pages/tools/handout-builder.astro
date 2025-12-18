@@ -1,0 +1,67 @@
+---
+export const prerender = true;
+
+import Layout from "@layouts/Layout.astro";
+import { loadT } from "@lib/i18n";
+import { getLocale } from "astro-i18n-aut";
+import { FileText } from "@lucide/astro";
+import HandoutCanvasApp from "@/components/handoutbuilder/HandoutCanvasApp";
+import "@/styles/system-editor.css";
+import "@/styles/handout-builder.css";
+import "@fontsource/inter";
+import "@fontsource/roboto";
+import "@fontsource/montserrat";
+import "@fontsource/merriweather";
+import "@fontsource/playfair-display";
+import "@fontsource/cinzel";
+import "@fontsource/im-fell-english";
+import "@fontsource/jetbrains-mono";
+
+const currentLocale = getLocale(Astro.url);
+const t = loadT(currentLocale);
+---
+
+<Layout
+  t={t}
+  title="Gerador de Handouts"
+  desc="Crie documentos de RPG personalizados e exporte em PNG/PDF"
+  navbarSticky={false}
+>
+  <section class="pt-3 pb-5">
+    <div class="container mb-3">
+      <h1 class="display-5 fw-bold text-white mb-2">
+        <FileText
+          size={36}
+          class="me-2 d-inline-block"
+          style="color: var(--bs-primary);"
+        />
+        Gerador de Handouts
+      </h1>
+      <p class="text-secondary mb-0">
+        Editor estilo Canva: camadas de imagens + vários textos no canvas, com exportação
+        para PNG/PDF.
+      </p>
+    </div>
+
+    <div class="container-fluid px-0 px-md-3">
+      <div class="system-editor handout-builder">
+        <div id="handout-builder-portal-root"></div>
+        <div class="handout-builder-shell overflow-hidden">
+          <HandoutCanvasApp client:only="react" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .handout-builder-shell {
+      min-height: 78vh;
+    }
+
+    @media (max-width: 768px) {
+      .handout-builder-shell {
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+</Layout>

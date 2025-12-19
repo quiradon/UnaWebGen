@@ -1,7 +1,7 @@
 ---
 export const prerender = true;
 
-import Layout from "@layouts/Layout.astro";
+import Layout from "@layouts/LayoutOnlyNav.astro";
 import { loadT } from "@lib/i18n";
 import { getLocale } from "astro-i18n-aut";
 import { FileText } from "@lucide/astro";
@@ -28,20 +28,6 @@ const t = loadT(currentLocale);
   navbarSticky={false}
 >
   <section class="pt-3 pb-5">
-    <div class="container mb-3">
-      <h1 class="display-5 fw-bold text-white mb-2">
-        <FileText
-          size={36}
-          class="me-2 d-inline-block"
-          style="color: var(--bs-primary);"
-        />
-        Gerador de Handouts
-      </h1>
-      <p class="text-secondary mb-0">
-        Editor estilo Canva: camadas de imagens + vários textos no canvas, com exportação
-        para PNG/PDF.
-      </p>
-    </div>
 
     <div class="container-fluid px-0 px-md-3">
       <div class="system-editor handout-builder">

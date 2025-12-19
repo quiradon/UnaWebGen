@@ -39,9 +39,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 
 type FontPresetId =
   | "serif"
@@ -56,6 +54,7 @@ type FontPresetId =
   | "im-fell-english"
   | "jetbrains-mono";
 type TextAlign = "left" | "center" | "right";
+type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 type BaseLayer = {
   id: string;
@@ -85,7 +84,7 @@ type TextLayer = BaseLayer & {
   color: string;
   align: TextAlign;
   fontPreset: FontPresetId;
-  fontWeight: 400 | 600 | 800;
+  fontWeight: FontWeight;
   italic: boolean;
   underline: boolean;
   backgroundColor: string;
@@ -100,6 +99,7 @@ type HandoutCanvasDocV1 = {
   pageHeight: number;
   zoom: number;
   paperColor: string;
+  paperOpacity: number;
   layers: Layer[];
 };
 
@@ -111,6 +111,11 @@ const DEFAULT_PAGE_WIDTH = 1000;
 const DEFAULT_PAGE_HEIGHT = 1000;
 const PAGE_SIZE_MIN = 200;
 const PAGE_SIZE_MAX = 5000;
+const ZOOM_MIN = 0.5;
+const ZOOM_MAX = 1.25;
+const ZOOM_STEP = 0.05;
+const ZOOM_STEP_LARGE = 0.15;
+const ZOOM_BUTTON_STEP = 0.1;
 
 const LEGACY_PAGE_SIZES = {
   a4: { width: 794, height: 1123 },
@@ -160,6 +165,34 @@ const FONT_PRESETS: Record<FontPresetId, { label: string; stack: string }> = {
 
 const FONT_PRESET_IDS = Object.keys(FONT_PRESETS) as FontPresetId[];
 const DEFAULT_FONT_PRESET: FontPresetId = "serif";
+const FONT_WEIGHT_VALUES = [100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
+const FONT_WEIGHT_OPTIONS: ReadonlyArray<{ value: FontWeight; label: string }> = [
+  { value: 100, label: "Thin" },
+  { value: 200, label: "Extra Light" },
+  { value: 300, label: "Light" },
+  { value: 400, label: "Regular" },
+  { value: 500, label: "Medium" },
+  { value: 600, label: "Semi Bold" },
+  { value: 700, label: "Bold" },
+  { value: 800, label: "Extra Bold" },
+  { value: 900, label: "Black" },
+] as const;
+const COLOR_HISTORY_KEY = "kraken.handoutColorHistory";
+const COLOR_HISTORY_LIMIT = 12;
+const COLOR_SUGGESTIONS = [
+  "#111111",
+  "#2b1b0e",
+  "#ffffff",
+  "#f6f0de",
+  "#f97316",
+  "#ef4444",
+  "#f59e0b",
+  "#22c55e",
+  "#14b8a6",
+  "#0ea5e9",
+  "#3b82f6",
+  "#8b5cf6",
+] as const;
 
 const DEFAULT_DOC: HandoutCanvasDocV1 = {
   version: 1,
@@ -167,6 +200,7 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
   pageHeight: DEFAULT_PAGE_HEIGHT,
   zoom: 0.9,
   paperColor: "#f6f0de",
+  paperOpacity: 1,
   layers: [
     {
       id: "txt_title",
@@ -250,6 +284,86 @@ function safeArray(value: unknown): unknown[] {
   return Array.isArray(value) ? value : [];
 }
 
+function normalizeFontWeight(value: unknown, fallback: FontWeight) {
+  if (typeof value === "number" && (FONT_WEIGHT_VALUES as readonly number[]).includes(value)) {
+    return value as FontWeight;
+  }
+  if (typeof value === "string") {
+    const parsed = Number.parseInt(value, 10);
+    if (Number.isFinite(parsed) && (FONT_WEIGHT_VALUES as readonly number[]).includes(parsed)) {
+      return parsed as FontWeight;
+    }
+  }
+  return fallback;
+}
+
+function getClosestWeight(weights: readonly FontWeight[], target: FontWeight) {
+  if (!weights.length) return target;
+  return weights.reduce((closest, weight) => {
+    const currentDiff = Math.abs(weight - target);
+    const closestDiff = Math.abs(closest - target);
+    if (currentDiff < closestDiff) return weight;
+    if (currentDiff === closestDiff && weight > closest) return weight;
+    return closest;
+  }, weights[0]);
+}
+
+function getRegularWeight(weights: readonly FontWeight[]) {
+  if (weights.includes(400)) return 400;
+  return getClosestWeight(weights, 400);
+}
+
+function getBoldWeight(weights: readonly FontWeight[]) {
+  const bolds = weights.filter((weight) => weight >= 600);
+  if (bolds.length) return bolds.includes(700) ? 700 : bolds[bolds.length - 1];
+  return getClosestWeight(weights, 700);
+}
+
+function normalizeHexColor(value: string) {
+  const trimmed = value.trim().toLowerCase();
+  if (!trimmed) return null;
+  const withHash = trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
+  const raw = withHash.slice(1);
+  const isShort = /^[0-9a-f]{3}$/.test(raw);
+  const isFull = /^[0-9a-f]{6}$/.test(raw);
+  if (!isShort && !isFull) return null;
+  const full = isShort
+    ? raw
+        .split("")
+        .map((c) => c + c)
+        .join("")
+    : raw;
+  return `#${full}`;
+}
+
+function hexToRgb(value: string) {
+  const hex = value.trim();
+  if (!hex.startsWith("#")) return null;
+  const raw = hex.slice(1);
+  const normalized =
+    raw.length === 3
+      ? raw
+          .split("")
+          .map((c) => c + c)
+          .join("")
+      : raw;
+  if (normalized.length !== 6) return null;
+  const int = Number.parseInt(normalized, 16);
+  if (Number.isNaN(int)) return null;
+  return {
+    r: (int >> 16) & 255,
+    g: (int >> 8) & 255,
+    b: int & 255,
+  };
+}
+
+function applyAlphaToColor(color: string, opacity: number) {
+  const clamped = clamp(opacity, 0, 1);
+  const rgb = hexToRgb(color);
+  if (!rgb) return color;
+  return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${clamped})`;
+}
+
 type FontPickerProps = {
   value: FontPresetId;
   onValueChange: (value: FontPresetId) => void;
@@ -316,6 +430,192 @@ function FontPicker({ value, onValueChange, disabled, className }: FontPickerPro
   );
 }
 
+type FontWeightPickerProps = {
+  value: FontWeight;
+  onValueChange: (value: FontWeight) => void;
+  fontFamily: string;
+  options?: ReadonlyArray<{ value: FontWeight; label: string }>;
+  disabled?: boolean;
+  className?: string;
+};
+
+function FontWeightPicker({
+  value,
+  onValueChange,
+  fontFamily,
+  options = FONT_WEIGHT_OPTIONS,
+  disabled,
+  className,
+}: FontWeightPickerProps) {
+  const [open, setOpen] = useState(false);
+  const selected = options.find((option) => option.value === value) ?? options[0] ?? FONT_WEIGHT_OPTIONS[3];
+  const triggerClassName = ["handout-toolbar-input", "handout-weight-trigger", className]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button type="button" variant="outline" disabled={disabled} className={triggerClassName} aria-expanded={open}>
+          <span className="handout-weight-preview" style={{ fontFamily, fontWeight: value }}>
+            Aa
+          </span>
+          <span className="handout-weight-label" style={{ fontFamily, fontWeight: value }}>
+            {selected.value} {selected.label}
+          </span>
+          <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="handout-weight-popover">
+        <div className="handout-weight-panel">
+          {options.map((option) => {
+            const isActive = option.value === value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                className={`handout-weight-option ${isActive ? "is-active" : ""}`}
+                onClick={() => {
+                  onValueChange(option.value);
+                  setOpen(false);
+                }}
+              >
+                <span className="handout-weight-label" style={{ fontFamily, fontWeight: option.value }}>
+                  {option.value} {option.label}
+                </span>
+                <span className="handout-weight-preview" style={{ fontFamily, fontWeight: option.value }}>
+                  Aa
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+type ColorPickerProps = {
+  value: string;
+  onValueChange: (value: string) => void;
+  suggestions?: readonly string[];
+  history?: readonly string[];
+  triggerLabel?: string;
+  ariaLabel?: string;
+  className?: string;
+};
+
+function ColorPicker({
+  value,
+  onValueChange,
+  suggestions = [],
+  history = [],
+  triggerLabel,
+  ariaLabel = "Selecionar cor",
+  className,
+}: ColorPickerProps) {
+  const [open, setOpen] = useState(false);
+  const normalizedValue = normalizeHexColor(value) ?? "#000000";
+  const [hexInput, setHexInput] = useState(normalizedValue.toUpperCase());
+
+  useEffect(() => {
+    const next = normalizeHexColor(value);
+    setHexInput((next ?? value).toUpperCase());
+  }, [value]);
+
+  const handleHexChange = (next: string) => {
+    setHexInput(next.toUpperCase());
+    const normalized = normalizeHexColor(next);
+    if (normalized) onValueChange(normalized);
+  };
+
+  const handleSwatchClick = (next: string) => {
+    const normalized = normalizeHexColor(next) ?? next;
+    onValueChange(normalized);
+  };
+
+  const normalizedValueLower = normalizedValue.toLowerCase();
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          className={["handout-toolbar-color", className].filter(Boolean).join(" ")}
+          aria-label={ariaLabel}
+          title={ariaLabel}
+        >
+          {triggerLabel && <span className="handout-toolbar-color-label">{triggerLabel}</span>}
+          <span className="handout-toolbar-color-swatch" style={{ backgroundColor: value }} />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="handout-color-popover">
+        <div className="handout-color-panel">
+          <div className="handout-color-row">
+            <input
+              type="color"
+              value={normalizedValue}
+              onChange={(e) => handleSwatchClick(e.target.value)}
+              className="handout-color-native"
+              aria-label="Selecionar cor"
+            />
+            <Input
+              value={hexInput}
+              onChange={(e) => handleHexChange(e.target.value)}
+              className="handout-color-hex"
+              placeholder="#FFFFFF"
+            />
+          </div>
+
+          <div className="handout-color-section">
+            <div className="handout-color-section-title">Sugestoes</div>
+            <div className="handout-color-swatches">
+              {suggestions.map((color) => {
+                const normalized = (normalizeHexColor(color) ?? color).toLowerCase();
+                const isActive = normalized === normalizedValueLower;
+                return (
+                  <button
+                    key={color}
+                    type="button"
+                    className={`handout-color-swatch ${isActive ? "is-active" : ""}`}
+                    style={{ backgroundColor: color }}
+                    onClick={() => handleSwatchClick(color)}
+                    aria-label={`Cor ${color}`}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="handout-color-section">
+            <div className="handout-color-section-title">Historico</div>
+            {history.length === 0 ? (
+              <div className="handout-color-empty">Sem historico</div>
+            ) : (
+              <div className="handout-color-swatches">
+                {history.map((color) => {
+                  const normalized = (normalizeHexColor(color) ?? color).toLowerCase();
+                  const isActive = normalized === normalizedValueLower;
+                  return (
+                    <button
+                      key={color}
+                      type="button"
+                      className={`handout-color-swatch ${isActive ? "is-active" : ""}`}
+                      style={{ backgroundColor: color }}
+                      onClick={() => handleSwatchClick(color)}
+                      aria-label={`Cor ${color}`}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function normalizeLayer(raw: unknown): Layer | null {
   if (!isObject(raw)) return null;
   const type = raw.type;
@@ -352,7 +652,6 @@ function normalizeLayer(raw: unknown): Layer | null {
     return layer;
   }
 
-  const fontWeight = safeEnum(String(raw.fontWeight), ["400", "600", "800"] as const, "400");
   const layer: TextLayer = {
     ...base,
     type: "text",
@@ -361,7 +660,7 @@ function normalizeLayer(raw: unknown): Layer | null {
     color: safeString(raw.color, "#111111"),
     align: safeEnum(raw.align, ["left", "center", "right"] as const, "left"),
     fontPreset: safeEnum(raw.fontPreset, FONT_PRESET_IDS, DEFAULT_FONT_PRESET),
-    fontWeight: Number(fontWeight) as 400 | 600 | 800,
+    fontWeight: normalizeFontWeight(raw.fontWeight, 400),
     italic: safeBoolean(raw.italic, false),
     underline: safeBoolean(raw.underline, false),
     backgroundColor: safeString(raw.backgroundColor, "transparent"),
@@ -381,8 +680,9 @@ function normalizeDocV1(raw: unknown): HandoutCanvasDocV1 | null {
   const legacyHeight = legacyOrientation === "portrait" ? legacyPreset.height : legacyPreset.width;
   const pageWidth = clamp(safeNumber(raw.pageWidth, legacyWidth), PAGE_SIZE_MIN, PAGE_SIZE_MAX);
   const pageHeight = clamp(safeNumber(raw.pageHeight, legacyHeight), PAGE_SIZE_MIN, PAGE_SIZE_MAX);
-  const zoom = clamp(safeNumber(raw.zoom, DEFAULT_DOC.zoom), 0.5, 1.25);
+  const zoom = clamp(safeNumber(raw.zoom, DEFAULT_DOC.zoom), ZOOM_MIN, ZOOM_MAX);
   const paperColor = safeString(raw.paperColor, DEFAULT_DOC.paperColor);
+  const paperOpacity = clamp(safeNumber(raw.paperOpacity, DEFAULT_DOC.paperOpacity), 0, 1);
 
   const layers = safeArray(raw.layers)
     .map(normalizeLayer)
@@ -394,6 +694,7 @@ function normalizeDocV1(raw: unknown): HandoutCanvasDocV1 | null {
     pageHeight,
     zoom,
     paperColor,
+    paperOpacity,
     layers: layers.length ? layers : DEFAULT_DOC.layers,
   };
 }
@@ -439,12 +740,18 @@ function HandoutCanvasBuilder() {
   type SidebarTab = "text" | "assets" | "layers" | "page" | "props" | "export";
   const [sidebarTab, setSidebarTab] = useState<SidebarTab>("text");
   const [doc, setDoc] = useState<HandoutCanvasDocV1>(DEFAULT_DOC);
+  const [colorHistory, setColorHistory] = useState<string[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [fontWeightSupport, setFontWeightSupport] = useState<Partial<Record<FontPresetId, FontWeight[]>>>({});
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const pageRef = useRef<HTMLDivElement | null>(null);
+  const stageRef = useRef<HTMLDivElement | null>(null);
   const jsonFileRef = useRef<HTMLInputElement | null>(null);
   const imageFileRef = useRef<HTMLInputElement | null>(null);
+  const textEditorRef = useRef<HTMLTextAreaElement | null>(null);
+  const editingSnapshotRef = useRef<string>("");
 
   useEffect(() => {
     try {
@@ -463,6 +770,29 @@ function HandoutCanvasBuilder() {
   }, []);
 
   useEffect(() => {
+    try {
+      const raw = localStorage.getItem(COLOR_HISTORY_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return;
+      const cleaned = parsed
+        .map((item) => (typeof item === "string" ? normalizeHexColor(item) : null))
+        .filter((item): item is string => Boolean(item));
+      if (!cleaned.length) return;
+      const seen = new Set<string>();
+      const deduped = cleaned.filter((color) => {
+        const key = color.toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+      setColorHistory(deduped.slice(0, COLOR_HISTORY_LIMIT));
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
     if (!hasLoaded) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(doc));
@@ -471,17 +801,72 @@ function HandoutCanvasBuilder() {
     }
   }, [doc, hasLoaded]);
 
+  useEffect(() => {
+    if (typeof document === "undefined" || !("fonts" in document)) return;
+    let active = true;
+    const fonts = document.fonts;
+    const checkWeights = () => {
+      const results: Partial<Record<FontPresetId, FontWeight[]>> = {};
+      for (const id of FONT_PRESET_IDS) {
+        const stack = FONT_PRESETS[id].stack;
+        const supported = FONT_WEIGHT_VALUES.filter((weight) =>
+          fonts.check(`normal ${weight} 16px ${stack}`, "Aa"),
+        );
+        results[id] = supported.length ? supported : [400];
+      }
+      if (active) setFontWeightSupport(results);
+    };
+
+    checkWeights();
+    fonts.ready.then(checkWeights).catch(() => {});
+
+    if (typeof fonts.addEventListener === "function") {
+      fonts.addEventListener("loadingdone", checkWeights);
+      fonts.addEventListener("loadingerror", checkWeights);
+      return () => {
+        active = false;
+        fonts.removeEventListener("loadingdone", checkWeights);
+        fonts.removeEventListener("loadingerror", checkWeights);
+      };
+    }
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(COLOR_HISTORY_KEY, JSON.stringify(colorHistory));
+    } catch {
+      // ignore
+    }
+  }, [colorHistory]);
+
+  useEffect(() => {
+    if (!editingId) return;
+    const raf = requestAnimationFrame(() => {
+      const editor = textEditorRef.current;
+      if (!editor) return;
+      editor.focus();
+      const len = editor.value.length;
+      editor.setSelectionRange(len, len);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [editingId]);
+
   const derivedPage = useMemo(() => {
     const width = clamp(doc.pageWidth, PAGE_SIZE_MIN, PAGE_SIZE_MAX);
     const height = clamp(doc.pageHeight, PAGE_SIZE_MIN, PAGE_SIZE_MAX);
+    const paperFill = applyAlphaToColor(doc.paperColor, doc.paperOpacity);
 
     const vars: CSSVars = {
-      "--handout-paper": doc.paperColor,
+      "--handout-paper": paperFill,
       "--handout-font": FONT_PRESETS[DEFAULT_FONT_PRESET].stack,
     };
 
     return { width, height, vars };
-  }, [doc.pageWidth, doc.pageHeight, doc.paperColor]);
+  }, [doc.pageWidth, doc.pageHeight, doc.paperColor, doc.paperOpacity]);
 
   const layersForList = useMemo(() => [...doc.layers].reverse(), [doc.layers]);
   const selectedLayer = useMemo(
@@ -489,13 +874,65 @@ function HandoutCanvasBuilder() {
     [doc.layers, selectedId],
   );
   const textLayer = selectedLayer?.type === "text" ? selectedLayer : null;
+  const textLayerWeights = useMemo(() => {
+    if (!textLayer) return FONT_WEIGHT_VALUES;
+    const supported = fontWeightSupport[textLayer.fontPreset];
+    return supported && supported.length ? supported : FONT_WEIGHT_VALUES;
+  }, [textLayer?.fontPreset, fontWeightSupport]);
+  const textWeightOptions = useMemo(() => {
+    const supported = new Set(textLayerWeights);
+    const filtered = FONT_WEIGHT_OPTIONS.filter((option) => supported.has(option.value));
+    return filtered.length ? filtered : FONT_WEIGHT_OPTIONS;
+  }, [textLayerWeights]);
+  const regularWeight = useMemo(() => getRegularWeight(textLayerWeights), [textLayerWeights]);
+  const boldWeight = useMemo(() => getBoldWeight(textLayerWeights), [textLayerWeights]);
+
+  useEffect(() => {
+    if (!textLayer) return;
+    if (textLayerWeights.includes(textLayer.fontWeight)) return;
+    const nextWeight = getClosestWeight(textLayerWeights, textLayer.fontWeight);
+    if (nextWeight === textLayer.fontWeight) return;
+    updateLayer(textLayer.id, (p) => (p.type === "text" ? { ...p, fontWeight: nextWeight } : p));
+  }, [textLayer?.id, textLayer?.fontWeight, textLayerWeights]);
   const opacityPercent = selectedLayer ? Math.round(selectedLayer.opacity * 100) : 100;
+  const paperOpacityPercent = Math.round(doc.paperOpacity * 100);
+
+  function adjustZoom(delta: number) {
+    setDoc((prev) => ({ ...prev, zoom: clamp(prev.zoom + delta, ZOOM_MIN, ZOOM_MAX) }));
+  }
+
+  function recordColor(value: string) {
+    const normalized = normalizeHexColor(value);
+    if (!normalized) return;
+    setColorHistory((prev) => {
+      const next = [normalized, ...prev.filter((color) => color.toLowerCase() !== normalized.toLowerCase())];
+      return next.slice(0, COLOR_HISTORY_LIMIT);
+    });
+  }
 
   function updateLayer(id: string, updater: (prev: Layer) => Layer) {
     setDoc((prev) => ({
       ...prev,
       layers: prev.layers.map((l) => (l.id === id ? updater(l) : l)),
     }));
+  }
+
+  function startTextEditing(layer: TextLayer) {
+    editingSnapshotRef.current = layer.text;
+    setSelectedId(layer.id);
+    setEditingId(layer.id);
+  }
+
+  function finishTextEditing() {
+    setEditingId(null);
+    editingSnapshotRef.current = "";
+  }
+
+  function cancelTextEditing() {
+    if (!editingId) return;
+    updateLayer(editingId, (p) => (p.type === "text" ? { ...p, text: editingSnapshotRef.current } : p));
+    setEditingId(null);
+    editingSnapshotRef.current = "";
   }
 
   function moveLayerOneStep(id: string, direction: -1 | 1) {
@@ -547,6 +984,7 @@ function HandoutCanvasBuilder() {
   function deleteLayer(id: string) {
     setDoc((prev) => ({ ...prev, layers: prev.layers.filter((l) => l.id !== id) }));
     setSelectedId((current) => (current === id ? null : current));
+    setEditingId((current) => (current === id ? null : current));
   }
 
   function addText() {
@@ -636,8 +1074,12 @@ function HandoutCanvasBuilder() {
   function resetAll() {
     setDoc(DEFAULT_DOC);
     setSelectedId(null);
+    setEditingId(null);
+    editingSnapshotRef.current = "";
+    setColorHistory([]);
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(COLOR_HISTORY_KEY);
     } catch {
       // ignore
     }
@@ -718,6 +1160,29 @@ function HandoutCanvasBuilder() {
       const tag = target?.tagName?.toLowerCase();
       if (tag === "input" || tag === "textarea" || tag === "select" || target?.isContentEditable) return;
 
+      const isModifier = e.ctrlKey || e.metaKey;
+      if (isModifier) {
+        const isZoomInKey = e.key === "=" || e.key === "+" || e.code === "NumpadAdd";
+        const isZoomOutKey = e.key === "-" || e.key === "_" || e.code === "NumpadSubtract";
+        const isZoomResetKey = e.key === "0" || e.code === "Numpad0";
+
+        if (isZoomInKey) {
+          e.preventDefault();
+          adjustZoom(ZOOM_BUTTON_STEP);
+          return;
+        }
+        if (isZoomOutKey) {
+          e.preventDefault();
+          adjustZoom(-ZOOM_BUTTON_STEP);
+          return;
+        }
+        if (isZoomResetKey) {
+          e.preventDefault();
+          setDoc((p) => ({ ...p, zoom: clamp(1, ZOOM_MIN, ZOOM_MAX) }));
+          return;
+        }
+      }
+
       if (e.key === "Delete" || e.key === "Backspace") {
         if (!selectedId) return;
         deleteLayer(selectedId);
@@ -727,6 +1192,23 @@ function HandoutCanvasBuilder() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [selectedId]);
+
+  useEffect(() => {
+    const node = stageRef.current;
+    if (!node) return;
+
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      const direction = Math.sign(e.deltaY);
+      if (direction === 0) return;
+      e.preventDefault();
+      const step = e.shiftKey ? ZOOM_STEP_LARGE : ZOOM_STEP;
+      adjustZoom(-direction * step);
+    };
+
+    node.addEventListener("wheel", onWheel, { passive: false });
+    return () => node.removeEventListener("wheel", onWheel);
+  }, []);
 
   return (
     <div className="handout-builder-app">
@@ -884,23 +1366,29 @@ function HandoutCanvasBuilder() {
                   <input
                     id="canvas-zoom"
                     type="range"
-                    min={0.5}
-                    max={1.25}
+                    min={ZOOM_MIN}
+                    max={ZOOM_MAX}
                     step={0.05}
                     value={doc.zoom}
-                    onChange={(e) => setDoc((p) => ({ ...p, zoom: Number(e.target.value) }))}
+                    onChange={(e) =>
+                      setDoc((p) => ({ ...p, zoom: clamp(Number(e.target.value), ZOOM_MIN, ZOOM_MAX) }))
+                    }
                     className="handout-range"
                   />
                 </div>
 
                 <div className="grid gap-2">
-                  <Label htmlFor="page-paper">Cor do papel</Label>
-                  <Input
-                    id="page-paper"
-                    type="color"
+                  <Label>Cor do papel</Label>
+                  <ColorPicker
                     value={doc.paperColor}
-                    onChange={(e) => setDoc((p) => ({ ...p, paperColor: e.target.value }))}
-                    className="h-10 p-1"
+                    onValueChange={(value) => {
+                      setDoc((p) => ({ ...p, paperColor: value }));
+                      recordColor(value);
+                    }}
+                    suggestions={COLOR_SUGGESTIONS}
+                    history={colorHistory}
+                    ariaLabel="Cor do papel"
+                    className="handout-color-inline"
                   />
                 </div>
                 </div>
@@ -1108,88 +1596,6 @@ function HandoutCanvasBuilder() {
                           </div>
                         </div>
                       )}
-
-                      {selectedLayer.type === "text" && (
-                        <div className="grid gap-3 rounded-md border border-input p-3">
-                          <div className="text-sm font-medium">Texto</div>
-                          <div className="grid gap-2">
-                            <Label>Conteúdo</Label>
-                            <Textarea
-                              value={selectedLayer.text}
-                              rows={6}
-                              onChange={(e) =>
-                                updateLayer(selectedLayer.id, (p) =>
-                                  p.type === "text" ? { ...p, text: e.target.value } : p,
-                                )
-                              }
-                            />
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-3">
-                            <div className="grid gap-2">
-                              <Label>Tamanho</Label>
-                              <Input
-                                type="number"
-                                value={selectedLayer.fontSize}
-                                onChange={(e) =>
-                                  updateLayer(selectedLayer.id, (p) =>
-                                    p.type === "text"
-                                      ? { ...p, fontSize: clamp(Number(e.target.value), 8, 180) }
-                                      : p,
-                                  )
-                                }
-                              />
-                            </div>
-                            <div className="grid gap-2">
-                              <Label>Cor</Label>
-                              <Input
-                                type="color"
-                                value={selectedLayer.color}
-                                onChange={(e) =>
-                                  updateLayer(selectedLayer.id, (p) =>
-                                    p.type === "text" ? { ...p, color: e.target.value } : p,
-                                  )
-                                }
-                                className="h-10 p-1"
-                              />
-                            </div>
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-3">
-                            <div className="grid gap-2">
-                              <Label>Alinhamento</Label>
-                              <Select
-                                value={selectedLayer.align}
-                                onValueChange={(v) =>
-                                  updateLayer(selectedLayer.id, (p) =>
-                                    p.type === "text" ? { ...p, align: v as TextAlign } : p,
-                                  )
-                                }
-                              >
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecione" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="left">Esquerda</SelectItem>
-                                  <SelectItem value="center">Centro</SelectItem>
-                                  <SelectItem value="right">Direita</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            <div className="grid gap-2">
-                              <Label>Fonte</Label>
-                              <FontPicker
-                                value={selectedLayer.fontPreset}
-                                onValueChange={(v) =>
-                                  updateLayer(selectedLayer.id, (p) =>
-                                    p.type === "text" ? { ...p, fontPreset: v } : p,
-                                  )
-                                }
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      )}
                     </>
                   )}
                 </div>
@@ -1261,7 +1667,86 @@ function HandoutCanvasBuilder() {
               </span>
             </div>
             <div className="handout-topbar-right">
-              {!selectedLayer && <span className="handout-topbar-muted">Selecione um item para editar.</span>}
+              {!selectedLayer && (
+                <div className="handout-background-toolbar" role="group" aria-label="Fundo do canvas">
+                  <span className="handout-topbar-chip">Fundo</span>
+                  <ColorPicker
+                    value={doc.paperColor}
+                    onValueChange={(value) => {
+                      setDoc((p) => ({ ...p, paperColor: value }));
+                      recordColor(value);
+                    }}
+                    suggestions={COLOR_SUGGESTIONS}
+                    history={colorHistory}
+                    triggerLabel="BG"
+                    ariaLabel="Cor do fundo"
+                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className="handout-toolbar-button"
+                        aria-label="Transparencia do fundo"
+                        title="Transparencia do fundo"
+                      >
+                        <SlidersHorizontal className="h-4 w-4" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent align="end" className="handout-opacity-popover">
+                      <div className="handout-opacity-panel">
+                        <div className="handout-opacity-title">Transparencia</div>
+                        <input
+                          type="range"
+                          min={0}
+                          max={100}
+                          step={1}
+                          value={paperOpacityPercent}
+                          onChange={(e) => {
+                            const value = clamp(Number(e.target.value), 0, 100);
+                            setDoc((p) => ({ ...p, paperOpacity: value / 100 }));
+                          }}
+                          className="handout-opacity-range"
+                        />
+                        <div className="handout-opacity-stepper">
+                          <button
+                            type="button"
+                            className="handout-toolbar-button"
+                            aria-label="Diminuir transparencia"
+                            onClick={() => {
+                              const value = clamp(paperOpacityPercent - 5, 0, 100);
+                              setDoc((p) => ({ ...p, paperOpacity: value / 100 }));
+                            }}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </button>
+                          <Input
+                            type="number"
+                            min={0}
+                            max={100}
+                            value={paperOpacityPercent}
+                            onChange={(e) => {
+                              const value = clamp(Number(e.target.value), 0, 100);
+                              setDoc((p) => ({ ...p, paperOpacity: value / 100 }));
+                            }}
+                            className="handout-opacity-input"
+                          />
+                          <button
+                            type="button"
+                            className="handout-toolbar-button"
+                            aria-label="Aumentar transparencia"
+                            onClick={() => {
+                              const value = clamp(paperOpacityPercent + 5, 0, 100);
+                              setDoc((p) => ({ ...p, paperOpacity: value / 100 }));
+                            }}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              )}
 
               {selectedLayer && (
                 <div className="handout-topbar-actions" role="group" aria-label="Acoes da camada">
@@ -1396,6 +1881,21 @@ function HandoutCanvasBuilder() {
 
                   <div className="handout-toolbar-divider" aria-hidden="true" />
 
+                  <div className="handout-toolbar-group">
+                    <FontWeightPicker
+                      value={textLayer.fontWeight}
+                      onValueChange={(value) =>
+                        updateLayer(textLayer.id, (p) =>
+                          p.type === "text" ? { ...p, fontWeight: value } : p,
+                        )
+                      }
+                      fontFamily={FONT_PRESETS[textLayer.fontPreset].stack}
+                      options={textWeightOptions}
+                    />
+                  </div>
+
+                  <div className="handout-toolbar-divider" aria-hidden="true" />
+
                   <div className="handout-toolbar-group handout-toolbar-size">
                     <button
                       type="button"
@@ -1438,35 +1938,34 @@ function HandoutCanvasBuilder() {
                   <div className="handout-toolbar-divider" aria-hidden="true" />
 
                   <div className="handout-toolbar-group">
-                    <label className="handout-toolbar-color" aria-label="Cor do texto">
-                      <span className="handout-toolbar-color-label">A</span>
-                      <span
-                        className="handout-toolbar-color-swatch"
-                        style={{ backgroundColor: textLayer.color }}
-                      />
-                      <input
-                        type="color"
-                        value={textLayer.color}
-                        onChange={(e) =>
-                          updateLayer(textLayer.id, (p) =>
-                            p.type === "text" ? { ...p, color: e.target.value } : p,
-                          )
-                        }
-                        className="handout-toolbar-color-input"
-                      />
-                    </label>
+                    <ColorPicker
+                      value={textLayer.color}
+                      onValueChange={(value) => {
+                        updateLayer(textLayer.id, (p) =>
+                          p.type === "text" ? { ...p, color: value } : p,
+                        );
+                        recordColor(value);
+                      }}
+                      suggestions={COLOR_SUGGESTIONS}
+                      history={colorHistory}
+                      triggerLabel="A"
+                      ariaLabel="Cor do texto"
+                    />
                     <button
                       type="button"
-                      className={`handout-toolbar-button ${textLayer.fontWeight >= 600 ? "is-active" : ""}`}
+                      className={`handout-toolbar-button ${
+                        textLayer.fontWeight !== regularWeight && textLayer.fontWeight >= boldWeight ? "is-active" : ""
+                      }`}
                       aria-label="Negrito"
-                      aria-pressed={textLayer.fontWeight >= 600}
-                      onClick={() =>
+                      aria-pressed={textLayer.fontWeight !== regularWeight && textLayer.fontWeight >= boldWeight}
+                      onClick={() => {
+                        const isBold =
+                          textLayer.fontWeight !== regularWeight && textLayer.fontWeight >= boldWeight;
+                        const nextWeight = isBold ? regularWeight : boldWeight;
                         updateLayer(textLayer.id, (p) =>
-                          p.type === "text"
-                            ? { ...p, fontWeight: p.fontWeight >= 600 ? 400 : 800 }
-                            : p,
-                        )
-                      }
+                          p.type === "text" ? { ...p, fontWeight: nextWeight } : p,
+                        );
+                      }}
                     >
                       <Bold className="h-4 w-4" />
                     </button>
@@ -1548,6 +2047,7 @@ function HandoutCanvasBuilder() {
           </div>
 
           <div
+            ref={stageRef}
             className="handout-preview-stage handout-canvas-stage"
             onDragOver={(e) => {
               e.preventDefault();
@@ -1573,11 +2073,15 @@ function HandoutCanvasBuilder() {
                   height: `${derivedPage.height}px`,
                 }}
                 onMouseDown={(e) => {
-                  if (e.target === e.currentTarget) setSelectedId(null);
+                  if (e.target === e.currentTarget) {
+                    setSelectedId(null);
+                    finishTextEditing();
+                  }
                 }}
               >
                 {doc.layers.map((layer) => {
                   const isSelected = layer.id === selectedId;
+                  const isEditing = editingId === layer.id;
                   const isRotated = Math.abs(layer.rotation) > 0.01;
                   if (!layer.visible) return null;
 
@@ -1599,8 +2103,9 @@ function HandoutCanvasBuilder() {
                     border: "2px solid rgba(255,255,255,0.85)",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
                   } as const;
+                  const canResize = isSelected && !layer.locked && !isEditing;
                   const resizeHandleStyles =
-                    isSelected && !layer.locked
+                    canResize
                       ? {
                           topLeft: handleStyle,
                           topRight: handleStyle,
@@ -1616,15 +2121,23 @@ function HandoutCanvasBuilder() {
                       size={{ width: layer.width, height: layer.height }}
                       position={{ x: layer.x, y: layer.y }}
                       scale={doc.zoom}
-                      disableDragging={layer.locked}
-                      enableResizing={isSelected && !layer.locked}
+                      disableDragging={layer.locked || isEditing}
+                      enableResizing={canResize}
                       resizeHandleStyles={resizeHandleStyles}
                       lockAspectRatio={layer.type === "image" ? layer.keepAspectRatio : false}
                       onMouseDown={(e) => {
                         e.stopPropagation();
+                        if (editingId && editingId !== layer.id) finishTextEditing();
                         setSelectedId(layer.id);
                       }}
-                      onDoubleClick={() => setSidebarTab("props")}
+                      onDoubleClick={(e) => {
+                        e.stopPropagation();
+                        if (layer.type === "text") {
+                          startTextEditing(layer);
+                          return;
+                        }
+                        setSidebarTab("props");
+                      }}
                       onDragStop={(_, data) => {
                         updateLayer(layer.id, (p) => ({ ...p, x: data.x, y: data.y }));
                       }}
@@ -1641,7 +2154,7 @@ function HandoutCanvasBuilder() {
                       }}
                       className={`handout-layer ${layer.type === "image" ? "is-image" : "is-text"} ${isSelected ? "is-selected" : ""} ${layer.locked ? "is-locked" : ""} ${isRotated ? "is-rotated" : ""}`}
                     >
-                      {isSelected && (
+                      {isSelected && !isEditing && (
                         <div className="handout-layer-bounds">
                           <div className={boundsLabelClassName} aria-hidden="true">
                             {Math.round(layer.width)}x{Math.round(layer.height)} · x:{Math.round(layer.x)} y:{Math.round(layer.y)}
@@ -1666,9 +2179,8 @@ function HandoutCanvasBuilder() {
                           {layer.type === "image" ? (
                             <img src={layer.src} alt="" draggable={false} className="handout-layer-image" />
                           ) : (
-                            <div
-                              className="handout-layer-text"
-                              style={{
+                            (() => {
+                              const textStyle = {
                                 fontSize: `${layer.fontSize}px`,
                                 color: layer.color,
                                 textAlign: layer.align,
@@ -1678,11 +2190,41 @@ function HandoutCanvasBuilder() {
                                 textDecoration: layer.underline ? "underline" : "none",
                                 backgroundColor: layer.backgroundColor,
                                 padding: `${layer.padding}px`,
+                                lineHeight: 1.2,
                                 whiteSpace: "pre-wrap",
-                              }}
-                            >
-                              {layer.text}
-                            </div>
+                              } as const;
+
+                              if (isEditing) {
+                                return (
+                                  <textarea
+                                    ref={textEditorRef}
+                                    value={layer.text}
+                                    onChange={(e) =>
+                                      updateLayer(layer.id, (p) =>
+                                        p.type === "text" ? { ...p, text: e.target.value } : p,
+                                      )
+                                    }
+                                    onBlur={finishTextEditing}
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Escape") {
+                                        e.preventDefault();
+                                        cancelTextEditing();
+                                      }
+                                    }}
+                                    onMouseDown={(e) => e.stopPropagation()}
+                                    onPointerDown={(e) => e.stopPropagation()}
+                                    className="handout-layer-text-editor"
+                                    style={textStyle}
+                                  />
+                                );
+                              }
+
+                              return (
+                                <div className="handout-layer-text" style={textStyle}>
+                                  {layer.text}
+                                </div>
+                              );
+                            })()
                           )}
                         </div>
                       </div>
@@ -1724,6 +2266,7 @@ export default function HandoutCanvasApp() {
     </PortalContainerProvider>
   );
 }
+
 
 
 

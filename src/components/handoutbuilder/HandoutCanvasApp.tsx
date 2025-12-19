@@ -55,6 +55,23 @@ type FontPresetId =
   | "jetbrains-mono";
 type TextAlign = "left" | "center" | "right";
 type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+type BlendMode =
+  | "normal"
+  | "multiply"
+  | "screen"
+  | "overlay"
+  | "darken"
+  | "lighten"
+  | "color-dodge"
+  | "color-burn"
+  | "hard-light"
+  | "soft-light"
+  | "difference"
+  | "exclusion"
+  | "hue"
+  | "saturation"
+  | "color"
+  | "luminosity";
 
 type BaseLayer = {
   id: string;
@@ -69,6 +86,7 @@ type BaseLayer = {
   flipY: boolean;
   locked: boolean;
   visible: boolean;
+  blendMode: BlendMode;
 };
 
 type ImageLayer = BaseLayer & {
@@ -177,6 +195,30 @@ const FONT_WEIGHT_OPTIONS: ReadonlyArray<{ value: FontWeight; label: string }> =
   { value: 800, label: "Extra Bold" },
   { value: 900, label: "Black" },
 ] as const;
+const BLEND_MODE_OPTIONS: ReadonlyArray<{ value: BlendMode; label: string }> = [
+  { value: "normal", label: "Normal" },
+  { value: "multiply", label: "Multiply" },
+  { value: "screen", label: "Screen" },
+  { value: "overlay", label: "Overlay" },
+  { value: "darken", label: "Darken" },
+  { value: "lighten", label: "Lighten" },
+  { value: "color-dodge", label: "Color Dodge" },
+  { value: "color-burn", label: "Color Burn" },
+  { value: "hard-light", label: "Hard Light" },
+  { value: "soft-light", label: "Soft Light" },
+  { value: "difference", label: "Difference" },
+  { value: "exclusion", label: "Exclusion" },
+  { value: "hue", label: "Hue" },
+  { value: "saturation", label: "Saturation" },
+  { value: "color", label: "Color" },
+  { value: "luminosity", label: "Luminosity" },
+] as const;
+const BLEND_MODE_VALUES = BLEND_MODE_OPTIONS.map((option) => option.value) as BlendMode[];
+const TEXT_ALIGN_LABELS: Record<TextAlign, string> = {
+  left: "Esquerda",
+  center: "Centro",
+  right: "Direita",
+};
 const COLOR_HISTORY_KEY = "kraken.handoutColorHistory";
 const COLOR_HISTORY_LIMIT = 12;
 const COLOR_SUGGESTIONS = [
@@ -216,6 +258,7 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
       flipY: false,
       locked: false,
       visible: true,
+      blendMode: "normal",
       text: "Handout",
       fontSize: 54,
       color: "#2b1b0e",
@@ -241,6 +284,7 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
       flipY: false,
       locked: false,
       visible: true,
+      blendMode: "normal",
       text:
         "Funciona como um mini-Canva:\\n\\n- Adicione imagens em camadas\\n- Crie vários textos\\n- Arraste e redimensione\\n- Reordene as camadas no painel",
       fontSize: 18,
@@ -495,6 +539,52 @@ function FontWeightPicker({
   );
 }
 
+type BlendModePickerProps = {
+  value: BlendMode;
+  onValueChange: (value: BlendMode) => void;
+  disabled?: boolean;
+  className?: string;
+};
+
+function BlendModePicker({ value, onValueChange, disabled, className }: BlendModePickerProps) {
+  const [open, setOpen] = useState(false);
+  const selected = BLEND_MODE_OPTIONS.find((option) => option.value === value) ?? BLEND_MODE_OPTIONS[0];
+  const triggerClassName = ["handout-toolbar-input", "handout-blend-trigger", className]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button type="button" variant="outline" disabled={disabled} className={triggerClassName} aria-expanded={open}>
+          <span className="handout-blend-label">{selected.label}</span>
+          <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="handout-blend-popover">
+        <div className="handout-blend-panel">
+          {BLEND_MODE_OPTIONS.map((option) => {
+            const isActive = option.value === value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                className={`handout-blend-option ${isActive ? "is-active" : ""}`}
+                onClick={() => {
+                  onValueChange(option.value);
+                  setOpen(false);
+                }}
+              >
+                <span className="handout-blend-label">{option.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 type ColorPickerProps = {
   value: string;
   onValueChange: (value: string) => void;
@@ -634,6 +724,7 @@ function normalizeLayer(raw: unknown): Layer | null {
     flipY: safeBoolean(raw.flipY, false),
     locked: safeBoolean(raw.locked, false),
     visible: safeBoolean(raw.visible, true),
+    blendMode: safeEnum(raw.blendMode, BLEND_MODE_VALUES, "normal"),
   };
 
   if (!base.id) return null;
@@ -1005,6 +1096,7 @@ function HandoutCanvasBuilder() {
       flipY: false,
       locked: false,
       visible: true,
+      blendMode: "normal",
       text: "Novo texto",
       fontSize: 32,
       color: "#2b1b0e",
@@ -1055,6 +1147,7 @@ function HandoutCanvasBuilder() {
           flipY: false,
           locked: false,
           visible: true,
+          blendMode: "normal",
           src,
           keepAspectRatio: true,
         });
@@ -1662,9 +1755,6 @@ function HandoutCanvasBuilder() {
           <div className="handout-topbar">
             <div className="handout-topbar-left">
               <span className="handout-topbar-chip">Canvas</span>
-              <span className="handout-topbar-muted">
-                {derivedPage.width}x{derivedPage.height}px
-              </span>
             </div>
             <div className="handout-topbar-right">
               {!selectedLayer && (
@@ -1694,7 +1784,6 @@ function HandoutCanvasBuilder() {
                     </PopoverTrigger>
                     <PopoverContent align="end" className="handout-opacity-popover">
                       <div className="handout-opacity-panel">
-                        <div className="handout-opacity-title">Transparencia</div>
                         <input
                           type="range"
                           min={0}
@@ -1707,41 +1796,6 @@ function HandoutCanvasBuilder() {
                           }}
                           className="handout-opacity-range"
                         />
-                        <div className="handout-opacity-stepper">
-                          <button
-                            type="button"
-                            className="handout-toolbar-button"
-                            aria-label="Diminuir transparencia"
-                            onClick={() => {
-                              const value = clamp(paperOpacityPercent - 5, 0, 100);
-                              setDoc((p) => ({ ...p, paperOpacity: value / 100 }));
-                            }}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </button>
-                          <Input
-                            type="number"
-                            min={0}
-                            max={100}
-                            value={paperOpacityPercent}
-                            onChange={(e) => {
-                              const value = clamp(Number(e.target.value), 0, 100);
-                              setDoc((p) => ({ ...p, paperOpacity: value / 100 }));
-                            }}
-                            className="handout-opacity-input"
-                          />
-                          <button
-                            type="button"
-                            className="handout-toolbar-button"
-                            aria-label="Aumentar transparencia"
-                            onClick={() => {
-                              const value = clamp(paperOpacityPercent + 5, 0, 100);
-                              setDoc((p) => ({ ...p, paperOpacity: value / 100 }));
-                            }}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </button>
-                        </div>
                       </div>
                     </PopoverContent>
                   </Popover>
@@ -1775,7 +1829,6 @@ function HandoutCanvasBuilder() {
                     </PopoverTrigger>
                     <PopoverContent align="end" className="handout-opacity-popover">
                       <div className="handout-opacity-panel">
-                        <div className="handout-opacity-title">Transparencia</div>
                         <input
                           type="range"
                           min={0}
@@ -1788,44 +1841,15 @@ function HandoutCanvasBuilder() {
                           }}
                           className="handout-opacity-range"
                         />
-                        <div className="handout-opacity-stepper">
-                          <button
-                            type="button"
-                            className="handout-toolbar-button"
-                            aria-label="Diminuir transparencia"
-                            onClick={() => {
-                              const value = clamp(opacityPercent - 5, 0, 100);
-                              updateLayer(selectedLayer.id, (p) => ({ ...p, opacity: value / 100 }));
-                            }}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </button>
-                          <Input
-                            type="number"
-                            min={0}
-                            max={100}
-                            value={opacityPercent}
-                            onChange={(e) => {
-                              const value = clamp(Number(e.target.value), 0, 100);
-                              updateLayer(selectedLayer.id, (p) => ({ ...p, opacity: value / 100 }));
-                            }}
-                            className="handout-opacity-input"
-                          />
-                          <button
-                            type="button"
-                            className="handout-toolbar-button"
-                            aria-label="Aumentar transparencia"
-                            onClick={() => {
-                              const value = clamp(opacityPercent + 5, 0, 100);
-                              updateLayer(selectedLayer.id, (p) => ({ ...p, opacity: value / 100 }));
-                            }}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </button>
-                        </div>
                       </div>
                     </PopoverContent>
                   </Popover>
+                  <BlendModePicker
+                    value={selectedLayer.blendMode}
+                    onValueChange={(value) =>
+                      updateLayer(selectedLayer.id, (p) => ({ ...p, blendMode: value }))
+                    }
+                  />
                   <button
                     type="button"
                     className={`handout-toolbar-button ${selectedLayer.flipX ? "is-active" : ""}`}
@@ -2000,36 +2024,23 @@ function HandoutCanvasBuilder() {
                   <div className="handout-toolbar-group">
                     <button
                       type="button"
-                      className={`handout-toolbar-button ${textLayer.align === "left" ? "is-active" : ""}`}
-                      aria-label="Alinhar a esquerda"
-                      aria-pressed={textLayer.align === "left"}
-                      onClick={() =>
-                        updateLayer(textLayer.id, (p) => (p.type === "text" ? { ...p, align: "left" } : p))
-                      }
+                      className="handout-toolbar-button"
+                      aria-label={`Alinhamento: ${TEXT_ALIGN_LABELS[textLayer.align]}`}
+                      title={`Alinhamento: ${TEXT_ALIGN_LABELS[textLayer.align]}`}
+                      onClick={() => {
+                        const order: TextAlign[] = ["left", "center", "right"];
+                        const idx = order.indexOf(textLayer.align);
+                        const next = order[(idx + 1) % order.length];
+                        updateLayer(textLayer.id, (p) => (p.type === "text" ? { ...p, align: next } : p));
+                      }}
                     >
-                      <AlignLeft className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className={`handout-toolbar-button ${textLayer.align === "center" ? "is-active" : ""}`}
-                      aria-label="Centralizar"
-                      aria-pressed={textLayer.align === "center"}
-                      onClick={() =>
-                        updateLayer(textLayer.id, (p) => (p.type === "text" ? { ...p, align: "center" } : p))
-                      }
-                    >
-                      <AlignCenter className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className={`handout-toolbar-button ${textLayer.align === "right" ? "is-active" : ""}`}
-                      aria-label="Alinhar a direita"
-                      aria-pressed={textLayer.align === "right"}
-                      onClick={() =>
-                        updateLayer(textLayer.id, (p) => (p.type === "text" ? { ...p, align: "right" } : p))
-                      }
-                    >
-                      <AlignRight className="h-4 w-4" />
+                      {textLayer.align === "left" ? (
+                        <AlignLeft className="h-4 w-4" />
+                      ) : textLayer.align === "center" ? (
+                        <AlignCenter className="h-4 w-4" />
+                      ) : (
+                        <AlignRight className="h-4 w-4" />
+                      )}
                     </button>
                   </div>
                 </div>
@@ -2152,6 +2163,7 @@ function HandoutCanvasBuilder() {
                           y: position.y,
                         }));
                       }}
+                      style={{ mixBlendMode: layer.blendMode }}
                       className={`handout-layer ${layer.type === "image" ? "is-image" : "is-text"} ${isSelected ? "is-selected" : ""} ${layer.locked ? "is-locked" : ""} ${isRotated ? "is-rotated" : ""}`}
                     >
                       {isSelected && !isEditing && (

@@ -27,7 +27,7 @@ const t = loadT(currentLocale);
   desc="Crie documentos de RPG personalizados e exporte em PNG/PDF"
   navbarSticky={false}
 >
-  <section class="pt-3 pb-5">
+  <section class="pt-3 pb-5 handout-builder-section">
 
     <div class="container-fluid px-0 px-md-3">
       <div class="system-editor handout-builder">
@@ -40,14 +40,52 @@ const t = loadT(currentLocale);
   </section>
 
   <style>
+    .handout-builder-section {
+      min-height: calc(100vh - var(--navbar-offset, 0px));
+      height: calc(100vh - var(--navbar-offset, 0px));
+      display: flex;
+      flex-direction: column;
+      padding: 0 !important;
+    }
+
+    .handout-builder-section > .container-fluid,
+    .handout-builder-section .system-editor,
     .handout-builder-shell {
-      min-height: 78vh;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .handout-builder-shell {
+      min-height: 0;
+      display: flex;
     }
 
     @media (max-width: 768px) {
+      .handout-builder-section {
+        min-height: calc(100svh - var(--navbar-offset, 0px));
+        height: calc(100svh - var(--navbar-offset, 0px));
+      }
+
       .handout-builder-shell {
         border-radius: 0 !important;
       }
     }
   </style>
+  <script is:inline>
+    {`
+      function updateHandoutNavbarOffset() {
+        const nav = document.getElementById("site-navbar");
+        if (!nav) return;
+        const height = nav.getBoundingClientRect().height;
+        document.documentElement.style.setProperty("--navbar-offset", height + "px");
+      }
+
+      document.addEventListener("astro:page-load", updateHandoutNavbarOffset);
+      window.addEventListener("resize", updateHandoutNavbarOffset);
+      window.addEventListener("astro:after-swap", updateHandoutNavbarOffset);
+      requestAnimationFrame(updateHandoutNavbarOffset);
+    `}
+  </script>
 </Layout>

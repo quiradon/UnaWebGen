@@ -3,6 +3,8 @@ import { Rnd } from "react-rnd";
 import {
   Check,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   ChevronUp,
   ChevronsUpDown,
   Copy,
@@ -10,6 +12,9 @@ import {
   Eye,
   EyeOff,
   Image as ImageIcon,
+  FlipHorizontal2,
+  FlipVertical2,
+  Blend,
   Bold,
   AlignCenter,
   AlignLeft,
@@ -22,6 +27,7 @@ import {
   Plus,
   Printer,
   RotateCcw,
+  Sparkles,
   SlidersHorizontal,
   Trash2,
   Type,
@@ -73,6 +79,25 @@ type BlendMode =
   | "color"
   | "luminosity";
 
+type ShadowEffect = {
+  enabled: boolean;
+  x: number;
+  y: number;
+  blur: number;
+  spread: number;
+  color: string;
+  opacity: number;
+};
+
+type LayerEffects = {
+  dropShadow: ShadowEffect;
+  innerShadow: ShadowEffect;
+  blur: number;
+  brightness: number;
+  contrast: number;
+  saturate: number;
+};
+
 type BaseLayer = {
   id: string;
   name: string;
@@ -87,6 +112,7 @@ type BaseLayer = {
   locked: boolean;
   visible: boolean;
   blendMode: BlendMode;
+  effects: LayerEffects;
 };
 
 type ImageLayer = BaseLayer & {
@@ -134,6 +160,16 @@ const ZOOM_MAX = 1.25;
 const ZOOM_STEP = 0.05;
 const ZOOM_STEP_LARGE = 0.15;
 const ZOOM_BUTTON_STEP = 0.1;
+const EFFECT_SHADOW_OFFSET_MIN = -200;
+const EFFECT_SHADOW_OFFSET_MAX = 200;
+const EFFECT_SHADOW_BLUR_MIN = 0;
+const EFFECT_SHADOW_BLUR_MAX = 200;
+const EFFECT_SHADOW_SPREAD_MIN = -100;
+const EFFECT_SHADOW_SPREAD_MAX = 100;
+const EFFECT_BLUR_MIN = 0;
+const EFFECT_BLUR_MAX = 40;
+const EFFECT_FILTER_MIN = 0;
+const EFFECT_FILTER_MAX = 200;
 
 const LEGACY_PAGE_SIZES = {
   a4: { width: 794, height: 1123 },
@@ -236,6 +272,37 @@ const COLOR_SUGGESTIONS = [
   "#8b5cf6",
 ] as const;
 
+const DEFAULT_DROP_SHADOW: ShadowEffect = {
+  enabled: false,
+  x: 0,
+  y: 18,
+  blur: 30,
+  spread: 0,
+  color: "#000000",
+  opacity: 0.35,
+};
+
+const DEFAULT_INNER_SHADOW: ShadowEffect = {
+  enabled: false,
+  x: 0,
+  y: 4,
+  blur: 12,
+  spread: 0,
+  color: "#000000",
+  opacity: 0.35,
+};
+
+function createDefaultEffects(): LayerEffects {
+  return {
+    dropShadow: { ...DEFAULT_DROP_SHADOW },
+    innerShadow: { ...DEFAULT_INNER_SHADOW },
+    blur: 0,
+    brightness: 100,
+    contrast: 100,
+    saturate: 100,
+  };
+}
+
 const DEFAULT_DOC: HandoutCanvasDocV1 = {
   version: 1,
   pageWidth: DEFAULT_PAGE_WIDTH,
@@ -259,6 +326,7 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
       locked: false,
       visible: true,
       blendMode: "normal",
+      effects: createDefaultEffects(),
       text: "Handout",
       fontSize: 54,
       color: "#2b1b0e",
@@ -284,8 +352,9 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
       flipY: false,
       locked: false,
       visible: true,
-      blendMode: "normal",
-      text:
+        blendMode: "normal",
+        effects: createDefaultEffects(),
+        text:
         "Funciona como um mini-Canva:\\n\\n- Adicione imagens em camadas\\n- Crie vários textos\\n- Arraste e redimensione\\n- Reordene as camadas no painel",
       fontSize: 18,
       color: "#2b1b0e",
@@ -406,6 +475,56 @@ function applyAlphaToColor(color: string, opacity: number) {
   const rgb = hexToRgb(color);
   if (!rgb) return color;
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${clamped})`;
+}
+
+function buildShadowValue(shadow: ShadowEffect, inset: boolean) {
+  if (!shadow.enabled) return null;
+  const color = applyAlphaToColor(shadow.color, shadow.opacity);
+  const prefix = inset ? "inset " : "";
+  return `${prefix}${shadow.x}px ${shadow.y}px ${shadow.blur}px ${shadow.spread}px ${color}`;
+}
+
+function getLayerEffectStyle(effects: LayerEffects) {
+  const shadows = [
+    buildShadowValue(effects.dropShadow, false),
+    buildShadowValue(effects.innerShadow, true),
+  ].filter((value): value is string => Boolean(value));
+  const boxShadow = shadows.length ? shadows.join(", ") : "none";
+
+  const filters: string[] = [];
+  if (effects.blur > 0) filters.push(`blur(${effects.blur}px)`);
+  if (effects.brightness !== 100) filters.push(`brightness(${effects.brightness}%)`);
+  if (effects.contrast !== 100) filters.push(`contrast(${effects.contrast}%)`);
+  if (effects.saturate !== 100) filters.push(`saturate(${effects.saturate}%)`);
+  const filter = filters.length ? filters.join(" ") : "none";
+
+  return { boxShadow, filter };
+}
+
+function normalizeShadowEffect(raw: unknown, fallback: ShadowEffect): ShadowEffect {
+  if (!isObject(raw)) return { ...fallback };
+  return {
+    enabled: safeBoolean(raw.enabled, fallback.enabled),
+    x: clamp(safeNumber(raw.x, fallback.x), EFFECT_SHADOW_OFFSET_MIN, EFFECT_SHADOW_OFFSET_MAX),
+    y: clamp(safeNumber(raw.y, fallback.y), EFFECT_SHADOW_OFFSET_MIN, EFFECT_SHADOW_OFFSET_MAX),
+    blur: clamp(safeNumber(raw.blur, fallback.blur), EFFECT_SHADOW_BLUR_MIN, EFFECT_SHADOW_BLUR_MAX),
+    spread: clamp(safeNumber(raw.spread, fallback.spread), EFFECT_SHADOW_SPREAD_MIN, EFFECT_SHADOW_SPREAD_MAX),
+    color: safeString(raw.color, fallback.color),
+    opacity: clamp(safeNumber(raw.opacity, fallback.opacity), 0, 1),
+  };
+}
+
+function normalizeEffects(raw: unknown): LayerEffects {
+  const fallback = createDefaultEffects();
+  if (!isObject(raw)) return fallback;
+  return {
+    dropShadow: normalizeShadowEffect(raw.dropShadow, fallback.dropShadow),
+    innerShadow: normalizeShadowEffect(raw.innerShadow, fallback.innerShadow),
+    blur: clamp(safeNumber(raw.blur, fallback.blur), EFFECT_BLUR_MIN, EFFECT_BLUR_MAX),
+    brightness: clamp(safeNumber(raw.brightness, fallback.brightness), EFFECT_FILTER_MIN, EFFECT_FILTER_MAX),
+    contrast: clamp(safeNumber(raw.contrast, fallback.contrast), EFFECT_FILTER_MIN, EFFECT_FILTER_MAX),
+    saturate: clamp(safeNumber(raw.saturate, fallback.saturate), EFFECT_FILTER_MIN, EFFECT_FILTER_MAX),
+  };
 }
 
 type FontPickerProps = {
@@ -725,6 +844,7 @@ function normalizeLayer(raw: unknown): Layer | null {
     locked: safeBoolean(raw.locked, false),
     visible: safeBoolean(raw.visible, true),
     blendMode: safeEnum(raw.blendMode, BLEND_MODE_VALUES, "normal"),
+    effects: normalizeEffects(raw.effects),
   };
 
   if (!base.id) return null;
@@ -827,10 +947,12 @@ async function getImageNaturalSize(src: string) {
   });
 }
 
-function HandoutCanvasBuilder() {
-  type SidebarTab = "text" | "assets" | "layers" | "page" | "props" | "export";
-  const [sidebarTab, setSidebarTab] = useState<SidebarTab>("text");
-  const [doc, setDoc] = useState<HandoutCanvasDocV1>(DEFAULT_DOC);
+  function HandoutCanvasBuilder() {
+    type SidebarTab = "text" | "assets" | "layers" | "page" | "props" | "effects" | "export";
+    const [sidebarTab, setSidebarTab] = useState<SidebarTab>("text");
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [doc, setDoc] = useState<HandoutCanvasDocV1>(DEFAULT_DOC);
+  const [topbarPulse, setTopbarPulse] = useState(false);
   const [colorHistory, setColorHistory] = useState<string[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -839,6 +961,9 @@ function HandoutCanvasBuilder() {
 
   const pageRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
+  const previewRef = useRef<HTMLDivElement | null>(null);
+  const topbarRef = useRef<HTMLDivElement | null>(null);
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
   const jsonFileRef = useRef<HTMLInputElement | null>(null);
   const imageFileRef = useRef<HTMLInputElement | null>(null);
   const textEditorRef = useRef<HTMLTextAreaElement | null>(null);
@@ -986,6 +1111,8 @@ function HandoutCanvasBuilder() {
     updateLayer(textLayer.id, (p) => (p.type === "text" ? { ...p, fontWeight: nextWeight } : p));
   }, [textLayer?.id, textLayer?.fontWeight, textLayerWeights]);
   const opacityPercent = selectedLayer ? Math.round(selectedLayer.opacity * 100) : 100;
+  const dropShadowOpacityPercent = selectedLayer ? Math.round(selectedLayer.effects.dropShadow.opacity * 100) : 0;
+  const innerShadowOpacityPercent = selectedLayer ? Math.round(selectedLayer.effects.innerShadow.opacity * 100) : 0;
   const paperOpacityPercent = Math.round(doc.paperOpacity * 100);
 
   function adjustZoom(delta: number) {
@@ -1001,18 +1128,30 @@ function HandoutCanvasBuilder() {
     });
   }
 
-  function updateLayer(id: string, updater: (prev: Layer) => Layer) {
-    setDoc((prev) => ({
-      ...prev,
-      layers: prev.layers.map((l) => (l.id === id ? updater(l) : l)),
-    }));
-  }
+function updateLayer(id: string, updater: (prev: Layer) => Layer) {
+  setDoc((prev) => ({
+    ...prev,
+    layers: prev.layers.map((l) => (l.id === id ? updater(l) : l)),
+  }));
+}
 
-  function startTextEditing(layer: TextLayer) {
-    editingSnapshotRef.current = layer.text;
-    setSelectedId(layer.id);
-    setEditingId(layer.id);
-  }
+function updateLayerEffects(id: string, updater: (prev: LayerEffects) => LayerEffects) {
+  updateLayer(id, (prev) => ({ ...prev, effects: updater(prev.effects) }));
+}
+
+function updateShadowEffect(
+  id: string,
+  key: "dropShadow" | "innerShadow",
+  updater: (prev: ShadowEffect) => ShadowEffect,
+) {
+  updateLayerEffects(id, (prev) => ({ ...prev, [key]: updater(prev[key]) }));
+}
+
+function startTextEditing(layer: TextLayer) {
+  editingSnapshotRef.current = layer.text;
+  setSelectedId(layer.id);
+  setEditingId(layer.id);
+}
 
   function finishTextEditing() {
     setEditingId(null);
@@ -1097,6 +1236,7 @@ function HandoutCanvasBuilder() {
       locked: false,
       visible: true,
       blendMode: "normal",
+      effects: createDefaultEffects(),
       text: "Novo texto",
       fontSize: 32,
       color: "#2b1b0e",
@@ -1144,13 +1284,14 @@ function HandoutCanvasBuilder() {
           opacity: 1,
           rotation: 0,
           flipX: false,
-          flipY: false,
-          locked: false,
-          visible: true,
-          blendMode: "normal",
-          src,
-          keepAspectRatio: true,
-        });
+            flipY: false,
+            locked: false,
+            visible: true,
+            blendMode: "normal",
+            effects: createDefaultEffects(),
+            src,
+            keepAspectRatio: true,
+          });
       } catch (error) {
         console.error(error);
         toast.error(`Falha ao carregar: ${file.name}`);
@@ -1303,460 +1444,57 @@ function HandoutCanvasBuilder() {
     return () => node.removeEventListener("wheel", onWheel);
   }, []);
 
+  useEffect(() => {
+    const topbar = topbarRef.current;
+    const preview = previewRef.current;
+    if (!topbar || !preview) return;
+
+    const updateOffset = () => {
+      const height = Math.ceil(topbar.getBoundingClientRect().height);
+      preview.style.setProperty("--handout-topbar-offset", `${height}px`);
+    };
+
+    updateOffset();
+
+    const observer = typeof ResizeObserver !== "undefined" ? new ResizeObserver(updateOffset) : null;
+    observer?.observe(topbar);
+    window.addEventListener("resize", updateOffset);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", updateOffset);
+    };
+  }, []);
+
+  useEffect(() => {
+    setTopbarPulse(true);
+    const timeout = window.setTimeout(() => setTopbarPulse(false), 260);
+    return () => window.clearTimeout(timeout);
+  }, [selectedLayer?.id, selectedLayer?.type]);
+
+  useEffect(() => {
+    const onPointerDown = (event: PointerEvent) => {
+      if (sidebarCollapsed) return;
+      const target = event.target as Node | null;
+      if (!target) return;
+      if (sidebarRef.current?.contains(target)) return;
+      if (topbarRef.current?.contains(target)) return;
+      const portalRoot = document.getElementById("handout-builder-portal-root");
+      if (portalRoot?.contains(target)) return;
+      setSidebarCollapsed(true);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [sidebarCollapsed]);
+
   return (
     <div className="handout-builder-app">
       <div className="handout-builder-layout">
-        <aside className="handout-builder-sidebar">
-          <div className="handout-sidebar-actions">
-            <button
-              type="button"
-              className={`handout-sidebar-action ${sidebarTab === "text" ? "is-active" : ""}`}
-              onClick={() => setSidebarTab("text")}
-              aria-pressed={sidebarTab === "text"}
-            >
-              <Type className="h-5 w-5" />
-              <span>Texto</span>
-            </button>
-            <button
-              type="button"
-              className={`handout-sidebar-action ${sidebarTab === "assets" ? "is-active" : ""}`}
-              onClick={() => setSidebarTab("assets")}
-              aria-pressed={sidebarTab === "assets"}
-            >
-              <ImageIcon className="h-5 w-5" />
-              <span>Assets</span>
-            </button>
-            <button
-              type="button"
-              className={`handout-sidebar-action ${sidebarTab === "layers" ? "is-active" : ""}`}
-              onClick={() => setSidebarTab("layers")}
-              aria-pressed={sidebarTab === "layers"}
-            >
-              <Layers className="h-5 w-5" />
-              <span>Camadas</span>
-            </button>
-            <button
-              type="button"
-              className={`handout-sidebar-action ${sidebarTab === "page" ? "is-active" : ""}`}
-              onClick={() => setSidebarTab("page")}
-              aria-pressed={sidebarTab === "page"}
-            >
-              <LayoutGrid className="h-5 w-5" />
-              <span>Pagina</span>
-            </button>
-            <button
-              type="button"
-              className={`handout-sidebar-action ${sidebarTab === "props" ? "is-active" : ""}`}
-              onClick={() => setSidebarTab("props")}
-              aria-pressed={sidebarTab === "props"}
-            >
-              <SlidersHorizontal className="h-5 w-5" />
-              <span>Props</span>
-            </button>
-            <button
-              type="button"
-              className={`handout-sidebar-action ${sidebarTab === "export" ? "is-active" : ""}`}
-              onClick={() => setSidebarTab("export")}
-              aria-pressed={sidebarTab === "export"}
-            >
-              <Download className="h-5 w-5" />
-              <span>Exportar</span>
-            </button>
-          </div>
-
-          <div className="handout-sidebar-panel">
-            {sidebarTab === "text" && (
-              <div className="handout-panel-section">
-                <div className="handout-panel-title">Texto</div>
-                <Button type="button" onClick={addText} className="w-full gap-2">
-                  <Type className="h-4 w-4" />
-                  Adicionar texto
-                </Button>
-                <div className="handout-panel-hint">
-                  Crie caixas de texto e ajuste fonte/tamanho na barra superior.
-                </div>
-              </div>
-            )}
-
-            {sidebarTab === "assets" && (
-              <div className="handout-panel-section">
-                <div className="handout-panel-title">Assets</div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => imageFileRef.current?.click()}
-                  className="w-full gap-2"
-                >
-                  <Upload className="h-4 w-4" />
-                  Upload de imagens
-                </Button>
-                <input
-                  ref={imageFileRef}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  className="hidden"
-                  onChange={(e) => {
-                    const files = e.target.files;
-                    if (files && files.length) void addImages(files);
-                    e.currentTarget.value = "";
-                  }}
-                />
-                <div className="handout-panel-hint">
-                  Arraste imagens direto para o canvas ou use o botao acima.
-                </div>
-              </div>
-            )}
-
-            {sidebarTab === "page" && (
-              <div className="handout-panel-section">
-                <div className="handout-panel-title">Pagina</div>
-                <div className="handout-panel-card">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="grid gap-2">
-                    <Label htmlFor="page-width">Largura (px)</Label>
-                    <Input
-                      id="page-width"
-                      type="number"
-                      min={PAGE_SIZE_MIN}
-                      max={PAGE_SIZE_MAX}
-                      step={1}
-                      value={doc.pageWidth}
-                      onChange={(e) => {
-                        const value = Number(e.target.value);
-                        if (!Number.isFinite(value)) return;
-                        setDoc((p) => ({
-                          ...p,
-                          pageWidth: clamp(value, PAGE_SIZE_MIN, PAGE_SIZE_MAX),
-                        }));
-                      }}
-                    />
-                  </div>
-
-                  <div className="grid gap-2">
-                    <Label htmlFor="page-height">Altura (px)</Label>
-                    <Input
-                      id="page-height"
-                      type="number"
-                      min={PAGE_SIZE_MIN}
-                      max={PAGE_SIZE_MAX}
-                      step={1}
-                      value={doc.pageHeight}
-                      onChange={(e) => {
-                        const value = Number(e.target.value);
-                        if (!Number.isFinite(value)) return;
-                        setDoc((p) => ({
-                          ...p,
-                          pageHeight: clamp(value, PAGE_SIZE_MIN, PAGE_SIZE_MAX),
-                        }));
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className="grid gap-2">
-                  <Label htmlFor="canvas-zoom">Zoom ({Math.round(doc.zoom * 100)}%)</Label>
-                  <input
-                    id="canvas-zoom"
-                    type="range"
-                    min={ZOOM_MIN}
-                    max={ZOOM_MAX}
-                    step={0.05}
-                    value={doc.zoom}
-                    onChange={(e) =>
-                      setDoc((p) => ({ ...p, zoom: clamp(Number(e.target.value), ZOOM_MIN, ZOOM_MAX) }))
-                    }
-                    className="handout-range"
-                  />
-                </div>
-
-                <div className="grid gap-2">
-                  <Label>Cor do papel</Label>
-                  <ColorPicker
-                    value={doc.paperColor}
-                    onValueChange={(value) => {
-                      setDoc((p) => ({ ...p, paperColor: value }));
-                      recordColor(value);
-                    }}
-                    suggestions={COLOR_SUGGESTIONS}
-                    history={colorHistory}
-                    ariaLabel="Cor do papel"
-                    className="handout-color-inline"
-                  />
-                </div>
-                </div>
-              </div>
-            )}
-
-            {sidebarTab === "layers" && (
-              <div className="handout-panel-section">
-                <div className="handout-panel-title">Camadas</div>
-                <div className="grid gap-3">
-                  {layersForList.length === 0 && (
-                    <div className="text-sm text-muted-foreground">Sem camadas. Adicione um texto ou imagem.</div>
-                  )}
-
-                  {layersForList.map((layer, idxFromTop) => {
-                    const realIdx = doc.layers.length - 1 - idxFromTop;
-                    const isSelected = layer.id === selectedId;
-                    const canMoveForward = realIdx < doc.layers.length - 1;
-                    const canMoveBackward = realIdx > 0;
-
-                    return (
-                      <div key={layer.id} className={`handout-layer-row ${isSelected ? "is-selected" : ""}`}>
-                        <button
-                          type="button"
-                          className="handout-layer-main"
-                          onClick={() => {
-                            setSelectedId(layer.id);
-                            setSidebarTab("props");
-                          }}
-                        >
-                          <span className="handout-layer-icon">
-                            {layer.type === "image" ? (
-                              <ImageIcon className="h-4 w-4" />
-                            ) : (
-                              <Type className="h-4 w-4" />
-                            )}
-                          </span>
-                          <span className="handout-layer-name" title={layer.name}>
-                            {layer.name || layer.id}
-                          </span>
-                        </button>
-
-                        <div className="handout-layer-actions">
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            disabled={!canMoveForward}
-                            onClick={() => moveLayerOneStep(layer.id, 1)}
-                            aria-label="Trazer para frente"
-                          >
-                            <ChevronUp className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            disabled={!canMoveBackward}
-                            onClick={() => moveLayerOneStep(layer.id, -1)}
-                            aria-label="Enviar para trás"
-                          >
-                            <ChevronDown className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, visible: !prev.visible }))}
-                            aria-label={layer.visible ? "Ocultar" : "Mostrar"}
-                          >
-                            {layer.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                          </Button>
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, locked: !prev.locked }))}
-                            aria-label={layer.locked ? "Desbloquear" : "Bloquear"}
-                          >
-                            {layer.locked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
-                          </Button>
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => deleteLayer(layer.id)}
-                            aria-label="Excluir"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {sidebarTab === "props" && (
-              <div className="handout-panel-section">
-                <div className="handout-panel-title">Propriedades</div>
-                <div className="grid gap-4">
-                  {!selectedLayer && (
-                    <div className="text-sm text-muted-foreground">Selecione uma camada para editar.</div>
-                  )}
-
-                  {selectedLayer && (
-                    <>
-                      <div className="grid gap-3 rounded-md border border-input p-3">
-                        <div className="text-sm font-medium">Transformações</div>
-
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="grid gap-2">
-                            <Label>Rotação (°)</Label>
-                            <Input
-                              type="number"
-                              value={selectedLayer.rotation}
-                              onChange={(e) => {
-                                const value = clamp(Number(e.target.value), -360, 360);
-                                updateLayer(selectedLayer.id, (p) => ({ ...p, rotation: value }));
-                              }}
-                            />
-                          </div>
-
-                          <div className="grid gap-2">
-                            <Label>Rotação</Label>
-                            <input
-                              type="range"
-                              min={-180}
-                              max={180}
-                              step={1}
-                              value={selectedLayer.rotation}
-                              onChange={(e) => {
-                                const value = Number(e.target.value);
-                                updateLayer(selectedLayer.id, (p) => ({ ...p, rotation: value }));
-                              }}
-                              className="handout-range"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-3 gap-2">
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              updateLayer(selectedLayer.id, (p) => ({
-                                ...p,
-                                rotation: clamp(p.rotation - 90, -360, 360),
-                              }))
-                            }
-                          >
-                            -90°
-                          </Button>
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              updateLayer(selectedLayer.id, (p) => ({
-                                ...p,
-                                rotation: clamp(p.rotation + 90, -360, 360),
-                              }))
-                            }
-                          >
-                            +90°
-                          </Button>
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              updateLayer(selectedLayer.id, (p) => ({
-                                ...p,
-                                rotation: 0,
-                                flipX: false,
-                                flipY: false,
-                              }))
-                            }
-                          >
-                            Reset
-                          </Button>
-                        </div>
-
-                      </div>
-
-                      {selectedLayer.type === "image" && (
-                        <div className="grid gap-3 rounded-md border border-input p-3">
-                          <div className="text-sm font-medium">Imagem</div>
-
-                          <div className="flex items-center justify-between gap-3 rounded-md border border-input px-3 py-2">
-                            <div className="grid gap-0.5">
-                              <div className="text-sm font-medium">Manter proporção</div>
-                              <div className="text-xs text-muted-foreground">Ao redimensionar</div>
-                            </div>
-                            <Switch
-                              checked={selectedLayer.keepAspectRatio}
-                              onCheckedChange={(checked) =>
-                                updateLayer(selectedLayer.id, (p) =>
-                                  p.type === "image" ? { ...p, keepAspectRatio: checked } : p,
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {sidebarTab === "export" && (
-              <div className="handout-panel-section">
-                <div className="handout-panel-title">Exportar</div>
-                <div className="grid gap-3">
-                  <Button type="button" onClick={() => void exportPng()} className="gap-2">
-                    <Download className="h-4 w-4" />
-                    Baixar PNG
-                  </Button>
-
-                  <Button type="button" variant="outline" onClick={printPdf} className="gap-2">
-                    <Printer className="h-4 w-4" />
-                    Imprimir / Salvar PDF
-                  </Button>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button type="button" variant="outline" onClick={exportJson} className="gap-2">
-                      <Download className="h-4 w-4" />
-                      JSON
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => jsonFileRef.current?.click()}
-                      className="gap-2"
-                    >
-                      <Upload className="h-4 w-4" />
-                      Importar
-                    </Button>
-                    <input
-                      ref={jsonFileRef}
-                      type="file"
-                      accept="application/json"
-                      className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) void importJsonFile(file);
-                        e.currentTarget.value = "";
-                      }}
-                    />
-                  </div>
-
-                  <Button type="button" variant="outline" onClick={() => void copyJson()} className="gap-2">
-                    <Copy className="h-4 w-4" />
-                    Copiar JSON
-                  </Button>
-
-                  <Button type="button" variant="outline" onClick={resetAll} className="gap-2">
-                    <RotateCcw className="h-4 w-4" />
-                    Resetar
-                  </Button>
-                </div>
-              </div>
-            )}
-          </div>
-        </aside>
-
-        <section className="handout-builder-preview">
-          <div className="handout-topbar">
-            <div className="handout-topbar-left">
-              <span className="handout-topbar-chip">Canvas</span>
-            </div>
-            <div className="handout-topbar-right">
+        <section ref={previewRef} className="handout-builder-preview">
+          <div ref={topbarRef} className={`handout-topbar ${topbarPulse ? "is-sizing" : ""}`}>
+            <div className="handout-topbar-inner">
+              <div className="handout-topbar-right">
               {!selectedLayer && (
                 <div className="handout-background-toolbar" role="group" aria-label="Fundo do canvas">
                   <span className="handout-topbar-chip">Fundo</span>
@@ -1772,16 +1510,16 @@ function HandoutCanvasBuilder() {
                     ariaLabel="Cor do fundo"
                   />
                   <Popover>
-                    <PopoverTrigger asChild>
-                      <button
-                        type="button"
-                        className="handout-toolbar-button"
-                        aria-label="Transparencia do fundo"
-                        title="Transparencia do fundo"
-                      >
-                        <SlidersHorizontal className="h-4 w-4" />
-                      </button>
-                    </PopoverTrigger>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className="handout-toolbar-button"
+                          aria-label="Transparencia do fundo"
+                          title="Transparencia do fundo"
+                        >
+                          <Blend className="h-4 w-4" />
+                        </button>
+                      </PopoverTrigger>
                     <PopoverContent align="end" className="handout-opacity-popover">
                       <div className="handout-opacity-panel">
                         <input
@@ -1817,16 +1555,16 @@ function HandoutCanvasBuilder() {
                     {selectedLayer.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
                   </button>
                   <Popover>
-                    <PopoverTrigger asChild>
-                      <button
-                        type="button"
-                        className="handout-toolbar-button"
-                        aria-label="Transparencia"
-                        title="Transparencia"
-                      >
-                        <SlidersHorizontal className="h-4 w-4" />
-                      </button>
-                    </PopoverTrigger>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className="handout-toolbar-button"
+                          aria-label="Transparencia"
+                          title="Transparencia"
+                        >
+                          <Blend className="h-4 w-4" />
+                        </button>
+                      </PopoverTrigger>
                     <PopoverContent align="end" className="handout-opacity-popover">
                       <div className="handout-opacity-panel">
                         <input
@@ -1850,30 +1588,30 @@ function HandoutCanvasBuilder() {
                       updateLayer(selectedLayer.id, (p) => ({ ...p, blendMode: value }))
                     }
                   />
-                  <button
-                    type="button"
-                    className={`handout-toolbar-button ${selectedLayer.flipX ? "is-active" : ""}`}
-                    aria-label="Flip horizontal"
-                    aria-pressed={selectedLayer.flipX}
-                    title="Flip horizontal"
-                    onClick={() =>
-                      updateLayer(selectedLayer.id, (p) => ({ ...p, flipX: !p.flipX }))
-                    }
-                  >
-                    <span className="handout-toolbar-text">H</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`handout-toolbar-button ${selectedLayer.flipY ? "is-active" : ""}`}
-                    aria-label="Flip vertical"
-                    aria-pressed={selectedLayer.flipY}
-                    title="Flip vertical"
-                    onClick={() =>
-                      updateLayer(selectedLayer.id, (p) => ({ ...p, flipY: !p.flipY }))
-                    }
-                  >
-                    <span className="handout-toolbar-text">V</span>
-                  </button>
+                    <button
+                      type="button"
+                      className={`handout-toolbar-button ${selectedLayer.flipX ? "is-active" : ""}`}
+                      aria-label="Flip horizontal"
+                      aria-pressed={selectedLayer.flipX}
+                      title="Flip horizontal"
+                      onClick={() =>
+                        updateLayer(selectedLayer.id, (p) => ({ ...p, flipX: !p.flipX }))
+                      }
+                    >
+                      <FlipHorizontal2 className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      className={`handout-toolbar-button ${selectedLayer.flipY ? "is-active" : ""}`}
+                      aria-label="Flip vertical"
+                      aria-pressed={selectedLayer.flipY}
+                      title="Flip vertical"
+                      onClick={() =>
+                        updateLayer(selectedLayer.id, (p) => ({ ...p, flipY: !p.flipY }))
+                      }
+                    >
+                      <FlipVertical2 className="h-4 w-4" />
+                    </button>
                   <button
                     type="button"
                     className={`handout-toolbar-button ${selectedLayer.locked ? "is-active" : ""}`}
@@ -2048,14 +1786,855 @@ function HandoutCanvasBuilder() {
 
               {selectedLayer && selectedLayer.type === "image" && (
                 <div className="handout-topbar-selection">
-                  <span className="handout-topbar-chip">Imagem</span>
-                  <span className="handout-topbar-muted">
-                    {selectedLayer.name || selectedLayer.id}
-                  </span>
                 </div>
               )}
             </div>
+            </div>
           </div>
+
+          <div className={`handout-canvas-shell ${sidebarCollapsed ? "is-collapsed" : ""}`}>
+            <aside
+              ref={sidebarRef}
+              className={`handout-builder-sidebar handout-canvas-sidebar ${sidebarCollapsed ? "is-collapsed" : ""}`}
+            >
+              <div className="handout-sidebar-actions">
+                <button
+                  type="button"
+                  className="handout-sidebar-toggle"
+                  aria-label={sidebarCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
+                  title={sidebarCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
+                  onClick={() => setSidebarCollapsed((prev) => !prev)}
+                >
+                  {sidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+                </button>
+                <button
+                  type="button"
+                  className={`handout-sidebar-action ${sidebarTab === "text" ? "is-active" : ""}`}
+                  onClick={() => { setSidebarTab("text"); setSidebarCollapsed(false); }}
+                  aria-pressed={sidebarTab === "text"}
+                >
+                  <Type className="h-5 w-5" />
+                  <span>Texto</span>
+                </button>
+                <button
+                  type="button"
+                  className={`handout-sidebar-action ${sidebarTab === "assets" ? "is-active" : ""}`}
+                  onClick={() => { setSidebarTab("assets"); setSidebarCollapsed(false); }}
+                  aria-pressed={sidebarTab === "assets"}
+                >
+                  <ImageIcon className="h-5 w-5" />
+                  <span>Assets</span>
+                </button>
+                <button
+                  type="button"
+                  className={`handout-sidebar-action ${sidebarTab === "layers" ? "is-active" : ""}`}
+                  onClick={() => { setSidebarTab("layers"); setSidebarCollapsed(false); }}
+                  aria-pressed={sidebarTab === "layers"}
+                >
+                  <Layers className="h-5 w-5" />
+                  <span>Camadas</span>
+                </button>
+                <button
+                  type="button"
+                  className={`handout-sidebar-action ${sidebarTab === "page" ? "is-active" : ""}`}
+                  onClick={() => { setSidebarTab("page"); setSidebarCollapsed(false); }}
+                  aria-pressed={sidebarTab === "page"}
+                >
+                  <LayoutGrid className="h-5 w-5" />
+                  <span>Pagina</span>
+                </button>
+                  <button
+                    type="button"
+                    className={`handout-sidebar-action ${sidebarTab === "props" ? "is-active" : ""}`}
+                    onClick={() => { setSidebarTab("props"); setSidebarCollapsed(false); }}
+                    aria-pressed={sidebarTab === "props"}
+                  >
+                    <SlidersHorizontal className="h-5 w-5" />
+                    <span>Props</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`handout-sidebar-action ${sidebarTab === "effects" ? "is-active" : ""}`}
+                    onClick={() => { setSidebarTab("effects"); setSidebarCollapsed(false); }}
+                    aria-pressed={sidebarTab === "effects"}
+                  >
+                    <Sparkles className="h-5 w-5" />
+                    <span>Efeitos</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`handout-sidebar-action ${sidebarTab === "export" ? "is-active" : ""}`}
+                    onClick={() => { setSidebarTab("export"); setSidebarCollapsed(false); }}
+                    aria-pressed={sidebarTab === "export"}
+                >
+                  <Download className="h-5 w-5" />
+                  <span>Exportar</span>
+                </button>
+              </div>
+
+              {!sidebarCollapsed && (
+                <div className="handout-sidebar-panel">
+                {sidebarTab === "text" && (
+                  <div className="handout-panel-section">
+                    <div className="handout-panel-title">Texto</div>
+                    <Button type="button" onClick={addText} className="w-full gap-2">
+                      <Type className="h-4 w-4" />
+                      Adicionar texto
+                    </Button>
+                    <div className="handout-panel-hint">
+                      Crie caixas de texto e ajuste fonte/tamanho na barra superior.
+                    </div>
+                  </div>
+                )}
+
+                {sidebarTab === "assets" && (
+                  <div className="handout-panel-section">
+                    <div className="handout-panel-title">Assets</div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => imageFileRef.current?.click()}
+                      className="w-full gap-2"
+                    >
+                      <Upload className="h-4 w-4" />
+                      Upload de imagens
+                    </Button>
+                    <input
+                      ref={imageFileRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      onChange={(e) => {
+                        const files = e.target.files;
+                        if (files && files.length) void addImages(files);
+                        e.currentTarget.value = "";
+                      }}
+                    />
+                    <div className="handout-panel-hint">
+                      Arraste imagens direto para o canvas ou use o botao acima.
+                    </div>
+                  </div>
+                )}
+
+                {sidebarTab === "page" && (
+                  <div className="handout-panel-section">
+                    <div className="handout-panel-title">Pagina</div>
+                    <div className="handout-panel-card">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="grid gap-2">
+                        <Label htmlFor="page-width">Largura (px)</Label>
+                        <Input
+                          id="page-width"
+                          type="number"
+                          min={PAGE_SIZE_MIN}
+                          max={PAGE_SIZE_MAX}
+                          step={1}
+                          value={doc.pageWidth}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            if (!Number.isFinite(value)) return;
+                            setDoc((p) => ({
+                              ...p,
+                              pageWidth: clamp(value, PAGE_SIZE_MIN, PAGE_SIZE_MAX),
+                            }));
+                          }}
+                        />
+                      </div>
+
+                      <div className="grid gap-2">
+                        <Label htmlFor="page-height">Altura (px)</Label>
+                        <Input
+                          id="page-height"
+                          type="number"
+                          min={PAGE_SIZE_MIN}
+                          max={PAGE_SIZE_MAX}
+                          step={1}
+                          value={doc.pageHeight}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            if (!Number.isFinite(value)) return;
+                            setDoc((p) => ({
+                              ...p,
+                              pageHeight: clamp(value, PAGE_SIZE_MIN, PAGE_SIZE_MAX),
+                            }));
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="canvas-zoom">Zoom ({Math.round(doc.zoom * 100)}%)</Label>
+                      <input
+                        id="canvas-zoom"
+                        type="range"
+                        min={ZOOM_MIN}
+                        max={ZOOM_MAX}
+                        step={0.05}
+                        value={doc.zoom}
+                        onChange={(e) =>
+                          setDoc((p) => ({ ...p, zoom: clamp(Number(e.target.value), ZOOM_MIN, ZOOM_MAX) }))
+                        }
+                        className="handout-range"
+                      />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label>Cor do papel</Label>
+                      <ColorPicker
+                        value={doc.paperColor}
+                        onValueChange={(value) => {
+                          setDoc((p) => ({ ...p, paperColor: value }));
+                          recordColor(value);
+                        }}
+                        suggestions={COLOR_SUGGESTIONS}
+                        history={colorHistory}
+                        ariaLabel="Cor do papel"
+                        className="handout-color-inline"
+                      />
+                    </div>
+                    </div>
+                  </div>
+                )}
+
+                {sidebarTab === "layers" && (
+                  <div className="handout-panel-section">
+                    <div className="handout-panel-title">Camadas</div>
+                    <div className="grid gap-3">
+                      {layersForList.length === 0 && (
+                        <div className="text-sm text-muted-foreground">Sem camadas. Adicione um texto ou imagem.</div>
+                      )}
+
+                      {layersForList.map((layer, idxFromTop) => {
+                        const realIdx = doc.layers.length - 1 - idxFromTop;
+                        const isSelected = layer.id === selectedId;
+                        const canMoveForward = realIdx < doc.layers.length - 1;
+                        const canMoveBackward = realIdx > 0;
+
+                        return (
+                          <div key={layer.id} className={`handout-layer-row ${isSelected ? "is-selected" : ""}`}>
+                            <button
+                              type="button"
+                              className="handout-layer-main"
+                              onClick={() => {
+                                setSelectedId(layer.id);
+                                setSidebarTab("props");
+                              }}
+                            >
+                              <span className="handout-layer-icon">
+                                {layer.type === "image" ? (
+                                  <ImageIcon className="h-4 w-4" />
+                                ) : (
+                                  <Type className="h-4 w-4" />
+                                )}
+                              </span>
+                              <span className="handout-layer-name" title={layer.name}>
+                                {layer.name || layer.id}
+                              </span>
+                            </button>
+
+                            <div className="handout-layer-actions">
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="ghost"
+                                disabled={!canMoveForward}
+                                onClick={() => moveLayerOneStep(layer.id, 1)}
+                                aria-label="Trazer para frente"
+                              >
+                                <ChevronUp className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="ghost"
+                                disabled={!canMoveBackward}
+                                onClick={() => moveLayerOneStep(layer.id, -1)}
+                                aria-label="Enviar para trás"
+                              >
+                                <ChevronDown className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="ghost"
+                                onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, visible: !prev.visible }))}
+                                aria-label={layer.visible ? "Ocultar" : "Mostrar"}
+                              >
+                                {layer.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                              </Button>
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="ghost"
+                                onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, locked: !prev.locked }))}
+                                aria-label={layer.locked ? "Desbloquear" : "Bloquear"}
+                              >
+                                {layer.locked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
+                              </Button>
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="ghost"
+                                onClick={() => deleteLayer(layer.id)}
+                                aria-label="Excluir"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                  {sidebarTab === "props" && (
+                    <div className="handout-panel-section">
+                      <div className="handout-panel-title">Propriedades</div>
+                      <div className="grid gap-4">
+                        {!selectedLayer && (
+                        <div className="text-sm text-muted-foreground">Selecione uma camada para editar.</div>
+                      )}
+
+                      {selectedLayer && (
+                        <>
+                          {selectedLayer.type === "image" && (
+                            <div className="grid gap-3 rounded-md border border-input p-3">
+                              <div className="text-sm font-medium">Imagem</div>
+
+                              <div className="flex items-center justify-between gap-3 rounded-md border border-input px-3 py-2">
+                                <div className="grid gap-0.5">
+                                  <div className="text-sm font-medium">Manter proporção</div>
+                                  <div className="text-xs text-muted-foreground">Ao redimensionar</div>
+                                </div>
+                                <Switch
+                                  checked={selectedLayer.keepAspectRatio}
+                                  onCheckedChange={(checked) =>
+                                    updateLayer(selectedLayer.id, (p) =>
+                                      p.type === "image" ? { ...p, keepAspectRatio: checked } : p,
+                                    )
+                                  }
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {sidebarTab === "effects" && (
+                    <div className="handout-panel-section">
+                      <div className="handout-panel-title">Efeitos</div>
+                      <div className="grid gap-4">
+                        {!selectedLayer && (
+                          <div className="text-sm text-muted-foreground">Selecione uma camada para editar.</div>
+                        )}
+
+                        {selectedLayer && (
+                          <>
+                            <div className="grid gap-3 rounded-md border border-input p-3">
+                              <div className="flex items-center justify-between gap-3">
+                                <div className="grid gap-0.5">
+                                  <div className="text-sm font-medium">Sombra externa</div>
+                                  <div className="text-xs text-muted-foreground">Drop shadow</div>
+                                </div>
+                                <Switch
+                                  checked={selectedLayer.effects.dropShadow.enabled}
+                                  onCheckedChange={(checked) =>
+                                    updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({ ...p, enabled: checked }))
+                                  }
+                                />
+                              </div>
+
+                              <div className="grid grid-cols-2 gap-3">
+                                <div className="grid gap-2">
+                                  <Label>Offset X</Label>
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_SHADOW_OFFSET_MIN}
+                                    max={EFFECT_SHADOW_OFFSET_MAX}
+                                    value={selectedLayer.effects.dropShadow.x}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_SHADOW_OFFSET_MIN,
+                                        EFFECT_SHADOW_OFFSET_MAX,
+                                      );
+                                      updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({ ...p, x: value }));
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="grid gap-2">
+                                  <Label>Offset Y</Label>
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_SHADOW_OFFSET_MIN}
+                                    max={EFFECT_SHADOW_OFFSET_MAX}
+                                    value={selectedLayer.effects.dropShadow.y}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_SHADOW_OFFSET_MIN,
+                                        EFFECT_SHADOW_OFFSET_MAX,
+                                      );
+                                      updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({ ...p, y: value }));
+                                    }}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-2 gap-3">
+                                <div className="grid gap-2">
+                                  <Label>Blur</Label>
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_SHADOW_BLUR_MIN}
+                                    max={EFFECT_SHADOW_BLUR_MAX}
+                                    value={selectedLayer.effects.dropShadow.blur}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_SHADOW_BLUR_MIN,
+                                        EFFECT_SHADOW_BLUR_MAX,
+                                      );
+                                      updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({ ...p, blur: value }));
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="grid gap-2">
+                                  <Label>Spread</Label>
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_SHADOW_SPREAD_MIN}
+                                    max={EFFECT_SHADOW_SPREAD_MAX}
+                                    value={selectedLayer.effects.dropShadow.spread}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_SHADOW_SPREAD_MIN,
+                                        EFFECT_SHADOW_SPREAD_MAX,
+                                      );
+                                      updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({ ...p, spread: value }));
+                                    }}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-2 gap-3">
+                                <div className="grid gap-2">
+                                  <Label>Cor</Label>
+                                  <ColorPicker
+                                    value={selectedLayer.effects.dropShadow.color}
+                                    onValueChange={(value) => {
+                                      updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({ ...p, color: value }));
+                                      recordColor(value);
+                                    }}
+                                    suggestions={COLOR_SUGGESTIONS}
+                                    history={colorHistory}
+                                    ariaLabel="Cor da sombra externa"
+                                    className="handout-color-inline"
+                                  />
+                                </div>
+
+                                <div className="grid gap-2">
+                                  <Label>Opacidade</Label>
+                                  <div className="handout-opacity-stepper">
+                                    <input
+                                      type="range"
+                                      min={0}
+                                      max={100}
+                                      step={1}
+                                      value={dropShadowOpacityPercent}
+                                      onChange={(e) => {
+                                        const value = clamp(Number(e.target.value), 0, 100);
+                                        updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({
+                                          ...p,
+                                          opacity: value / 100,
+                                        }));
+                                      }}
+                                      className="handout-opacity-range"
+                                      style={{ flex: 1 }}
+                                    />
+                                    <Input
+                                      type="number"
+                                      min={0}
+                                      max={100}
+                                      value={dropShadowOpacityPercent}
+                                      onChange={(e) => {
+                                        const value = clamp(Number(e.target.value), 0, 100);
+                                        updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({
+                                          ...p,
+                                          opacity: value / 100,
+                                        }));
+                                      }}
+                                      className="handout-opacity-input"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="grid gap-3 rounded-md border border-input p-3">
+                              <div className="flex items-center justify-between gap-3">
+                                <div className="grid gap-0.5">
+                                  <div className="text-sm font-medium">Sombra interna</div>
+                                  <div className="text-xs text-muted-foreground">Inner shadow</div>
+                                </div>
+                                <Switch
+                                  checked={selectedLayer.effects.innerShadow.enabled}
+                                  onCheckedChange={(checked) =>
+                                    updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({ ...p, enabled: checked }))
+                                  }
+                                />
+                              </div>
+
+                              <div className="grid grid-cols-2 gap-3">
+                                <div className="grid gap-2">
+                                  <Label>Offset X</Label>
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_SHADOW_OFFSET_MIN}
+                                    max={EFFECT_SHADOW_OFFSET_MAX}
+                                    value={selectedLayer.effects.innerShadow.x}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_SHADOW_OFFSET_MIN,
+                                        EFFECT_SHADOW_OFFSET_MAX,
+                                      );
+                                      updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({ ...p, x: value }));
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="grid gap-2">
+                                  <Label>Offset Y</Label>
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_SHADOW_OFFSET_MIN}
+                                    max={EFFECT_SHADOW_OFFSET_MAX}
+                                    value={selectedLayer.effects.innerShadow.y}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_SHADOW_OFFSET_MIN,
+                                        EFFECT_SHADOW_OFFSET_MAX,
+                                      );
+                                      updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({ ...p, y: value }));
+                                    }}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-2 gap-3">
+                                <div className="grid gap-2">
+                                  <Label>Blur</Label>
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_SHADOW_BLUR_MIN}
+                                    max={EFFECT_SHADOW_BLUR_MAX}
+                                    value={selectedLayer.effects.innerShadow.blur}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_SHADOW_BLUR_MIN,
+                                        EFFECT_SHADOW_BLUR_MAX,
+                                      );
+                                      updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({ ...p, blur: value }));
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="grid gap-2">
+                                  <Label>Spread</Label>
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_SHADOW_SPREAD_MIN}
+                                    max={EFFECT_SHADOW_SPREAD_MAX}
+                                    value={selectedLayer.effects.innerShadow.spread}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_SHADOW_SPREAD_MIN,
+                                        EFFECT_SHADOW_SPREAD_MAX,
+                                      );
+                                      updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({ ...p, spread: value }));
+                                    }}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-2 gap-3">
+                                <div className="grid gap-2">
+                                  <Label>Cor</Label>
+                                  <ColorPicker
+                                    value={selectedLayer.effects.innerShadow.color}
+                                    onValueChange={(value) => {
+                                      updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({ ...p, color: value }));
+                                      recordColor(value);
+                                    }}
+                                    suggestions={COLOR_SUGGESTIONS}
+                                    history={colorHistory}
+                                    ariaLabel="Cor da sombra interna"
+                                    className="handout-color-inline"
+                                  />
+                                </div>
+
+                                <div className="grid gap-2">
+                                  <Label>Opacidade</Label>
+                                  <div className="handout-opacity-stepper">
+                                    <input
+                                      type="range"
+                                      min={0}
+                                      max={100}
+                                      step={1}
+                                      value={innerShadowOpacityPercent}
+                                      onChange={(e) => {
+                                        const value = clamp(Number(e.target.value), 0, 100);
+                                        updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({
+                                          ...p,
+                                          opacity: value / 100,
+                                        }));
+                                      }}
+                                      className="handout-opacity-range"
+                                      style={{ flex: 1 }}
+                                    />
+                                    <Input
+                                      type="number"
+                                      min={0}
+                                      max={100}
+                                      value={innerShadowOpacityPercent}
+                                      onChange={(e) => {
+                                        const value = clamp(Number(e.target.value), 0, 100);
+                                        updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({
+                                          ...p,
+                                          opacity: value / 100,
+                                        }));
+                                      }}
+                                      className="handout-opacity-input"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="grid gap-3 rounded-md border border-input p-3">
+                              <div className="text-sm font-medium">Desfoque</div>
+                              <div className="grid gap-2">
+                                <Label>Intensidade (px)</Label>
+                                <div className="handout-opacity-stepper">
+                                  <input
+                                    type="range"
+                                    min={EFFECT_BLUR_MIN}
+                                    max={EFFECT_BLUR_MAX}
+                                    step={1}
+                                    value={selectedLayer.effects.blur}
+                                    onChange={(e) => {
+                                      const value = clamp(Number(e.target.value), EFFECT_BLUR_MIN, EFFECT_BLUR_MAX);
+                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, blur: value }));
+                                    }}
+                                    className="handout-range"
+                                    style={{ flex: 1 }}
+                                  />
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_BLUR_MIN}
+                                    max={EFFECT_BLUR_MAX}
+                                    value={selectedLayer.effects.blur}
+                                    onChange={(e) => {
+                                      const value = clamp(Number(e.target.value), EFFECT_BLUR_MIN, EFFECT_BLUR_MAX);
+                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, blur: value }));
+                                    }}
+                                    className="handout-opacity-input"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="grid gap-3 rounded-md border border-input p-3">
+                              <div className="text-sm font-medium">Filtros</div>
+
+                              <div className="grid gap-2">
+                                <Label>Brilho (%)</Label>
+                                <div className="handout-opacity-stepper">
+                                  <input
+                                    type="range"
+                                    min={EFFECT_FILTER_MIN}
+                                    max={EFFECT_FILTER_MAX}
+                                    step={1}
+                                    value={selectedLayer.effects.brightness}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_FILTER_MIN,
+                                        EFFECT_FILTER_MAX,
+                                      );
+                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, brightness: value }));
+                                    }}
+                                    className="handout-range"
+                                    style={{ flex: 1 }}
+                                  />
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_FILTER_MIN}
+                                    max={EFFECT_FILTER_MAX}
+                                    value={selectedLayer.effects.brightness}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_FILTER_MIN,
+                                        EFFECT_FILTER_MAX,
+                                      );
+                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, brightness: value }));
+                                    }}
+                                    className="handout-opacity-input"
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="grid gap-2">
+                                <Label>Contraste (%)</Label>
+                                <div className="handout-opacity-stepper">
+                                  <input
+                                    type="range"
+                                    min={EFFECT_FILTER_MIN}
+                                    max={EFFECT_FILTER_MAX}
+                                    step={1}
+                                    value={selectedLayer.effects.contrast}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_FILTER_MIN,
+                                        EFFECT_FILTER_MAX,
+                                      );
+                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, contrast: value }));
+                                    }}
+                                    className="handout-range"
+                                    style={{ flex: 1 }}
+                                  />
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_FILTER_MIN}
+                                    max={EFFECT_FILTER_MAX}
+                                    value={selectedLayer.effects.contrast}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_FILTER_MIN,
+                                        EFFECT_FILTER_MAX,
+                                      );
+                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, contrast: value }));
+                                    }}
+                                    className="handout-opacity-input"
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="grid gap-2">
+                                <Label>Saturacao (%)</Label>
+                                <div className="handout-opacity-stepper">
+                                  <input
+                                    type="range"
+                                    min={EFFECT_FILTER_MIN}
+                                    max={EFFECT_FILTER_MAX}
+                                    step={1}
+                                    value={selectedLayer.effects.saturate}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_FILTER_MIN,
+                                        EFFECT_FILTER_MAX,
+                                      );
+                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, saturate: value }));
+                                    }}
+                                    className="handout-range"
+                                    style={{ flex: 1 }}
+                                  />
+                                  <Input
+                                    type="number"
+                                    min={EFFECT_FILTER_MIN}
+                                    max={EFFECT_FILTER_MAX}
+                                    value={selectedLayer.effects.saturate}
+                                    onChange={(e) => {
+                                      const value = clamp(
+                                        Number(e.target.value),
+                                        EFFECT_FILTER_MIN,
+                                        EFFECT_FILTER_MAX,
+                                      );
+                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, saturate: value }));
+                                    }}
+                                    className="handout-opacity-input"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {sidebarTab === "export" && (
+                    <div className="handout-panel-section">
+                      <div className="handout-panel-title">Exportar</div>
+                    <div className="grid gap-3">
+                      <Button type="button" onClick={() => void exportPng()} className="gap-2">
+                        <Download className="h-4 w-4" />
+                        Baixar PNG
+                      </Button>
+
+                      <Button type="button" variant="outline" onClick={printPdf} className="gap-2">
+                        <Printer className="h-4 w-4" />
+                        Imprimir / Salvar PDF
+                      </Button>
+
+                      <div className="grid grid-cols-2 gap-2">
+                        <Button type="button" variant="outline" onClick={exportJson} className="gap-2">
+                          <Download className="h-4 w-4" />
+                          JSON
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => jsonFileRef.current?.click()}
+                          className="gap-2"
+                        >
+                          <Upload className="h-4 w-4" />
+                          Importar
+                        </Button>
+                        <input
+                          ref={jsonFileRef}
+                          type="file"
+                          accept="application/json"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) void importJsonFile(file);
+                            e.currentTarget.value = "";
+                          }}
+                        />
+                      </div>
+
+                      <Button type="button" variant="outline" onClick={() => void copyJson()} className="gap-2">
+                        <Copy className="h-4 w-4" />
+                        Copiar JSON
+                      </Button>
+
+                      <Button type="button" variant="outline" onClick={resetAll} className="gap-2">
+                        <RotateCcw className="h-4 w-4" />
+                        Resetar
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                </div>
+              )}
+            </aside>
 
           <div
             ref={stageRef}
@@ -2097,6 +2676,12 @@ function HandoutCanvasBuilder() {
                   if (!layer.visible) return null;
 
                   const layerTransform = `rotate(${layer.rotation}deg) scaleX(${layer.flipX ? -1 : 1}) scaleY(${layer.flipY ? -1 : 1})`;
+                  const layerEffectStyle = getLayerEffectStyle(layer.effects);
+                  const effectNeedsOverflow = layer.effects.dropShadow.enabled || layer.effects.blur > 0;
+                  const layerInnerStyle = {
+                    opacity: layer.opacity,
+                    overflow: effectNeedsOverflow ? "visible" : undefined,
+                  } as const;
                   const labelIsBottom = layer.y < 40;
                   const labelIsRight = layer.x + 240 > derivedPage.width;
                   const boundsLabelClassName = [
@@ -2183,10 +2768,10 @@ function HandoutCanvasBuilder() {
                         </div>
                       )}
 
-                      <div className="handout-layer-inner" style={{ opacity: layer.opacity }}>
+                      <div className="handout-layer-inner" style={layerInnerStyle}>
                         <div
                           className="handout-layer-transform"
-                          style={{ transform: layerTransform, transformOrigin: "center center" }}
+                          style={{ transform: layerTransform, transformOrigin: "center center", ...layerEffectStyle }}
                         >
                           {layer.type === "image" ? (
                             <img src={layer.src} alt="" draggable={false} className="handout-layer-image" />
@@ -2246,6 +2831,7 @@ function HandoutCanvasBuilder() {
               </div>
             </div>
           </div>
+          </div>
         </section>
       </div>
     </div>
@@ -2278,7 +2864,3 @@ export default function HandoutCanvasApp() {
     </PortalContainerProvider>
   );
 }
-
-
-
-

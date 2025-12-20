@@ -1101,6 +1101,10 @@ function FontPicker({ value, onValueChange, disabled, className }: FontPickerPro
   const [open, setOpen] = useState(false);
   const selected = FONT_PRESETS[value] ?? FONT_PRESETS.serif;
   const triggerClassName = ["w-full justify-between gap-2", className].filter(Boolean).join(" ");
+  const handleSelect = (id: FontPresetId) => {
+    onValueChange(id);
+    setOpen(false);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -1131,15 +1135,14 @@ function FontPicker({ value, onValueChange, disabled, className }: FontPickerPro
                   key={id}
                   value={`${preset.label} ${id}`}
                   className="cursor-pointer"
-                  onMouseDown={(e) => {
-                    if (e.button !== 0) return;
-                    e.preventDefault();
-                    onValueChange(id as FontPresetId);
-                    setOpen(false);
-                  }}
                   onSelect={() => {
-                    onValueChange(id as FontPresetId);
-                    setOpen(false);
+                    handleSelect(id as FontPresetId);
+                  }}
+                  onClick={() => {
+                    handleSelect(id as FontPresetId);
+                  }}
+                  onMouseDown={(event) => {
+                    event.preventDefault();
                   }}
                 >
                   <Check className={`mr-2 h-4 w-4 ${value === id ? "opacity-100" : "opacity-0"}`} />
@@ -1788,7 +1791,6 @@ async function getImageNaturalSize(src: string) {
       | "elements"
       | "assets"
       | "templates"
-      | "layers"
       | "page"
       | "props"
       | "effects"
@@ -1804,6 +1806,7 @@ async function getImageNaturalSize(src: string) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [manipulatingId, setManipulatingId] = useState<string | null>(null);
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
+  const [layersPanelOpen, setLayersPanelOpen] = useState(false);
   const [fillPresets, setFillPresets] = useState<FillPreset[]>([]);
   const [assetSearch, setAssetSearch] = useState("");
   const [pendingAsset, setPendingAsset] = useState<AssetItem | null>(null);
@@ -1825,6 +1828,7 @@ async function getImageNaturalSize(src: string) {
   const previewRef = useRef<HTMLDivElement | null>(null);
   const topbarRef = useRef<HTMLDivElement | null>(null);
   const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const layersPanelRef = useRef<HTMLDivElement | null>(null);
   const jsonFileRef = useRef<HTMLInputElement | null>(null);
   const imageFileRef = useRef<HTMLInputElement | null>(null);
   const shapeImageFileRef = useRef<HTMLInputElement | null>(null);
@@ -2657,7 +2661,7 @@ function updateShadowEffect(
     if (!created.length) return;
     setDoc((prev) => ({ ...prev, layers: [...prev.layers, ...created] }));
     setSelection([created[created.length - 1].id], created[created.length - 1].id);
-    setSidebarTab("layers");
+    setLayersPanelOpen(true);
     toast.success("Imagem(ns) adicionada(s).");
   }
 
@@ -2701,7 +2705,7 @@ function updateShadowEffect(
       if (!layer) return;
       setDoc((prev) => ({ ...prev, layers: [...prev.layers, layer] }));
       setSelection([layer.id], layer.id);
-      setSidebarTab("layers");
+      setLayersPanelOpen(true);
     } catch (error) {
       console.error(error);
       toast.error("Falha ao inserir asset.");
@@ -3026,6 +3030,7 @@ function updateShadowEffect(
       if (!target) return;
       if (sidebarRef.current?.contains(target)) return;
       if (topbarRef.current?.contains(target)) return;
+      if (layersPanelRef.current?.contains(target)) return;
       const portalRoot = document.getElementById("handout-builder-portal-root");
       if (portalRoot?.contains(target)) return;
       setSidebarCollapsed(true);
@@ -3347,15 +3352,6 @@ function updateShadowEffect(
                 >
                   <FileText className="h-5 w-5" />
                   <span>Templates</span>
-                </button>
-                <button
-                  type="button"
-                  className={`handout-sidebar-action ${sidebarTab === "layers" ? "is-active" : ""}`}
-                  onClick={() => { setSidebarTab("layers"); setSidebarCollapsed(false); }}
-                  aria-pressed={sidebarTab === "layers"}
-                >
-                  <Layers className="h-5 w-5" />
-                  <span>Camadas</span>
                 </button>
                 <button
                   type="button"
@@ -3739,102 +3735,7 @@ function updateShadowEffect(
                   </div>
                 </div>
               )}
-
-                {sidebarTab === "layers" && (
-                  <div className="handout-panel-section">
-                    <div className="handout-panel-title">Camadas</div>
-                    <div className="grid gap-3">
-                      {layersForList.length === 0 && (
-                        <div className="text-sm text-muted-foreground">Sem camadas. Adicione um texto ou imagem.</div>
-                      )}
-
-                      {layersForList.map((layer, idxFromTop) => {
-                        const realIdx = doc.layers.length - 1 - idxFromTop;
-                        const isSelected = selectedIds.includes(layer.id);
-                        const canMoveForward = realIdx < doc.layers.length - 1;
-                        const canMoveBackward = realIdx > 0;
-
-                        return (
-                          <div key={layer.id} className={`handout-layer-row ${isSelected ? "is-selected" : ""}`}>
-                            <button
-                              type="button"
-                              className="handout-layer-main"
-                              onClick={(event) => {
-                                selectLayerFromPointer(layer, event.shiftKey);
-                                setSidebarTab("props");
-                              }}
-                            >
-                              <span className="handout-layer-icon">
-                                {layer.type === "image" ? (
-                                  <ImageIcon className="h-4 w-4" />
-                                ) : layer.type === "shape" ? (
-                                  <Square className="h-4 w-4" />
-                                ) : (
-                                  <Type className="h-4 w-4" />
-                                )}
-                              </span>
-                              <span className="handout-layer-name" title={layer.name}>
-                                {layer.name || layer.id}
-                              </span>
-                            </button>
-
-                            <div className="handout-layer-actions">
-                              <Button
-                                type="button"
-                                size="icon"
-                                variant="ghost"
-                                disabled={!canMoveForward}
-                                onClick={() => moveLayerOneStep(layer.id, 1)}
-                                aria-label="Trazer para frente"
-                              >
-                                <ChevronUp className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                type="button"
-                                size="icon"
-                                variant="ghost"
-                                disabled={!canMoveBackward}
-                                onClick={() => moveLayerOneStep(layer.id, -1)}
-                                aria-label="Enviar para trás"
-                              >
-                                <ChevronDown className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                type="button"
-                                size="icon"
-                                variant="ghost"
-                                onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, visible: !prev.visible }))}
-                                aria-label={layer.visible ? "Ocultar" : "Mostrar"}
-                              >
-                                {layer.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                              </Button>
-                              <Button
-                                type="button"
-                                size="icon"
-                                variant="ghost"
-                                onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, locked: !prev.locked }))}
-                                aria-label={layer.locked ? "Desbloquear" : "Bloquear"}
-                              >
-                                {layer.locked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
-                              </Button>
-                              <Button
-                                type="button"
-                                size="icon"
-                                variant="ghost"
-                                onClick={() => deleteLayer(layer.id)}
-                                aria-label="Excluir"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                  {sidebarTab === "props" && (
+{sidebarTab === "props" && (
                     <div className="handout-panel-section">
                       <div className="handout-panel-title">Propriedades</div>
                       <div className="grid gap-4">
@@ -5282,6 +5183,125 @@ function updateShadowEffect(
               </div>
             </div>
           </div>
+          <div
+            ref={layersPanelRef}
+            className={`handout-layers-float ${layersPanelOpen ? "is-open" : ""}`}
+          >
+            <button
+              type="button"
+              className="handout-layers-toggle"
+              onClick={() => setLayersPanelOpen((prev) => !prev)}
+              aria-expanded={layersPanelOpen}
+              aria-controls="handout-layers-panel"
+            >
+              <Layers className="h-4 w-4" />
+              <span>Camadas</span>
+            </button>
+            {layersPanelOpen && (
+              <div className="handout-layers-panel" id="handout-layers-panel">
+                <div className="handout-layers-panel-header">
+                  <span className="handout-layers-panel-title">Camadas</span>
+                  <button
+                    type="button"
+                    className="handout-layers-panel-close"
+                    onClick={() => setLayersPanelOpen(false)}
+                    aria-label="Fechar camadas"
+                  >
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="handout-layers-panel-body">
+                  {layersForList.length === 0 && (
+                    <div className="text-sm text-muted-foreground">
+                      Sem camadas. Adicione um texto ou imagem.
+                    </div>
+                  )}
+                  {layersForList.map((layer, idxFromTop) => {
+                    const realIdx = doc.layers.length - 1 - idxFromTop;
+                    const isSelected = selectedIds.includes(layer.id);
+                    const canMoveForward = realIdx < doc.layers.length - 1;
+                    const canMoveBackward = realIdx > 0;
+
+                    return (
+                      <div key={layer.id} className={`handout-layer-row ${isSelected ? "is-selected" : ""}`}>
+                        <button
+                          type="button"
+                          className="handout-layer-main"
+                          onClick={(event) => {
+                            selectLayerFromPointer(layer, event.shiftKey);
+                            setSidebarTab("props");
+                          }}
+                        >
+                          <span className="handout-layer-icon">
+                            {layer.type === "image" ? (
+                              <ImageIcon className="h-4 w-4" />
+                            ) : layer.type === "shape" ? (
+                              <Square className="h-4 w-4" />
+                            ) : (
+                              <Type className="h-4 w-4" />
+                            )}
+                          </span>
+                          <span className="handout-layer-name" title={layer.name}>
+                            {layer.name || layer.id}
+                          </span>
+                        </button>
+
+                        <div className="handout-layer-actions">
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            disabled={!canMoveForward}
+                            onClick={() => moveLayerOneStep(layer.id, 1)}
+                            aria-label="Trazer para frente"
+                          >
+                            <ChevronUp className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            disabled={!canMoveBackward}
+                            onClick={() => moveLayerOneStep(layer.id, -1)}
+                            aria-label="Enviar para tras"
+                          >
+                            <ChevronDown className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, visible: !prev.visible }))}
+                            aria-label={layer.visible ? "Ocultar" : "Mostrar"}
+                          >
+                            {layer.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                          </Button>
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, locked: !prev.locked }))}
+                            aria-label={layer.locked ? "Desbloquear" : "Bloquear"}
+                          >
+                            {layer.locked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
+                          </Button>
+                          <Button
+                            type="button"
+                            size="icon"
+                            variant="ghost"
+                            onClick={() => deleteLayer(layer.id)}
+                            aria-label="Excluir"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
           {contextMenu && contextMenuLayers.length > 0 && (
             <div className="handout-context-menu" style={contextMenuStyle}>
               <div
@@ -5509,6 +5529,8 @@ export default function HandoutCanvasApp() {
     </PortalContainerProvider>
   );
 }
+
+
 
 
 

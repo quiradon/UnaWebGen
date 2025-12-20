@@ -1,28 +1,21 @@
-﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Rnd } from "react-rnd";
 import {
-  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronUp,
-  ChevronsUpDown,
   Circle,
-  Copy,
   Download,
   Eye,
   EyeOff,
   FileText,
   Image as ImageIcon,
-  FlipHorizontal2,
-  FlipVertical2,
   Blend,
   Bold,
   AlignCenter,
   AlignLeft,
   AlignRight,
   Italic,
-  Layers,
   LayoutGrid,
   Lock,
   Minus,
@@ -47,198 +40,58 @@ import templateLibraryData from "@data/handout-templates.json";
 import { PortalContainerProvider } from "@/components/ui/portal-context";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { BlendModePicker } from "@/components/handoutbuilder/controls/BlendModePicker";
+import { ColorPicker } from "@/components/handoutbuilder/controls/ColorPicker";
+import { FontSelect } from "@/components/handoutbuilder/controls/FontSelect";
+import { FontWeightPicker } from "@/components/handoutbuilder/controls/FontWeightPicker";
+import { GradientStopEditor } from "@/components/handoutbuilder/controls/GradientStopEditor";
+import { LayerContextMenu } from "@/components/handoutbuilder/menus/LayerContextMenu";
+import { LayersPanel } from "@/components/handoutbuilder/panels/LayersPanel";
+import {
+  BLEND_MODE_VALUES,
+  DEFAULT_FONT_PRESET,
+  FONT_PRESETS,
+  FONT_PRESET_IDS,
+  FONT_WEIGHT_OPTIONS,
+  FONT_WEIGHT_VALUES,
+  SHAPE_FILL_MODE_LABELS,
+  SHAPE_FILL_MODE_VALUES,
+  SHAPE_IMAGE_FIT_LABELS,
+  SHAPE_IMAGE_FIT_VALUES,
+  SHAPE_KIND_LABELS,
+  SHAPE_KIND_VALUES,
+  TEMPLATE_IDS,
+} from "@/components/handoutbuilder/handoutCanvasOptions";
+import type {
+  AssetGroup,
+  AssetItem,
+  BaseLayer,
+  CSSVars,
+  ContextMenuState,
+  FillPreset,
+  FontPresetId,
+  FontWeight,
+  HandoutCanvasDocV1,
+  HandoutTemplateEntry,
+  ImageLayer,
+  Layer,
+  LayerEffects,
+  ShadowEffect,
+  ShapeFillMode,
+  ShapeImageFit,
+  ShapeKind,
+  ShapeLayer,
+  SnapGuide,
+  TextAlign,
+  TextLayer,
+} from "@/components/handoutbuilder/handoutCanvasTypes";
+import { clamp, normalizeHexColor } from "@/components/handoutbuilder/handoutCanvasUtils";
 
-type FontPresetId =
-  | "serif"
-  | "sans"
-  | "mono"
-  | "inter"
-  | "roboto"
-  | "montserrat"
-  | "merriweather"
-  | "playfair-display"
-  | "cinzel"
-  | "im-fell-english"
-  | "jetbrains-mono";
-type TextAlign = "left" | "center" | "right";
-type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-type BlendMode =
-  | "normal"
-  | "multiply"
-  | "screen"
-  | "overlay"
-  | "darken"
-  | "lighten"
-  | "color-dodge"
-  | "color-burn"
-  | "hard-light"
-  | "soft-light"
-  | "difference"
-  | "exclusion"
-  | "hue"
-  | "saturation"
-  | "color"
-  | "luminosity";
-type ShapeKind = "rect" | "ellipse" | "triangle" | "diamond" | "hexagon" | "star";
-type ShapeFillMode = "solid" | "linear" | "radial" | "image";
-type ShapeImageFit = "cover" | "contain";
-type TemplateId = "none" | "parchment" | "letter" | "dossier";
-
-type ShadowEffect = {
-  enabled: boolean;
-  x: number;
-  y: number;
-  blur: number;
-  spread: number;
-  color: string;
-  opacity: number;
-};
-
-type LayerEffects = {
-  dropShadow: ShadowEffect;
-  innerShadow: ShadowEffect;
-  blur: number;
-  brightness: number;
-  contrast: number;
-  saturate: number;
-};
-
-type BaseLayer = {
-  id: string;
-  name: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  opacity: number;
-  rotation: number;
-  flipX: boolean;
-  flipY: boolean;
-  locked: boolean;
-  visible: boolean;
-  groupId: string | null;
-  clipToId: string | null;
-  blendMode: BlendMode;
-  effects: LayerEffects;
-};
-
-type ImageLayer = BaseLayer & {
-  type: "image";
-  src: string;
-  keepAspectRatio: boolean;
-};
-
-type TextLayer = BaseLayer & {
-  type: "text";
-  text: string;
-  fontSize: number;
-  color: string;
-  align: TextAlign;
-  fontPreset: FontPresetId;
-  fontWeight: FontWeight;
-  italic: boolean;
-  underline: boolean;
-  backgroundColor: string;
-  padding: number;
-  fillMode: ShapeFillMode;
-  fillColor: string;
-  fillColor2: string;
-  fillStop1: number;
-  fillStop2: number;
-  gradientAngle: number;
-  imageSrc: string;
-  imageFit: ShapeImageFit;
-  letterSpacing: number;
-  lineHeight: number;
-  strokeColor: string;
-  strokeWidth: number;
-};
-
-type ShapeLayer = BaseLayer & {
-  type: "shape";
-  shape: ShapeKind;
-  cornerRadius: number;
-  fillMode: ShapeFillMode;
-  fillColor: string;
-  fillColor2: string;
-  fillStop1: number;
-  fillStop2: number;
-  gradientAngle: number;
-  imageSrc: string;
-  imageFit: ShapeImageFit;
-};
-
-type Layer = ImageLayer | TextLayer | ShapeLayer;
-
-type HandoutCanvasDocV1 = {
-  version: 1;
-  pageWidth: number;
-  pageHeight: number;
-  zoom: number;
-  paperColor: string;
-  paperOpacity: number;
-  template: TemplateId;
-  templateId: string | null;
-  layers: Layer[];
-};
-
-type CSSVars = React.CSSProperties & Record<`--${string}`, string>;
-
-type ContextMenuState = {
-  x: number;
-  y: number;
-  ids: string[];
-  primaryId: string | null;
-};
-
-type FillPreset = {
-  id: string;
-  label: string;
-  mode: ShapeFillMode;
-  color1: string;
-  color2: string;
-  stop1: number;
-  stop2: number;
-  angle: number;
-  imageSrc: string;
-  imageFit: ShapeImageFit;
-};
-
-type AssetItem = {
-  id: string;
-  name: string;
-  src: string;
-  width: number;
-  height: number;
-  premium?: boolean;
-};
-
-type AssetGroup = {
-  id: string;
-  label: string;
-  description: string;
-  kind: "folder" | "group";
-  items: AssetItem[];
-  defaultCollapsed?: boolean;
-};
-
-type HandoutTemplateEntry = {
-  id: string;
-  label: string;
-  description: string;
-  doc: HandoutCanvasDocV1;
-};
-
-type SnapGuide = {
-  axis: "x" | "y";
-  value: number;
-};
 
 const STORAGE_KEY = "kraken.handoutCanvas.v1";
 
@@ -271,101 +124,6 @@ const LEGACY_PAGE_SIZES = {
 const LEGACY_PAGE_SIZE_IDS = ["a4", "letter", "note"] as const;
 const LEGACY_ORIENTATIONS = ["portrait", "landscape"] as const;
 
-const FONT_PRESETS: Record<FontPresetId, { label: string; stack: string }> = {
-  serif: { label: "Serif (Sistema)", stack: 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' },
-  sans: {
-    label: "Sans (Sistema)",
-    stack: 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif',
-  },
-  mono: {
-    label: "Mono (Sistema)",
-    stack:
-      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-  },
-  inter: { label: "Inter", stack: 'Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif' },
-  roboto: { label: "Roboto", stack: 'Roboto, ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif' },
-  montserrat: {
-    label: "Montserrat",
-    stack: 'Montserrat, ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif',
-  },
-  merriweather: {
-    label: "Merriweather",
-    stack: 'Merriweather, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
-  },
-  "playfair-display": {
-    label: "Playfair Display",
-    stack: 'Playfair Display, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
-  },
-  cinzel: { label: "Cinzel", stack: 'Cinzel, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' },
-  "im-fell-english": {
-    label: "IM Fell English",
-    stack: 'IM Fell English, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
-  },
-  "jetbrains-mono": {
-    label: "JetBrains Mono",
-    stack:
-      'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-  },
-};
-
-const FONT_PRESET_IDS = Object.keys(FONT_PRESETS) as FontPresetId[];
-const DEFAULT_FONT_PRESET: FontPresetId = "serif";
-const FONT_WEIGHT_VALUES = [100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
-const FONT_WEIGHT_OPTIONS: ReadonlyArray<{ value: FontWeight; label: string }> = [
-  { value: 100, label: "Thin" },
-  { value: 200, label: "Extra Light" },
-  { value: 300, label: "Light" },
-  { value: 400, label: "Regular" },
-  { value: 500, label: "Medium" },
-  { value: 600, label: "Semi Bold" },
-  { value: 700, label: "Bold" },
-  { value: 800, label: "Extra Bold" },
-  { value: 900, label: "Black" },
-] as const;
-const BLEND_MODE_OPTIONS: ReadonlyArray<{ value: BlendMode; label: string }> = [
-  { value: "normal", label: "Normal" },
-  { value: "multiply", label: "Multiply" },
-  { value: "screen", label: "Screen" },
-  { value: "overlay", label: "Overlay" },
-  { value: "darken", label: "Darken" },
-  { value: "lighten", label: "Lighten" },
-  { value: "color-dodge", label: "Color Dodge" },
-  { value: "color-burn", label: "Color Burn" },
-  { value: "hard-light", label: "Hard Light" },
-  { value: "soft-light", label: "Soft Light" },
-  { value: "difference", label: "Difference" },
-  { value: "exclusion", label: "Exclusion" },
-  { value: "hue", label: "Hue" },
-  { value: "saturation", label: "Saturation" },
-  { value: "color", label: "Color" },
-  { value: "luminosity", label: "Luminosity" },
-] as const;
-const BLEND_MODE_VALUES = BLEND_MODE_OPTIONS.map((option) => option.value) as BlendMode[];
-const SHAPE_KINDS = ["rect", "ellipse", "triangle", "diamond", "hexagon", "star"] as const;
-const SHAPE_KIND_VALUES = [...SHAPE_KINDS] as ShapeKind[];
-const SHAPE_KIND_LABELS: Record<ShapeKind, string> = {
-  rect: "Retângulo",
-  ellipse: "Círculo",
-  triangle: "Triângulo",
-  diamond: "Diamante",
-  hexagon: "Hexágono",
-  star: "Estrela",
-};
-const SHAPE_FILL_MODES = ["solid", "linear", "radial", "image"] as const;
-const SHAPE_FILL_MODE_VALUES = [...SHAPE_FILL_MODES] as ShapeFillMode[];
-const SHAPE_FILL_MODE_LABELS: Record<ShapeFillMode, string> = {
-  solid: "Cor sólida",
-  linear: "Gradiente linear",
-  radial: "Gradiente radial",
-  image: "Imagem",
-};
-const SHAPE_IMAGE_FITS = ["cover", "contain"] as const;
-const SHAPE_IMAGE_FIT_VALUES = [...SHAPE_IMAGE_FITS] as ShapeImageFit[];
-const SHAPE_IMAGE_FIT_LABELS: Record<ShapeImageFit, string> = {
-  cover: "Cobrir",
-  contain: "Conter",
-};
-const TEMPLATE_IDS = ["none", "parchment", "letter", "dossier"] as const;
 const TEMPLATE_PREVIEW_MAX = 140;
 const TEMPLATE_PREVIEW_LARGE_MAX = 280;
 const TEXT_ALIGN_LABELS: Record<TextAlign, string> = {
@@ -584,10 +342,6 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
   ],
 };
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, value));
-}
-
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
@@ -645,23 +399,6 @@ function getBoldWeight(weights: readonly FontWeight[]) {
   const bolds = weights.filter((weight) => weight >= 600);
   if (bolds.length) return bolds.includes(700) ? 700 : bolds[bolds.length - 1];
   return getClosestWeight(weights, 700);
-}
-
-function normalizeHexColor(value: string) {
-  const trimmed = value.trim().toLowerCase();
-  if (!trimmed) return null;
-  const withHash = trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
-  const raw = withHash.slice(1);
-  const isShort = /^[0-9a-f]{3}$/.test(raw);
-  const isFull = /^[0-9a-f]{6}$/.test(raw);
-  if (!isShort && !isFull) return null;
-  const full = isShort
-    ? raw
-        .split("")
-        .map((c) => c + c)
-        .join("")
-    : raw;
-  return `#${full}`;
 }
 
 function hexToRgb(value: string) {
@@ -1090,442 +827,6 @@ function normalizeEffects(raw: unknown): LayerEffects {
   };
 }
 
-type FontPickerProps = {
-  value: FontPresetId;
-  onValueChange: (value: FontPresetId) => void;
-  disabled?: boolean;
-  className?: string;
-};
-
-function FontPicker({ value, onValueChange, disabled, className }: FontPickerProps) {
-  const [open, setOpen] = useState(false);
-  const selected = FONT_PRESETS[value] ?? FONT_PRESETS.serif;
-  const triggerClassName = ["w-full justify-between gap-2", className].filter(Boolean).join(" ");
-  const handleSelect = (id: FontPresetId) => {
-    onValueChange(id);
-    setOpen(false);
-  };
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          type="button"
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          disabled={disabled}
-          className={triggerClassName}
-        >
-          <span className="truncate" style={{ fontFamily: selected.stack }}>
-            {selected.label}
-          </span>
-          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-
-      <PopoverContent align="start" className="w-[320px] p-0">
-        <Command>
-          <CommandInput placeholder="Buscar fonte..." />
-          <CommandList>
-            <CommandEmpty>Nenhuma fonte encontrada.</CommandEmpty>
-            <CommandGroup>
-              {Object.entries(FONT_PRESETS).map(([id, preset]) => (
-                <CommandItem
-                  key={id}
-                  value={`${preset.label} ${id}`}
-                  className="cursor-pointer"
-                  onSelect={() => {
-                    handleSelect(id as FontPresetId);
-                  }}
-                  onClick={() => {
-                    handleSelect(id as FontPresetId);
-                  }}
-                  onMouseDown={(event) => {
-                    event.preventDefault();
-                  }}
-                >
-                  <Check className={`mr-2 h-4 w-4 ${value === id ? "opacity-100" : "opacity-0"}`} />
-                  <span className="truncate" style={{ fontFamily: preset.stack }}>
-                    {preset.label}
-                  </span>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-type FontWeightPickerProps = {
-  value: FontWeight;
-  onValueChange: (value: FontWeight) => void;
-  fontFamily: string;
-  options?: ReadonlyArray<{ value: FontWeight; label: string }>;
-  disabled?: boolean;
-  className?: string;
-};
-
-function FontWeightPicker({
-  value,
-  onValueChange,
-  fontFamily,
-  options = FONT_WEIGHT_OPTIONS,
-  disabled,
-  className,
-}: FontWeightPickerProps) {
-  const [open, setOpen] = useState(false);
-  const selected = options.find((option) => option.value === value) ?? options[0] ?? FONT_WEIGHT_OPTIONS[3];
-  const triggerClassName = ["handout-toolbar-input", "handout-weight-trigger", className]
-    .filter(Boolean)
-    .join(" ");
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button type="button" variant="outline" disabled={disabled} className={triggerClassName} aria-expanded={open}>
-          <span className="handout-weight-preview" style={{ fontFamily, fontWeight: value }}>
-            Aa
-          </span>
-          <span className="handout-weight-label" style={{ fontFamily, fontWeight: value }}>
-            {selected.value} {selected.label}
-          </span>
-          <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent align="start" className="handout-weight-popover">
-        <div className="handout-weight-panel">
-          {options.map((option) => {
-            const isActive = option.value === value;
-            return (
-              <button
-                key={option.value}
-                type="button"
-                className={`handout-weight-option ${isActive ? "is-active" : ""}`}
-                onClick={() => {
-                  onValueChange(option.value);
-                  setOpen(false);
-                }}
-              >
-                <span className="handout-weight-label" style={{ fontFamily, fontWeight: option.value }}>
-                  {option.value} {option.label}
-                </span>
-                <span className="handout-weight-preview" style={{ fontFamily, fontWeight: option.value }}>
-                  Aa
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-type BlendModePickerProps = {
-  value: BlendMode;
-  onValueChange: (value: BlendMode) => void;
-  disabled?: boolean;
-  className?: string;
-};
-
-function BlendModePicker({ value, onValueChange, disabled, className }: BlendModePickerProps) {
-  const [open, setOpen] = useState(false);
-  const selected = BLEND_MODE_OPTIONS.find((option) => option.value === value) ?? BLEND_MODE_OPTIONS[0];
-  const triggerClassName = ["handout-toolbar-input", "handout-blend-trigger", className]
-    .filter(Boolean)
-    .join(" ");
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button type="button" variant="outline" disabled={disabled} className={triggerClassName} aria-expanded={open}>
-          <span className="handout-blend-label">{selected.label}</span>
-          <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent align="start" className="handout-blend-popover">
-        <div className="handout-blend-panel">
-          {BLEND_MODE_OPTIONS.map((option) => {
-            const isActive = option.value === value;
-            return (
-              <button
-                key={option.value}
-                type="button"
-                className={`handout-blend-option ${isActive ? "is-active" : ""}`}
-                onClick={() => {
-                  onValueChange(option.value);
-                  setOpen(false);
-                }}
-              >
-                <span className="handout-blend-label">{option.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-type ColorPickerProps = {
-  value: string;
-  onValueChange: (value: string) => void;
-  suggestions?: readonly string[];
-  history?: readonly string[];
-  triggerLabel?: string;
-  ariaLabel?: string;
-  className?: string;
-};
-
-function ColorPicker({
-  value,
-  onValueChange,
-  suggestions = [],
-  history = [],
-  triggerLabel,
-  ariaLabel = "Selecionar cor",
-  className,
-}: ColorPickerProps) {
-  const [open, setOpen] = useState(false);
-  const normalizedValue = normalizeHexColor(value) ?? "#000000";
-  const [hexInput, setHexInput] = useState(normalizedValue.toUpperCase());
-
-  useEffect(() => {
-    const next = normalizeHexColor(value);
-    setHexInput((next ?? value).toUpperCase());
-  }, [value]);
-
-  const handleHexChange = (next: string) => {
-    setHexInput(next.toUpperCase());
-    const normalized = normalizeHexColor(next);
-    if (normalized) onValueChange(normalized);
-  };
-
-  const handleSwatchClick = (next: string) => {
-    const normalized = normalizeHexColor(next) ?? next;
-    onValueChange(normalized);
-  };
-
-  const normalizedValueLower = normalizedValue.toLowerCase();
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <button
-          type="button"
-          className={["handout-toolbar-color", className].filter(Boolean).join(" ")}
-          aria-label={ariaLabel}
-          title={ariaLabel}
-        >
-          {triggerLabel && <span className="handout-toolbar-color-label">{triggerLabel}</span>}
-          <span className="handout-toolbar-color-swatch" style={{ backgroundColor: value }} />
-        </button>
-      </PopoverTrigger>
-      <PopoverContent align="start" className="handout-color-popover">
-        <div className="handout-color-panel">
-          <div className="handout-color-row">
-            <input
-              type="color"
-              value={normalizedValue}
-              onChange={(e) => handleSwatchClick(e.target.value)}
-              className="handout-color-native"
-              aria-label="Selecionar cor"
-            />
-            <Input
-              value={hexInput}
-              onChange={(e) => handleHexChange(e.target.value)}
-              className="handout-color-hex"
-              placeholder="#FFFFFF"
-            />
-          </div>
-
-          <div className="handout-color-section">
-            <div className="handout-color-section-title">Sugestoes</div>
-            <div className="handout-color-swatches">
-              {suggestions.map((color) => {
-                const normalized = (normalizeHexColor(color) ?? color).toLowerCase();
-                const isActive = normalized === normalizedValueLower;
-                return (
-                  <button
-                    key={color}
-                    type="button"
-                    className={`handout-color-swatch ${isActive ? "is-active" : ""}`}
-                    style={{ backgroundColor: color }}
-                    onClick={() => handleSwatchClick(color)}
-                    aria-label={`Cor ${color}`}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="handout-color-section">
-            <div className="handout-color-section-title">Historico</div>
-            {history.length === 0 ? (
-              <div className="handout-color-empty">Sem historico</div>
-            ) : (
-              <div className="handout-color-swatches">
-                {history.map((color) => {
-                  const normalized = (normalizeHexColor(color) ?? color).toLowerCase();
-                  const isActive = normalized === normalizedValueLower;
-                  return (
-                    <button
-                      key={color}
-                      type="button"
-                      className={`handout-color-swatch ${isActive ? "is-active" : ""}`}
-                      style={{ backgroundColor: color }}
-                      onClick={() => handleSwatchClick(color)}
-                      aria-label={`Cor ${color}`}
-                    />
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-type GradientStopEditorProps = {
-  stop1: number;
-  stop2: number;
-  color1: string;
-  color2: string;
-  angle: number;
-  onStop1Change: (value: number) => void;
-  onStop2Change: (value: number) => void;
-  onAngleChange?: (value: number) => void;
-  mode: "linear" | "radial";
-};
-
-function GradientStopEditor({
-  stop1,
-  stop2,
-  color1,
-  color2,
-  angle,
-  onStop1Change,
-  onStop2Change,
-  onAngleChange,
-  mode,
-}: GradientStopEditorProps) {
-  const barRef = useRef<HTMLDivElement | null>(null);
-  const gradient =
-    mode === "linear"
-      ? `linear-gradient(${angle}deg, ${color1} ${stop1}%, ${color2} ${stop2}%)`
-      : `radial-gradient(circle at center, ${color1} ${stop1}%, ${color2} ${stop2}%)`;
-
-  const updateStop = (which: "start" | "end", clientX: number) => {
-    const bar = barRef.current;
-    if (!bar) return;
-    const rect = bar.getBoundingClientRect();
-    if (!rect.width) return;
-    const pct = clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
-    const value = Math.round(pct);
-    if (which === "start") onStop1Change(value);
-    else onStop2Change(value);
-  };
-
-  const startDrag = (which: "start" | "end") => (event: React.PointerEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    updateStop(which, event.clientX);
-    const handleMove = (ev: PointerEvent) => updateStop(which, ev.clientX);
-    const handleUp = () => {
-      window.removeEventListener("pointermove", handleMove);
-      window.removeEventListener("pointerup", handleUp);
-      window.removeEventListener("pointercancel", handleUp);
-    };
-    window.addEventListener("pointermove", handleMove);
-    window.addEventListener("pointerup", handleUp);
-    window.addEventListener("pointercancel", handleUp);
-  };
-
-  const handleBarPointerDown = (event: React.PointerEvent) => {
-    const bar = barRef.current;
-    if (!bar) return;
-    const rect = bar.getBoundingClientRect();
-    const pct = clamp(((event.clientX - rect.left) / rect.width) * 100, 0, 100);
-    const pick = Math.abs(pct - stop1) <= Math.abs(pct - stop2) ? "start" : "end";
-    updateStop(pick, event.clientX);
-    startDrag(pick)(event);
-  };
-
-  return (
-    <div className="handout-gradient-editor">
-      <div
-        ref={barRef}
-        className="handout-gradient-bar"
-        style={{ backgroundImage: gradient }}
-        onPointerDown={handleBarPointerDown}
-      >
-        <button
-          type="button"
-          className="handout-gradient-handle is-start"
-          style={{ left: `${stop1}%`, backgroundColor: color1 }}
-          onPointerDown={startDrag("start")}
-          aria-label="Stop 1"
-        />
-        <button
-          type="button"
-          className="handout-gradient-handle is-end"
-          style={{ left: `${stop2}%`, backgroundColor: color2 }}
-          onPointerDown={startDrag("end")}
-          aria-label="Stop 2"
-        />
-      </div>
-      {mode === "linear" && onAngleChange ? (
-        <div className="grid gap-2">
-          <Label>Angulo</Label>
-          <Input
-            type="number"
-            min={0}
-            max={360}
-            value={angle}
-            onChange={(event) => {
-              const value = clamp(Number(event.target.value), 0, 360);
-              onAngleChange(value);
-            }}
-          />
-        </div>
-      ) : null}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="grid gap-2">
-          <Label>Stop 1 (%)</Label>
-          <Input
-            type="number"
-            min={0}
-            max={100}
-            value={stop1}
-            onChange={(event) => {
-              const value = clamp(Number(event.target.value), 0, 100);
-              onStop1Change(value);
-            }}
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label>Stop 2 (%)</Label>
-          <Input
-            type="number"
-            min={0}
-            max={100}
-            value={stop2}
-            onChange={(event) => {
-              const value = clamp(Number(event.target.value), 0, 100);
-              onStop2Change(value);
-            }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function normalizeLayer(raw: unknown): Layer | null {
   if (!isObject(raw)) return null;
   const type = raw.type;
@@ -1740,53 +1041,7 @@ function normalizeFillPreset(raw: unknown): FillPreset | null {
   };
 }
 
-function createId(prefix: string) {
-  const rand =
-    typeof crypto !== "undefined" && "randomUUID" in crypto
-      ? crypto.randomUUID()
-      : `${Date.now().toString(16)}${Math.random().toString(16).slice(2)}`;
-  return `${prefix}_${rand}`;
-}
-
-function downloadBlob(blob: Blob, filename: string) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-function sanitizeFilename(value: string) {
-  const base = value
-    .toLowerCase()
-    .replace(/[^a-z0-9-_]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "");
-  return base || "layer";
-}
-
-async function fileToDataUrl(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = () => reject(new Error("Falha ao ler arquivo."));
-    reader.onload = () => resolve(String(reader.result || ""));
-    reader.readAsDataURL(file);
-  });
-}
-
-async function getImageNaturalSize(src: string) {
-  return new Promise<{ width: number; height: number }>((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve({ width: img.naturalWidth || img.width, height: img.naturalHeight || img.height });
-    img.onerror = () => reject(new Error("Falha ao carregar imagem."));
-    img.src = src;
-  });
-}
-
-  function HandoutCanvasBuilder() {
+function HandoutCanvasBuilder() {
     type SidebarTab =
       | "elements"
       | "assets"
@@ -2072,29 +1327,6 @@ async function getImageNaturalSize(src: string) {
       height: `${size.height}px`,
     } as CSSVars;
   }, [pendingAsset]);
-  const contextMenuStyle = contextMenu
-    ? ({ "--context-x": `${contextMenu.x}px`, "--context-y": `${contextMenu.y}px` } as CSSVars)
-    : undefined;
-  const contextMenuLayers = useMemo(() => {
-    if (!contextMenu) return [];
-    const idSet = new Set(contextMenu.ids);
-    return doc.layers.filter((layer) => idSet.has(layer.id));
-  }, [contextMenu, doc.layers]);
-  const contextMenuPrimary = useMemo(() => {
-    if (!contextMenu?.primaryId) return null;
-    return doc.layers.find((layer) => layer.id === contextMenu.primaryId) ?? null;
-  }, [contextMenu, doc.layers]);
-  const contextMenuPrimaryIndex = useMemo(() => {
-    if (!contextMenuPrimary) return -1;
-    return doc.layers.findIndex((layer) => layer.id === contextMenuPrimary.id);
-  }, [contextMenuPrimary, doc.layers]);
-  const contextMenuIsSingle = contextMenuLayers.length === 1;
-  const contextMenuCanMoveForward =
-    contextMenuIsSingle && contextMenuPrimaryIndex >= 0 && contextMenuPrimaryIndex < doc.layers.length - 1;
-  const contextMenuCanMoveBackward = contextMenuIsSingle && contextMenuPrimaryIndex > 0;
-  const contextMenuShouldFlipX = contextMenuLayers.some((layer) => !layer.flipX);
-  const contextMenuShouldFlipY = contextMenuLayers.some((layer) => !layer.flipY);
-  const contextMenuLayerIds = contextMenuLayers.map((layer) => layer.id);
   const filteredAssetGroups = useMemo(() => {
     const term = assetSearch.trim().toLowerCase();
     if (!term) return ASSET_GROUPS;
@@ -2108,7 +1340,6 @@ async function getImageNaturalSize(src: string) {
     }).filter((group) => group.items.length > 0);
   }, [assetSearch]);
 
-  const layersForList = useMemo(() => [...doc.layers].reverse(), [doc.layers]);
   const selectedLayer = useMemo(
     () => doc.layers.find((l) => l.id === selectedId) ?? null,
     [doc.layers, selectedId],
@@ -3158,7 +2389,7 @@ function updateShadowEffect(
               {textLayer && (
                 <div className="handout-text-toolbar" role="toolbar" aria-label="Editor de texto">
                   <div className="handout-toolbar-group handout-toolbar-font">
-                    <FontPicker
+                    <FontSelect
                       value={textLayer.fontPreset}
                       onValueChange={(v) =>
                         updateLayer(textLayer.id, (p) =>
@@ -5183,222 +4414,31 @@ function updateShadowEffect(
               </div>
             </div>
           </div>
-          <div
-            ref={layersPanelRef}
-            className={`handout-layers-float ${layersPanelOpen ? "is-open" : ""}`}
-          >
-            <button
-              type="button"
-              className="handout-layers-toggle"
-              onClick={() => setLayersPanelOpen((prev) => !prev)}
-              aria-expanded={layersPanelOpen}
-              aria-controls="handout-layers-panel"
-            >
-              <Layers className="h-4 w-4" />
-              <span>Camadas</span>
-            </button>
-            {layersPanelOpen && (
-              <div className="handout-layers-panel" id="handout-layers-panel">
-                <div className="handout-layers-panel-header">
-                  <span className="handout-layers-panel-title">Camadas</span>
-                  <button
-                    type="button"
-                    className="handout-layers-panel-close"
-                    onClick={() => setLayersPanelOpen(false)}
-                    aria-label="Fechar camadas"
-                  >
-                    <ChevronDown className="h-4 w-4" />
-                  </button>
-                </div>
-                <div className="handout-layers-panel-body">
-                  {layersForList.length === 0 && (
-                    <div className="text-sm text-muted-foreground">
-                      Sem camadas. Adicione um texto ou imagem.
-                    </div>
-                  )}
-                  {layersForList.map((layer, idxFromTop) => {
-                    const realIdx = doc.layers.length - 1 - idxFromTop;
-                    const isSelected = selectedIds.includes(layer.id);
-                    const canMoveForward = realIdx < doc.layers.length - 1;
-                    const canMoveBackward = realIdx > 0;
-
-                    return (
-                      <div key={layer.id} className={`handout-layer-row ${isSelected ? "is-selected" : ""}`}>
-                        <button
-                          type="button"
-                          className="handout-layer-main"
-                          onClick={(event) => {
-                            selectLayerFromPointer(layer, event.shiftKey);
-                            setSidebarTab("props");
-                          }}
-                        >
-                          <span className="handout-layer-icon">
-                            {layer.type === "image" ? (
-                              <ImageIcon className="h-4 w-4" />
-                            ) : layer.type === "shape" ? (
-                              <Square className="h-4 w-4" />
-                            ) : (
-                              <Type className="h-4 w-4" />
-                            )}
-                          </span>
-                          <span className="handout-layer-name" title={layer.name}>
-                            {layer.name || layer.id}
-                          </span>
-                        </button>
-
-                        <div className="handout-layer-actions">
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            disabled={!canMoveForward}
-                            onClick={() => moveLayerOneStep(layer.id, 1)}
-                            aria-label="Trazer para frente"
-                          >
-                            <ChevronUp className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            disabled={!canMoveBackward}
-                            onClick={() => moveLayerOneStep(layer.id, -1)}
-                            aria-label="Enviar para tras"
-                          >
-                            <ChevronDown className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, visible: !prev.visible }))}
-                            aria-label={layer.visible ? "Ocultar" : "Mostrar"}
-                          >
-                            {layer.visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                          </Button>
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => updateLayer(layer.id, (prev) => ({ ...prev, locked: !prev.locked }))}
-                            aria-label={layer.locked ? "Desbloquear" : "Bloquear"}
-                          >
-                            {layer.locked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
-                          </Button>
-                          <Button
-                            type="button"
-                            size="icon"
-                            variant="ghost"
-                            onClick={() => deleteLayer(layer.id)}
-                            aria-label="Excluir"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-          {contextMenu && contextMenuLayers.length > 0 && (
-            <div className="handout-context-menu" style={contextMenuStyle}>
-              <div
-                className="handout-context-menu-backdrop"
-                onMouseDown={closeContextMenu}
-                onContextMenu={(event) => {
-                  event.preventDefault();
-                  closeContextMenu();
-                }}
-              />
-              <div
-                className="handout-context-menu-card"
-                role="menu"
-                aria-label="Acoes da camada"
-                onMouseDown={(event) => event.stopPropagation()}
-              >
-                <button
-                  type="button"
-                  className="handout-context-menu-item"
-                  onClick={() => {
-                    duplicateLayers(contextMenuLayerIds);
-                    closeContextMenu();
-                  }}
-                >
-                  <Copy className="h-4 w-4" />
-                  <span className="handout-context-menu-label">Duplicar</span>
-                </button>
-                <button
-                  type="button"
-                  className="handout-context-menu-item is-danger"
-                  onClick={() => {
-                    deleteLayers(contextMenuLayerIds);
-                    closeContextMenu();
-                  }}
-                >
-                  <Trash2 className="h-4 w-4" />
-                  <span className="handout-context-menu-label">Excluir</span>
-                </button>
-                <div className="handout-context-menu-divider" />
-                {contextMenuIsSingle && (
-                  <>
-                    <button
-                      type="button"
-                      className="handout-context-menu-item"
-                      disabled={!contextMenuCanMoveForward || !contextMenuPrimary}
-                      onClick={() => {
-                        if (contextMenuPrimary) moveLayerOneStep(contextMenuPrimary.id, 1);
-                        closeContextMenu();
-                      }}
-                    >
-                      <ChevronUp className="h-4 w-4" />
-                      <span className="handout-context-menu-label">Trazer para frente</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="handout-context-menu-item"
-                      disabled={!contextMenuCanMoveBackward || !contextMenuPrimary}
-                      onClick={() => {
-                        if (contextMenuPrimary) moveLayerOneStep(contextMenuPrimary.id, -1);
-                        closeContextMenu();
-                      }}
-                    >
-                      <ChevronDown className="h-4 w-4" />
-                      <span className="handout-context-menu-label">Enviar para tras</span>
-                    </button>
-                    <div className="handout-context-menu-divider" />
-                  </>
-                )}
-                <button
-                  type="button"
-                  className="handout-context-menu-item"
-                  onClick={() => {
-                    toggleFlipSelected(contextMenuLayerIds, "x");
-                    closeContextMenu();
-                  }}
-                >
-                  <FlipHorizontal2 className="h-4 w-4" />
-                  <span className="handout-context-menu-label">
-                    {contextMenuShouldFlipX ? "Flip horizontal" : "Desfazer flip horizontal"}
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className="handout-context-menu-item"
-                  onClick={() => {
-                    toggleFlipSelected(contextMenuLayerIds, "y");
-                    closeContextMenu();
-                  }}
-                >
-                  <FlipVertical2 className="h-4 w-4" />
-                  <span className="handout-context-menu-label">
-                    {contextMenuShouldFlipY ? "Flip vertical" : "Desfazer flip vertical"}
-                  </span>
-                </button>
-              </div>
-            </div>
-          )}
+          <LayersPanel
+            open={layersPanelOpen}
+            layers={doc.layers}
+            selectedIds={selectedIds}
+            panelRef={layersPanelRef}
+            onToggleOpen={() => setLayersPanelOpen((prev) => !prev)}
+            onClose={() => setLayersPanelOpen(false)}
+            onSelectLayer={(layer, shiftKey) => {
+              selectLayerFromPointer(layer, shiftKey);
+              setSidebarTab("props");
+            }}
+            onMoveLayer={moveLayerOneStep}
+            onToggleVisible={(id) => updateLayer(id, (prev) => ({ ...prev, visible: !prev.visible }))}
+            onToggleLocked={(id) => updateLayer(id, (prev) => ({ ...prev, locked: !prev.locked }))}
+            onDeleteLayer={deleteLayer}
+          />
+          <LayerContextMenu
+            contextMenu={contextMenu}
+            layers={doc.layers}
+            onClose={closeContextMenu}
+            onDuplicate={duplicateLayers}
+            onDelete={deleteLayers}
+            onMoveLayer={moveLayerOneStep}
+            onToggleFlip={toggleFlipSelected}
+          />
           {pendingTemplateOption && (
             <div
               className="handout-template-confirm"
@@ -5529,13 +4569,3 @@ export default function HandoutCanvasApp() {
     </PortalContainerProvider>
   );
 }
-
-
-
-
-
-
-
-
-
-

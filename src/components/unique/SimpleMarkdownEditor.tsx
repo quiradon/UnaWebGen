@@ -27,24 +27,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { NotionStyleEditor } from "./NotionStyleEditor";
 import type { NotionStyleEditorHandle } from "./NotionStyleEditor";
 import { normalizeSingleEquals } from "@/lib/utils";
-
-type StatOption = { value: number; name: { default: string; [key: string]: string }; emoji?: string };
-
-interface Stats {
-  id: number;
-  type: string;
-  emoji?: string;
-  name?: { default: string; [key: string]: string };
-  min?: number;
-  options?: number | StatOption[];
-  formula?: string;
-}
-
-interface Section {
-  id: number;
-  name?: { default: string; [key: string]: string };
-  emoji?: string;
-}
+import { Section, Stats } from "@/components/sistemaeditor/editor";
 
 interface SimpleMarkdownEditorProps {
   value: string;
@@ -943,7 +926,7 @@ export function SimpleMarkdownEditor({
                               if (statMatch && variable.type === 'enum' && variable.property === 'value') {
                                 const statId = parseInt(statMatch[1]);
                                 const stat = stats?.find(s => s.id === statId);
-                                if (stat && Array.isArray(stat.options)) {
+                                if (stat && "options" in stat && Array.isArray(stat.options)) {
                                   return (
                                     <Select
                                       value={resolvedValue}

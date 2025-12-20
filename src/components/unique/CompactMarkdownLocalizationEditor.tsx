@@ -8,36 +8,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SimpleMarkdownEditor } from "./SimpleMarkdownEditor";
+import { Locale, Section, Stats } from "@/components/sistemaeditor/editor";
 
-type Locale =
-  | "pt-BR"
-  | "en-US"
-  | "es-ES"
-  | "fr"
-  | "de"
-  | "it"
-  | "ru"
-  | "zh-CN"
-  | "ja"
-  | "ko";
 type Localization<T> = { default: T } & Partial<Record<Locale, T>>;
-
-type StatOption = { value: number; name: { default: string; [key: string]: string }; emoji?: string };
-
-interface Stats {
-  id: number;
-  type: string;
-  emoji?: string;
-  name?: { default: string; [key: string]: string };
-  min?: number;
-  options?: number | StatOption[];
-}
-
-interface Section {
-  id: number;
-  name?: { default: string; [key: string]: string };
-  emoji?: string;
-}
 
 interface CompactMarkdownLocalizationEditorProps {
   value: Localization<string>;
@@ -134,7 +107,7 @@ export function CompactMarkdownLocalizationEditor({
               : value[curr] ?? ""
           }
           onChange={(text) => updateLocale(curr, text)}
-          placeholder={curr === "default" ? "Obrigatorio" : `Opcional (${curr})`}
+          placeholder={curr === "default" ? "Obrigatório" : `Opcional (${curr})`}
           sections={sections}
           stats={stats}
         />

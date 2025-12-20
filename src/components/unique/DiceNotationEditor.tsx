@@ -332,7 +332,7 @@ const DiceNotationEditor: React.FC<DiceNotationEditorProps> = ({
         } catch (error) {
           return (
             <div className="text-xs font-medium text-red-500">
-              {error instanceof Error ? error.message : "Expressao invalida"}
+              {error instanceof Error ? error.message : "Expressão inválida"}
             </div>
           );
         }
@@ -346,8 +346,8 @@ const DiceNotationEditor: React.FC<DiceNotationEditorProps> = ({
       badge="rpg-dice-roller"
       description={
         <span>
-          Monte expressoes de rolagem combinando dados classicos, atributos do
-          sistema e modificadores avancados.
+          Monte expressoes de rolagem combinando dados clássicos, atributos do
+          sistema e modificadores avançados.
         </span>
       }
       value={expression}

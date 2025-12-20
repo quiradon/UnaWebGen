@@ -267,6 +267,11 @@ export function VariableExpressionEditor({
               {badge}
             </Badge>
           )}
+          {onConfirm && (
+            <Button className="ml-auto" onClick={onConfirm} disabled={confirmDisabled}>
+              {confirmLabel}
+            </Button>
+          )}
         </div>
         {description && (
           <div className="text-sm text-muted-foreground">{description}</div>
@@ -595,14 +600,6 @@ export function VariableExpressionEditor({
           </ScrollArea>
         </div>
       </CardContent>
-
-      {onConfirm && (
-        <CardFooter className="justify-end border-t border-border/60">
-          <Button onClick={onConfirm} disabled={confirmDisabled}>
-            {confirmLabel}
-          </Button>
-        </CardFooter>
-      )}
     </Card>
   );
 }

@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Rnd } from "react-rnd";
 import {
   Check,
@@ -12,6 +12,7 @@ import {
   Download,
   Eye,
   EyeOff,
+  FileText,
   Image as ImageIcon,
   FlipHorizontal2,
   FlipVertical2,
@@ -40,6 +41,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { toPng } from "html-to-image";
+
+import templateLibraryData from "@data/handout-templates.json";
 
 import { PortalContainerProvider } from "@/components/ui/portal-context";
 import { Toaster } from "@/components/ui/sonner";
@@ -85,6 +88,7 @@ type BlendMode =
 type ShapeKind = "rect" | "ellipse" | "triangle" | "diamond" | "hexagon" | "star";
 type ShapeFillMode = "solid" | "linear" | "radial" | "image";
 type ShapeImageFit = "cover" | "contain";
+type TemplateId = "none" | "parchment" | "letter" | "dossier";
 
 type ShadowEffect = {
   enabled: boolean;
@@ -179,10 +183,19 @@ type HandoutCanvasDocV1 = {
   zoom: number;
   paperColor: string;
   paperOpacity: number;
+  template: TemplateId;
+  templateId: string | null;
   layers: Layer[];
 };
 
 type CSSVars = React.CSSProperties & Record<`--${string}`, string>;
+
+type ContextMenuState = {
+  x: number;
+  y: number;
+  ids: string[];
+  primaryId: string | null;
+};
 
 type FillPreset = {
   id: string;
@@ -203,6 +216,23 @@ type AssetItem = {
   src: string;
   width: number;
   height: number;
+  premium?: boolean;
+};
+
+type AssetGroup = {
+  id: string;
+  label: string;
+  description: string;
+  kind: "folder" | "group";
+  items: AssetItem[];
+  defaultCollapsed?: boolean;
+};
+
+type HandoutTemplateEntry = {
+  id: string;
+  label: string;
+  description: string;
+  doc: HandoutCanvasDocV1;
 };
 
 type SnapGuide = {
@@ -335,6 +365,9 @@ const SHAPE_IMAGE_FIT_LABELS: Record<ShapeImageFit, string> = {
   cover: "Cobrir",
   contain: "Conter",
 };
+const TEMPLATE_IDS = ["none", "parchment", "letter", "dossier"] as const;
+const TEMPLATE_PREVIEW_MAX = 140;
+const TEMPLATE_PREVIEW_LARGE_MAX = 280;
 const TEXT_ALIGN_LABELS: Record<TextAlign, string> = {
   left: "Esquerda",
   center: "Centro",
@@ -343,7 +376,6 @@ const TEXT_ALIGN_LABELS: Record<TextAlign, string> = {
 const COLOR_HISTORY_KEY = "kraken.handoutColorHistory";
 const COLOR_HISTORY_LIMIT = 12;
 const FILL_PRESET_KEY = "kraken.handoutFillPresets";
-const ASSET_LIBRARY_KEY = "kraken.handoutAssetLibrary";
 const SNAP_PREF_KEY = "kraken.handoutSnapPrefs";
 const COLOR_SUGGESTIONS = [
   "#111111",
@@ -359,6 +391,58 @@ const COLOR_SUGGESTIONS = [
   "#3b82f6",
   "#8b5cf6",
 ] as const;
+
+// Placeholder catalog until the backend assets route is available.
+const ASSET_GROUPS: AssetGroup[] = [
+  {
+    id: "guild-icons",
+    label: "Guilda - Icones",
+    description: "Icones para selos e banners.",
+    kind: "group",
+    items: [
+      { id: "guild-torre", name: "Torre", src: "/img/guilds/icons/torre.webp", width: 512, height: 512 },
+      { id: "guild-ray", name: "Raio", src: "/img/guilds/icons/ray.webp", width: 512, height: 512 },
+      { id: "guild-celeste", name: "Celeste", src: "/img/guilds/icons/celeste.webp", width: 512, height: 512 },
+      { id: "guild-jambo", name: "Jambo", src: "/img/guilds/icons/jambo.webp", width: 512, height: 512 },
+    ],
+  },
+  {
+    id: "tarot-cards",
+    label: "Tarot - Cartas",
+    description: "Colecao de cartas classicas.",
+    kind: "folder",
+    items: [
+      { id: "tarot-0", name: "Tarot 0", src: "/api/tarot-card/0.webp", width: 512, height: 768 },
+      { id: "tarot-1", name: "Tarot 1", src: "/api/tarot-card/1.webp", width: 512, height: 768 },
+      { id: "tarot-2", name: "Tarot 2", src: "/api/tarot-card/2.webp", width: 512, height: 768 },
+      { id: "tarot-3", name: "Tarot 3", src: "/api/tarot-card/3.webp", width: 512, height: 768 },
+    ],
+  },
+  {
+    id: "reactions-wave",
+    label: "Reacoes - Wave",
+    description: "Reacoes animadas.",
+    kind: "group",
+    items: [
+      { id: "wave-0", name: "Wave 0", src: "/api/reacts/wave/0.webp", width: 512, height: 512 },
+      { id: "wave-1", name: "Wave 1", src: "/api/reacts/wave/1.webp", width: 512, height: 512 },
+      { id: "wave-2", name: "Wave 2", src: "/api/reacts/wave/2.webp", width: 512, height: 512 },
+      { id: "wave-3", name: "Wave 3", src: "/api/reacts/wave/3.webp", width: 512, height: 512 },
+    ],
+  },
+  {
+    id: "premium-art",
+    label: "Premium - Arte",
+    description: "Conteudo exclusivo para assinantes.",
+    kind: "folder",
+    defaultCollapsed: true,
+    items: [
+      { id: "premium-1", name: "Premium 1", src: "/img/tiers_premium/1.webp", width: 512, height: 512, premium: true },
+      { id: "premium-2", name: "Premium 2", src: "/img/tiers_premium/2.webp", width: 512, height: 512, premium: true },
+      { id: "premium-3", name: "Premium 3", src: "/img/tiers_premium/3.webp", width: 512, height: 512, premium: true },
+    ],
+  },
+];
 
 const GRADIENT_PRESETS = [
   { id: "sunset", label: "Sunset", angle: 45, color1: "#f97316", color2: "#f43f5e" },
@@ -411,6 +495,8 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
   zoom: 0.9,
   paperColor: "#f6f0de",
   paperOpacity: 1,
+  template: "none",
+  templateId: null,
   layers: [
     {
       id: "txt_title",
@@ -1541,6 +1627,8 @@ function normalizeDocV1(raw: unknown): HandoutCanvasDocV1 | null {
   const zoom = clamp(safeNumber(raw.zoom, DEFAULT_DOC.zoom), ZOOM_MIN, ZOOM_MAX);
   const paperColor = safeString(raw.paperColor, DEFAULT_DOC.paperColor);
   const paperOpacity = clamp(safeNumber(raw.paperOpacity, DEFAULT_DOC.paperOpacity), 0, 1);
+  const template = safeEnum(raw.template, TEMPLATE_IDS, DEFAULT_DOC.template);
+  const templateId = safeString(raw.templateId, "") || null;
 
   const layers = safeArray(raw.layers)
     .map(normalizeLayer)
@@ -1553,8 +1641,81 @@ function normalizeDocV1(raw: unknown): HandoutCanvasDocV1 | null {
     zoom,
     paperColor,
     paperOpacity,
+    template,
+    templateId,
     layers: layers.length ? layers : DEFAULT_DOC.layers,
   };
+}
+
+function normalizeTemplateEntry(raw: unknown): HandoutTemplateEntry | null {
+  if (!isObject(raw)) return null;
+  const id = safeString(raw.id, "");
+  if (!id) return null;
+  const doc = normalizeDocV1(raw.doc);
+  if (!doc) return null;
+  return {
+    id,
+    label: safeString(raw.label, "Template"),
+    description: safeString(raw.description, ""),
+    doc,
+  };
+}
+
+function normalizeTemplateLibrary(raw: unknown) {
+  const entries = safeArray(raw)
+    .map(normalizeTemplateEntry)
+    .filter((item): item is HandoutTemplateEntry => Boolean(item));
+  if (entries.length) return entries;
+  return [
+    {
+      id: "default",
+      label: "Base",
+      description: "Modelo simples e neutro.",
+      doc: DEFAULT_DOC,
+    },
+  ];
+}
+
+function getTemplateVars(doc: HandoutCanvasDocV1): CSSVars {
+  return {
+    "--handout-paper": applyAlphaToColor(doc.paperColor, doc.paperOpacity),
+    "--handout-font": FONT_PRESETS[DEFAULT_FONT_PRESET].stack,
+    "--handout-preview-ratio": `${doc.pageWidth} / ${doc.pageHeight}`,
+  };
+}
+
+function getPreviewSize(width: number, height: number, maxSize: number) {
+  const safeWidth = Math.max(1, width);
+  const safeHeight = Math.max(1, height);
+  const scale = Math.min(maxSize / safeWidth, maxSize / safeHeight, 1);
+  return {
+    width: Math.max(1, Math.round(safeWidth * scale)),
+    height: Math.max(1, Math.round(safeHeight * scale)),
+  };
+}
+
+function getTemplatePreviewStyle(doc: HandoutCanvasDocV1, maxSize: number): CSSVars {
+  const size = getPreviewSize(doc.pageWidth, doc.pageHeight, maxSize);
+  return {
+    ...getTemplateVars(doc),
+    width: `${size.width}px`,
+    height: `${size.height}px`,
+  };
+}
+
+function getTemplatePreviewLines(doc: HandoutCanvasDocV1, maxLines = 3) {
+  const lines: string[] = [];
+  for (const layer of doc.layers) {
+    if (layer.type !== "text") continue;
+    const rawLines = layer.text.split("\n");
+    for (const line of rawLines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      lines.push(trimmed);
+      if (lines.length >= maxLines) return lines;
+    }
+  }
+  return lines;
 }
 
 function normalizeFillPreset(raw: unknown): FillPreset | null {
@@ -1573,20 +1734,6 @@ function normalizeFillPreset(raw: unknown): FillPreset | null {
     angle: clamp(safeNumber(raw.angle, 45), 0, 360),
     imageSrc: safeString(raw.imageSrc, ""),
     imageFit: safeEnum(raw.imageFit, SHAPE_IMAGE_FIT_VALUES, "cover"),
-  };
-}
-
-function normalizeAssetItem(raw: unknown): AssetItem | null {
-  if (!isObject(raw)) return null;
-  const id = safeString(raw.id, "");
-  const src = safeString(raw.src, "");
-  if (!id || !src) return null;
-  return {
-    id,
-    name: safeString(raw.name, "Asset"),
-    src,
-    width: Math.max(1, safeNumber(raw.width, 0)),
-    height: Math.max(1, safeNumber(raw.height, 0)),
   };
 }
 
@@ -1637,18 +1784,36 @@ async function getImageNaturalSize(src: string) {
 }
 
   function HandoutCanvasBuilder() {
-    type SidebarTab = "text" | "assets" | "shapes" | "layers" | "page" | "props" | "effects" | "export";
-    const [sidebarTab, setSidebarTab] = useState<SidebarTab>("text");
+    type SidebarTab =
+      | "elements"
+      | "assets"
+      | "templates"
+      | "layers"
+      | "page"
+      | "props"
+      | "effects"
+      | "export";
+    const [sidebarTab, setSidebarTab] = useState<SidebarTab>("elements");
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [doc, setDoc] = useState<HandoutCanvasDocV1>(DEFAULT_DOC);
+  const [pendingTemplateId, setPendingTemplateId] = useState<string | null>(null);
   const [topbarPulse, setTopbarPulse] = useState(false);
   const [colorHistory, setColorHistory] = useState<string[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [manipulatingId, setManipulatingId] = useState<string | null>(null);
+  const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
   const [fillPresets, setFillPresets] = useState<FillPreset[]>([]);
-  const [assetLibrary, setAssetLibrary] = useState<AssetItem[]>([]);
+  const [assetSearch, setAssetSearch] = useState("");
+  const [pendingAsset, setPendingAsset] = useState<AssetItem | null>(null);
+  const [collapsedAssetGroups, setCollapsedAssetGroups] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const group of ASSET_GROUPS) {
+      if (group.defaultCollapsed) initial[group.id] = true;
+    }
+    return initial;
+  });
   const [snapEnabled, setSnapEnabled] = useState(true);
   const [snapTolerance, setSnapTolerance] = useState(6);
   const [snapGuides, setSnapGuides] = useState<SnapGuide[]>([]);
@@ -1662,7 +1827,6 @@ async function getImageNaturalSize(src: string) {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const jsonFileRef = useRef<HTMLInputElement | null>(null);
   const imageFileRef = useRef<HTMLInputElement | null>(null);
-  const assetFileRef = useRef<HTMLInputElement | null>(null);
   const shapeImageFileRef = useRef<HTMLInputElement | null>(null);
   const textImageFileRef = useRef<HTMLInputElement | null>(null);
   const textEditorRef = useRef<HTMLTextAreaElement | null>(null);
@@ -1731,21 +1895,6 @@ async function getImageNaturalSize(src: string) {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(ASSET_LIBRARY_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return;
-      const cleaned = parsed
-        .map(normalizeAssetItem)
-        .filter((item): item is AssetItem => Boolean(item));
-      setAssetLibrary(cleaned);
-    } catch {
-      // ignore
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
       const snapRaw = localStorage.getItem(SNAP_PREF_KEY);
       if (!snapRaw) return;
       const parsed = JSON.parse(snapRaw);
@@ -1773,14 +1922,6 @@ async function getImageNaturalSize(src: string) {
       // ignore
     }
   }, [fillPresets]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(ASSET_LIBRARY_KEY, JSON.stringify(assetLibrary));
-    } catch {
-      // ignore
-    }
-  }, [assetLibrary]);
 
   useEffect(() => {
     try {
@@ -1851,6 +1992,40 @@ async function getImageNaturalSize(src: string) {
     if (!snapEnabled) clearSnapGuides();
   }, [snapEnabled]);
 
+  useEffect(() => {
+    if (!pendingTemplateId) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPendingTemplateId(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [pendingTemplateId]);
+
+  useEffect(() => {
+    if (!pendingAsset) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPendingAsset(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [pendingAsset]);
+
+  useEffect(() => {
+    if (!contextMenu) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setContextMenu(null);
+    };
+    const onViewportChange = () => setContextMenu(null);
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("scroll", onViewportChange, true);
+    window.addEventListener("resize", onViewportChange);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("scroll", onViewportChange, true);
+      window.removeEventListener("resize", onViewportChange);
+    };
+  }, [contextMenu]);
+
   const derivedPage = useMemo(() => {
     const width = clamp(doc.pageWidth, PAGE_SIZE_MIN, PAGE_SIZE_MAX);
     const height = clamp(doc.pageHeight, PAGE_SIZE_MIN, PAGE_SIZE_MAX);
@@ -1863,6 +2038,72 @@ async function getImageNaturalSize(src: string) {
 
     return { width, height, vars };
   }, [doc.pageWidth, doc.pageHeight, doc.paperColor, doc.paperOpacity]);
+
+  const templateLibrary = useMemo(() => normalizeTemplateLibrary(templateLibraryData), []);
+  const templateClass = doc.template === "none" ? "" : `handout-template-${doc.template}`;
+
+  const pendingTemplateOption = useMemo(
+    () => templateLibrary.find((option) => option.id === pendingTemplateId) ?? null,
+    [pendingTemplateId, templateLibrary],
+  );
+  const pendingTemplatePreviewLines = useMemo(
+    () => (pendingTemplateOption ? getTemplatePreviewLines(pendingTemplateOption.doc, 1) : []),
+    [pendingTemplateOption],
+  );
+  const pendingTemplatePrimaryText =
+    pendingTemplatePreviewLines.length ? pendingTemplatePreviewLines : ["Sem texto"];
+  const pendingTemplateVars = useMemo(
+    () =>
+      pendingTemplateOption
+        ? getTemplatePreviewStyle(pendingTemplateOption.doc, TEMPLATE_PREVIEW_LARGE_MAX)
+        : derivedPage.vars,
+    [pendingTemplateOption, derivedPage.vars],
+  );
+  const assetPreviewVars = useMemo(() => {
+    if (!pendingAsset) return {};
+    const size = getPreviewSize(pendingAsset.width, pendingAsset.height, TEMPLATE_PREVIEW_LARGE_MAX);
+    return {
+      width: `${size.width}px`,
+      height: `${size.height}px`,
+    } as CSSVars;
+  }, [pendingAsset]);
+  const contextMenuStyle = contextMenu
+    ? ({ "--context-x": `${contextMenu.x}px`, "--context-y": `${contextMenu.y}px` } as CSSVars)
+    : undefined;
+  const contextMenuLayers = useMemo(() => {
+    if (!contextMenu) return [];
+    const idSet = new Set(contextMenu.ids);
+    return doc.layers.filter((layer) => idSet.has(layer.id));
+  }, [contextMenu, doc.layers]);
+  const contextMenuPrimary = useMemo(() => {
+    if (!contextMenu?.primaryId) return null;
+    return doc.layers.find((layer) => layer.id === contextMenu.primaryId) ?? null;
+  }, [contextMenu, doc.layers]);
+  const contextMenuPrimaryIndex = useMemo(() => {
+    if (!contextMenuPrimary) return -1;
+    return doc.layers.findIndex((layer) => layer.id === contextMenuPrimary.id);
+  }, [contextMenuPrimary, doc.layers]);
+  const contextMenuIsSingle = contextMenuLayers.length === 1;
+  const contextMenuCanMoveForward =
+    contextMenuIsSingle && contextMenuPrimaryIndex >= 0 && contextMenuPrimaryIndex < doc.layers.length - 1;
+  const contextMenuCanMoveBackward = contextMenuIsSingle && contextMenuPrimaryIndex > 0;
+  const contextMenuShouldLock = contextMenuLayers.some((layer) => !layer.locked);
+  const contextMenuShouldShow = contextMenuLayers.some((layer) => !layer.visible);
+  const contextMenuShouldFlipX = contextMenuLayers.some((layer) => !layer.flipX);
+  const contextMenuShouldFlipY = contextMenuLayers.some((layer) => !layer.flipY);
+  const contextMenuLayerIds = contextMenuLayers.map((layer) => layer.id);
+  const filteredAssetGroups = useMemo(() => {
+    const term = assetSearch.trim().toLowerCase();
+    if (!term) return ASSET_GROUPS;
+    return ASSET_GROUPS.map((group) => {
+      const haystack = `${group.label} ${group.description}`.toLowerCase();
+      if (haystack.includes(term)) {
+        return group;
+      }
+      const filteredItems = group.items.filter((asset) => asset.name.toLowerCase().includes(term));
+      return { ...group, items: filteredItems };
+    }).filter((group) => group.items.length > 0);
+  }, [assetSearch]);
 
   const layersForList = useMemo(() => [...doc.layers].reverse(), [doc.layers]);
   const selectedLayer = useMemo(
@@ -1935,6 +2176,82 @@ async function getImageNaturalSize(src: string) {
   function clearSelection() {
     setSelectedIds([]);
     setSelectedId(null);
+  }
+
+  function openContextMenu(event: React.MouseEvent, ids: string[], primaryId: string | null) {
+    if (!ids.length) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const uniqueIds = Array.from(new Set(ids));
+    const resolvedPrimary =
+      primaryId && uniqueIds.includes(primaryId) ? primaryId : uniqueIds.length ? uniqueIds[0] : null;
+    setContextMenu({
+      x: event.clientX,
+      y: event.clientY,
+      ids: uniqueIds,
+      primaryId: resolvedPrimary,
+    });
+  }
+
+  function closeContextMenu() {
+    setContextMenu(null);
+  }
+
+  function handleStageMouseDown(event: React.MouseEvent<HTMLDivElement>) {
+    if (event.button !== 0) return;
+    closeContextMenu();
+    const target = event.target as Node;
+    if (pageRef.current && pageRef.current.contains(target)) return;
+    clearSelection();
+    finishTextEditing();
+  }
+
+  function handleStageContextMenu(event: React.MouseEvent<HTMLDivElement>) {
+    if (editingId) return;
+    const ids = selectedIds.length ? selectedIds : selectedId ? [selectedId] : [];
+    if (!ids.length) return;
+    const primaryId = selectedId ?? ids[0] ?? null;
+    openContextMenu(event, ids, primaryId);
+  }
+
+  function requestTemplateChange(id: string) {
+    if (id === doc.templateId) return;
+    setPendingTemplateId(id);
+  }
+
+  function confirmTemplateChange() {
+    if (!pendingTemplateOption) return;
+    setDoc({
+      ...pendingTemplateOption.doc,
+      templateId: pendingTemplateOption.id,
+    });
+    clearSelection();
+    setEditingId(null);
+    setManipulatingId(null);
+    editingSnapshotRef.current = "";
+    setPendingTemplateId(null);
+  }
+
+  function cancelTemplateChange() {
+    setPendingTemplateId(null);
+  }
+
+  function requestAssetImport(asset: AssetItem) {
+    setPendingAsset(asset);
+  }
+
+  function confirmAssetImport() {
+    if (!pendingAsset) return;
+    void addAssetToCanvas(pendingAsset);
+    setPendingAsset(null);
+  }
+
+  function cancelAssetImport() {
+    setPendingAsset(null);
+  }
+
+  function toggleAssetGroup(id: string) {
+    setCollapsedAssetGroups((prev) => ({ ...prev, [id]: !prev[id] }));
   }
 
   function selectLayerId(id: string, additive: boolean) {
@@ -2146,6 +2463,22 @@ function updateShadowEffect(
     const layers = doc.layers.filter((layer) => ids.includes(layer.id));
     const shouldLock = layers.some((layer) => !layer.locked);
     updateLayers(ids, (layer) => ({ ...layer, locked: shouldLock }));
+  }
+
+  function toggleVisibilitySelected(ids: string[]) {
+    if (!ids.length) return;
+    const layers = doc.layers.filter((layer) => ids.includes(layer.id));
+    const shouldShow = layers.some((layer) => !layer.visible);
+    updateLayers(ids, (layer) => ({ ...layer, visible: shouldShow }));
+  }
+
+  function toggleFlipSelected(ids: string[], axis: "x" | "y") {
+    if (!ids.length) return;
+    const layers = doc.layers.filter((layer) => ids.includes(layer.id));
+    const shouldFlip = layers.some((layer) => (axis === "x" ? !layer.flipX : !layer.flipY));
+    updateLayers(ids, (layer) =>
+      axis === "x" ? { ...layer, flipX: shouldFlip } : { ...layer, flipY: shouldFlip },
+    );
   }
 
   function startRotation(e: React.PointerEvent, layer: Layer) {
@@ -2363,33 +2696,6 @@ function updateShadowEffect(
     return layer;
   }
 
-  async function addAssets(files: FileList) {
-    const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
-    if (!list.length) return;
-    const created: AssetItem[] = [];
-
-    for (const file of list) {
-      try {
-        const src = await fileToDataUrl(file);
-        const natural = await getImageNaturalSize(src);
-        created.push({
-          id: createId("asset"),
-          name: file.name,
-          src,
-          width: natural.width,
-          height: natural.height,
-        });
-      } catch (error) {
-        console.error(error);
-        toast.error(`Falha ao carregar: ${file.name}`);
-      }
-    }
-
-    if (!created.length) return;
-    setAssetLibrary((prev) => [...created, ...prev]);
-    toast.success("Assets adicionados.");
-  }
-
   async function addAssetToCanvas(asset: AssetItem) {
     try {
       const layer = await createImageLayerFromSrc(asset.src, asset.name);
@@ -2401,10 +2707,6 @@ function updateShadowEffect(
       console.error(error);
       toast.error("Falha ao inserir asset.");
     }
-  }
-
-  function removeAsset(id: string) {
-    setAssetLibrary((prev) => prev.filter((asset) => asset.id !== id));
   }
 
   async function setShapeFillImage(layerId: string, file: File) {
@@ -2765,7 +3067,7 @@ function updateShadowEffect(
 
   useEffect(() => {
     const onPointerDown = (event: PointerEvent) => {
-      if (sidebarCollapsed) return;
+      if (sidebarCollapsed || pendingTemplateId || pendingAsset) return;
       const target = event.target as Node | null;
       if (!target) return;
       if (sidebarRef.current?.contains(target)) return;
@@ -2777,7 +3079,7 @@ function updateShadowEffect(
 
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [sidebarCollapsed]);
+  }, [sidebarCollapsed, pendingTemplateId, pendingAsset]);
 
   return (
     <div className="handout-builder-app">
@@ -2879,30 +3181,6 @@ function updateShadowEffect(
                       updateLayer(selectedLayer.id, (p) => ({ ...p, blendMode: value }))
                     }
                   />
-                    <button
-                      type="button"
-                      className={`handout-toolbar-button ${selectedLayer.flipX ? "is-active" : ""}`}
-                      aria-label="Flip horizontal"
-                      aria-pressed={selectedLayer.flipX}
-                      title="Flip horizontal"
-                      onClick={() =>
-                        updateLayer(selectedLayer.id, (p) => ({ ...p, flipX: !p.flipX }))
-                      }
-                    >
-                      <FlipHorizontal2 className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      className={`handout-toolbar-button ${selectedLayer.flipY ? "is-active" : ""}`}
-                      aria-label="Flip vertical"
-                      aria-pressed={selectedLayer.flipY}
-                      title="Flip vertical"
-                      onClick={() =>
-                        updateLayer(selectedLayer.id, (p) => ({ ...p, flipY: !p.flipY }))
-                      }
-                    >
-                      <FlipVertical2 className="h-4 w-4" />
-                    </button>
                   <button
                     type="button"
                     className={`handout-toolbar-button ${selectedLayer.locked ? "is-active" : ""}`}
@@ -3091,12 +3369,12 @@ function updateShadowEffect(
               <div className="handout-sidebar-actions">
                 <button
                   type="button"
-                  className={`handout-sidebar-action ${sidebarTab === "text" ? "is-active" : ""}`}
-                  onClick={() => { setSidebarTab("text"); setSidebarCollapsed(false); }}
-                  aria-pressed={sidebarTab === "text"}
+                  className={`handout-sidebar-action ${sidebarTab === "elements" ? "is-active" : ""}`}
+                  onClick={() => { setSidebarTab("elements"); setSidebarCollapsed(false); }}
+                  aria-pressed={sidebarTab === "elements"}
                 >
                   <Type className="h-5 w-5" />
-                  <span>Texto</span>
+                  <span>Elementos</span>
                 </button>
                 <button
                   type="button"
@@ -3109,12 +3387,12 @@ function updateShadowEffect(
                 </button>
                 <button
                   type="button"
-                  className={`handout-sidebar-action ${sidebarTab === "shapes" ? "is-active" : ""}`}
-                  onClick={() => { setSidebarTab("shapes"); setSidebarCollapsed(false); }}
-                  aria-pressed={sidebarTab === "shapes"}
+                  className={`handout-sidebar-action ${sidebarTab === "templates" ? "is-active" : ""}`}
+                  onClick={() => { setSidebarTab("templates"); setSidebarCollapsed(false); }}
+                  aria-pressed={sidebarTab === "templates"}
                 >
-                  <Square className="h-5 w-5" />
-                  <span>Formas</span>
+                  <FileText className="h-5 w-5" />
+                  <span>Templates</span>
                 </button>
                 <button
                   type="button"
@@ -3165,15 +3443,80 @@ function updateShadowEffect(
 
               {!sidebarCollapsed && (
                 <div className="handout-sidebar-panel">
-                {sidebarTab === "text" && (
+                {sidebarTab === "elements" && (
                   <div className="handout-panel-section">
-                    <div className="handout-panel-title">Texto</div>
-                    <Button type="button" onClick={addText} className="w-full gap-2">
-                      <Type className="h-4 w-4" />
-                      Adicionar texto
-                    </Button>
-                    <div className="handout-panel-hint">
-                      Crie caixas de texto e ajuste fonte/tamanho na barra superior.
+                    <div className="handout-panel-title">Elementos</div>
+                    <div className="handout-panel-card">
+                      <div className="handout-panel-subtitle">Texto</div>
+                      <Button type="button" onClick={addText} className="w-full gap-2">
+                        <Type className="h-4 w-4" />
+                        Adicionar texto
+                      </Button>
+                      <div className="handout-panel-hint">
+                        Crie caixas de texto e ajuste fonte/tamanho na barra superior.
+                      </div>
+                    </div>
+                    <div className="handout-panel-card">
+                      <div className="handout-panel-subtitle">Formas</div>
+                      <div className="handout-shape-grid">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="handout-shape-button"
+                          onClick={() => addShape("rect")}
+                        >
+                          <Square className="h-4 w-4" />
+                          Retƒngulo
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="handout-shape-button"
+                          onClick={() => addShape("ellipse")}
+                        >
+                          <Circle className="h-4 w-4" />
+                          C¡rculo
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="handout-shape-button"
+                          onClick={() => addShape("triangle")}
+                        >
+                          <Triangle className="h-4 w-4" />
+                          Triƒngulo
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="handout-shape-button"
+                          onClick={() => addShape("diamond")}
+                        >
+                          <Square className="h-4 w-4 rotate-45" />
+                          Diamante
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="handout-shape-button"
+                          onClick={() => addShape("hexagon")}
+                        >
+                          <Square className="h-4 w-4" />
+                          Hex gono
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="handout-shape-button"
+                          onClick={() => addShape("star")}
+                        >
+                          <Star className="h-4 w-4" />
+                          Estrela
+                        </Button>
+                      </div>
+                      <div className="handout-panel-hint">
+                        Escolha uma forma e personalize o preenchimento nas propriedades.
+                      </div>
                     </div>
                   </div>
                 )}
@@ -3181,6 +3524,15 @@ function updateShadowEffect(
                 {sidebarTab === "assets" && (
                   <div className="handout-panel-section">
                     <div className="handout-panel-title">Assets</div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="asset-search">Buscar</Label>
+                      <Input
+                        id="asset-search"
+                        value={assetSearch}
+                        onChange={(event) => setAssetSearch(event.target.value)}
+                        placeholder="Buscar assets..."
+                      />
+                    </div>
                     <Button
                       type="button"
                       variant="outline"
@@ -3202,126 +3554,130 @@ function updateShadowEffect(
                         e.currentTarget.value = "";
                       }}
                     />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => assetFileRef.current?.click()}
-                      className="w-full gap-2"
-                    >
-                      <Upload className="h-4 w-4" />
-                      Salvar na biblioteca
-                    </Button>
-                    <input
-                      ref={assetFileRef}
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      className="hidden"
-                      onChange={(e) => {
-                        const files = e.target.files;
-                        if (files && files.length) void addAssets(files);
-                        e.currentTarget.value = "";
-                      }}
-                    />
                     <div className="handout-panel-hint">
                       Arraste imagens direto para o canvas ou use o botao acima.
                     </div>
-                    {assetLibrary.length > 0 ? (
-                      <div className="handout-asset-grid">
-                        {assetLibrary.map((asset) => (
-                          <div key={asset.id} className="handout-asset-card">
-                            <button
-                              type="button"
-                              className="handout-asset-preview"
-                              onClick={() => void addAssetToCanvas(asset)}
-                              title="Adicionar ao canvas"
-                            >
-                              <img src={asset.src} alt={asset.name} />
-                            </button>
-                            <div className="handout-asset-meta">
-                              <span className="handout-asset-name" title={asset.name}>
-                                {asset.name}
-                              </span>
-                              <Button
+                    {filteredAssetGroups.length > 0 ? (
+                      <div className="handout-asset-catalog">
+                        {filteredAssetGroups.map((group) => {
+                          const isCollapsed = assetSearch.trim()
+                            ? false
+                            : Boolean(collapsedAssetGroups[group.id]);
+                          const hasPremium = group.items.some((asset) => asset.premium);
+                          return (
+                            <div key={group.id} className="handout-asset-group">
+                              <button
                                 type="button"
-                                size="icon"
-                                variant="ghost"
-                                aria-label="Remover asset"
-                                onClick={() => removeAsset(asset.id)}
+                                className="handout-asset-group-header"
+                                onClick={() => toggleAssetGroup(group.id)}
+                                aria-expanded={!isCollapsed}
                               >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
+                                {isCollapsed ? (
+                                  <ChevronRight className="h-4 w-4" />
+                                ) : (
+                                  <ChevronDown className="h-4 w-4" />
+                                )}
+                                <div className="handout-asset-group-meta">
+                                  <span className="handout-asset-group-name">{group.label}</span>
+                                  <span className="handout-asset-group-desc">{group.description}</span>
+                                </div>
+                                <span
+                                  className={`handout-asset-group-pill ${group.kind === "folder" ? "is-folder" : "is-group"}`}
+                                >
+                                  {group.kind === "folder" ? "Pasta" : "Grupo"}
+                                </span>
+                                {hasPremium && (
+                                  <span className="handout-asset-group-premium">
+                                    <Lock className="h-3 w-3" />
+                                    Premium
+                                  </span>
+                                )}
+                                <span className="handout-asset-group-count">{group.items.length}</span>
+                              </button>
+                              {!isCollapsed && (
+                                <div className="handout-asset-grid">
+                                  {group.items.map((asset) => (
+                                    <div key={asset.id} className="handout-asset-card">
+                                      <div className="handout-asset-preview-wrap">
+                                        <button
+                                          type="button"
+                                          className="handout-asset-preview"
+                                          onClick={() => requestAssetImport(asset)}
+                                          title="Importar asset"
+                                        >
+                                          <img src={asset.src} alt={asset.name} />
+                                        </button>
+                                        {asset.premium && (
+                                          <span className="handout-asset-badge">
+                                            <Lock className="h-3 w-3" />
+                                            Premium
+                                          </span>
+                                        )}
+                                      </div>
+                                      <div className="handout-asset-meta">
+                                        <span className="handout-asset-name" title={asset.name}>
+                                          {asset.name}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     ) : (
-                      <div className="handout-panel-hint">Sem assets salvos.</div>
+                      <div className="handout-panel-hint">
+                        {assetSearch ? "Nenhum asset encontrado." : "Catalogo vazio no momento."}
+                      </div>
                     )}
                   </div>
                 )}
 
-                {sidebarTab === "shapes" && (
+
+                {sidebarTab === "templates" && (
                   <div className="handout-panel-section">
-                    <div className="handout-panel-title">Formas</div>
-                    <div className="handout-shape-grid">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="handout-shape-button"
-                        onClick={() => addShape("rect")}
-                      >
-                        <Square className="h-4 w-4" />
-                        Retângulo
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="handout-shape-button"
-                        onClick={() => addShape("ellipse")}
-                      >
-                        <Circle className="h-4 w-4" />
-                        Círculo
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="handout-shape-button"
-                        onClick={() => addShape("triangle")}
-                      >
-                        <Triangle className="h-4 w-4" />
-                        Triângulo
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="handout-shape-button"
-                        onClick={() => addShape("diamond")}
-                      >
-                        <Square className="h-4 w-4 rotate-45" />
-                        Diamante
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="handout-shape-button"
-                        onClick={() => addShape("hexagon")}
-                      >
-                        <Square className="h-4 w-4" />
-                        Hexágono
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="handout-shape-button"
-                        onClick={() => addShape("star")}
-                      >
-                        <Star className="h-4 w-4" />
-                        Estrela
-                      </Button>
+                    <div className="handout-panel-title">Templates</div>
+                    <div className="handout-template-grid">
+                      {templateLibrary.map((template) => {
+                        const isActive = doc.templateId === template.id;
+                        const previewLines = getTemplatePreviewLines(template.doc, 3);
+                        const previewText = previewLines.length ? previewLines : ["Sem texto"];
+                        const isBase = template.doc.template === "none";
+                        const themeClass = isBase ? "" : `handout-template-${template.doc.template}`;
+                        const templateStyle = getTemplatePreviewStyle(template.doc, TEMPLATE_PREVIEW_MAX);
+
+                        return (
+                          <button
+                            key={template.id}
+                            type="button"
+                            className={`handout-template-card ${isActive ? "is-active" : ""}`}
+                            onClick={() => requestTemplateChange(template.id)}
+                            aria-pressed={isActive}
+                          >
+                            <div className="handout-template-preview">
+                              <div
+                                className={`handout-template-preview-surface ${isBase ? "is-base" : ""} ${themeClass}`}
+                                style={templateStyle}
+                              >
+                                <div className="handout-template-preview-text">
+                                  {previewText.map((line, index) => (
+                                    <span key={`${template.id}-${index}`}>{line}</span>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="handout-template-meta">
+                              <span className="handout-template-name">{template.label}</span>
+                              <span className="handout-template-desc">{template.description}</span>
+                            </div>
+                          </button>
+                        );
+                      })}
                     </div>
                     <div className="handout-panel-hint">
-                      Escolha uma forma e personalize o preenchimento nas propriedades.
+                      Templates substituem a pagina inteira. Clique para previsualizar e confirmar antes de aplicar.
                     </div>
                   </div>
                 )}
@@ -4498,6 +4854,8 @@ function updateShadowEffect(
           <div
             ref={stageRef}
             className="handout-preview-stage handout-canvas-stage"
+            onMouseDown={handleStageMouseDown}
+            onContextMenu={handleStageContextMenu}
             onDragOver={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -4515,7 +4873,7 @@ function updateShadowEffect(
             >
               <div
                 ref={pageRef}
-                className="handout-page handout-print-target handout-canvas-page"
+                className={`handout-page handout-print-target handout-canvas-page ${templateClass}`}
                 style={{
                   ...derivedPage.vars,
                   width: `${derivedPage.width}px`,
@@ -4648,8 +5006,17 @@ function updateShadowEffect(
                       }}
                       onMouseDown={(e) => {
                         e.stopPropagation();
+                        closeContextMenu();
                         if (editingId && editingId !== layer.id) finishTextEditing();
                         selectLayerFromPointer(layer, e.shiftKey);
+                      }}
+                      onContextMenu={(e) => {
+                        if (editingId) return;
+                        const isSelectedLayer = selectedIds.includes(layer.id);
+                        const ids = isSelectedLayer ? selectedIds : [layer.id];
+                        const primaryId = isSelectedLayer ? selectedId ?? layer.id : layer.id;
+                        if (!isSelectedLayer) setSelection([layer.id], layer.id);
+                        openContextMenu(e, ids, primaryId);
                       }}
                       onDoubleClick={(e) => {
                         e.stopPropagation();
@@ -4970,6 +5337,227 @@ function updateShadowEffect(
               </div>
             </div>
           </div>
+          {contextMenu && contextMenuLayers.length > 0 && (
+            <div className="handout-context-menu" style={contextMenuStyle}>
+              <div
+                className="handout-context-menu-backdrop"
+                onMouseDown={closeContextMenu}
+                onContextMenu={(event) => {
+                  event.preventDefault();
+                  closeContextMenu();
+                }}
+              />
+              <div
+                className="handout-context-menu-card"
+                role="menu"
+                aria-label="Acoes da camada"
+                onMouseDown={(event) => event.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  className="handout-context-menu-item"
+                  onClick={() => {
+                    duplicateLayers(contextMenuLayerIds);
+                    closeContextMenu();
+                  }}
+                >
+                  <Copy className="h-4 w-4" />
+                  <span className="handout-context-menu-label">Duplicar</span>
+                </button>
+                <button
+                  type="button"
+                  className="handout-context-menu-item is-danger"
+                  onClick={() => {
+                    deleteLayers(contextMenuLayerIds);
+                    closeContextMenu();
+                  }}
+                >
+                  <Trash2 className="h-4 w-4" />
+                  <span className="handout-context-menu-label">Excluir</span>
+                </button>
+                <div className="handout-context-menu-divider" />
+                {contextMenuIsSingle && (
+                  <>
+                    <button
+                      type="button"
+                      className="handout-context-menu-item"
+                      disabled={!contextMenuCanMoveForward || !contextMenuPrimary}
+                      onClick={() => {
+                        if (contextMenuPrimary) moveLayerOneStep(contextMenuPrimary.id, 1);
+                        closeContextMenu();
+                      }}
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                      <span className="handout-context-menu-label">Trazer para frente</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="handout-context-menu-item"
+                      disabled={!contextMenuCanMoveBackward || !contextMenuPrimary}
+                      onClick={() => {
+                        if (contextMenuPrimary) moveLayerOneStep(contextMenuPrimary.id, -1);
+                        closeContextMenu();
+                      }}
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                      <span className="handout-context-menu-label">Enviar para tras</span>
+                    </button>
+                    <div className="handout-context-menu-divider" />
+                  </>
+                )}
+                <button
+                  type="button"
+                  className="handout-context-menu-item"
+                  onClick={() => {
+                    toggleLockSelected(contextMenuLayerIds);
+                    closeContextMenu();
+                  }}
+                >
+                  {contextMenuShouldLock ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
+                  <span className="handout-context-menu-label">
+                    {contextMenuShouldLock ? "Bloquear" : "Desbloquear"}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  className="handout-context-menu-item"
+                  onClick={() => {
+                    toggleVisibilitySelected(contextMenuLayerIds);
+                    closeContextMenu();
+                  }}
+                >
+                  {contextMenuShouldShow ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                  <span className="handout-context-menu-label">
+                    {contextMenuShouldShow ? "Mostrar" : "Ocultar"}
+                  </span>
+                </button>
+                <div className="handout-context-menu-divider" />
+                <button
+                  type="button"
+                  className="handout-context-menu-item"
+                  onClick={() => {
+                    toggleFlipSelected(contextMenuLayerIds, "x");
+                    closeContextMenu();
+                  }}
+                >
+                  <FlipHorizontal2 className="h-4 w-4" />
+                  <span className="handout-context-menu-label">
+                    {contextMenuShouldFlipX ? "Flip horizontal" : "Desfazer flip horizontal"}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  className="handout-context-menu-item"
+                  onClick={() => {
+                    toggleFlipSelected(contextMenuLayerIds, "y");
+                    closeContextMenu();
+                  }}
+                >
+                  <FlipVertical2 className="h-4 w-4" />
+                  <span className="handout-context-menu-label">
+                    {contextMenuShouldFlipY ? "Flip vertical" : "Desfazer flip vertical"}
+                  </span>
+                </button>
+              </div>
+            </div>
+          )}
+          {pendingTemplateOption && (
+            <div
+              className="handout-template-confirm"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="handout-template-confirm-title"
+            >
+              <div className="handout-template-confirm-backdrop" onMouseDown={cancelTemplateChange} />
+              <div
+                className="handout-template-confirm-card"
+                role="document"
+                onMouseDown={(event) => event.stopPropagation()}
+              >
+                <div className="handout-template-confirm-header">
+                  <span className="handout-template-confirm-eyebrow">Confirmar template</span>
+                  <h3 id="handout-template-confirm-title" className="handout-template-confirm-title">
+                    Aplicar "{pendingTemplateOption.label}"?
+                  </h3>
+                  <p className="handout-template-confirm-text">
+                    Isso substitui a pagina inteira, incluindo textos e elementos. O documento atual sera perdido.
+                  </p>
+                </div>
+                <div className="handout-template-confirm-preview is-single">
+                  <div className="handout-template-confirm-block">
+                    <span className="handout-template-confirm-label">Preview</span>
+                    <div className="handout-template-preview is-large">
+                      <div
+                        className={`handout-template-preview-surface ${pendingTemplateOption.doc.template === "none" ? "is-base" : ""} ${pendingTemplateOption.doc.template === "none" ? "" : `handout-template-${pendingTemplateOption.doc.template}`}`}
+                        style={pendingTemplateVars}
+                      >
+                        <div className="handout-template-preview-text">
+                          {pendingTemplatePrimaryText.map((line, index) => (
+                            <span key={`pending-${index}`}>{line}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <span className="handout-template-confirm-caption">{pendingTemplateOption.label}</span>
+                  </div>
+                </div>
+                <div className="handout-template-confirm-actions">
+                  <Button type="button" variant="outline" onClick={cancelTemplateChange}>
+                    Cancelar
+                  </Button>
+                  <Button type="button" onClick={confirmTemplateChange}>
+                    Aplicar template
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+          {pendingAsset && (
+            <div
+              className="handout-template-confirm"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="handout-asset-confirm-title"
+            >
+              <div className="handout-template-confirm-backdrop" onMouseDown={cancelAssetImport} />
+              <div
+                className="handout-template-confirm-card"
+                role="document"
+                onMouseDown={(event) => event.stopPropagation()}
+              >
+                <div className="handout-template-confirm-header">
+                  <span className="handout-template-confirm-eyebrow">Confirmar asset</span>
+                  <h3 id="handout-asset-confirm-title" className="handout-template-confirm-title">
+                    Importar "{pendingAsset.name}"?
+                  </h3>
+                  <p className="handout-template-confirm-text">
+                    Esse asset sera adicionado ao canvas como uma nova camada.
+                  </p>
+                </div>
+                <div className="handout-template-confirm-preview is-single">
+                  <div className="handout-template-confirm-block">
+                    <span className="handout-template-confirm-label">Preview</span>
+                    <div className="handout-template-preview is-large">
+                      <div className="handout-template-preview-surface is-asset" style={assetPreviewVars}>
+                        <img src={pendingAsset.src} alt={pendingAsset.name} />
+                      </div>
+                    </div>
+                    <span className="handout-template-confirm-caption">
+                      {pendingAsset.premium ? "Premium" : "Asset"}
+                    </span>
+                  </div>
+                </div>
+                <div className="handout-template-confirm-actions">
+                  <Button type="button" variant="outline" onClick={cancelAssetImport}>
+                    Cancelar
+                  </Button>
+                  <Button type="button" onClick={confirmAssetImport}>
+                    Importar asset
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
           </div>
         </section>
       </div>

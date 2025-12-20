@@ -887,7 +887,10 @@
   flex-wrap: nowrap;
   width: max-content;
   max-width: calc(100% - 24px);
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
   transition: box-shadow 0.2s ease;
   transform-origin: top right;
 }
@@ -1628,6 +1631,20 @@
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), transparent);
 }
 
+.handout-builder .handout-page.is-transparent {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px hsl(var(--border));
+}
+
+.handout-builder .handout-page.is-transparent::before,
+.handout-builder .handout-page.is-transparent::after {
+  content: none;
+}
+
+.handout-builder .handout-page.is-transparent[data-exporting="true"] {
+  box-shadow: none;
+}
+
 /* Markdown */
 .handout-builder .handout-markdown {
   font-size: 16px;
@@ -1749,6 +1766,7 @@
   display: block;
   overflow: hidden;
   isolation: isolate;
+  border-radius: 0;
 }
 
 .handout-builder .handout-layer {

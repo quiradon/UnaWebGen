@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { Rnd } from "react-rnd";
 import {
   Check,
@@ -2038,6 +2038,7 @@ async function getImageNaturalSize(src: string) {
 
     return { width, height, vars };
   }, [doc.pageWidth, doc.pageHeight, doc.paperColor, doc.paperOpacity]);
+  const isPaperTransparent = doc.paperOpacity <= 0;
 
   const templateLibrary = useMemo(() => normalizeTemplateLibrary(templateLibraryData), []);
   const templateClass = doc.template === "none" ? "" : `handout-template-${doc.template}`;
@@ -2087,8 +2088,6 @@ async function getImageNaturalSize(src: string) {
   const contextMenuCanMoveForward =
     contextMenuIsSingle && contextMenuPrimaryIndex >= 0 && contextMenuPrimaryIndex < doc.layers.length - 1;
   const contextMenuCanMoveBackward = contextMenuIsSingle && contextMenuPrimaryIndex > 0;
-  const contextMenuShouldLock = contextMenuLayers.some((layer) => !layer.locked);
-  const contextMenuShouldShow = contextMenuLayers.some((layer) => !layer.visible);
   const contextMenuShouldFlipX = contextMenuLayers.some((layer) => !layer.flipX);
   const contextMenuShouldFlipY = contextMenuLayers.some((layer) => !layer.flipY);
   const contextMenuLayerIds = contextMenuLayers.map((layer) => layer.id);
@@ -2846,7 +2845,7 @@ function updateShadowEffect(
     const prevSelectedIds = selectedIds;
     clearSelection();
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-
+    node.dataset.exporting = "true";
     try {
       toast.message("Gerando PNG…");
       const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 2 });
@@ -2861,43 +2860,7 @@ function updateShadowEffect(
       console.error(error);
       toast.error("Falha ao exportar PNG.");
     } finally {
-      setSelection(prevSelectedIds, prevSelected);
-    }
-  }
-
-  async function exportLayersPng() {
-    const page = pageRef.current;
-    if (!page) return;
-
-    const prevSelected = selectedId;
-    const prevSelectedIds = selectedIds;
-    clearSelection();
-    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-
-    try {
-      const layers = doc.layers.filter((layer) => layer.visible);
-      if (!layers.length) {
-        toast.message("Sem camadas para exportar.");
-        return;
-      }
-      toast.message("Exportando camadas...");
-      for (const layer of layers) {
-        const node = page.querySelector(`[data-layer-id=\"${layer.id}\"]`) as HTMLElement | null;
-        if (!node) continue;
-        const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 2 });
-        const filename = `${sanitizeFilename(layer.name || layer.id)}.png`;
-        const a = document.createElement("a");
-        a.href = dataUrl;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      }
-      toast.success("Camadas exportadas.");
-    } catch (error) {
-      console.error(error);
-      toast.error("Falha ao exportar camadas.");
-    } finally {
+      delete node.dataset.exporting;
       setSelection(prevSelectedIds, prevSelected);
     }
   }
@@ -2909,15 +2872,6 @@ function updateShadowEffect(
       toast.success("JSON exportado.");
     } catch {
       toast.error("Falha ao exportar JSON.");
-    }
-  }
-
-  async function copyJson() {
-    try {
-      await navigator.clipboard.writeText(JSON.stringify(doc, null, 2));
-      toast.success("JSON copiado.");
-    } catch {
-      toast.error("Falha ao copiar JSON.");
     }
   }
 
@@ -4803,10 +4757,6 @@ function updateShadowEffect(
                         <Download className="h-4 w-4" />
                         Baixar PNG
                       </Button>
-                      <Button type="button" variant="outline" onClick={() => void exportLayersPng()} className="gap-2">
-                        <Download className="h-4 w-4" />
-                        PNG por camada
-                      </Button>
 
                       <div className="grid grid-cols-2 gap-2">
                         <Button type="button" variant="outline" onClick={exportJson} className="gap-2">
@@ -4834,11 +4784,6 @@ function updateShadowEffect(
                           }}
                         />
                       </div>
-
-                      <Button type="button" variant="outline" onClick={() => void copyJson()} className="gap-2">
-                        <Copy className="h-4 w-4" />
-                        Copiar JSON
-                      </Button>
 
                       <Button type="button" variant="outline" onClick={resetAll} className="gap-2">
                         <RotateCcw className="h-4 w-4" />
@@ -4873,7 +4818,7 @@ function updateShadowEffect(
             >
               <div
                 ref={pageRef}
-                className={`handout-page handout-print-target handout-canvas-page ${templateClass}`}
+                className={`handout-page handout-print-target handout-canvas-page ${templateClass} ${isPaperTransparent ? "is-transparent" : ""}`}
                 style={{
                   ...derivedPage.vars,
                   width: `${derivedPage.width}px`,
@@ -5409,33 +5354,6 @@ function updateShadowEffect(
                   type="button"
                   className="handout-context-menu-item"
                   onClick={() => {
-                    toggleLockSelected(contextMenuLayerIds);
-                    closeContextMenu();
-                  }}
-                >
-                  {contextMenuShouldLock ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
-                  <span className="handout-context-menu-label">
-                    {contextMenuShouldLock ? "Bloquear" : "Desbloquear"}
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className="handout-context-menu-item"
-                  onClick={() => {
-                    toggleVisibilitySelected(contextMenuLayerIds);
-                    closeContextMenu();
-                  }}
-                >
-                  {contextMenuShouldShow ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-                  <span className="handout-context-menu-label">
-                    {contextMenuShouldShow ? "Mostrar" : "Ocultar"}
-                  </span>
-                </button>
-                <div className="handout-context-menu-divider" />
-                <button
-                  type="button"
-                  className="handout-context-menu-item"
-                  onClick={() => {
                     toggleFlipSelected(contextMenuLayerIds, "x");
                     closeContextMenu();
                   }}
@@ -5591,6 +5509,9 @@ export default function HandoutCanvasApp() {
     </PortalContainerProvider>
   );
 }
+
+
+
 
 
 

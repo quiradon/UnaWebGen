@@ -7,6 +7,7 @@ import {
   ChevronRight,
   ChevronUp,
   ChevronsUpDown,
+  Circle,
   Copy,
   Download,
   Eye,
@@ -25,12 +26,14 @@ import {
   Lock,
   Minus,
   Plus,
-  Printer,
   RotateCcw,
+  Square,
   Sparkles,
+  Star,
   SlidersHorizontal,
   Trash2,
   Type,
+  Triangle,
   Underline,
   Unlock,
   Upload,
@@ -45,6 +48,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 
 type FontPresetId =
@@ -78,6 +82,9 @@ type BlendMode =
   | "saturation"
   | "color"
   | "luminosity";
+type ShapeKind = "rect" | "ellipse" | "triangle" | "diamond" | "hexagon" | "star";
+type ShapeFillMode = "solid" | "linear" | "radial" | "image";
+type ShapeImageFit = "cover" | "contain";
 
 type ShadowEffect = {
   enabled: boolean;
@@ -111,6 +118,8 @@ type BaseLayer = {
   flipY: boolean;
   locked: boolean;
   visible: boolean;
+  groupId: string | null;
+  clipToId: string | null;
   blendMode: BlendMode;
   effects: LayerEffects;
 };
@@ -133,9 +142,35 @@ type TextLayer = BaseLayer & {
   underline: boolean;
   backgroundColor: string;
   padding: number;
+  fillMode: ShapeFillMode;
+  fillColor: string;
+  fillColor2: string;
+  fillStop1: number;
+  fillStop2: number;
+  gradientAngle: number;
+  imageSrc: string;
+  imageFit: ShapeImageFit;
+  letterSpacing: number;
+  lineHeight: number;
+  strokeColor: string;
+  strokeWidth: number;
 };
 
-type Layer = ImageLayer | TextLayer;
+type ShapeLayer = BaseLayer & {
+  type: "shape";
+  shape: ShapeKind;
+  cornerRadius: number;
+  fillMode: ShapeFillMode;
+  fillColor: string;
+  fillColor2: string;
+  fillStop1: number;
+  fillStop2: number;
+  gradientAngle: number;
+  imageSrc: string;
+  imageFit: ShapeImageFit;
+};
+
+type Layer = ImageLayer | TextLayer | ShapeLayer;
 
 type HandoutCanvasDocV1 = {
   version: 1;
@@ -148,6 +183,32 @@ type HandoutCanvasDocV1 = {
 };
 
 type CSSVars = React.CSSProperties & Record<`--${string}`, string>;
+
+type FillPreset = {
+  id: string;
+  label: string;
+  mode: ShapeFillMode;
+  color1: string;
+  color2: string;
+  stop1: number;
+  stop2: number;
+  angle: number;
+  imageSrc: string;
+  imageFit: ShapeImageFit;
+};
+
+type AssetItem = {
+  id: string;
+  name: string;
+  src: string;
+  width: number;
+  height: number;
+};
+
+type SnapGuide = {
+  axis: "x" | "y";
+  value: number;
+};
 
 const STORAGE_KEY = "kraken.handoutCanvas.v1";
 
@@ -250,6 +311,30 @@ const BLEND_MODE_OPTIONS: ReadonlyArray<{ value: BlendMode; label: string }> = [
   { value: "luminosity", label: "Luminosity" },
 ] as const;
 const BLEND_MODE_VALUES = BLEND_MODE_OPTIONS.map((option) => option.value) as BlendMode[];
+const SHAPE_KINDS = ["rect", "ellipse", "triangle", "diamond", "hexagon", "star"] as const;
+const SHAPE_KIND_VALUES = [...SHAPE_KINDS] as ShapeKind[];
+const SHAPE_KIND_LABELS: Record<ShapeKind, string> = {
+  rect: "Retângulo",
+  ellipse: "Círculo",
+  triangle: "Triângulo",
+  diamond: "Diamante",
+  hexagon: "Hexágono",
+  star: "Estrela",
+};
+const SHAPE_FILL_MODES = ["solid", "linear", "radial", "image"] as const;
+const SHAPE_FILL_MODE_VALUES = [...SHAPE_FILL_MODES] as ShapeFillMode[];
+const SHAPE_FILL_MODE_LABELS: Record<ShapeFillMode, string> = {
+  solid: "Cor sólida",
+  linear: "Gradiente linear",
+  radial: "Gradiente radial",
+  image: "Imagem",
+};
+const SHAPE_IMAGE_FITS = ["cover", "contain"] as const;
+const SHAPE_IMAGE_FIT_VALUES = [...SHAPE_IMAGE_FITS] as ShapeImageFit[];
+const SHAPE_IMAGE_FIT_LABELS: Record<ShapeImageFit, string> = {
+  cover: "Cobrir",
+  contain: "Conter",
+};
 const TEXT_ALIGN_LABELS: Record<TextAlign, string> = {
   left: "Esquerda",
   center: "Centro",
@@ -257,6 +342,9 @@ const TEXT_ALIGN_LABELS: Record<TextAlign, string> = {
 };
 const COLOR_HISTORY_KEY = "kraken.handoutColorHistory";
 const COLOR_HISTORY_LIMIT = 12;
+const FILL_PRESET_KEY = "kraken.handoutFillPresets";
+const ASSET_LIBRARY_KEY = "kraken.handoutAssetLibrary";
+const SNAP_PREF_KEY = "kraken.handoutSnapPrefs";
 const COLOR_SUGGESTIONS = [
   "#111111",
   "#2b1b0e",
@@ -270,6 +358,13 @@ const COLOR_SUGGESTIONS = [
   "#0ea5e9",
   "#3b82f6",
   "#8b5cf6",
+] as const;
+
+const GRADIENT_PRESETS = [
+  { id: "sunset", label: "Sunset", angle: 45, color1: "#f97316", color2: "#f43f5e" },
+  { id: "ocean", label: "Ocean", angle: 90, color1: "#0ea5e9", color2: "#22d3ee" },
+  { id: "forest", label: "Forest", angle: 135, color1: "#22c55e", color2: "#16a34a" },
+  { id: "night", label: "Night", angle: 120, color1: "#312e81", color2: "#0f172a" },
 ] as const;
 
 const DEFAULT_DROP_SHADOW: ShadowEffect = {
@@ -291,6 +386,12 @@ const DEFAULT_INNER_SHADOW: ShadowEffect = {
   color: "#000000",
   opacity: 0.35,
 };
+const DEFAULT_SHAPE_FILL_COLOR = "#f97316";
+const DEFAULT_SHAPE_FILL_COLOR_2 = "#fde68a";
+const DEFAULT_FILL_STOP_1 = 0;
+const DEFAULT_FILL_STOP_2 = 100;
+const DEFAULT_TEXT_FILL_COLOR = "#2b1b0e";
+const DEFAULT_TEXT_STROKE_COLOR = "#000000";
 
 function createDefaultEffects(): LayerEffects {
   return {
@@ -314,7 +415,7 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
     {
       id: "txt_title",
       type: "text",
-      name: "TÃ­tulo",
+      name: "Título",
       x: 72,
       y: 72,
       width: 650,
@@ -325,6 +426,8 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
       flipY: false,
       locked: false,
       visible: true,
+      groupId: null,
+      clipToId: null,
       blendMode: "normal",
       effects: createDefaultEffects(),
       text: "Handout",
@@ -337,6 +440,18 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
       underline: false,
       backgroundColor: "transparent",
       padding: 0,
+      fillMode: "solid",
+      fillColor: "#2b1b0e",
+      fillColor2: DEFAULT_SHAPE_FILL_COLOR_2,
+      fillStop1: DEFAULT_FILL_STOP_1,
+      fillStop2: DEFAULT_FILL_STOP_2,
+      gradientAngle: 45,
+      imageSrc: "",
+      imageFit: "cover",
+      letterSpacing: 0,
+      lineHeight: 1.2,
+      strokeColor: DEFAULT_TEXT_STROKE_COLOR,
+      strokeWidth: 0,
     },
     {
       id: "txt_body",
@@ -352,10 +467,12 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
       flipY: false,
       locked: false,
       visible: true,
-        blendMode: "normal",
-        effects: createDefaultEffects(),
-        text:
-        "Funciona como um mini-Canva:\\n\\n- Adicione imagens em camadas\\n- Crie vÃ¡rios textos\\n- Arraste e redimensione\\n- Reordene as camadas no painel",
+      groupId: null,
+      clipToId: null,
+      blendMode: "normal",
+      effects: createDefaultEffects(),
+      text:
+        "Funciona como um mini-Canva:\\n\\n- Adicione imagens em camadas\\n- Crie vários textos\\n- Arraste e redimensione\\n- Reordene as camadas no painel",
       fontSize: 18,
       color: "#2b1b0e",
       align: "left",
@@ -365,6 +482,18 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
       underline: false,
       backgroundColor: "transparent",
       padding: 0,
+      fillMode: "solid",
+      fillColor: "#2b1b0e",
+      fillColor2: DEFAULT_SHAPE_FILL_COLOR_2,
+      fillStop1: DEFAULT_FILL_STOP_1,
+      fillStop2: DEFAULT_FILL_STOP_2,
+      gradientAngle: 45,
+      imageSrc: "",
+      imageFit: "cover",
+      letterSpacing: 0,
+      lineHeight: 1.2,
+      strokeColor: DEFAULT_TEXT_STROKE_COLOR,
+      strokeWidth: 0,
     },
   ],
 };
@@ -538,6 +667,284 @@ function getLayerEffectStyle(effects: LayerEffects) {
   const filter = filters.length ? filters.join(" ") : "none";
 
   return { boxShadow, filter };
+}
+
+function getImagePreserveAspectRatio(fit: ShapeImageFit) {
+  return fit === "cover" ? "xMidYMid slice" : "xMidYMid meet";
+}
+
+function getSortedStops(stop1: number, stop2: number) {
+  const first = clamp(stop1, 0, 100);
+  const second = clamp(stop2, 0, 100);
+  return first <= second ? [first, second] : [second, first];
+}
+
+function getShapeFill(layer: ShapeLayer, idBase: string) {
+  const primary = layer.fillColor || DEFAULT_SHAPE_FILL_COLOR;
+  const secondary = layer.fillColor2 || primary;
+  const [stop1, stop2] = getSortedStops(layer.fillStop1, layer.fillStop2);
+  if (layer.fillMode === "solid") {
+    return { fill: primary, defs: null };
+  }
+  if (layer.fillMode === "linear") {
+    const gradientId = `${idBase}-linear`;
+    const defs = (
+      <linearGradient
+        id={gradientId}
+        x1="0"
+        y1="0"
+        x2="100"
+        y2="0"
+        gradientUnits="userSpaceOnUse"
+        gradientTransform={`rotate(${layer.gradientAngle} 50 50)`}
+      >
+        <stop offset={`${stop1}%`} stopColor={primary} />
+        <stop offset={`${stop2}%`} stopColor={secondary} />
+      </linearGradient>
+    );
+    return { fill: `url(#${gradientId})`, defs };
+  }
+  if (layer.fillMode === "radial") {
+    const gradientId = `${idBase}-radial`;
+    const defs = (
+      <radialGradient id={gradientId} cx="50" cy="50" r="50" gradientUnits="userSpaceOnUse">
+        <stop offset={`${stop1}%`} stopColor={primary} />
+        <stop offset={`${stop2}%`} stopColor={secondary} />
+      </radialGradient>
+    );
+    return { fill: `url(#${gradientId})`, defs };
+  }
+
+  if (!layer.imageSrc) {
+    return { fill: primary, defs: null };
+  }
+
+  const patternId = `${idBase}-pattern`;
+  const defs = (
+    <pattern id={patternId} patternUnits="userSpaceOnUse" width="100" height="100">
+      <image
+        href={layer.imageSrc}
+        x="0"
+        y="0"
+        width="100"
+        height="100"
+        preserveAspectRatio={getImagePreserveAspectRatio(layer.imageFit)}
+      />
+    </pattern>
+  );
+  return { fill: `url(#${patternId})`, defs };
+}
+
+function getTextFillStyle(layer: TextLayer) {
+  const primary = layer.fillColor || layer.color || DEFAULT_TEXT_FILL_COLOR;
+  const secondary = layer.fillColor2 || primary;
+  const [stop1, stop2] = getSortedStops(layer.fillStop1, layer.fillStop2);
+  const baseStyle: React.CSSProperties = {
+    color: primary,
+    WebkitTextStroke: layer.strokeWidth > 0 ? `${layer.strokeWidth}px ${layer.strokeColor}` : undefined,
+  };
+
+  if (layer.fillMode === "solid") {
+    return baseStyle;
+  }
+
+  if (layer.fillMode === "image") {
+    if (!layer.imageSrc) return baseStyle;
+    return {
+      ...baseStyle,
+      backgroundImage: `url(${layer.imageSrc})`,
+      backgroundSize: layer.imageFit === "cover" ? "cover" : "contain",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      WebkitBackgroundClip: "text",
+      backgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+    };
+  }
+
+  const gradient =
+    layer.fillMode === "linear"
+      ? `linear-gradient(${layer.gradientAngle}deg, ${primary} ${stop1}%, ${secondary} ${stop2}%)`
+      : `radial-gradient(circle at center, ${primary} ${stop1}%, ${secondary} ${stop2}%)`;
+
+  return {
+    ...baseStyle,
+    backgroundImage: gradient,
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+  };
+}
+
+function escapeSvgText(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function buildShapeMaskSvg(layer: ShapeLayer) {
+  const radius = clamp(layer.cornerRadius, 0, 50);
+  let shapeMarkup = "";
+  switch (layer.shape) {
+    case "rect":
+      shapeMarkup = `<rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" rx=\"${radius}\" ry=\"${radius}\" fill=\"white\" />`;
+      break;
+    case "ellipse":
+      shapeMarkup = `<ellipse cx=\"50\" cy=\"50\" rx=\"50\" ry=\"50\" fill=\"white\" />`;
+      break;
+    case "triangle":
+      shapeMarkup = `<path d=\"M50 6 L96 94 L4 94 Z\" fill=\"white\" />`;
+      break;
+    case "diamond":
+      shapeMarkup = `<path d=\"M50 4 L96 50 L50 96 L4 50 Z\" fill=\"white\" />`;
+      break;
+    case "hexagon":
+      shapeMarkup = `<path d=\"M24 6 L76 6 L96 50 L76 94 L24 94 L4 50 Z\" fill=\"white\" />`;
+      break;
+    case "star":
+      shapeMarkup = `<path d=\"M50 6 L62 38 L96 38 L68 58 L78 92 L50 72 L22 92 L32 58 L4 38 L38 38 Z\" fill=\"white\" />`;
+      break;
+    default:
+      shapeMarkup = `<rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"white\" />`;
+  }
+  return `<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"${layer.width}\" height=\"${layer.height}\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"none\">${shapeMarkup}</svg>`;
+}
+
+function buildTextMaskSvg(layer: TextLayer) {
+  const fontFamily = FONT_PRESETS[layer.fontPreset].stack;
+  const fontStyle = layer.italic ? "italic" : "normal";
+  const fontWeight = layer.fontWeight;
+  const lineHeight = layer.lineHeight || 1.2;
+  const lines = layer.text.split("\\n");
+  const padding = layer.padding || 0;
+  const innerWidth = Math.max(1, layer.width - padding * 2);
+  const anchor = layer.align === "center" ? "middle" : layer.align === "right" ? "end" : "start";
+  const x =
+    layer.align === "center"
+      ? padding + innerWidth / 2
+      : layer.align === "right"
+        ? padding + innerWidth
+        : padding;
+  const startY = padding + layer.fontSize;
+  const lineGap = layer.fontSize * lineHeight;
+  const tspans = lines
+    .map((line, index) => {
+      const y = startY + index * lineGap;
+      return `<tspan x=\"${x}\" y=\"${y}\">${escapeSvgText(line || " ")}</tspan>`;
+    })
+    .join("");
+  return `<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"${layer.width}\" height=\"${layer.height}\" viewBox=\"0 0 ${layer.width} ${layer.height}\"><text fill=\"white\" font-family=\"${escapeSvgText(
+    fontFamily,
+  )}\" font-size=\"${layer.fontSize}\" font-weight=\"${fontWeight}\" font-style=\"${fontStyle}\" text-anchor=\"${anchor}\" letter-spacing=\"${layer.letterSpacing}\">${tspans}</text></svg>`;
+}
+
+function buildMaskDataUrl(layer: ShapeLayer | TextLayer) {
+  const svg = layer.type === "shape" ? buildShapeMaskSvg(layer) : buildTextMaskSvg(layer);
+  const encoded = encodeURIComponent(svg);
+  return `data:image/svg+xml;utf8,${encoded}`;
+}
+
+function getClipMaskStyle(layer: Layer, maskLayer: ShapeLayer | TextLayer) {
+  const maskUrl = buildMaskDataUrl(maskLayer);
+  const offsetX = maskLayer.x - layer.x;
+  const offsetY = maskLayer.y - layer.y;
+  const size = `${maskLayer.width}px ${maskLayer.height}px`;
+  return {
+    WebkitMaskImage: `url(\"${maskUrl}\")`,
+    maskImage: `url(\"${maskUrl}\")`,
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+    WebkitMaskSize: size,
+    maskSize: size,
+    WebkitMaskPosition: `${offsetX}px ${offsetY}px`,
+    maskPosition: `${offsetX}px ${offsetY}px`,
+  } as React.CSSProperties;
+}
+
+function renderShapeElement(
+  kind: ShapeKind,
+  cornerRadius: number,
+  props: { className?: string; fill?: string; filterId?: string | null; style?: React.CSSProperties },
+) {
+  const radius = clamp(cornerRadius, 0, 50);
+  const { className, fill = "currentColor", filterId, style } = props;
+  const filter = filterId ? `url(#${filterId})` : undefined;
+
+  switch (kind) {
+    case "rect":
+      return (
+        <rect
+          x="0"
+          y="0"
+          width="100"
+          height="100"
+          rx={radius}
+          ry={radius}
+          className={className}
+          fill={fill}
+          style={style}
+          filter={filter}
+        />
+      );
+    case "ellipse":
+      return (
+        <ellipse
+          cx="50"
+          cy="50"
+          rx="50"
+          ry="50"
+          className={className}
+          fill={fill}
+          style={style}
+          filter={filter}
+        />
+      );
+    case "triangle":
+      return (
+        <path
+          d="M50 6 L96 94 L4 94 Z"
+          className={className}
+          fill={fill}
+          style={style}
+          filter={filter}
+        />
+      );
+    case "diamond":
+      return (
+        <path
+          d="M50 4 L96 50 L50 96 L4 50 Z"
+          className={className}
+          fill={fill}
+          style={style}
+          filter={filter}
+        />
+      );
+    case "hexagon":
+      return (
+        <path
+          d="M24 6 L76 6 L96 50 L76 94 L24 94 L4 50 Z"
+          className={className}
+          fill={fill}
+          style={style}
+          filter={filter}
+        />
+      );
+    case "star":
+      return (
+        <path
+          d="M50 6 L62 38 L96 38 L68 58 L78 92 L50 72 L22 92 L32 58 L4 38 L38 38 Z"
+          className={className}
+          fill={fill}
+          style={style}
+          filter={filter}
+        />
+      );
+    default:
+      return null;
+  }
 }
 
 function renderInnerShadowFilter(id: string, shadow: ShadowEffect) {
@@ -895,10 +1302,145 @@ function ColorPicker({
   );
 }
 
+type GradientStopEditorProps = {
+  stop1: number;
+  stop2: number;
+  color1: string;
+  color2: string;
+  angle: number;
+  onStop1Change: (value: number) => void;
+  onStop2Change: (value: number) => void;
+  onAngleChange?: (value: number) => void;
+  mode: "linear" | "radial";
+};
+
+function GradientStopEditor({
+  stop1,
+  stop2,
+  color1,
+  color2,
+  angle,
+  onStop1Change,
+  onStop2Change,
+  onAngleChange,
+  mode,
+}: GradientStopEditorProps) {
+  const barRef = useRef<HTMLDivElement | null>(null);
+  const gradient =
+    mode === "linear"
+      ? `linear-gradient(${angle}deg, ${color1} ${stop1}%, ${color2} ${stop2}%)`
+      : `radial-gradient(circle at center, ${color1} ${stop1}%, ${color2} ${stop2}%)`;
+
+  const updateStop = (which: "start" | "end", clientX: number) => {
+    const bar = barRef.current;
+    if (!bar) return;
+    const rect = bar.getBoundingClientRect();
+    if (!rect.width) return;
+    const pct = clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
+    const value = Math.round(pct);
+    if (which === "start") onStop1Change(value);
+    else onStop2Change(value);
+  };
+
+  const startDrag = (which: "start" | "end") => (event: React.PointerEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    updateStop(which, event.clientX);
+    const handleMove = (ev: PointerEvent) => updateStop(which, ev.clientX);
+    const handleUp = () => {
+      window.removeEventListener("pointermove", handleMove);
+      window.removeEventListener("pointerup", handleUp);
+      window.removeEventListener("pointercancel", handleUp);
+    };
+    window.addEventListener("pointermove", handleMove);
+    window.addEventListener("pointerup", handleUp);
+    window.addEventListener("pointercancel", handleUp);
+  };
+
+  const handleBarPointerDown = (event: React.PointerEvent) => {
+    const bar = barRef.current;
+    if (!bar) return;
+    const rect = bar.getBoundingClientRect();
+    const pct = clamp(((event.clientX - rect.left) / rect.width) * 100, 0, 100);
+    const pick = Math.abs(pct - stop1) <= Math.abs(pct - stop2) ? "start" : "end";
+    updateStop(pick, event.clientX);
+    startDrag(pick)(event);
+  };
+
+  return (
+    <div className="handout-gradient-editor">
+      <div
+        ref={barRef}
+        className="handout-gradient-bar"
+        style={{ backgroundImage: gradient }}
+        onPointerDown={handleBarPointerDown}
+      >
+        <button
+          type="button"
+          className="handout-gradient-handle is-start"
+          style={{ left: `${stop1}%`, backgroundColor: color1 }}
+          onPointerDown={startDrag("start")}
+          aria-label="Stop 1"
+        />
+        <button
+          type="button"
+          className="handout-gradient-handle is-end"
+          style={{ left: `${stop2}%`, backgroundColor: color2 }}
+          onPointerDown={startDrag("end")}
+          aria-label="Stop 2"
+        />
+      </div>
+      {mode === "linear" && onAngleChange ? (
+        <div className="grid gap-2">
+          <Label>Angulo</Label>
+          <Input
+            type="number"
+            min={0}
+            max={360}
+            value={angle}
+            onChange={(event) => {
+              const value = clamp(Number(event.target.value), 0, 360);
+              onAngleChange(value);
+            }}
+          />
+        </div>
+      ) : null}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="grid gap-2">
+          <Label>Stop 1 (%)</Label>
+          <Input
+            type="number"
+            min={0}
+            max={100}
+            value={stop1}
+            onChange={(event) => {
+              const value = clamp(Number(event.target.value), 0, 100);
+              onStop1Change(value);
+            }}
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label>Stop 2 (%)</Label>
+          <Input
+            type="number"
+            min={0}
+            max={100}
+            value={stop2}
+            onChange={(event) => {
+              const value = clamp(Number(event.target.value), 0, 100);
+              onStop2Change(value);
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function normalizeLayer(raw: unknown): Layer | null {
   if (!isObject(raw)) return null;
   const type = raw.type;
-  if (type !== "image" && type !== "text") return null;
+  if (type !== "image" && type !== "text" && type !== "shape") return null;
 
   const base: BaseLayer = {
     id: safeString(raw.id, ""),
@@ -913,6 +1455,8 @@ function normalizeLayer(raw: unknown): Layer | null {
     flipY: safeBoolean(raw.flipY, false),
     locked: safeBoolean(raw.locked, false),
     visible: safeBoolean(raw.visible, true),
+    groupId: safeString(raw.groupId, "") || null,
+    clipToId: safeString(raw.clipToId, "") || null,
     blendMode: safeEnum(raw.blendMode, BLEND_MODE_VALUES, "normal"),
     effects: normalizeEffects(raw.effects),
   };
@@ -933,12 +1477,33 @@ function normalizeLayer(raw: unknown): Layer | null {
     return layer;
   }
 
+  if (type === "shape") {
+    const layer: ShapeLayer = {
+      ...base,
+      type: "shape",
+      shape: safeEnum(raw.shape, SHAPE_KIND_VALUES, "rect"),
+      cornerRadius: clamp(safeNumber(raw.cornerRadius, 12), 0, 50),
+      fillMode: safeEnum(raw.fillMode, SHAPE_FILL_MODE_VALUES, "solid"),
+      fillColor: safeString(raw.fillColor, DEFAULT_SHAPE_FILL_COLOR),
+      fillColor2: safeString(raw.fillColor2, DEFAULT_SHAPE_FILL_COLOR_2),
+      fillStop1: clamp(safeNumber(raw.fillStop1, DEFAULT_FILL_STOP_1), 0, 100),
+      fillStop2: clamp(safeNumber(raw.fillStop2, DEFAULT_FILL_STOP_2), 0, 100),
+      gradientAngle: clamp(safeNumber(raw.gradientAngle, 45), 0, 360),
+      imageSrc: safeString(raw.imageSrc, ""),
+      imageFit: safeEnum(raw.imageFit, SHAPE_IMAGE_FIT_VALUES, "cover"),
+    };
+    return layer;
+  }
+
+  const textColor = safeString(raw.color, DEFAULT_TEXT_FILL_COLOR);
+  const textFillColor = safeString(raw.fillColor, textColor);
+  const textFillColor2 = safeString(raw.fillColor2, textFillColor);
   const layer: TextLayer = {
     ...base,
     type: "text",
     text: safeString(raw.text, ""),
     fontSize: clamp(safeNumber(raw.fontSize, 18), 8, 180),
-    color: safeString(raw.color, "#111111"),
+    color: textFillColor,
     align: safeEnum(raw.align, ["left", "center", "right"] as const, "left"),
     fontPreset: safeEnum(raw.fontPreset, FONT_PRESET_IDS, DEFAULT_FONT_PRESET),
     fontWeight: normalizeFontWeight(raw.fontWeight, 400),
@@ -946,6 +1511,18 @@ function normalizeLayer(raw: unknown): Layer | null {
     underline: safeBoolean(raw.underline, false),
     backgroundColor: safeString(raw.backgroundColor, "transparent"),
     padding: clamp(safeNumber(raw.padding, 0), 0, 64),
+    fillMode: safeEnum(raw.fillMode, SHAPE_FILL_MODE_VALUES, "solid"),
+    fillColor: textFillColor,
+    fillColor2: textFillColor2,
+    fillStop1: clamp(safeNumber(raw.fillStop1, DEFAULT_FILL_STOP_1), 0, 100),
+    fillStop2: clamp(safeNumber(raw.fillStop2, DEFAULT_FILL_STOP_2), 0, 100),
+    gradientAngle: clamp(safeNumber(raw.gradientAngle, 45), 0, 360),
+    imageSrc: safeString(raw.imageSrc, ""),
+    imageFit: safeEnum(raw.imageFit, SHAPE_IMAGE_FIT_VALUES, "cover"),
+    letterSpacing: clamp(safeNumber(raw.letterSpacing, 0), -5, 20),
+    lineHeight: clamp(safeNumber(raw.lineHeight, 1.2), 0.6, 3),
+    strokeColor: safeString(raw.strokeColor, DEFAULT_TEXT_STROKE_COLOR),
+    strokeWidth: clamp(safeNumber(raw.strokeWidth, 0), 0, 12),
   };
   return layer;
 }
@@ -980,6 +1557,39 @@ function normalizeDocV1(raw: unknown): HandoutCanvasDocV1 | null {
   };
 }
 
+function normalizeFillPreset(raw: unknown): FillPreset | null {
+  if (!isObject(raw)) return null;
+  const id = safeString(raw.id, "");
+  if (!id) return null;
+  const mode = safeEnum(raw.mode, SHAPE_FILL_MODE_VALUES, "solid");
+  return {
+    id,
+    label: safeString(raw.label, "Preset"),
+    mode,
+    color1: safeString(raw.color1, DEFAULT_SHAPE_FILL_COLOR),
+    color2: safeString(raw.color2, DEFAULT_SHAPE_FILL_COLOR_2),
+    stop1: clamp(safeNumber(raw.stop1, DEFAULT_FILL_STOP_1), 0, 100),
+    stop2: clamp(safeNumber(raw.stop2, DEFAULT_FILL_STOP_2), 0, 100),
+    angle: clamp(safeNumber(raw.angle, 45), 0, 360),
+    imageSrc: safeString(raw.imageSrc, ""),
+    imageFit: safeEnum(raw.imageFit, SHAPE_IMAGE_FIT_VALUES, "cover"),
+  };
+}
+
+function normalizeAssetItem(raw: unknown): AssetItem | null {
+  if (!isObject(raw)) return null;
+  const id = safeString(raw.id, "");
+  const src = safeString(raw.src, "");
+  if (!id || !src) return null;
+  return {
+    id,
+    name: safeString(raw.name, "Asset"),
+    src,
+    width: Math.max(1, safeNumber(raw.width, 0)),
+    height: Math.max(1, safeNumber(raw.height, 0)),
+  };
+}
+
 function createId(prefix: string) {
   const rand =
     typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -997,6 +1607,15 @@ function downloadBlob(blob: Blob, filename: string) {
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function sanitizeFilename(value: string) {
+  const base = value
+    .toLowerCase()
+    .replace(/[^a-z0-9-_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return base || "layer";
 }
 
 async function fileToDataUrl(file: File) {
@@ -1018,14 +1637,21 @@ async function getImageNaturalSize(src: string) {
 }
 
   function HandoutCanvasBuilder() {
-    type SidebarTab = "text" | "assets" | "layers" | "page" | "props" | "effects" | "export";
+    type SidebarTab = "text" | "assets" | "shapes" | "layers" | "page" | "props" | "effects" | "export";
     const [sidebarTab, setSidebarTab] = useState<SidebarTab>("text");
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-    const [doc, setDoc] = useState<HandoutCanvasDocV1>(DEFAULT_DOC);
+  const [doc, setDoc] = useState<HandoutCanvasDocV1>(DEFAULT_DOC);
   const [topbarPulse, setTopbarPulse] = useState(false);
   const [colorHistory, setColorHistory] = useState<string[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [manipulatingId, setManipulatingId] = useState<string | null>(null);
+  const [fillPresets, setFillPresets] = useState<FillPreset[]>([]);
+  const [assetLibrary, setAssetLibrary] = useState<AssetItem[]>([]);
+  const [snapEnabled, setSnapEnabled] = useState(true);
+  const [snapTolerance, setSnapTolerance] = useState(6);
+  const [snapGuides, setSnapGuides] = useState<SnapGuide[]>([]);
   const [fontWeightSupport, setFontWeightSupport] = useState<Partial<Record<FontPresetId, FontWeight[]>>>({});
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -1036,8 +1662,18 @@ async function getImageNaturalSize(src: string) {
   const sidebarRef = useRef<HTMLDivElement | null>(null);
   const jsonFileRef = useRef<HTMLInputElement | null>(null);
   const imageFileRef = useRef<HTMLInputElement | null>(null);
+  const assetFileRef = useRef<HTMLInputElement | null>(null);
+  const shapeImageFileRef = useRef<HTMLInputElement | null>(null);
+  const textImageFileRef = useRef<HTMLInputElement | null>(null);
   const textEditorRef = useRef<HTMLTextAreaElement | null>(null);
   const editingSnapshotRef = useRef<string>("");
+  const snapFrameRef = useRef<number | null>(null);
+  const snapPendingRef = useRef<SnapGuide[] | null>(null);
+  const groupDragRef = useRef<{
+    ids: string[];
+    startBounds: { x: number; y: number; width: number; height: number };
+    startLayers: Record<string, { x: number; y: number; width: number; height: number }>;
+  } | null>(null);
 
   useEffect(() => {
     try {
@@ -1079,6 +1715,49 @@ async function getImageNaturalSize(src: string) {
   }, []);
 
   useEffect(() => {
+    try {
+      const raw = localStorage.getItem(FILL_PRESET_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return;
+      const cleaned = parsed
+        .map(normalizeFillPreset)
+        .filter((item): item is FillPreset => Boolean(item));
+      setFillPresets(cleaned);
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(ASSET_LIBRARY_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return;
+      const cleaned = parsed
+        .map(normalizeAssetItem)
+        .filter((item): item is AssetItem => Boolean(item));
+      setAssetLibrary(cleaned);
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const snapRaw = localStorage.getItem(SNAP_PREF_KEY);
+      if (!snapRaw) return;
+      const parsed = JSON.parse(snapRaw);
+      if (!isObject(parsed)) return;
+      setSnapEnabled(safeBoolean(parsed.enabled, true));
+      setSnapTolerance(clamp(safeNumber(parsed.tolerance, 6), 2, 30));
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
     if (!hasLoaded) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(doc));
@@ -1086,6 +1765,33 @@ async function getImageNaturalSize(src: string) {
       // ignore
     }
   }, [doc, hasLoaded]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(FILL_PRESET_KEY, JSON.stringify(fillPresets));
+    } catch {
+      // ignore
+    }
+  }, [fillPresets]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(ASSET_LIBRARY_KEY, JSON.stringify(assetLibrary));
+    } catch {
+      // ignore
+    }
+  }, [assetLibrary]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        SNAP_PREF_KEY,
+        JSON.stringify({ enabled: snapEnabled, tolerance: snapTolerance }),
+      );
+    } catch {
+      // ignore
+    }
+  }, [snapEnabled, snapTolerance]);
 
   useEffect(() => {
     if (typeof document === "undefined" || !("fonts" in document)) return;
@@ -1141,6 +1847,10 @@ async function getImageNaturalSize(src: string) {
     return () => cancelAnimationFrame(raf);
   }, [editingId]);
 
+  useEffect(() => {
+    if (!snapEnabled) clearSnapGuides();
+  }, [snapEnabled]);
+
   const derivedPage = useMemo(() => {
     const width = clamp(doc.pageWidth, PAGE_SIZE_MIN, PAGE_SIZE_MAX);
     const height = clamp(doc.pageHeight, PAGE_SIZE_MIN, PAGE_SIZE_MAX);
@@ -1159,6 +1869,25 @@ async function getImageNaturalSize(src: string) {
     () => doc.layers.find((l) => l.id === selectedId) ?? null,
     [doc.layers, selectedId],
   );
+  const selectedLayers = useMemo(
+    () => doc.layers.filter((layer) => selectedIds.includes(layer.id)),
+    [doc.layers, selectedIds],
+  );
+  const selectionBounds = useMemo(() => {
+    if (selectedLayers.length < 2) return null;
+    const minX = Math.min(...selectedLayers.map((layer) => layer.x));
+    const minY = Math.min(...selectedLayers.map((layer) => layer.y));
+    const maxX = Math.max(...selectedLayers.map((layer) => layer.x + layer.width));
+    const maxY = Math.max(...selectedLayers.map((layer) => layer.y + layer.height));
+    return {
+      x: minX,
+      y: minY,
+      width: Math.max(1, maxX - minX),
+      height: Math.max(1, maxY - minY),
+    };
+  }, [selectedLayers]);
+  const isGroupSelection = Boolean(selectionBounds);
+  const isGroupLocked = isGroupSelection ? selectedLayers.some((layer) => layer.locked) : false;
   const textLayer = selectedLayer?.type === "text" ? selectedLayer : null;
   const textLayerWeights = useMemo(() => {
     if (!textLayer) return FONT_WEIGHT_VALUES;
@@ -1198,10 +1927,136 @@ async function getImageNaturalSize(src: string) {
     });
   }
 
+  function setSelection(ids: string[], primaryId: string | null) {
+    setSelectedIds(ids);
+    setSelectedId(primaryId);
+  }
+
+  function clearSelection() {
+    setSelectedIds([]);
+    setSelectedId(null);
+  }
+
+  function selectLayerId(id: string, additive: boolean) {
+    if (!additive) {
+      setSelection([id], id);
+      return;
+    }
+    setSelectedIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    setSelectedId(id);
+  }
+
+  function getGroupLayerIds(groupId: string | null) {
+    if (!groupId) return [];
+    return doc.layers.filter((layer) => layer.groupId === groupId).map((layer) => layer.id);
+  }
+
+  function selectGroupById(groupId: string | null) {
+    const ids = getGroupLayerIds(groupId);
+    if (!ids.length) return;
+    const primary = ids.includes(selectedId ?? "") ? selectedId : ids[0];
+    setSelection(ids, primary ?? ids[0]);
+  }
+
+  function selectLayerFromPointer(layer: Layer, additive: boolean) {
+    const groupIds = getGroupLayerIds(layer.groupId);
+    if (!additive) {
+      const nextIds = groupIds.length ? groupIds : [layer.id];
+      setSelection(nextIds, layer.id);
+      return;
+    }
+    const additional = groupIds.length ? groupIds : [layer.id];
+    setSelectedIds((prev) => Array.from(new Set([...prev, ...additional])));
+    setSelectedId(layer.id);
+  }
+
+  function scheduleSnapGuides(guides: SnapGuide[]) {
+    if (!snapEnabled) return;
+    snapPendingRef.current = guides;
+    if (snapFrameRef.current !== null) return;
+    snapFrameRef.current = window.requestAnimationFrame(() => {
+      snapFrameRef.current = null;
+      if (!snapPendingRef.current) return;
+      setSnapGuides(snapPendingRef.current);
+      snapPendingRef.current = null;
+    });
+  }
+
+  function clearSnapGuides() {
+    snapPendingRef.current = null;
+    setSnapGuides([]);
+  }
+
+  function getSnapTargets(excludeIds: string[]) {
+    const vertical = [0, derivedPage.width / 2, derivedPage.width];
+    const horizontal = [0, derivedPage.height / 2, derivedPage.height];
+    doc.layers.forEach((layer) => {
+      if (excludeIds.includes(layer.id) || !layer.visible) return;
+      vertical.push(layer.x, layer.x + layer.width / 2, layer.x + layer.width);
+      horizontal.push(layer.y, layer.y + layer.height / 2, layer.y + layer.height);
+    });
+    return { vertical, horizontal };
+  }
+
+  function computeSnapResult(rect: { x: number; y: number; width: number; height: number }, excludeIds: string[]) {
+    if (!snapEnabled) return { x: rect.x, y: rect.y, guides: [] as SnapGuide[] };
+    const { vertical, horizontal } = getSnapTargets(excludeIds);
+    const candidatesX = [rect.x, rect.x + rect.width / 2, rect.x + rect.width];
+    const candidatesY = [rect.y, rect.y + rect.height / 2, rect.y + rect.height];
+    let snappedX = rect.x;
+    let snappedY = rect.y;
+    let bestXDiff = snapTolerance + 1;
+    let bestYDiff = snapTolerance + 1;
+    let bestXTarget = 0;
+    let bestYTarget = 0;
+    const guides: SnapGuide[] = [];
+
+    candidatesX.forEach((candidate) => {
+      vertical.forEach((target) => {
+        const diff = target - candidate;
+        if (Math.abs(diff) < Math.abs(bestXDiff) && Math.abs(diff) <= snapTolerance) {
+          bestXDiff = diff;
+          bestXTarget = target;
+        }
+      });
+    });
+
+    if (Math.abs(bestXDiff) <= snapTolerance) {
+      snappedX = rect.x + bestXDiff;
+      guides.push({ axis: "x", value: bestXTarget });
+    }
+
+    candidatesY.forEach((candidate) => {
+      horizontal.forEach((target) => {
+        const diff = target - candidate;
+        if (Math.abs(diff) < Math.abs(bestYDiff) && Math.abs(diff) <= snapTolerance) {
+          bestYDiff = diff;
+          bestYTarget = target;
+        }
+      });
+    });
+
+    if (Math.abs(bestYDiff) <= snapTolerance) {
+      snappedY = rect.y + bestYDiff;
+      guides.push({ axis: "y", value: bestYTarget });
+    }
+
+    return { x: snappedX, y: snappedY, guides };
+  }
+
 function updateLayer(id: string, updater: (prev: Layer) => Layer) {
   setDoc((prev) => ({
     ...prev,
     layers: prev.layers.map((l) => (l.id === id ? updater(l) : l)),
+  }));
+}
+
+function updateLayers(ids: string[], updater: (prev: Layer) => Layer) {
+  if (!ids.length) return;
+  const idSet = new Set(ids);
+  setDoc((prev) => ({
+    ...prev,
+    layers: prev.layers.map((layer) => (idSet.has(layer.id) ? updater(layer) : layer)),
   }));
 }
 
@@ -1217,11 +2072,11 @@ function updateShadowEffect(
   updateLayerEffects(id, (prev) => ({ ...prev, [key]: updater(prev[key]) }));
 }
 
-function startTextEditing(layer: TextLayer) {
-  editingSnapshotRef.current = layer.text;
-  setSelectedId(layer.id);
-  setEditingId(layer.id);
-}
+  function startTextEditing(layer: TextLayer) {
+    editingSnapshotRef.current = layer.text;
+    setSelection([layer.id], layer.id);
+    setEditingId(layer.id);
+  }
 
   function finishTextEditing() {
     setEditingId(null);
@@ -1248,6 +2103,51 @@ function startTextEditing(layer: TextLayer) {
     });
   }
 
+  function moveLayersBy(ids: string[], dx: number, dy: number) {
+    if (!ids.length) return;
+    updateLayers(ids, (layer) => (layer.locked ? layer : { ...layer, x: layer.x + dx, y: layer.y + dy }));
+  }
+
+  function duplicateLayers(ids: string[]) {
+    if (!ids.length) return;
+    const sourceLayers = doc.layers.filter((layer) => ids.includes(layer.id));
+    if (!sourceLayers.length) return;
+    const duplicates = sourceLayers.map((layer) => {
+      const nextId = createId(layer.type === "image" ? "img" : layer.type === "shape" ? "shape" : "txt");
+      return {
+        ...layer,
+        id: nextId,
+        name: `${layer.name || "Camada"} copia`,
+        x: layer.x + 12,
+        y: layer.y + 12,
+        groupId: layer.groupId,
+      };
+    });
+    setDoc((prev) => ({ ...prev, layers: [...prev.layers, ...duplicates] }));
+    setSelection(
+      duplicates.map((layer) => layer.id),
+      duplicates[0]?.id ?? null,
+    );
+  }
+
+  function groupSelectedLayers(ids: string[]) {
+    if (ids.length < 2) return;
+    const groupId = createId("group");
+    updateLayers(ids, (layer) => ({ ...layer, groupId }));
+  }
+
+  function ungroupSelectedLayers(ids: string[]) {
+    if (!ids.length) return;
+    updateLayers(ids, (layer) => ({ ...layer, groupId: null }));
+  }
+
+  function toggleLockSelected(ids: string[]) {
+    if (!ids.length) return;
+    const layers = doc.layers.filter((layer) => ids.includes(layer.id));
+    const shouldLock = layers.some((layer) => !layer.locked);
+    updateLayers(ids, (layer) => ({ ...layer, locked: shouldLock }));
+  }
+
   function startRotation(e: React.PointerEvent, layer: Layer) {
     if (layer.locked) return;
     const pageRect = pageRef.current?.getBoundingClientRect();
@@ -1255,6 +2155,7 @@ function startTextEditing(layer: TextLayer) {
 
     e.preventDefault();
     e.stopPropagation();
+    setManipulatingId(layer.id);
 
     const centerX = pageRect.left + (layer.x + layer.width / 2) * doc.zoom;
     const centerY = pageRect.top + (layer.y + layer.height / 2) * doc.zoom;
@@ -1271,6 +2172,7 @@ function startTextEditing(layer: TextLayer) {
 
     const handleUp = () => {
       document.body.style.userSelect = prevUserSelect;
+      setManipulatingId(null);
       window.removeEventListener("pointermove", handleMove);
       window.removeEventListener("pointerup", handleUp);
       window.removeEventListener("pointercancel", handleUp);
@@ -1281,10 +2183,29 @@ function startTextEditing(layer: TextLayer) {
     window.addEventListener("pointercancel", handleUp);
   }
 
+  function deleteLayers(ids: string[]) {
+    if (!ids.length) return;
+    const idSet = new Set(ids);
+    setDoc((prev) => {
+      const remaining = prev.layers.filter((l) => !idSet.has(l.id));
+      const cleaned = remaining.map((layer) =>
+        layer.clipToId && idSet.has(layer.clipToId) ? { ...layer, clipToId: null } : layer,
+      );
+      return { ...prev, layers: cleaned };
+    });
+    setSelectedIds((prev) => {
+      const next = prev.filter((id) => !idSet.has(id));
+      setSelectedId((current) => {
+        if (!current || !idSet.has(current)) return current;
+        return next.length ? next[0] : null;
+      });
+      return next;
+    });
+    setEditingId((current) => (current && idSet.has(current) ? null : current));
+  }
+
   function deleteLayer(id: string) {
-    setDoc((prev) => ({ ...prev, layers: prev.layers.filter((l) => l.id !== id) }));
-    setSelectedId((current) => (current === id ? null : current));
-    setEditingId((current) => (current === id ? null : current));
+    deleteLayers([id]);
   }
 
   function addText() {
@@ -1305,6 +2226,8 @@ function startTextEditing(layer: TextLayer) {
       flipY: false,
       locked: false,
       visible: true,
+      groupId: null,
+      clipToId: null,
       blendMode: "normal",
       effects: createDefaultEffects(),
       text: "Novo texto",
@@ -1317,10 +2240,67 @@ function startTextEditing(layer: TextLayer) {
       underline: false,
       backgroundColor: "transparent",
       padding: 0,
+      fillMode: "solid",
+      fillColor: "#2b1b0e",
+      fillColor2: DEFAULT_SHAPE_FILL_COLOR_2,
+      fillStop1: DEFAULT_FILL_STOP_1,
+      fillStop2: DEFAULT_FILL_STOP_2,
+      gradientAngle: 45,
+      imageSrc: "",
+      imageFit: "cover",
+      letterSpacing: 0,
+      lineHeight: 1.2,
+      strokeColor: DEFAULT_TEXT_STROKE_COLOR,
+      strokeWidth: 0,
     };
 
     setDoc((prev) => ({ ...prev, layers: [...prev.layers, layer] }));
-    setSelectedId(id);
+    setSelection([id], id);
+    setSidebarTab("props");
+  }
+
+  function addShape(kind: ShapeKind) {
+    const id = createId("shape");
+    const number = doc.layers.filter((l) => l.type === "shape").length + 1;
+    const base = Math.round(Math.min(derivedPage.width, derivedPage.height) * 0.28);
+    const isRect = kind === "rect";
+    const width = isRect ? Math.round(base * 1.4) : base;
+    const height = isRect ? Math.round(base * 0.9) : base;
+    const x = Math.max(0, Math.round((derivedPage.width - width) / 2));
+    const y = Math.max(0, Math.round((derivedPage.height - height) / 2));
+
+    const layer: ShapeLayer = {
+      id,
+      type: "shape",
+      name: `Forma ${number}`,
+      x,
+      y,
+      width,
+      height,
+      opacity: 1,
+      rotation: 0,
+      flipX: false,
+      flipY: false,
+      locked: false,
+      visible: true,
+      groupId: null,
+      clipToId: null,
+      blendMode: "normal",
+      effects: createDefaultEffects(),
+      shape: kind,
+      cornerRadius: isRect ? 12 : 0,
+      fillMode: "solid",
+      fillColor: DEFAULT_SHAPE_FILL_COLOR,
+      fillColor2: DEFAULT_SHAPE_FILL_COLOR_2,
+      fillStop1: DEFAULT_FILL_STOP_1,
+      fillStop2: DEFAULT_FILL_STOP_2,
+      gradientAngle: 45,
+      imageSrc: "",
+      imageFit: "cover",
+    };
+
+    setDoc((prev) => ({ ...prev, layers: [...prev.layers, layer] }));
+    setSelection([id], id);
     setSidebarTab("props");
   }
 
@@ -1328,40 +2308,14 @@ function startTextEditing(layer: TextLayer) {
     const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
     if (!list.length) return;
 
-    toast.message(`Carregando ${list.length} imagem(ns)â€¦`);
+    toast.message(`Carregando ${list.length} imagem(ns)...`);
     const created: ImageLayer[] = [];
 
     for (const file of list) {
       try {
         const src = await fileToDataUrl(file);
-        const natural = await getImageNaturalSize(src);
-        const maxW = derivedPage.width * 0.85;
-        const maxH = derivedPage.height * 0.6;
-        const scale = Math.min(maxW / natural.width, maxH / natural.height, 1);
-        const width = Math.max(64, Math.round(natural.width * scale));
-        const height = Math.max(64, Math.round(natural.height * scale));
-        const x = Math.max(0, Math.round((derivedPage.width - width) / 2));
-        const y = Math.max(0, Math.round((derivedPage.height - height) / 2));
-
-        created.push({
-          id: createId("img"),
-          type: "image",
-          name: file.name,
-          x,
-          y,
-          width,
-          height,
-          opacity: 1,
-          rotation: 0,
-          flipX: false,
-            flipY: false,
-            locked: false,
-            visible: true,
-            blendMode: "normal",
-            effects: createDefaultEffects(),
-            src,
-            keepAspectRatio: true,
-          });
+        const layer = await createImageLayerFromSrc(src, file.name);
+        if (layer) created.push(layer);
       } catch (error) {
         console.error(error);
         toast.error(`Falha ao carregar: ${file.name}`);
@@ -1370,14 +2324,206 @@ function startTextEditing(layer: TextLayer) {
 
     if (!created.length) return;
     setDoc((prev) => ({ ...prev, layers: [...prev.layers, ...created] }));
-    setSelectedId(created[created.length - 1].id);
+    setSelection([created[created.length - 1].id], created[created.length - 1].id);
     setSidebarTab("layers");
     toast.success("Imagem(ns) adicionada(s).");
   }
 
+  async function createImageLayerFromSrc(src: string, name: string) {
+    const natural = await getImageNaturalSize(src);
+    const maxW = derivedPage.width * 0.85;
+    const maxH = derivedPage.height * 0.6;
+    const scale = Math.min(maxW / natural.width, maxH / natural.height, 1);
+    const width = Math.max(64, Math.round(natural.width * scale));
+    const height = Math.max(64, Math.round(natural.height * scale));
+    const x = Math.max(0, Math.round((derivedPage.width - width) / 2));
+    const y = Math.max(0, Math.round((derivedPage.height - height) / 2));
+
+    const layer: ImageLayer = {
+      id: createId("img"),
+      type: "image",
+      name,
+      x,
+      y,
+      width,
+      height,
+      opacity: 1,
+      rotation: 0,
+      flipX: false,
+      flipY: false,
+      locked: false,
+      visible: true,
+      groupId: null,
+      clipToId: null,
+      blendMode: "normal",
+      effects: createDefaultEffects(),
+      src,
+      keepAspectRatio: true,
+    };
+    return layer;
+  }
+
+  async function addAssets(files: FileList) {
+    const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
+    if (!list.length) return;
+    const created: AssetItem[] = [];
+
+    for (const file of list) {
+      try {
+        const src = await fileToDataUrl(file);
+        const natural = await getImageNaturalSize(src);
+        created.push({
+          id: createId("asset"),
+          name: file.name,
+          src,
+          width: natural.width,
+          height: natural.height,
+        });
+      } catch (error) {
+        console.error(error);
+        toast.error(`Falha ao carregar: ${file.name}`);
+      }
+    }
+
+    if (!created.length) return;
+    setAssetLibrary((prev) => [...created, ...prev]);
+    toast.success("Assets adicionados.");
+  }
+
+  async function addAssetToCanvas(asset: AssetItem) {
+    try {
+      const layer = await createImageLayerFromSrc(asset.src, asset.name);
+      if (!layer) return;
+      setDoc((prev) => ({ ...prev, layers: [...prev.layers, layer] }));
+      setSelection([layer.id], layer.id);
+      setSidebarTab("layers");
+    } catch (error) {
+      console.error(error);
+      toast.error("Falha ao inserir asset.");
+    }
+  }
+
+  function removeAsset(id: string) {
+    setAssetLibrary((prev) => prev.filter((asset) => asset.id !== id));
+  }
+
+  async function setShapeFillImage(layerId: string, file: File) {
+    try {
+      const src = await fileToDataUrl(file);
+      updateLayer(layerId, (p) =>
+        p.type === "shape" ? { ...p, imageSrc: src, fillMode: "image" } : p,
+      );
+      toast.success("Imagem aplicada.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Falha ao carregar imagem.");
+    }
+  }
+
+  async function setTextFillImage(layerId: string, file: File) {
+    try {
+      const src = await fileToDataUrl(file);
+      updateLayer(layerId, (p) =>
+        p.type === "text"
+          ? {
+              ...p,
+              imageSrc: src,
+              fillMode: "image",
+            }
+          : p,
+      );
+      toast.success("Imagem aplicada.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Falha ao carregar imagem.");
+    }
+  }
+
+  function buildFillPreset(layer: TextLayer | ShapeLayer): FillPreset {
+    return {
+      id: createId("preset"),
+      label: layer.name || "Preset",
+      mode: layer.fillMode,
+      color1: layer.fillColor || DEFAULT_SHAPE_FILL_COLOR,
+      color2: layer.fillColor2 || DEFAULT_SHAPE_FILL_COLOR_2,
+      stop1: layer.fillStop1 ?? DEFAULT_FILL_STOP_1,
+      stop2: layer.fillStop2 ?? DEFAULT_FILL_STOP_2,
+      angle: layer.gradientAngle ?? 45,
+      imageSrc: layer.imageSrc || "",
+      imageFit: layer.imageFit || "cover",
+    };
+  }
+
+  function saveFillPreset(layer: TextLayer | ShapeLayer) {
+    const preset = buildFillPreset(layer);
+    setFillPresets((prev) => [preset, ...prev]);
+    toast.success("Preset salvo.");
+  }
+
+  function applyFillPreset(layerId: string, preset: FillPreset) {
+    updateLayer(layerId, (layer) => {
+      if (layer.type !== "shape" && layer.type !== "text") return layer;
+      const fillMode = preset.mode === "image" && !preset.imageSrc ? "solid" : preset.mode;
+      if (layer.type === "text") {
+        return {
+          ...layer,
+          fillMode,
+          fillColor: preset.color1,
+          fillColor2: preset.color2,
+          fillStop1: preset.stop1,
+          fillStop2: preset.stop2,
+          gradientAngle: preset.angle,
+          imageSrc: preset.imageSrc,
+          imageFit: preset.imageFit,
+          color: preset.color1,
+        };
+      }
+      return {
+        ...layer,
+        fillMode,
+        fillColor: preset.color1,
+        fillColor2: preset.color2,
+        fillStop1: preset.stop1,
+        fillStop2: preset.stop2,
+        gradientAngle: preset.angle,
+        imageSrc: preset.imageSrc,
+        imageFit: preset.imageFit,
+      };
+    });
+  }
+
+  function removeFillPreset(id: string) {
+    setFillPresets((prev) => prev.filter((preset) => preset.id !== id));
+  }
+
+  function getPresetPreviewStyle(preset: FillPreset): React.CSSProperties {
+    if (preset.mode === "solid") {
+      return { background: preset.color1 };
+    }
+    if (preset.mode === "linear") {
+      return {
+        backgroundImage: `linear-gradient(${preset.angle}deg, ${preset.color1} ${preset.stop1}%, ${preset.color2} ${preset.stop2}%)`,
+      };
+    }
+    if (preset.mode === "radial") {
+      return {
+        backgroundImage: `radial-gradient(circle at center, ${preset.color1} ${preset.stop1}%, ${preset.color2} ${preset.stop2}%)`,
+      };
+    }
+    if (preset.imageSrc) {
+      return {
+        backgroundImage: `url(${preset.imageSrc})`,
+        backgroundSize: preset.imageFit === "cover" ? "cover" : "contain",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      };
+    }
+    return { background: preset.color1 };
+  }
+
   function resetAll() {
     setDoc(DEFAULT_DOC);
-    setSelectedId(null);
+    clearSelection();
     setEditingId(null);
     editingSnapshotRef.current = "";
     setColorHistory([]);
@@ -1395,11 +2541,12 @@ function startTextEditing(layer: TextLayer) {
     if (!node) return;
 
     const prevSelected = selectedId;
-    setSelectedId(null);
+    const prevSelectedIds = selectedIds;
+    clearSelection();
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
     try {
-      toast.message("Gerando PNGâ€¦");
+      toast.message("Gerando PNG…");
       const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 2 });
       const a = document.createElement("a");
       a.href = dataUrl;
@@ -1412,13 +2559,45 @@ function startTextEditing(layer: TextLayer) {
       console.error(error);
       toast.error("Falha ao exportar PNG.");
     } finally {
-      setSelectedId(prevSelected);
+      setSelection(prevSelectedIds, prevSelected);
     }
   }
 
-  function printPdf() {
-    setSelectedId(null);
-    window.print();
+  async function exportLayersPng() {
+    const page = pageRef.current;
+    if (!page) return;
+
+    const prevSelected = selectedId;
+    const prevSelectedIds = selectedIds;
+    clearSelection();
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+    try {
+      const layers = doc.layers.filter((layer) => layer.visible);
+      if (!layers.length) {
+        toast.message("Sem camadas para exportar.");
+        return;
+      }
+      toast.message("Exportando camadas...");
+      for (const layer of layers) {
+        const node = page.querySelector(`[data-layer-id=\"${layer.id}\"]`) as HTMLElement | null;
+        if (!node) continue;
+        const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 2 });
+        const filename = `${sanitizeFilename(layer.name || layer.id)}.png`;
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      toast.success("Camadas exportadas.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Falha ao exportar camadas.");
+    } finally {
+      setSelection(prevSelectedIds, prevSelected);
+    }
   }
 
   function exportJson() {
@@ -1446,11 +2625,11 @@ function startTextEditing(layer: TextLayer) {
       const parsed = JSON.parse(raw) as unknown;
       const normalized = normalizeDocV1(parsed);
       if (!normalized) {
-        toast.error("Arquivo invÃ¡lido.");
+        toast.error("Arquivo inválido.");
         return;
       }
       setDoc(normalized);
-      setSelectedId(null);
+      clearSelection();
       toast.success("Importado.");
     } catch (error) {
       console.error(error);
@@ -1487,15 +2666,57 @@ function startTextEditing(layer: TextLayer) {
         }
       }
 
+      const activeIds = selectedIds.length ? selectedIds : selectedId ? [selectedId] : [];
+      if (!activeIds.length) return;
+
+      if (isModifier && e.key.toLowerCase() === "d") {
+        e.preventDefault();
+        duplicateLayers(activeIds);
+        return;
+      }
+      if (isModifier && e.key.toLowerCase() === "g") {
+        e.preventDefault();
+        if (e.shiftKey) {
+          ungroupSelectedLayers(activeIds);
+        } else {
+          groupSelectedLayers(activeIds);
+        }
+        return;
+      }
+      if (isModifier && e.key.toLowerCase() === "l") {
+        e.preventDefault();
+        toggleLockSelected(activeIds);
+        return;
+      }
+
       if (e.key === "Delete" || e.key === "Backspace") {
-        if (!selectedId) return;
-        deleteLayer(selectedId);
+        e.preventDefault();
+        deleteLayers(activeIds);
+        return;
+      }
+
+      const step = e.shiftKey ? 10 : 1;
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        moveLayersBy(activeIds, 0, -step);
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        moveLayersBy(activeIds, 0, step);
+      }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        moveLayersBy(activeIds, -step, 0);
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        moveLayersBy(activeIds, step, 0);
       }
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [selectedId]);
+  }, [selectedId, selectedIds, doc.layers]);
 
   useEffect(() => {
     const node = stageRef.current;
@@ -1771,10 +2992,10 @@ function startTextEditing(layer: TextLayer) {
 
                   <div className="handout-toolbar-group">
                     <ColorPicker
-                      value={textLayer.color}
+                      value={textLayer.fillColor || textLayer.color}
                       onValueChange={(value) => {
                         updateLayer(textLayer.id, (p) =>
-                          p.type === "text" ? { ...p, color: value } : p,
+                          p.type === "text" ? { ...p, color: value, fillColor: value } : p,
                         );
                         recordColor(value);
                       }}
@@ -1870,15 +3091,6 @@ function startTextEditing(layer: TextLayer) {
               <div className="handout-sidebar-actions">
                 <button
                   type="button"
-                  className="handout-sidebar-toggle"
-                  aria-label={sidebarCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
-                  title={sidebarCollapsed ? "Expandir barra lateral" : "Recolher barra lateral"}
-                  onClick={() => setSidebarCollapsed((prev) => !prev)}
-                >
-                  {sidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-                </button>
-                <button
-                  type="button"
                   className={`handout-sidebar-action ${sidebarTab === "text" ? "is-active" : ""}`}
                   onClick={() => { setSidebarTab("text"); setSidebarCollapsed(false); }}
                   aria-pressed={sidebarTab === "text"}
@@ -1894,6 +3106,15 @@ function startTextEditing(layer: TextLayer) {
                 >
                   <ImageIcon className="h-5 w-5" />
                   <span>Assets</span>
+                </button>
+                <button
+                  type="button"
+                  className={`handout-sidebar-action ${sidebarTab === "shapes" ? "is-active" : ""}`}
+                  onClick={() => { setSidebarTab("shapes"); setSidebarCollapsed(false); }}
+                  aria-pressed={sidebarTab === "shapes"}
+                >
+                  <Square className="h-5 w-5" />
+                  <span>Formas</span>
                 </button>
                 <button
                   type="button"
@@ -1981,8 +3202,126 @@ function startTextEditing(layer: TextLayer) {
                         e.currentTarget.value = "";
                       }}
                     />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => assetFileRef.current?.click()}
+                      className="w-full gap-2"
+                    >
+                      <Upload className="h-4 w-4" />
+                      Salvar na biblioteca
+                    </Button>
+                    <input
+                      ref={assetFileRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      className="hidden"
+                      onChange={(e) => {
+                        const files = e.target.files;
+                        if (files && files.length) void addAssets(files);
+                        e.currentTarget.value = "";
+                      }}
+                    />
                     <div className="handout-panel-hint">
                       Arraste imagens direto para o canvas ou use o botao acima.
+                    </div>
+                    {assetLibrary.length > 0 ? (
+                      <div className="handout-asset-grid">
+                        {assetLibrary.map((asset) => (
+                          <div key={asset.id} className="handout-asset-card">
+                            <button
+                              type="button"
+                              className="handout-asset-preview"
+                              onClick={() => void addAssetToCanvas(asset)}
+                              title="Adicionar ao canvas"
+                            >
+                              <img src={asset.src} alt={asset.name} />
+                            </button>
+                            <div className="handout-asset-meta">
+                              <span className="handout-asset-name" title={asset.name}>
+                                {asset.name}
+                              </span>
+                              <Button
+                                type="button"
+                                size="icon"
+                                variant="ghost"
+                                aria-label="Remover asset"
+                                onClick={() => removeAsset(asset.id)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="handout-panel-hint">Sem assets salvos.</div>
+                    )}
+                  </div>
+                )}
+
+                {sidebarTab === "shapes" && (
+                  <div className="handout-panel-section">
+                    <div className="handout-panel-title">Formas</div>
+                    <div className="handout-shape-grid">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="handout-shape-button"
+                        onClick={() => addShape("rect")}
+                      >
+                        <Square className="h-4 w-4" />
+                        Retângulo
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="handout-shape-button"
+                        onClick={() => addShape("ellipse")}
+                      >
+                        <Circle className="h-4 w-4" />
+                        Círculo
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="handout-shape-button"
+                        onClick={() => addShape("triangle")}
+                      >
+                        <Triangle className="h-4 w-4" />
+                        Triângulo
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="handout-shape-button"
+                        onClick={() => addShape("diamond")}
+                      >
+                        <Square className="h-4 w-4 rotate-45" />
+                        Diamante
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="handout-shape-button"
+                        onClick={() => addShape("hexagon")}
+                      >
+                        <Square className="h-4 w-4" />
+                        Hexágono
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="handout-shape-button"
+                        onClick={() => addShape("star")}
+                      >
+                        <Star className="h-4 w-4" />
+                        Estrela
+                      </Button>
+                    </div>
+                    <div className="handout-panel-hint">
+                      Escolha uma forma e personalize o preenchimento nas propriedades.
                     </div>
                   </div>
                 )}
@@ -2064,8 +3403,32 @@ function startTextEditing(layer: TextLayer) {
                       />
                     </div>
                     </div>
+                  <div className="handout-panel-card">
+                    <div className="grid gap-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="grid gap-0.5">
+                          <div className="text-sm font-medium">Snapping</div>
+                          <div className="text-xs text-muted-foreground">Guias de alinhamento</div>
+                        </div>
+                        <Switch checked={snapEnabled} onCheckedChange={(checked) => setSnapEnabled(checked)} />
+                      </div>
+                      <div className="grid gap-2">
+                        <Label>Tolerancia (px)</Label>
+                        <Input
+                          type="number"
+                          min={2}
+                          max={30}
+                          value={snapTolerance}
+                          onChange={(event) =>
+                            setSnapTolerance(clamp(Number(event.target.value), 2, 30))
+                          }
+                          disabled={!snapEnabled}
+                        />
+                      </div>
+                    </div>
                   </div>
-                )}
+                </div>
+              )}
 
                 {sidebarTab === "layers" && (
                   <div className="handout-panel-section">
@@ -2077,7 +3440,7 @@ function startTextEditing(layer: TextLayer) {
 
                       {layersForList.map((layer, idxFromTop) => {
                         const realIdx = doc.layers.length - 1 - idxFromTop;
-                        const isSelected = layer.id === selectedId;
+                        const isSelected = selectedIds.includes(layer.id);
                         const canMoveForward = realIdx < doc.layers.length - 1;
                         const canMoveBackward = realIdx > 0;
 
@@ -2086,14 +3449,16 @@ function startTextEditing(layer: TextLayer) {
                             <button
                               type="button"
                               className="handout-layer-main"
-                              onClick={() => {
-                                setSelectedId(layer.id);
+                              onClick={(event) => {
+                                selectLayerFromPointer(layer, event.shiftKey);
                                 setSidebarTab("props");
                               }}
                             >
                               <span className="handout-layer-icon">
                                 {layer.type === "image" ? (
                                   <ImageIcon className="h-4 w-4" />
+                                ) : layer.type === "shape" ? (
+                                  <Square className="h-4 w-4" />
                                 ) : (
                                   <Type className="h-4 w-4" />
                                 )}
@@ -2120,7 +3485,7 @@ function startTextEditing(layer: TextLayer) {
                                 variant="ghost"
                                 disabled={!canMoveBackward}
                                 onClick={() => moveLayerOneStep(layer.id, -1)}
-                                aria-label="Enviar para trÃ¡s"
+                                aria-label="Enviar para trás"
                               >
                                 <ChevronDown className="h-4 w-4" />
                               </Button>
@@ -2169,13 +3534,98 @@ function startTextEditing(layer: TextLayer) {
 
                       {selectedLayer && (
                         <>
+                          {selectedIds.length > 1 && (
+                            <div className="grid gap-3 rounded-md border border-input p-3">
+                              <div className="text-sm font-medium">Selecao</div>
+                              <div className="text-xs text-muted-foreground">
+                                {selectedIds.length} camadas selecionadas
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => groupSelectedLayers(selectedIds)}
+                                >
+                                  Agrupar
+                                </Button>
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => ungroupSelectedLayers(selectedIds)}
+                                >
+                                  Desagrupar
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+
+                          {selectedIds.length === 1 && selectedLayer.groupId && (
+                            <div className="grid gap-3 rounded-md border border-input p-3">
+                              <div className="text-sm font-medium">Grupo</div>
+                              <div className="flex flex-wrap gap-2">
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => selectGroupById(selectedLayer.groupId)}
+                                >
+                                  Selecionar grupo
+                                </Button>
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => ungroupSelectedLayers([selectedLayer.id])}
+                                >
+                                  Desagrupar
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="grid gap-3 rounded-md border border-input p-3">
+                            <div className="text-sm font-medium">Clipping</div>
+                            <div className="grid gap-2">
+                              <Label>Usar mascara</Label>
+                              <Select
+                                value={selectedLayer.clipToId ?? "none"}
+                                onValueChange={(value) =>
+                                  updateLayer(selectedLayer.id, (p) => ({
+                                    ...p,
+                                    clipToId: value === "none" ? null : value,
+                                  }))
+                                }
+                              >
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="none">Sem mascara</SelectItem>
+                                  {doc.layers
+                                    .filter(
+                                      (layer) =>
+                                        layer.id !== selectedLayer.id &&
+                                        (layer.type === "shape" || layer.type === "text"),
+                                    )
+                                    .map((layer) => (
+                                      <SelectItem key={layer.id} value={layer.id}>
+                                        {layer.name || layer.id}
+                                      </SelectItem>
+                                    ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+
                           {selectedLayer.type === "image" && (
                             <div className="grid gap-3 rounded-md border border-input p-3">
                               <div className="text-sm font-medium">Imagem</div>
 
                               <div className="flex items-center justify-between gap-3 rounded-md border border-input px-3 py-2">
                                 <div className="grid gap-0.5">
-                                  <div className="text-sm font-medium">Manter proporÃ§Ã£o</div>
+                                  <div className="text-sm font-medium">Manter proporção</div>
                                   <div className="text-xs text-muted-foreground">Ao redimensionar</div>
                                 </div>
                                 <Switch
@@ -2188,6 +3638,432 @@ function startTextEditing(layer: TextLayer) {
                                 />
                               </div>
                             </div>
+                          )}
+
+                          {selectedLayer.type === "shape" && (
+                            <>
+                              <div className="grid gap-3 rounded-md border border-input p-3">
+                                <div className="text-sm font-medium">Forma</div>
+                                <div className="grid gap-2">
+                                  <Label>Tipo</Label>
+                                  <Select
+                                    value={selectedLayer.shape}
+                                    onValueChange={(value) => {
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "shape"
+                                          ? {
+                                              ...p,
+                                              shape: value as ShapeKind,
+                                              cornerRadius: value === "rect" ? p.cornerRadius : 0,
+                                            }
+                                          : p,
+                                      );
+                                    }}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {SHAPE_KIND_VALUES.map((kind) => (
+                                        <SelectItem key={kind} value={kind}>
+                                          {SHAPE_KIND_LABELS[kind]}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                                {selectedLayer.shape === "rect" && (
+                                  <div className="grid gap-2">
+                                    <Label>Raio da borda</Label>
+                                    <Input
+                                      type="number"
+                                      min={0}
+                                      max={50}
+                                      value={selectedLayer.cornerRadius}
+                                      onChange={(e) => {
+                                        const value = clamp(Number(e.target.value), 0, 50);
+                                        updateLayer(selectedLayer.id, (p) =>
+                                          p.type === "shape" ? { ...p, cornerRadius: value } : p,
+                                        );
+                                      }}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="grid gap-3 rounded-md border border-input p-3">
+                                <div className="text-sm font-medium">Preenchimento</div>
+                                <div className="grid gap-2">
+                                  <Label>Modo</Label>
+                                  <Select
+                                    value={selectedLayer.fillMode}
+                                    onValueChange={(value) => {
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "shape"
+                                          ? { ...p, fillMode: value as ShapeFillMode }
+                                          : p,
+                                      );
+                                    }}
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {SHAPE_FILL_MODE_VALUES.map((mode) => (
+                                        <SelectItem key={mode} value={mode}>
+                                          {SHAPE_FILL_MODE_LABELS[mode]}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                                {selectedLayer.fillMode !== "image" && (
+                                  <div
+                                    className={`grid gap-3 ${
+                                      selectedLayer.fillMode === "solid" ? "" : "grid-cols-2"
+                                    }`}
+                                  >
+                                    <div className="grid gap-2">
+                                      <Label>{selectedLayer.fillMode === "solid" ? "Cor" : "Cor 1"}</Label>
+                                      <ColorPicker
+                                        value={selectedLayer.fillColor}
+                                        onValueChange={(value) => {
+                                          updateLayer(selectedLayer.id, (p) =>
+                                            p.type === "shape" ? { ...p, fillColor: value } : p,
+                                          );
+                                          recordColor(value);
+                                        }}
+                                        suggestions={COLOR_SUGGESTIONS}
+                                        history={colorHistory}
+                                        ariaLabel="Cor primaria"
+                                        className="handout-color-inline"
+                                      />
+                                    </div>
+
+                                    {selectedLayer.fillMode !== "solid" && (
+                                      <div className="grid gap-2">
+                                        <Label>Cor 2</Label>
+                                        <ColorPicker
+                                          value={selectedLayer.fillColor2}
+                                          onValueChange={(value) => {
+                                            updateLayer(selectedLayer.id, (p) =>
+                                              p.type === "shape" ? { ...p, fillColor2: value } : p,
+                                            );
+                                            recordColor(value);
+                                          }}
+                                          suggestions={COLOR_SUGGESTIONS}
+                                          history={colorHistory}
+                                          ariaLabel="Cor secundaria"
+                                          className="handout-color-inline"
+                                        />
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+
+                                {(selectedLayer.fillMode === "linear" || selectedLayer.fillMode === "radial") && (
+                                  <GradientStopEditor
+                                    stop1={selectedLayer.fillStop1}
+                                    stop2={selectedLayer.fillStop2}
+                                    color1={selectedLayer.fillColor}
+                                    color2={selectedLayer.fillColor2}
+                                    angle={selectedLayer.gradientAngle}
+                                    mode={selectedLayer.fillMode}
+                                    onStop1Change={(value) =>
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "shape" ? { ...p, fillStop1: value } : p,
+                                      )
+                                    }
+                                    onStop2Change={(value) =>
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "shape" ? { ...p, fillStop2: value } : p,
+                                      )
+                                    }
+                                    onAngleChange={(value) =>
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "shape" ? { ...p, gradientAngle: value } : p,
+                                      )
+                                    }
+                                  />
+                                )}
+
+                                {selectedLayer.fillMode === "image" && (
+                                  <div className="grid gap-2">
+                                    <Button
+                                      type="button"
+                                      variant="outline"
+                                      onClick={() => shapeImageFileRef.current?.click()}
+                                    >
+                                      <Upload className="h-4 w-4" />
+                                      <span>Selecionar imagem</span>
+                                    </Button>
+                                    <input
+                                      ref={shapeImageFileRef}
+                                      type="file"
+                                      accept="image/*"
+                                      className="hidden"
+                                      onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) void setShapeFillImage(selectedLayer.id, file);
+                                        e.currentTarget.value = "";
+                                      }}
+                                    />
+                                    {!selectedLayer.imageSrc && (
+                                      <div className="text-xs text-muted-foreground">
+                                        Nenhuma imagem selecionada.
+                                      </div>
+                                    )}
+                                    <div className="grid gap-2">
+                                      <Label>Ajuste</Label>
+                                      <Select
+                                        value={selectedLayer.imageFit}
+                                        onValueChange={(value) => {
+                                          updateLayer(selectedLayer.id, (p) =>
+                                            p.type === "shape"
+                                              ? { ...p, imageFit: value as ShapeImageFit }
+                                              : p,
+                                          );
+                                        }}
+                                      >
+                                        <SelectTrigger>
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          {SHAPE_IMAGE_FIT_VALUES.map((mode) => (
+                                            <SelectItem key={mode} value={mode}>
+                                              {SHAPE_IMAGE_FIT_LABELS[mode]}
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+
+                            </>
+                          )}
+
+                          {selectedLayer.type === "text" && (
+                            <>
+                              <div className="grid gap-3 rounded-md border border-input p-3">
+                                <div className="text-sm font-medium">Preenchimento do texto</div>
+                                <div className="grid gap-2">
+                                  <Label>Modo</Label>
+                                  <Select
+                                    value={selectedLayer.fillMode}
+                                    onValueChange={(value) =>
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "text" ? { ...p, fillMode: value as ShapeFillMode } : p,
+                                      )
+                                    }
+                                  >
+                                    <SelectTrigger>
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      {SHAPE_FILL_MODE_VALUES.map((mode) => (
+                                        <SelectItem key={mode} value={mode}>
+                                          {SHAPE_FILL_MODE_LABELS[mode]}
+                                        </SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                                {selectedLayer.fillMode !== "image" && (
+                                  <div
+                                    className={`grid gap-3 ${
+                                      selectedLayer.fillMode === "solid" ? "" : "grid-cols-2"
+                                    }`}
+                                  >
+                                    <div className="grid gap-2">
+                                      <Label>{selectedLayer.fillMode === "solid" ? "Cor" : "Cor 1"}</Label>
+                                      <ColorPicker
+                                        value={selectedLayer.fillColor}
+                                        onValueChange={(value) => {
+                                          updateLayer(selectedLayer.id, (p) =>
+                                            p.type === "text" ? { ...p, fillColor: value, color: value } : p,
+                                          );
+                                          recordColor(value);
+                                        }}
+                                        suggestions={COLOR_SUGGESTIONS}
+                                        history={colorHistory}
+                                        ariaLabel="Cor primaria"
+                                        className="handout-color-inline"
+                                      />
+                                    </div>
+
+                                    {selectedLayer.fillMode !== "solid" && (
+                                      <div className="grid gap-2">
+                                        <Label>Cor 2</Label>
+                                        <ColorPicker
+                                          value={selectedLayer.fillColor2}
+                                          onValueChange={(value) => {
+                                            updateLayer(selectedLayer.id, (p) =>
+                                              p.type === "text" ? { ...p, fillColor2: value } : p,
+                                            );
+                                            recordColor(value);
+                                          }}
+                                          suggestions={COLOR_SUGGESTIONS}
+                                          history={colorHistory}
+                                          ariaLabel="Cor secundaria"
+                                          className="handout-color-inline"
+                                        />
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+
+                                {(selectedLayer.fillMode === "linear" || selectedLayer.fillMode === "radial") && (
+                                  <GradientStopEditor
+                                    stop1={selectedLayer.fillStop1}
+                                    stop2={selectedLayer.fillStop2}
+                                    color1={selectedLayer.fillColor}
+                                    color2={selectedLayer.fillColor2}
+                                    angle={selectedLayer.gradientAngle}
+                                    mode={selectedLayer.fillMode}
+                                    onStop1Change={(value) =>
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "text" ? { ...p, fillStop1: value } : p,
+                                      )
+                                    }
+                                    onStop2Change={(value) =>
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "text" ? { ...p, fillStop2: value } : p,
+                                      )
+                                    }
+                                    onAngleChange={(value) =>
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "text" ? { ...p, gradientAngle: value } : p,
+                                      )
+                                    }
+                                  />
+                                )}
+
+                                {selectedLayer.fillMode === "image" && (
+                                  <div className="grid gap-2">
+                                    <Button
+                                      type="button"
+                                      variant="outline"
+                                      onClick={() => textImageFileRef.current?.click()}
+                                    >
+                                      <Upload className="h-4 w-4" />
+                                      <span>Selecionar imagem</span>
+                                    </Button>
+                                    <input
+                                      ref={textImageFileRef}
+                                      type="file"
+                                      accept="image/*"
+                                      className="hidden"
+                                      onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) void setTextFillImage(selectedLayer.id, file);
+                                        e.currentTarget.value = "";
+                                      }}
+                                    />
+                                    {!selectedLayer.imageSrc && (
+                                      <div className="text-xs text-muted-foreground">
+                                        Nenhuma imagem selecionada.
+                                      </div>
+                                    )}
+                                    <div className="grid gap-2">
+                                      <Label>Ajuste</Label>
+                                      <Select
+                                        value={selectedLayer.imageFit}
+                                        onValueChange={(value) => {
+                                          updateLayer(selectedLayer.id, (p) =>
+                                            p.type === "text" ? { ...p, imageFit: value as ShapeImageFit } : p,
+                                          );
+                                        }}
+                                      >
+                                        <SelectTrigger>
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          {SHAPE_IMAGE_FIT_VALUES.map((mode) => (
+                                            <SelectItem key={mode} value={mode}>
+                                              {SHAPE_IMAGE_FIT_LABELS[mode]}
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="grid gap-3 rounded-md border border-input p-3">
+                                <div className="text-sm font-medium">Texto avancado</div>
+                                <div className="grid gap-2">
+                                  <Label>Espacamento (px)</Label>
+                                  <Input
+                                    type="number"
+                                    min={-5}
+                                    max={20}
+                                    value={selectedLayer.letterSpacing}
+                                    onChange={(e) => {
+                                      const value = clamp(Number(e.target.value), -5, 20);
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "text" ? { ...p, letterSpacing: value } : p,
+                                      );
+                                    }}
+                                  />
+                                </div>
+                                <div className="grid gap-2">
+                                  <Label>Altura da linha</Label>
+                                  <Input
+                                    type="number"
+                                    min={0.6}
+                                    max={3}
+                                    step={0.1}
+                                    value={selectedLayer.lineHeight}
+                                    onChange={(e) => {
+                                      const value = clamp(Number(e.target.value), 0.6, 3);
+                                      updateLayer(selectedLayer.id, (p) =>
+                                        p.type === "text" ? { ...p, lineHeight: value } : p,
+                                      );
+                                    }}
+                                  />
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                  <div className="grid gap-2">
+                                    <Label>Contorno (px)</Label>
+                                    <Input
+                                      type="number"
+                                      min={0}
+                                      max={12}
+                                      value={selectedLayer.strokeWidth}
+                                      onChange={(e) => {
+                                        const value = clamp(Number(e.target.value), 0, 12);
+                                        updateLayer(selectedLayer.id, (p) =>
+                                          p.type === "text" ? { ...p, strokeWidth: value } : p,
+                                        );
+                                      }}
+                                    />
+                                  </div>
+                                  <div className="grid gap-2">
+                                    <Label>Cor do contorno</Label>
+                                    <ColorPicker
+                                      value={selectedLayer.strokeColor}
+                                      onValueChange={(value) => {
+                                        updateLayer(selectedLayer.id, (p) =>
+                                          p.type === "text" ? { ...p, strokeColor: value } : p,
+                                        );
+                                        recordColor(value);
+                                      }}
+                                      suggestions={COLOR_SUGGESTIONS}
+                                      history={colorHistory}
+                                      ariaLabel="Cor do contorno"
+                                      className="handout-color-inline"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                            </>
                           )}
                         </>
                         )}
@@ -2571,10 +4447,9 @@ function startTextEditing(layer: TextLayer) {
                         <Download className="h-4 w-4" />
                         Baixar PNG
                       </Button>
-
-                      <Button type="button" variant="outline" onClick={printPdf} className="gap-2">
-                        <Printer className="h-4 w-4" />
-                        Imprimir / Salvar PDF
+                      <Button type="button" variant="outline" onClick={() => void exportLayersPng()} className="gap-2">
+                        <Download className="h-4 w-4" />
+                        PNG por camada
                       </Button>
 
                       <div className="grid grid-cols-2 gap-2">
@@ -2648,13 +4523,30 @@ function startTextEditing(layer: TextLayer) {
                 }}
                 onMouseDown={(e) => {
                   if (e.target === e.currentTarget) {
-                    setSelectedId(null);
+                    clearSelection();
                     finishTextEditing();
                   }
                 }}
               >
+                {snapGuides.length > 0 && (
+                  <div className="handout-snap-guides">
+                    {snapGuides.map((guide, idx) => (
+                      <div
+                        key={`${guide.axis}-${guide.value}-${idx}`}
+                        className={`handout-snap-guide ${guide.axis === "x" ? "is-vertical" : "is-horizontal"}`}
+                        style={
+                          guide.axis === "x"
+                            ? { left: `${guide.value}px` }
+                            : { top: `${guide.value}px` }
+                        }
+                      />
+                    ))}
+                  </div>
+                )}
+
                 {doc.layers.map((layer) => {
-                  const isSelected = layer.id === selectedId;
+                  const isSelected = selectedIds.includes(layer.id);
+                  const isPrimarySelected = layer.id === selectedId;
                   const isEditing = editingId === layer.id;
                   const isRotated = Math.abs(layer.rotation) > 0.01;
                   if (!layer.visible) return null;
@@ -2662,24 +4554,48 @@ function startTextEditing(layer: TextLayer) {
                   const layerTransform = `rotate(${layer.rotation}deg) scaleX(${layer.flipX ? -1 : 1}) scaleY(${layer.flipY ? -1 : 1})`;
                   const isImageLayer = layer.type === "image";
                   const isTextLayer = layer.type === "text";
-                  const layerEffectStyle = isImageLayer || isTextLayer ? undefined : getLayerEffectStyle(layer.effects);
+                  const isShapeLayer = layer.type === "shape";
+                  const shapeLayer = isShapeLayer ? (layer as ShapeLayer) : null;
+                  const isManipulatingLayer =
+                    manipulatingId === layer.id || (manipulatingId === "group" && isSelected);
+                  const suppressEffects = isManipulatingLayer && !isEditing;
+                  const layerBlendMode = suppressEffects ? "normal" : layer.blendMode;
+                  const layerEffectStyle =
+                    isImageLayer || isTextLayer || isShapeLayer ? undefined : getLayerEffectStyle(layer.effects);
                   const innerShadowEnabled =
                     layer.effects.innerShadow.enabled && layer.effects.innerShadow.opacity > 0;
                   const innerShadowId = innerShadowEnabled ? `handout-inner-shadow-${layer.id}` : null;
                   const imageEffectStyle = isImageLayer ? getImageEffectStyle(layer.effects) : null;
-                  const textEffectStyle = isTextLayer ? getTextEffectStyle(layer.effects) : null;
-                  const showInnerShadow = Boolean(isImageLayer && innerShadowId);
-                  const showTextInnerShadow = Boolean(isTextLayer && innerShadowId);
+                  const textEffectStyle = !suppressEffects && isTextLayer ? getTextEffectStyle(layer.effects) : null;
+                  const shapeEffectStyle = !suppressEffects && isShapeLayer ? getTextEffectStyle(layer.effects) : null;
+                  const shapeFill = shapeLayer ? getShapeFill(shapeLayer, shapeLayer.id) : null;
+                  const showInnerShadow = Boolean(isImageLayer && innerShadowId && !suppressEffects);
+                  const showTextInnerShadow = Boolean(isTextLayer && innerShadowId && !suppressEffects);
+                  const showShapeInnerShadow = Boolean(isShapeLayer && innerShadowId && !suppressEffects);
                   const imageFilterStyle = isImageLayer
-                    ? ({ filter: imageEffectStyle?.filter ?? "none" } as React.CSSProperties)
+                    ? ({
+                        filter: suppressEffects ? "none" : imageEffectStyle?.filter ?? "none",
+                      } as React.CSSProperties)
                     : undefined;
                   const innerShadowFilterStyle = showInnerShadow
                     ? ({ filter: `url(#${innerShadowId})` } as React.CSSProperties)
                     : undefined;
+                  const shapeFilterStyle = shapeEffectStyle
+                    ? ({ filter: shapeEffectStyle.filter } as React.CSSProperties)
+                    : undefined;
                   const effectNeedsOverflow = layer.effects.dropShadow.enabled || layer.effects.blur > 0;
+                  const clipLayer =
+                    layer.clipToId && layer.clipToId !== layer.id
+                      ? doc.layers.find((item) => item.id === layer.clipToId)
+                      : null;
+                  const clipMaskStyle =
+                    clipLayer && clipLayer.visible && (clipLayer.type === "shape" || clipLayer.type === "text")
+                      ? getClipMaskStyle(layer, clipLayer)
+                      : null;
                   const layerInnerStyle = {
                     opacity: layer.opacity,
                     overflow: effectNeedsOverflow ? "visible" : undefined,
+                    ...(clipMaskStyle ?? {}),
                   } as const;
                   const labelIsBottom = layer.y < 40;
                   const labelIsRight = layer.x + 240 > derivedPage.width;
@@ -2698,7 +4614,7 @@ function startTextEditing(layer: TextLayer) {
                     border: "2px solid rgba(255,255,255,0.85)",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
                   } as const;
-                  const canResize = isSelected && !layer.locked && !isEditing;
+                  const canResize = isPrimarySelected && !layer.locked && !isEditing && !isGroupSelection;
                   const resizeHandleStyles =
                     canResize
                       ? {
@@ -2716,14 +4632,24 @@ function startTextEditing(layer: TextLayer) {
                       size={{ width: layer.width, height: layer.height }}
                       position={{ x: layer.x, y: layer.y }}
                       scale={doc.zoom}
-                      disableDragging={layer.locked || isEditing}
+                      data-layer-id={layer.id}
+                      disableDragging={layer.locked || isEditing || (isGroupSelection && isSelected)}
                       enableResizing={canResize}
                       resizeHandleStyles={resizeHandleStyles}
                       lockAspectRatio={layer.type === "image" ? layer.keepAspectRatio : false}
+                      onDragStart={() => setManipulatingId(layer.id)}
+                      onDrag={(_, data) => {
+                        if (!snapEnabled) return;
+                        const result = computeSnapResult(
+                          { x: data.x, y: data.y, width: layer.width, height: layer.height },
+                          [layer.id],
+                        );
+                        scheduleSnapGuides(result.guides);
+                      }}
                       onMouseDown={(e) => {
                         e.stopPropagation();
                         if (editingId && editingId !== layer.id) finishTextEditing();
-                        setSelectedId(layer.id);
+                        selectLayerFromPointer(layer, e.shiftKey);
                       }}
                       onDoubleClick={(e) => {
                         e.stopPropagation();
@@ -2734,26 +4660,49 @@ function startTextEditing(layer: TextLayer) {
                         setSidebarTab("props");
                       }}
                       onDragStop={(_, data) => {
-                        updateLayer(layer.id, (p) => ({ ...p, x: data.x, y: data.y }));
+                        const result = computeSnapResult(
+                          { x: data.x, y: data.y, width: layer.width, height: layer.height },
+                          [layer.id],
+                        );
+                        updateLayer(layer.id, (p) => ({ ...p, x: result.x, y: result.y }));
+                        clearSnapGuides();
+                        setManipulatingId(null);
+                      }}
+                      onResizeStart={() => setManipulatingId(layer.id)}
+                      onResize={(_, __, ref, ___, position) => {
+                        if (!snapEnabled) return;
+                        const nextWidth = Number(ref.style.width.replace("px", ""));
+                        const nextHeight = Number(ref.style.height.replace("px", ""));
+                        const result = computeSnapResult(
+                          { x: position.x, y: position.y, width: nextWidth, height: nextHeight },
+                          [layer.id],
+                        );
+                        scheduleSnapGuides(result.guides);
                       }}
                       onResizeStop={(_, __, ref, ___, position) => {
                         const nextWidth = Number(ref.style.width.replace("px", ""));
                         const nextHeight = Number(ref.style.height.replace("px", ""));
+                        const result = computeSnapResult(
+                          { x: position.x, y: position.y, width: nextWidth, height: nextHeight },
+                          [layer.id],
+                        );
                         updateLayer(layer.id, (p) => ({
                           ...p,
                           width: Math.max(20, nextWidth),
                           height: Math.max(20, nextHeight),
-                          x: position.x,
-                          y: position.y,
+                          x: result.x,
+                          y: result.y,
                         }));
+                        clearSnapGuides();
+                        setManipulatingId(null);
                       }}
-                      style={{ mixBlendMode: layer.blendMode }}
-                      className={`handout-layer ${layer.type === "image" ? "is-image" : "is-text"} ${isSelected ? "is-selected" : ""} ${layer.locked ? "is-locked" : ""} ${isRotated ? "is-rotated" : ""}`}
+                      style={{ mixBlendMode: layerBlendMode }}
+                      className={`handout-layer ${layer.type === "image" ? "is-image" : layer.type === "shape" ? "is-shape" : "is-text"} ${isSelected ? "is-selected" : ""} ${layer.locked ? "is-locked" : ""} ${isRotated ? "is-rotated" : ""} ${isManipulatingLayer ? "is-manipulating" : ""}`}
                     >
-                      {isSelected && !isEditing && (
+                      {isPrimarySelected && !isEditing && (
                         <div className="handout-layer-bounds">
                           <div className={boundsLabelClassName} aria-hidden="true">
-                            {Math.round(layer.width)}x{Math.round(layer.height)} Â· x:{Math.round(layer.x)} y:{Math.round(layer.y)}
+                            {Math.round(layer.width)}x{Math.round(layer.height)} · x:{Math.round(layer.x)} y:{Math.round(layer.y)}
                           </div>
                           <button
                             type="button"
@@ -2794,11 +4743,36 @@ function startTextEditing(layer: TextLayer) {
                                 />
                               ) : null}
                             </div>
+                          ) : layer.type === "shape" && shapeLayer ? (
+                            <>
+                              {showShapeInnerShadow && innerShadowId
+                                ? renderInnerShadowFilter(innerShadowId, layer.effects.innerShadow)
+                                : null}
+                              <svg
+                                className="handout-layer-shape"
+                                viewBox="0 0 100 100"
+                                preserveAspectRatio="none"
+                                style={shapeFilterStyle}
+                                aria-hidden="true"
+                              >
+                                {shapeFill?.defs ? <defs>{shapeFill.defs}</defs> : null}
+                                {renderShapeElement(shapeLayer.shape, shapeLayer.cornerRadius, {
+                                  fill: shapeFill?.fill ?? DEFAULT_SHAPE_FILL_COLOR,
+                                })}
+                                {showShapeInnerShadow && innerShadowId
+                                  ? renderShapeElement(shapeLayer.shape, shapeLayer.cornerRadius, {
+                                      className: "handout-layer-shape-shadow",
+                                      fill: "#000000",
+                                      filterId: innerShadowId,
+                                    })
+                                  : null}
+                              </svg>
+                            </>
                           ) : (
                             (() => {
                               const textStyle = {
                                 fontSize: `${layer.fontSize}px`,
-                                color: layer.color,
+                                color: layer.fillColor || layer.color,
                                 textAlign: layer.align,
                                 fontFamily: FONT_PRESETS[layer.fontPreset].stack,
                                 fontWeight: layer.fontWeight,
@@ -2806,9 +4780,11 @@ function startTextEditing(layer: TextLayer) {
                                 textDecoration: layer.underline ? "underline" : "none",
                                 backgroundColor: layer.backgroundColor,
                                 padding: `${layer.padding}px`,
-                                lineHeight: 1.2,
+                                lineHeight: layer.lineHeight,
+                                letterSpacing: `${layer.letterSpacing}px`,
                                 whiteSpace: "pre-wrap",
                               } as React.CSSProperties;
+                              const textFillStyle = getTextFillStyle(layer);
                               const textDisplayStyle = textEffectStyle
                                 ? ({ ...textStyle, ...textEffectStyle } as React.CSSProperties)
                                 : textStyle;
@@ -2845,7 +4821,9 @@ function startTextEditing(layer: TextLayer) {
                                     : null}
                                   <div className="handout-layer-text-wrap">
                                     <div className="handout-layer-text" style={textDisplayStyle}>
-                                      {layer.text}
+                                      <span className="handout-layer-text-fill" style={textFillStyle}>
+                                        {layer.text}
+                                      </span>
                                     </div>
                                     {showTextInnerShadow && innerShadowId ? (
                                       <div
@@ -2856,7 +4834,9 @@ function startTextEditing(layer: TextLayer) {
                                           filter: `url(#${innerShadowId})`,
                                         }}
                                       >
-                                        {layer.text}
+                                        <span className="handout-layer-text-fill" style={textFillStyle}>
+                                          {layer.text}
+                                        </span>
                                       </div>
                                     ) : null}
                                   </div>
@@ -2869,6 +4849,124 @@ function startTextEditing(layer: TextLayer) {
                     </Rnd>
                   );
                 })}
+
+                {selectionBounds && (
+                  <Rnd
+                    bounds="parent"
+                    size={{ width: selectionBounds.width, height: selectionBounds.height }}
+                    position={{ x: selectionBounds.x, y: selectionBounds.y }}
+                    scale={doc.zoom}
+                    disableDragging={isGroupLocked}
+                    enableResizing={!isGroupLocked}
+                    onDragStart={() => {
+                      if (!selectionBounds) return;
+                      groupDragRef.current = {
+                        ids: selectedLayers.map((layer) => layer.id),
+                        startBounds: { ...selectionBounds },
+                        startLayers: selectedLayers.reduce(
+                          (acc, layer) => {
+                            acc[layer.id] = {
+                              x: layer.x,
+                              y: layer.y,
+                              width: layer.width,
+                              height: layer.height,
+                            };
+                            return acc;
+                          },
+                          {} as Record<string, { x: number; y: number; width: number; height: number }>,
+                        ),
+                      };
+                      setManipulatingId("group");
+                    }}
+                    onDrag={(_, data) => {
+                      const refData = groupDragRef.current;
+                      if (!refData) return;
+                      const snap = computeSnapResult(
+                        {
+                          x: data.x,
+                          y: data.y,
+                          width: refData.startBounds.width,
+                          height: refData.startBounds.height,
+                        },
+                        refData.ids,
+                      );
+                      scheduleSnapGuides(snap.guides);
+                      const dx = snap.x - refData.startBounds.x;
+                      const dy = snap.y - refData.startBounds.y;
+                      const idSet = new Set(refData.ids);
+                      setDoc((prev) => ({
+                        ...prev,
+                        layers: prev.layers.map((layer) => {
+                          if (!idSet.has(layer.id)) return layer;
+                          const start = refData.startLayers[layer.id];
+                          return {
+                            ...layer,
+                            x: start.x + dx,
+                            y: start.y + dy,
+                          };
+                        }),
+                      }));
+                    }}
+                    onDragStop={() => {
+                      clearSnapGuides();
+                      setManipulatingId(null);
+                      groupDragRef.current = null;
+                    }}
+                    onResizeStart={() => {
+                      if (!selectionBounds) return;
+                      groupDragRef.current = {
+                        ids: selectedLayers.map((layer) => layer.id),
+                        startBounds: { ...selectionBounds },
+                        startLayers: selectedLayers.reduce(
+                          (acc, layer) => {
+                            acc[layer.id] = {
+                              x: layer.x,
+                              y: layer.y,
+                              width: layer.width,
+                              height: layer.height,
+                            };
+                            return acc;
+                          },
+                          {} as Record<string, { x: number; y: number; width: number; height: number }>,
+                        ),
+                      };
+                      setManipulatingId("group");
+                    }}
+                    onResize={(_, __, ref, ___, position) => {
+                      const refData = groupDragRef.current;
+                      if (!refData) return;
+                      const nextWidth = Math.max(1, Number(ref.style.width.replace("px", "")));
+                      const nextHeight = Math.max(1, Number(ref.style.height.replace("px", "")));
+                      const scaleX = nextWidth / refData.startBounds.width;
+                      const scaleY = nextHeight / refData.startBounds.height;
+                      const idSet = new Set(refData.ids);
+                      setDoc((prev) => ({
+                        ...prev,
+                        layers: prev.layers.map((layer) => {
+                          if (!idSet.has(layer.id)) return layer;
+                          const start = refData.startLayers[layer.id];
+                          const relX = start.x - refData.startBounds.x;
+                          const relY = start.y - refData.startBounds.y;
+                          return {
+                            ...layer,
+                            x: position.x + relX * scaleX,
+                            y: position.y + relY * scaleY,
+                            width: Math.max(20, start.width * scaleX),
+                            height: Math.max(20, start.height * scaleY),
+                          };
+                        }),
+                      }));
+                    }}
+                    onResizeStop={() => {
+                      clearSnapGuides();
+                      setManipulatingId(null);
+                      groupDragRef.current = null;
+                    }}
+                    className="handout-group-bounds"
+                  >
+                    <div className="handout-group-inner" />
+                  </Rnd>
+                )}
               </div>
             </div>
           </div>
@@ -2905,4 +5003,8 @@ export default function HandoutCanvasApp() {
     </PortalContainerProvider>
   );
 }
+
+
+
+
 

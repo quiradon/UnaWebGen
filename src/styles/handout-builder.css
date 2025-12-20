@@ -1,5 +1,5 @@
 ﻿.handout-builder .handout-builder-app {
-  padding: 16px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -8,7 +8,7 @@
 
 @media (min-width: 768px) {
   .handout-builder .handout-builder-app {
-    padding: 20px;
+    padding: 0;
   }
 }
 
@@ -31,7 +31,7 @@
   display: grid;
   grid-template-columns: 88px minmax(0, 1fr);
   min-height: 0;
-  border-radius: 18px;
+  border-radius: 0 18px 18px 0;
   border: 1px solid hsl(var(--border));
   overflow: hidden;
   background:
@@ -50,6 +50,7 @@
   height: 100%;
   padding: 12px;
   padding-top: calc(12px + var(--handout-topbar-offset, 0px));
+  padding-left: 0;
   border: 1px solid hsl(var(--border));
   border-radius: 0;
   background-color: #20202521;
@@ -70,12 +71,13 @@
 
 .handout-builder .handout-canvas-sidebar {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 0;
+  bottom: 0;
+  left: 0;
   z-index: 30;
   width: min(360px, 90vw);
-  height: calc(100% - 24px);
-  max-height: calc(100% - 24px);
+  height: auto;
+  max-height: none;
   align-self: stretch;
   transition: width 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -84,7 +86,7 @@
   grid-template-columns: 64px;
   width: 64px;
   min-width: 64px;
-  transform: translateX(-4px);
+  transform: translateX(0);
 }
 
 .handout-builder .handout-canvas-sidebar.is-collapsed .handout-sidebar-panel {
@@ -169,7 +171,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
+  padding: 0;
   overflow: auto;
   min-height: 0;
 }
@@ -199,6 +201,156 @@
   border-radius: 14px;
   border: 1px solid hsl(var(--border));
   background: hsl(var(--muted) / 0.2);
+}
+
+.handout-builder .handout-gradient-editor {
+  display: grid;
+  gap: 10px;
+}
+
+.handout-builder .handout-gradient-bar {
+  position: relative;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid hsl(var(--border));
+  cursor: pointer;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.handout-builder .handout-gradient-handle {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  z-index: 1;
+}
+
+.handout-builder .handout-gradient-handle:active {
+  cursor: grabbing;
+}
+
+.handout-builder .handout-shape-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.handout-builder .handout-asset-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.handout-builder .handout-asset-card {
+  border-radius: 12px;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  overflow: hidden;
+  display: grid;
+  gap: 6px;
+}
+
+.handout-builder .handout-asset-preview {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: none;
+  padding: 0;
+  background: hsl(var(--muted) / 0.35);
+  display: block;
+  cursor: pointer;
+}
+
+.handout-builder .handout-asset-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.handout-builder .handout-asset-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 8px 8px;
+}
+
+.handout-builder .handout-asset-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.handout-builder .handout-gradient-preset-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.handout-builder .handout-gradient-preset {
+  height: 24px;
+  border-radius: 999px;
+  border: 1px solid hsl(var(--border));
+  background: transparent;
+  cursor: pointer;
+}
+
+.handout-builder .handout-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.handout-builder .handout-preset-card {
+  border-radius: 12px;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--background));
+  overflow: hidden;
+  display: grid;
+  gap: 6px;
+}
+
+.handout-builder .handout-preset-swatch {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.handout-builder .handout-preset-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 0 8px 8px;
+}
+
+.handout-builder .handout-preset-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.handout-builder .handout-shape-button {
+  justify-content: flex-start;
+  gap: 8px;
+  height: 42px;
+  font-weight: 600;
 }
 
 .handout-builder .handout-effects-panel {
@@ -794,7 +946,7 @@
   justify-content: center;
   overflow: auto;
   position: relative;
-  padding: 16px;
+  padding: 0;
   min-width: 0;
   min-height: 0;
   width: 100%;
@@ -806,7 +958,7 @@
 
 @media (max-width: 768px) {
   .handout-builder .handout-builder-app {
-    padding: 8px;
+    padding: 0;
   }
 
   .handout-builder .handout-builder-preview {
@@ -850,15 +1002,17 @@
   .handout-builder .handout-canvas-shell {
     padding: 8px;
     padding-top: calc(8px + var(--handout-topbar-offset, 0px));
+    padding-left: 0;
     min-height: 0;
   }
 
   .handout-builder .handout-canvas-sidebar {
-    top: 8px;
-    left: 8px;
+    top: 0;
+    bottom: 0;
+    left: 0;
     width: min(92vw, 320px);
-    height: calc(100% - 16px);
-    max-height: calc(100% - 16px);
+    height: auto;
+    max-height: none;
   }
 
   .handout-builder .handout-canvas-sidebar.is-collapsed {
@@ -1153,6 +1307,48 @@
   position: relative;
 }
 
+.handout-builder .handout-group-bounds {
+  border: 1px dashed hsl(var(--primary));
+  background: rgba(59, 130, 246, 0.04);
+  z-index: 12;
+}
+
+.handout-builder .handout-group-inner {
+  width: 100%;
+  height: 100%;
+}
+
+.handout-builder .handout-layer.is-manipulating .handout-layer-transform {
+  will-change: transform;
+}
+
+.handout-builder .handout-layer.is-manipulating .handout-layer-image,
+.handout-builder .handout-layer.is-manipulating .handout-layer-text,
+.handout-builder .handout-layer.is-manipulating .handout-layer-shape {
+  filter: none !important;
+}
+
+.handout-builder .handout-layer.is-manipulating {
+  will-change: transform;
+  cursor: grabbing;
+}
+
+.handout-builder .handout-layer.is-manipulating .handout-layer-inner,
+.handout-builder .handout-layer.is-manipulating .handout-layer-transform {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.handout-builder .handout-layer.is-manipulating.is-selected {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.handout-builder .handout-layer.is-manipulating .handout-layer-bounds {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .handout-builder .handout-layer.is-selected {
   border-color: var(--handout-accent, hsl(var(--primary)));
   border-style: dashed;
@@ -1188,6 +1384,30 @@
   inset: 0;
   pointer-events: none;
   z-index: 5;
+}
+
+.handout-builder .handout-snap-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.handout-builder .handout-snap-guide {
+  position: absolute;
+  background: rgba(59, 130, 246, 0.75);
+}
+
+.handout-builder .handout-snap-guide.is-vertical {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.handout-builder .handout-snap-guide.is-horizontal {
+  left: 0;
+  right: 0;
+  height: 1px;
 }
 
 .handout-builder .handout-rotate-handle {
@@ -1287,12 +1507,32 @@
   z-index: 1;
 }
 
+.handout-builder .handout-layer-shape {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.handout-builder .handout-layer-shape-shadow {
+  pointer-events: none;
+}
+
 .handout-builder .handout-layer-text {
   width: 100%;
   height: 100%;
   line-height: 1.2;
   user-select: none;
   box-sizing: border-box;
+}
+
+.handout-builder .handout-layer-text-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  white-space: inherit;
+  user-select: none;
 }
 
 .handout-builder .handout-layer-text-wrap {

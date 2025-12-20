@@ -1,4 +1,4 @@
-.handout-builder .handout-builder-app {
+﻿.handout-builder .handout-builder-app {
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -199,6 +199,56 @@
   border-radius: 14px;
   border: 1px solid hsl(var(--border));
   background: hsl(var(--muted) / 0.2);
+}
+
+.handout-builder .handout-effects-panel {
+  gap: 18px;
+}
+
+.handout-builder .handout-effects-card {
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid hsl(var(--border));
+  background:
+    radial-gradient(120px 80px at 0% 0%, hsl(var(--muted) / 0.45), transparent 70%),
+    linear-gradient(160deg, hsl(var(--background) / 0.95), hsl(var(--background) / 0.75));
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.handout-builder .handout-effects-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.handout-builder .handout-effects-card[data-active="true"] {
+  border-color: hsl(var(--primary) / 0.55);
+  background:
+    radial-gradient(160px 100px at 0% 0%, hsl(var(--primary) / 0.2), transparent 70%),
+    linear-gradient(160deg, hsl(var(--background)), hsl(var(--background) / 0.78));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14), inset 0 0 0 1px hsl(var(--primary) / 0.18);
+}
+
+.handout-builder .handout-effects-card-head {
+  padding-bottom: 8px;
+  border-bottom: 1px dashed hsl(var(--border) / 0.7);
+}
+
+.handout-builder .handout-effects-card-title {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.handout-builder .handout-effects-card-subtitle {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.handout-builder .handout-effects-card .handout-opacity-stepper {
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid hsl(var(--border) / 0.7);
+  background: hsl(var(--background) / 0.75);
 }
 
 .handout-builder .handout-builder-preview {
@@ -1207,6 +1257,21 @@
   right: 0;
 }
 
+.handout-builder .handout-layer-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.handout-builder .handout-layer-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .handout-builder .handout-layer-image {
   width: 100%;
   height: 100%;
@@ -1216,12 +1281,31 @@
   pointer-events: none;
 }
 
+.handout-builder .handout-layer-image-shadow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
 .handout-builder .handout-layer-text {
   width: 100%;
   height: 100%;
   line-height: 1.2;
   user-select: none;
   box-sizing: border-box;
+}
+
+.handout-builder .handout-layer-text-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.handout-builder .handout-layer-text-shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .handout-builder .handout-layer-text-editor {
@@ -1304,3 +1388,5 @@
     box-shadow: none !important;
   }
 }
+
+

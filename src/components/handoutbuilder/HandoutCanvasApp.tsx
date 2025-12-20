@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { Rnd } from "react-rnd";
 import {
   Check,
@@ -314,7 +314,7 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
     {
       id: "txt_title",
       type: "text",
-      name: "Título",
+      name: "TÃ­tulo",
       x: 72,
       y: 72,
       width: 650,
@@ -355,7 +355,7 @@ const DEFAULT_DOC: HandoutCanvasDocV1 = {
         blendMode: "normal",
         effects: createDefaultEffects(),
         text:
-        "Funciona como um mini-Canva:\\n\\n- Adicione imagens em camadas\\n- Crie vários textos\\n- Arraste e redimensione\\n- Reordene as camadas no painel",
+        "Funciona como um mini-Canva:\\n\\n- Adicione imagens em camadas\\n- Crie vÃ¡rios textos\\n- Arraste e redimensione\\n- Reordene as camadas no painel",
       fontSize: 18,
       color: "#2b1b0e",
       align: "left",
@@ -477,11 +477,50 @@ function applyAlphaToColor(color: string, opacity: number) {
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${clamped})`;
 }
 
+function toSvgColor(color: string) {
+  const rgb = hexToRgb(color);
+  if (!rgb) return color;
+  return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+}
+
 function buildShadowValue(shadow: ShadowEffect, inset: boolean) {
   if (!shadow.enabled) return null;
   const color = applyAlphaToColor(shadow.color, shadow.opacity);
   const prefix = inset ? "inset " : "";
   return `${prefix}${shadow.x}px ${shadow.y}px ${shadow.blur}px ${shadow.spread}px ${color}`;
+}
+
+function buildDropShadowFilter(shadow: ShadowEffect) {
+  if (!shadow.enabled) return null;
+  const color = applyAlphaToColor(shadow.color, shadow.opacity);
+  const blur = Math.max(0, shadow.blur + shadow.spread);
+  return `drop-shadow(${shadow.x}px ${shadow.y}px ${blur}px ${color})`;
+}
+
+function getImageEffectStyle(effects: LayerEffects) {
+  const filters: string[] = [];
+  const dropShadow = buildDropShadowFilter(effects.dropShadow);
+  if (dropShadow) filters.push(dropShadow);
+  if (effects.blur > 0) filters.push(`blur(${effects.blur}px)`);
+  if (effects.brightness !== 100) filters.push(`brightness(${effects.brightness}%)`);
+  if (effects.contrast !== 100) filters.push(`contrast(${effects.contrast}%)`);
+  if (effects.saturate !== 100) filters.push(`saturate(${effects.saturate}%)`);
+  const filter = filters.length ? filters.join(" ") : "none";
+
+  return { filter };
+}
+
+function getTextEffectStyle(effects: LayerEffects) {
+  const filters: string[] = [];
+  const dropShadow = buildDropShadowFilter(effects.dropShadow);
+  if (dropShadow) filters.push(dropShadow);
+  if (effects.blur > 0) filters.push(`blur(${effects.blur}px)`);
+  if (effects.brightness !== 100) filters.push(`brightness(${effects.brightness}%)`);
+  if (effects.contrast !== 100) filters.push(`contrast(${effects.contrast}%)`);
+  if (effects.saturate !== 100) filters.push(`saturate(${effects.saturate}%)`);
+  const filter = filters.length ? filters.join(" ") : "none";
+
+  return { filter };
 }
 
 function getLayerEffectStyle(effects: LayerEffects) {
@@ -499,6 +538,37 @@ function getLayerEffectStyle(effects: LayerEffects) {
   const filter = filters.length ? filters.join(" ") : "none";
 
   return { boxShadow, filter };
+}
+
+function renderInnerShadowFilter(id: string, shadow: ShadowEffect) {
+  if (!shadow.enabled || shadow.opacity <= 0) return null;
+  const spreadRadius = Math.max(0, Math.abs(shadow.spread));
+  const spreadOperator = shadow.spread >= 0 ? "dilate" : "erode";
+  const blur = Math.max(0, shadow.blur);
+  const color = toSvgColor(shadow.color);
+  const opacity = clamp(shadow.opacity, 0, 1);
+
+  return (
+    <svg className="handout-layer-filter" aria-hidden="true" focusable="false">
+      <filter
+        id={id}
+        x="-50%"
+        y="-50%"
+        width="200%"
+        height="200%"
+        filterUnits="objectBoundingBox"
+        primitiveUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feMorphology in="SourceAlpha" operator={spreadOperator} radius={spreadRadius} result="spread" />
+        <feOffset in="spread" dx={shadow.x} dy={shadow.y} result="offset" />
+        <feGaussianBlur in="offset" stdDeviation={blur} result="blur" />
+        <feComposite in="blur" in2="spread" operator="arithmetic" k2="-1" k3="1" result="innerShadow" />
+        <feFlood floodColor={color} floodOpacity={opacity} result="shadowColor" />
+        <feComposite in="shadowColor" in2="innerShadow" operator="in" result="shadow" />
+      </filter>
+    </svg>
+  );
 }
 
 function normalizeShadowEffect(raw: unknown, fallback: ShadowEffect): ShadowEffect {
@@ -1258,7 +1328,7 @@ function startTextEditing(layer: TextLayer) {
     const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
     if (!list.length) return;
 
-    toast.message(`Carregando ${list.length} imagem(ns)…`);
+    toast.message(`Carregando ${list.length} imagem(ns)â€¦`);
     const created: ImageLayer[] = [];
 
     for (const file of list) {
@@ -1329,7 +1399,7 @@ function startTextEditing(layer: TextLayer) {
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
     try {
-      toast.message("Gerando PNG…");
+      toast.message("Gerando PNGâ€¦");
       const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 2 });
       const a = document.createElement("a");
       a.href = dataUrl;
@@ -1376,7 +1446,7 @@ function startTextEditing(layer: TextLayer) {
       const parsed = JSON.parse(raw) as unknown;
       const normalized = normalizeDocV1(parsed);
       if (!normalized) {
-        toast.error("Arquivo inválido.");
+        toast.error("Arquivo invÃ¡lido.");
         return;
       }
       setDoc(normalized);
@@ -2050,7 +2120,7 @@ function startTextEditing(layer: TextLayer) {
                                 variant="ghost"
                                 disabled={!canMoveBackward}
                                 onClick={() => moveLayerOneStep(layer.id, -1)}
-                                aria-label="Enviar para trás"
+                                aria-label="Enviar para trÃ¡s"
                               >
                                 <ChevronDown className="h-4 w-4" />
                               </Button>
@@ -2105,7 +2175,7 @@ function startTextEditing(layer: TextLayer) {
 
                               <div className="flex items-center justify-between gap-3 rounded-md border border-input px-3 py-2">
                                 <div className="grid gap-0.5">
-                                  <div className="text-sm font-medium">Manter proporção</div>
+                                  <div className="text-sm font-medium">Manter proporÃ§Ã£o</div>
                                   <div className="text-xs text-muted-foreground">Ao redimensionar</div>
                                 </div>
                                 <Switch
@@ -2128,18 +2198,23 @@ function startTextEditing(layer: TextLayer) {
                   {sidebarTab === "effects" && (
                     <div className="handout-panel-section">
                       <div className="handout-panel-title">Efeitos</div>
-                      <div className="grid gap-4">
+                      <div className="handout-effects-panel grid gap-4">
                         {!selectedLayer && (
                           <div className="text-sm text-muted-foreground">Selecione uma camada para editar.</div>
                         )}
 
                         {selectedLayer && (
                           <>
-                            <div className="grid gap-3 rounded-md border border-input p-3">
-                              <div className="flex items-center justify-between gap-3">
+                            <div
+                              className="handout-effects-card grid gap-3 rounded-md border border-input p-3"
+                              data-active={selectedLayer.effects.dropShadow.enabled ? "true" : "false"}
+                            >
+                              <div className="handout-effects-card-head flex items-center justify-between gap-3">
                                 <div className="grid gap-0.5">
-                                  <div className="text-sm font-medium">Sombra externa</div>
-                                  <div className="text-xs text-muted-foreground">Drop shadow</div>
+                                  <div className="handout-effects-card-title text-sm font-medium">Sombra externa</div>
+                                  <div className="handout-effects-card-subtitle text-xs text-muted-foreground">
+                                    Drop shadow
+                                  </div>
                                 </div>
                                 <Switch
                                   checked={selectedLayer.effects.dropShadow.enabled}
@@ -2243,47 +2318,34 @@ function startTextEditing(layer: TextLayer) {
 
                                 <div className="grid gap-2">
                                   <Label>Opacidade</Label>
-                                  <div className="handout-opacity-stepper">
-                                    <input
-                                      type="range"
-                                      min={0}
-                                      max={100}
-                                      step={1}
-                                      value={dropShadowOpacityPercent}
-                                      onChange={(e) => {
-                                        const value = clamp(Number(e.target.value), 0, 100);
-                                        updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({
-                                          ...p,
-                                          opacity: value / 100,
-                                        }));
-                                      }}
-                                      className="handout-opacity-range"
-                                      style={{ flex: 1 }}
-                                    />
-                                    <Input
-                                      type="number"
-                                      min={0}
-                                      max={100}
-                                      value={dropShadowOpacityPercent}
-                                      onChange={(e) => {
-                                        const value = clamp(Number(e.target.value), 0, 100);
-                                        updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({
-                                          ...p,
-                                          opacity: value / 100,
-                                        }));
-                                      }}
-                                      className="handout-opacity-input"
-                                    />
-                                  </div>
+                                  <Input
+                                    type="number"
+                                    min={0}
+                                    max={100}
+                                    value={dropShadowOpacityPercent}
+                                    onChange={(e) => {
+                                      const value = clamp(Number(e.target.value), 0, 100);
+                                      updateShadowEffect(selectedLayer.id, "dropShadow", (p) => ({
+                                        ...p,
+                                        opacity: value / 100,
+                                      }));
+                                    }}
+                                    className="handout-opacity-input"
+                                  />
                                 </div>
                               </div>
                             </div>
 
-                            <div className="grid gap-3 rounded-md border border-input p-3">
-                              <div className="flex items-center justify-between gap-3">
+                            <div
+                              className="handout-effects-card grid gap-3 rounded-md border border-input p-3"
+                              data-active={selectedLayer.effects.innerShadow.enabled ? "true" : "false"}
+                            >
+                              <div className="handout-effects-card-head flex items-center justify-between gap-3">
                                 <div className="grid gap-0.5">
-                                  <div className="text-sm font-medium">Sombra interna</div>
-                                  <div className="text-xs text-muted-foreground">Inner shadow</div>
+                                  <div className="handout-effects-card-title text-sm font-medium">Sombra interna</div>
+                                  <div className="handout-effects-card-subtitle text-xs text-muted-foreground">
+                                    Inner shadow
+                                  </div>
                                 </div>
                                 <Switch
                                   checked={selectedLayer.effects.innerShadow.enabled}
@@ -2387,68 +2449,17 @@ function startTextEditing(layer: TextLayer) {
 
                                 <div className="grid gap-2">
                                   <Label>Opacidade</Label>
-                                  <div className="handout-opacity-stepper">
-                                    <input
-                                      type="range"
-                                      min={0}
-                                      max={100}
-                                      step={1}
-                                      value={innerShadowOpacityPercent}
-                                      onChange={(e) => {
-                                        const value = clamp(Number(e.target.value), 0, 100);
-                                        updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({
-                                          ...p,
-                                          opacity: value / 100,
-                                        }));
-                                      }}
-                                      className="handout-opacity-range"
-                                      style={{ flex: 1 }}
-                                    />
-                                    <Input
-                                      type="number"
-                                      min={0}
-                                      max={100}
-                                      value={innerShadowOpacityPercent}
-                                      onChange={(e) => {
-                                        const value = clamp(Number(e.target.value), 0, 100);
-                                        updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({
-                                          ...p,
-                                          opacity: value / 100,
-                                        }));
-                                      }}
-                                      className="handout-opacity-input"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="grid gap-3 rounded-md border border-input p-3">
-                              <div className="text-sm font-medium">Desfoque</div>
-                              <div className="grid gap-2">
-                                <Label>Intensidade (px)</Label>
-                                <div className="handout-opacity-stepper">
-                                  <input
-                                    type="range"
-                                    min={EFFECT_BLUR_MIN}
-                                    max={EFFECT_BLUR_MAX}
-                                    step={1}
-                                    value={selectedLayer.effects.blur}
-                                    onChange={(e) => {
-                                      const value = clamp(Number(e.target.value), EFFECT_BLUR_MIN, EFFECT_BLUR_MAX);
-                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, blur: value }));
-                                    }}
-                                    className="handout-range"
-                                    style={{ flex: 1 }}
-                                  />
                                   <Input
                                     type="number"
-                                    min={EFFECT_BLUR_MIN}
-                                    max={EFFECT_BLUR_MAX}
-                                    value={selectedLayer.effects.blur}
+                                    min={0}
+                                    max={100}
+                                    value={innerShadowOpacityPercent}
                                     onChange={(e) => {
-                                      const value = clamp(Number(e.target.value), EFFECT_BLUR_MIN, EFFECT_BLUR_MAX);
-                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, blur: value }));
+                                      const value = clamp(Number(e.target.value), 0, 100);
+                                      updateShadowEffect(selectedLayer.id, "innerShadow", (p) => ({
+                                        ...p,
+                                        opacity: value / 100,
+                                      }));
                                     }}
                                     className="handout-opacity-input"
                                   />
@@ -2456,121 +2467,94 @@ function startTextEditing(layer: TextLayer) {
                               </div>
                             </div>
 
-                            <div className="grid gap-3 rounded-md border border-input p-3">
-                              <div className="text-sm font-medium">Filtros</div>
+                            <div
+                              className="handout-effects-card grid gap-3 rounded-md border border-input p-3"
+                              data-active={selectedLayer.effects.blur > 0 ? "true" : "false"}
+                            >
+                              <div className="handout-effects-card-title text-sm font-medium">Desfoque</div>
+                              <div className="grid gap-2">
+                                <Label>Intensidade (px)</Label>
+                                <Input
+                                  type="number"
+                                  min={EFFECT_BLUR_MIN}
+                                  max={EFFECT_BLUR_MAX}
+                                  value={selectedLayer.effects.blur}
+                                  onChange={(e) => {
+                                    const value = clamp(Number(e.target.value), EFFECT_BLUR_MIN, EFFECT_BLUR_MAX);
+                                    updateLayerEffects(selectedLayer.id, (p) => ({ ...p, blur: value }));
+                                  }}
+                                  className="handout-opacity-input"
+                                />
+                              </div>
+                            </div>
+
+                            <div
+                              className="handout-effects-card grid gap-3 rounded-md border border-input p-3"
+                              data-active={
+                                selectedLayer.effects.brightness !== 100 ||
+                                selectedLayer.effects.contrast !== 100 ||
+                                selectedLayer.effects.saturate !== 100
+                                  ? "true"
+                                  : "false"
+                              }
+                            >
+                              <div className="handout-effects-card-title text-sm font-medium">Filtros</div>
 
                               <div className="grid gap-2">
                                 <Label>Brilho (%)</Label>
-                                <div className="handout-opacity-stepper">
-                                  <input
-                                    type="range"
-                                    min={EFFECT_FILTER_MIN}
-                                    max={EFFECT_FILTER_MAX}
-                                    step={1}
-                                    value={selectedLayer.effects.brightness}
-                                    onChange={(e) => {
-                                      const value = clamp(
-                                        Number(e.target.value),
-                                        EFFECT_FILTER_MIN,
-                                        EFFECT_FILTER_MAX,
-                                      );
-                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, brightness: value }));
-                                    }}
-                                    className="handout-range"
-                                    style={{ flex: 1 }}
-                                  />
-                                  <Input
-                                    type="number"
-                                    min={EFFECT_FILTER_MIN}
-                                    max={EFFECT_FILTER_MAX}
-                                    value={selectedLayer.effects.brightness}
-                                    onChange={(e) => {
-                                      const value = clamp(
-                                        Number(e.target.value),
-                                        EFFECT_FILTER_MIN,
-                                        EFFECT_FILTER_MAX,
-                                      );
-                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, brightness: value }));
-                                    }}
-                                    className="handout-opacity-input"
-                                  />
-                                </div>
+                                <Input
+                                  type="number"
+                                  min={EFFECT_FILTER_MIN}
+                                  max={EFFECT_FILTER_MAX}
+                                  value={selectedLayer.effects.brightness}
+                                  onChange={(e) => {
+                                    const value = clamp(
+                                      Number(e.target.value),
+                                      EFFECT_FILTER_MIN,
+                                      EFFECT_FILTER_MAX,
+                                    );
+                                    updateLayerEffects(selectedLayer.id, (p) => ({ ...p, brightness: value }));
+                                  }}
+                                  className="handout-opacity-input"
+                                />
                               </div>
 
                               <div className="grid gap-2">
                                 <Label>Contraste (%)</Label>
-                                <div className="handout-opacity-stepper">
-                                  <input
-                                    type="range"
-                                    min={EFFECT_FILTER_MIN}
-                                    max={EFFECT_FILTER_MAX}
-                                    step={1}
-                                    value={selectedLayer.effects.contrast}
-                                    onChange={(e) => {
-                                      const value = clamp(
-                                        Number(e.target.value),
-                                        EFFECT_FILTER_MIN,
-                                        EFFECT_FILTER_MAX,
-                                      );
-                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, contrast: value }));
-                                    }}
-                                    className="handout-range"
-                                    style={{ flex: 1 }}
-                                  />
-                                  <Input
-                                    type="number"
-                                    min={EFFECT_FILTER_MIN}
-                                    max={EFFECT_FILTER_MAX}
-                                    value={selectedLayer.effects.contrast}
-                                    onChange={(e) => {
-                                      const value = clamp(
-                                        Number(e.target.value),
-                                        EFFECT_FILTER_MIN,
-                                        EFFECT_FILTER_MAX,
-                                      );
-                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, contrast: value }));
-                                    }}
-                                    className="handout-opacity-input"
-                                  />
-                                </div>
+                                <Input
+                                  type="number"
+                                  min={EFFECT_FILTER_MIN}
+                                  max={EFFECT_FILTER_MAX}
+                                  value={selectedLayer.effects.contrast}
+                                  onChange={(e) => {
+                                    const value = clamp(
+                                      Number(e.target.value),
+                                      EFFECT_FILTER_MIN,
+                                      EFFECT_FILTER_MAX,
+                                    );
+                                    updateLayerEffects(selectedLayer.id, (p) => ({ ...p, contrast: value }));
+                                  }}
+                                  className="handout-opacity-input"
+                                />
                               </div>
 
                               <div className="grid gap-2">
                                 <Label>Saturacao (%)</Label>
-                                <div className="handout-opacity-stepper">
-                                  <input
-                                    type="range"
-                                    min={EFFECT_FILTER_MIN}
-                                    max={EFFECT_FILTER_MAX}
-                                    step={1}
-                                    value={selectedLayer.effects.saturate}
-                                    onChange={(e) => {
-                                      const value = clamp(
-                                        Number(e.target.value),
-                                        EFFECT_FILTER_MIN,
-                                        EFFECT_FILTER_MAX,
-                                      );
-                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, saturate: value }));
-                                    }}
-                                    className="handout-range"
-                                    style={{ flex: 1 }}
-                                  />
-                                  <Input
-                                    type="number"
-                                    min={EFFECT_FILTER_MIN}
-                                    max={EFFECT_FILTER_MAX}
-                                    value={selectedLayer.effects.saturate}
-                                    onChange={(e) => {
-                                      const value = clamp(
-                                        Number(e.target.value),
-                                        EFFECT_FILTER_MIN,
-                                        EFFECT_FILTER_MAX,
-                                      );
-                                      updateLayerEffects(selectedLayer.id, (p) => ({ ...p, saturate: value }));
-                                    }}
-                                    className="handout-opacity-input"
-                                  />
-                                </div>
+                                <Input
+                                  type="number"
+                                  min={EFFECT_FILTER_MIN}
+                                  max={EFFECT_FILTER_MAX}
+                                  value={selectedLayer.effects.saturate}
+                                  onChange={(e) => {
+                                    const value = clamp(
+                                      Number(e.target.value),
+                                      EFFECT_FILTER_MIN,
+                                      EFFECT_FILTER_MAX,
+                                    );
+                                    updateLayerEffects(selectedLayer.id, (p) => ({ ...p, saturate: value }));
+                                  }}
+                                  className="handout-opacity-input"
+                                />
                               </div>
                             </div>
                           </>
@@ -2676,7 +2660,22 @@ function startTextEditing(layer: TextLayer) {
                   if (!layer.visible) return null;
 
                   const layerTransform = `rotate(${layer.rotation}deg) scaleX(${layer.flipX ? -1 : 1}) scaleY(${layer.flipY ? -1 : 1})`;
-                  const layerEffectStyle = getLayerEffectStyle(layer.effects);
+                  const isImageLayer = layer.type === "image";
+                  const isTextLayer = layer.type === "text";
+                  const layerEffectStyle = isImageLayer || isTextLayer ? undefined : getLayerEffectStyle(layer.effects);
+                  const innerShadowEnabled =
+                    layer.effects.innerShadow.enabled && layer.effects.innerShadow.opacity > 0;
+                  const innerShadowId = innerShadowEnabled ? `handout-inner-shadow-${layer.id}` : null;
+                  const imageEffectStyle = isImageLayer ? getImageEffectStyle(layer.effects) : null;
+                  const textEffectStyle = isTextLayer ? getTextEffectStyle(layer.effects) : null;
+                  const showInnerShadow = Boolean(isImageLayer && innerShadowId);
+                  const showTextInnerShadow = Boolean(isTextLayer && innerShadowId);
+                  const imageFilterStyle = isImageLayer
+                    ? ({ filter: imageEffectStyle?.filter ?? "none" } as React.CSSProperties)
+                    : undefined;
+                  const innerShadowFilterStyle = showInnerShadow
+                    ? ({ filter: `url(#${innerShadowId})` } as React.CSSProperties)
+                    : undefined;
                   const effectNeedsOverflow = layer.effects.dropShadow.enabled || layer.effects.blur > 0;
                   const layerInnerStyle = {
                     opacity: layer.opacity,
@@ -2754,7 +2753,7 @@ function startTextEditing(layer: TextLayer) {
                       {isSelected && !isEditing && (
                         <div className="handout-layer-bounds">
                           <div className={boundsLabelClassName} aria-hidden="true">
-                            {Math.round(layer.width)}x{Math.round(layer.height)} · x:{Math.round(layer.x)} y:{Math.round(layer.y)}
+                            {Math.round(layer.width)}x{Math.round(layer.height)} Â· x:{Math.round(layer.x)} y:{Math.round(layer.y)}
                           </div>
                           <button
                             type="button"
@@ -2774,7 +2773,27 @@ function startTextEditing(layer: TextLayer) {
                           style={{ transform: layerTransform, transformOrigin: "center center", ...layerEffectStyle }}
                         >
                           {layer.type === "image" ? (
-                            <img src={layer.src} alt="" draggable={false} className="handout-layer-image" />
+                            <div className="handout-layer-image-wrap">
+                              {showInnerShadow && innerShadowId
+                                ? renderInnerShadowFilter(innerShadowId, layer.effects.innerShadow)
+                                : null}
+                              <img
+                                src={layer.src}
+                                alt=""
+                                draggable={false}
+                                className="handout-layer-image"
+                                style={imageFilterStyle}
+                              />
+                              {showInnerShadow && innerShadowFilterStyle ? (
+                                <img
+                                  src={layer.src}
+                                  alt=""
+                                  draggable={false}
+                                  className="handout-layer-image handout-layer-image-shadow"
+                                  style={innerShadowFilterStyle}
+                                />
+                              ) : null}
+                            </div>
                           ) : (
                             (() => {
                               const textStyle = {
@@ -2789,7 +2808,10 @@ function startTextEditing(layer: TextLayer) {
                                 padding: `${layer.padding}px`,
                                 lineHeight: 1.2,
                                 whiteSpace: "pre-wrap",
-                              } as const;
+                              } as React.CSSProperties;
+                              const textDisplayStyle = textEffectStyle
+                                ? ({ ...textStyle, ...textEffectStyle } as React.CSSProperties)
+                                : textStyle;
 
                               if (isEditing) {
                                 return (
@@ -2817,9 +2839,28 @@ function startTextEditing(layer: TextLayer) {
                               }
 
                               return (
-                                <div className="handout-layer-text" style={textStyle}>
-                                  {layer.text}
-                                </div>
+                                <>
+                                  {showTextInnerShadow && innerShadowId
+                                    ? renderInnerShadowFilter(innerShadowId, layer.effects.innerShadow)
+                                    : null}
+                                  <div className="handout-layer-text-wrap">
+                                    <div className="handout-layer-text" style={textDisplayStyle}>
+                                      {layer.text}
+                                    </div>
+                                    {showTextInnerShadow && innerShadowId ? (
+                                      <div
+                                        className="handout-layer-text handout-layer-text-shadow"
+                                        style={{
+                                          ...textStyle,
+                                          backgroundColor: "transparent",
+                                          filter: `url(#${innerShadowId})`,
+                                        }}
+                                      >
+                                        {layer.text}
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                </>
                               );
                             })()
                           )}
@@ -2864,3 +2905,4 @@ export default function HandoutCanvasApp() {
     </PortalContainerProvider>
   );
 }
+

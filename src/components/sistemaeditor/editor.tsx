@@ -84,7 +84,7 @@ interface Replacement { key: number; options: number[]; }
 export type Stats = StatsNumeric | StatsEnum | StatsBoolean | StatsString | StatsCalculated;
 
 export interface RPGSystem {
-  config: { id: number; name: LabelLocalization; description: Localization<string>; };
+  config: { id: number; name: LabelLocalization; description: Localization<string>; emoji?: string; };
   stats: Stats[];
   sections: Section[];
   integrations?: Integrations;
@@ -1150,6 +1150,8 @@ function ReplacementEditor({ value, onChange, stats = [], dices = [] }: {
 // Stat Editors
 // =====================
 function BaseStatFields({ stat, onPatch, sections, allStats }: { stat: BaseStat; onPatch: (p: Partial<BaseStat>) => void; sections: Section[], allStats: Stats[] }) {
+  const modifierOptions = allStats.filter((item) => item.id !== stat.id);
+
   return (
     <div className="grid gap-3">
       <div className="grid md:grid-cols-5 gap-3">
@@ -1162,7 +1164,7 @@ function BaseStatFields({ stat, onPatch, sections, allStats }: { stat: BaseStat;
            }} />
         </div>
         <div className="grid gap-2 md:col-span-2"><Label>Modificadores adicionais</Label>
-          <MultiSelect options={allStats} value={stat.modifiers} onChange={(ids) => onPatch({ modifiers: ids })} placeholders={{
+          <MultiSelect options={modifierOptions} value={stat.modifiers} onChange={(ids) => onPatch({ modifiers: ids })} placeholders={{
             input: "Selecione os modificadores conectados",
             search: "Buscar modificador...",
             notfound: "Modificador não encontrado"
@@ -2237,6 +2239,7 @@ export default function RPGSystemBuilder() {
                   onChange={(v) => setSystem({ ...system, config: v })}
                   LabelLocalizationEditor={LabelLocalizationEditor}
                   CompactTextLocalizationEditor={CompactTextLocalizationEditor}
+                  EmojiPicker={CustomEmojiPicker}
                 />
               </TabsContent>
 
@@ -2287,3 +2290,5 @@ export default function RPGSystemBuilder() {
     </div>
   );
 }
+
+

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { Copy, ChevronUp, ChevronDown, ChevronRight, Trash2, Check } from "lucide-react";
+import React, { useMemo, useState } from "react";
+import { Copy, ChevronUp, ChevronDown, ChevronRight, Trash2, Check, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 // Types - importados do editor principal
@@ -34,6 +36,7 @@ type Stats = BaseStat & (
 );
 
 interface Section {
+  emoji: string;
   id: number;
   name: LabelLocalization;
   preview: any;
@@ -68,6 +71,25 @@ const StatsTab: React.FC<StatsTabProps> = ({
   PolymorphicStatEditor,
 }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [pageFilter, setPageFilter] = useState<string>("all");
+
+  const filteredStats = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    return stats.filter((st) => {
+      const matchesText = term.length === 0 || [
+        String(st.id),
+        st.type,
+        st.emoji ?? "",
+        ...Object.values(st.name ?? {}).filter(Boolean),
+      ].some((value) => String(value).toLowerCase().includes(term));
+
+      const matchesPage = pageFilter === "all"
+        || (st.edit_page ?? []).includes(Number(pageFilter));
+
+      return matchesText && matchesPage;
+    });
+  }, [stats, searchTerm, pageFilter]);
 
   const copyToClipboard = async (text: string, label: string) => {
     try {
@@ -82,6 +104,31 @@ const StatsTab: React.FC<StatsTabProps> = ({
 
   return (
     <>
+      <div className="grid gap-2 mb-3 md:grid-cols-[1fr,240px]">
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Buscar stats por nome, ID, tipo ou emoji..."
+            className="!pl-12"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <Select value={pageFilter} onValueChange={setPageFilter}>
+          <SelectTrigger>
+            <SelectValue placeholder="Filtrar por página" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todas as páginas</SelectItem>
+            {sections.map((section) => (
+              <SelectItem key={section.id} value={String(section.id)}>
+                {section.emoji && `${section.emoji} `}
+                {section.name?.default ?? `Seção ${section.id}`}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <div className="flex flex-wrap gap-2 mb-3">
         <Button size="sm" className="bg-blue-500 hover:bg-blue-600 text-white" onClick={() => onAddStat("numeric")}>
           + Numeric
@@ -100,7 +147,7 @@ const StatsTab: React.FC<StatsTabProps> = ({
         </Button>
       </div>
       <div className="grid gap-4">
-        {stats.map((st, i) => (
+        {filteredStats.map((st, i) => (
           <Card key={i} className="relative border-l-4 border-l-purple-500 hover:shadow-lg transition-shadow">
             <div className="flex items-center justify-end gap-1 absolute top-2 right-2 z-10">
               <Button
@@ -228,6 +275,11 @@ const StatsTab: React.FC<StatsTabProps> = ({
             </Collapsible>
           </Card>
         ))}
+        {filteredStats.length === 0 && (
+          <div className="text-sm text-muted-foreground text-center py-6">
+            Nenhum stat encontrado com os filtros atuais.
+          </div>
+        )}
       </div>
     </>
   );

@@ -8,6 +8,7 @@ import { Loader2, Download, Globe, User, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import type { RPGSystem } from "@/components/sistemaeditor/editor";
+import config from "@/config";
 
 interface SystemSummary {
   id: string;
@@ -46,7 +47,7 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
   const fetchSystems = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api-rpg.arkanus.app/rpg/systems/");
+      const response = await fetch(`${config.api_url}/rpg/systems/`);
       if (!response.ok) throw new Error("Falha ao buscar sistemas");
       const data = await response.json();
       setSystems(data.systems_list || []);
@@ -61,7 +62,7 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
   const handleSelectSystem = async (id: string) => {
     setLoadingId(id);
     try {
-      const response = await fetch(`https://api-rpg.arkanus.app/rpg/systems/${id}`);
+      const response = await fetch(`${config.api_url}/rpg/systems/${id}`);
       if (!response.ok) throw new Error("Falha ao buscar detalhes do sistema");
       const data = await response.json();
       
@@ -102,7 +103,7 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
           </div>
         </DialogHeader>
         
-        <ScrollArea className="flex-1 pr-4 h-[60vh]">
+        <ScrollArea className="flex-1 min-h-0 pr-4 max-h-[60vh]">
           {loading ? (
             <div className="flex justify-center items-center h-40">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />

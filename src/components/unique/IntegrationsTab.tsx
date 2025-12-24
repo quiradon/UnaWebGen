@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import DiceNotationModal from "./DiceNotationModal";
+import MultiSelect from "../ui/multiselect";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 // Types - importados do editor principal
 type Locale = 
@@ -59,7 +61,7 @@ interface NexusSchemas {
 
 interface Integrations {
   iniciative?: {
-    dice_notation: string;
+    id: number;
   };
   atributes_roll?: string;
   schemas: NexusSchemas[];
@@ -91,8 +93,6 @@ const IntegrationsTab: React.FC<IntegrationsTabProps> = ({
   CompactTextLocalizationEditor,
 }) => {
   const [newFieldKey, setNewFieldKey] = useState<number>(1);
-  const [showIniciativeEditor, setShowIniciativeEditor] = useState(false);
-  const [tempIniciative, setTempIniciative] = useState<string>("");
   const [showAtributesRollEditor, setShowAtributesRollEditor] = useState(false);
   const [tempAtributesRoll, setTempAtributesRoll] = useState<string>("");
   const [expandedSchemas, setExpandedSchemas] = useState<Set<number>>(new Set());
@@ -219,15 +219,8 @@ const IntegrationsTab: React.FC<IntegrationsTabProps> = ({
     });
   };
 
-  const openIniciativeEditor = () => {
-    setTempIniciative(currentIntegrations.iniciative?.dice_notation || "");
-    setShowIniciativeEditor(true);
-  };
-
-  const confirmIniciative = (notation: string) => {
-    updateIntegrations({ iniciative: { dice_notation: notation } });
-    setShowIniciativeEditor(false);
-    setTempIniciative("");
+  const setIniciative = (id: number) => {
+    updateIntegrations({ iniciative: { id } });
   };
 
   const openAtributesRollEditor = () => {
@@ -258,32 +251,22 @@ const IntegrationsTab: React.FC<IntegrationsTabProps> = ({
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
-            <Label>Notação de Iniciativa</Label>
             <div className="flex gap-2">
-              <Textarea
-                value={currentIntegrations.iniciative?.dice_notation || ""}
-                onChange={(e) =>
-                  updateIntegrations({
-                    iniciative: { dice_notation: e.target.value },
-                  })
-                }
-                placeholder="Ex: 1d20 + <stat:1:value>"
-                rows={2}
-                className="flex-1 font-mono text-sm"
-              />
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={openIniciativeEditor}
-                title="Abrir Editor de Dice Notation"
-                className="h-auto"
-              >
-                🎲 Editor
-              </Button>
+              <Label className="align-bottom">Iniciativa</Label>
+              <Select value={`${integrations?.iniciative?.id ?? ""}`} onValueChange={(value) => setIniciative(parseInt(value))}>
+                <SelectTrigger className="ml-auto w-32">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {stats.map((opt) => (
+                    <SelectItem key={opt.id} value={`${opt.id}`}>{opt.emoji} {opt.name.default}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            {currentIntegrations.iniciative?.dice_notation && (
+            {currentIntegrations.iniciative?.id && (
               <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
-                <strong>Configurado:</strong> {currentIntegrations.iniciative.dice_notation}
+                <strong>Configurado:</strong> {currentIntegrations.iniciative.id}
               </div>
             )}
           </div>
@@ -569,13 +552,6 @@ const IntegrationsTab: React.FC<IntegrationsTabProps> = ({
       </Card>
 
       {/* Dialogs para editores de dice notation */}
-      <DiceNotationModal
-        isOpen={showIniciativeEditor}
-        onClose={() => setShowIniciativeEditor(false)}
-        value={tempIniciative}
-        onChange={setTempIniciative}
-        onConfirm={confirmIniciative}
-      />
 
       <DiceNotationModal
         isOpen={showAtributesRollEditor}

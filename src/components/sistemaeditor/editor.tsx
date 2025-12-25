@@ -52,6 +52,8 @@ type Operator = typeof operators[number];
 const sectionTypes = ["string", "img"] as const;
 type SectionType = typeof sectionTypes[number];
 
+const STRING_MAX_LENGTH_LIMIT = 128;
+
 interface BaseStat extends BaseSelectable {
   edit_page?: number[]; // Seções (por ids) onde o stat pode ser editado
   modifiers?: number[]; // Modificadores de stats
@@ -1315,7 +1317,13 @@ function StatStringEditor({ value, onChange, sections, allStats }: { value: Stat
     value.minLength !== undefined || value.maxLength !== undefined
   );
 
-  const patch = (p: Partial<StatsString>) => onChange({ ...value, ...p });
+  const patch = (p: Partial<StatsString>) => {
+    const next = { ...value, ...p };
+    if (typeof next.maxLength === "number") {
+      next.maxLength = Math.min(next.maxLength, STRING_MAX_LENGTH_LIMIT);
+    }
+    onChange(next);
+  };
 
   const handleLimitsToggle = (enabled: boolean) => {
     setShowLimits(enabled);
@@ -1356,6 +1364,7 @@ function StatStringEditor({ value, onChange, sections, allStats }: { value: Stat
             <Label>Máx. caracteres</Label>
             <Input
               type="number"
+              max={STRING_MAX_LENGTH_LIMIT}
               value={value.maxLength ?? 100}
               onChange={(e) => patch({ maxLength: Number(e.target.value) })}
             />
@@ -1574,6 +1583,12 @@ function validate(system: RPGSystem): string[] {
             if (!o.name?.default) errs.push(`stats[${idx}].options[${j}].name.default é obrigatório`);
             if (o.name?.default && o.name.default.length > 100) errs.push(`stats[${idx}].options[${j}].name.default excede 100 caracteres (${o.name.default.length})`);
           });
+        }
+      }
+      if (s.type === "string") {
+        const st = s as StatsString;
+        if (typeof st.maxLength === "number" && st.maxLength > STRING_MAX_LENGTH_LIMIT) {
+          errs.push(`stats[${idx}].maxLength excede ${STRING_MAX_LENGTH_LIMIT} caracteres (${st.maxLength})`);
         }
       }
       if (s.type === "calculated") {
@@ -1831,7 +1846,7 @@ export default function RPGSystemBuilder() {
       case "numeric": stat = { ...base, type: "numeric", min: -100000, max: 100000 } as StatsNumeric; break;
       case "enum": stat = { ...base, type: "enum", options: [] } as StatsEnum; break;
       case "boolean": stat = { ...base, type: "boolean" } as StatsBoolean; break;
-      case "string": stat = { ...base, type: "string", minLength: 0, maxLength: 200 } as StatsString; break;
+      case "string": stat = { ...base, type: "string", minLength: 0, maxLength: STRING_MAX_LENGTH_LIMIT } as StatsString; break;
       case "calculated": stat = { ...base, type: "calculated", formula: "" } as StatsCalculated; break;
     }
     setSystem({ ...system, stats: [...system.stats, stat] }); setSelectedTab("stats");

@@ -536,9 +536,10 @@
     }
   },
   "price": {
-    "0": "$3/Mês",
-    "1": "$5/Mês",
-    "2": "$7/Mês"
+    "0": "$15/Mês",
+    "1": "$25/Mês",
+    "2": "$30/Mês",
+    "3": "$50/Mês"
   },
   "privacy": {
     "desc": "Lee la Política de Privacidad de Mini Kraken. Aprende cómo recopilamos, usamos y protegemos tus datos.",

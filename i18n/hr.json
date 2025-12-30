@@ -536,9 +536,10 @@
     }
   },
   "price": {
-    "0": "5R$/mjesečno\n",
-    "1": "5 $/mj.\n",
-    "2": "7 $/mj.\n"
+    "0": "15R$/mjesečno\n",
+    "1": "25 $/mj.\n",
+    "2": "30 $/mj.\n",
+    "3": "50 $/mj.\n"
   },
   "privacy": {
     "desc": "Pročitajte Pravila o privatnosti Mini Krakensa. Saznajte kako prikupljamo, koristimo i štitimo vaše podatke.\n",

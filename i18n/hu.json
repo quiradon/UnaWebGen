@@ -536,9 +536,10 @@
     }
   },
   "price": {
-    "0": "$3/Hónap",
-    "1": "$5/Hónap",
-    "2": "$7/Hónap"
+    "0": "$15/Hónap",
+    "1": "$25/Hónap",
+    "2": "$30/Hónap",
+    "3": "$50/Hónap"
   },
   "privacy": {
     "desc": "Olvassa el a Mini Kraken adatvédelmi irányelveit.  Tudja meg, hogyan gyűjtjük, használjuk és védjük az adatait.",

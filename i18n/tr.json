@@ -536,9 +536,10 @@
     }
   },
   "price": {
-    "0": "$3/Ay",
-    "1": "$5/Ay",
-    "2": "$7/Ay"
+    "0": "$15/Ay",
+    "1": "$25/Ay",
+    "2": "$30/Ay",
+    "3": "$50/Ay"
   },
   "privacy": {
     "desc": "Mini Kraken Gizlilik Politikasını okuyun. Verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu öğrenin.",

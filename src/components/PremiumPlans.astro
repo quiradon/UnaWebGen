@@ -1,0 +1,520 @@
+---
+import PremiumPlanCard from "@components/PremiumPlanCard.astro";
+import {
+  User,
+  Users,
+  MessageCircle,
+  Key,
+  Coins,
+  Dices,
+  Tags,
+  BookText,
+  Palette,
+  Package,
+  Info,
+  Crown,
+  Check,
+  X,
+} from "@lucide/astro";
+import tier1 from "../assets/img/tiers_premium/1.webp";
+import tier2 from "../assets/img/tiers_premium/2.webp";
+import tier3 from "../assets/img/tiers_premium/3.webp";
+import tier4 from "../assets/img/tiers_premium/4.webp";
+
+const { t } = Astro.props;
+
+const feat = t?.premium?.feat ?? {};
+const price = t?.price ?? {};
+const coinsLabel = feat?.[4] ?? "Kraken Coins";
+const guildsLabel = t?.index?.status?.guilds ?? "Servidores";
+const supportLabel = feat?.[5] ?? "Suporte prioritario";
+const homebrewLabel = feat?.[3] ?? "Homebrew";
+const playtestsLabel = feat?.[9] ?? "Playtests exclusivos";
+const ctaLabel = t?.index?.donate?.btn ?? "Apoiar Projeto";
+const billingLabels = t?.lang?.startsWith("en")
+  ? { monthly: "Monthly", annual: "Annual" }
+  : { monthly: "Mensal", annual: "Anual" };
+const annualPeriod = t?.lang?.startsWith("en") ? "year" : "ano";
+const annualNote = t?.lang?.startsWith("en")
+  ? "2 months free"
+  : "2 meses gratis";
+const annualMultiplier = 10;
+
+const joinText = (...parts) => parts.filter(Boolean).join(" ");
+
+const buildAnnualPrice = (priceText) => {
+  if (!priceText) return "";
+  const [mainRaw] = priceText.split("/");
+  const main = mainRaw?.trim() ?? "";
+  const match = main.match(/([0-9]+(?:[.,][0-9]+)?)/);
+  if (!match) return priceText;
+  const rawAmount = match[1];
+  const amountIndex = main.indexOf(rawAmount);
+  const currency = main.replace(rawAmount, "").trim();
+  const space =
+    currency && main.includes(`${currency} ${rawAmount}`) ? " " : "";
+  const hasComma = rawAmount.includes(",");
+  const hasDot = rawAmount.includes(".");
+  const decimalPart = hasComma
+    ? rawAmount.split(",")[1]
+    : hasDot
+      ? rawAmount.split(".")[1]
+      : "";
+  const decimals = decimalPart ? decimalPart.length : 0;
+  const numeric = parseFloat(rawAmount.replace(",", "."));
+  if (Number.isNaN(numeric)) return priceText;
+  const annualValue = numeric * annualMultiplier;
+  const oldValue = numeric * 12;
+  const formatted = decimals ? annualValue.toFixed(decimals) : `${annualValue}`;
+  const formattedOld = decimals ? oldValue.toFixed(decimals) : `${oldValue}`;
+  const formattedAmount = hasComma ? formatted.replace(".", ",") : formatted;
+  const formattedOldAmount = hasComma
+    ? formattedOld.replace(".", ",")
+    : formattedOld;
+  const mainAnnual =
+    amountIndex > 0
+      ? `${currency}${space}${formattedAmount}`.trim()
+      : `${formattedAmount}${currency}`.trim();
+  const mainOld =
+    amountIndex > 0
+      ? `${currency}${space}${formattedOldAmount}`.trim()
+      : `${formattedOldAmount}${currency}`.trim();
+  return {
+    annual: `${mainAnnual}/${annualPeriod}`,
+    old: `${mainOld}/${annualPeriod}`,
+  };
+};
+
+const price0 = price?.[0] ?? "15R$/mes";
+const price1 = price?.[1] ?? "25R$/mes";
+const price2 = price?.[2] ?? "30R$/mes";
+const price3 = price?.[3] ?? "50R$/mes";
+const annual0 = buildAnnualPrice(price0);
+const annual1 = buildAnnualPrice(price1);
+const annual2 = buildAnnualPrice(price2);
+const annual3 = buildAnnualPrice(price3);
+
+const plans = [
+  {
+    title: t?.premium?.[0]?.title ?? "Guerreiro",
+    desc:
+      t?.premium?.[0]?.desc ??
+      "Plano para quem joga sozinho e quer recursos basicos.",
+    priceMonthly: price0,
+    priceAnnual: annual0.annual,
+    priceOldAnnual: annual0.old,
+    priceNoteAnnual: annualNote,
+    titleIcon: Crown,
+    primary: [
+      { Icon: User, text: feat?.[10] },
+      { Icon: Coins, text: `2 ${coinsLabel}` },
+      { Icon: Key, text: joinText(feat?.[6], feat?.[7]) },
+      { Icon: MessageCircle, text: supportLabel },
+    ],
+    secondary: [
+      { Icon: Dices, text: feat?.[0] },
+      { Icon: Tags, text: feat?.[1] },
+      { Icon: BookText, text: feat?.[2] },
+    ],
+    accent: "#f59e0b",
+    badge: tier1,
+  },
+  {
+    title: t?.premium?.[1]?.title ?? "Aventureiro",
+    desc:
+      t?.premium?.[1]?.desc ??
+      "Beneficios para todo o servidor, com mais recursos.",
+    priceMonthly: price1,
+    priceAnnual: annual1.annual,
+    priceOldAnnual: annual1.old,
+    priceNoteAnnual: annualNote,
+    titleIcon: User,
+    primary: [
+      { Icon: User, text: feat?.[10] },
+      { Icon: Coins, text: `4 ${coinsLabel}` },
+      { Icon: Key, text: joinText(feat?.[6], feat?.[8]) },
+      { Icon: MessageCircle, text: supportLabel },
+    ],
+    secondary: [
+      { Icon: Dices, text: feat?.[0] },
+      { Icon: Tags, text: feat?.[1] },
+      { Icon: BookText, text: feat?.[2] },
+      { Icon: Palette, text: feat?.[3] },
+    ],
+    accent: "#38bdf8",
+    badge: tier2,
+  },
+  {
+    title: t?.premium?.[2]?.title ?? "Heroi do Polvo",
+    desc: t?.premium?.[2]?.desc ?? "Para quem quer tudo liberado.",
+    priceMonthly: price2,
+    priceAnnual: annual2.annual,
+    priceOldAnnual: annual2.old,
+    priceNoteAnnual: annualNote,
+    titleIcon: Crown,
+    primary: [
+      { Icon: User, text: feat?.[11] },
+      { Icon: Coins, text: `10 ${coinsLabel}` },
+      { Icon: Key, text: joinText(feat?.[6], feat?.[12]) },
+      { Icon: MessageCircle, text: supportLabel },
+      { Icon: Package, text: feat?.[9] },
+      { Icon: Info, text: feat?.[98] },
+      { Icon: Package, text: feat?.[99] },
+    ],
+    secondary: [
+      { Icon: Dices, text: feat?.[0] },
+      { Icon: Tags, text: feat?.[1] },
+      { Icon: BookText, text: feat?.[2] },
+      { Icon: Palette, text: feat?.[3] },
+    ],
+    accent: "#22c55e",
+    badge: tier3,
+  },
+  {
+    title: t?.premium?.[3]?.title ?? "Conselho do Kraken",
+    desc:
+      t?.premium?.[3]?.desc ??
+      "Prioridade maxima para servidores grandes.",
+    priceMonthly: price3,
+    priceAnnual: annual3.annual,
+    priceOldAnnual: annual3.old,
+    priceNoteAnnual: annualNote,
+    titleIcon: Crown,
+    primary: [
+      { Icon: User, text: feat?.[11] },
+      { Icon: Coins, text: `20 ${coinsLabel}` },
+      { Icon: Key, text: joinText(feat?.[6], `6 ${guildsLabel}`) },
+      { Icon: MessageCircle, text: supportLabel },
+      { Icon: Package, text: feat?.[9] },
+      { Icon: Info, text: feat?.[98] },
+      { Icon: Package, text: feat?.[99] },
+    ],
+    secondary: [
+      { Icon: Dices, text: feat?.[0] },
+      { Icon: Tags, text: feat?.[1] },
+      { Icon: BookText, text: feat?.[2] },
+      { Icon: Palette, text: feat?.[3] },
+    ],
+    accent: "#f97316",
+    badge: tier4,
+  },
+];
+
+const compareRows = [
+  { label: coinsLabel, icon: Coins, values: ["2", "4", "10", "20"] },
+  { label: guildsLabel, icon: Users, values: ["1", "1", "3", "6"] },
+  { label: homebrewLabel, icon: Palette, values: [false, true, true, true] },
+  { label: playtestsLabel, icon: Package, values: [false, false, true, true] },
+  { label: supportLabel, icon: MessageCircle, values: [true, true, true, true] },
+];
+---
+
+<section
+  id="premium"
+  class="d-xl-flex justify-content-xl-center"
+  data-premium-plans
+  data-billing="monthly"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col mb-3">
+        <h2 class="display-4 fw-bold mt-0">{t?.index?.donate?.title}</h2>
+        <p class="lead text-secondary mb-5">{t?.index?.donate?.desc}</p>
+      </div>
+    </div>
+    <div class="d-flex justify-content-start justify-content-md-end mb-4">
+      <div class="premium-billing" data-premium-billing>
+        <button
+          type="button"
+          class="premium-billing__option is-active"
+          data-billing="monthly"
+        >
+          {billingLabels.monthly}
+        </button>
+        <button
+          type="button"
+          class="premium-billing__option"
+          data-billing="annual"
+        >
+          {billingLabels.annual}
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-4 align-items-stretch premium-plans-grid">
+      {plans.map((plan) => (
+        <PremiumPlanCard
+          title={plan.title}
+          desc={plan.desc}
+          priceMonthly={plan.priceMonthly}
+          priceAnnual={plan.priceAnnual}
+          priceOldAnnual={plan.priceOldAnnual}
+          priceNoteAnnual={plan.priceNoteAnnual}
+          titleIcon={plan.titleIcon}
+          primaryFeatures={plan.primary}
+          secondaryFeatures={plan.secondary}
+          ctaLabel={ctaLabel}
+          accent={plan.accent}
+          badge={plan.badge}
+          badgeAlt={plan.title}
+        />
+      ))}
+    </div>
+
+    <div class="premium-compare mt-4">
+      <div class="premium-compare__scroll">
+        <div class="premium-compare__grid">
+          <div class="premium-compare__row premium-compare__header">
+            <div class="premium-compare__label" aria-hidden="true"></div>
+            {plans.map((plan) => (
+              <div
+                class="premium-compare__cell premium-compare__cell--plan premium-compare__cell--header"
+                style={`--compare-accent: ${plan.accent};`}
+              >
+                {plan.title}
+              </div>
+            ))}
+          </div>
+          {compareRows.map((row) => {
+            const RowIcon = row.icon;
+            return (
+              <div class="premium-compare__row">
+                <div class="premium-compare__label">
+                  {RowIcon ? (
+                    <RowIcon size={16} class="premium-compare__label-icon" />
+                  ) : null}
+                  <span>{row.label}</span>
+                </div>
+                {row.values.map((value, index) => {
+                  const plan = plans[index];
+                  const cellStyle = plan?.accent
+                    ? `--compare-accent: ${plan.accent};`
+                    : undefined;
+                  return (
+                    <div
+                      class="premium-compare__cell premium-compare__cell--plan"
+                      style={cellStyle}
+                    >
+                      {typeof value === "boolean" ? (
+                        value ? (
+                          <Check size={18} class="text-success" />
+                        ) : (
+                          <X size={18} class="text-danger" />
+                        )
+                      ) : (
+                        <span class="premium-compare__value">{value}</span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const initPremiumBilling = () => {
+    const root = document.querySelector("[data-premium-plans]");
+    const toggle = document.querySelector("[data-premium-billing]");
+    if (!root || !toggle) return;
+    const buttons = Array.from(
+      toggle.querySelectorAll("[data-billing]")
+    );
+    const setBilling = (value) => {
+      if (!value) return;
+      root.dataset.billing = value;
+      buttons.forEach((btn) => {
+        btn.classList.toggle("is-active", btn.dataset.billing === value);
+      });
+    };
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => setBilling(btn.dataset.billing));
+    });
+    if (buttons.length) {
+      setBilling(buttons[0].dataset.billing);
+    }
+  };
+
+  document.addEventListener("astro:page-load", initPremiumBilling);
+</script>
+
+<style>
+  :global([data-premium-plans][data-billing="monthly"]
+    .premium-plan-card__pricing[data-billing="annual"]) {
+    display: none;
+  }
+
+  :global([data-premium-plans][data-billing="annual"]
+    .premium-plan-card__pricing[data-billing="monthly"]) {
+    display: none;
+  }
+
+  .premium-billing {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 6px;
+  }
+
+  .premium-billing__option {
+    border: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .premium-billing__option.is-active {
+    background: #f8f9fa;
+    color: #0b0f14;
+  }
+
+  .premium-compare {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #10131b;
+    padding: 18px 20px;
+  }
+
+  .premium-compare::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .premium-compare::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.05), transparent 55%);
+    pointer-events: none;
+  }
+
+  .premium-compare__scroll {
+    overflow-x: auto;
+  }
+
+  .premium-compare__grid {
+    min-width: 720px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .premium-compare__row {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.2fr) repeat(4, minmax(120px, 1fr));
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.04);
+    position: relative;
+    z-index: 1;
+  }
+
+  .premium-compare__header {
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.06);
+    font-weight: 700;
+  }
+
+  .premium-compare__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.92rem;
+  }
+
+  .premium-compare__label-icon {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .premium-compare__cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    font-size: 0.92rem;
+  }
+
+  .premium-compare__cell--plan {
+    position: relative;
+    isolation: isolate;
+    padding: 6px 16px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .premium-compare__cell--plan::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+    border-radius: 999px;
+    background: var(--compare-accent, rgba(255, 255, 255, 0.5));
+    opacity: 0.7;
+    z-index: 0;
+  }
+
+  .premium-compare__cell--plan > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .premium-compare__cell--header {
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .premium-compare__cell--header::after {
+    left: 10px;
+    right: 10px;
+    top: auto;
+    bottom: 6px;
+    width: auto;
+    height: 2px;
+    margin-top: 0;
+    opacity: 0.9;
+  }
+
+  .premium-compare__value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    font-weight: 600;
+  }
+</style>

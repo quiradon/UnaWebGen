@@ -536,9 +536,10 @@
     }
   },
   "price": {
-    "0": "50 kr./md.\n",
-    "1": "7 kr./md.\n",
-    "2": "15 kr./md.\n"
+    "0": "15 kr./md.\n",
+    "1": "25 kr./md.\n",
+    "2": "30 kr./md.\n",
+    "3": "50 kr./md.\n"
   },
   "privacy": {
     "desc": "Læs Mini Krakens Privatlivspolitik. Lær hvordan vi indsamler, bruger og beskytter dine data.\n",

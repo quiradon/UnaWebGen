@@ -536,9 +536,10 @@
     }
   },
   "price": {
-    "0": "$3/Bulan",
-    "1": "$5/Bulan",
-    "2": "$7/Bulan"
+    "0": "$15/Bulan",
+    "1": "$25/Bulan",
+    "2": "$30/Bulan",
+    "3": "$50/Bulan"
   },
   "privacy": {
     "desc": "Baca Kebijakan Privasi untuk Mini Kraken. Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data Anda.",

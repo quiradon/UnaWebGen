@@ -1,0 +1,370 @@
+---
+const {
+  title,
+  desc,
+  priceMonthly,
+  priceAnnual,
+  priceOldMonthly,
+  priceOldAnnual,
+  priceNoteMonthly,
+  priceNoteAnnual,
+  primaryFeatures = [],
+  secondaryFeatures = [],
+  ctaLabel,
+  ctaHref = "#premium_modal",
+  titleIcon: TitleIcon,
+  badge,
+  badgeAlt,
+  accent,
+  className = "col-12 col-md-6 col-lg-3",
+} = Astro.props;
+
+const safePrimary = primaryFeatures.filter((item) => item?.text);
+const safeSecondary = secondaryFeatures.filter((item) => item?.text);
+const wrapperClass = className?.trim() || "col-12 col-md-6 col-lg-3";
+const cardClass = "premium-plan-card";
+const cardStyle = accent ? `--plan-accent: ${accent};` : undefined;
+const badgeAltText = badgeAlt ?? title ?? "";
+const buildPriceParts = (priceText) => {
+  if (!priceText) return null;
+  const [priceMainRaw, pricePeriodRaw] = priceText.split("/");
+  const priceMain = priceMainRaw?.trim();
+  const pricePeriod = pricePeriodRaw?.trim();
+  const amountMatch = priceMain?.match(/[0-9][0-9.,]*/);
+  const priceAmount = amountMatch?.[0] ?? priceMain ?? "";
+  const priceCurrency = amountMatch
+    ? priceMain.replace(priceAmount, "").trim()
+    : "";
+  return {
+    amount: priceAmount,
+    currency: priceCurrency,
+    period: pricePeriod,
+  };
+};
+
+const monthlyParts = buildPriceParts(priceMonthly);
+const annualParts = buildPriceParts(priceAnnual);
+---
+
+<div class={wrapperClass}>
+  <article class={cardClass} style={cardStyle}>
+    {badge ? (
+    <img
+      class="premium-plan-card__badge"
+      src={badge.src}
+      width="48"
+      height="48"
+      alt={badgeAltText}
+      loading="lazy"
+      decoding="async"
+    />
+    ) : null}
+    
+    <header class="premium-plan-card__header">
+      <div>
+        <h3 class="premium-plan-card__title">{title}</h3>
+        {desc ? <p class="premium-plan-card__desc">{desc}</p> : null}
+      </div>
+    </header>
+
+    {monthlyParts ? (
+      <div class="premium-plan-card__pricing" data-billing="monthly">
+        {priceOldMonthly ? (
+          <span class="premium-plan-card__price-old">{priceOldMonthly}</span>
+        ) : null}
+        <div class="premium-plan-card__price-main">
+          {monthlyParts.currency ? (
+            <span class="premium-plan-card__price-currency">
+              {monthlyParts.currency}
+            </span>
+          ) : null}
+          <span class="premium-plan-card__price-amount">
+            {monthlyParts.amount}
+          </span>
+          {monthlyParts.period ? (
+            <span class="premium-plan-card__price-period">
+              /{monthlyParts.period}
+            </span>
+          ) : null}
+        </div>
+        {priceNoteMonthly ? (
+          <span class="premium-plan-card__price-note">{priceNoteMonthly}</span>
+        ) : null}
+      </div>
+    ) : null}
+    {annualParts ? (
+      <div class="premium-plan-card__pricing" data-billing="annual">
+        {priceOldAnnual ? (
+          <span class="premium-plan-card__price-old">{priceOldAnnual}</span>
+        ) : null}
+        <div class="premium-plan-card__price-main">
+          {annualParts.currency ? (
+            <span class="premium-plan-card__price-currency">
+              {annualParts.currency}
+            </span>
+          ) : null}
+          <span class="premium-plan-card__price-amount">
+            {annualParts.amount}
+          </span>
+          {annualParts.period ? (
+            <span class="premium-plan-card__price-period">
+              /{annualParts.period}
+            </span>
+          ) : null}
+        </div>
+        {priceNoteAnnual ? (
+          <span class="premium-plan-card__price-note">{priceNoteAnnual}</span>
+        ) : null}
+      </div>
+    ) : null}
+    <a
+      class="premium-plan-card__cta"
+      href={ctaHref}
+      data-bs-target="#premium_modal"
+      data-bs-toggle="modal"
+    >
+      {ctaLabel}
+    </a>
+
+    <div class="premium-plan-card__body">
+      {safePrimary.length ? (
+        <ul class="premium-plan-card__list">
+          {safePrimary.map((item) => {
+            const Icon = item.Icon;
+            return (
+              <li class="premium-plan-card__item">
+                {Icon ? (
+                  <Icon size={16} class="premium-plan-card__item-icon" />
+                ) : null}
+                <span>{item.text}</span>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+
+      {safeSecondary.length ? (
+        <>
+          <hr class="premium-plan-card__divider" />
+          <ul class="premium-plan-card__list">
+            {safeSecondary.map((item) => {
+              const Icon = item.Icon;
+              return (
+                <li class="premium-plan-card__item">
+                  {Icon ? (
+                    <Icon size={16} class="premium-plan-card__item-icon" />
+                  ) : null}
+                  <span>{item.text}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </>
+      ) : null}
+    </div>
+  </article>
+</div>
+
+<style>
+  .premium-plan-card {
+    --plan-accent: var(--bs-primary);
+    position: relative;
+    overflow: visible;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 124px 70px 48px 1fr;
+    row-gap: 14px;
+    padding: 48px 20px 20px 22px;
+    background: #10131b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    color: #fff;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .premium-plan-card::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 3px;
+    border-radius: 999px;
+    background: var(--plan-accent);
+    opacity: 0.9;
+  }
+
+  .premium-plan-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.05), transparent 55%);
+    pointer-events: none;
+  }
+
+  .premium-plan-card__header {
+    grid-row: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 12px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    position: relative;
+    z-index: 1;
+    min-height: 112px;
+  }
+
+  .premium-plan-card__badge {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 58px;
+    height: 58px;
+    z-index: 3;
+  }
+
+  .premium-plan-card__title {
+    margin: 0 0 6px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    min-height: 1.2em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .premium-plan-card__desc {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.92rem;
+    line-height: 1.35;
+    min-height: calc(1.35em * 2);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .premium-plan-card__icon {
+    color: var(--plan-accent);
+    opacity: 0.9;
+  }
+
+  .premium-plan-card__body {
+    grid-row: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+    margin-top: 6px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .premium-plan-card__list {
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .premium-plan-card__item {
+    display: flex;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.92rem;
+  }
+
+  .premium-plan-card__item-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .premium-plan-card__divider {
+    border-color: rgba(255, 255, 255, 0.08);
+    margin: 4px 0;
+  }
+
+  .premium-plan-card__pricing {
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .premium-plan-card__price-old {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: line-through;
+  }
+
+  .premium-plan-card__price-main {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .premium-plan-card__price-currency {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+  }
+
+  .premium-plan-card__price-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .premium-plan-card__price-period {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    padding-bottom: 2px;
+  }
+
+  .premium-plan-card__price-note {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .premium-plan-card__cta {
+    grid-row: 3;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--plan-accent);
+    color: #0b0f14;
+    text-decoration: none !important;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .premium-plan-card__cta:hover {
+    filter: brightness(1.05);
+    color: #0b0f14;
+  }
+
+  .premium-plan-card:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+</style>

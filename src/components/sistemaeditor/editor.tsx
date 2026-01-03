@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import {
   BarChart3,
   ClipboardPaste,
@@ -14,6 +14,7 @@ import {
   ChevronUp,
   X,
   Globe,
+  Smile,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,6 +42,8 @@ import IntegrationsTab from "@/components/unique/IntegrationsTab";
 import { MentionInput } from "@/components/unique/MentionInput";
 import { TemplatesModal } from "@/components/unique/TemplatesModal";
 import MultiSelect, { BaseSelectable, LabelLocalization, LabelString, Locale, Localization } from "../ui/multiselect";
+import { EmojiDisplay } from "@/components/unique/EmojiDisplay";
+import config from "@/config";
 
 // =====================
 // Types
@@ -300,8 +303,16 @@ function CustomEmojiPicker({ value, onChange, placeholder = "ex.: 🗡️" }: { 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="justify-start font-normal">
-          {value || <span className="text-muted-foreground">{placeholder}</span>}
+        <Button 
+          variant="outline" 
+          className="h-10 w-10 p-0 aspect-square flex items-center justify-center" 
+          title={value ? "Alterar emoji" : "Escolher emoji"}
+        >
+          {value ? (
+            <EmojiDisplay value={value} className="h-6 w-6" />
+          ) : (
+            <Smile className="h-5 w-5 text-muted-foreground opacity-50" />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -392,7 +403,7 @@ function DiceEditor({ value, onChange, stats = [] }: { value: Dice[] | undefined
           Os dados são executados de cima para baixo. Primeiro dado com condição válida (ou sem condição) é executado.
         </p>
       </CardHeader>
-      <CardContent className="grid gap-3">
+      <CardContent className="grid gap-3 pt-6">
         {dices.length === 0 && (
           <div className="text-center py-8 text-muted-foreground border-2 border-dashed rounded-lg">
             <div className="text-2xl mb-2">🎲</div>
@@ -460,7 +471,7 @@ function DiceEditor({ value, onChange, stats = [] }: { value: Dice[] | undefined
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="grid gap-3">
+            <CardContent className="grid gap-3 pt-6">
 
               {/* Condição (opcional exceto para o último) */}
               {i < dices.length - 1 && (
@@ -766,7 +777,7 @@ function ReplacementEditor({ value, onChange, stats = [], dices = [] }: {
           Apenas stats usados nas expressões de dados deste card podem ser configurados como chaves.
         </p>
       </CardHeader>
-      <CardContent className="grid gap-3">
+      <CardContent className="grid gap-3 pt-6">
         {validKeyStats.length === 0 && usedStatIds.length === 0 && (
           <div className="text-center py-8 text-muted-foreground border-2 border-dashed rounded-lg">
             <div className="text-2xl mb-2">🎲</div>
@@ -802,9 +813,9 @@ function ReplacementEditor({ value, onChange, stats = [], dices = [] }: {
                     {keyStat && (
                       <div className="flex items-center gap-2">
                         <span className="text-sm">🔑</span>
-                        <code className="text-sm bg-muted px-2 py-1 rounded font-mono">
-                          {keyStat.emoji && `${keyStat.emoji} `}
-                          {keyStat.name?.default || `Stat ${keyStat.id}`}
+                        <code className="text-sm bg-muted px-2 py-1 rounded font-mono flex items-center gap-1">
+                          <EmojiDisplay value={keyStat.emoji} className="h-4 w-4" />
+                          <span>{keyStat.name?.default || `Stat ${keyStat.id}`}</span>
                         </code>
                       </div>
                     )}
@@ -853,10 +864,10 @@ function ReplacementEditor({ value, onChange, stats = [], dices = [] }: {
                                     stat.type === 'string' ? 'orange' :
                                       stat.type === 'calculated' ? 'pink' : 'secondary'
                             }>{stat.type}</Badge>
-                            <span>
-                              {stat.emoji && `${stat.emoji} `}
-                              {stat.name?.default || `Stat ${stat.id}`}
-                            </span>
+                            <div className="flex items-center gap-1">
+                              <EmojiDisplay value={stat.emoji} className="h-4 w-4" />
+                              <span>{stat.name?.default || `Stat ${stat.id}`}</span>
+                            </div>
                           </div>
                         </SelectItem>
                       ))}
@@ -927,9 +938,9 @@ function ReplacementEditor({ value, onChange, stats = [], dices = [] }: {
                                       stat.type === 'calculated' ? 'pink' : 'secondary'
                               }>{stat.type}</Badge>
                               <div className="flex-1">
-                                <div className="font-medium text-sm">
-                                  {stat.emoji && `${stat.emoji} `}
-                                  {stat.name?.default || `Stat ${stat.id}`}
+                                <div className="font-medium text-sm flex items-center gap-1">
+                                  <EmojiDisplay value={stat.emoji} className="h-4 w-4" />
+                                  <span>{stat.name?.default || `Stat ${stat.id}`}</span>
                                   {isKey && <span className="text-xs text-muted-foreground ml-2">(chave)</span>}
                                 </div>
                               </div>
@@ -1197,9 +1208,13 @@ function StatEnumEditor({ value, onChange, sections, allStats }: { value: StatsE
                 <SelectContent>
                   {availableEnumStats.map((stat) => (
                     <SelectItem key={stat.id} value={String(stat.id)}>
-                      {stat.emoji && `${stat.emoji} `}
-                      {stat.name?.default || `Stat ${stat.id}`}
-                      {Array.isArray(stat.options) && ` (${stat.options.length} opções)`}
+                      <div className="flex items-center gap-1">
+                        <EmojiDisplay value={stat.emoji} className="h-4 w-4" />
+                        <span>
+                          {stat.name?.default || `Stat ${stat.id}`}
+                          {Array.isArray(stat.options) && ` (${stat.options.length} opções)`}
+                        </span>
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -1249,7 +1264,7 @@ function StatEnumEditor({ value, onChange, sections, allStats }: { value: StatsE
                   <CardHeader className="py-3 cursor-pointer hover:bg-muted/50">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="text-lg">{o.emoji || "📋"}</span>
+                        <EmojiDisplay value={o.emoji} defaultEmoji="📋" className="text-lg h-6 w-6" />
                         <div>
                           <div className="font-medium text-sm">
                             {o.name?.default || `Opção ${o.value}`}
@@ -1808,12 +1823,68 @@ export default function RPGSystemBuilder() {
   });
   const [selectedTab, setSelectedTab] = useState<string>("config");
   const [showTemplatesModal, setShowTemplatesModal] = useState(false);
-  const errors = useMemo(() => validate(system), [system]);
+  const [highlightedItem, setHighlightedItem] = useState<{ type: 'stats' | 'sections', value: number } | null>(null);
+  
+  const [errors, setErrors] = useState<string[]>(() => validate(system));
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrors(validate(system));
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [system]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const remixId = params.get("remix");
+
+    if (remixId) {
+      const loadRemix = async () => {
+        try {
+          toast.info("Carregando sistema para remix...");
+          const response = await fetch(`${config.api_url}/rpg/systems/${remixId}`);
+          if (!response.ok) throw new Error("Falha ao buscar sistema");
+          const data = await response.json();
+          
+          if (data.system_data && data.system_data.sistema) {
+            setSystem(data.system_data.sistema);
+            toast.success("Sistema carregado com sucesso!");
+            window.history.replaceState({}, document.title, window.location.pathname);
+          } else {
+            throw new Error("Dados inválidos");
+          }
+        } catch (error) {
+          toast.error("Erro ao carregar sistema para remix");
+          console.error(error);
+        }
+      };
+      loadRemix();
+    }
+  }, []);
 
   const handleLoadTemplate = (newSystem: RPGSystem) => {
     console.log("Loading template:", newSystem);
     setSystem(newSystem);
     setSelectedTab("config");
+  };
+
+  const handleOpenErrorItem = (error: string) => {
+    const match = error.match(/(stats|sections)\[(\d+)\]/);
+    if (match) {
+      const type = match[1] as 'stats' | 'sections';
+      const index = parseInt(match[2]);
+
+      if (type === 'stats') {
+        const stat = system.stats[index];
+        if (stat) {
+          setSelectedTab('stats');
+          // Pequeno delay para garantir que a tab mudou antes de focar
+          setTimeout(() => setHighlightedItem({ type: 'stats', value: stat.id }), 50);
+        }
+      } else if (type === 'sections') {
+        setSelectedTab('sections');
+        setTimeout(() => setHighlightedItem({ type: 'sections', value: index }), 50);
+      }
+    }
   };
 
   const addStat = (kind: Stats["type"]) => {
@@ -1991,11 +2062,23 @@ export default function RPGSystemBuilder() {
                 </TabsList>
 
                 <div className="flex flex-wrap items-center gap-2">
-                  <Button onClick={exportJson} size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+                  <Button 
+                    onClick={exportJson} 
+                    size="sm" 
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                    disabled={errors.length > 0}
+                    title={errors.length > 0 ? "Corrija os erros antes de exportar" : "Exportar JSON"}
+                  >
                     <Download className="h-4 w-4 sm:mr-2" />
                     <span className="hidden sm:inline">Exportar</span>
                   </Button>
-                  <Button variant="outline" onClick={copyJson} size="sm">
+                  <Button 
+                    variant="outline" 
+                    onClick={copyJson} 
+                    size="sm"
+                    disabled={errors.length > 0}
+                    title={errors.length > 0 ? "Corrija os erros antes de copiar" : "Copiar JSON"}
+                  >
                     <Copy className="h-4 w-4 sm:mr-2" />
                     <span className="hidden sm:inline">Copiar</span>
                   </Button>
@@ -2039,7 +2122,21 @@ export default function RPGSystemBuilder() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="grid gap-1">
-                {errors.map((er, i) => (<div key={i} className="text-sm text-red-500">• {er}</div>))}
+                {errors.map((er, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm text-red-500">
+                    <span>• {er}</span>
+                    {/(stats|sections)\[(\d+)\]/.test(er) && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs hover:bg-red-100 hover:text-red-600 ml-auto"
+                        onClick={() => handleOpenErrorItem(er)}
+                      >
+                        Corrigir
+                      </Button>
+                    )}
+                  </div>
+                ))}
               </CardContent>
             </Card>
           )}
@@ -2063,6 +2160,7 @@ export default function RPGSystemBuilder() {
                   onRemoveStat={removeStat}
                   onDuplicateStat={duplicateStat}
                   onMoveStat={moveStat}
+                  openStatId={highlightedItem?.type === 'stats' ? highlightedItem.value : undefined}
                   PolymorphicStatEditor={PolymorphicStatEditor}
                 />
               </TabsContent>
@@ -2075,6 +2173,7 @@ export default function RPGSystemBuilder() {
                   onUpdateSection={updateSection}
                   onRemoveSection={removeSection}
                   onMoveSection={moveSection}
+                  openSectionIndex={highlightedItem?.type === 'sections' ? highlightedItem.value : undefined}
                   SectionEditor={SectionEditor}
                 />
               </TabsContent>

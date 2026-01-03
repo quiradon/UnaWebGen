@@ -49,7 +49,7 @@ import MultiSelect, { BaseSelectable, LabelLocalization, LabelString, Locale, Lo
 const operators = ["<", ">", "<=", ">=", "==", "!="] as const;
 type Operator = typeof operators[number];
 
-const sectionTypes = ["string", "img"] as const;
+const sectionTypes = ["string"] as const;
 type SectionType = typeof sectionTypes[number];
 
 const STRING_MAX_LENGTH_LIMIT = 128;
@@ -1509,37 +1509,13 @@ function SectionEditor({ value, onChange, sections, stats = [] }: { value: Secti
         </div>
       </div>
       <LabelLocalizationEditor label="Nome (localizado)" value={value.name} onChange={(v) => patch({ name: v })} />
-      <Card>
-        <CardHeader className="py-3"><CardTitle className="text-sm">Preview</CardTitle></CardHeader>
-        <CardContent className="grid gap-3">
-          <div className="grid md:grid-cols-3 gap-3"><div className="grid gap-2"><Label>Tipo</Label>
-            <Select value={value.preview.type} onValueChange={(val) => {
-              if (!assertSectionType(val)) {
-                return;
-              }
-              patch({ preview: { ...value.preview, type: val } })
-            }}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="string">string</SelectItem>
-                <SelectItem value="img">img</SelectItem>
-              </SelectContent>
-            </Select></div></div>
-          {value.preview.type === "string" ? ( 
-            <CompactMarkdownLocalizationEditor
-              value={value.preview.content}
-              onChange={(v) => patch({ preview: { ...value.preview, content: v } })}
-              label="Conteúdo (Markdown)"
-              sections={sections}
-              stats={stats}
-            />
-          ) : (
-            <CompactTextLocalizationEditor value={value.preview.content} onChange={(v) => patch({ preview: { ...value.preview, content: v } })} label="URL da imagem" placeholder="https://..." />
-          )}
-        </CardContent>
-      </Card>
+          <CompactMarkdownLocalizationEditor
+            value={value.preview.content}
+            onChange={(v) => patch({ preview: { ...value.preview, content: v, type: "string" } })}
+            label="Conteúdo (Markdown)"
+            sections={sections}
+            stats={stats}
+          />
       <div className="text-xs text-muted-foreground">Dica: você pode referenciar variáveis como <code>&lt;stat:ID:name&gt;</code> no Markdown.</div>
     </div>
   );
@@ -1781,9 +1757,9 @@ export default function RPGSystemBuilder() {
         name: { default: "Imagem Exemplo" },
         emoji: "🖼️",
         preview: {
-          type: "img",
+          type: "string",
           content: {
-            default: "https://picsum.photos/seed/rpg-demo/800/360"
+            default: "![Imagem Exemplo](https://picsum.photos/seed/rpg-demo/800/360)"
           }
         },
         view_pages: [1, 3]

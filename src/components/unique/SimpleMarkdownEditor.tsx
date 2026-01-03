@@ -35,6 +35,7 @@ interface SimpleMarkdownEditorProps {
   placeholder?: string;
   stats?: Stats[];
   sections?: Section[];
+  headerRight?: React.ReactNode;
 }
 
 type SelectionRange = { start: number; end: number };

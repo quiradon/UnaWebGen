@@ -29,7 +29,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { toast } from "sonner";
-import EmojiPickerReact, { EmojiStyle, Theme } from "emoji-picker-react";
+import EmojiPickerReact, { EmojiStyle, Theme, } from "emoji-picker-react";
 import { CompactMarkdownLocalizationEditor as NewCompactMarkdownEditor } from "@/components/unique/CompactMarkdownLocalizationEditor";
 import DiceNotationModal from "@/components/unique/DiceNotationModal";
 import { NotionStyleRender } from "@/components/unique/NotionStyleRender";
@@ -322,8 +322,16 @@ function CustomEmojiPicker({ value, onChange, placeholder = "ex.: 🗡️" }: { 
           width={320}
           height={420}
           emojiStyle={EmojiStyle.TWITTER}
-          theme={Theme.AUTO}
+          theme={Theme.DARK}
           searchPlaceholder="Buscar emojis..."
+          skinTonePickerLocation="none"
+          customEmojis={[
+            { names: ["Dungeons & Dragons"], id: "<:SystemDnD:1282444126586933271>", imgUrl: "https://cdn.discordapp.com/emojis/1282444126586933271.webp?size=64&quality=lossless"},
+            { names: ["Gear","Engrenagem"], id: "<:gear:1281499363507568670>", imgUrl: "https://cdn.discordapp.com/emojis/1281499363507568670.webp?size=64&quality=lossless"},
+            { names: ["Notes","Notas"], id: "<:notes:1281493946366824510>", imgUrl: "https://cdn.discordapp.com/emojis/1281493946366824510.webp?size=64&quality=lossless"},
+            { names: ["Backpack","MOCHILA"], id: "<:backpack:1281493417737584731>", imgUrl: "https://cdn.discordapp.com/emojis/1281493417737584731.webp?size=64&quality=lossless"},
+          ]}
+                    
           previewConfig={{
             defaultEmoji: "1f44d",
             defaultCaption: "Escolha um emoji!"

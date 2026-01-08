@@ -362,6 +362,36 @@ function safeBoolean(value: unknown, fallback: boolean) {
   return typeof value === "boolean" ? value : fallback;
 }
 
+function createId(prefix: string) {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return `${prefix}_${crypto.randomUUID()}`;
+  }
+  return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+async function fileToDataUrl(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Falha ao ler arquivo."));
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function getImageNaturalSize(src: string) {
+  return new Promise<{ width: number; height: number }>((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve({
+        width: img.naturalWidth || img.width,
+        height: img.naturalHeight || img.height,
+      });
+    };
+    img.onerror = () => reject(new Error("Falha ao carregar imagem."));
+    img.src = src;
+  });
+}
+
 function safeArray(value: unknown): unknown[] {
   return Array.isArray(value) ? value : [];
 }
@@ -1060,6 +1090,8 @@ function HandoutCanvasBuilder() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [manipulatingId, setManipulatingId] = useState<string | null>(null);
+  const [dragOverride, setDragOverride] = useState<{ id: string; x: number; y: number } | null>(null);
+  const [groupDragOffset, setGroupDragOffset] = useState<{ dx: number; dy: number } | null>(null);
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
   const [layersPanelOpen, setLayersPanelOpen] = useState(false);
   const [fillPresets, setFillPresets] = useState<FillPreset[]>([]);
@@ -1092,6 +1124,13 @@ function HandoutCanvasBuilder() {
   const editingSnapshotRef = useRef<string>("");
   const snapFrameRef = useRef<number | null>(null);
   const snapPendingRef = useRef<SnapGuide[] | null>(null);
+  const snapTargetsRef = useRef<{ vertical: number[]; horizontal: number[] } | null>(null);
+  const dragFrameRef = useRef<number | null>(null);
+  const dragPendingRef = useRef<{ id: string; x: number; y: number } | null>(null);
+  const dragAnchorRef = useRef<{ id: string; offsetX: number; offsetY: number } | null>(null);
+  const groupDragFrameRef = useRef<number | null>(null);
+  const groupDragPendingRef = useRef<{ dx: number; dy: number } | null>(null);
+  const groupDragAnchorRef = useRef<{ offsetX: number; offsetY: number } | null>(null);
   const groupDragRef = useRef<{
     ids: string[];
     startBounds: { x: number; y: number; width: number; height: number };
@@ -1363,6 +1402,7 @@ function HandoutCanvasBuilder() {
   }, [selectedLayers]);
   const isGroupSelection = Boolean(selectionBounds);
   const isGroupLocked = isGroupSelection ? selectedLayers.some((layer) => layer.locked) : false;
+  const activeGroupOffset = manipulatingId === "group" ? groupDragOffset : null;
   const textLayer = selectedLayer?.type === "text" ? selectedLayer : null;
   const textLayerWeights = useMemo(() => {
     if (!textLayer) return FONT_WEIGHT_VALUES;
@@ -1536,6 +1576,125 @@ function HandoutCanvasBuilder() {
   function clearSnapGuides() {
     snapPendingRef.current = null;
     setSnapGuides([]);
+  }
+
+  function prepareSnapTargets(excludeIds: string[]) {
+    snapTargetsRef.current = getSnapTargets(excludeIds);
+  }
+
+  function clearSnapTargets() {
+    snapTargetsRef.current = null;
+  }
+
+  function scheduleDragOverride(id: string, x: number, y: number) {
+    dragPendingRef.current = { id, x, y };
+    if (dragFrameRef.current !== null) return;
+    dragFrameRef.current = window.requestAnimationFrame(() => {
+      dragFrameRef.current = null;
+      const pending = dragPendingRef.current;
+      dragPendingRef.current = null;
+      if (!pending) return;
+      setDragOverride(pending);
+    });
+  }
+
+  function clearDragOverride() {
+    if (dragFrameRef.current !== null) {
+      window.cancelAnimationFrame(dragFrameRef.current);
+      dragFrameRef.current = null;
+    }
+    dragPendingRef.current = null;
+    dragAnchorRef.current = null;
+    setDragOverride(null);
+  }
+
+  function scheduleGroupDragUpdate(dx: number, dy: number) {
+    groupDragPendingRef.current = { dx, dy };
+    if (groupDragFrameRef.current !== null) return;
+    groupDragFrameRef.current = window.requestAnimationFrame(() => {
+      groupDragFrameRef.current = null;
+      const pending = groupDragPendingRef.current;
+      groupDragPendingRef.current = null;
+      if (!pending) return;
+      setGroupDragOffset(pending);
+    });
+  }
+
+  function cancelGroupDragUpdate() {
+    if (groupDragFrameRef.current !== null) {
+      window.cancelAnimationFrame(groupDragFrameRef.current);
+      groupDragFrameRef.current = null;
+    }
+    groupDragPendingRef.current = null;
+    groupDragAnchorRef.current = null;
+    setGroupDragOffset(null);
+  }
+
+  function getPointerCanvasPosition(event: MouseEvent | TouchEvent) {
+    const page = pageRef.current;
+    if (!page) return null;
+    const rect = page.getBoundingClientRect();
+    if ("touches" in event) {
+      const touch = event.touches[0] ?? event.changedTouches[0];
+      if (!touch) return null;
+      return {
+        x: (touch.clientX - rect.left) / doc.zoom,
+        y: (touch.clientY - rect.top) / doc.zoom,
+      };
+    }
+    return {
+      x: ((event as MouseEvent).clientX - rect.left) / doc.zoom,
+      y: ((event as MouseEvent).clientY - rect.top) / doc.zoom,
+    };
+  }
+
+  function computeSnapResultWithTargets(
+    rect: { x: number; y: number; width: number; height: number },
+    targets: { vertical: number[]; horizontal: number[] },
+  ) {
+    if (!snapEnabled) return { x: rect.x, y: rect.y, guides: [] as SnapGuide[] };
+    const { vertical, horizontal } = targets;
+    const candidatesX = [rect.x, rect.x + rect.width / 2, rect.x + rect.width];
+    const candidatesY = [rect.y, rect.y + rect.height / 2, rect.y + rect.height];
+    let snappedX = rect.x;
+    let snappedY = rect.y;
+    let bestXDiff = snapTolerance + 1;
+    let bestYDiff = snapTolerance + 1;
+    let bestXTarget = 0;
+    let bestYTarget = 0;
+    const guides: SnapGuide[] = [];
+
+    candidatesX.forEach((candidate) => {
+      vertical.forEach((target) => {
+        const diff = target - candidate;
+        if (Math.abs(diff) < Math.abs(bestXDiff) && Math.abs(diff) <= snapTolerance) {
+          bestXDiff = diff;
+          bestXTarget = target;
+        }
+      });
+    });
+
+    if (Math.abs(bestXDiff) <= snapTolerance) {
+      snappedX = rect.x + bestXDiff;
+      guides.push({ axis: "x", value: bestXTarget });
+    }
+
+    candidatesY.forEach((candidate) => {
+      horizontal.forEach((target) => {
+        const diff = target - candidate;
+        if (Math.abs(diff) < Math.abs(bestYDiff) && Math.abs(diff) <= snapTolerance) {
+          bestYDiff = diff;
+          bestYTarget = target;
+        }
+      });
+    });
+
+    if (Math.abs(bestYDiff) <= snapTolerance) {
+      snappedY = rect.y + bestYDiff;
+      guides.push({ axis: "y", value: bestYTarget });
+    }
+
+    return { x: snappedX, y: snappedY, guides };
   }
 
   function getSnapTargets(excludeIds: string[]) {
@@ -3946,7 +4105,11 @@ function updateShadowEffect(
           >
             <div
               className="handout-canvas-zoom"
-              style={{ transform: `scale(${doc.zoom})`, transformOrigin: "top center" }}
+              style={{
+                transform: `scale(${doc.zoom})`,
+                transformOrigin: "top left",
+                marginLeft: `${(derivedPage.width * (1 - doc.zoom)) / 2}px`,
+              }}
             >
               <div
                 ref={pageRef}
@@ -4059,27 +4222,50 @@ function updateShadowEffect(
                           bottomRight: handleStyle,
                         }
                       : undefined;
+                  const overridePosition = dragOverride?.id === layer.id ? dragOverride : null;
+                  const groupOffset = activeGroupOffset && isSelected ? activeGroupOffset : null;
+                  const layerPosition = overridePosition
+                    ? { x: overridePosition.x, y: overridePosition.y }
+                    : groupOffset
+                      ? { x: layer.x + groupOffset.dx, y: layer.y + groupOffset.dy }
+                      : { x: layer.x, y: layer.y };
 
                   return (
                     <Rnd
                       key={layer.id}
                       bounds="parent"
                       size={{ width: layer.width, height: layer.height }}
-                      position={{ x: layer.x, y: layer.y }}
+                      position={layerPosition}
                       scale={doc.zoom}
                       data-layer-id={layer.id}
                       disableDragging={layer.locked || isEditing || (isGroupSelection && isSelected)}
                       enableResizing={canResize}
                       resizeHandleStyles={resizeHandleStyles}
                       lockAspectRatio={layer.type === "image" ? layer.keepAspectRatio : false}
-                      onDragStart={() => setManipulatingId(layer.id)}
-                      onDrag={(_, data) => {
-                        if (!snapEnabled) return;
-                        const result = computeSnapResult(
-                          { x: data.x, y: data.y, width: layer.width, height: layer.height },
-                          [layer.id],
-                        );
-                        scheduleSnapGuides(result.guides);
+                      onDragStart={(event) => {
+                        clearSnapGuides();
+                        if (snapEnabled) prepareSnapTargets([layer.id]);
+                        const pointer = getPointerCanvasPosition(event as MouseEvent | TouchEvent);
+                        if (pointer) {
+                          dragAnchorRef.current = {
+                            id: layer.id,
+                            offsetX: pointer.x - layer.x,
+                            offsetY: pointer.y - layer.y,
+                          };
+                          scheduleDragOverride(layer.id, layer.x, layer.y);
+                        }
+                        setManipulatingId(layer.id);
+                      }}
+                      onDrag={(event) => {
+                        const anchor = dragAnchorRef.current;
+                        if (!anchor || anchor.id !== layer.id) return;
+                        const pointer = getPointerCanvasPosition(event as MouseEvent | TouchEvent);
+                        if (!pointer) return;
+                        const maxX = Math.max(0, derivedPage.width - layer.width);
+                        const maxY = Math.max(0, derivedPage.height - layer.height);
+                        const nextX = clamp(pointer.x - anchor.offsetX, 0, maxX);
+                        const nextY = clamp(pointer.y - anchor.offsetY, 0, maxY);
+                        scheduleDragOverride(layer.id, nextX, nextY);
                       }}
                       onMouseDown={(e) => {
                         e.stopPropagation();
@@ -4103,13 +4289,29 @@ function updateShadowEffect(
                         }
                         setSidebarTab("props");
                       }}
-                      onDragStop={(_, data) => {
-                        const result = computeSnapResult(
-                          { x: data.x, y: data.y, width: layer.width, height: layer.height },
-                          [layer.id],
+                      onDragStop={(event, data) => {
+                        const anchor = dragAnchorRef.current;
+                        const pointer = getPointerCanvasPosition(event as MouseEvent | TouchEvent);
+                        let baseX = data.x;
+                        let baseY = data.y;
+                        if (anchor && anchor.id === layer.id && pointer) {
+                          const maxX = Math.max(0, derivedPage.width - layer.width);
+                          const maxY = Math.max(0, derivedPage.height - layer.height);
+                          baseX = clamp(pointer.x - anchor.offsetX, 0, maxX);
+                          baseY = clamp(pointer.y - anchor.offsetY, 0, maxY);
+                        } else if (dragOverride?.id === layer.id) {
+                          baseX = dragOverride.x;
+                          baseY = dragOverride.y;
+                        }
+                        const targets = snapTargetsRef.current ?? getSnapTargets([layer.id]);
+                        const result = computeSnapResultWithTargets(
+                          { x: baseX, y: baseY, width: layer.width, height: layer.height },
+                          targets,
                         );
                         updateLayer(layer.id, (p) => ({ ...p, x: result.x, y: result.y }));
                         clearSnapGuides();
+                        clearSnapTargets();
+                        clearDragOverride();
                         setManipulatingId(null);
                       }}
                       onResizeStart={() => setManipulatingId(layer.id)}
@@ -4298,12 +4500,26 @@ function updateShadowEffect(
                   <Rnd
                     bounds="parent"
                     size={{ width: selectionBounds.width, height: selectionBounds.height }}
-                    position={{ x: selectionBounds.x, y: selectionBounds.y }}
+                    position={
+                      activeGroupOffset
+                        ? { x: selectionBounds.x + activeGroupOffset.dx, y: selectionBounds.y + activeGroupOffset.dy }
+                        : { x: selectionBounds.x, y: selectionBounds.y }
+                    }
                     scale={doc.zoom}
                     disableDragging={isGroupLocked}
                     enableResizing={!isGroupLocked}
-                    onDragStart={() => {
+                    onDragStart={(event) => {
                       if (!selectionBounds) return;
+                      clearSnapGuides();
+                      cancelGroupDragUpdate();
+                      const pointer = getPointerCanvasPosition(event as MouseEvent | TouchEvent);
+                      if (pointer) {
+                        groupDragAnchorRef.current = {
+                          offsetX: pointer.x - selectionBounds.x,
+                          offsetY: pointer.y - selectionBounds.y,
+                        };
+                        scheduleGroupDragUpdate(0, 0);
+                      }
                       groupDragRef.current = {
                         ids: selectedLayers.map((layer) => layer.id),
                         startBounds: { ...selectionBounds },
@@ -4320,39 +4536,66 @@ function updateShadowEffect(
                           {} as Record<string, { x: number; y: number; width: number; height: number }>,
                         ),
                       };
+                      if (snapEnabled) prepareSnapTargets(selectedLayers.map((layer) => layer.id));
                       setManipulatingId("group");
                     }}
-                    onDrag={(_, data) => {
+                    onDrag={(event) => {
                       const refData = groupDragRef.current;
                       if (!refData) return;
-                      const snap = computeSnapResult(
-                        {
-                          x: data.x,
-                          y: data.y,
-                          width: refData.startBounds.width,
-                          height: refData.startBounds.height,
-                        },
-                        refData.ids,
-                      );
-                      scheduleSnapGuides(snap.guides);
-                      const dx = snap.x - refData.startBounds.x;
-                      const dy = snap.y - refData.startBounds.y;
-                      const idSet = new Set(refData.ids);
-                      setDoc((prev) => ({
-                        ...prev,
-                        layers: prev.layers.map((layer) => {
-                          if (!idSet.has(layer.id)) return layer;
-                          const start = refData.startLayers[layer.id];
-                          return {
-                            ...layer,
-                            x: start.x + dx,
-                            y: start.y + dy,
-                          };
-                        }),
-                      }));
+                      const pointer = getPointerCanvasPosition(event as MouseEvent | TouchEvent);
+                      const anchor = groupDragAnchorRef.current;
+                      if (!pointer || !anchor || !selectionBounds) return;
+                      const maxX = Math.max(0, derivedPage.width - selectionBounds.width);
+                      const maxY = Math.max(0, derivedPage.height - selectionBounds.height);
+                      const nextX = clamp(pointer.x - anchor.offsetX, 0, maxX);
+                      const nextY = clamp(pointer.y - anchor.offsetY, 0, maxY);
+                      scheduleGroupDragUpdate(nextX - refData.startBounds.x, nextY - refData.startBounds.y);
                     }}
-                    onDragStop={() => {
+                    onDragStop={(event, data) => {
+                      const refData = groupDragRef.current;
+                      if (refData) {
+                        const targets = snapTargetsRef.current ?? getSnapTargets(refData.ids);
+                        let baseX = data.x;
+                        let baseY = data.y;
+                        const anchor = groupDragAnchorRef.current;
+                        const pointer = getPointerCanvasPosition(event as MouseEvent | TouchEvent);
+                        if (anchor && pointer && selectionBounds) {
+                          const maxX = Math.max(0, derivedPage.width - selectionBounds.width);
+                          const maxY = Math.max(0, derivedPage.height - selectionBounds.height);
+                          baseX = clamp(pointer.x - anchor.offsetX, 0, maxX);
+                          baseY = clamp(pointer.y - anchor.offsetY, 0, maxY);
+                        } else if (activeGroupOffset && selectionBounds) {
+                          baseX = selectionBounds.x + activeGroupOffset.dx;
+                          baseY = selectionBounds.y + activeGroupOffset.dy;
+                        }
+                        const result = computeSnapResultWithTargets(
+                          {
+                            x: baseX,
+                            y: baseY,
+                            width: refData.startBounds.width,
+                            height: refData.startBounds.height,
+                          },
+                          targets,
+                        );
+                        const dx = result.x - refData.startBounds.x;
+                        const dy = result.y - refData.startBounds.y;
+                        const idSet = new Set(refData.ids);
+                        setDoc((prev) => ({
+                          ...prev,
+                          layers: prev.layers.map((layer) => {
+                            if (!idSet.has(layer.id)) return layer;
+                            const start = refData.startLayers[layer.id];
+                            return {
+                              ...layer,
+                              x: start.x + dx,
+                              y: start.y + dy,
+                            };
+                          }),
+                        }));
+                      }
+                      cancelGroupDragUpdate();
                       clearSnapGuides();
+                      clearSnapTargets();
                       setManipulatingId(null);
                       groupDragRef.current = null;
                     }}

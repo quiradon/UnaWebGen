@@ -2176,6 +2176,7 @@
 @media print {
   .handout-canvas-zoom {
     transform: none !important;
+    margin-left: 0 !important;
   }
 
   .handout-layer-bounds {

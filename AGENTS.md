@@ -18,6 +18,8 @@ These skills are discovered at startup from multiple local sources. Each entry i
   - If multiple skills apply, choose the minimal set that covers the request and state the order you'll use them.
   - Announce which skill(s) you're using and why (one short line). If you skip an obvious skill, say why.
 - Context hygiene:
+  - **Source of Truth**: Always consult `docs/features/` and `docs/technical/` before modifying code. These files contain business rules and technical maps that are NOT visible just by reading the source code.
+  - **LLM Master Guide**: Use `docs/llm-context.md` for project-specific prompt engineering rules, coding standards, and common module cheat sheets.
   - Keep context small: summarize long sections instead of pasting them; only load extra files when needed.
   - Avoid deeply nested references; prefer one-hop files explicitly linked from `SKILL.md`.
   - When variants exist (frameworks, providers, domains), pick only the relevant reference file(s) and note that choice.

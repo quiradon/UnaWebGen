@@ -9,15 +9,6 @@ const t = loadT(locale);
 
 ---
 <Layout t={t} title={t.dices?.title} desc={t.dices?.desc}>
-  <script src="https://unpkg.com/mathjs@11.8.2/lib/browser/math.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/random-js@2.1.0/dist/random-js.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@dice-roller/rpg-dice-roller/lib/umd/bundle.min.js"></script>
-  <script is:inline>
-    // exposed for /js/dice_roll.js
-    // @ts-ignore
-    var diceRoller = new rpgDiceRoller.DiceRoller();
-  </script>
-
   <section>
     <div class="container">
       <div class="row mt-5 m-1">
@@ -39,5 +30,52 @@ const t = loadT(locale);
   </section>
 
   <div class="footer-spacer" style="flex-grow: 1;"></div>
-  <script is:inline src="/js/dice_roll.js"></script>
+
+  <script is:inline>
+    // Global variable exposed for /js/dice_roll.js
+    var diceRoller = null;
+
+    async function loadScripts() {
+      const scripts = [
+        'https://unpkg.com/mathjs@11.8.2/lib/browser/math.js',
+        'https://cdn.jsdelivr.net/npm/random-js@2.1.0/dist/random-js.umd.min.js',
+        'https://cdn.jsdelivr.net/npm/@dice-roller/rpg-dice-roller/lib/umd/bundle.min.js'
+      ];
+
+      for (const src of scripts) {
+        if (!document.querySelector(`script[src="${src}"]`)) {
+          await new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+        }
+      }
+
+      // @ts-ignore
+      if (typeof rpgDiceRoller !== 'undefined') {
+        // @ts-ignore
+        diceRoller = new rpgDiceRoller.DiceRoller();
+        console.log('DiceRoller initialized');
+      }
+    }
+
+    document.addEventListener('astro:page-load', async () => {
+      await loadScripts();
+      // Load helper script after dependencies
+      if (!document.querySelector(`script[src="/js/dice_roll.js"]`)) {
+        const script = document.createElement('script');
+        script.src = "/js/dice_roll.js";
+        document.body.appendChild(script);
+      } else {
+        // If already exists, we might need to re-bind events or re-init
+        // dice_roll.js should ideally handle re-execution
+        if (typeof initDiceRoll === 'function') {
+          initDiceRoll();
+        }
+      }
+    });
+  </script>
 </Layout>

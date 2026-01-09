@@ -125,7 +125,7 @@ function normalizeStateV1(input: unknown): HandoutStateV1 | null {
     template: safeEnum(input.template, ["parchment", "letter", "dossier"] as const, DEFAULT_STATE.template),
     pageSize: safeEnum(input.pageSize, ["a4", "letter", "note"] as const, DEFAULT_STATE.pageSize),
     orientation: safeEnum(input.orientation, ["portrait", "landscape"] as const, DEFAULT_STATE.orientation),
-    zoom: Math.min(1.5, Math.max(0.5, safeNumber(input.zoom, DEFAULT_STATE.zoom))),
+    zoom: Math.min(1.5, Math.max(0.25, safeNumber(input.zoom, DEFAULT_STATE.zoom))),
     paperColor: safeString(input.paperColor, DEFAULT_STATE.paperColor),
     inkColor: safeString(input.inkColor, DEFAULT_STATE.inkColor),
     accentColor: safeString(input.accentColor, DEFAULT_STATE.accentColor),
@@ -493,7 +493,7 @@ function HandoutBuilder() {
                       <input
                         id="handout-zoom"
                         type="range"
-                        min={0.5}
+                        min={0.25}
                         max={1.25}
                         step={0.05}
                         value={state.zoom}

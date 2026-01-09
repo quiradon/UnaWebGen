@@ -1,4 +1,6 @@
 {
     "liveServer.settings.root": "",
-    "workbench.iconTheme": "material-icon-theme"
+    "workbench.iconTheme": "material-icon-theme",
+    "polyglotManager.openaiModel": "gpt-4o-mini",
+    "polyglotManager.sourceLanguage": "pt"
 }

@@ -20,6 +20,7 @@ These skills are discovered at startup from multiple local sources. Each entry i
 - Context hygiene:
   - **Source of Truth**: Always consult `docs/features/` and `docs/technical/` before modifying code. These files contain business rules and technical maps that are NOT visible just by reading the source code.
   - **LLM Master Guide**: Use `docs/llm-context.md` for project-specific prompt engineering rules, coding standards, and common module cheat sheets.
+  - **File Length & Modularization**: Avoid creating files with more than 400 lines. If a file grows beyond this limit, split it into smaller, reusable components or separate logic into utility files.
   - Keep context small: summarize long sections instead of pasting them; only load extra files when needed.
   - Avoid deeply nested references; prefer one-hop files explicitly linked from `SKILL.md`.
   - When variants exist (frameworks, providers, domains), pick only the relevant reference file(s) and note that choice.

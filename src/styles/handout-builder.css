@@ -28,12 +28,15 @@
 }
 
 .handout-builder .handout-builder-sidebar {
-  display: grid;
-  grid-template-columns: 88px minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  width: var(--handout-sidebar-collapsed-width);
+  min-width: var(--handout-sidebar-collapsed-width);
   min-height: 0;
-  border-radius: 0 18px 18px 0;
+  border-radius: 0;
   border: 1px solid hsl(var(--border));
-  overflow: hidden;
+  overflow: visible;
   background:
     radial-gradient(380px 240px at 90% 0%, hsl(var(--muted) / 0.45), transparent 65%),
     hsl(var(--card));
@@ -48,10 +51,9 @@
   position: relative;
   min-height: 0;
   height: 100%;
-  --handout-sidebar-offset: min(480px, 40vw);
-  padding: 12px;
-  padding-top: calc(12px + var(--handout-topbar-offset, 0px));
-  padding-left: 0;
+  --handout-sidebar-collapsed-width: 88px;
+  --handout-sidebar-open-width: min(480px, 40vw);
+  padding: 0;
   border: 1px solid hsl(var(--border));
   border-radius: 0;
   background-color: #20202521;
@@ -68,27 +70,20 @@
 
 .handout-builder .handout-canvas-shell.is-collapsed {
   gap: 8px;
-  --handout-sidebar-offset: 88px;
 }
 
 .handout-builder .handout-canvas-sidebar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 30;
-  width: min(480px, 40vw);
-  height: auto;
-  max-height: none;
+  position: relative;
+  width: var(--handout-sidebar-collapsed-width);
+  min-width: var(--handout-sidebar-collapsed-width);
+  height: 100%;
   align-self: stretch;
-  transition: width 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .handout-builder .handout-canvas-sidebar.is-collapsed {
-  grid-template-columns: 88px;
-  width: 88px;
-  min-width: 88px;
-  transform: translateX(0);
+  width: var(--handout-sidebar-collapsed-width);
+  min-width: var(--handout-sidebar-collapsed-width);
 }
 
 .handout-builder .handout-canvas-sidebar.is-collapsed .handout-sidebar-panel {
@@ -114,8 +109,11 @@
 }
 
 @media (max-width: 1023px) {
+  .handout-builder .handout-canvas-shell {
+    --handout-sidebar-collapsed-width: 72px;
+  }
+
   .handout-builder .handout-builder-sidebar {
-    grid-template-columns: 72px minmax(0, 1fr);
     min-height: auto;
   }
 }
@@ -125,6 +123,8 @@
   flex-direction: column;
   gap: 10px;
   padding: 14px 12px;
+  flex: 1;
+  min-height: 0;
   background:
     radial-gradient(140px 140px at 50% 0%, rgba(255, 255, 255, 0.45), transparent 65%),
     linear-gradient(180deg, hsl(var(--muted) / 0.55), hsl(var(--muted) / 0.15));
@@ -167,6 +167,12 @@
 }
 
 .handout-builder .handout-sidebar-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(100% + 12px);
+  z-index: 30;
+  width: var(--handout-sidebar-open-width);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -174,6 +180,12 @@
   overflow: auto;
   min-height: 0;
   scrollbar-gutter: stable;
+  border-radius: 18px;
+  border: 1px solid hsl(var(--border));
+  background:
+    radial-gradient(380px 240px at 90% 0%, hsl(var(--muted) / 0.45), transparent 65%),
+    hsl(var(--card));
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
 }
 
 .handout-builder .handout-panel-section {
@@ -1488,7 +1500,8 @@
   justify-content: center;
   overflow: auto;
   position: relative;
-  padding: 0;
+  padding: 12px;
+  padding-top: calc(12px + var(--handout-topbar-offset, 0px));
   min-width: 0;
   min-height: 0;
   width: 100%;
@@ -1496,10 +1509,6 @@
   border: none;
   border-radius: 0;
   background: transparent;
-}
-
-.handout-builder .handout-canvas-stage {
-  padding-left: var(--handout-sidebar-offset, 0px);
 }
 
 @media (max-width: 768px) {
@@ -1529,6 +1538,11 @@
     gap: 8px;
   }
 
+  .handout-builder .handout-preview-stage {
+    padding: 8px;
+    padding-top: calc(8px + var(--handout-topbar-offset, 0px));
+  }
+
   .handout-builder .handout-text-toolbar,
   .handout-builder .handout-topbar-actions,
   .handout-builder .handout-background-toolbar {
@@ -1546,29 +1560,16 @@
   }
 
   .handout-builder .handout-canvas-shell {
-    padding: 8px;
-    padding-top: calc(8px + var(--handout-topbar-offset, 0px));
-    padding-left: 0;
+    padding: 0;
     min-height: 0;
-    --handout-sidebar-offset: min(92vw, 360px);
+    --handout-sidebar-open-width: min(92vw, 360px);
   }
 
-  .handout-builder .handout-canvas-sidebar {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: min(92vw, 360px);
-    height: auto;
-    max-height: none;
-  }
-
-  .handout-builder .handout-canvas-sidebar.is-collapsed {
-    width: 88px;
-    min-width: 88px;
+  .handout-builder .handout-sidebar-panel {
+    left: calc(100% + 8px);
   }
 
   .handout-builder .handout-canvas-shell.is-collapsed {
-    --handout-sidebar-offset: 88px;
   }
 }
 

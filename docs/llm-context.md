@@ -31,4 +31,5 @@ MiniKraken is an RPG toolkit built with **Astro**, **Bun**, and **Tailwind/Boots
 - Use **TypeScript** for all new scripts.
 - Prefer **Functional Components** for React.
 - Use **Lucide Icons** via `@lucide/astro`.
+- **Max File Length**: Do not exceed 400 lines per file. Separate logic and UI into smaller components/files.
 - Ensure **View Transitions** compatibility by using `window.__kraken` caches for state.

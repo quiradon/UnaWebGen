@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 
 // Types - importados do editor principal
 type Locale = 
@@ -15,6 +16,7 @@ interface RPGSystemConfig {
   id: number;
   name: LabelLocalization;
   description: Localization<string>;
+  emoji?: string;
 }
 
 interface ConfigTabProps {
@@ -32,6 +34,11 @@ interface ConfigTabProps {
     onChange: (v: Localization<string>) => void;
     placeholder?: string;
   }>;
+  EmojiPicker: React.ComponentType<{
+    value?: string;
+    onChange: (v: string) => void;
+    placeholder?: string;
+  }>;
 }
 
 const ConfigTab: React.FC<ConfigTabProps> = ({
@@ -39,6 +46,7 @@ const ConfigTab: React.FC<ConfigTabProps> = ({
   onChange,
   LabelLocalizationEditor,
   CompactTextLocalizationEditor,
+  EmojiPicker,
 }) => {
   const patch = (p: Partial<RPGSystemConfig>) => onChange({ ...value, ...p });
 
@@ -51,6 +59,14 @@ const ConfigTab: React.FC<ConfigTabProps> = ({
         </CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4 pt-6">
+        <div className="grid gap-2">
+          <Label>Emoji</Label>
+          <EmojiPicker
+            value={value.emoji ?? ""}
+            onChange={(v) => patch({ emoji: v })}
+            placeholder="ex.: 🎲"
+          />
+        </div>
         <LabelLocalizationEditor
           label="Nome (localizado)"
           value={value.name}

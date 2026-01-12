@@ -8,6 +8,7 @@ import { Loader2, Download, Globe, User, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import type { RPGSystem } from "@/components/sistemaeditor/editor";
+import config from "@/config";
 
 interface SystemSummary {
   id: string;
@@ -46,7 +47,7 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
   const fetchSystems = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://api-rpg.arkanus.app/rpg/systems/");
+      const response = await fetch(`${config.api_url}/rpg/systems/`);
       if (!response.ok) throw new Error("Falha ao buscar sistemas");
       const data = await response.json();
       setSystems(data.systems_list || []);
@@ -61,7 +62,7 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
   const handleSelectSystem = async (id: string) => {
     setLoadingId(id);
     try {
-      const response = await fetch(`https://api-rpg.arkanus.app/rpg/systems/${id}`);
+      const response = await fetch(`${config.api_url}/rpg/systems/${id}`);
       if (!response.ok) throw new Error("Falha ao buscar detalhes do sistema");
       const data = await response.json();
       
@@ -85,24 +86,24 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[80vh] flex flex-col">
+      <DialogContent className="max-w-3xl h-[80vh] flex flex-col overflow-hidden">
         <DialogHeader>
           <DialogTitle>Sistemas Implementados</DialogTitle>
           <DialogDescription>
             Escolha um dos sistemas pré-configurados para usar como base.
           </DialogDescription>
           <div className="relative mt-2">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input 
               placeholder="Buscar sistema por nome ou descrição..." 
-              className="pl-8" 
+              className="pl-9" 
               value={searchTerm} 
               onChange={(e) => setSearchTerm(e.target.value)} 
             />
           </div>
         </DialogHeader>
         
-        <ScrollArea className="flex-1 pr-4 h-[60vh]">
+        <ScrollArea className="flex-1 min-h-0 pr-4">
           {loading ? (
             <div className="flex justify-center items-center h-40">
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -157,3 +158,4 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
     </Dialog>
   );
 }
+

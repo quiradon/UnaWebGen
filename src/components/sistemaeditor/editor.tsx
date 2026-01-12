@@ -40,27 +40,23 @@ import SectionsTab from "@/components/unique/SectionsTab";
 import IntegrationsTab from "@/components/unique/IntegrationsTab";
 import { MentionInput } from "@/components/unique/MentionInput";
 import { TemplatesModal } from "@/components/unique/TemplatesModal";
+import MultiSelect, { BaseSelectable, LabelLocalization, LabelString, Locale, Localization } from "../ui/multiselect";
 
 // =====================
 // Types
 // =====================
-export type Locale =
-  | "id" | "da" | "de" | "en-GB" | "en-US" | "es-ES" | "es-419" | "fr" | "hr" | "it"
-  | "lt" | "hu" | "nl" | "no" | "pl" | "pt-BR" | "ro" | "fi" | "sv-SE" | "vi" | "tr"
-  | "cs" | "el" | "bg" | "ru" | "uk" | "hi" | "th" | "zh-CN" | "ja" | "zh-TW" | "ko"
-  | string;
 
-type Localization<T = string> = { default: T } & Partial<Record<Locale, T>>;
+const operators = ["<", ">", "<=", ">=", "==", "!="] as const;
+type Operator = typeof operators[number];
 
-type LabelString = string & { __brand_label100?: true };
+const sectionTypes = ["string", "img"] as const;
+type SectionType = typeof sectionTypes[number];
 
-export type LabelLocalization = { default: LabelString } & Partial<Record<Locale, LabelString>>;
+const STRING_MAX_LENGTH_LIMIT = 128;
 
-interface BaseStat {
-  id: number;
-  name: LabelLocalization;
+interface BaseStat extends BaseSelectable {
   edit_page?: number[]; // Seções (por ids) onde o stat pode ser editado
-  emoji?: string;
+  modifiers?: number[]; // Modificadores de stats
 }
 
 interface StatsNumeric extends BaseStat { type: "numeric"; min?: number; max?: number; dices?: Dice[]; replacements?: Replacement[]; }
@@ -74,21 +70,18 @@ interface Replacement { key: number; options: number[]; }
 export type Stats = StatsNumeric | StatsEnum | StatsBoolean | StatsString | StatsCalculated;
 
 export interface RPGSystem {
-  config: { id: number; name: LabelLocalization; description: Localization<string>; };
+  config: { id: number; name: LabelLocalization; description: Localization<string>; emoji?: string; };
   stats: Stats[];
   sections: Section[];
   integrations?: Integrations;
 }
 
-interface Section {
-  id: number;
-  name: LabelLocalization;
-  emoji?: string;
-  preview: { type: "string" | "img"; content: Localization<string>; };
+export interface Section extends BaseSelectable {
+  preview: { type: SectionType; content: Localization<string>; };
   view_pages: number[]; // Seções (ids) onde ESTA seção também aparece (para aglomerar com outras páginas)
 }
 
-interface Dice { expression: string; condition?: { value1: string; operator: "<" | ">" | "<=" | ">=" | "==" | "!="; value2: string; }; }
+interface Dice { expression: string; condition?: { value1: string; operator: Operator; value2: string; }; }
 
 // =====================
 // Integration Types
@@ -145,9 +138,7 @@ function getLocaleName(locale: Locale | "default"): string {
   return LOCALE_NAMES[locale] || locale;
 }
 
-interface NexusSchemas {
-  id: number;
-  name: LabelLocalization;
+interface NexusSchemas extends BaseSelectable {
   description: Localization<string>;
   fields?: {
     [key: number]: SchemaEval;
@@ -165,6 +156,22 @@ interface SchemaEval {
 interface SchemaOption {
   value: string;
   label: LabelLocalization;
+}
+
+
+
+function assertOperator(str: string): str is Operator {
+  if (operators.includes(str as Operator)) {
+    return true;
+  }
+  return false;
+}
+
+function assertSectionType(str: string): str is SectionType {
+  if (sectionTypes.includes(str as SectionType)) {
+    return true;
+  }
+  return false;
 }
 
 // =====================
@@ -250,7 +257,7 @@ function CompactTextLocalizationEditor({ value, onChange, label, placeholder, lo
   return (
     <Card className="border-dashed">
       <CardHeader className="py-3"><CardTitle className="text-sm flex items-center gap-2">{label}
-        <Select value={String(curr)} onValueChange={(value) => setCurr(value as any)}>
+        <Select value={String(curr)} onValueChange={(value) => setCurr(value)}>
           <SelectTrigger className="ml-auto w-32">
             <SelectValue />
           </SelectTrigger>
@@ -262,7 +269,7 @@ function CompactTextLocalizationEditor({ value, onChange, label, placeholder, lo
         </Select></CardTitle></CardHeader>
       <CardContent>
         <Input
-          value={(value as any)[curr] ?? ""}
+          value={(value)[curr] ?? ""}
           placeholder={curr === "default" ? (placeholder ?? "Obrigatório") : `${placeholder ?? "Opcional"} (${curr})`}
           onChange={(e) => update(curr, e.target.value)}
           maxLength={100}
@@ -275,136 +282,7 @@ function CompactTextLocalizationEditor({ value, onChange, label, placeholder, lo
 // Usando o novo componente de Markdown com estilo Notion
 const CompactMarkdownLocalizationEditor = NewCompactMarkdownEditor;
 function LabelLocalizationEditor({ value, onChange, label, locales = ["pt-BR", "en-US", "es-ES", "fr", "de", "it", "ru", "zh-CN", "ja", "ko"] }: { value: LabelLocalization; onChange: (v: LabelLocalization) => void; label: string; locales?: Locale[]; }) {
-  return (<CompactTextLocalizationEditor value={value as any} onChange={(v) => onChange(v as LabelLocalization)} label={label} placeholder="rótulo curto (ex.: Força)" locales={locales} />);
-}
-
-// =====================
-// SingleSelect de Seção (para stats) - DEPRECATED: Use MultiSelectSections
-// =====================
-// function SingleSelectSection({ sections, value, onChange, placeholder = "Selecionar seção", includeDefault = false }:{ sections:Section[]; value:number|undefined; onChange:(id?:number)=>void; placeholder?:string; includeDefault?:boolean; }){
-//   return (
-//     <Select value={value !== undefined ? String(value) : "-999"} onValueChange={(val) => {
-//       if (val === "-999") {
-//         onChange(undefined);
-//       } else {
-//         onChange(parseInt(val));
-//       }
-//     }}>
-//       <SelectTrigger>
-//         <SelectValue placeholder={placeholder} />
-//       </SelectTrigger>
-//       <SelectContent>
-//         <SelectItem value="-999">Nenhuma seção</SelectItem>
-//         {includeDefault && <SelectItem value="-1">Padrão</SelectItem>}
-//         {sections.map((section) => (
-//           <SelectItem key={section.id} value={String(section.id)}>
-//             {section.emoji && `${section.emoji} `}{section.name?.default || `Seção ${section.id}`}
-//           </SelectItem>
-//         ))}
-//       </SelectContent>
-//     </Select>
-//   );
-// }
-
-// =====================
-// MultiSelect de Seções (reusável)
-// =====================
-function MultiSelectSections({ sections, value, onChange, placeholder = "Selecionar seções", includeDefault = false }: { sections: Section[]; value: number[] | undefined; onChange: (ids: number[]) => void; placeholder?: string; includeDefault?: boolean; }) {
-  const [open, setOpen] = useState(false);
-  const selected = new Set(value ?? []);
-
-  const toggle = (id: number) => {
-    const next = new Set(selected);
-    if (next.has(id)) {
-      next.delete(id);
-    } else {
-      next.add(id);
-    }
-    onChange(Array.from(next));
-  };
-
-  const labelFor = (id: number) => {
-    if (id === -1) return "Padrão";
-    return sections.find((s) => s.id === id)?.name?.default ?? String(id);
-  };
-  const selectedLabels = Array.from(selected).map(labelFor);
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
-          <div className="flex flex-wrap gap-1 items-center">
-            {selected.size === 0 ? (
-              <span className="text-muted-foreground">{placeholder}</span>
-            ) : (
-              <>
-                {selectedLabels.slice(0, 3).map((label, i) => (
-                  <Badge key={i} variant="secondary" className="mr-1">
-                    {label}
-                  </Badge>
-                ))}
-                {selected.size > 3 && (
-                  <Badge variant="outline">+{selected.size - 3}</Badge>
-                )}
-              </>
-            )}
-          </div>
-          <ChevronDown className="h-4 w-4 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="p-0 w-[300px]" align="start">
-        <div className="p-2">
-          <div className="relative">
-            <Input
-              placeholder="Buscar seção..."
-              className="mb-2"
-            />
-          </div>
-          <ScrollArea className="max-h-64">
-            <div className="space-y-1">
-              {includeDefault && (
-                <div
-                  key={-1}
-                  className="flex items-center space-x-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground cursor-pointer border-b"
-                  onClick={() => toggle(-1)}
-                >
-                  <Checkbox
-                    checked={selected.has(-1)}
-                    onCheckedChange={() => toggle(-1)}
-                  />
-                  <span className="flex-1 font-medium">
-                    🏠 Padrão
-                  </span>
-                </div>
-              )}
-              {sections.length === 0 ? (
-                <div className="text-sm text-muted-foreground p-2">
-                  Nenhuma seção encontrada.
-                </div>
-              ) : (
-                sections.map((section) => (
-                  <div
-                    key={section.id}
-                    className="flex items-center space-x-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground cursor-pointer"
-                    onClick={() => toggle(section.id)}
-                  >
-                    <Checkbox
-                      checked={selected.has(section.id)}
-                      onCheckedChange={() => toggle(section.id)}
-                    />
-                    <span className="flex-1">
-                      {section.emoji && `${section.emoji} `}
-                      {section.name?.default ?? `Seção ${section.id}`}
-                    </span>
-                  </div>
-                ))
-              )}
-            </div>
-          </ScrollArea>
-        </div>
-      </PopoverContent>
-    </Popover>
-  );
+  return (<CompactTextLocalizationEditor value={value} onChange={(v) => onChange(v as LabelLocalization)} label={label} placeholder="rótulo curto (ex.: Força)" locales={locales} />);
 }
 
 // =====================
@@ -605,7 +483,12 @@ function DiceEditor({ value, onChange, stats = [] }: { value: Dice[] | undefined
                       <Label className="min-w-16 text-xs">Operador</Label>
                       <Select
                         value={d.condition?.operator ?? "=="}
-                        onValueChange={(val) => set(i, { condition: { ...(d.condition ?? { operator: "==", value1: "", value2: "" }), operator: val as any } })}
+                        onValueChange={(val) => {
+                          if (!assertOperator(val)) {
+                            return;
+                          }
+                          set(i, { condition: { ...(d.condition ?? { operator: "==", value1: "", value2: "" }), operator: val } })
+                        }}
                       >
                         <SelectTrigger className="text-xs">
                           <SelectValue />
@@ -659,7 +542,7 @@ function DiceEditor({ value, onChange, stats = [] }: { value: Dice[] | undefined
                                     const first = stat.options[0];
                                     if (typeof first === 'number') return String(first);
                                     if (first && typeof first === 'object') {
-                                      const value = (first as any).value ?? Object.values(first)[0];
+                                      const value = (first).value ?? Object.values(first)[0];
                                       if (typeof value === 'number') return String(value);
                                     }
                                   }
@@ -682,7 +565,7 @@ function DiceEditor({ value, onChange, stats = [] }: { value: Dice[] | undefined
                                     const first = stat.options[1];
                                     if (typeof first === 'number') return String(first);
                                     if (first && typeof first === 'object') {
-                                      const value = (first as any).value ?? Object.values(first)[0];
+                                      const value = (first).value ?? Object.values(first)[0];
                                       if (typeof value === 'number') return String(value);
                                     }
                                   }
@@ -749,7 +632,7 @@ function DiceEditor({ value, onChange, stats = [] }: { value: Dice[] | undefined
           value={tempExpression}
           onChange={setTempExpression}
           onConfirm={confirmDiceExpression}
-          stats={stats as any}
+          stats={stats}
           title={editingDiceIndex >= 0 ? `Editor de dado ${editingDiceIndex + 1}` : "Novo dado"}
         />
       </CardContent>
@@ -1088,16 +971,29 @@ function ReplacementEditor({ value, onChange, stats = [], dices = [] }: {
 // =====================
 // Stat Editors
 // =====================
-function BaseStatFields({ stat, onPatch, sections }: { stat: BaseStat; onPatch: (p: Partial<BaseStat>) => void; sections: Section[] }) {
+function BaseStatFields({ stat, onPatch, sections, allStats }: { stat: BaseStat; onPatch: (p: Partial<BaseStat>) => void; sections: Section[], allStats: Stats[] }) {
+  const modifierOptions = allStats.filter((item) => item.id !== stat.id);
+
   return (
     <div className="grid gap-3">
-      <div className="grid md:grid-cols-3 gap-3">
+      <div className="grid md:grid-cols-5 gap-3">
         <div className="grid gap-2"><Label>Emoji</Label><CustomEmojiPicker value={stat.emoji ?? ""} onChange={(v) => onPatch({ emoji: v })} /></div>
         <div className="grid gap-2 md:col-span-2"><Label>Páginas editáveis (seções)</Label>
-          <MultiSelectSections sections={sections} value={stat.edit_page} onChange={(ids) => onPatch({ edit_page: ids })} placeholder="Selecione as seções onde este stat é editável" />
+          <MultiSelect options={sections} value={stat.edit_page} onChange={(ids) => onPatch({ edit_page: ids })} placeholders={{
+            input: "Selecione as seções onde este stat é editável",
+            search: "Buscar seção...",
+            notfound: "Seção não encontrada"
+           }} />
+        </div>
+        <div className="grid gap-2 md:col-span-2"><Label>Modificadores adicionais</Label>
+          <MultiSelect options={modifierOptions} value={stat.modifiers} onChange={(ids) => onPatch({ modifiers: ids })} placeholders={{
+            input: "Selecione os modificadores conectados",
+            search: "Buscar modificador...",
+            notfound: "Modificador não encontrado"
+           }} />
         </div>
       </div>
-      <LabelLocalizationEditor label="Nome (localizado)" value={stat.name} onChange={(v) => onPatch({ name: v } as any)} />
+      <LabelLocalizationEditor label="Nome (localizado)" value={stat.name} onChange={(v) => onPatch({ name: v })} />
     </div>
   );
 }
@@ -1127,7 +1023,7 @@ function StatNumericEditor({ value, onChange, sections, allStats = [] }: {
 
   return (
     <div className="grid gap-4">
-      <BaseStatFields stat={value} onPatch={patch} sections={sections} />
+      <BaseStatFields stat={value} onPatch={patch} sections={sections} allStats={allStats} />
 
       <div className="flex items-center space-x-2">
         <Switch
@@ -1192,7 +1088,7 @@ function OptionEditor({ value, onChange }: { value: StatsEnumOption; onChange: (
       <LabelLocalizationEditor
         label="Nome (localizado)"
         value={value.name}
-        onChange={(v) => patch({ name: v } as any)}
+        onChange={(v) => patch({ name: v })}
       />
     </div>
   );
@@ -1266,7 +1162,7 @@ function StatEnumEditor({ value, onChange, sections, allStats }: { value: StatsE
 
   return (
     <div className="grid gap-4">
-      <BaseStatFields stat={value} onPatch={patch} sections={sections} />
+      <BaseStatFields stat={value} onPatch={patch} sections={sections} allStats={allStats} />
       <div className="flex items-center gap-2">
         <Switch
           checked={!isNumberCompat}
@@ -1410,18 +1306,24 @@ function StatBooleanEditor({ value, onChange, sections, allStats = [] }: {
   const patch = (p: Partial<StatsBoolean>) => onChange({ ...value, ...p });
   return (
     <div className="grid gap-4">
-      <BaseStatFields stat={value} onPatch={patch} sections={sections} />
+      <BaseStatFields stat={value} onPatch={patch} sections={sections} allStats={allStats} />
       <DiceEditor value={value.dices} onChange={(v) => patch({ dices: v })} stats={allStats} />
       <ReplacementEditor value={value.replacements} onChange={(v) => patch({ replacements: v })} stats={allStats} dices={value.dices} />
     </div>
   );
 }
-function StatStringEditor({ value, onChange, sections }: { value: StatsString; onChange: (v: StatsString) => void; sections: Section[] }) {
+function StatStringEditor({ value, onChange, sections, allStats }: { value: StatsString; onChange: (v: StatsString) => void; sections: Section[]; allStats: Stats[] }) {
   const [showLimits, setShowLimits] = useState<boolean>(
     value.minLength !== undefined || value.maxLength !== undefined
   );
 
-  const patch = (p: Partial<StatsString>) => onChange({ ...value, ...p });
+  const patch = (p: Partial<StatsString>) => {
+    const next = { ...value, ...p };
+    if (typeof next.maxLength === "number") {
+      next.maxLength = Math.min(next.maxLength, STRING_MAX_LENGTH_LIMIT);
+    }
+    onChange(next);
+  };
 
   const handleLimitsToggle = (enabled: boolean) => {
     setShowLimits(enabled);
@@ -1437,7 +1339,7 @@ function StatStringEditor({ value, onChange, sections }: { value: StatsString; o
 
   return (
     <div className="grid gap-4">
-      <BaseStatFields stat={value} onPatch={patch} sections={sections} />
+      <BaseStatFields stat={value} onPatch={patch} sections={sections} allStats={allStats} />
 
       <div className="flex items-center space-x-2">
         <Switch
@@ -1462,6 +1364,7 @@ function StatStringEditor({ value, onChange, sections }: { value: StatsString; o
             <Label>Máx. caracteres</Label>
             <Input
               type="number"
+              max={STRING_MAX_LENGTH_LIMIT}
               value={value.maxLength ?? 100}
               onChange={(e) => patch({ maxLength: Number(e.target.value) })}
             />
@@ -1519,7 +1422,7 @@ function StatCalculatedEditor({ value, onChange, sections, allStats }: { value: 
 
   return (
     <div className="grid gap-4">
-      <BaseStatFields stat={value} onPatch={patch} sections={sections} />
+      <BaseStatFields stat={value} onPatch={patch} sections={sections} allStats={allStats} />
       <div className="grid gap-2">
         <div className="flex items-center justify-between">
           <Label>F�rmula</Label>
@@ -1566,11 +1469,11 @@ function StatCalculatedEditor({ value, onChange, sections, allStats }: { value: 
 function PolymorphicStatEditor({ value, onChange, sections, allStats }: { value: Stats; onChange: (v: Stats) => void; sections: Section[]; allStats: Stats[] }) {
   return (
     <div className="grid gap-4">
-      {value.type === "numeric" && <StatNumericEditor value={value} onChange={onChange as any} sections={sections} allStats={allStats} />}
-      {value.type === "enum" && <StatEnumEditor value={value} onChange={onChange as any} sections={sections} allStats={allStats} />}
-      {value.type === "boolean" && <StatBooleanEditor value={value} onChange={onChange as any} sections={sections} allStats={allStats} />}
-      {value.type === "string" && <StatStringEditor value={value} onChange={onChange as any} sections={sections} />}
-      {value.type === "calculated" && <StatCalculatedEditor value={value} onChange={onChange as any} sections={sections} allStats={allStats} />}
+      {value.type === "numeric" && <StatNumericEditor value={value} onChange={onChange} sections={sections} allStats={allStats} />}
+      {value.type === "enum" && <StatEnumEditor value={value} onChange={onChange} sections={sections} allStats={allStats} />}
+      {value.type === "boolean" && <StatBooleanEditor value={value} onChange={onChange} sections={sections} allStats={allStats} />}
+      {value.type === "string" && <StatStringEditor value={value} onChange={onChange} sections={sections} allStats={allStats} />}
+      {value.type === "calculated" && <StatCalculatedEditor value={value} onChange={onChange} sections={sections} allStats={allStats} />}
     </div>
   );
 }
@@ -1592,21 +1495,30 @@ function SectionEditor({ value, onChange, sections, stats = [] }: { value: Secti
         </div>
         <div className="grid gap-2">
           <Label>Páginas exibidas (seções)</Label>
-          <MultiSelectSections
-            sections={sectionChoices}
+          <MultiSelect
+            options={sectionChoices}
             value={value.view_pages}
             onChange={(ids) => patch({ view_pages: ids })}
-            placeholder="Selecione em quais páginas (seções) essa seção também aparece"
+            placeholders={{
+              input: "Selecione em quais páginas (seções) essa seção também aparece",
+              search: "Buscar seção...",
+              notfound: "Seção não encontrada"
+            }}
             includeDefault={true}
           />
         </div>
       </div>
-      <LabelLocalizationEditor label="Nome (localizado)" value={value.name} onChange={(v) => patch({ name: v } as any)} />
+      <LabelLocalizationEditor label="Nome (localizado)" value={value.name} onChange={(v) => patch({ name: v })} />
       <Card>
         <CardHeader className="py-3"><CardTitle className="text-sm">Preview</CardTitle></CardHeader>
         <CardContent className="grid gap-3">
           <div className="grid md:grid-cols-3 gap-3"><div className="grid gap-2"><Label>Tipo</Label>
-            <Select value={value.preview.type} onValueChange={(val) => patch({ preview: { ...value.preview, type: val as any } })}>
+            <Select value={value.preview.type} onValueChange={(val) => {
+              if (!assertSectionType(val)) {
+                return;
+              }
+              patch({ preview: { ...value.preview, type: val } })
+            }}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -1615,13 +1527,13 @@ function SectionEditor({ value, onChange, sections, stats = [] }: { value: Secti
                 <SelectItem value="img">img</SelectItem>
               </SelectContent>
             </Select></div></div>
-          {value.preview.type === "string" ? (
+          {value.preview.type === "string" ? ( 
             <CompactMarkdownLocalizationEditor
               value={value.preview.content}
               onChange={(v) => patch({ preview: { ...value.preview, content: v } })}
               label="Conteúdo (Markdown)"
-              sections={sections as any}
-              stats={stats as any}
+              sections={sections}
+              stats={stats}
             />
           ) : (
             <CompactTextLocalizationEditor value={value.preview.content} onChange={(v) => patch({ preview: { ...value.preview, content: v } })} label="URL da imagem" placeholder="https://..." />
@@ -1671,6 +1583,12 @@ function validate(system: RPGSystem): string[] {
             if (!o.name?.default) errs.push(`stats[${idx}].options[${j}].name.default é obrigatório`);
             if (o.name?.default && o.name.default.length > 100) errs.push(`stats[${idx}].options[${j}].name.default excede 100 caracteres (${o.name.default.length})`);
           });
+        }
+      }
+      if (s.type === "string") {
+        const st = s as StatsString;
+        if (typeof st.maxLength === "number" && st.maxLength > STRING_MAX_LENGTH_LIMIT) {
+          errs.push(`stats[${idx}].maxLength excede ${STRING_MAX_LENGTH_LIMIT} caracteres (${st.maxLength})`);
         }
       }
       if (s.type === "calculated") {
@@ -1928,7 +1846,7 @@ export default function RPGSystemBuilder() {
       case "numeric": stat = { ...base, type: "numeric", min: -100000, max: 100000 } as StatsNumeric; break;
       case "enum": stat = { ...base, type: "enum", options: [] } as StatsEnum; break;
       case "boolean": stat = { ...base, type: "boolean" } as StatsBoolean; break;
-      case "string": stat = { ...base, type: "string", minLength: 0, maxLength: 200 } as StatsString; break;
+      case "string": stat = { ...base, type: "string", minLength: 0, maxLength: STRING_MAX_LENGTH_LIMIT } as StatsString; break;
       case "calculated": stat = { ...base, type: "calculated", formula: "" } as StatsCalculated; break;
     }
     setSystem({ ...system, stats: [...system.stats, stat] }); setSelectedTab("stats");
@@ -1983,7 +1901,7 @@ export default function RPGSystemBuilder() {
   return (
     <div className="flex min-h-[78vh] w-full bg-background overflow-hidden">
       {/* Barra Lateral */}
-      <aside className="hidden w-64 transition-all duration-300 bg-gradient-to-b from-sidebar to-sidebar/95 border-r border-border flex flex-col relative">
+      {/* <aside className="w-64 transition-all duration-300 bg-gradient-to-b from-sidebar to-sidebar/95 border-r border-border flex flex-col relative">
         <div className="p-6 border-b border-border/50 relative">
           <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Editor de Sistema</h1>
           <p className="text-xs text-sidebar-foreground/70 mt-1">Construtor visual de sistemas</p>
@@ -2063,7 +1981,7 @@ export default function RPGSystemBuilder() {
           </Button>
         </div>
 
-      </aside>
+      </aside> */}
 
       {/* Conteúdo Principal */}
       <main className="flex-1 overflow-auto">
@@ -2156,31 +2074,32 @@ export default function RPGSystemBuilder() {
                   onChange={(v) => setSystem({ ...system, config: v })}
                   LabelLocalizationEditor={LabelLocalizationEditor}
                   CompactTextLocalizationEditor={CompactTextLocalizationEditor}
+                  EmojiPicker={CustomEmojiPicker}
                 />
               </TabsContent>
 
               <TabsContent value="stats" className="mt-0">
                 <StatsTab
-                  stats={system.stats as any}
-                  sections={system.sections as any}
+                  stats={system.stats}
+                  sections={system.sections}
                   onAddStat={addStat}
                   onUpdateStat={updateStat}
                   onRemoveStat={removeStat}
                   onDuplicateStat={duplicateStat}
                   onMoveStat={moveStat}
-                  PolymorphicStatEditor={PolymorphicStatEditor as any}
+                  PolymorphicStatEditor={PolymorphicStatEditor}
                 />
               </TabsContent>
 
               <TabsContent value="sections" className="mt-0">
                 <SectionsTab
-                  sections={system.sections as any}
-                  stats={system.stats as any}
+                  sections={system.sections}
+                  stats={system.stats}
                   onAddSection={addSection}
                   onUpdateSection={updateSection}
                   onRemoveSection={removeSection}
                   onMoveSection={moveSection}
-                  SectionEditor={SectionEditor as any}
+                  SectionEditor={SectionEditor}
                 />
               </TabsContent>
 
@@ -2206,3 +2125,5 @@ export default function RPGSystemBuilder() {
     </div>
   );
 }
+
+

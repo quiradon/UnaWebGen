@@ -1,0 +1,90 @@
+---
+export const prerender = true;
+
+import Layout from "@layouts/LayoutOnlyNav.astro";
+import { loadT } from "@lib/i18n";
+import { getLocale } from "astro-i18n-aut";
+import { FileText } from "@lucide/astro";
+import HandoutCanvasApp from "@/components/handoutbuilder/HandoutCanvasApp";
+import "@/styles/system-editor.css";
+import "@/styles/handout-builder.css";
+import "@fontsource/inter";
+import "@fontsource/roboto";
+import "@fontsource/montserrat";
+import "@fontsource/merriweather";
+import "@fontsource/playfair-display";
+import "@fontsource/cinzel";
+import "@fontsource/im-fell-english";
+import "@fontsource/jetbrains-mono";
+
+const currentLocale = getLocale(Astro.url);
+const t = loadT(currentLocale);
+---
+
+<Layout
+  t={t}
+  title="Gerador de Handouts"
+  desc="Crie documentos de RPG personalizados e exporte em PNG/PDF"
+  navbarSticky={false}
+>
+  <section class="handout-builder-section">
+    <div class="container-fluid px-0">
+      <div class="system-editor handout-builder">
+        <div id="handout-builder-portal-root"></div>
+        <div class="handout-builder-shell overflow-hidden">
+          <HandoutCanvasApp client:only="react" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .handout-builder-section {
+      min-height: calc(100vh - var(--navbar-offset, 0px));
+      height: calc(100vh - var(--navbar-offset, 0px));
+      display: flex;
+      flex-direction: column;
+      padding: 0 !important;
+    }
+
+    .handout-builder-section > .container-fluid,
+    .handout-builder-section .system-editor,
+    .handout-builder-shell {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .handout-builder-shell {
+      min-height: 0;
+      display: flex;
+    }
+
+    @media (max-width: 768px) {
+      .handout-builder-section {
+        min-height: calc(100svh - var(--navbar-offset, 0px));
+        height: calc(100svh - var(--navbar-offset, 0px));
+      }
+
+      .handout-builder-shell {
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+  <script is:inline>
+    {`
+      function updateHandoutNavbarOffset() {
+        const nav = document.getElementById("site-navbar");
+        if (!nav) return;
+        const height = nav.getBoundingClientRect().height;
+        document.documentElement.style.setProperty("--navbar-offset", height + "px");
+      }
+
+      document.addEventListener("astro:page-load", updateHandoutNavbarOffset);
+      window.addEventListener("resize", updateHandoutNavbarOffset);
+      window.addEventListener("astro:after-swap", updateHandoutNavbarOffset);
+      requestAnimationFrame(updateHandoutNavbarOffset);
+    `}
+  </script>
+</Layout>

@@ -56,19 +56,6 @@ function buildDropShadowFilter(shadow: ShadowEffect) {
   return `drop-shadow(${shadow.x}px ${shadow.y}px ${blur}px ${color})`;
 }
 
-export function getImageEffectStyle(effects: LayerEffects) {
-  const filters: string[] = [];
-  const dropShadow = buildDropShadowFilter(effects.dropShadow);
-  if (dropShadow) filters.push(dropShadow);
-  if (effects.blur > 0) filters.push(`blur(${effects.blur}px)`);
-  if (effects.brightness !== 100) filters.push(`brightness(${effects.brightness}%)`);
-  if (effects.contrast !== 100) filters.push(`contrast(${effects.contrast}%)`);
-  if (effects.saturate !== 100) filters.push(`saturate(${effects.saturate}%)`);
-  const filter = filters.length ? filters.join(" ") : "none";
-
-  return { filter };
-}
-
 export function getTextEffectStyle(effects: LayerEffects) {
   const filters: string[] = [];
   const dropShadow = buildDropShadowFilter(effects.dropShadow);
@@ -100,7 +87,9 @@ export function getLayerEffectStyle(effects: LayerEffects) {
 }
 
 function getImagePreserveAspectRatio(fit: ShapeImageFit) {
-  return fit === "cover" ? "xMidYMid slice" : "xMidYMid meet";
+  if (fit === "fit") return "xMidYMid meet";
+  if (fit === "fill" || fit === "crop") return "xMidYMid slice";
+  return "xMidYMid meet";
 }
 
 function getSortedStops(stop1: number, stop2: number) {
@@ -113,6 +102,10 @@ export function getShapeFill(layer: ShapeLayer, idBase: string) {
   const primary = layer.fillColor || DEFAULT_SHAPE_FILL_COLOR;
   const secondary = layer.fillColor2 || primary;
   const [stop1, stop2] = getSortedStops(layer.fillStop1, layer.fillStop2);
+  const baseWidth = Math.max(1, layer.width);
+  const baseHeight = Math.max(1, layer.height);
+  const centerX = baseWidth / 2;
+  const centerY = baseHeight / 2;
   if (layer.fillMode === "solid") {
     return { fill: primary, defs: null };
   }
@@ -123,10 +116,10 @@ export function getShapeFill(layer: ShapeLayer, idBase: string) {
         id={gradientId}
         x1="0"
         y1="0"
-        x2="100"
+        x2={baseWidth}
         y2="0"
         gradientUnits="userSpaceOnUse"
-        gradientTransform={`rotate(${layer.gradientAngle} 50 50)`}
+        gradientTransform={`rotate(${layer.gradientAngle} ${centerX} ${centerY})`}
       >
         <stop offset={`${stop1}%`} stopColor={primary} />
         <stop offset={`${stop2}%`} stopColor={secondary} />
@@ -137,7 +130,7 @@ export function getShapeFill(layer: ShapeLayer, idBase: string) {
   if (layer.fillMode === "radial") {
     const gradientId = `${idBase}-radial`;
     const defs = (
-      <radialGradient id={gradientId} cx="50" cy="50" r="50" gradientUnits="userSpaceOnUse">
+      <radialGradient id={gradientId} cx="0.5" cy="0.5" r="0.5" gradientUnits="objectBoundingBox">
         <stop offset={`${stop1}%`} stopColor={primary} />
         <stop offset={`${stop2}%`} stopColor={secondary} />
       </radialGradient>
@@ -150,15 +143,16 @@ export function getShapeFill(layer: ShapeLayer, idBase: string) {
   }
 
   const patternId = `${idBase}-pattern`;
+  const preserveAspectRatio = getImagePreserveAspectRatio(layer.imageFit);
   const defs = (
-    <pattern id={patternId} patternUnits="userSpaceOnUse" width="100" height="100">
+    <pattern id={patternId} patternUnits="userSpaceOnUse" width={baseWidth} height={baseHeight}>
       <image
         href={layer.imageSrc}
         x="0"
         y="0"
-        width="100"
-        height="100"
-        preserveAspectRatio={getImagePreserveAspectRatio(layer.imageFit)}
+        width={baseWidth}
+        height={baseHeight}
+        preserveAspectRatio={preserveAspectRatio}
       />
     </pattern>
   );
@@ -180,10 +174,16 @@ export function getTextFillStyle(layer: TextLayer) {
 
   if (layer.fillMode === "image") {
     if (!layer.imageSrc) return baseStyle;
+    const backgroundSize =
+      layer.imageFit === "fill" || layer.imageFit === "crop"
+        ? "cover"
+        : layer.imageFit === "fit"
+          ? "contain"
+          : "auto";
     return {
       ...baseStyle,
       backgroundImage: `url(${layer.imageSrc})`,
-      backgroundSize: layer.imageFit === "cover" ? "cover" : "contain",
+      backgroundSize,
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       WebkitBackgroundClip: "text",

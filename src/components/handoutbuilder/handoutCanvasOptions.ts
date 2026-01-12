@@ -95,10 +95,11 @@ export const SHAPE_FILL_MODE_LABELS: Record<ShapeFillMode, string> = {
   radial: "Gradiente radial",
   image: "Imagem",
 };
-export const SHAPE_IMAGE_FITS = ["cover", "contain"] as const;
+export const SHAPE_IMAGE_FITS = ["fill", "fit", "crop"] as const;
 export const SHAPE_IMAGE_FIT_VALUES = [...SHAPE_IMAGE_FITS] as ShapeImageFit[];
 export const SHAPE_IMAGE_FIT_LABELS: Record<ShapeImageFit, string> = {
-  cover: "Cobrir",
-  contain: "Conter",
+  fill: "Preencher",
+  fit: "Ajustar",
+  crop: "Cortar",
 };
 export const TEMPLATE_IDS = ["none", "parchment", "letter", "dossier"] as const;

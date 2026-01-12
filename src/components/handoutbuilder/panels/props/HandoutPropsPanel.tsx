@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import type { Layer, ShapeLayer, TextLayer } from "@/components/handoutbuilder/handoutCanvasTypes";
 import { HandoutPropsClipping } from "@/components/handoutbuilder/panels/props/HandoutPropsClipping";
-import { HandoutPropsImage } from "@/components/handoutbuilder/panels/props/HandoutPropsImage";
 import { HandoutPropsShape } from "@/components/handoutbuilder/panels/props/HandoutPropsShape";
 import { HandoutPropsText } from "@/components/handoutbuilder/panels/props/HandoutPropsText";
 
@@ -86,10 +85,6 @@ export function HandoutPropsPanel(props: HandoutPropsPanelProps) {
             )}
 
             <HandoutPropsClipping selectedLayer={selectedLayer} docLayers={docLayers} updateLayer={updateLayer} />
-
-            {selectedLayer.type === "image" && (
-              <HandoutPropsImage selectedLayer={selectedLayer} updateLayer={updateLayer} />
-            )}
 
             {selectedLayer.type === "shape" && (
               <HandoutPropsShape

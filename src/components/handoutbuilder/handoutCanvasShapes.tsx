@@ -2,14 +2,39 @@ import type { ShadowEffect, ShapeKind } from "@/components/handoutbuilder/handou
 import { clamp } from "@/components/handoutbuilder/handoutCanvasUtils";
 import { toSvgColor } from "@/components/handoutbuilder/handoutCanvasEffects";
 
+type ShapeSize = {
+  width: number;
+  height: number;
+};
+
+function scaleX(value: number, size: ShapeSize) {
+  return (value / 100) * size.width;
+}
+
+function scaleY(value: number, size: ShapeSize) {
+  return (value / 100) * size.height;
+}
+
+function pointsToPath(points: Array<[number, number]>, size: ShapeSize) {
+  const segments = points.map(([x, y], index) => {
+    const px = scaleX(x, size);
+    const py = scaleY(y, size);
+    return `${index === 0 ? "M" : "L"}${px} ${py}`;
+  });
+  return `${segments.join(" ")} Z`;
+}
+
 export function renderShapeElement(
   kind: ShapeKind,
   cornerRadius: number,
+  size: ShapeSize,
   props: { className?: string; fill?: string; filterId?: string | null; style?: React.CSSProperties },
 ) {
   const radius = clamp(cornerRadius, 0, 50);
   const { className, fill = "currentColor", filterId, style } = props;
   const filter = filterId ? `url(#${filterId})` : undefined;
+  const rectRadiusX = (radius / 100) * size.width;
+  const rectRadiusY = (radius / 100) * size.height;
 
   switch (kind) {
     case "rect":
@@ -17,10 +42,10 @@ export function renderShapeElement(
         <rect
           x="0"
           y="0"
-          width="100"
-          height="100"
-          rx={radius}
-          ry={radius}
+          width={size.width}
+          height={size.height}
+          rx={rectRadiusX}
+          ry={rectRadiusY}
           className={className}
           fill={fill}
           style={style}
@@ -30,10 +55,10 @@ export function renderShapeElement(
     case "ellipse":
       return (
         <ellipse
-          cx="50"
-          cy="50"
-          rx="50"
-          ry="50"
+          cx={size.width / 2}
+          cy={size.height / 2}
+          rx={size.width / 2}
+          ry={size.height / 2}
           className={className}
           fill={fill}
           style={style}
@@ -41,13 +66,54 @@ export function renderShapeElement(
         />
       );
     case "triangle":
-      return <path d="M50 6 L96 94 L4 94 Z" className={className} fill={fill} style={style} filter={filter} />;
+      return (
+        <path
+          d={pointsToPath(
+            [
+              [50, 6],
+              [96, 94],
+              [4, 94],
+            ],
+            size,
+          )}
+          className={className}
+          fill={fill}
+          style={style}
+          filter={filter}
+        />
+      );
     case "diamond":
-      return <path d="M50 4 L96 50 L50 96 L4 50 Z" className={className} fill={fill} style={style} filter={filter} />;
+      return (
+        <path
+          d={pointsToPath(
+            [
+              [50, 4],
+              [96, 50],
+              [50, 96],
+              [4, 50],
+            ],
+            size,
+          )}
+          className={className}
+          fill={fill}
+          style={style}
+          filter={filter}
+        />
+      );
     case "hexagon":
       return (
         <path
-          d="M24 6 L76 6 L96 50 L76 94 L24 94 L4 50 Z"
+          d={pointsToPath(
+            [
+              [24, 6],
+              [76, 6],
+              [96, 50],
+              [76, 94],
+              [24, 94],
+              [4, 50],
+            ],
+            size,
+          )}
           className={className}
           fill={fill}
           style={style}
@@ -57,7 +123,21 @@ export function renderShapeElement(
     case "star":
       return (
         <path
-          d="M50 6 L62 38 L96 38 L68 58 L78 92 L50 72 L22 92 L32 58 L4 38 L38 38 Z"
+          d={pointsToPath(
+            [
+              [50, 6],
+              [62, 38],
+              [96, 38],
+              [68, 58],
+              [78, 92],
+              [50, 72],
+              [22, 92],
+              [32, 58],
+              [4, 38],
+              [38, 38],
+            ],
+            size,
+          )}
           className={className}
           fill={fill}
           style={style}

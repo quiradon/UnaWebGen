@@ -129,28 +129,30 @@ export function HandoutPropsText(props: HandoutPropsTextProps) {
               }}
             />
             {!selectedLayer.imageSrc && <div className="text-xs text-muted-foreground">Nenhuma imagem selecionada.</div>}
-            <div className="grid gap-2">
-              <Label>Ajuste</Label>
-              <Select
-                value={selectedLayer.imageFit}
-                onValueChange={(value) =>
-                  updateLayer(selectedLayer.id, (p) =>
-                    p.type === "text" ? { ...p, imageFit: value as ShapeImageFit } : p,
-                  )
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {SHAPE_IMAGE_FIT_VALUES.map((mode) => (
-                    <SelectItem key={mode} value={mode}>
-                      {SHAPE_IMAGE_FIT_LABELS[mode]}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            {selectedLayer.fillMode === "image" && (
+              <div className="grid gap-2">
+                <Label>Ajuste</Label>
+                <Select
+                  value={selectedLayer.imageFit}
+                  onValueChange={(value) =>
+                    updateLayer(selectedLayer.id, (p) =>
+                      p.type === "text" ? { ...p, imageFit: value as ShapeImageFit } : p,
+                    )
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SHAPE_IMAGE_FIT_VALUES.map((mode) => (
+                      <SelectItem key={mode} value={mode}>
+                        {SHAPE_IMAGE_FIT_LABELS[mode]}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
         )}
       </div>

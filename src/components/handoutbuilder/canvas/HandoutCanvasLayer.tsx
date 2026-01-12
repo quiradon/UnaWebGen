@@ -1,14 +1,10 @@
+import { useState } from "react";
 import { Rnd } from "react-rnd";
 import { RotateCcw } from "lucide-react";
 
 import type { Layer, ShapeLayer, SnapGuide, TextLayer } from "@/components/handoutbuilder/handoutCanvasTypes";
 import { clamp } from "@/components/handoutbuilder/handoutCanvasUtils";
-import {
-  getImageEffectStyle,
-  getLayerEffectStyle,
-  getShapeFill,
-  getTextEffectStyle,
-} from "@/components/handoutbuilder/handoutCanvasEffects";
+import { getShapeFill, getTextEffectStyle } from "@/components/handoutbuilder/handoutCanvasEffects";
 import { getClipMaskStyle } from "@/components/handoutbuilder/handoutCanvasMasks";
 import { renderInnerShadowFilter, renderShapeElement } from "@/components/handoutbuilder/handoutCanvasShapes";
 import { HandoutCanvasTextLayer } from "@/components/handoutbuilder/canvas/HandoutCanvasTextLayer";
@@ -110,31 +106,23 @@ export function HandoutCanvasLayer({ layer, context }: HandoutCanvasLayerProps) 
   if (!layer.visible) return null;
 
   const layerTransform = `rotate(${layer.rotation}deg) scaleX(${layer.flipX ? -1 : 1}) scaleY(${layer.flipY ? -1 : 1})`;
-  const isImageLayer = layer.type === "image";
   const isTextLayer = layer.type === "text";
   const isShapeLayer = layer.type === "shape";
   const shapeLayer = isShapeLayer ? (layer as ShapeLayer) : null;
+  const shapeSize = shapeLayer
+    ? { width: Math.max(1, layer.width), height: Math.max(1, layer.height) }
+    : { width: 1, height: 1 };
+  const [lockCornerAspectRatio, setLockCornerAspectRatio] = useState(false);
   const isManipulatingLayer = manipulatingId === layer.id || (manipulatingId === "group" && isSelected);
   const suppressEffects = isManipulatingLayer && !isEditing;
   const layerBlendMode = suppressEffects ? "normal" : layer.blendMode;
-  const layerEffectStyle = isImageLayer || isTextLayer || isShapeLayer ? undefined : getLayerEffectStyle(layer.effects);
   const innerShadowEnabled = layer.effects.innerShadow.enabled && layer.effects.innerShadow.opacity > 0;
   const innerShadowId = innerShadowEnabled ? `handout-inner-shadow-${layer.id}` : null;
-  const imageEffectStyle = isImageLayer ? getImageEffectStyle(layer.effects) : null;
   const textEffectStyle = !suppressEffects && isTextLayer ? getTextEffectStyle(layer.effects) : null;
   const shapeEffectStyle = !suppressEffects && isShapeLayer ? getTextEffectStyle(layer.effects) : null;
   const shapeFill = shapeLayer ? getShapeFill(shapeLayer, shapeLayer.id) : null;
-  const showInnerShadow = Boolean(isImageLayer && innerShadowId && !suppressEffects);
   const showTextInnerShadow = Boolean(isTextLayer && innerShadowId && !suppressEffects);
   const showShapeInnerShadow = Boolean(isShapeLayer && innerShadowId && !suppressEffects);
-  const imageFilterStyle = isImageLayer
-    ? ({
-        filter: suppressEffects ? "none" : imageEffectStyle?.filter ?? "none",
-      } as React.CSSProperties)
-    : undefined;
-  const innerShadowFilterStyle = showInnerShadow
-    ? ({ filter: `url(#${innerShadowId})` } as React.CSSProperties)
-    : undefined;
   const shapeFilterStyle = shapeEffectStyle ? ({ filter: shapeEffectStyle.filter } as React.CSSProperties) : undefined;
   const effectNeedsOverflow = layer.effects.dropShadow.enabled || layer.effects.blur > 0;
   const clipLayer =
@@ -157,15 +145,16 @@ export function HandoutCanvasLayer({ layer, context }: HandoutCanvasLayerProps) 
   ]
     .filter(Boolean)
     .join(" ");
+  const useTransformOverlay = isPrimarySelected && !isEditing && !isGroupSelection;
   const handleStyle = {
-    width: "12px",
-    height: "12px",
+    width: "var(--handout-handle-size, 12px)",
+    height: "var(--handout-handle-size, 12px)",
     background: "var(--handout-accent, hsl(var(--primary)))",
     borderRadius: "999px",
-    border: "2px solid rgba(255,255,255,0.85)",
+    border: "var(--handout-handle-border, 2px) solid rgba(255,255,255,0.85)",
     boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
   } as const;
-  const canResize = isPrimarySelected && !layer.locked && !isEditing && !isGroupSelection;
+  const canResize = isPrimarySelected && !layer.locked && !isEditing && !isGroupSelection && !useTransformOverlay;
   const resizeHandleStyles = canResize
     ? {
         topLeft: handleStyle,
@@ -181,6 +170,7 @@ export function HandoutCanvasLayer({ layer, context }: HandoutCanvasLayerProps) 
     : groupOffset
       ? { x: layer.x + groupOffset.dx, y: layer.y + groupOffset.dy }
       : { x: layer.x, y: layer.y };
+  const lockAspectRatio = lockCornerAspectRatio;
 
   return (
     <Rnd
@@ -190,10 +180,10 @@ export function HandoutCanvasLayer({ layer, context }: HandoutCanvasLayerProps) 
       position={layerPosition}
       scale={zoom}
       data-layer-id={layer.id}
-      disableDragging={layer.locked || isEditing || (isGroupSelection && isSelected)}
+      disableDragging={layer.locked || isEditing || (isGroupSelection && isSelected) || useTransformOverlay}
       enableResizing={canResize}
       resizeHandleStyles={resizeHandleStyles}
-      lockAspectRatio={layer.type === "image" ? layer.keepAspectRatio : false}
+      lockAspectRatio={lockAspectRatio}
       onDragStart={(event) => {
         clearSnapGuides();
         if (snapEnabled) prepareSnapTargets([layer.id]);
@@ -266,7 +256,15 @@ export function HandoutCanvasLayer({ layer, context }: HandoutCanvasLayerProps) 
         clearDragOverride();
         setManipulatingId(null);
       }}
-      onResizeStart={() => setManipulatingId(layer.id)}
+      onResizeStart={(_, direction) => {
+        setManipulatingId(layer.id);
+        const lockCorner =
+          direction === "topLeft" ||
+          direction === "topRight" ||
+          direction === "bottomLeft" ||
+          direction === "bottomRight";
+        setLockCornerAspectRatio(lockCorner);
+      }}
       onResize={(_, __, ref, ___, position) => {
         if (!snapEnabled) return;
         const nextWidth = Number(ref.style.width.replace("px", ""));
@@ -290,12 +288,13 @@ export function HandoutCanvasLayer({ layer, context }: HandoutCanvasLayerProps) 
           y: result.y,
         }));
         clearSnapGuides();
+        setLockCornerAspectRatio(false);
         setManipulatingId(null);
       }}
       style={{ mixBlendMode: layerBlendMode }}
-      className={`handout-layer ${layer.type === "image" ? "is-image" : layer.type === "shape" ? "is-shape" : "is-text"} ${isSelected ? "is-selected" : ""} ${layer.locked ? "is-locked" : ""} ${isRotated ? "is-rotated" : ""} ${isManipulatingLayer ? "is-manipulating" : ""}`}
+      className={`handout-layer ${layer.type === "shape" ? "is-shape" : "is-text"} ${isSelected ? "is-selected" : ""} ${layer.locked ? "is-locked" : ""} ${isRotated ? "is-rotated" : ""} ${isManipulatingLayer ? "is-manipulating" : ""} ${useTransformOverlay ? "has-transform-overlay" : ""}`}
     >
-      {isPrimarySelected && !isEditing && (
+      {isPrimarySelected && !isEditing && !useTransformOverlay && (
         <div className="handout-layer-bounds">
           <div className={boundsLabelClassName} aria-hidden="true">
             {Math.round(layer.width)}x{Math.round(layer.height)} Жњ x:{Math.round(layer.x)} y:{Math.round(layer.y)}
@@ -313,30 +312,13 @@ export function HandoutCanvasLayer({ layer, context }: HandoutCanvasLayerProps) 
       )}
 
       <div className="handout-layer-inner" style={layerInnerStyle}>
-        <div
-          className="handout-layer-transform"
-          style={{ transform: layerTransform, transformOrigin: "center center", ...layerEffectStyle }}
-        >
-          {layer.type === "image" ? (
-            <div className="handout-layer-image-wrap">
-              {showInnerShadow && innerShadowId ? renderInnerShadowFilter(innerShadowId, layer.effects.innerShadow) : null}
-              <img src={layer.src} alt="" draggable={false} className="handout-layer-image" style={imageFilterStyle} />
-              {showInnerShadow && innerShadowFilterStyle ? (
-                <img
-                  src={layer.src}
-                  alt=""
-                  draggable={false}
-                  className="handout-layer-image handout-layer-image-shadow"
-                  style={innerShadowFilterStyle}
-                />
-              ) : null}
-            </div>
-          ) : layer.type === "shape" && shapeLayer ? (
+        <div className="handout-layer-transform" style={{ transform: layerTransform, transformOrigin: "center center" }}>
+          {layer.type === "shape" && shapeLayer ? (
             <>
               {showShapeInnerShadow && innerShadowId ? renderInnerShadowFilter(innerShadowId, layer.effects.innerShadow) : null}
-              <svg className="handout-layer-shape" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <svg className="handout-layer-shape" viewBox={`0 0 ${shapeSize.width} ${shapeSize.height}`}>
                 {shapeFill?.defs}
-                {renderShapeElement(shapeLayer.shape, shapeLayer.cornerRadius, {
+                {renderShapeElement(shapeLayer.shape, shapeLayer.cornerRadius, shapeSize, {
                   className: "handout-layer-shape-fill",
                   fill: shapeFill?.fill,
                   filterId: showShapeInnerShadow && innerShadowId ? innerShadowId : null,
@@ -344,7 +326,7 @@ export function HandoutCanvasLayer({ layer, context }: HandoutCanvasLayerProps) 
                 })}
                 {showShapeInnerShadow && innerShadowId ? (
                   <g className="handout-layer-shape-shadow">
-                    {renderShapeElement(shapeLayer.shape, shapeLayer.cornerRadius, {
+                    {renderShapeElement(shapeLayer.shape, shapeLayer.cornerRadius, shapeSize, {
                       className: "handout-layer-shape-fill",
                       fill: shapeFill?.fill,
                       filterId: innerShadowId,

@@ -3,6 +3,7 @@ import { Rnd } from "react-rnd";
 import type { CSSVars, HandoutCanvasDocV1, Layer, SnapGuide } from "@/components/handoutbuilder/handoutCanvasTypes";
 import { clamp } from "@/components/handoutbuilder/handoutCanvasUtils";
 import { HandoutCanvasLayer, HandoutCanvasLayerContext } from "@/components/handoutbuilder/canvas/HandoutCanvasLayer";
+import { HandoutCanvasTransformOverlay } from "@/components/handoutbuilder/canvas/HandoutCanvasTransformOverlay";
 
 type HandoutCanvasStageProps = {
   stageRef: React.RefObject<HTMLDivElement>;
@@ -62,6 +63,30 @@ export function HandoutCanvasStage(props: HandoutCanvasStageProps) {
     cancelGroupDragUpdate,
     setDoc,
   } = props;
+  const primarySelectedLayer = layerContext.selectedId
+    ? doc.layers.find((layer) => layer.id === layerContext.selectedId) ?? null
+    : null;
+  const showTransformOverlay =
+    Boolean(primarySelectedLayer) &&
+    !layerContext.isGroupSelection &&
+    layerContext.editingId !== primarySelectedLayer?.id;
+  const uiScale = doc.zoom > 0 ? 1 / doc.zoom : 1;
+  const uiVars: CSSVars = {
+    "--handout-handle-size": `${12 * uiScale}px`,
+    "--handout-handle-border": `${2 * uiScale}px`,
+    "--handout-rotate-size": `${18 * uiScale}px`,
+    "--handout-rotate-offset": `${28 * uiScale}px`,
+    "--handout-rotate-stem-top": `${16 * uiScale}px`,
+    "--handout-rotate-stem-width": `${2 * uiScale}px`,
+    "--handout-rotate-stem-length": `${12 * uiScale}px`,
+    "--handout-rotate-icon-size": `${14 * uiScale}px`,
+    "--handout-label-font": `${12 * uiScale}px`,
+    "--handout-label-pad-x": `${6 * uiScale}px`,
+    "--handout-label-pad-y": `${4 * uiScale}px`,
+    "--handout-label-radius": `${10 * uiScale}px`,
+    "--handout-label-offset": `${8 * uiScale}px`,
+    "--handout-label-border": `${1 * uiScale}px`,
+  };
 
   return (
     <div
@@ -86,6 +111,7 @@ export function HandoutCanvasStage(props: HandoutCanvasStageProps) {
           transform: `scale(${doc.zoom})`,
           transformOrigin: "top left",
           marginLeft: `${(derivedPage.width * (1 - doc.zoom)) / 2}px`,
+          ...uiVars,
         }}
       >
         <div
@@ -118,6 +144,9 @@ export function HandoutCanvasStage(props: HandoutCanvasStageProps) {
           {doc.layers.map((layer) => (
             <HandoutCanvasLayer key={layer.id} layer={layer} context={layerContext} />
           ))}
+          {showTransformOverlay && primarySelectedLayer && (
+            <HandoutCanvasTransformOverlay layer={primarySelectedLayer} context={layerContext} />
+          )}
 
           {selectionBounds && (
             <Rnd

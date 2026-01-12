@@ -33,7 +33,7 @@ export type BlendMode =
   | "luminosity";
 export type ShapeKind = "rect" | "ellipse" | "triangle" | "diamond" | "hexagon" | "star";
 export type ShapeFillMode = "solid" | "linear" | "radial" | "image";
-export type ShapeImageFit = "cover" | "contain";
+export type ShapeImageFit = "fill" | "fit" | "crop";
 export type TemplateId = "none" | "parchment" | "letter" | "dossier";
 
 export type ShadowEffect = {
@@ -74,12 +74,6 @@ export type BaseLayer = {
   effects: LayerEffects;
 };
 
-export type ImageLayer = BaseLayer & {
-  type: "image";
-  src: string;
-  keepAspectRatio: boolean;
-};
-
 export type TextLayer = BaseLayer & {
   type: "text";
   text: string;
@@ -100,6 +94,8 @@ export type TextLayer = BaseLayer & {
   gradientAngle: number;
   imageSrc: string;
   imageFit: ShapeImageFit;
+  imageWidth?: number;
+  imageHeight?: number;
   letterSpacing: number;
   lineHeight: number;
   strokeColor: string;
@@ -118,9 +114,11 @@ export type ShapeLayer = BaseLayer & {
   gradientAngle: number;
   imageSrc: string;
   imageFit: ShapeImageFit;
+  imageWidth?: number;
+  imageHeight?: number;
 };
 
-export type Layer = ImageLayer | TextLayer | ShapeLayer;
+export type Layer = TextLayer | ShapeLayer;
 
 export type HandoutCanvasDocV1 = {
   version: 1;

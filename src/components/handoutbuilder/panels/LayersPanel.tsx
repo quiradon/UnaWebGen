@@ -1,5 +1,5 @@
 import type { Ref } from "react";
-import { ChevronDown, ChevronUp, Eye, EyeOff, Image as ImageIcon, Layers, Lock, Square, Trash2, Type, Unlock } from "lucide-react";
+import { ChevronDown, ChevronUp, Eye, EyeOff, Layers, Lock, Square, Trash2, Type, Unlock } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { Layer } from "@/components/handoutbuilder/handoutCanvasTypes";
@@ -60,7 +60,7 @@ export function LayersPanel({
           </div>
           <div className="handout-layers-panel-body">
             {layersForList.length === 0 && (
-              <div className="text-sm text-muted-foreground">Sem camadas. Adicione um texto ou imagem.</div>
+              <div className="text-sm text-muted-foreground">Sem camadas. Adicione um texto ou forma.</div>
             )}
             {layersForList.map((layer, idxFromTop) => {
               const realIdx = layers.length - 1 - idxFromTop;
@@ -76,13 +76,7 @@ export function LayersPanel({
                     onClick={(event) => onSelectLayer(layer, event.shiftKey)}
                   >
                     <span className="handout-layer-icon">
-                      {layer.type === "image" ? (
-                        <ImageIcon className="h-4 w-4" />
-                      ) : layer.type === "shape" ? (
-                        <Square className="h-4 w-4" />
-                      ) : (
-                        <Type className="h-4 w-4" />
-                      )}
+                      {layer.type === "shape" ? <Square className="h-4 w-4" /> : <Type className="h-4 w-4" />}
                     </span>
                     <span className="handout-layer-name" title={layer.name}>
                       {layer.name || layer.id}

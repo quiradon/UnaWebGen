@@ -12,7 +12,6 @@ import type {
   FillPreset,
   HandoutCanvasDocV1,
   HandoutTemplateEntry,
-  ImageLayer,
   Layer,
   LayerEffects,
   ShadowEffect,
@@ -75,6 +74,18 @@ export function safeArray(value: unknown): unknown[] {
   return Array.isArray(value) ? value : [];
 }
 
+function normalizeFillMode(value: unknown) {
+  if (value === "prencher") return "image";
+  return safeEnum(value, SHAPE_FILL_MODE_VALUES, "solid");
+}
+
+function normalizeImageFit(value: unknown) {
+  if (value === "cover") return "fill";
+  if (value === "contain") return "fit";
+  if (value === "tile") return "fill";
+  return safeEnum(value, SHAPE_IMAGE_FIT_VALUES, "fill");
+}
+
 function normalizeShadowEffect(raw: unknown, fallback: ShadowEffect): ShadowEffect {
   if (!isObject(raw)) return { ...fallback };
   return {
@@ -131,12 +142,21 @@ function normalizeLayer(raw: unknown): Layer | null {
     const src = safeString(raw.src, "");
     if (!src) return null;
 
-    const keepAspectRatio = safeBoolean(raw.keepAspectRatio, true);
-    const layer: ImageLayer = {
+    const layer: ShapeLayer = {
       ...base,
-      type: "image",
-      src,
-      keepAspectRatio,
+      type: "shape",
+      shape: "rect",
+      cornerRadius: 0,
+      fillMode: "image",
+      fillColor: DEFAULT_SHAPE_FILL_COLOR,
+      fillColor2: DEFAULT_SHAPE_FILL_COLOR_2,
+      fillStop1: DEFAULT_FILL_STOP_1,
+      fillStop2: DEFAULT_FILL_STOP_2,
+      gradientAngle: 45,
+      imageSrc: src,
+      imageFit: normalizeImageFit(raw.imageFit),
+      imageWidth: safeNumber(raw.imageWidth, 0) || undefined,
+      imageHeight: safeNumber(raw.imageHeight, 0) || undefined,
     };
     return layer;
   }
@@ -147,14 +167,16 @@ function normalizeLayer(raw: unknown): Layer | null {
       type: "shape",
       shape: safeEnum(raw.shape, SHAPE_KIND_VALUES, "rect"),
       cornerRadius: clamp(safeNumber(raw.cornerRadius, 12), 0, 50),
-      fillMode: safeEnum(raw.fillMode, SHAPE_FILL_MODE_VALUES, "solid"),
+      fillMode: normalizeFillMode(raw.fillMode),
       fillColor: safeString(raw.fillColor, DEFAULT_SHAPE_FILL_COLOR),
       fillColor2: safeString(raw.fillColor2, DEFAULT_SHAPE_FILL_COLOR_2),
       fillStop1: clamp(safeNumber(raw.fillStop1, DEFAULT_FILL_STOP_1), 0, 100),
       fillStop2: clamp(safeNumber(raw.fillStop2, DEFAULT_FILL_STOP_2), 0, 100),
       gradientAngle: clamp(safeNumber(raw.gradientAngle, 45), 0, 360),
       imageSrc: safeString(raw.imageSrc, ""),
-      imageFit: safeEnum(raw.imageFit, SHAPE_IMAGE_FIT_VALUES, "cover"),
+      imageFit: normalizeImageFit(raw.imageFit),
+      imageWidth: safeNumber(raw.imageWidth, 0) || undefined,
+      imageHeight: safeNumber(raw.imageHeight, 0) || undefined,
     };
     return layer;
   }
@@ -175,14 +197,16 @@ function normalizeLayer(raw: unknown): Layer | null {
     underline: safeBoolean(raw.underline, false),
     backgroundColor: safeString(raw.backgroundColor, "transparent"),
     padding: clamp(safeNumber(raw.padding, 0), 0, 64),
-    fillMode: safeEnum(raw.fillMode, SHAPE_FILL_MODE_VALUES, "solid"),
+    fillMode: normalizeFillMode(raw.fillMode),
     fillColor: textFillColor,
     fillColor2: textFillColor2,
     fillStop1: clamp(safeNumber(raw.fillStop1, DEFAULT_FILL_STOP_1), 0, 100),
     fillStop2: clamp(safeNumber(raw.fillStop2, DEFAULT_FILL_STOP_2), 0, 100),
     gradientAngle: clamp(safeNumber(raw.gradientAngle, 45), 0, 360),
     imageSrc: safeString(raw.imageSrc, ""),
-    imageFit: safeEnum(raw.imageFit, SHAPE_IMAGE_FIT_VALUES, "cover"),
+    imageFit: normalizeImageFit(raw.imageFit),
+    imageWidth: safeNumber(raw.imageWidth, 0) || undefined,
+    imageHeight: safeNumber(raw.imageHeight, 0) || undefined,
     letterSpacing: clamp(safeNumber(raw.letterSpacing, 0), -5, 20),
     lineHeight: clamp(safeNumber(raw.lineHeight, 1.2), 0.6, 3),
     strokeColor: safeString(raw.strokeColor, DEFAULT_TEXT_STROKE_COLOR),
@@ -258,7 +282,7 @@ export function normalizeFillPreset(raw: unknown): FillPreset | null {
   if (!isObject(raw)) return null;
   const id = safeString(raw.id, "");
   if (!id) return null;
-  const mode = safeEnum(raw.mode, SHAPE_FILL_MODE_VALUES, "solid");
+  const mode = normalizeFillMode(raw.mode);
   return {
     id,
     label: safeString(raw.label, "Preset"),
@@ -269,6 +293,6 @@ export function normalizeFillPreset(raw: unknown): FillPreset | null {
     stop2: clamp(safeNumber(raw.stop2, DEFAULT_FILL_STOP_2), 0, 100),
     angle: clamp(safeNumber(raw.angle, 45), 0, 360),
     imageSrc: safeString(raw.imageSrc, ""),
-    imageFit: safeEnum(raw.imageFit, SHAPE_IMAGE_FIT_VALUES, "cover"),
+    imageFit: normalizeImageFit(raw.imageFit),
   };
 }

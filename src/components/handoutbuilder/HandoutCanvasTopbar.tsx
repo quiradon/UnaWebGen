@@ -316,9 +316,6 @@ export function HandoutCanvasTopbar(props: HandoutCanvasTopbarProps) {
             </div>
           )}
 
-          {selectedLayer && selectedLayer.type === "image" && (
-            <div className="handout-topbar-selection" />
-          )}
         </div>
       </div>
     </div>

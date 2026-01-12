@@ -26,10 +26,11 @@ import type {
   FontPresetId,
   FontWeight,
   HandoutCanvasDocV1,
-  ImageLayer,
   Layer,
   LayerEffects,
   ShadowEffect,
+  ShapeFillMode,
+  ShapeImageFit,
   ShapeKind,
   ShapeLayer,
   SnapGuide,
@@ -826,7 +827,7 @@ function updateShadowEffect(
     const sourceLayers = doc.layers.filter((layer) => ids.includes(layer.id));
     if (!sourceLayers.length) return;
     const duplicates = sourceLayers.map((layer) => {
-      const nextId = createId(layer.type === "image" ? "img" : layer.type === "shape" ? "shape" : "txt");
+      const nextId = createId(layer.type === "shape" ? "shape" : "txt");
       return {
         ...layer,
         id: nextId,
@@ -976,7 +977,7 @@ function updateShadowEffect(
       fillStop2: DEFAULT_FILL_STOP_2,
       gradientAngle: 45,
       imageSrc: "",
-      imageFit: "cover",
+      imageFit: "fill",
       letterSpacing: 0,
       lineHeight: 1.2,
       strokeColor: DEFAULT_TEXT_STROKE_COLOR,
@@ -1025,7 +1026,7 @@ function updateShadowEffect(
       fillStop2: DEFAULT_FILL_STOP_2,
       gradientAngle: 45,
       imageSrc: "",
-      imageFit: "cover",
+      imageFit: "fill",
     };
 
     setDoc((prev) => ({ ...prev, layers: [...prev.layers, layer] }));
@@ -1038,12 +1039,12 @@ function updateShadowEffect(
     if (!list.length) return;
 
     toast.message(`Carregando ${list.length} imagem(ns)...`);
-    const created: ImageLayer[] = [];
+    const created: ShapeLayer[] = [];
 
     for (const file of list) {
       try {
         const src = await fileToDataUrl(file);
-        const layer = await createImageLayerFromSrc(src, file.name);
+        const layer = await createImageShapeLayerFromSrc(src, file.name);
         if (layer) created.push(layer);
       } catch (error) {
         console.error(error);
@@ -1058,8 +1059,16 @@ function updateShadowEffect(
     toast.success("Imagem(ns) adicionada(s).");
   }
 
-  async function createImageLayerFromSrc(src: string, name: string) {
-    const natural = await getImageNaturalSize(src);
+  async function createImageShapeLayerFromSrc(
+    src: string,
+    name: string,
+    options?: {
+      fillMode?: ShapeFillMode;
+      imageFit?: ShapeImageFit;
+      size?: { width: number; height: number };
+    },
+  ) {
+    const natural = options?.size ?? (await getImageNaturalSize(src));
     const maxW = derivedPage.width * 0.85;
     const maxH = derivedPage.height * 0.6;
     const scale = Math.min(maxW / natural.width, maxH / natural.height, 1);
@@ -1068,9 +1077,9 @@ function updateShadowEffect(
     const x = Math.max(0, Math.round((derivedPage.width - width) / 2));
     const y = Math.max(0, Math.round((derivedPage.height - height) / 2));
 
-    const layer: ImageLayer = {
-      id: createId("img"),
-      type: "image",
+    const layer: ShapeLayer = {
+      id: createId("shape"),
+      type: "shape",
       name,
       x,
       y,
@@ -1086,15 +1095,29 @@ function updateShadowEffect(
       clipToId: null,
       blendMode: "normal",
       effects: createDefaultEffects(),
-      src,
-      keepAspectRatio: true,
+      shape: "rect",
+      cornerRadius: 0,
+      fillMode: options?.fillMode ?? "image",
+      fillColor: DEFAULT_SHAPE_FILL_COLOR,
+      fillColor2: DEFAULT_SHAPE_FILL_COLOR_2,
+      fillStop1: DEFAULT_FILL_STOP_1,
+      fillStop2: DEFAULT_FILL_STOP_2,
+      gradientAngle: 45,
+      imageSrc: src,
+      imageFit: options?.imageFit ?? "fill",
+      imageWidth: natural.width,
+      imageHeight: natural.height,
     };
     return layer;
   }
 
   async function addAssetToCanvas(asset: AssetItem) {
     try {
-      const layer = await createImageLayerFromSrc(asset.src, asset.name);
+      const layer = await createImageShapeLayerFromSrc(asset.src, asset.name, {
+        fillMode: "image",
+        imageFit: "fill",
+        size: { width: asset.width, height: asset.height },
+      });
       if (!layer) return;
       setDoc((prev) => ({ ...prev, layers: [...prev.layers, layer] }));
       setSelection([layer.id], layer.id);
@@ -1108,8 +1131,17 @@ function updateShadowEffect(
   async function setShapeFillImage(layerId: string, file: File) {
     try {
       const src = await fileToDataUrl(file);
+      const natural = await getImageNaturalSize(src);
       updateLayer(layerId, (p) =>
-        p.type === "shape" ? { ...p, imageSrc: src, fillMode: "image" } : p,
+        p.type === "shape"
+          ? {
+              ...p,
+              imageSrc: src,
+              fillMode: "image",
+              imageWidth: natural.width,
+              imageHeight: natural.height,
+            }
+          : p,
       );
       toast.success("Imagem aplicada.");
     } catch (error) {
@@ -1121,12 +1153,15 @@ function updateShadowEffect(
   async function setTextFillImage(layerId: string, file: File) {
     try {
       const src = await fileToDataUrl(file);
+      const natural = await getImageNaturalSize(src);
       updateLayer(layerId, (p) =>
         p.type === "text"
           ? {
               ...p,
               imageSrc: src,
               fillMode: "image",
+              imageWidth: natural.width,
+              imageHeight: natural.height,
             }
           : p,
       );
@@ -1148,7 +1183,7 @@ function updateShadowEffect(
       stop2: layer.fillStop2 ?? DEFAULT_FILL_STOP_2,
       angle: layer.gradientAngle ?? 45,
       imageSrc: layer.imageSrc || "",
-      imageFit: layer.imageFit || "cover",
+      imageFit: layer.imageFit || "fill",
     };
   }
 
@@ -1207,15 +1242,21 @@ function updateShadowEffect(
       return {
         backgroundImage: `radial-gradient(circle at center, ${preset.color1} ${preset.stop1}%, ${preset.color2} ${preset.stop2}%)`,
       };
-    }
-    if (preset.imageSrc) {
-      return {
-        backgroundImage: `url(${preset.imageSrc})`,
-        backgroundSize: preset.imageFit === "cover" ? "cover" : "contain",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      };
-    }
+      }
+      if (preset.imageSrc) {
+        const backgroundSize =
+          preset.imageFit === "fill" || preset.imageFit === "crop"
+            ? "cover"
+            : preset.imageFit === "fit"
+              ? "contain"
+              : "auto";
+        return {
+          backgroundImage: `url(${preset.imageSrc})`,
+          backgroundSize,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        };
+      }
     return { background: preset.color1 };
   }
 

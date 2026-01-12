@@ -14,7 +14,6 @@ import {
   Wrench,
   Music,
   Sparkles,
-  FileText,
 } from "@lucide/astro";
 
 export { getStaticPaths };
@@ -119,16 +118,6 @@ const pathPrefix = Locale === "en" ? "" : `/${Locale}`;
             title="Token Animator"
             description="Adicione efeitos de respiraAAśo animados aos seus tokens de RPG"
             icon={Sparkles}
-            iconColor="text-primary"
-          />
-        </div>
-
-        <div class="col-lg-6 col-xl-4 mb-4">
-          <ToolCard
-            href={`${pathPrefix}/tools/handout-builder/`}
-            title="Gerador de Handouts"
-            description="Crie documentos/handouts de RPG e exporte em PNG/PDF"
-            icon={FileText}
             iconColor="text-primary"
           />
         </div>

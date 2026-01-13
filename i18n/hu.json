@@ -657,6 +657,20 @@
           "desc": "Opció a támogatók számára Brazíliában",
           "btn": "Támogatni szeretnék"
         }
+      },
+      "tier": {
+        "0": {
+          "name": "Jelölt"
+        },
+        "1": {
+          "name": "Kultista"
+        },
+        "2": {
+          "name": "Próféta"
+        },
+        "3": {
+          "name": "Ébredés"
+        }
       }
     }
   }

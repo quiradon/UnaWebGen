@@ -3,11 +3,6 @@ const {
   title,
   desc,
   priceMonthly,
-  priceAnnual,
-  priceOldMonthly,
-  priceOldAnnual,
-  priceNoteMonthly,
-  priceNoteAnnual,
   primaryFeatures = [],
   secondaryFeatures = [],
   ctaLabel,
@@ -19,13 +14,13 @@ const {
   className = "col-12 col-md-6 col-lg-3",
 } = Astro.props;
 
-const safePrimary = primaryFeatures.filter((item) => item?.text);
-const safeSecondary = secondaryFeatures.filter((item) => item?.text);
+const safePrimary = primaryFeatures.filter((item: any) => item?.text);
+const safeSecondary = secondaryFeatures.filter((item: any) => item?.text);
 const wrapperClass = className?.trim() || "col-12 col-md-6 col-lg-3";
 const cardClass = "premium-plan-card";
 const cardStyle = accent ? `--plan-accent: ${accent};` : undefined;
 const badgeAltText = badgeAlt ?? title ?? "";
-const buildPriceParts = (priceText) => {
+const buildPriceParts = (priceText: string | undefined): { amount: string; currency: string; period: string | undefined } | null => {
   if (!priceText) return null;
   const [priceMainRaw, pricePeriodRaw] = priceText.split("/");
   const priceMain = priceMainRaw?.trim();
@@ -43,7 +38,6 @@ const buildPriceParts = (priceText) => {
 };
 
 const monthlyParts = buildPriceParts(priceMonthly);
-const annualParts = buildPriceParts(priceAnnual);
 ---
 
 <div class={wrapperClass}>
@@ -68,10 +62,7 @@ const annualParts = buildPriceParts(priceAnnual);
     </header>
 
     {monthlyParts ? (
-      <div class="premium-plan-card__pricing" data-billing="monthly">
-        {priceOldMonthly ? (
-          <span class="premium-plan-card__price-old">{priceOldMonthly}</span>
-        ) : null}
+      <div class="premium-plan-card__pricing">
         <div class="premium-plan-card__price-main">
           {monthlyParts.currency ? (
             <span class="premium-plan-card__price-currency">
@@ -87,34 +78,6 @@ const annualParts = buildPriceParts(priceAnnual);
             </span>
           ) : null}
         </div>
-        {priceNoteMonthly ? (
-          <span class="premium-plan-card__price-note">{priceNoteMonthly}</span>
-        ) : null}
-      </div>
-    ) : null}
-    {annualParts ? (
-      <div class="premium-plan-card__pricing" data-billing="annual">
-        {priceOldAnnual ? (
-          <span class="premium-plan-card__price-old">{priceOldAnnual}</span>
-        ) : null}
-        <div class="premium-plan-card__price-main">
-          {annualParts.currency ? (
-            <span class="premium-plan-card__price-currency">
-              {annualParts.currency}
-            </span>
-          ) : null}
-          <span class="premium-plan-card__price-amount">
-            {annualParts.amount}
-          </span>
-          {annualParts.period ? (
-            <span class="premium-plan-card__price-period">
-              /{annualParts.period}
-            </span>
-          ) : null}
-        </div>
-        {priceNoteAnnual ? (
-          <span class="premium-plan-card__price-note">{priceNoteAnnual}</span>
-        ) : null}
       </div>
     ) : null}
     <a
@@ -129,7 +92,7 @@ const annualParts = buildPriceParts(priceAnnual);
     <div class="premium-plan-card__body">
       {safePrimary.length ? (
         <ul class="premium-plan-card__list">
-          {safePrimary.map((item) => {
+          {safePrimary.map((item: any) => {
             const Icon = item.Icon;
             return (
               <li class="premium-plan-card__item">
@@ -147,7 +110,7 @@ const annualParts = buildPriceParts(priceAnnual);
         <>
           <hr class="premium-plan-card__divider" />
           <ul class="premium-plan-card__list">
-            {safeSecondary.map((item) => {
+            {safeSecondary.map((item: any) => {
               const Icon = item.Icon;
               return (
                 <li class="premium-plan-card__item">
@@ -173,8 +136,8 @@ const annualParts = buildPriceParts(priceAnnual);
     height: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 124px 70px 48px 1fr;
-    row-gap: 14px;
+    grid-template-rows: 124px 35px 48px 1fr;
+    row-gap: 8px;
     padding: 48px 20px 20px 22px;
     background: #10131b;
     border: 1px solid rgba(255, 255, 255, 0.08);

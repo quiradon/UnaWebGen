@@ -657,6 +657,20 @@
           "desc": "Opsi untuk pendukung di Brasil",
           "btn": "Quiero Mendukung"
         }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirasi"
+        },
+        "1": {
+          "name": "Cultis"
+        },
+        "2": {
+          "name": "Nabi"
+        },
+        "3": {
+          "name": "Terjaga"
+        }
       }
     }
   }

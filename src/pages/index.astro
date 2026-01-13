@@ -35,11 +35,7 @@ const landingHTML = (t.index?.landing?.text ?? "").replace(
   '<span class="text-primary">$1<\/span>',
 );
 const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
-const supportLinks = {
-  catarse: "https://catarse.me/SEU-PROJETO",
-  patreon: "https://www.patreon.com/c/minikraken",
-  discord: config.discord_invite,
-};
+
 ---
 
 <Layout
@@ -461,7 +457,7 @@ const supportLinks = {
   <PremiumPlans t={t} />
 
   <!-- Modal -->
-  <SupportModal t={t} links={supportLinks} />
+  <SupportModal/>
 
   <!-- Page specific scripts -->
 <script is:inline type="module">

@@ -657,6 +657,20 @@
           "desc": "Opcija za podržavatelje u Brazilu",
           "btn": "Želim podržati"
         }
+      },
+      "tier": {
+        "0": {
+          "name": "Nastojnik"
+        },
+        "1": {
+          "name": "Kultist"
+        },
+        "2": {
+          "name": "Prorok"
+        },
+        "3": {
+          "name": "Budim se"
+        }
       }
     }
   }

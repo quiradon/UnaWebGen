@@ -11,6 +11,7 @@ import { loadT } from "@lib/i18n";
 import { getLocale } from "astro-i18n-aut";
 const locale = getLocale(Astro.url);
 const t = loadT(locale);
+import config from "@/config";
 
 console.log(t.v2.premium.modal.title)
 
@@ -22,15 +23,15 @@ interface Props {
 }
 
 const {
-  links = {},
   modalId = "premium_modal",
 } = Astro.props;
 
-const resolvedLinks = {
-  catarse: links.catarse ?? "#",
-  patreon: links.patreon ?? "#",
-  discord: links.discord ?? "#",
+const supportLinks = {
+  catarse: "https://catarse.me/SEU-PROJETO",
+  patreon: "https://www.patreon.com/c/minikraken",
+  discord: config.discord_invite,
 };
+
 ---
 
 <div
@@ -47,7 +48,7 @@ const resolvedLinks = {
           <Card
             title="Catarse"
             description={t.v2.premium.modal.catarse.desc}
-            href={resolvedLinks.catarse}
+            href={supportLinks.catarse}
             buttonText={t.v2.premium.modal.catarse.btn}
             accentColor="#7ecb31"
             backgroundImage="/img/bg/Forest7.webp"
@@ -56,7 +57,7 @@ const resolvedLinks = {
           <Card
             title="Patreon"
             description={t.v2.premium.modal.patreon.desc}
-            href={resolvedLinks.patreon}
+            href={supportLinks.patreon}
             buttonText={t.v2.premium.modal.patreon.btn}
             accentColor="#ff4f5e"
             backgroundImage="/img/bg/cyberpunk.webp"
@@ -66,7 +67,7 @@ const resolvedLinks = {
         <Card
           title={t.v2.premium.modal.discord.title}
           description={t.v2.premium.modal.discord.desc}
-          href={resolvedLinks.discord}
+          href={supportLinks.discord}
           buttonText={t.v2.premium.modal.discord.btn}
           accentColor="#5865f2"
           backgroundImageSrc={discordBackground.src}

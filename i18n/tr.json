@@ -657,6 +657,20 @@
           "desc": "Brezilya'daki destekçiler için seçenek",
           "btn": "Desteklemek İstiyorum"
         }
+      },
+      "tier": {
+        "0": {
+          "name": "Aday"
+        },
+        "1": {
+          "name": "Kultist"
+        },
+        "2": {
+          "name": "Profet"
+        },
+        "3": {
+          "name": "Uyanıyorum"
+        }
       }
     }
   }

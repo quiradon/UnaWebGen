@@ -657,6 +657,20 @@
           "desc": "Opção para apoiadores no Brasil",
           "btn": "Quero Apoiar"
         }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirante"
+        },
+        "1": {
+          "name": "Cultista"
+        },
+        "2": {
+          "name": "Profeta"
+        },
+        "3": {
+          "name": "Desperto"
+        }
       }
     }
   }

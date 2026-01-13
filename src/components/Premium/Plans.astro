@@ -26,79 +26,20 @@ const coinsLabel = feat?.[4] ?? "Kraken Coins";
 const guildsLabel = t?.index?.status?.guilds ?? "Servidores";
 const supportLabel = feat?.[5] ?? "Suporte prioritario";
 const ctaLabel = t?.index?.donate?.btn ?? "Apoiar Projeto";
-const billingLabels = t?.lang?.startsWith("en")
-  ? { monthly: "Monthly", annual: "Annual" }
-  : { monthly: "Mensal", annual: "Anual" };
-const annualPeriod = t?.lang?.startsWith("en") ? "year" : "ano";
-const annualNote = t?.lang?.startsWith("en")
-  ? "2 months free"
-  : "2 meses gratis";
-const annualMultiplier = 10;
-
-const joinText = (...parts) => parts.filter(Boolean).join(" ");
-
-const buildAnnualPrice = (priceText) => {
-  if (!priceText) return "";
-  const [mainRaw] = priceText.split("/");
-  const main = mainRaw?.trim() ?? "";
-  const match = main.match(/([0-9]+(?:[.,][0-9]+)?)/);
-  if (!match) return priceText;
-  const rawAmount = match[1];
-  const amountIndex = main.indexOf(rawAmount);
-  const currency = main.replace(rawAmount, "").trim();
-  const space =
-    currency && main.includes(`${currency} ${rawAmount}`) ? " " : "";
-  const hasComma = rawAmount.includes(",");
-  const hasDot = rawAmount.includes(".");
-  const decimalPart = hasComma
-    ? rawAmount.split(",")[1]
-    : hasDot
-      ? rawAmount.split(".")[1]
-      : "";
-  const decimals = decimalPart ? decimalPart.length : 0;
-  const numeric = parseFloat(rawAmount.replace(",", "."));
-  if (Number.isNaN(numeric)) return priceText;
-  const annualValue = numeric * annualMultiplier;
-  const oldValue = numeric * 12;
-  const formatted = decimals ? annualValue.toFixed(decimals) : `${annualValue}`;
-  const formattedOld = decimals ? oldValue.toFixed(decimals) : `${oldValue}`;
-  const formattedAmount = hasComma ? formatted.replace(".", ",") : formatted;
-  const formattedOldAmount = hasComma
-    ? formattedOld.replace(".", ",")
-    : formattedOld;
-  const mainAnnual =
-    amountIndex > 0
-      ? `${currency}${space}${formattedAmount}`.trim()
-      : `${formattedAmount}${currency}`.trim();
-  const mainOld =
-    amountIndex > 0
-      ? `${currency}${space}${formattedOldAmount}`.trim()
-      : `${formattedOldAmount}${currency}`.trim();
-  return {
-    annual: `${mainAnnual}/${annualPeriod}`,
-    old: `${mainOld}/${annualPeriod}`,
-  };
-};
+const joinText = (...parts: (string | undefined | null)[]): string => parts.filter(Boolean).join(" ");
 
 const price0 = price?.[0] ?? "15R$/mes";
 const price1 = price?.[1] ?? "25R$/mes";
 const price2 = price?.[2] ?? "30R$/mes";
 const price3 = price?.[3] ?? "50R$/mes";
-const annual0 = buildAnnualPrice(price0);
-const annual1 = buildAnnualPrice(price1);
-const annual2 = buildAnnualPrice(price2);
-const annual3 = buildAnnualPrice(price3);
 
 const plans = [
   {
-    title: t?.premium?.[0]?.title ?? "Guerreiro",
+    title: t.v2.premium.tier[0].name,
     desc:
       t?.premium?.[0]?.desc ??
       "Plano para quem joga sozinho e quer recursos basicos.",
     priceMonthly: price0,
-    priceAnnual: annual0.annual,
-    priceOldAnnual: annual0.old,
-    priceNoteAnnual: annualNote,
     titleIcon: Crown,
     primary: [
       { Icon: User, text: feat?.[10] },
@@ -115,14 +56,11 @@ const plans = [
     badge: tier1,
   },
   {
-    title: t?.premium?.[1]?.title ?? "Aventureiro",
+    title: t.v2.premium.tier[1].name,
     desc:
       t?.premium?.[1]?.desc ??
       "Beneficios para todo o servidor, com mais recursos.",
     priceMonthly: price1,
-    priceAnnual: annual1.annual,
-    priceOldAnnual: annual1.old,
-    priceNoteAnnual: annualNote,
     titleIcon: User,
     primary: [
       { Icon: User, text: feat?.[10] },
@@ -140,12 +78,9 @@ const plans = [
     badge: tier2,
   },
   {
-    title: t?.premium?.[2]?.title ?? "Heroi do Polvo",
+    title: t.v2.premium.tier[2].name,
     desc: t?.premium?.[2]?.desc ?? "Para quem quer tudo liberado.",
     priceMonthly: price2,
-    priceAnnual: annual2.annual,
-    priceOldAnnual: annual2.old,
-    priceNoteAnnual: annualNote,
     titleIcon: Crown,
     primary: [
       { Icon: User, text: feat?.[11] },
@@ -166,14 +101,11 @@ const plans = [
     badge: tier3,
   },
   {
-    title: t?.premium?.[3]?.title ?? "Conselho do Kraken",
+    title: t.v2.premium.tier[3].name,
     desc:
       t?.premium?.[3]?.desc ??
       "Prioridade maxima para servidores grandes.",
     priceMonthly: price3,
-    priceAnnual: annual3.annual,
-    priceOldAnnual: annual3.old,
-    priceNoteAnnual: annualNote,
     titleIcon: Crown,
     primary: [
       { Icon: User, text: feat?.[11] },
@@ -201,31 +133,12 @@ const plans = [
   id="premium"
   class="d-xl-flex justify-content-xl-center"
   data-premium-plans
-  data-billing="monthly"
 >
   <div class="container">
     <div class="row">
       <div class="col mb-3">
         <h2 class="display-4 fw-bold mt-0">{t?.index?.donate?.title}</h2>
         <p class="lead text-secondary mb-5">{t?.index?.donate?.desc}</p>
-      </div>
-    </div>
-    <div class="d-flex justify-content-start justify-content-md-end mb-4">
-      <div class="premium-billing" data-premium-billing>
-        <button
-          type="button"
-          class="premium-billing__option is-active"
-          data-billing="monthly"
-        >
-          {billingLabels.monthly}
-        </button>
-        <button
-          type="button"
-          class="premium-billing__option"
-          data-billing="annual"
-        >
-          {billingLabels.annual}
-        </button>
       </div>
     </div>
 
@@ -235,9 +148,6 @@ const plans = [
           title={plan.title}
           desc={plan.desc}
           priceMonthly={plan.priceMonthly}
-          priceAnnual={plan.priceAnnual}
-          priceOldAnnual={plan.priceOldAnnual}
-          priceNoteAnnual={plan.priceNoteAnnual}
           titleIcon={plan.titleIcon}
           primaryFeatures={plan.primary}
           secondaryFeatures={plan.secondary}
@@ -252,71 +162,8 @@ const plans = [
   </div>
 </section>
 
-<script>
-  const initPremiumBilling = () => {
-    const root = document.querySelector("[data-premium-plans]");
-    const toggle = document.querySelector("[data-premium-billing]");
-    if (!root || !toggle) return;
-    const buttons = Array.from(
-      toggle.querySelectorAll("[data-billing]")
-    );
-    const setBilling = (value) => {
-      if (!value) return;
-      root.dataset.billing = value;
-      buttons.forEach((btn) => {
-        btn.classList.toggle("is-active", btn.dataset.billing === value);
-      });
-    };
-    buttons.forEach((btn) => {
-      btn.addEventListener("click", () => setBilling(btn.dataset.billing));
-    });
-    if (buttons.length) {
-      setBilling(buttons[0].dataset.billing);
-    }
-  };
-
-  document.addEventListener("astro:page-load", initPremiumBilling);
-</script>
-
 <style>
   [data-premium-plans] {
     padding-bottom: clamp(48px, 6vw, 96px);
   }
-
-  :global([data-premium-plans][data-billing="monthly"]
-    .premium-plan-card__pricing[data-billing="annual"]) {
-    display: none;
-  }
-
-  :global([data-premium-plans][data-billing="annual"]
-    .premium-plan-card__pricing[data-billing="monthly"]) {
-    display: none;
-  }
-
-  .premium-billing {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    gap: 6px;
-  }
-
-  .premium-billing__option {
-    border: 0;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.75);
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-
-  .premium-billing__option.is-active {
-    background: #f8f9fa;
-    color: #0b0f14;
-  }
-
 </style>

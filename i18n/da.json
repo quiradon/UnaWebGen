@@ -657,6 +657,20 @@
           "desc": "Mulighed for støtter i Brasilien",
           "btn": "Jeg vil støtte"
         }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirant"
+        },
+        "1": {
+          "name": "Kultist"
+        },
+        "2": {
+          "name": "Profet"
+        },
+        "3": {
+          "name": "Vågnet"
+        }
       }
     }
   }

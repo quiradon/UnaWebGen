@@ -637,5 +637,27 @@
       "desc": "Porta le tue sessioni di GDR su Discord a un livello superiore con la personalizzazione avanzata di mappe e token direttamente su Discord. Modifica gli scenari, regola le posizioni e adatta l'ambiente di gioco in tempo reale, senza lasciare il tuo server. Controllo totale per i GM e i giocatori, tutto integrato nel tuo spazio di gioco su Discord.",
       "title": "Personalizza mappe e griglie"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Sostenere il progetto",
+        "footer": "Accettiamo Pix e PayPal tramite Discord, permettendo un supporto diretto per la tua massima comodità.",
+        "discord": {
+          "title": "Riscuotere ricompense tramite Discord",
+          "desc": "Dopo aver supportato, apri un ticket per sbloccare subito le tue funzioni premium.",
+          "btn": "Entrare nella comunità"
+        },
+        "patreon": {
+          "desc": "Opzione per sostenitori globali, tramite dollaro.",
+          "btn": "Iscriviti a Patreon"
+        },
+        "desc": "Scegli come desideri diventare un sostenitore del progetto e sbloccare ricompense esclusive.",
+        "catarse": {
+          "desc": "Opzione per sostenitori in Brasile",
+          "btn": "Voglio sostenere"
+        }
+      }
+    }
   }
 }

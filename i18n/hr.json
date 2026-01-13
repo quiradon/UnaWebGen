@@ -637,5 +637,27 @@
       "desc": "Podignite svoje Discord RPG sesije na višu razinu uz naprednu personalizaciju karata i žetona izravno u Discordu. Uređujte scenarije, prilagođavajte pozicije i prilagođavajte okruženje igre u stvarnom vremenu, bez napuštanja svog poslužitelja. Potpuna kontrola za voditelje i igrače, sve integrirano u vaš Discord prostor za igru.",
       "title": "Prilagodi karte i mreže"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Podržati projekt",
+        "footer": "Prihvaćamo Pix i PayPal putem Discorda, omogućujući izravnu podršku za vašu veću pogodnost.",
+        "discord": {
+          "title": "Iskoristi nagrade putem Discorda",
+          "desc": "Nakon podrške, otvorite tiket kako biste odmah aktivirali svoje premium funkcije.",
+          "btn": "Pridruži se zajednici"
+        },
+        "patreon": {
+          "desc": "Opcija za globalne podržavatelje, putem dolara.",
+          "btn": "Pretplati se na Patreon"
+        },
+        "desc": "Odaberite kako želite postati podržavatelj projekta i otključati ekskluzivne nagrade.",
+        "catarse": {
+          "desc": "Opcija za podržavatelje u Brazilu",
+          "btn": "Želim podržati"
+        }
+      }
+    }
   }
 }

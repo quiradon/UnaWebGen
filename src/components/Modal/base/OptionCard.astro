@@ -1,0 +1,53 @@
+---
+import Card from "../../Card.astro";
+
+interface Props {
+  name: string;
+  description: string;
+  cta: string;
+  href: string;
+  accent: string;
+  background?: string;
+  iconSrc?: string;
+  iconAlt?: string;
+  isActivation?: boolean;
+  bgImageSrc?: string;
+}
+
+const {
+  name,
+  description,
+  cta,
+  href,
+  accent,
+  background,
+  iconSrc,
+  iconAlt = name,
+  isActivation = false,
+  bgImageSrc,
+} = Astro.props;
+---
+
+<Card
+  title={name}
+  description={description}
+  href={href}
+  buttonText={cta}
+  accentColor={accent}
+  backgroundImage={!isActivation ? background : undefined}
+  backgroundImageSrc={bgImageSrc}
+  icon={iconSrc ? { src: iconSrc, alt: iconAlt } : undefined}
+  class={isActivation ? "card--activation" : ""}
+/>
+
+<style>
+  :global(.card--activation) {
+    min-height: 150px;
+  }
+
+  @media (max-width: 992px) {
+    :global(.card--activation) {
+      min-height: 140px;
+    }
+  }
+</style>

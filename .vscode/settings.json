@@ -3,5 +3,6 @@
     "workbench.iconTheme": "helium-icon-theme",
     "i18n-ally.localesPaths": [
         "i18n"
-    ]
+    ],
+    "polyglotManager.sourceLanguage": "pt"
 }

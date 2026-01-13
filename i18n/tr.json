@@ -637,5 +637,27 @@
       "desc": "Discord RPG oturumlarınızı, doğrudan Discord içinde gelişmiş harita ve token özelleştirmesiyle bir üst seviyeye taşıyın. Senaryoları düzenleyin, konumları ayarlayın ve oyun ortamını gerçek zamanlı olarak uyarlayın, sunucudan çıkmadan. GM'ler ve oyuncular için tam kontrol, hepsi Discord oyun alanınıza entegre edilmiş.",
       "title": "Haritaları ve Izgaraları Özelleştir"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Projeye Destek Ol",
+        "footer": "Pix ve PayPal'ı Discord üzerinden kabul ediyoruz, böylece size daha fazla kolaylık sağlıyoruz.",
+        "discord": {
+          "title": "Discord üzerinden Ödülleri Almak",
+          "desc": "Destek verdikten sonra, premium özelliklerinizi anında açmak için bir bilet oluşturun.",
+          "btn": "Topluluğa katıl"
+        },
+        "patreon": {
+          "desc": "Küresel destekçiler için dolar üzerinden seçenek.",
+          "btn": "Patreon'a Abone Ol"
+        },
+        "desc": "Projeye destekçi olarak katılmak ve özel ödüllerin kilidini açmak için nasıl devam etmek istediğinizi seçin.",
+        "catarse": {
+          "desc": "Brezilya'daki destekçiler için seçenek",
+          "btn": "Desteklemek İstiyorum"
+        }
+      }
+    }
   }
 }

@@ -637,5 +637,27 @@
       "desc": "Level up your Discord RPG sessions with advanced map and token customization directly within Discord. Edit scenarios, adjust positions, and adapt the game environment in real time, all without leaving your server. Full control for GMs and players, all integrated into your Discord game space.",
       "title": "Customize Maps and Grids"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Support Project",
+        "footer": "We accept Pix and PayPal via Discord, allowing direct support for your greater convenience.",
+        "discord": {
+          "title": "Redeem Rewards via Discord",
+          "desc": "After supporting, open a ticket to immediately unlock your premium features.",
+          "btn": "Join the community"
+        },
+        "patreon": {
+          "desc": "Option for global supporters, through dollars.",
+          "btn": "Subscribe to Patreon"
+        },
+        "desc": "Choose how you want to become a supporter of the project and unlock exclusive rewards.",
+        "catarse": {
+          "desc": "Option for supporters in Brazil",
+          "btn": "I Want to Support"
+        }
+      }
+    }
   }
 }

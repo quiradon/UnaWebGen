@@ -637,5 +637,27 @@
       "desc": "Améliorez vos sessions de JdR sur Discord grâce à une personnalisation avancée des cartes et des jetons directement sur Discord. Modifiez les scénarios, ajustez les positions et adaptez l'environnement de jeu en temps réel, sans quitter votre serveur. Contrôle total pour les MJ et les joueurs, le tout intégré à votre espace de jeu sur Discord.",
       "title": "Personnaliser les cartes et les grilles"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Soutenir le projet",
+        "footer": "Nous acceptons Pix et PayPal via Discord, permettant un soutien direct pour votre plus grande commodité.",
+        "discord": {
+          "title": "Réclamer des récompenses via Discord",
+          "desc": "Après avoir soutenu, ouvrez un ticket pour débloquer immédiatement vos fonctions premium.",
+          "btn": "Rejoindre la communauté"
+        },
+        "patreon": {
+          "desc": "Option pour les soutiens globaux, via le dollar.",
+          "btn": "S'abonner à Patreon"
+        },
+        "desc": "Choisissez comment vous souhaitez devenir un soutien du projet et débloquer des récompenses exclusives.",
+        "catarse": {
+          "desc": "Option pour les soutiens au Brésil",
+          "btn": "Je veux soutenir"
+        }
+      }
+    }
   }
 }

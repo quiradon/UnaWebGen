@@ -637,5 +637,27 @@
       "desc": "Podnieś swoje sesje RPG na Discordzie na wyższy poziom dzięki zaawansowanej personalizacji map i żetonów bezpośrednio na Discordzie. Edytuj scenariusze, dostosuj pozycje i zmieniaj otoczenie gry w czasie rzeczywistym, bez opuszczania serwera. Pełna kontrola dla Mistrzów Gry i graczy, wszystko zintegrowane z Waszą przestrzenią gry na Discordzie.",
       "title": "Dostosuj mapy i siatki"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Wspieraj projekt",
+        "footer": "Akceptujemy Pix i PayPal przez Discord, umożliwiając bezpośrednie wsparcie dla Twojej większej wygody.",
+        "discord": {
+          "title": "Odbierz nagrody przez Discord",
+          "desc": "Po wsparciu, otwórz zgłoszenie, aby natychmiast odblokować swoje funkcje premium.",
+          "btn": "Dołącz do społeczności"
+        },
+        "patreon": {
+          "desc": "Opcja dla globalnych wspierających, za pomocą dolara.",
+          "btn": "Zasubskrybuj Patreon"
+        },
+        "desc": "Wybierz, jak chcesz zostać wspierającym projekt i odblokować ekskluzywne nagrody.",
+        "catarse": {
+          "desc": "Opcja dla wspierających w Brazylii",
+          "btn": "Chcę wesprzeć"
+        }
+      }
+    }
   }
 }

@@ -637,5 +637,27 @@
       "desc": "Eleve suas sessões de RPG no Discord para outro nível com personalização avançada de mapas e tokens diretamente no Discord. Edite cenários, ajuste posições e adapte o ambiente de jogo em tempo real, sem sair do seu servidor. Controle total para mestres e jogadores, tudo integrado ao seu espaço de jogo no Discord.",
       "title": "Personalize mapas e tokens no VTT"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Apoiar Projeto",
+        "footer": "Aceitamos Pix e PayPal via Discord permitindo apoio direto para sua maior conveniência.",
+        "discord": {
+          "title": "Resgatar Recompensas via discord",
+          "desc": "Após apoiar, abra um ticket para liberar suas funções premium na hora.",
+          "btn": "Entrar na comunidade"
+        },
+        "patreon": {
+          "desc": "Opção para apoiadores globais, através de dolar.",
+          "btn": "Assinar Patreon"
+        },
+        "desc": "Escolha como você deseja se tornar um apoiador do projeto e desbloquear recompensas exclusivas.",
+        "catarse": {
+          "desc": "Opção para apoiadores no Brasil",
+          "btn": "Quero Apoiar"
+        }
+      }
+    }
   }
 }

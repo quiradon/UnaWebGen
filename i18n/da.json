@@ -637,5 +637,27 @@
       "desc": "Tag dine Discord-RPG-sessioner op med avanceret kort- og tokentilpasning direkte i Discord. Rediger scenarier, juster positioner, og tilpas spilmiljøet i realtid, alt sammen uden at forlade din server. Fuldstændig kontrol for mestre og spillere, alt integreret i dit Discord-spilområde.",
       "title": "Tilpas kort og gitter"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Støt projektet",
+        "footer": "Vi accepterer Pix og PayPal via Discord, hvilket giver direkte støtte for din største bekvemmelighed.",
+        "discord": {
+          "title": "Indløs belønninger via Discord",
+          "desc": "Efter at have støttet, åbn en ticket for straks at få adgang til dine premium-funktioner.",
+          "btn": "Deltag i fællesskabet"
+        },
+        "patreon": {
+          "desc": "Mulighed for globale støtter via dollar.",
+          "btn": "Tilmeld Patreon"
+        },
+        "desc": "Vælg, hvordan du ønsker at blive en støtte for projektet og låse op for eksklusive belønninger.",
+        "catarse": {
+          "desc": "Mulighed for støtter i Brasilien",
+          "btn": "Jeg vil støtte"
+        }
+      }
+    }
   }
 }

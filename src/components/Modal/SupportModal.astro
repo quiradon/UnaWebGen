@@ -1,0 +1,131 @@
+---
+import catarseLogo from "@assets/img/plataforms/catarse.png";
+import patreonLogo from "@assets/img/plataforms/patreon.svg";
+import discordLogo from "@assets/img/plataforms/Discord-Symbol-Blurple.svg";
+import discordBackground from "@assets/img/plataforms/backgrounds/DiscordBG.png";
+import Header from "./base/Header.astro";
+import Body from "./base/Body.astro";
+import Footer from "./base/Footer.astro";
+import Card from "../Card.astro";
+import { loadT } from "@lib/i18n";
+import { getLocale } from "astro-i18n-aut";
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
+
+console.log(t.v2.premium.modal.title)
+
+interface Props {
+  links?: Record<string, string>;
+  modalId?: string;
+  title?: string;
+  joinLabel?: string;
+}
+
+const {
+  links = {},
+  modalId = "premium_modal",
+} = Astro.props;
+
+const resolvedLinks = {
+  catarse: links.catarse ?? "#",
+  patreon: links.patreon ?? "#",
+  discord: links.discord ?? "#",
+};
+---
+
+<div
+  id={modalId}
+  class="modal fade support-modal"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <Header title={t.v2.premium.modal.title} intro={t.v2.premium.modal.desc} />
+      <Body>
+        <div class="support-options">
+          <Card
+            title="Catarse"
+            description={t.v2.premium.modal.catarse.desc}
+            href={resolvedLinks.catarse}
+            buttonText={t.v2.premium.modal.catarse.btn}
+            accentColor="#7ecb31"
+            backgroundImage="/img/bg/Forest7.webp"
+            icon={{ src: catarseLogo.src, alt: "Catarse" }}
+          />
+          <Card
+            title="Patreon"
+            description={t.v2.premium.modal.patreon.desc}
+            href={resolvedLinks.patreon}
+            buttonText={t.v2.premium.modal.patreon.btn}
+            accentColor="#ff4f5e"
+            backgroundImage="/img/bg/cyberpunk.webp"
+            icon={{ src: patreonLogo.src, alt: "Patreon" }}
+          />
+        </div>
+        <Card
+          title={t.v2.premium.modal.discord.title}
+          description={t.v2.premium.modal.discord.desc}
+          href={resolvedLinks.discord}
+          buttonText={t.v2.premium.modal.discord.btn}
+          accentColor="#5865f2"
+          backgroundImageSrc={discordBackground.src}
+          icon={{ src: discordLogo.src, alt: "Discord" }}
+          class="card--activation"
+        />
+      </Body>
+      <Footer footnote={t.v2.premium.modal.footer} />
+    </div>
+  </div>
+</div>
+
+<style>
+  .support-modal .modal-content {
+    background: #0f1219;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 3.5rem);
+    max-height: calc(100dvh - 3.5rem);
+  }
+
+  .support-modal .modal-dialog {
+    max-width: 880px;
+  }
+
+  .support-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  :global(.card--activation) {
+    min-height: 150px;
+  }
+
+  @media (max-width: 992px) {
+    .support-modal .modal-dialog {
+      max-width: 680px;
+      margin: 1.25rem auto;
+    }
+
+    .support-options {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .support-modal .modal-dialog {
+      margin: 0.75rem;
+    }
+
+    .support-modal .modal-content {
+      max-height: calc(100vh - 1.5rem);
+      max-height: calc(100dvh - 1.5rem);
+      border-radius: 14px;
+    }
+  }
+</style>

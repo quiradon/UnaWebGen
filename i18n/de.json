@@ -637,5 +637,27 @@
       "desc": "Hebe deine Discord-Rollenspiel-Sitzungen auf ein neues Level mit erweiterter Karten- und Token-Anpassung direkt in Discord. Bearbeite Szenarien, passe Positionen an und passe die Spielumgebung in Echtzeit an, alles ohne deinen Server zu verlassen. Volle Kontrolle für Spielleiter und Spieler, alles integriert in deinen Discord-Spielbereich.",
       "title": "Karten und Raster anpassen"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Projekt unterstützen",
+        "footer": "Wir akzeptieren Pix und PayPal über Discord, um direkte Unterstützung für Ihre größere Bequemlichkeit zu ermöglichen.",
+        "discord": {
+          "title": "Belohnungen über Discord einlösen",
+          "desc": "Nach der Unterstützung öffne ein Ticket, um deine Premium-Funktionen sofort freizuschalten.",
+          "btn": "In die Gemeinschaft eintreten"
+        },
+        "patreon": {
+          "desc": "Option für globale Unterstützer, durch Dollar.",
+          "btn": "Patreon abonnieren"
+        },
+        "desc": "Wählen Sie, wie Sie Unterstützer des Projekts werden und exklusive Belohnungen freischalten möchten.",
+        "catarse": {
+          "desc": "Option für Unterstützer in Brasilien",
+          "btn": "Ich möchte unterstützen"
+        }
+      }
+    }
   }
 }

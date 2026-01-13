@@ -637,5 +637,27 @@
       "desc": "Emeld a Discord szerepjátékos üléseid egy új szintre a térképek és zsetonok fejlett testreszabásával közvetlenül a Discordon belül. Szerkeszd a forgatókönyveket, állítsd be a pozíciókat, és igazítsd a játék környezetét valós időben, anélkül, hogy elhagynád a szerveredet. Teljes kontroll a mesterek és a játékosok számára, minden integrálva a Discord játéktéredbe.",
       "title": "Térképek és rácsos megjelenítés testreszabása"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Támogatás projekt",
+        "footer": "Elfogadunk Pixet és PayPalt Discordon keresztül, lehetővé téve a közvetlen támogatást az Ön nagyobb kényelme érdekében.",
+        "discord": {
+          "title": "Jutalmak beváltása Discordon keresztül",
+          "desc": "Miután támogatott, nyisson egy jegyet, hogy azonnal feloldhassa prémium funkcióit.",
+          "btn": "Csatlakozás a közösséghez"
+        },
+        "patreon": {
+          "desc": "Globális támogatók számára elérhető opció, dollárban.",
+          "btn": "Feliratkozás a Patreonra"
+        },
+        "desc": "Válassza ki, hogyan szeretne a projekt támogatója lenni, és feloldani exkluzív jutalmakat.",
+        "catarse": {
+          "desc": "Opció a támogatók számára Brazíliában",
+          "btn": "Támogatni szeretnék"
+        }
+      }
+    }
   }
 }

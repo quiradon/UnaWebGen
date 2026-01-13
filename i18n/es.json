@@ -637,5 +637,27 @@
       "desc": "Eleva tus sesiones de RPG de Discord a otro nivel con personalización avanzada de mapas y fichas directamente en Discord. Edita escenarios, ajusta posiciones y adapta el entorno del juego en tiempo real, sin salir de tu servidor. Control total para maestros y jugadores, todo integrado en tu espacio de juego de Discord.",
       "title": "Personalizar mapas y cuadrículas"
     }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Apoyar Proyecto",
+        "footer": "Aceptamos Pix y PayPal a través de Discord, permitiendo apoyo directo para su mayor conveniencia.",
+        "discord": {
+          "title": "Canjear Recompensas vía discord",
+          "desc": "Después de apoyar, abre un ticket para liberar tus funciones premium al instante.",
+          "btn": "Entrar en la comunidad"
+        },
+        "patreon": {
+          "desc": "Opción para patrocinadores globales, a través de dólar.",
+          "btn": "Suscribirse a Patreon"
+        },
+        "desc": "Elige cómo deseas convertirte en un patrocinador del proyecto y desbloquear recompensas exclusivas.",
+        "catarse": {
+          "desc": "Opción para patrocinadores en Brasil",
+          "btn": "Quiero Apoyar"
+        }
+      }
+    }
   }
 }

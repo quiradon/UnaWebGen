@@ -1,0 +1,38 @@
+---
+interface Props {
+  footnote: string;
+}
+
+const { footnote } = Astro.props;
+---
+
+<div class="support-modal__footer">
+  <span class="support-modal__footnote">{footnote}</span>
+</div>
+
+<style>
+  .support-modal__footer {
+    padding: 0 24px 22px;
+    display: flex;
+    justify-content: flex-start;
+    flex-shrink: 0;
+  }
+
+  .support-modal__footnote {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .support-modal__footer {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .support-modal__footnote {
+      width: 100%;
+      text-align: center;
+      padding-top: 8px;
+    }
+  }
+</style>

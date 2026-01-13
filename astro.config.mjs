@@ -76,7 +76,8 @@ export default defineConfig({
         '@pages': '/src/pages',
         '@i18n': '/src/i18n',
         '@static': '',
-        '@data': '/data'
+        '@data': '/data',
+        '@assets': '/src/assets',
       }
     }
   },

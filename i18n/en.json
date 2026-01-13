@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "A Plan for Lone Wolves Who Want to Access Resources Alone.",
-      "title": "Warrior"
+      "desc": "A Plan for Lone Wolves Who Want to Access Resources Alone."
     },
     "1": {
-      "desc": "One for all and all for one, with this plan everyone on your server benefits!",
-      "title": "Adventurous"
+      "desc": "One for all and all for one, with this plan everyone on your server benefits!"
     },
     "2": {
-      "desc": "For true lovers of Inanimalia Fortuna!",
-      "title": "Octopus Hero"
+      "desc": "For true lovers of Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Macro Slots (per character)",

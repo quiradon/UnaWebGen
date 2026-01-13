@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Terv egyedül utazó farkasoknak, akik egyedül szeretnének hozzáférni az erőforrásokhoz.",
-      "title": "Harcos"
+      "desc": "Terv egyedül utazó farkasoknak, akik egyedül szeretnének hozzáférni az erőforrásokhoz."
     },
     "1": {
-      "desc": "Egy mindenkiért, mindenki egyért, ezzel a tervvel mindenki profitál a szerveren!",
-      "title": "Kalandvágyó"
+      "desc": "Egy mindenkiért, mindenki egyért, ezzel a tervvel mindenki profitál a szerveren!"
     },
     "2": {
-      "desc": "Az Inanimalia Fortuna igazi szerelmeseinek!",
-      "title": "Polip Hős"
+      "desc": "Az Inanimalia Fortuna igazi szerelmeseinek!"
     },
     "feat": {
       "0": "+5 Makró Slot (karakterenként)",

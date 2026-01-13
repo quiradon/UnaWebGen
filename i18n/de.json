@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Ein Plan für Einzelgänger, die allein auf Ressourcen zugreifen möchten.",
-      "title": "Krieger"
+      "desc": "Ein Plan für Einzelgänger, die allein auf Ressourcen zugreifen möchten."
     },
     "1": {
-      "desc": "Einer für alle und alle für einen – mit diesem Plan profitiert jeder auf deinem Server!",
-      "title": "Abenteuerlich"
+      "desc": "Einer für alle und alle für einen – mit diesem Plan profitiert jeder auf deinem Server!"
     },
     "2": {
-      "desc": "Für wahre Liebhaber von Inanimalia Fortuna!",
-      "title": "Oktopus-Held"
+      "desc": "Für wahre Liebhaber von Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Makro-Slots (pro Charakter)",

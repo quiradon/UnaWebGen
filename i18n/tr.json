@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Kaynaklara Tek Başınıza Erişmek İsteyen Yalnız Kurtlar İçin Bir Plan.",
-      "title": "Savaşçı"
+      "desc": "Kaynaklara Tek Başınıza Erişmek İsteyen Yalnız Kurtlar İçin Bir Plan."
     },
     "1": {
-      "desc": "Hepimiz bir, birlik için hepimiz; bu planla sunucunuzdaki herkes faydalanır!",
-      "title": "Maceracı"
+      "desc": "Hepimiz bir, birlik için hepimiz; bu planla sunucunuzdaki herkes faydalanır!"
     },
     "2": {
-      "desc": "Inanimalia Fortuna'nın gerçek aşıkları için!",
-      "title": "Ahtapot Kahramanı"
+      "desc": "Inanimalia Fortuna'nın gerçek aşıkları için!"
     },
     "feat": {
       "0": "+5 Makro Yuvası (karakter başına)",

@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Un plan pour les loups solitaires qui veulent accéder aux ressources seuls.",
-      "title": "Guerrier"
+      "desc": "Un plan pour les loups solitaires qui veulent accéder aux ressources seuls."
     },
     "1": {
-      "desc": "Un pour tous et tous pour un, avec ce plan, tout le monde sur votre serveur en profite !",
-      "title": "Aventurier"
+      "desc": "Un pour tous et tous pour un, avec ce plan, tout le monde sur votre serveur en profite !"
     },
     "2": {
-      "desc": "Pour les vrais amoureux d'Inanimalia Fortuna !",
-      "title": "Héros Pieuvre"
+      "desc": "Pour les vrais amoureux d'Inanimalia Fortuna !"
     },
     "feat": {
       "0": "+5 emplacements de macros (par personnage)",

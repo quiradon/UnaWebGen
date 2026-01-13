@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "En plan for ensomme ulve, der ønsker adgang til ressourcerne alene.",
-      "title": "Kriger"
+      "desc": "En plan for ensomme ulve, der ønsker adgang til ressourcerne alene."
     },
     "1": {
-      "desc": "En for alle og alle for en, med denne plan får alle på din server fordele!",
-      "title": "Eventyrer"
+      "desc": "En for alle og alle for en, med denne plan får alle på din server fordele!"
     },
     "2": {
-      "desc": "Til de sande elskere af Inanimalia Fortuna!",
-      "title": "Blækspruttehelt"
+      "desc": "Til de sande elskere af Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Makro-slots (per karakter)",

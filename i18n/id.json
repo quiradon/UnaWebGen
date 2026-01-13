@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Rencana untuk Serigala Tunggal yang Ingin Mengakses Sumber Daya Sendiri.",
-      "title": "Prajurit"
+      "desc": "Rencana untuk Serigala Tunggal yang Ingin Mengakses Sumber Daya Sendiri."
     },
     "1": {
-      "desc": "Satu untuk semua dan semua untuk satu, dengan rencana ini semua orang di server Anda mendapat manfaat!",
-      "title": "Petualang"
+      "desc": "Satu untuk semua dan semua untuk satu, dengan rencana ini semua orang di server Anda mendapat manfaat!"
     },
     "2": {
-      "desc": "Untuk pecinta sejati Inanimalia Fortuna!",
-      "title": "Pahlawan Gurita"
+      "desc": "Untuk pecinta sejati Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Slot Makro (per karakter)",

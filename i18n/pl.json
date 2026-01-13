@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Plan dla samotnych wilków, którzy chcą uzyskać dostęp do zasobów w pojedynkę.",
-      "title": "Wojownik"
+      "desc": "Plan dla samotnych wilków, którzy chcą uzyskać dostęp do zasobów w pojedynkę."
     },
     "1": {
-      "desc": "Jeden za wszystkich, wszyscy za jednego – dzięki temu planowi każdy na twoim serwerze odniesie korzyści!",
-      "title": "Przygodowy"
+      "desc": "Jeden za wszystkich, wszyscy za jednego – dzięki temu planowi każdy na twoim serwerze odniesie korzyści!"
     },
     "2": {
-      "desc": "Dla prawdziwych miłośników Inanimalia Fortuna!",
-      "title": "Bohater-Ośmiornica"
+      "desc": "Dla prawdziwych miłośników Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Slotów na Makra (na postać)",

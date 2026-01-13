@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Um Plano para Lobos Solitários que Querem Acessar Recursos Sozinhos.",
-      "title": "Guerreiro"
+      "desc": "Um Plano para Lobos Solitários que Querem Acessar Recursos Sozinhos."
     },
     "1": {
-      "desc": "Um para todos e todos para um, com este plano todos no seu servidor se beneficiam!",
-      "title": "Aventuroso"
+      "desc": "Um para todos e todos para um, com este plano todos no seu servidor se beneficiam!"
     },
     "2": {
-      "desc": "Para verdadeiros amantes de Inanimalia Fortuna!",
-      "title": "Herói Polvo"
+      "desc": "Para verdadeiros amantes de Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Slots de Macro (por personagem)",

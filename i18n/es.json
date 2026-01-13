@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Un plan para lobos solitarios que quieren acceder a los recursos solos.",
-      "title": "Guerrero"
+      "desc": "Un plan para lobos solitarios que quieren acceder a los recursos solos."
     },
     "1": {
-      "desc": "¡Uno para todos y todos para uno, con este plan todos en tu servidor se benefician!",
-      "title": "Aventurero"
+      "desc": "¡Uno para todos y todos para uno, con este plan todos en tu servidor se benefician!"
     },
     "2": {
-      "desc": "¡Para los verdaderos amantes de Inanimalia Fortuna!",
-      "title": "Héroe Pulpo"
+      "desc": "¡Para los verdaderos amantes de Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Ranuras Macro (por personaje)",

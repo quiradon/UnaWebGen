@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Plan za usamljene vukove koji žele pristupiti resursima sami.",
-      "title": "Ratnik"
+      "desc": "Plan za usamljene vukove koji žele pristupiti resursima sami."
     },
     "1": {
-      "desc": "Jedan za sve i svi za jednoga, s ovim planom svi na vašem poslužitelju dobivaju pogodnosti!",
-      "title": "Avanturisti"
+      "desc": "Jedan za sve i svi za jednoga, s ovim planom svi na vašem poslužitelju dobivaju pogodnosti!"
     },
     "2": {
-      "desc": "Za prave ljubitelje Inanimalia Fortune!",
-      "title": "Heroj hobotnice"
+      "desc": "Za prave ljubitelje Inanimalia Fortune!"
     },
     "feat": {
       "0": "+5 Makro utora (po liku)",

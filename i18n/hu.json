@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Terv egyedül utazó farkasoknak, akik egyedül szeretnének hozzáférni az erőforrásokhoz.",
-      "title": "Harcos"
+      "desc": "Terv egyedül utazó farkasoknak, akik egyedül szeretnének hozzáférni az erőforrásokhoz."
     },
     "1": {
-      "desc": "Egy mindenkiért, mindenki egyért, ezzel a tervvel mindenki profitál a szerveren!",
-      "title": "Kalandvágyó"
+      "desc": "Egy mindenkiért, mindenki egyért, ezzel a tervvel mindenki profitál a szerveren!"
     },
     "2": {
-      "desc": "Az Inanimalia Fortuna igazi szerelmeseinek!",
-      "title": "Polip Hős"
+      "desc": "Az Inanimalia Fortuna igazi szerelmeseinek!"
     },
     "feat": {
       "0": "+5 Makró Slot (karakterenként)",
@@ -533,12 +530,21 @@
       "12": "Három Céh számára",
       "98": "Csapat Lábcsomag és a Clube da Una",
       "99": "Költői jogosultság a fejlesztők megkérdezésére"
+    },
+    "new": {
+      "0": "Szabadulj meg a hirdetésektől!",
+      "1": "%0% gigabájt tárhely"
+    },
+    "info": {
+      "kc": "A Kraken Coins digitális pontok, amelyeket skinek, tárgyak és erőforrások cseréjére lehet használni az ökoszisztémában és a közösségben",
+      "storage": "A tárolás minden olyan dologra vonatkozik, amit a rendszerben regisztrálnak, például dokumentumokra, karakterképekre, kalandborítókra és bármilyen feltöltésre."
     }
   },
   "price": {
-    "0": "$3/Hónap",
-    "1": "$5/Hónap",
-    "2": "$7/Hónap"
+    "0": "$15/Hónap",
+    "1": "$25/Hónap",
+    "2": "$30/Hónap",
+    "3": "$50/Hónap"
   },
   "privacy": {
     "desc": "Olvassa el a Mini Kraken adatvédelmi irányelveit.  Tudja meg, hogyan gyűjtjük, használjuk és védjük az adatait.",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Emeld a Discord szerepjátékos üléseid egy új szintre a térképek és zsetonok fejlett testreszabásával közvetlenül a Discordon belül. Szerkeszd a forgatókönyveket, állítsd be a pozíciókat, és igazítsd a játék környezetét valós időben, anélkül, hogy elhagynád a szerveredet. Teljes kontroll a mesterek és a játékosok számára, minden integrálva a Discord játéktéredbe.",
       "title": "Térképek és rácsos megjelenítés testreszabása"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Támogatás projekt",
+        "footer": "Elfogadunk Pixet és PayPalt Discordon keresztül, lehetővé téve a közvetlen támogatást az Ön nagyobb kényelme érdekében.",
+        "discord": {
+          "title": "Jutalmak beváltása Discordon keresztül",
+          "desc": "Miután támogatott, nyisson egy jegyet, hogy azonnal feloldhassa prémium funkcióit.",
+          "btn": "Csatlakozás a közösséghez"
+        },
+        "patreon": {
+          "desc": "Globális támogatók számára elérhető opció, dollárban.",
+          "btn": "Feliratkozás a Patreonra"
+        },
+        "desc": "Válassza ki, hogyan szeretne a projekt támogatója lenni, és feloldani exkluzív jutalmakat.",
+        "catarse": {
+          "desc": "Opció a támogatók számára Brazíliában",
+          "btn": "Támogatni szeretnék"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Jelölt"
+        },
+        "1": {
+          "name": "Kultista"
+        },
+        "2": {
+          "name": "Próféta"
+        },
+        "3": {
+          "name": "Ébredés"
+        }
+      }
     }
   }
 }

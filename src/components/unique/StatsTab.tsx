@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { EmojiDisplay } from "@/components/unique/EmojiDisplay";
 
 // Types - importados do editor principal
 type Locale = 
@@ -51,6 +52,7 @@ interface StatsTabProps {
   onRemoveStat: (index: number) => void;
   onDuplicateStat: (index: number) => void;
   onMoveStat: (index: number, dir: -1 | 1) => void;
+  openStatId?: number | null;
   // Componente auxiliar passado como prop
   PolymorphicStatEditor: React.ComponentType<{
     value: Stats;
@@ -68,11 +70,29 @@ const StatsTab: React.FC<StatsTabProps> = ({
   onRemoveStat,
   onDuplicateStat,
   onMoveStat,
+  openStatId,
   PolymorphicStatEditor,
 }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [pageFilter, setPageFilter] = useState<string>("all");
+  const [openStates, setOpenStates] = useState<Record<number, boolean>>({});
+
+  React.useEffect(() => {
+    if (openStatId !== null && openStatId !== undefined) {
+      setOpenStates(prev => ({ ...prev, [openStatId]: true }));
+      // Scroll to item
+      setTimeout(() => {
+        const element = document.getElementById(`stat-item-${openStatId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Add a temporary highlight effect
+          element.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+          setTimeout(() => element.classList.remove('ring-2', 'ring-primary', 'ring-offset-2'), 2000);
+        }
+      }, 100);
+    }
+  }, [openStatId]);
 
   const filteredStats = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
@@ -148,7 +168,11 @@ const StatsTab: React.FC<StatsTabProps> = ({
       </div>
       <div className="grid gap-4">
         {filteredStats.map((st, i) => (
-          <Card key={i} className="relative border-l-4 border-l-purple-500 hover:shadow-lg transition-shadow">
+          <Card 
+            key={i} 
+            id={`stat-item-${st.id}`}
+            className="relative border-l-4 border-l-purple-500 hover:shadow-lg transition-all duration-500"
+          >
             <div className="flex items-center justify-end gap-1 absolute top-2 right-2 z-10">
               <Button
                 size="icon"
@@ -187,7 +211,10 @@ const StatsTab: React.FC<StatsTabProps> = ({
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
-            <Collapsible defaultOpen={false}>
+            <Collapsible 
+              open={!!openStates[st.id]} 
+              onOpenChange={(open) => setOpenStates(prev => ({ ...prev, [st.id]: open }))}
+            >
               <CollapsibleTrigger className="w-full text-left hover:bg-accent/50 transition-colors">
                 <CardHeader className="py-3 pr-32">
                   <CardTitle className="text-base flex items-center gap-2">
@@ -257,7 +284,10 @@ const StatsTab: React.FC<StatsTabProps> = ({
                       st.type === 'string' ? 'orange' :
                       st.type === 'calculated' ? 'pink' : 'secondary'
                     }>{st.type}</Badge>
-                    <span>{st.emoji && `${st.emoji} `}{st.name?.default || `Stat ${i + 1}`}</span>
+                    <div className="flex items-center gap-2">
+                      <EmojiDisplay value={st.emoji} className="h-5 w-5" />
+                      <span>{st.name?.default || `Stat ${i + 1}`}</span>
+                    </div>
                     <ChevronRight className="h-4 w-4 transition-transform duration-200 ui-state-open:rotate-90" />
                   </CardTitle>
                 </CardHeader>

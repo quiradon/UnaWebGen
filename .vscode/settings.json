@@ -1,6 +1,9 @@
 {
     "liveServer.settings.root": "",
     "workbench.iconTheme": "material-icon-theme",
-    "polyglotManager.openaiModel": "gpt-4o-mini",
-    "polyglotManager.sourceLanguage": "pt"
+    "i18n-ally.localesPaths": [
+        "i18n"
+    ],
+    "polyglotManager.sourceLanguage": "pt",
+    "polyglotManager.openaiModel": "gpt-4.1-nano-2025-04-14"
 }

@@ -1,0 +1,516 @@
+---
+const {
+  title,
+  desc,
+  priceMonthly,
+  primaryFeatures = [],
+  secondaryFeatures = [],
+  ctaLabel,
+  ctaHref = "#premium_modal",
+  titleIcon: TitleIcon,
+  badge,
+  badgeAlt,
+  accent,
+  className = "col-12 col-md-6 col-lg-3",
+} = Astro.props;
+
+import {
+  Info as InfoIcon,
+} from "@lucide/astro";
+
+const safePrimary = primaryFeatures.filter((item: any) => item?.text);
+const safeSecondary = secondaryFeatures.filter((item: any) => item?.text);
+const wrapperClass = className?.trim() || "col-12 col-md-6 col-lg-3";
+const cardClass = "premium-plan-card";
+const cardStyle = accent ? `--plan-accent: ${accent};` : undefined;
+const badgeAltText = badgeAlt ?? title ?? "";
+const buildPriceParts = (priceText: string | undefined): { amount: string; currency: string; period: string | undefined } | null => {
+  if (!priceText) return null;
+  const [priceMainRaw, pricePeriodRaw] = priceText.split("/");
+  const priceMain = priceMainRaw?.trim();
+  const pricePeriod = pricePeriodRaw?.trim();
+  const amountMatch = priceMain?.match(/[0-9][0-9.,]*/);
+  const priceAmount = amountMatch?.[0] ?? priceMain ?? "";
+  const priceCurrency = amountMatch
+    ? priceMain.replace(priceAmount, "").trim()
+    : "";
+  return {
+    amount: priceAmount,
+    currency: priceCurrency,
+    period: pricePeriod,
+  };
+};
+
+const monthlyParts = buildPriceParts(priceMonthly);
+---
+
+<div class={wrapperClass}>
+  <article class={cardClass} style={cardStyle}>
+    {badge ? (
+    <img
+      class="premium-plan-card__badge"
+      src={badge.src}
+      width="48"
+      height="48"
+      alt={badgeAltText}
+      loading="lazy"
+      decoding="async"
+    />
+    ) : null}
+    
+    <header class="premium-plan-card__header">
+      <div>
+        <h3 class="premium-plan-card__title">{title}</h3>
+        {desc ? <p class="premium-plan-card__desc">{desc}</p> : null}
+      </div>
+    </header>
+
+    {monthlyParts ? (
+      <div class="premium-plan-card__pricing">
+        <div class="premium-plan-card__price-main">
+          {monthlyParts.currency ? (
+            <span class="premium-plan-card__price-currency">
+              {monthlyParts.currency}
+            </span>
+          ) : null}
+          <span class="premium-plan-card__price-amount">
+            {monthlyParts.amount}
+          </span>
+          {monthlyParts.period ? (
+            <span class="premium-plan-card__price-period">
+              /{monthlyParts.period}
+            </span>
+          ) : null}
+        </div>
+      </div>
+    ) : null}
+    <a
+      class="premium-plan-card__cta"
+      href={ctaHref}
+      data-bs-target="#premium_modal"
+      data-bs-toggle="modal"
+    >
+      {ctaLabel}
+    </a>
+
+    <div class="premium-plan-card__body">
+      {safePrimary.length ? (
+        <ul class="premium-plan-card__list">
+          {safePrimary.map((item: any) => {
+            const Icon = item.Icon;
+            return (
+              <li class="premium-plan-card__item">
+                {Icon ? (
+                  <Icon size={16} class="premium-plan-card__item-icon" />
+                ) : null}
+                <span class="premium-plan-card__item-content">
+                  <span class="premium-plan-card__item-text">{item.text}</span>
+                  {item.info ? (
+                    <span
+                      class="premium-plan-card__info"
+                      role="button"
+                      tabindex="0"
+                      aria-label={item.info}
+                    >
+                      <InfoIcon size={14} />
+                      <span class="premium-plan-card__tooltip">
+                        {item.info}
+                      </span>
+                    </span>
+                  ) : null}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+
+      {safeSecondary.length ? (
+        <>
+          <hr class="premium-plan-card__divider" />
+          <ul class="premium-plan-card__list">
+          {safeSecondary.map((item: any) => {
+            const Icon = item.Icon;
+            return (
+              <li class="premium-plan-card__item">
+                {Icon ? (
+                  <Icon size={16} class="premium-plan-card__item-icon" />
+                ) : null}
+                <span class="premium-plan-card__item-content">
+                  <span class="premium-plan-card__item-text">{item.text}</span>
+                  {item.info ? (
+                    <span
+                      class="premium-plan-card__info"
+                      role="button"
+                      tabindex="0"
+                      aria-label={item.info}
+                    >
+                      <InfoIcon size={14} />
+                      <span class="premium-plan-card__tooltip">
+                        {item.info}
+                      </span>
+                    </span>
+                  ) : null}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </>
+      ) : null}
+    </div>
+  </article>
+</div>
+
+<style>
+  .premium-plan-card {
+    --plan-accent: var(--bs-primary);
+    position: relative;
+    overflow: visible;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 124px 35px 48px 1fr;
+    row-gap: 8px;
+    padding: 48px 20px 20px 22px;
+    background: #10131b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    color: #fff;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .premium-plan-card::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 3px;
+    border-radius: 999px;
+    background: var(--plan-accent);
+    opacity: 0.9;
+  }
+
+  .premium-plan-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(140deg, rgba(255, 255, 255, 0.05), transparent 55%);
+    pointer-events: none;
+  }
+
+  .premium-plan-card__header {
+    grid-row: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 12px 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    position: relative;
+    z-index: 1;
+    min-height: 112px;
+  }
+
+  .premium-plan-card__badge {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 58px;
+    height: 58px;
+    z-index: 3;
+  }
+
+  .premium-plan-card__title {
+    margin: 0 0 6px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    min-height: 1.2em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .premium-plan-card__desc {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.92rem;
+    line-height: 1.35;
+    min-height: calc(1.35em * 2);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .premium-plan-card__icon {
+    color: var(--plan-accent);
+    opacity: 0.9;
+  }
+
+  .premium-plan-card__body {
+    grid-row: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+    margin-top: 6px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .premium-plan-card__list {
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .premium-plan-card__item {
+    display: flex;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.92rem;
+  }
+
+  .premium-plan-card__item-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .premium-plan-card__item-text {
+    line-height: 1.35;
+  }
+
+  .premium-plan-card__info {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: rgb(34, 31, 57);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: help;
+    flex-shrink: 0;
+    padding: 0;
+    z-index: 5;
+  }
+
+  .premium-plan-card__info svg {
+    display: block;
+  }
+
+  .premium-plan-card__info:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+  }
+
+  .premium-plan-card__tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #0b0f14;
+    color: rgba(255, 255, 255, 0.95);
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    width: max-content;
+    max-width: 220px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .premium-plan-card__tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: #0b0f14 transparent transparent transparent;
+  }
+
+  .premium-plan-card__info:hover .premium-plan-card__tooltip,
+  .premium-plan-card__info:focus-visible .premium-plan-card__tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .premium-plan-card__item-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .premium-plan-card__divider {
+    border-color: rgba(255, 255, 255, 0.08);
+    margin: 4px 0;
+  }
+
+  .premium-plan-card__pricing {
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .premium-plan-card__price-old {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: line-through;
+  }
+
+  .premium-plan-card__price-main {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .premium-plan-card__price-currency {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+  }
+
+  .premium-plan-card__price-amount {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .premium-plan-card__price-period {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    padding-bottom: 2px;
+  }
+
+  .premium-plan-card__price-note {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .premium-plan-card__cta {
+    grid-row: 3;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--plan-accent);
+    color: #0b0f14;
+    text-decoration: none !important;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .premium-plan-card__cta:hover {
+    filter: brightness(1.05);
+    color: #0b0f14;
+  }
+
+  .premium-plan-card__cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  .premium-plan-card__cta::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  .premium-plan-card:hover .premium-plan-card__cta::before {
+    animation: plan-cta-shimmer 1.2s ease-in-out infinite;
+  }
+
+  .premium-plan-card:hover .premium-plan-card__cta::after {
+    animation: plan-cta-shimmer-secondary 1.2s ease-in-out 0.2s infinite;
+  }
+
+  .premium-plan-card:hover .premium-plan-card__cta {
+    filter: brightness(1.08);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  .premium-plan-card:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+  }
+
+  @keyframes plan-cta-shimmer {
+    0% {
+      left: -100%;
+      transform: rotateZ(-35deg);
+    }
+    100% {
+      left: 100%;
+      transform: rotateZ(-35deg);
+    }
+  }
+
+  @keyframes plan-cta-shimmer-secondary {
+    0% {
+      left: -100%;
+      transform: rotateZ(-35deg);
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      left: 100%;
+      transform: rotateZ(-35deg);
+      opacity: 0.5;
+    }
+  }
+  
+</style>

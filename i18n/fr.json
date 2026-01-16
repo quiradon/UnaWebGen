@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Un plan pour les loups solitaires qui veulent accéder aux ressources seuls.",
-      "title": "Guerrier"
+      "desc": "Un plan pour les loups solitaires qui veulent accéder aux ressources seuls."
     },
     "1": {
-      "desc": "Un pour tous et tous pour un, avec ce plan, tout le monde sur votre serveur en profite !",
-      "title": "Aventurier"
+      "desc": "Un pour tous et tous pour un, avec ce plan, tout le monde sur votre serveur en profite !"
     },
     "2": {
-      "desc": "Pour les vrais amoureux d'Inanimalia Fortuna !",
-      "title": "Héros Pieuvre"
+      "desc": "Pour les vrais amoureux d'Inanimalia Fortuna !"
     },
     "feat": {
       "0": "+5 emplacements de macros (par personnage)",
@@ -533,12 +530,21 @@
       "12": "Pour trois guildes",
       "98": "Pack Équipement Pied et Clube da Una",
       "99": "Licence poétique pour exiger des développeurs"
+    },
+    "new": {
+      "0": "Débarrassez-vous des publicités",
+      "1": "%0% gigaoctets de stockage"
+    },
+    "info": {
+      "kc": "Les Kraken Coins sont des points numériques qui peuvent être échangés contre des skins, des objets et des ressources de l'écosystème et de la communauté.",
+      "storage": "Le stockage concerne tout ce qui est enregistré dans l'écosystème, tels que des documents, des photos de personnages, des couvertures d'aventures et tout téléchargement."
     }
   },
   "price": {
-    "0": "3 $/mois",
-    "1": "5 $/mois",
-    "2": "7 $/mois"
+    "0": "15 $/mois",
+    "1": "25 $/mois",
+    "2": "30 $/mois",
+    "3": "50 $/mois"
   },
   "privacy": {
     "desc": "Lisez la Politique de confidentialité de Mini Kraken. Découvrez comment nous collectons, utilisons et protégeons vos données.",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Améliorez vos sessions de JdR sur Discord grâce à une personnalisation avancée des cartes et des jetons directement sur Discord. Modifiez les scénarios, ajustez les positions et adaptez l'environnement de jeu en temps réel, sans quitter votre serveur. Contrôle total pour les MJ et les joueurs, le tout intégré à votre espace de jeu sur Discord.",
       "title": "Personnaliser les cartes et les grilles"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Soutenir le projet",
+        "footer": "Nous acceptons Pix et PayPal via Discord, permettant un soutien direct pour votre plus grande commodité.",
+        "discord": {
+          "title": "Réclamer des récompenses via Discord",
+          "desc": "Après avoir soutenu, ouvrez un ticket pour débloquer immédiatement vos fonctions premium.",
+          "btn": "Rejoindre la communauté"
+        },
+        "patreon": {
+          "desc": "Option pour les soutiens globaux, via le dollar.",
+          "btn": "S'abonner à Patreon"
+        },
+        "desc": "Choisissez comment vous souhaitez devenir un soutien du projet et débloquer des récompenses exclusives.",
+        "catarse": {
+          "desc": "Option pour les soutiens au Brésil",
+          "btn": "Je veux soutenir"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirant"
+        },
+        "1": {
+          "name": "Cultiste"
+        },
+        "2": {
+          "name": "Prophète"
+        },
+        "3": {
+          "name": "Réveillé"
+        }
+      }
     }
   }
 }

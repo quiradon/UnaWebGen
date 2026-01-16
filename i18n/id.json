@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Rencana untuk Serigala Tunggal yang Ingin Mengakses Sumber Daya Sendiri.",
-      "title": "Prajurit"
+      "desc": "Rencana untuk Serigala Tunggal yang Ingin Mengakses Sumber Daya Sendiri."
     },
     "1": {
-      "desc": "Satu untuk semua dan semua untuk satu, dengan rencana ini semua orang di server Anda mendapat manfaat!",
-      "title": "Petualang"
+      "desc": "Satu untuk semua dan semua untuk satu, dengan rencana ini semua orang di server Anda mendapat manfaat!"
     },
     "2": {
-      "desc": "Untuk pecinta sejati Inanimalia Fortuna!",
-      "title": "Pahlawan Gurita"
+      "desc": "Untuk pecinta sejati Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Slot Makro (per karakter)",
@@ -533,12 +530,21 @@
       "12": "Untuk Tiga Guild",
       "98": "Paket Kaki Tim dan Clube da Una",
       "99": "Lisensi Puitis untuk Meminta Pengembang"
+    },
+    "new": {
+      "0": "Singkirkan iklan.",
+      "1": "%0% Gigas de armazenamento"
+    },
+    "info": {
+      "kc": "Kraken Coins são pontos digitais que podem ser trocados por skins, itens e recursos do ecossistema e da comunidade",
+      "storage": "O armazenamento refere-se a tudo que é registrado no ecossistema, como documentos, fotos de personagens, capas de aventuras e quaisquer uploads"
     }
   },
   "price": {
-    "0": "$3/Bulan",
-    "1": "$5/Bulan",
-    "2": "$7/Bulan"
+    "0": "$15/Bulan",
+    "1": "$25/Bulan",
+    "2": "$30/Bulan",
+    "3": "$50/Bulan"
   },
   "privacy": {
     "desc": "Baca Kebijakan Privasi untuk Mini Kraken. Pelajari bagaimana kami mengumpulkan, menggunakan, dan melindungi data Anda.",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Tingkatkan sesi RPG Discord Anda ke level berikutnya dengan kustomisasi peta dan token tingkat lanjut langsung di Discord. Edit skenario, sesuaikan posisi, dan sesuaikan lingkungan game secara real time, tanpa meninggalkan server Anda. Kontrol penuh untuk GM dan pemain, semuanya terintegrasi ke dalam ruang permainan Discord Anda.",
       "title": "Sesuaikan Peta dan Kisi-kisi"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Apoiar Proyek",
+        "footer": "Kami menerima Pix dan PayPal melalui Discord yang memungkinkan dukungan langsung untuk kenyamanan Anda yang lebih besar.",
+        "discord": {
+          "title": "Menebus Hadiah melalui Discord",
+          "desc": "Setelah mendukung, buka tiket untuk segera mengaktifkan fitur premium Anda.",
+          "btn": "Masuk ke komunitas"
+        },
+        "patreon": {
+          "desc": "Opsi untuk pendukung global, melalui dolar.",
+          "btn": "AssSubscribe Patreon"
+        },
+        "desc": "Pilih bagaimana Anda ingin menjadi pendukung proyek dan membuka kunci hadiah eksklusif.",
+        "catarse": {
+          "desc": "Opsi untuk pendukung di Brasil",
+          "btn": "Quiero Mendukung"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirasi"
+        },
+        "1": {
+          "name": "Cultis"
+        },
+        "2": {
+          "name": "Nabi"
+        },
+        "3": {
+          "name": "Terjaga"
+        }
+      }
     }
   }
 }

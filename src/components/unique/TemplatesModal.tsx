@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Download, Globe, User, Search } from "lucide-react";
+import { Loader2, Download, Globe, User, Search, Link } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import type { RPGSystem } from "@/components/sistemaeditor/editor";
@@ -125,9 +125,9 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
                       {sys.description || "Sem descrição"}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="mt-auto pt-0">
+                  <CardContent className="mt-auto pt-0 flex gap-2">
                     <Button 
-                      className="w-full mt-2" 
+                      className="flex-1 mt-2" 
                       variant="outline" 
                       disabled={loadingId === sys.id}
                       onClick={(e) => {
@@ -141,6 +141,20 @@ export function TemplatesModal({ isOpen, onClose, onSelectSystem }: TemplatesMod
                         <Download className="h-4 w-4 mr-2" />
                       )}
                       Carregar Template
+                    </Button>
+                    <Button
+                      className="mt-2"
+                      variant="ghost"
+                      size="icon"
+                      title="Copiar Link de Remix"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const url = `${window.location.origin}${window.location.pathname}?remix=${sys.id}`;
+                        navigator.clipboard.writeText(url);
+                        toast.success("Link de remix copiado!");
+                      }}
+                    >
+                      <Link className="h-4 w-4" />
                     </Button>
                   </CardContent>
                 </Card>

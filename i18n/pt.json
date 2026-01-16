@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Um Plano para lobos solitários que desejam ter acesso aos recursos sozinho.",
-      "title": "Guerreiro"
+      "desc": "Um Plano para lobos solitários que desejam ter acesso aos recursos sozinho."
     },
     "1": {
-      "desc": "Um por todos e todos por um, com esse plano todos em seu servidor ganham benefícios!",
-      "title": "Aventureiro"
+      "desc": "Um por todos e todos por um, com esse plano todos em seu servidor ganham benefícios!"
     },
     "2": {
-      "desc": "Para os verdadeiros amantes da Inanimalia Fortuna!",
-      "title": "Herói do Polvo"
+      "desc": "Para os verdadeiros amantes da Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Slots macros (por personagem)",
@@ -533,12 +530,21 @@
       "12": "para Três Servidores",
       "98": "Pack do pé da equipe & Clube da Una",
       "99": "Licença poética para cobrar os Devs"
+    },
+    "new": {
+      "0": "Livre-se de Anuncios",
+      "1": "%0% Gigas de armazenamento"
+    },
+    "info": {
+      "kc": "Kraken Coins são pontos digitais que podem ser trocados, por skins, itens e recursos do ecosistema e da comunidade.",
+      "storage": "O Armazenamento diz respeito a tudo que é cadastrado no ecossitema, documentos, fotos de personagens, capas de aventuras e quaisquer uploads."
     }
   },
   "price": {
-    "0": "5R$/mês",
-    "1": "7R$/mês",
-    "2": "15R$/mês"
+    "0": "15R$/mês",
+    "1": "25R$/mês",
+    "2": "30R$/mês",
+    "3": "50R$/mês"
   },
   "privacy": {
     "desc": "Leia a Política de Privacidade do Mini Kraken. Aprenda como coletamos, usamos e protegemos seus dados.",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Eleve suas sessões de RPG no Discord para outro nível com personalização avançada de mapas e tokens diretamente no Discord. Edite cenários, ajuste posições e adapte o ambiente de jogo em tempo real, sem sair do seu servidor. Controle total para mestres e jogadores, tudo integrado ao seu espaço de jogo no Discord.",
       "title": "Personalize mapas e tokens no VTT"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Apoiar Projeto",
+        "footer": "Aceitamos Pix e PayPal via Discord permitindo apoio direto para sua maior conveniência.",
+        "discord": {
+          "title": "Resgatar Recompensas via discord",
+          "desc": "Após apoiar, abra um ticket para liberar suas funções premium na hora.",
+          "btn": "Entrar na comunidade"
+        },
+        "patreon": {
+          "desc": "Opção para apoiadores globais, através de dolar.",
+          "btn": "Assinar Patreon"
+        },
+        "desc": "Escolha como você deseja se tornar um apoiador do projeto e desbloquear recompensas exclusivas.",
+        "catarse": {
+          "desc": "Opção para apoiadores no Brasil",
+          "btn": "Quero Apoiar"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirante"
+        },
+        "1": {
+          "name": "Cultista"
+        },
+        "2": {
+          "name": "Profeta"
+        },
+        "3": {
+          "name": "Desperto"
+        }
+      }
     }
   }
 }

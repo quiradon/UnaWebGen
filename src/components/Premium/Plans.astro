@@ -1,0 +1,170 @@
+---
+import PremiumPlanCard from "@components/Premium/PlanCard.astro";
+import {
+  User,
+  MessageCircle,
+  Key,
+  Coins,
+  Dices,
+  Save,
+  Hd,
+  Crown,
+} from "@lucide/astro";
+import tier1 from "@assets/img/tiers_premium/1.webp";
+import tier2 from "@assets/img/tiers_premium/2.webp";
+import tier3 from "@assets/img/tiers_premium/3.webp";
+import tier4 from "@assets/img/tiers_premium/4.webp";
+
+import { getLocale } from "astro-i18n-aut";
+import { loadT } from "@lib/i18n";
+
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
+
+
+const feat = t?.premium?.feat ?? {};
+const price = t?.price ?? {};
+const coinsLabel = feat?.[4] ?? "Kraken Coins";
+const guildsLabel = t?.index?.status?.guilds ?? "Servidores";
+const supportLabel = feat?.[5] ?? "Suporte prioritario";
+const ctaLabel = t?.index?.donate?.btn ?? "Apoiar Projeto";
+const joinText = (...parts: (string | undefined | null)[]): string => parts.filter(Boolean).join(" ");
+
+// Preços baseados no idioma
+const isPtBr = locale === "pt";
+const period = isPtBr ? "mês" : "Month";
+
+const price0 = isPtBr ? `R$ 15/${period}` : `$ 5/${period}`;
+const price1 = isPtBr ? `R$ 25/${period}` : `$ 8/${period}`;
+const price2 = isPtBr ? `R$ 30/${period}` : `$ 12/${period}`;
+const price3 = isPtBr ? `R$ 50/${period}` : `$ 16/${period}`;
+
+const plans = [
+  {
+    title: t.v2.premium.tier[0].name,
+    desc:
+      t?.premium?.[0]?.desc ??
+      "Plano para quem joga sozinho e quer recursos basicos.",
+    priceMonthly: price0,
+    titleIcon: Crown,
+    primary: [
+      { Icon: User, text: feat?.[10] },
+      { Icon: Coins, text: `2 ${coinsLabel}`, info: t.premium.info.kc },
+      { Icon: Key, text: t.premium.new[0] },
+      { Icon: Save, text: t.premium.new[1].replace("%0%", "5"), info: t.premium.info.storage },
+
+    ],
+    secondary: [
+      { Icon: Dices, text: feat?.[0] },
+    ],
+    accent: "#34DF68",
+    badge: tier1,
+  },
+  {
+    title: t.v2.premium.tier[1].name,
+    desc:
+      t?.premium?.[1]?.desc ??
+      "Beneficios para todo o servidor, com mais recursos.",
+    priceMonthly: price1,
+    titleIcon: User,
+    primary: [
+      { Icon: User, text: feat?.[10] },
+      { Icon: Coins, text: `5 ${coinsLabel}`, info: t.premium.info.kc  },
+      { Icon: Key, text: t.premium.new[0] },
+      { Icon: Save, text: t.premium.new[1].replace("%0%", "10"), info: t.premium.info.storage },
+      { Icon: Hd, text: "Exportação em Alta Qualidade", info: t.premium.info.storage },
+
+
+
+    ],
+    secondary: [
+      { Icon: Dices, text: feat?.[0] },
+    ],
+    accent: "#FF7B29",
+    badge: tier2,
+  },
+  {
+    title: t.v2.premium.tier[2].name,
+    desc: t?.premium?.[2]?.desc ?? "Para quem quer tudo liberado.",
+    priceMonthly: price2,
+    titleIcon: Crown,
+    primary: [
+      { Icon: User, text: feat?.[10] },
+      { Icon: Coins, text: `7 ${coinsLabel}`, info: t.premium.info.kc  },
+      { Icon: Key, text: t.premium.new[0]},
+      { Icon: Save, text: t.premium.new[1].replace("%0%", "20"), info: t.premium.info.storage },
+
+
+      { Icon: MessageCircle, text: supportLabel },
+    ],
+    secondary: [
+      { Icon: Dices, text: feat?.[0] },
+    ],
+    accent: "#38bdf8",
+    badge: tier3,
+  },
+  {
+    title: t.v2.premium.tier[3].name,
+    desc:
+      t?.premium?.[3]?.desc ??
+      "Prioridade maxima para servidores grandes.",
+    priceMonthly: price3,
+    titleIcon: Crown,
+    primary: [
+      { Icon: User, text: feat?.[10] },
+      { Icon: Coins, text: `15 ${coinsLabel}`, info: t.premium.info.kc  },
+      { Icon: Key, text: t.premium.new[0] },
+      { Icon: Save, text: t.premium.new[1].replace("%0%", "35"), info: t.premium.info.storage },
+
+      
+      
+      { Icon: MessageCircle, text: supportLabel },
+    ],
+    secondary: [
+      { Icon: Dices, text: feat?.[0] }
+    ],
+    accent: "#FF0655",
+    badge: tier4,
+  },
+];
+
+---
+
+<section
+  id="premium"
+  class="d-xl-flex justify-content-xl-center"
+  data-premium-plans
+>
+  <div class="container">
+    <div class="row">
+      <div class="col mb-3">
+        <h2 class="display-4 fw-bold mt-0">{t?.index?.donate?.title}</h2>
+        <p class="lead text-secondary mb-5">{t?.index?.donate?.desc}</p>
+      </div>
+    </div>
+
+    <div class="row g-4 align-items-stretch premium-plans-grid">
+      {plans.map((plan) => (
+        <PremiumPlanCard
+          title={plan.title}
+          desc={plan.desc}
+          priceMonthly={plan.priceMonthly}
+          titleIcon={plan.titleIcon}
+          primaryFeatures={plan.primary}
+          secondaryFeatures={plan.secondary}
+          ctaLabel={ctaLabel}
+          accent={plan.accent}
+          badge={plan.badge}
+          badgeAlt={plan.title}
+        />
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  [data-premium-plans] {
+    padding-bottom: clamp(48px, 6vw, 96px);
+  }
+</style>

@@ -35,6 +35,7 @@ interface SimpleMarkdownEditorProps {
   placeholder?: string;
   stats?: Stats[];
   sections?: Section[];
+  headerRight?: React.ReactNode;
 }
 
 type SelectionRange = { start: number; end: number };
@@ -109,6 +110,7 @@ export function SimpleMarkdownEditor({
   placeholder = "Escreva seu documento... Use @ para inserir variaveis",
   stats = [],
   sections = [],
+  headerRight,
 }: SimpleMarkdownEditorProps) {
   const editorRef = useRef<NotionStyleEditorHandle | null>(null);
   const [sampleOverrides, setSampleOverrides] = useState<Record<string, string>>({});
@@ -672,19 +674,21 @@ export function SimpleMarkdownEditor({
 
   return (
     <div className="rounded-3xl border border-border bg-card shadow-card">
-      <div className="flex flex-wrap items-center gap-2 border-b border-border/60 bg-muted/40 px-4 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border bg-muted/40 px-4 py-3">
         <div className="flex items-center gap-2 text-muted-foreground">
           <Type className="h-4 w-4" />
           <span className="text-sm font-medium">Documento em Markdown</span>
         </div>
-        <div className="flex flex-wrap items-center gap-1">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="h-8 w-8"
-            title="Titulo 1"
-            onClick={() => insertHeading(1)}
-          >
+        <div className="flex items-center gap-2">
+          {headerRight}
+          <div className="flex flex-wrap items-center gap-1">
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8"
+              title="Titulo 1"
+              onClick={() => insertHeading(1)}
+            >
             <Heading1 className="h-4 w-4" />
           </Button>
           <Button
@@ -807,6 +811,7 @@ export function SimpleMarkdownEditor({
           >
             <GitBranch className="h-4 w-4" />
           </Button>
+          </div>
         </div>
       </div>
 

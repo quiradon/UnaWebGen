@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Plan dla samotnych wilków, którzy chcą uzyskać dostęp do zasobów w pojedynkę.",
-      "title": "Wojownik"
+      "desc": "Plan dla samotnych wilków, którzy chcą uzyskać dostęp do zasobów w pojedynkę."
     },
     "1": {
-      "desc": "Jeden za wszystkich, wszyscy za jednego – dzięki temu planowi każdy na twoim serwerze odniesie korzyści!",
-      "title": "Przygodowy"
+      "desc": "Jeden za wszystkich, wszyscy za jednego – dzięki temu planowi każdy na twoim serwerze odniesie korzyści!"
     },
     "2": {
-      "desc": "Dla prawdziwych miłośników Inanimalia Fortuna!",
-      "title": "Bohater-Ośmiornica"
+      "desc": "Dla prawdziwych miłośników Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Slotów na Makra (na postać)",
@@ -533,12 +530,21 @@
       "12": "Dla Trzech Gildii",
       "98": "Pakiet naklejek drużynowych i Clube da Una",
       "99": "Poetycka licencja na żądanie Deweloperów"
+    },
+    "new": {
+      "0": "Pozbądź się reklam.",
+      "1": "%0% Giga bajtów pamięci"
+    },
+    "info": {
+      "kc": "Kraken Coins to punkty cyfrowe, które można wymieniać na skiny, przedmioty i zasoby ekosystemu oraz społeczności.",
+      "storage": "Przechowywanie odnosi się do wszystkiego, co jest zarejestrowane w ekosystemie, dokumentów, zdjęć postaci, okładek przygód i wszelkich przesłanych plików."
     }
   },
   "price": {
-    "0": "3$/miesiąc",
-    "1": "5$/miesiąc",
-    "2": "7$/miesiąc"
+    "0": "15$/miesiąc",
+    "1": "25$/miesiąc",
+    "2": "30$/miesiąc",
+    "3": "50$/miesiąc"
   },
   "privacy": {
     "desc": "Przeczytaj Politykę Prywatności Mini Kraken. Dowiedz się, jak zbieramy, wykorzystujemy i chronimy Twoje dane.",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Podnieś swoje sesje RPG na Discordzie na wyższy poziom dzięki zaawansowanej personalizacji map i żetonów bezpośrednio na Discordzie. Edytuj scenariusze, dostosuj pozycje i zmieniaj otoczenie gry w czasie rzeczywistym, bez opuszczania serwera. Pełna kontrola dla Mistrzów Gry i graczy, wszystko zintegrowane z Waszą przestrzenią gry na Discordzie.",
       "title": "Dostosuj mapy i siatki"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Wspieraj projekt",
+        "footer": "Akceptujemy Pix i PayPal przez Discord, umożliwiając bezpośrednie wsparcie dla Twojej większej wygody.",
+        "discord": {
+          "title": "Odbierz nagrody przez Discord",
+          "desc": "Po wsparciu, otwórz zgłoszenie, aby natychmiast odblokować swoje funkcje premium.",
+          "btn": "Dołącz do społeczności"
+        },
+        "patreon": {
+          "desc": "Opcja dla globalnych wspierających, za pomocą dolara.",
+          "btn": "Zasubskrybuj Patreon"
+        },
+        "desc": "Wybierz, jak chcesz zostać wspierającym projekt i odblokować ekskluzywne nagrody.",
+        "catarse": {
+          "desc": "Opcja dla wspierających w Brazylii",
+          "btn": "Chcę wesprzeć"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirant"
+        },
+        "1": {
+          "name": "Kultysta"
+        },
+        "2": {
+          "name": "Prorok"
+        },
+        "3": {
+          "name": "Obudzony"
+        }
+      }
     }
   }
 }

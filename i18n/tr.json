@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Kaynaklara Tek Başınıza Erişmek İsteyen Yalnız Kurtlar İçin Bir Plan.",
-      "title": "Savaşçı"
+      "desc": "Kaynaklara Tek Başınıza Erişmek İsteyen Yalnız Kurtlar İçin Bir Plan."
     },
     "1": {
-      "desc": "Hepimiz bir, birlik için hepimiz; bu planla sunucunuzdaki herkes faydalanır!",
-      "title": "Maceracı"
+      "desc": "Hepimiz bir, birlik için hepimiz; bu planla sunucunuzdaki herkes faydalanır!"
     },
     "2": {
-      "desc": "Inanimalia Fortuna'nın gerçek aşıkları için!",
-      "title": "Ahtapot Kahramanı"
+      "desc": "Inanimalia Fortuna'nın gerçek aşıkları için!"
     },
     "feat": {
       "0": "+5 Makro Yuvası (karakter başına)",
@@ -533,12 +530,21 @@
       "12": "Üç Lonca İçin",
       "98": "Takım Ayak Paketi ve Clube da Una",
       "99": "Geliştiricilerden talep etme hakkı (şiirsel lisans)"
+    },
+    "new": {
+      "0": "Reklamlardan kurtulun.",
+      "1": "%0% Giga bajtów pamięci"
+    },
+    "info": {
+      "kc": "Kraken Coins dijital puanlardır ve ekosistem ve topluluk içindeki skinler, eşyalar ve kaynaklarla takas edilebilir.",
+      "storage": "Depolama, ekosistemde kaydedilen her şeyi ifade eder; belgeler, karakter fotoğrafları, macera kapakları ve herhangi bir yükleme."
     }
   },
   "price": {
-    "0": "$3/Ay",
-    "1": "$5/Ay",
-    "2": "$7/Ay"
+    "0": "$15/Ay",
+    "1": "$25/Ay",
+    "2": "$30/Ay",
+    "3": "$50/Ay"
   },
   "privacy": {
     "desc": "Mini Kraken Gizlilik Politikasını okuyun. Verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu öğrenin.",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Discord RPG oturumlarınızı, doğrudan Discord içinde gelişmiş harita ve token özelleştirmesiyle bir üst seviyeye taşıyın. Senaryoları düzenleyin, konumları ayarlayın ve oyun ortamını gerçek zamanlı olarak uyarlayın, sunucudan çıkmadan. GM'ler ve oyuncular için tam kontrol, hepsi Discord oyun alanınıza entegre edilmiş.",
       "title": "Haritaları ve Izgaraları Özelleştir"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Projeye Destek Ol",
+        "footer": "Pix ve PayPal'ı Discord üzerinden kabul ediyoruz, böylece size daha fazla kolaylık sağlıyoruz.",
+        "discord": {
+          "title": "Discord üzerinden Ödülleri Almak",
+          "desc": "Destek verdikten sonra, premium özelliklerinizi anında açmak için bir bilet oluşturun.",
+          "btn": "Topluluğa katıl"
+        },
+        "patreon": {
+          "desc": "Küresel destekçiler için dolar üzerinden seçenek.",
+          "btn": "Patreon'a Abone Ol"
+        },
+        "desc": "Projeye destekçi olarak katılmak ve özel ödüllerin kilidini açmak için nasıl devam etmek istediğinizi seçin.",
+        "catarse": {
+          "desc": "Brezilya'daki destekçiler için seçenek",
+          "btn": "Desteklemek İstiyorum"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Aday"
+        },
+        "1": {
+          "name": "Kultist"
+        },
+        "2": {
+          "name": "Profet"
+        },
+        "3": {
+          "name": "Uyanıyorum"
+        }
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 name = "fortuna_website"
 compatibility_date = "2025-02-11"
+compatibility_flags = ["nodejs_compat"]
 [dev]
 port = 3000
 

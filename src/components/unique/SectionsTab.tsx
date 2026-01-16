@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
+import { EmojiDisplay } from "@/components/unique/EmojiDisplay";
 
 // Types - importados do editor principal
 type Locale = 
@@ -47,6 +48,7 @@ interface SectionsTabProps {
   onUpdateSection: (index: number, value: Section) => void;
   onRemoveSection: (index: number) => void;
   onMoveSection: (index: number, dir: -1 | 1) => void;
+  openSectionIndex?: number | null;
   // Componente auxiliar passado como prop
   SectionEditor: React.ComponentType<{
     value: Section;
@@ -63,10 +65,27 @@ const SectionsTab: React.FC<SectionsTabProps> = ({
   onUpdateSection,
   onRemoveSection,
   onMoveSection,
+  openSectionIndex,
   SectionEditor,
 }) => {
   const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set([0])); // Primeira seção expandida por padrão
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (openSectionIndex !== null && openSectionIndex !== undefined) {
+      setExpandedSections(prev => new Set([...prev, openSectionIndex]));
+      // Scroll to item
+      setTimeout(() => {
+        const element = document.getElementById(`section-item-${openSectionIndex}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Add a temporary highlight effect
+          element.classList.add('ring-2', 'ring-primary', 'ring-offset-2');
+          setTimeout(() => element.classList.remove('ring-2', 'ring-primary', 'ring-offset-2'), 2000);
+        }
+      }, 100);
+    }
+  }, [openSectionIndex]);
 
   const toggleSection = (index: number) => {
     const newExpanded = new Set(expandedSections);
@@ -98,7 +117,11 @@ const SectionsTab: React.FC<SectionsTabProps> = ({
       </div>
       <div className="grid gap-4">
         {sections.map((sec, i) => (
-          <Card key={i} className="border-l-4 border-l-indigo-500 hover:shadow-lg transition-shadow">
+          <Card 
+            key={i} 
+            id={`section-item-${i}`}
+            className="border-l-4 border-l-indigo-500 hover:shadow-lg transition-all duration-500"
+          >
             <Collapsible open={expandedSections.has(i)} onOpenChange={() => toggleSection(i)}>
               <CardHeader className="py-3">
                 <div className="flex items-center justify-between">
@@ -149,7 +172,10 @@ const SectionsTab: React.FC<SectionsTabProps> = ({
                       </PopoverContent>
                     </Popover>
                     <Badge className="bg-indigo-500 text-white">Seção</Badge>
-                    <span className="text-base font-semibold">{sec.emoji && `${sec.emoji} `}{sec.name?.default || `Seção ${i + 1}`}</span>
+                    <div className="flex items-center gap-2 text-base font-semibold">
+                      <EmojiDisplay value={sec.emoji} className="h-5 w-5" />
+                      <span>{sec.name?.default || `Seção ${i + 1}`}</span>
+                    </div>
                     <ChevronRight className={`h-4 w-4 transition-transform duration-200 ml-auto ${expandedSections.has(i) ? 'rotate-90' : ''}`} />
                   </CollapsibleTrigger>
                   <div className="flex items-center gap-1 ml-2">

@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Un plan para lobos solitarios que quieren acceder a los recursos solos.",
-      "title": "Guerrero"
+      "desc": "Un plan para lobos solitarios que quieren acceder a los recursos solos."
     },
     "1": {
-      "desc": "¡Uno para todos y todos para uno, con este plan todos en tu servidor se benefician!",
-      "title": "Aventurero"
+      "desc": "¡Uno para todos y todos para uno, con este plan todos en tu servidor se benefician!"
     },
     "2": {
-      "desc": "¡Para los verdaderos amantes de Inanimalia Fortuna!",
-      "title": "Héroe Pulpo"
+      "desc": "¡Para los verdaderos amantes de Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Ranuras Macro (por personaje)",
@@ -533,12 +530,21 @@
       "12": "Para Tres Gremios",
       "98": "Team Foot Pack y Clube da Una",
       "99": "Licencia poética para exigir a los Devs"
+    },
+    "new": {
+      "0": "Elimina los anuncios",
+      "1": "%0% Gigas de almacenamiento"
+    },
+    "info": {
+      "kc": "Las monedas Kraken son puntos digitales que se pueden canjear por skins, objetos y recursos del ecosistema y de la comunidad",
+      "storage": "El almacenamiento se refiere a todo lo que se registra en el ecosistema, documentos, fotos de personajes, portadas de aventuras y cualquier carga."
     }
   },
   "price": {
-    "0": "$3/Mes",
-    "1": "$5/Mes",
-    "2": "$7/Mes"
+    "0": "$15/Mes",
+    "1": "$25/Mes",
+    "2": "$30/Mes",
+    "3": "$50/Mes"
   },
   "privacy": {
     "desc": "Lee la Política de Privacidad de Mini Kraken. Aprende cómo recopilamos, usamos y protegemos tus datos.",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Eleva tus sesiones de RPG de Discord a otro nivel con personalización avanzada de mapas y fichas directamente en Discord. Edita escenarios, ajusta posiciones y adapta el entorno del juego en tiempo real, sin salir de tu servidor. Control total para maestros y jugadores, todo integrado en tu espacio de juego de Discord.",
       "title": "Personalizar mapas y cuadrículas"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Apoyar Proyecto",
+        "footer": "Aceptamos Pix y PayPal a través de Discord, permitiendo apoyo directo para su mayor conveniencia.",
+        "discord": {
+          "title": "Canjear Recompensas vía discord",
+          "desc": "Después de apoyar, abre un ticket para liberar tus funciones premium al instante.",
+          "btn": "Entrar en la comunidad"
+        },
+        "patreon": {
+          "desc": "Opción para patrocinadores globales, a través de dólar.",
+          "btn": "Suscribirse a Patreon"
+        },
+        "desc": "Elige cómo deseas convertirte en un patrocinador del proyecto y desbloquear recompensas exclusivas.",
+        "catarse": {
+          "desc": "Opción para patrocinadores en Brasil",
+          "btn": "Quiero Apoyar"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirante"
+        },
+        "1": {
+          "name": "Cultista"
+        },
+        "2": {
+          "name": "Profeta"
+        },
+        "3": {
+          "name": "Despierto"
+        }
+      }
     }
   }
 }

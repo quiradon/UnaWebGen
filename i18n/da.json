@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "En plan for ensomme ulve, der ønsker adgang til ressourcerne alene.",
-      "title": "Kriger"
+      "desc": "En plan for ensomme ulve, der ønsker adgang til ressourcerne alene."
     },
     "1": {
-      "desc": "En for alle og alle for en, med denne plan får alle på din server fordele!",
-      "title": "Eventyrer"
+      "desc": "En for alle og alle for en, med denne plan får alle på din server fordele!"
     },
     "2": {
-      "desc": "Til de sande elskere af Inanimalia Fortuna!",
-      "title": "Blækspruttehelt"
+      "desc": "Til de sande elskere af Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Makro-slots (per karakter)",
@@ -533,12 +530,21 @@
       "12": "til Tre Servere",
       "98": "Hold-in-hånd pakke fra teamet & Una Klubben\n",
       "99": "Poetisk licens til at opkræve udviklere.\n"
+    },
+    "new": {
+      "0": "Fjern annoncerne.",
+      "1": "%0% gigabyte-lagerkapacitet"
+    },
+    "info": {
+      "kc": "Kraken Coins sind digitale Punkte, die gegen Skins, Gegenstände und Ressourcen des Ökosystems und der Gemeinschaft eingetauscht werden können",
+      "storage": "Lagring omfatter alt, hvad der er registreret i økosystemet, herunder dokumenter, billeder af figurer, eventcover og eventuelle uploads."
     }
   },
   "price": {
-    "0": "50 kr./md.\n",
-    "1": "7 kr./md.\n",
-    "2": "15 kr./md.\n"
+    "0": "15 kr./md.\n",
+    "1": "25 kr./md.\n",
+    "2": "30 kr./md.\n",
+    "3": "50 kr./md.\n"
   },
   "privacy": {
     "desc": "Læs Mini Krakens Privatlivspolitik. Lær hvordan vi indsamler, bruger og beskytter dine data.\n",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Tag dine Discord-RPG-sessioner op med avanceret kort- og tokentilpasning direkte i Discord. Rediger scenarier, juster positioner, og tilpas spilmiljøet i realtid, alt sammen uden at forlade din server. Fuldstændig kontrol for mestre og spillere, alt integreret i dit Discord-spilområde.",
       "title": "Tilpas kort og gitter"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Støt projektet",
+        "footer": "Vi accepterer Pix og PayPal via Discord, hvilket giver direkte støtte for din største bekvemmelighed.",
+        "discord": {
+          "title": "Indløs belønninger via Discord",
+          "desc": "Efter at have støttet, åbn en ticket for straks at få adgang til dine premium-funktioner.",
+          "btn": "Deltag i fællesskabet"
+        },
+        "patreon": {
+          "desc": "Mulighed for globale støtter via dollar.",
+          "btn": "Tilmeld Patreon"
+        },
+        "desc": "Vælg, hvordan du ønsker at blive en støtte for projektet og låse op for eksklusive belønninger.",
+        "catarse": {
+          "desc": "Mulighed for støtter i Brasilien",
+          "btn": "Jeg vil støtte"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirant"
+        },
+        "1": {
+          "name": "Kultist"
+        },
+        "2": {
+          "name": "Profet"
+        },
+        "3": {
+          "name": "Vågnet"
+        }
+      }
     }
   }
 }

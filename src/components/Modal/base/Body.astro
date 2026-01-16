@@ -1,0 +1,39 @@
+---
+interface Props {
+  children: any;
+}
+
+const { children } = Astro.props;
+---
+
+<div class="support-modal__body">
+  <slot />
+</div>
+
+<style>
+  .support-modal__body {
+    padding: 20px 24px 18px;
+    display: grid;
+    gap: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex: 1 1 auto;
+    min-height: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (max-width: 768px) {
+    .support-modal__body {
+      padding-left: 18px;
+      padding-right: 18px;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .support-modal__body {
+      padding: 14px;
+      gap: 12px;
+    }
+  }
+</style>

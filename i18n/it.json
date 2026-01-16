@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Um Plano para Lobos Solitários que Querem Acessar Recursos Sozinhos.",
-      "title": "Guerreiro"
+      "desc": "Um Plano para Lobos Solitários que Querem Acessar Recursos Sozinhos."
     },
     "1": {
-      "desc": "Um para todos e todos para um, com este plano todos no seu servidor se beneficiam!",
-      "title": "Aventuroso"
+      "desc": "Um para todos e todos para um, com este plano todos no seu servidor se beneficiam!"
     },
     "2": {
-      "desc": "Para verdadeiros amantes de Inanimalia Fortuna!",
-      "title": "Herói Polvo"
+      "desc": "Para verdadeiros amantes de Inanimalia Fortuna!"
     },
     "feat": {
       "0": "+5 Slots de Macro (por personagem)",
@@ -533,12 +530,21 @@
       "12": "Para Três Guildas",
       "98": "Pacote de Pés de Equipe e Clube da Una",
       "99": "Licença poética para exigir Devs"
+    },
+    "new": {
+      "0": "Elimina gli annunci",
+      "1": "%0% GB di archiviazione"
+    },
+    "info": {
+      "kc": "Kraken Coins sono punti digitali che possono essere scambiati per skin, oggetti e risorse dell'ecosistema e della comunità",
+      "storage": "L'archiviazione riguarda tutto ciò che viene registrato nell'ecosistema, documenti, foto dei personaggi, copertine delle avventure e qualsiasi caricamento."
     }
   },
   "price": {
-    "0": "$3/Mês",
-    "1": "$5/Mês",
-    "2": "$7/Mês"
+    "0": "$15/Mês",
+    "1": "$25/Mês",
+    "2": "$30/Mês",
+    "3": "$50/Mês"
   },
   "privacy": {
     "desc": "Lee la Política de Privacidad de Mini Kraken. Aprende cómo recopilamos, usamos y protegemos tus datos.",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Porta le tue sessioni di GDR su Discord a un livello superiore con la personalizzazione avanzata di mappe e token direttamente su Discord. Modifica gli scenari, regola le posizioni e adatta l'ambiente di gioco in tempo reale, senza lasciare il tuo server. Controllo totale per i GM e i giocatori, tutto integrato nel tuo spazio di gioco su Discord.",
       "title": "Personalizza mappe e griglie"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Sostenere il progetto",
+        "footer": "Accettiamo Pix e PayPal tramite Discord, permettendo un supporto diretto per la tua massima comodità.",
+        "discord": {
+          "title": "Riscuotere ricompense tramite Discord",
+          "desc": "Dopo aver supportato, apri un ticket per sbloccare subito le tue funzioni premium.",
+          "btn": "Entrare nella comunità"
+        },
+        "patreon": {
+          "desc": "Opzione per sostenitori globali, tramite dollaro.",
+          "btn": "Iscriviti a Patreon"
+        },
+        "desc": "Scegli come desideri diventare un sostenitore del progetto e sbloccare ricompense esclusive.",
+        "catarse": {
+          "desc": "Opzione per sostenitori in Brasile",
+          "btn": "Voglio sostenere"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Aspirante"
+        },
+        "1": {
+          "name": "Cultista"
+        },
+        "2": {
+          "name": "Profeta"
+        },
+        "3": {
+          "name": "Risveglio"
+        }
+      }
     }
   }
 }

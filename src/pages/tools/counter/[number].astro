@@ -1,0 +1,54 @@
+---
+export const prerender = false;
+import Layout from "@layouts/Layout.astro";
+import { loadT } from "@lib/i18n";
+import { getLocale } from "astro-i18n-aut";
+
+const { number } = Astro.params;
+
+// Attempt to get locale, fallback to 'en' if not detected
+const locale = getLocale(Astro.url);
+const t = loadT(locale);
+
+// Cache control:
+// max-age=60: Browser checks cache every 60 seconds
+// s-maxage=3600: Cloudflare (CDN) caches this response for 1 hour
+// This means the first user generates the page, subsequent users see the cached version for 1 hour.
+Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=3600');
+---
+
+<Layout t={t} title={`Counter: ${number}`}>
+  <div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <div class="card shadow-lg border-0 glass-container">
+          <div class="card-body p-5">
+            <h2 class="text-primary mb-4">Hybrid Rendering Demo</h2>
+            
+            <div class="display-1 fw-bold text-white mb-4">
+              {number}
+            </div>
+
+            <p class="lead text-secondary mb-4">
+              This number was rendered on the server (Cloudflare Worker).
+            </p>
+
+            <div class="alert alert-info d-inline-block text-start">
+              <small>
+                <strong>Generated at:</strong> {new Date().toLocaleString()}<br/>
+                <strong>Cache-Control:</strong> {Astro.response.headers.get('Cache-Control')}
+              </small>
+            </div>
+
+            <div class="mt-4">
+              <p class="small text-muted">
+                Refresh the page. The timestamp should stay the same for 1 hour (cached),<br/>
+                unless you are looking at a different number.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

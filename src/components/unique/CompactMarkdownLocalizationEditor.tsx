@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -76,17 +75,28 @@ export function CompactMarkdownLocalizationEditor({
   };
 
   return (
-    <Card className="border border-dashed border-border/60">
-      <CardHeader className="py-3">
-        <CardTitle className="flex items-center gap-2 text-sm">
-          {label}
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <span className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{label}</span>
+      </div>
+      <SimpleMarkdownEditor
+        value={
+          curr === "default"
+            ? value.default ?? ""
+            : value[curr] ?? ""
+        }
+        onChange={(text) => updateLocale(curr, text)}
+        placeholder={curr === "default" ? "Obrigatório" : `Opcional (${curr})`}
+        sections={sections}
+        stats={stats}
+        headerRight={
           <Select
             value={curr}
             onValueChange={(opt) =>
               setCurr(opt as Locale | "default")
             }
           >
-            <SelectTrigger className="ml-auto w-32">
+            <SelectTrigger className="w-32 h-8 text-xs">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -97,21 +107,8 @@ export function CompactMarkdownLocalizationEditor({
               ))}
             </SelectContent>
           </Select>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <SimpleMarkdownEditor
-          value={
-            curr === "default"
-              ? value.default ?? ""
-              : value[curr] ?? ""
-          }
-          onChange={(text) => updateLocale(curr, text)}
-          placeholder={curr === "default" ? "Obrigatório" : `Opcional (${curr})`}
-          sections={sections}
-          stats={stats}
-        />
-      </CardContent>
-    </Card>
+        }
+      />
+    </div>
   );
 }

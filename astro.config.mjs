@@ -24,7 +24,16 @@ const locales = {
   zh: "zh-CN",
 };
 
+import cloudflare from "@astrojs/cloudflare";
+
 export default defineConfig({
+  // output: "hybrid" has been removed/merged into static with adapter
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
+    },
+  }),
+  output: "hybrid",
   prefetch: true,
   trailingSlash: "always",
   site: "https://rpg.arkanus.app",
@@ -76,7 +85,8 @@ export default defineConfig({
         '@pages': '/src/pages',
         '@i18n': '/src/i18n',
         '@static': '',
-        '@data': '/data'
+        '@data': '/data',
+        '@assets': '/src/assets',
       }
     }
   },

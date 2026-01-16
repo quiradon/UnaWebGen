@@ -506,16 +506,13 @@
   },
   "premium": {
     "0": {
-      "desc": "Plan za usamljene vukove koji žele pristupiti resursima sami.",
-      "title": "Ratnik"
+      "desc": "Plan za usamljene vukove koji žele pristupiti resursima sami."
     },
     "1": {
-      "desc": "Jedan za sve i svi za jednoga, s ovim planom svi na vašem poslužitelju dobivaju pogodnosti!",
-      "title": "Avanturisti"
+      "desc": "Jedan za sve i svi za jednoga, s ovim planom svi na vašem poslužitelju dobivaju pogodnosti!"
     },
     "2": {
-      "desc": "Za prave ljubitelje Inanimalia Fortune!",
-      "title": "Heroj hobotnice"
+      "desc": "Za prave ljubitelje Inanimalia Fortune!"
     },
     "feat": {
       "0": "+5 Makro utora (po liku)",
@@ -533,12 +530,21 @@
       "12": "za tri poslužitelja",
       "98": "Paket za stopala tima & Una Klub\n",
       "99": "Pjesnička licenca za naplatu developerima.\n"
+    },
+    "new": {
+      "0": "Ukloni oglase",
+      "1": "%0% gigabajti pohrane"
+    },
+    "info": {
+      "kc": "Kraken Coins su digitalni bodovi koji se mogu zamijeniti za skinove, predmete i resurse ekosistema i zajednice",
+      "storage": "O armazenamento refere-se a tudo que é registrado no ecossistema, como documentos, fotos de personagens, capas de aventuras e quaisquer uploads."
     }
   },
   "price": {
-    "0": "5R$/mjesečno\n",
-    "1": "5 $/mj.\n",
-    "2": "7 $/mj.\n"
+    "0": "15R$/mjesečno\n",
+    "1": "25 $/mj.\n",
+    "2": "30 $/mj.\n",
+    "3": "50 $/mj.\n"
   },
   "privacy": {
     "desc": "Pročitajte Pravila o privatnosti Mini Krakensa. Saznajte kako prikupljamo, koristimo i štitimo vaše podatke.\n",
@@ -635,6 +641,42 @@
     "index": {
       "desc": "Podignite svoje Discord RPG sesije na višu razinu uz naprednu personalizaciju karata i žetona izravno u Discordu. Uređujte scenarije, prilagođavajte pozicije i prilagođavajte okruženje igre u stvarnom vremenu, bez napuštanja svog poslužitelja. Potpuna kontrola za voditelje i igrače, sve integrirano u vaš Discord prostor za igru.",
       "title": "Prilagodi karte i mreže"
+    }
+  },
+  "v2": {
+    "premium": {
+      "modal": {
+        "title": "Podržati projekt",
+        "footer": "Prihvaćamo Pix i PayPal putem Discorda, omogućujući izravnu podršku za vašu veću pogodnost.",
+        "discord": {
+          "title": "Iskoristi nagrade putem Discorda",
+          "desc": "Nakon podrške, otvorite tiket kako biste odmah aktivirali svoje premium funkcije.",
+          "btn": "Pridruži se zajednici"
+        },
+        "patreon": {
+          "desc": "Opcija za globalne podržavatelje, putem dolara.",
+          "btn": "Pretplati se na Patreon"
+        },
+        "desc": "Odaberite kako želite postati podržavatelj projekta i otključati ekskluzivne nagrade.",
+        "catarse": {
+          "desc": "Opcija za podržavatelje u Brazilu",
+          "btn": "Želim podržati"
+        }
+      },
+      "tier": {
+        "0": {
+          "name": "Nastojnik"
+        },
+        "1": {
+          "name": "Kultist"
+        },
+        "2": {
+          "name": "Prorok"
+        },
+        "3": {
+          "name": "Budim se"
+        }
+      }
     }
   }
 }

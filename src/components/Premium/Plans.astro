@@ -6,11 +6,8 @@ import {
   Key,
   Coins,
   Dices,
-  Tags,
-  BookText,
-  Palette,
-  Package,
-  Info,
+  Save,
+  Hd,
   Crown,
 } from "@lucide/astro";
 import tier1 from "@assets/img/tiers_premium/1.webp";
@@ -52,15 +49,15 @@ const plans = [
     titleIcon: Crown,
     primary: [
       { Icon: User, text: feat?.[10] },
-      { Icon: Coins, text: `2 ${coinsLabel}` },
+      { Icon: Coins, text: `2 ${coinsLabel}`, info: t.premium.info.kc },
       { Icon: Key, text: t.premium.new[0] },
+      { Icon: Save, text: t.premium.new[1].replace("%0%", "5"), info: t.premium.info.storage },
+
     ],
     secondary: [
       { Icon: Dices, text: feat?.[0] },
-      { Icon: Tags, text: feat?.[1] },
-      { Icon: BookText, text: feat?.[2] },
     ],
-    accent: "#f59e0b",
+    accent: "#34DF68",
     badge: tier1,
   },
   {
@@ -72,18 +69,18 @@ const plans = [
     titleIcon: User,
     primary: [
       { Icon: User, text: feat?.[10] },
-      { Icon: Coins, text: `5 ${coinsLabel}` },
+      { Icon: Coins, text: `5 ${coinsLabel}`, info: t.premium.info.kc  },
       { Icon: Key, text: t.premium.new[0] },
+      { Icon: Save, text: t.premium.new[1].replace("%0%", "10"), info: t.premium.info.storage },
+      { Icon: Hd, text: "Exportação em Alta Qualidade", info: t.premium.info.storage },
+
 
 
     ],
     secondary: [
       { Icon: Dices, text: feat?.[0] },
-      { Icon: Tags, text: feat?.[1] },
-      { Icon: BookText, text: feat?.[2] },
-      { Icon: Palette, text: feat?.[3] },
     ],
-    accent: "#38bdf8",
+    accent: "#FF7B29",
     badge: tier2,
   },
   {
@@ -93,18 +90,17 @@ const plans = [
     titleIcon: Crown,
     primary: [
       { Icon: User, text: feat?.[10] },
-      { Icon: Coins, text: `7 ${coinsLabel}` },
+      { Icon: Coins, text: `7 ${coinsLabel}`, info: t.premium.info.kc  },
       { Icon: Key, text: t.premium.new[0]},
+      { Icon: Save, text: t.premium.new[1].replace("%0%", "20"), info: t.premium.info.storage },
+
 
       { Icon: MessageCircle, text: supportLabel },
     ],
     secondary: [
       { Icon: Dices, text: feat?.[0] },
-      { Icon: Tags, text: feat?.[1] },
-      { Icon: BookText, text: feat?.[2] },
-      { Icon: Palette, text: feat?.[3] },
     ],
-    accent: "#22c55e",
+    accent: "#38bdf8",
     badge: tier3,
   },
   {
@@ -116,20 +112,18 @@ const plans = [
     titleIcon: Crown,
     primary: [
       { Icon: User, text: feat?.[10] },
-      { Icon: Coins, text: `15 ${coinsLabel}` },
+      { Icon: Coins, text: `15 ${coinsLabel}`, info: t.premium.info.kc  },
       { Icon: Key, text: t.premium.new[0] },
-      
+      { Icon: Save, text: t.premium.new[1].replace("%0%", "35"), info: t.premium.info.storage },
+
       
       
       { Icon: MessageCircle, text: supportLabel },
     ],
     secondary: [
-      { Icon: Dices, text: feat?.[0] },
-      { Icon: Tags, text: feat?.[1] },
-      { Icon: BookText, text: feat?.[2] },
-      { Icon: Palette, text: feat?.[3] },
+      { Icon: Dices, text: feat?.[0] }
     ],
-    accent: "#f97316",
+    accent: "#FF0655",
     badge: tier4,
   },
 ];

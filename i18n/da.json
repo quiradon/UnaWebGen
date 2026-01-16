@@ -532,7 +532,12 @@
       "99": "Poetisk licens til at opkræve udviklere.\n"
     },
     "new": {
-      "0": "Fjern annoncerne."
+      "0": "Fjern annoncerne.",
+      "1": "%0% gigabyte-lagerkapacitet"
+    },
+    "info": {
+      "kc": "Kraken Coins sind digitale Punkte, die gegen Skins, Gegenstände und Ressourcen des Ökosystems und der Gemeinschaft eingetauscht werden können",
+      "storage": "Lagring omfatter alt, hvad der er registreret i økosystemet, herunder dokumenter, billeder af figurer, eventcover og eventuelle uploads."
     }
   },
   "price": {

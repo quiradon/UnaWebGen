@@ -532,7 +532,12 @@
       "99": "Poetycka licencja na żądanie Deweloperów"
     },
     "new": {
-      "0": "Pozbądź się reklam."
+      "0": "Pozbądź się reklam.",
+      "1": "%0% Giga bajtów pamięci"
+    },
+    "info": {
+      "kc": "Kraken Coins to punkty cyfrowe, które można wymieniać na skiny, przedmioty i zasoby ekosystemu oraz społeczności.",
+      "storage": "Przechowywanie odnosi się do wszystkiego, co jest zarejestrowane w ekosystemie, dokumentów, zdjęć postaci, okładek przygód i wszelkich przesłanych plików."
     }
   },
   "price": {

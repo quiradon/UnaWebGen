@@ -14,6 +14,10 @@ const {
   className = "col-12 col-md-6 col-lg-3",
 } = Astro.props;
 
+import {
+  Info as InfoIcon,
+} from "@lucide/astro";
+
 const safePrimary = primaryFeatures.filter((item: any) => item?.text);
 const safeSecondary = secondaryFeatures.filter((item: any) => item?.text);
 const wrapperClass = className?.trim() || "col-12 col-md-6 col-lg-3";
@@ -99,7 +103,22 @@ const monthlyParts = buildPriceParts(priceMonthly);
                 {Icon ? (
                   <Icon size={16} class="premium-plan-card__item-icon" />
                 ) : null}
-                <span>{item.text}</span>
+                <span class="premium-plan-card__item-content">
+                  <span class="premium-plan-card__item-text">{item.text}</span>
+                  {item.info ? (
+                    <span
+                      class="premium-plan-card__info"
+                      role="button"
+                      tabindex="0"
+                      aria-label={item.info}
+                    >
+                      <InfoIcon size={14} />
+                      <span class="premium-plan-card__tooltip">
+                        {item.info}
+                      </span>
+                    </span>
+                  ) : null}
+                </span>
               </li>
             );
           })}
@@ -110,19 +129,34 @@ const monthlyParts = buildPriceParts(priceMonthly);
         <>
           <hr class="premium-plan-card__divider" />
           <ul class="premium-plan-card__list">
-            {safeSecondary.map((item: any) => {
-              const Icon = item.Icon;
-              return (
-                <li class="premium-plan-card__item">
-                  {Icon ? (
-                    <Icon size={16} class="premium-plan-card__item-icon" />
+          {safeSecondary.map((item: any) => {
+            const Icon = item.Icon;
+            return (
+              <li class="premium-plan-card__item">
+                {Icon ? (
+                  <Icon size={16} class="premium-plan-card__item-icon" />
+                ) : null}
+                <span class="premium-plan-card__item-content">
+                  <span class="premium-plan-card__item-text">{item.text}</span>
+                  {item.info ? (
+                    <span
+                      class="premium-plan-card__info"
+                      role="button"
+                      tabindex="0"
+                      aria-label={item.info}
+                    >
+                      <InfoIcon size={14} />
+                      <span class="premium-plan-card__tooltip">
+                        {item.info}
+                      </span>
+                    </span>
                   ) : null}
-                  <span>{item.text}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </>
       ) : null}
     </div>
   </article>
@@ -247,6 +281,81 @@ const monthlyParts = buildPriceParts(priceMonthly);
     font-size: 0.92rem;
   }
 
+  .premium-plan-card__item-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .premium-plan-card__item-text {
+    line-height: 1.35;
+  }
+
+  .premium-plan-card__info {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: rgb(34, 31, 57);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 1;
+    cursor: help;
+    flex-shrink: 0;
+    padding: 0;
+    z-index: 5;
+  }
+
+  .premium-plan-card__info svg {
+    display: block;
+  }
+
+  .premium-plan-card__info:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 2px;
+  }
+
+  .premium-plan-card__tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #0b0f14;
+    color: rgba(255, 255, 255, 0.95);
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    width: max-content;
+    max-width: 220px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .premium-plan-card__tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: #0b0f14 transparent transparent transparent;
+  }
+
+  .premium-plan-card__info:hover .premium-plan-card__tooltip,
+  .premium-plan-card__info:focus-visible .premium-plan-card__tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
   .premium-plan-card__item-icon {
     flex-shrink: 0;
     margin-top: 2px;
@@ -318,6 +427,7 @@ const monthlyParts = buildPriceParts(priceMonthly);
     position: relative;
     z-index: 1;
     width: 100%;
+    overflow: hidden;
   }
 
   .premium-plan-card__cta:hover {
@@ -325,9 +435,82 @@ const monthlyParts = buildPriceParts(priceMonthly);
     color: #0b0f14;
   }
 
+  .premium-plan-card__cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  .premium-plan-card__cta::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  .premium-plan-card:hover .premium-plan-card__cta::before {
+    animation: plan-cta-shimmer 1.2s ease-in-out infinite;
+  }
+
+  .premium-plan-card:hover .premium-plan-card__cta::after {
+    animation: plan-cta-shimmer-secondary 1.2s ease-in-out 0.2s infinite;
+  }
+
+  .premium-plan-card:hover .premium-plan-card__cta {
+    filter: brightness(1.08);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+  }
+
   .premium-plan-card:hover {
     border-color: rgba(255, 255, 255, 0.16);
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
     transform: translateY(-2px);
   }
+
+  @keyframes plan-cta-shimmer {
+    0% {
+      left: -100%;
+      transform: rotateZ(-35deg);
+    }
+    100% {
+      left: 100%;
+      transform: rotateZ(-35deg);
+    }
+  }
+
+  @keyframes plan-cta-shimmer-secondary {
+    0% {
+      left: -100%;
+      transform: rotateZ(-35deg);
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    100% {
+      left: 100%;
+      transform: rotateZ(-35deg);
+      opacity: 0.5;
+    }
+  }
+  
 </style>

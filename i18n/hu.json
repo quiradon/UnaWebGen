@@ -532,7 +532,12 @@
       "99": "Költői jogosultság a fejlesztők megkérdezésére"
     },
     "new": {
-      "0": "Szabadulj meg a hirdetésektől!"
+      "0": "Szabadulj meg a hirdetésektől!",
+      "1": "%0% gigabájt tárhely"
+    },
+    "info": {
+      "kc": "A Kraken Coins digitális pontok, amelyeket skinek, tárgyak és erőforrások cseréjére lehet használni az ökoszisztémában és a közösségben",
+      "storage": "A tárolás minden olyan dologra vonatkozik, amit a rendszerben regisztrálnak, például dokumentumokra, karakterképekre, kalandborítókra és bármilyen feltöltésre."
     }
   },
   "price": {

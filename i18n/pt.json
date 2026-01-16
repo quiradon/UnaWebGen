@@ -532,7 +532,12 @@
       "99": "Licença poética para cobrar os Devs"
     },
     "new": {
-      "0": "Livre-se de Anuncios"
+      "0": "Livre-se de Anuncios",
+      "1": "%0% Gigas de armazenamento"
+    },
+    "info": {
+      "kc": "Kraken Coins são pontos digitais que podem ser trocados, por skins, itens e recursos do ecosistema e da comunidade.",
+      "storage": "O Armazenamento diz respeito a tudo que é cadastrado no ecossitema, documentos, fotos de personagens, capas de aventuras e quaisquer uploads."
     }
   },
   "price": {

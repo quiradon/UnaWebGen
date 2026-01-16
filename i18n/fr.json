@@ -532,7 +532,12 @@
       "99": "Licence poétique pour exiger des développeurs"
     },
     "new": {
-      "0": "Débarrassez-vous des publicités"
+      "0": "Débarrassez-vous des publicités",
+      "1": "%0% gigaoctets de stockage"
+    },
+    "info": {
+      "kc": "Les Kraken Coins sont des points numériques qui peuvent être échangés contre des skins, des objets et des ressources de l'écosystème et de la communauté.",
+      "storage": "Le stockage concerne tout ce qui est enregistré dans l'écosystème, tels que des documents, des photos de personnages, des couvertures d'aventures et tout téléchargement."
     }
   },
   "price": {

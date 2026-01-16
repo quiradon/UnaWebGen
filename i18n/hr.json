@@ -532,7 +532,12 @@
       "99": "Pjesnička licenca za naplatu developerima.\n"
     },
     "new": {
-      "0": "Ukloni oglase"
+      "0": "Ukloni oglase",
+      "1": "%0% gigabajti pohrane"
+    },
+    "info": {
+      "kc": "Kraken Coins su digitalni bodovi koji se mogu zamijeniti za skinove, predmete i resurse ekosistema i zajednice",
+      "storage": "O armazenamento refere-se a tudo que é registrado no ecossistema, como documentos, fotos de personagens, capas de aventuras e quaisquer uploads."
     }
   },
   "price": {

@@ -532,7 +532,12 @@
       "99": "Poetic license to demand Devs"
     },
     "new": {
-      "0": "Get rid of ads"
+      "0": "Get rid of ads",
+      "1": "%0% gigabytes of storage"
+    },
+    "info": {
+      "kc": "Kraken Coins are digital points that can be exchanged for skins, items, and resources within the ecosystem and community.",
+      "storage": "Storage refers to everything registered in the ecosystem, including documents, character photos, adventure covers, and any uploads."
     }
   },
   "price": {

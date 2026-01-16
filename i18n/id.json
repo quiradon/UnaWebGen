@@ -532,7 +532,12 @@
       "99": "Lisensi Puitis untuk Meminta Pengembang"
     },
     "new": {
-      "0": "Singkirkan iklan."
+      "0": "Singkirkan iklan.",
+      "1": "%0% Gigas de armazenamento"
+    },
+    "info": {
+      "kc": "Kraken Coins são pontos digitais que podem ser trocados por skins, itens e recursos do ecossistema e da comunidade",
+      "storage": "O armazenamento refere-se a tudo que é registrado no ecossistema, como documentos, fotos de personagens, capas de aventuras e quaisquer uploads"
     }
   },
   "price": {

@@ -8,20 +8,10 @@ import { loadT } from "@lib/i18n";
 const locale = getLocale(Astro.url);
 const t = loadT(locale);
 
-type Cmd = {
-  name: string;
-  description: string;
-  name_localizations?: Record<string, string>;
-  description_localizations?: Record<string, string>;
-  options?: CmdOption[];
-};
-type CmdOption = Cmd & { type: number };
+import { type Cmd, type CmdOption, getCachedCommands } from "@lib/commands";
 
 async function getCommands(): Promise<Cmd[]> {
-  const url = "https://api-rpg.arkanus.app/bot/commands";
-  const res = await fetch(url);
-  const data = (await res.json()) as Cmd[];
-  return Array.isArray(data) ? data : [];
+  return await getCachedCommands();
 }
 
 function formatName(cmd: Cmd, lang: string) {

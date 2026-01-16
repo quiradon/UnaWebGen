@@ -1,6 +1,6 @@
 {
     "liveServer.settings.root": "",
-    "workbench.iconTheme": "helium-icon-theme",
+    "workbench.iconTheme": "material-icon-theme",
     "i18n-ally.localesPaths": [
         "i18n"
     ],

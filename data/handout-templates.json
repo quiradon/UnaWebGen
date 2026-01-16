@@ -1,0 +1,188 @@
+﻿[
+  {
+    "id": "base",
+    "label": "Modelo base",
+    "description": "Um ponto de partida limpo.",
+    "doc": {
+      "version": 1,
+      "pageWidth": 1000,
+      "pageHeight": 1000,
+      "zoom": 0.9,
+      "paperColor": "#f6f0de",
+      "paperOpacity": 1,
+      "template": "none",
+      "templateId": "base",
+      "layers": [
+        {
+          "id": "base_title",
+          "type": "text",
+          "name": "Titulo",
+          "x": 72,
+          "y": 72,
+          "width": 760,
+          "height": 120,
+          "text": "Modelo base",
+          "fontSize": 56,
+          "fontPreset": "playfair-display",
+          "fontWeight": 800,
+          "align": "left",
+          "lineHeight": 1.1
+        },
+        {
+          "id": "base_subtitle",
+          "type": "text",
+          "name": "Subtitulo",
+          "x": 72,
+          "y": 175,
+          "width": 760,
+          "height": 60,
+          "text": "Um ponto de partida limpo",
+          "fontSize": 22,
+          "fontPreset": "merriweather",
+          "fontWeight": 500,
+          "align": "left",
+          "lineHeight": 1.2
+        },
+        {
+          "id": "base_body",
+          "type": "text",
+          "name": "Texto",
+          "x": 72,
+          "y": 260,
+          "width": 760,
+          "height": 520,
+          "text": "Use este modelo para comecar.\n\n- Adicione imagens\n- Ajuste textos\n- Organize camadas",
+          "fontSize": 18,
+          "fontPreset": "serif",
+          "fontWeight": 400,
+          "align": "left",
+          "lineHeight": 1.4
+        }
+      ]
+    }
+  },
+  {
+    "id": "guild-notice",
+    "label": "Aviso da guilda",
+    "description": "Modelo para recados e avisos.",
+    "doc": {
+      "version": 1,
+      "pageWidth": 1000,
+      "pageHeight": 1000,
+      "zoom": 0.9,
+      "paperColor": "#f1e2c2",
+      "paperOpacity": 1,
+      "template": "parchment",
+      "templateId": "guild-notice",
+      "layers": [
+        {
+          "id": "guild_title",
+          "type": "text",
+          "name": "Titulo",
+          "x": 80,
+          "y": 72,
+          "width": 840,
+          "height": 110,
+          "text": "Aviso da guilda",
+          "fontSize": 52,
+          "fontPreset": "cinzel",
+          "fontWeight": 700,
+          "align": "center",
+          "lineHeight": 1.1
+        },
+        {
+          "id": "guild_subtitle",
+          "type": "text",
+          "name": "Subtitulo",
+          "x": 80,
+          "y": 170,
+          "width": 840,
+          "height": 60,
+          "text": "Reuniao geral - sexta",
+          "fontSize": 20,
+          "fontPreset": "merriweather",
+          "fontWeight": 500,
+          "align": "center",
+          "lineHeight": 1.2
+        },
+        {
+          "id": "guild_body",
+          "type": "text",
+          "name": "Texto",
+          "x": 120,
+          "y": 260,
+          "width": 760,
+          "height": 520,
+          "text": "Local: Sala dos mapas\nHorario: 18:00\nTrazer inventario e selo pessoal.\n\nMissao extra:\n- Patrulha no mercado\n- Relatorio do porto",
+          "fontSize": 18,
+          "fontPreset": "serif",
+          "fontWeight": 400,
+          "align": "left",
+          "lineHeight": 1.35
+        }
+      ]
+    }
+  },
+  {
+    "id": "wanted-poster",
+    "label": "Cartaz procurado",
+    "description": "Poster com destaque e recompensa.",
+    "doc": {
+      "version": 1,
+      "pageWidth": 1000,
+      "pageHeight": 1000,
+      "zoom": 0.9,
+      "paperColor": "#efe7d6",
+      "paperOpacity": 1,
+      "template": "dossier",
+      "templateId": "wanted-poster",
+      "layers": [
+        {
+          "id": "wanted_title",
+          "type": "text",
+          "name": "Titulo",
+          "x": 90,
+          "y": 70,
+          "width": 820,
+          "height": 110,
+          "text": "PROCURADO",
+          "fontSize": 60,
+          "fontPreset": "cinzel",
+          "fontWeight": 800,
+          "align": "center",
+          "lineHeight": 1
+        },
+        {
+          "id": "wanted_subtitle",
+          "type": "text",
+          "name": "Subtitulo",
+          "x": 90,
+          "y": 180,
+          "width": 820,
+          "height": 60,
+          "text": "Vivo ou morto",
+          "fontSize": 22,
+          "fontPreset": "merriweather",
+          "fontWeight": 600,
+          "align": "center",
+          "lineHeight": 1.2
+        },
+        {
+          "id": "wanted_body",
+          "type": "text",
+          "name": "Texto",
+          "x": 130,
+          "y": 280,
+          "width": 740,
+          "height": 520,
+          "text": "Nome: Aric Vale\nRecompensa: 500 moedas\nUltima vez visto na doca 7.\nContato: Capitao Mirna",
+          "fontSize": 19,
+          "fontPreset": "serif",
+          "fontWeight": 400,
+          "align": "left",
+          "lineHeight": 1.4
+        }
+      ]
+    }
+  }
+]

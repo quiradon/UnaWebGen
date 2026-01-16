@@ -1,0 +1,73 @@
+---
+import Head from "@components/Head.astro";
+import Navbar from "@components/Navbar.astro";
+import Footer from "@components/Footer.astro";
+import { ClientRouter } from "astro:transitions";
+import type { Translations } from "@lib/i18n";
+import config from "../config";
+
+interface Props {
+  t: Translations;
+  title: string;
+  desc?: string;
+  pictureURL?: string;
+  navbarFixed?: boolean;
+  navbarSticky?: boolean;
+}
+
+const {
+  t,
+  title,
+  desc,
+  pictureURL,
+  navbarFixed = false,
+  navbarSticky = true,
+} = Astro.props as Props;
+---
+
+<html lang={t.lang} data-bs-theme="dark">
+  <Head title={title} desc={desc} pictureURL={pictureURL} />
+  <body class:list={{ "navbar-fixed": navbarFixed }}>
+    <ClientRouter />
+    <Navbar t={t} fixed={navbarFixed} sticky={navbarSticky} />
+    <main class="main-content" transition:animate="fade">
+      <slot />
+    </main>
+    <script is:inline src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Carrega versões já geradas em public/scripts para evitar MIME errado -->
+    <script type="module" src="/scripts/session-prime.js"></script>
+    <script src="../scripts/auth-widget.ts"></script>
+  </body>
+</html>
+
+<style is:global>
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  body.navbar-fixed .main-content {
+    padding-top: calc(var(--navbar-offset, 72px) + 16px);
+  }
+
+  body.navbar-fixed #site-navbar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+    transform: none !important;
+  }
+
+  footer {
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+</style>

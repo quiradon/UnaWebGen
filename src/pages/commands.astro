@@ -11,7 +11,27 @@ const t = loadT(locale);
 import { type Cmd, type CmdOption, getCachedCommands } from "@lib/commands";
 
 async function getCommands(): Promise<Cmd[]> {
-  return await getCachedCommands();
+  try {
+    const url = "https://api-rpg.arkanus.app/bot/commands";
+    const res = await fetch(url);
+
+    // Check if response is OK before parsing
+    if (!res.ok) {
+      console.warn(
+        `[commands] API returned status ${res.status}, using empty commands list`,
+      );
+      return [];
+    }
+
+    const data = (await res.json()) as Cmd[];
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.warn(
+      "[commands] Failed to fetch commands, using empty list:",
+      error,
+    );
+    return [];
+  }
 }
 
 function formatName(cmd: Cmd, lang: string) {

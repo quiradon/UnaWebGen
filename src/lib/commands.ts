@@ -18,7 +18,7 @@ export async function getCachedCommands(): Promise<Cmd[]> {
 
     console.log("Fetching commands from API...");
     try {
-        const url = "https://api-rpg.arkanus.app/bot/commands";
+        const url = "https://api-rpg.arkanus.app/bot/commands/";
         const res = await fetch(url);
         const data = (await res.json()) as Cmd[];
         cachedCommands = Array.isArray(data) ? data : [];

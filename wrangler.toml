@@ -11,8 +11,5 @@ not_found_handling = "404-page"
 [dev]
 port = 3000
 
-[placement]
-mode = "smart"
-
 [observability.traces]
 enabled = true

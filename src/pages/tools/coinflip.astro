@@ -5,7 +5,7 @@ import { loadT } from '@lib/i18n';
 import { getLocale } from "astro-i18n-aut";
 
 const currentLocale = getLocale(Astro.url);
-const t = loadT(currentLocale);
+const t = await loadT(currentLocale);
 
 ---
 <Layout t={t} title={t.flip_coin?.title} desc={t.flip_coin?.description}>
@@ -388,3 +388,7 @@ const t = loadT(currentLocale);
     }
   </script>
 </Layout>
+
+
+
+

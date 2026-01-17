@@ -19,7 +19,7 @@ import {
 export { getStaticPaths };
 
 const Locale = getLocale(Astro.url);
-const t = loadT(Locale);
+const t = await loadT(Locale);
 
 const pathPrefix = Locale === "en" ? "" : `/${Locale}`;
 ---
@@ -199,3 +199,7 @@ const pathPrefix = Locale === "en" ? "" : `/${Locale}`;
     }
   </style>
 </Layout>
+
+
+
+

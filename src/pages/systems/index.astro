@@ -3,7 +3,7 @@ import Layout from '@layouts/Layout.astro';
 import { getLocale } from "astro-i18n-aut";
 import { loadT } from '@lib/i18n';
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
 ---
 <Layout t={t} title={t.systems?.title} desc={t.systems?.desc} pictureURL="/img/bg/newbg2.webp">
@@ -31,4 +31,8 @@ const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
     </div>
   </section>
 </Layout>
+
+
+
+
 

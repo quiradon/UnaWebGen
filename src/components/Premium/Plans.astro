@@ -19,7 +19,7 @@ import { getLocale } from "astro-i18n-aut";
 import { loadT } from "@lib/i18n";
 
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 
 
 const feat = t?.premium?.feat ?? {};
@@ -168,3 +168,7 @@ const plans = [
     padding-bottom: clamp(48px, 6vw, 96px);
   }
 </style>
+
+
+
+

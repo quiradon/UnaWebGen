@@ -1,54 +1,827 @@
 ---
-export const prerender = false;
-import Layout from "@layouts/Layout.astro";
-import { loadT } from "@lib/i18n";
+export const prerender = true;
+import Layout from '@layouts/Layout.astro';
+import { loadT } from '@lib/i18n';
+import { CloudSun, Sliders, Shuffle, Snowflake, CloudRain, Sun, RefreshCw, AlertTriangle, Thermometer, Wind, CloudSnow, CloudLightning, CloudDrizzle, CloudFog, CloudHail, BookOpen, Copy, Check } from '@lucide/astro';
+import weatherNarratives from '../../../data/weather-narratives.json';
 import { getLocale } from "astro-i18n-aut";
-
-const { number } = Astro.params;
-
-// Attempt to get locale, fallback to 'en' if not detected
-const locale = getLocale(Astro.url);
-const t = loadT(locale);
-
-// Cache control:
-// max-age=60: Browser checks cache every 60 seconds
-// s-maxage=3600: Cloudflare (CDN) caches this response for 1 hour
-// This means the first user generates the page, subsequent users see the cached version for 1 hour.
-Astro.response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=3600');
+const currentLocale = getLocale(Astro.url);
+const t = await loadT(currentLocale);
+// Get narratives for current language, fallback to English, then Portuguese
+const narrativeLang = (weatherNarratives as any)[currentLocale] || weatherNarratives.en || weatherNarratives.pt;
 ---
+<Layout t={t} title={t.tools?.clima?.pageTitle} desc={t.tools?.clima?.pageDesc}>
+  <section class="weather-section pt-2 mt-4 mb-5">
+    <div class="container">
+      <!-- Header -->
+      <div class="col-12 mb-4 text-center mt-5">
+        <h1 class="display-4 fw-bold text-white mb-3">
+          <CloudSun size={40} class="me-2 d-inline-block" style="color: var(--bs-primary);" />
+          {t.tools?.clima?.pageTitle}
+        </h1>
+        <p class="lead text-secondary">{t.tools?.clima?.pageDesc}</p>
+      </div>
 
-<Layout t={t} title={`Counter: ${number}`}>
-  <div class="container py-5 mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8 text-center">
-        <div class="card shadow-lg border-0 glass-container">
-          <div class="card-body p-5">
-            <h2 class="text-primary mb-4">Hybrid Rendering Demo</h2>
-            
-            <div class="display-1 fw-bold text-white mb-4">
-              {number}
+      <div class="row justify-content-center g-4 mb-5">
+        <!-- Control Panel -->
+        <div class="col-lg-5 col-md-12 mb-5">
+          <div class="weather-card glass-card">
+            <div class="card-body p-4">
+              <h5 class="card-title mb-4 d-flex align-items-center">
+                <Sliders size={24} class="me-2" />
+                {t.tools?.clima?.select}
+              </h5>
+              
+              <div class="climate-options mb-4">
+                <div class="climate-option" data-type="random">
+                  <Shuffle size={32} />
+                  <span>{t.common?.random}</span>
+                </div>
+                <div class="climate-option" data-type="cold">
+                  <Snowflake size={32} />
+                  <span>{t.tools?.clima?.type?.cold}</span>
+                </div>
+                <div class="climate-option" data-type="temperate">
+                  <CloudRain size={32} />
+                  <span>{t.tools?.clima?.type?.temperate}</span>
+                </div>
+                <div class="climate-option" data-type="desert">
+                  <Sun size={32} />
+                  <span>{t.tools?.clima?.type?.desert}</span>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-lg w-100 generate-btn" id="genWeather">
+                <RefreshCw size={20} class="me-2 d-inline-block" />
+                {t.tools?.clima?.button}
+              </button>
             </div>
+          </div>
+        </div>
 
-            <p class="lead text-secondary mb-4">
-              This number was rendered on the server (Cloudflare Worker).
-            </p>
-
-            <div class="alert alert-info d-inline-block text-start">
-              <small>
-                <strong>Generated at:</strong> {new Date().toLocaleString()}<br/>
-                <strong>Cache-Control:</strong> {Astro.response.headers.get('Cache-Control')}
-              </small>
+        <!-- Results Panel / Mockup -->
+        <div class="col-lg-5 col-md-12 mb-5">
+          <!-- Mockup inicial -->
+          <div class="weather-card glass-card mockup-card" id="mockupCard">
+            <div class="card-body p-4 d-flex flex-column justify-content-center align-items-center h-100">
+              <div class="mockup-icon mb-4">
+                <CloudSun size={80} class="opacity-25" />
+              </div>
+              <h5 class="text-secondary text-center mb-2">{t.tools.clima.label}</h5>
+              <p class="text-muted text-center small">{t.tools.clima.label2}</p>
             </div>
+          </div>
 
-            <div class="mt-4">
-              <p class="small text-muted">
-                Refresh the page. The timestamp should stay the same for 1 hour (cached),<br/>
-                unless you are looking at a different number.
-              </p>
+          <!-- Card de resultados -->
+          <div class="weather-card glass-card result-card" id="weatherResult" style="display: none;">
+            <div class="card-body p-4">
+              <div class="weather-icon-container mb-4">
+                <div id="weatherIcon"></div>
+              </div>
+              
+              <h3 class="weather-condition mb-4 text-center"></h3>
+              
+              <div class="weather-details">
+                <div class="detail-item">
+                  <AlertTriangle size={28} class="detail-icon" />
+                  <div class="detail-content">
+                    <span class="detail-label">{t.tools.clima.intensidade}</span>
+                    <span class="detail-value intensity"></span>
+                  </div>
+                </div>
+                
+                <div class="detail-item">
+                  <Thermometer size={28} class="detail-icon" />
+                  <div class="detail-content">
+                    <span class="detail-label temperature-label"></span>
+                    <span class="detail-value temperature"></span>
+                  </div>
+                </div>
+                
+                <div class="detail-item">
+                  <Wind size={28} class="detail-icon" />
+                  <div class="detail-content">
+                    <span class="detail-label wind-label"></span>
+                    <span class="detail-value wind-speed"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Narrative Description for RPG -->
+              <div class="narrative-section mt-4">
+                <div class="narrative-header" id="narrativeHeader">
+                  <BookOpen size={20} class="me-2" />
+                  <span>{narrativeLang.narrativeTitle}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron ms-auto"><path d="m6 9 6 6 6-6"/></svg>
+                </div>
+                <div class="narrative-content" id="narrativeContent">
+                  <p class="narrative-text" id="narrativeText"></p>
+                  <button class="btn btn-sm btn-outline-primary copy-btn" id="copyNarrative">
+                    <Copy size={16} class="me-1" />
+                    <span class="copy-text">{t.comum.copy}</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <style>
+    .weather-section {
+      min-height: 70vh;
+    }
+
+    .glass-card {
+      background: rgba(29, 26, 45, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      height: 100%;
+      min-height: 520px;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .weather-card .card-body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Mockup styles */
+    .mockup-card {
+      min-height: 520px;
+    }
+
+    .mockup-icon {
+      opacity: 0.3;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .climate-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      flex-grow: 1;
+    }
+
+    .climate-option {
+      padding: 20px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+      min-height: 100px;
+    }
+
+    .climate-option :global(svg) {
+      color: var(--bs-primary);
+      transition: all 0.3s ease;
+    }
+
+    .climate-option span {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+    }
+
+    .climate-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--bs-primary);
+      transform: scale(1.05);
+    }
+
+    .climate-option.active {
+      background: linear-gradient(135deg, var(--bs-primary), rgba(248, 7, 82, 0.6));
+      border-color: var(--bs-primary);
+      box-shadow: 0 4px 16px rgba(248, 7, 82, 0.4);
+    }
+
+    .climate-option.active :global(svg) {
+      color: white !important;
+      transform: scale(1.15);
+      filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
+    }
+
+    .climate-option.active span {
+      color: white;
+      font-weight: 600;
+    }
+
+    .generate-btn {
+      padding: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .generate-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .generate-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .generate-btn:active {
+      transform: scale(0.96);
+    }
+
+    .generate-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    .fade-out {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    .weather-icon-container.updating {
+      animation: pulse 0.6s ease-in-out;
+    }
+
+    .weather-icon-container {
+      text-align: center;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .weather-icon-container :global(svg) {
+      animation: iconPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .generate-btn.loading :global(svg) {
+      animation: spin 1s linear infinite;
+    }
+
+    .weather-condition {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--bs-primary), #ff6b9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .weather-details {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .detail-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateX(4px);
+    }
+
+    .detail-item :global(.detail-icon) {
+      color: var(--bs-primary);
+      min-width: 28px;
+      flex-shrink: 0;
+    }
+
+    .detail-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .detail-label {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .detail-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    /* Responsividade mobile */
+    @media (max-width: 991px) {
+      .glass-card {
+        min-height: auto;
+      }
+
+      .mockup-card {
+        min-height: 300px;
+      }
+
+      .climate-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .climate-option {
+        padding: 16px 12px;
+        min-height: 90px;
+      }
+
+      .climate-option span {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .climate-options {
+        grid-template-columns: 1fr;
+      }
+
+      .climate-option {
+        flex-direction: row;
+        justify-content: flex-start;
+        min-height: 70px;
+        padding: 16px;
+      }
+
+      .climate-option :global(svg) {
+        width: 28px;
+        height: 28px;
+      }
+
+      .weather-icon-container {
+        padding: 20px;
+      }
+
+      .weather-condition {
+        font-size: 1.5rem;
+      }
+
+      .detail-item {
+        padding: 12px;
+      }
+
+      .detail-value {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Narrative Section */
+    .narrative-section {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+    }
+
+    .narrative-header {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .narrative-header:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .narrative-header span {
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+    }
+
+    .narrative-header .chevron {
+      transition: transform 0.3s ease;
+      color: var(--bs-primary);
+    }
+
+    .narrative-header.expanded .chevron {
+      transform: rotate(180deg);
+    }
+
+    .narrative-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0 16px;
+    }
+
+    .narrative-content.expanded {
+      max-height: 500px;
+      padding: 16px;
+    }
+
+    .narrative-text {
+      margin: 0 0 16px 0;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.95rem;
+      font-style: italic;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+      padding: 16px;
+      border-radius: 12px;
+      border-left: 3px solid var(--bs-primary);
+    }
+
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      padding: 8px 16px;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(248, 7, 82, 0.3);
+    }
+
+    .copy-btn.copied {
+      background: rgba(34, 197, 94, 0.2);
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+
+    /* Weather type specific colors */
+    .weather-cold { color: #66b3ff; }
+    .weather-temperate { color: #6ec9ff; }
+    .weather-desert { color: #ffb347; }
+    .weather-snow { color: #e0f2ff; }
+    .weather-rain { color: #5ba3d0; }
+    .weather-clear { color: #ffd700; }
+    .weather-storm { color: #9370db; }
+  </style>
+
+  <script define:vars={{ climaTranslations: t.tools.clima, narrativeLang: narrativeLang, userLocale: currentLocale }} is:inline>
+    // Weather icon SVG mapping (Lucide-style)
+    const weatherIconsSVG = {
+      'blizzard': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 9a3 3 0 1 0 0 6"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="m9 18 3 3 3-3"/><path d="m9 6 3-3 3 3"/><path d="m15 18 3 3 3-3"/><path d="m15 6 3-3 3 3"/></svg>',
+      'snow': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M16 14v2"/><path d="M8 14v2"/><path d="M16 20v2"/><path d="M8 20v2"/><path d="M12 16v2"/><path d="M12 22v2"/></svg>',
+      'cloudy': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>',
+      'clear': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>',
+      'thunderstorm': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973"/><path d="m13 12-3 5h4l-3 5"/></svg>',
+      'heavy_rain': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v1"/><path d="M8 14v1"/><path d="M16 19v1"/><path d="M16 14v1"/><path d="M12 21v1"/><path d="M12 16v1"/></svg>',
+      'light_rain': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M8 19v2"/><path d="M12 19v2"/><path d="M16 19v2"/></svg>',
+      'sandstorm': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5.2 6.2 1.4 1.4"/><path d="M2 13h2"/><path d="M20 13h2"/><path d="m17.4 7.6 1.4-1.4"/><path d="M22 17H2"/><path d="M22 21H2"/><path d="M16 13a4 4 0 0 0-8 0"/><path d="M12 5V2.5"/></svg>',
+      'dust_devil': '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3"/><path d="M18 8H6"/><path d="M19 12H9"/><path d="M16 16h-6"/><path d="M11 20H9"/></svg>'
+    };
+
+    const weatherColors = {
+      'blizzard': '#66b3ff',
+      'snow': '#e0f2ff',
+      'cloudy': '#a8b8c8',
+      'clear': '#ffd700',
+      'thunderstorm': '#9370db',
+      'heavy_rain': '#4a90e2',
+      'light_rain': '#6ec9ff',
+      'sandstorm': '#d4a574',
+      'dust_devil': '#c89b6f'
+    };
+
+    // Use narratives from JSON
+    const narrativeTemplates = narrativeLang.narratives;
+
+    // Temperature unit detection and conversion
+    const useFahrenheit = userLocale === 'en'; // English (US) uses Fahrenheit
+    
+    function celsiusToFahrenheit(celsius) {
+      return Math.round((celsius * 9/5) + 32);
+    }
+    
+    function formatTemperature(celsius) {
+      if (useFahrenheit) {
+        return `${celsiusToFahrenheit(celsius)}°F`;
+      }
+      return `${celsius}°C`;
+    }
+    
+    function formatWindSpeed(kmh) {
+      if (useFahrenheit) {
+        // Convert km/h to mph for US
+        const mph = Math.round(kmh * 0.621371);
+        return `${mph} mph`;
+      }
+      return `${kmh} km/h`;
+    }
+
+    function generateNarrative(weather, intensity, temp, wind) {
+      const key = `${weather}_${intensity}`;
+      const templates = narrativeTemplates[key] || narrativeTemplates[`${weather}_moderate`] || [];
+      
+      if (templates.length === 0) {
+        return `Weather conditions: ${weather} with ${intensity} intensity. Temperature: ${temp}°C, Wind: ${wind} km/h.`;
+      }
+      
+      // Select random template
+      const narrative = templates[Math.floor(Math.random() * templates.length)];
+      return narrative;
+    }
+
+    function generateWeather(type) {
+      let temp, weather, wind, intensity;
+      switch (type) {
+        case 'cold':
+          temp = Math.floor(Math.random() * 25) - 20; // -20°C to 5°C
+          weather = Math.random() < 0.4 ? 'blizzard' : Math.random() < 0.7 ? 'snow' : Math.random() < 0.9 ? 'cloudy' : 'clear';
+          wind = Math.floor(Math.random() * 60) + 10; // 10-70 km/h
+          intensity = Math.random() < 0.3 ? 'severe' : Math.random() < 0.7 ? 'moderate' : 'mild';
+          break;
+        case 'temperate':
+          temp = Math.floor(Math.random() * 30) + 0; // 0°C to 30°C
+          weather = Math.random() < 0.3 ? 'thunderstorm' : Math.random() < 0.5 ? 'heavy_rain' : Math.random() < 0.7 ? 'light_rain' : Math.random() < 0.85 ? 'cloudy' : 'clear';
+          wind = Math.floor(Math.random() * 40) + 5; // 5-45 km/h
+          intensity = Math.random() < 0.2 ? 'severe' : Math.random() < 0.6 ? 'moderate' : 'mild';
+          break;
+        case 'desert':
+          temp = Math.floor(Math.random() * 35) + 15; // 15°C to 50°C
+          weather = Math.random() < 0.6 ? 'clear' : Math.random() < 0.8 ? 'sandstorm' : Math.random() < 0.9 ? 'dust_devil' : 'cloudy';
+          wind = Math.floor(Math.random() * 50) + 15; // 15-65 km/h
+          intensity = Math.random() < 0.3 ? 'severe' : Math.random() < 0.7 ? 'moderate' : 'mild';
+          break;
+        default:
+          const types = ['cold', 'temperate', 'desert'];
+          return generateWeather(types[Math.floor(Math.random() * types.length)]);
+      }
+      return { temp, weather, wind, intensity };
+    }
+
+    const T = {
+      options: climaTranslations.options || {},
+      intense: climaTranslations.intense || {},
+      temperatura: climaTranslations.temperatura || 'Temperatura',
+      vento: climaTranslations.vento || 'Velocidade do vento',
+      button: climaTranslations.button || 'Gerar Clima'
+    };
+
+    // Climate type selection
+    let selectedClimate = 'random';
+    document.querySelectorAll('.climate-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.climate-option').forEach(opt => opt.classList.remove('active'));
+        this.classList.add('active');
+        selectedClimate = this.dataset.type;
+      });
+    });
+
+    // Set initial selection
+    document.querySelector('.climate-option[data-type="random"]').classList.add('active');
+
+    // Generate weather button
+    document.getElementById('genWeather').addEventListener('click', function() {
+      const button = this;
+      const weatherResult = document.getElementById('weatherResult');
+      const mockupCard = document.getElementById('mockupCard');
+      const isRegeneration = weatherResult.style.display === 'block';
+      
+      button.disabled = true;
+      button.classList.add('loading');
+      
+      // Store original content
+      const originalHTML = button.innerHTML;
+      
+      // Show loading state
+      button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Gerando...';
+      
+      // If regenerating, fade out current content
+      if (isRegeneration) {
+        weatherResult.classList.add('fade-out');
+        
+        setTimeout(() => {
+          updateWeatherContent();
+        }, 300);
+      } else {
+        // First time generation
+        setTimeout(() => {
+          updateWeatherContent();
+        }, 800);
+      }
+      
+      function updateWeatherContent() {
+        const result = generateWeather(selectedClimate);
+        const translations = T.options || {};
+        const intensityTranslations = T.intense || {};
+        
+        // Check if narrative is currently expanded
+        const narrativeHeader = document.getElementById('narrativeHeader');
+        const narrativeContent = document.getElementById('narrativeContent');
+        const wasExpanded = narrativeHeader.classList.contains('expanded');
+        
+        // Update icon with color
+        const weatherIcon = document.getElementById('weatherIcon');
+        const iconSVG = weatherIconsSVG[result.weather] || weatherIconsSVG['cloudy'];
+        weatherIcon.innerHTML = iconSVG;
+        weatherIcon.querySelector('svg').style.color = weatherColors[result.weather] || '#ffffff';
+        
+        // Update content
+        weatherResult.querySelector('.weather-condition').textContent = translations[result.weather] || result.weather;
+        weatherResult.querySelector('.intensity').textContent = intensityTranslations[result.intensity] || result.intensity;
+        weatherResult.querySelector('.temperature').textContent = formatTemperature(result.temp);
+        weatherResult.querySelector('.temperature-label').textContent = T.temperatura;
+        weatherResult.querySelector('.wind-speed').textContent = formatWindSpeed(result.wind);
+        weatherResult.querySelector('.wind-label').textContent = T.vento;
+        
+        // Generate and update narrative
+        const narrative = generateNarrative(result.weather, result.intensity, result.temp, result.wind);
+        document.getElementById('narrativeText').textContent = narrative;
+        
+        // Maintain narrative section state (keep expanded if it was expanded)
+        if (wasExpanded) {
+          narrativeHeader.classList.add('expanded');
+          narrativeContent.classList.add('expanded');
+        } else {
+          narrativeHeader.classList.remove('expanded');
+          narrativeContent.classList.remove('expanded');
+        }
+        
+        // Remove ALL animation classes first
+        weatherResult.classList.remove('fade-out', 'fade-in');
+        weatherResult.style.animation = 'none';
+        
+        // Hide mockup and show result
+        mockupCard.style.display = 'none';
+        weatherResult.style.display = 'block';
+        
+        // Force reflow to restart animation
+        void weatherResult.offsetWidth;
+        
+        // Add fade-in animation
+        weatherResult.classList.add('fade-in');
+        
+        // Add pulse animation to icon
+        const iconContainer = weatherResult.querySelector('.weather-icon-container');
+        iconContainer.classList.remove('updating'); // Remove first
+        void iconContainer.offsetWidth; // Force reflow
+        iconContainer.classList.add('updating');
+        
+        setTimeout(() => {
+          iconContainer.classList.remove('updating');
+        }, 600);
+        
+        // Clean up animation class
+        setTimeout(() => {
+          weatherResult.classList.remove('fade-in');
+        }, 400);
+        
+        // Reset button
+        button.disabled = false;
+        button.classList.remove('loading');
+        button.innerHTML = originalHTML;
+      }
+    });
+
+    // Narrative toggle functionality
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#narrativeHeader')) {
+        const header = document.getElementById('narrativeHeader');
+        const content = document.getElementById('narrativeContent');
+        header.classList.toggle('expanded');
+        content.classList.toggle('expanded');
+      }
+    });
+
+    // Copy narrative functionality
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#copyNarrative')) {
+        const copyBtn = document.getElementById('copyNarrative');
+        const narrativeText = document.getElementById('narrativeText').textContent;
+        
+        navigator.clipboard.writeText(narrativeText).then(() => {
+          // Change button appearance
+          copyBtn.classList.add('copied');
+          const copyTextSpan = copyBtn.querySelector('.copy-text');
+          const originalText = copyTextSpan.textContent;
+          copyTextSpan.textContent = narrativeLang.copiedButton;
+          
+          // Reset after 2 seconds
+          setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            copyTextSpan.textContent = originalText;
+          }, 2000);
+        }).catch(err => {
+          console.error('Error copying:', err);
+        });
+      }
+    });
+  </script>
 </Layout>
+
+
+

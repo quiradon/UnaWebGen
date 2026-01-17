@@ -7,7 +7,7 @@ import { Sparkles, Wind, Download, FileImage, Film, X, Check, Upload, Lock, Star
 import config from '../../config';
 
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 const apiBase = config.api_url;
 
 const copy = {
@@ -45,7 +45,7 @@ const copy = {
   };
 ---
 
-<Layout t={t} title={copy.title} desc={copy.description}>
+<Layout t={t} title={copy.title} desc={copy.description} useBootstrapJS={true}>
   <section class="token-animator-section pt-2 mt-4 mb-5" data-api-base={apiBase}>
     <div class="container">
       <!-- Header -->
@@ -1874,6 +1874,10 @@ const copy = {
 
   </style>
 </Layout>
+
+
+
+
 
 
 

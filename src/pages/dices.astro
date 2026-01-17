@@ -5,7 +5,7 @@ import { loadT  } from '@lib/i18n';
 
 import { getLocale } from "astro-i18n-aut";
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 
 ---
 <Layout t={t} title={t.dices?.title} desc={t.dices?.desc}>
@@ -79,3 +79,7 @@ const t = loadT(locale);
     });
   </script>
 </Layout>
+
+
+
+

@@ -9,7 +9,7 @@ import SystemEditorApp from "@/components/sistemaeditor/SystemEditorApp";
 import "@/styles/system-editor.css";
 
 const currentLocale = getLocale(Astro.url);
-const t = loadT(currentLocale);
+const t = await loadT(currentLocale);
 ---
 
 <Layout
@@ -51,3 +51,7 @@ const t = loadT(currentLocale);
     }
   </style>
 </Layout>
+
+
+
+

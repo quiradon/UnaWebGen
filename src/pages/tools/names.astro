@@ -6,7 +6,7 @@ import { loadT, } from '@lib/i18n';
 import { Sparkles, Sprout, Users, User, UserCircle, Shuffle } from '@lucide/astro';
 import {Image} from 'astro:assets';
 import { getLocale } from "astro-i18n-aut";
-const t = loadT(getLocale(Astro.url));
+const t = await loadT(getLocale(Astro.url));
 import image from "../../assets/img/landing/names_generate.webp";
 
 ---
@@ -588,3 +588,7 @@ import image from "../../assets/img/landing/names_generate.webp";
     });
   </script>
 </Layout>
+
+
+
+

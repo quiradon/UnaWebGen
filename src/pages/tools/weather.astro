@@ -6,7 +6,7 @@ import { CloudSun, Sliders, Shuffle, Snowflake, CloudRain, Sun, RefreshCw, Alert
 import weatherNarratives from '../../../data/weather-narratives.json';
 import { getLocale } from "astro-i18n-aut";
 const currentLocale = getLocale(Astro.url);
-const t = loadT(currentLocale);
+const t = await loadT(currentLocale);
 // Get narratives for current language, fallback to English, then Portuguese
 const narrativeLang = (weatherNarratives as any)[currentLocale] || weatherNarratives.en || weatherNarratives.pt;
 ---
@@ -822,3 +822,7 @@ const narrativeLang = (weatherNarratives as any)[currentLocale] || weatherNarrat
     });
   </script>
 </Layout>
+
+
+
+

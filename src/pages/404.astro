@@ -6,7 +6,7 @@ import { loadT, getStaticPaths } from '@lib/i18n';
 
 import { getLocale } from "astro-i18n-aut";
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 ---
 <Layout t={t} title={t.PageNotFound?.title} desc={t.PageNotFound?.desc}>
   <section class="mb-5 pb-5">
@@ -19,4 +19,8 @@ const t = loadT(locale);
     </div>
   </section>
 </Layout>
+
+
+
+
 

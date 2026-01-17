@@ -27,7 +27,7 @@ import image2 from "../assets/img/landing/dices.webp";
 import imageSheet from "../assets/img/landing/sheets.webp";
 import imageVTT from "../assets/img/landing/vtt2.webp";
 
-const t = loadT(getLocale(Astro.url));
+const t = await loadT(getLocale(Astro.url));
 const langPrefix = idiomaR(t);
 
 const landingHTML = (t.index?.landing?.text ?? "").replace(
@@ -42,6 +42,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
   t={t}
   title={t.index?.name ?? "Mini Kraken"}
   desc={t.index?.desc ?? "test"}
+  useBootstrapJS={true}
 >
   <head>
     <link
@@ -506,3 +507,7 @@ const sistemas: Record<string, any> = t.posts?.sistemas ?? {};
 </script>
 
 </Layout>
+
+
+
+

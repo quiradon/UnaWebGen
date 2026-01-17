@@ -6,7 +6,7 @@ import Skeleton from "@components/ui-astro/Skeleton.astro";
 import config from "../../../config";
 
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 const skeletonItems = Array.from({ length: 6 });
 const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
   /\/$/,
@@ -14,7 +14,7 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
 );
 ---
 
-<Layout title="Personagens Antigos" t={t}>
+<Layout title="Personagens Antigos" t={t} useBootstrapJS={true}>
   <!-- Hidden data attributes for script -->
   <div
     style="display: none;"
@@ -512,3 +512,7 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
     transform: none;
   }
 </style>
+
+
+
+

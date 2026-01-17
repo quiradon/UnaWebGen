@@ -18,7 +18,7 @@ import "@fontsource/im-fell-english";
 import "@fontsource/jetbrains-mono";
 
 const currentLocale = getLocale(Astro.url);
-const t = loadT(currentLocale);
+const t = await loadT(currentLocale);
 ---
 
 <Layout
@@ -88,3 +88,7 @@ const t = loadT(currentLocale);
     `}
   </script>
 </Layout>
+
+
+
+

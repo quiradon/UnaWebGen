@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   const paths = [];
   
   for (const locale of locales) {
-    const t = loadT(locale);
+    const t = await loadT(locale);
     const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
     
     for (const sistema of sistemas) {
@@ -29,7 +29,7 @@ export async function getStaticPaths() {
 }
 
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 
 const { system: slug } = Astro.params;
 const sistemas = Object.values(t.posts?.sistemas ?? {}) as any[];
@@ -78,4 +78,3 @@ const linkReplacer = (str: string) => str.replace(/\[(.*?)\]\((.*?)\)/gm, '<a hr
     </div>
   </section>
 </Layout>
-

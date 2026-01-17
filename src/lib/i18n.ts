@@ -1,20 +1,20 @@
 export type Translations = Record<string, any> & { lang: string };
 
 const translationModules = import.meta.glob<Translations>('/i18n/*.json', {
-  eager: true,
   import: 'default',
 });
 
 const translationsByLang: Record<string, Translations> = {};
-for (const [file, translations] of Object.entries(translationModules)) {
+const translationLoaders: Record<string, () => Promise<Translations>> = {};
+for (const [file, loader] of Object.entries(translationModules)) {
   const name = file.split('/').pop();
   if (!name) continue;
   const lang = name.replace(/\.json$/, '');
   if (!lang) continue;
-  translationsByLang[lang] = translations;
+  translationLoaders[lang] = loader as () => Promise<Translations>;
 }
 
-const languageList = Object.keys(translationsByLang);
+const languageList = Object.keys(translationLoaders);
 
 export async function getStaticPaths() {
   const languages = getLanguages();
@@ -27,11 +27,16 @@ export function getLanguages(): string[] {
   return languageList.slice();
 }
 
-export function loadT(lang: string): Translations {
+export async function loadT(lang: string): Promise<Translations> {
   const resolvedLang = lang || 'en';
-  const base = translationsByLang[resolvedLang];
+  let base = translationsByLang[resolvedLang];
   if (!base) {
-    throw new Error(`Missing translations for language "${resolvedLang}".`);
+    const loader = translationLoaders[resolvedLang];
+    if (!loader) {
+      throw new Error(`Missing translations for language "${resolvedLang}".`);
+    }
+    base = await loader();
+    translationsByLang[resolvedLang] = base;
   }
   return { ...base, lang: resolvedLang };
 }

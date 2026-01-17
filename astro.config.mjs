@@ -37,8 +37,6 @@ const baseAliases = {
   "@assets": "/src/assets",
 };
 
-const isProd = process.env.NODE_ENV === "production";
-
 export default defineConfig({
   // output: "hybrid" has been removed/merged into static with adapter
   adapter: cloudflare({
@@ -98,10 +96,6 @@ export default defineConfig({
     },
     resolve: {
       alias: [
-        {
-          find: "react-dom/server",
-          replacement: isProd ? "react-dom/server.edge" : "react-dom/server",
-        },
         ...Object.entries(baseAliases).map(([find, replacement]) => ({
           find,
           replacement,

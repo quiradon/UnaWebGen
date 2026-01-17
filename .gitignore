@@ -6,3 +6,6 @@ export
 /.vscode
 /.astro/
 src/astro_tmp_pages_*/
+
+/.astro/
+/.astro/*

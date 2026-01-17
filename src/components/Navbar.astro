@@ -33,7 +33,7 @@ const { fixed = false, sticky = true } = Astro.props as {
 };
 
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 const lang = idiomaR(t);
 const allUrls = getAllLocaleUrls(Astro.url);
 const localePaths = Object.fromEntries(
@@ -440,3 +440,7 @@ const menuSections = [guideSection, toolsSection];
   }}
   allUrls={localePaths}
 />
+
+
+
+

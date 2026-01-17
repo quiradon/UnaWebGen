@@ -4,7 +4,7 @@ import { loadT } from "../../lib/i18n";
 import { ChevronDown } from "@lucide/astro";
 
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 const allUrls = getAllLocaleUrls(Astro.url);
 
 // Forçar caminhos relativos para manter ViewTransitions (evita trocas de host)
@@ -336,3 +336,7 @@ const lang_LABELS: Record<string, string> = {
 
   // Listener para ViewTransitions - atualiza links quando a página muda
 </script>
+
+
+
+

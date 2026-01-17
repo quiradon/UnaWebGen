@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 
 import { getLocale } from "astro-i18n-aut";
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 const html = markdownToHtml(t.privacy?.md ?? '');
 ---
 <Layout t={t} title={t.privacy?.title} desc={t.privacy?.desc} pictureURL="/img/banners/terms_of_service_banner.webp">
@@ -35,4 +35,8 @@ const html = markdownToHtml(t.privacy?.md ?? '');
     </div>
   </section>
 </Layout>
+
+
+
+
 

@@ -10,7 +10,7 @@ import DashboardContent from "@components/dashboard/DashboardContent.astro";
 export { getStaticPaths };
 
 const Locale = getLocale(Astro.url);
-const t = loadT(Locale);
+const t = await loadT(Locale);
 const langPrefix = idiomaR(t);
 const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
   /\/$/,
@@ -162,4 +162,8 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
     });
   </script>
 </Layout>
+
+
+
+
 

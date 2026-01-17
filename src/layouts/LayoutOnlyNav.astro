@@ -13,6 +13,7 @@ interface Props {
   pictureURL?: string;
   navbarFixed?: boolean;
   navbarSticky?: boolean;
+  useBootstrapJS?: boolean;
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   pictureURL,
   navbarFixed = false,
   navbarSticky = true,
+  useBootstrapJS = false,
 } = Astro.props as Props;
 ---
 
@@ -33,7 +35,7 @@ const {
     <main class="main-content" transition:animate="fade">
       <slot />
     </main>
-    <script is:inline src="/bootstrap/js/bootstrap.min.js"></script>
+    {useBootstrapJS && <script src="/bootstrap/js/bootstrap.min.js" defer></script>}
     <!-- Carrega versões já geradas em public/scripts para evitar MIME errado -->
     <script type="module" src="/scripts/session-prime.js"></script>
     <script src="../scripts/auth-widget.ts"></script>

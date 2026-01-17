@@ -4,7 +4,7 @@ import { loadT } from '@lib/i18n';
 import { Radio, Volume2, Download, PlayCircle } from '@lucide/astro';
 
 import { getLocale } from "astro-i18n-aut";
-const t = loadT(getLocale(Astro.url));
+const t = await loadT(getLocale(Astro.url));
 ---
 <Layout t={t} title={t.tools?.morse?.title} desc={t.tools?.morse?.desc}>
   <section class="morse-section pt-2 mt-4 mb-5">
@@ -583,3 +583,7 @@ const t = loadT(getLocale(Astro.url));
     }
   </script>
 </Layout>
+
+
+
+

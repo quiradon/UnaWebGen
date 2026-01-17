@@ -4,7 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import { loadT } from "@lib/i18n";
 import { Shuffle, Sparkles } from "@lucide/astro";
 import { getLocale } from "astro-i18n-aut";
-const t = loadT(getLocale(Astro.url));
+const t = await loadT(getLocale(Astro.url));
 ---
 
 <Layout t={t} title={t.tarot?.title} desc={t.tarot?.desc}>
@@ -364,3 +364,7 @@ const t = loadT(getLocale(Astro.url));
     }
   </style>
 </Layout>
+
+
+
+

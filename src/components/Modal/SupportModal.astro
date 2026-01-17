@@ -10,7 +10,7 @@ import Card from "../Card.astro";
 import { loadT } from "@lib/i18n";
 import { getLocale } from "astro-i18n-aut";
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 import config from "@/config";
 
 
@@ -160,3 +160,7 @@ const supportLinks = {
     }
   }
 </style>
+
+
+
+

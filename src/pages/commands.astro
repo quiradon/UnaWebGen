@@ -6,7 +6,7 @@ import { Terminal, Search, Hash, ChevronRight } from "@lucide/astro";
 import { getLocale } from "astro-i18n-aut";
 import { loadT } from "@lib/i18n";
 const locale = getLocale(Astro.url);
-const t = loadT(locale);
+const t = await loadT(locale);
 
 import { type Cmd, type CmdOption, getCachedCommands } from "@lib/commands";
 
@@ -666,3 +666,7 @@ const sortedGroups = Object.keys(groupedCommands).sort();
     });
   </script>
 </Layout>
+
+
+
+

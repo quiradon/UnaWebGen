@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro';
 import { loadT } from '@lib/i18n';
 import { Shuffle, Dice5, ChevronDown, Layers, CheckCircle2, Diamond, Spade, Club, Heart } from '@lucide/astro';
 import { getLocale } from "astro-i18n-aut";
-const t = loadT(getLocale(Astro.url));
+const t = await loadT(getLocale(Astro.url));
 ---
 <Layout t={t} title={t.poker?.title} desc={t.poker?.desc}>
   <section class="hero-section py-5">
@@ -945,3 +945,7 @@ const t = loadT(getLocale(Astro.url));
     }
   </style>
 </Layout>
+
+
+
+

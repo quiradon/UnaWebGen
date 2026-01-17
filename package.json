@@ -7,9 +7,9 @@
     "dev": "bun --bun astro dev --host --port 4321",
     "dev:clean": "rimraf node_modules/.vite && bun --bun astro dev --host --port 4321",
     "start": "bun --bun astro preview --host --port 4321",
-    "build": "bun install && bun astro build",
-    "workers:dev": "wrangler dev",
-    "workers:deploy": "wrangler deploy",
+    "build": "bun astro build",
+    "workers:dev": "bun run build && wrangler dev",
+    "workers:deploy": "bun run build && wrangler deploy",
     "clean": "rimraf dist"
   },
   "author": "Quiradon",

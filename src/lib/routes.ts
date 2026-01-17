@@ -1,11 +1,6 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import { getLanguages } from './i18n';
 
-const I18N_DIR = path.resolve(process.cwd(), 'i18n');
-const languages = fs
-  .readdirSync(I18N_DIR)
-  .filter((f) => f.endsWith('.json'))
-  .map((f) => path.basename(f, path.extname(f)));
+const languages = getLanguages();
 
 export function idiomaR(t: { lang?: string } | undefined): string {
   const lang = t && t.lang ? (t.lang === 'en' ? '' : `/${t.lang}`) : '';

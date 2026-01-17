@@ -8,7 +8,7 @@ MiniKraken is an RPG toolkit built with **Astro**, **Bun**, and **Tailwind/Boots
 ## Standard System Prompt Snippet
 > You are an expert developer working on the MiniKraken project. 
 > 1. **I18next Context**: Documentation is in `i18n/*.json`. Never hardcode UI strings.
-> 2. **Islands**: Check if the feature is in React (`src/components/handoutbuilder`) or Svelte.
+> 2. **Islands**: Check if the feature is in React (`src/components/handoutbuilder`) 
 > 3. **Session**: Always use `src/scripts/session-manager.ts` for auth logic.
 > 4. **Styling**: Tailwind is used inside `.system-editor` containers; Bootstrap is for layout.
 

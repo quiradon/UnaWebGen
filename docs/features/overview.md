@@ -9,14 +9,14 @@ The project serves as a centralized hub for RPG utilities, ranging from simple d
 - **Framework**: [Astro](https://astro.build/) (Static Site Generation with Islands Architecture).
 - **Runtime**: [Bun](https://bun.sh/).
 - **Styling**: Tailwind CSS.
-- **Components**: Mix of Astro components, React, and Svelte for specific interactive features.
+- **Components**: Mix of Astro components, React for specific interactive features.
 - **Internationalization**: `astro-i18n-aut` with translation files in `i18n/`.
 - **Bot Integration**: Deeply connected with a Discord bot (Fortuna/MiniKraken), featuring command documentation and a dashboard.
 
 ## LLM Context
 When assisting with this codebase, keep in mind:
 - **I18n focus**: Most UI text should be pulled from the `i18n` JSON files.
-- **Islands Architecture**: Complex interactive state is often handled in Svelte or React components embedded in Astro pages.
+- **Islands Architecture**: Complex interactive state is often handled in React components embedded in Astro pages.
 - **RPG Domain**: Familiarity with TTRPG (Tabletop Role-Playing Game) concepts like dice notation (`1d20+5`), VTT (Virtual Tabletop) tokens, and character sheets is essential.
 
 ## Main Routes

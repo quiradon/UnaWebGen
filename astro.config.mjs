@@ -1,7 +1,6 @@
 import { defineConfig } from "astro/config";
 import { i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
 import sitemap from "@astrojs/sitemap";
-import svelte from "@astrojs/svelte";
 import react from "@astrojs/react";
 
 const defaultLocale = "en";
@@ -32,8 +31,9 @@ export default defineConfig({
     platformProxy: {
       enabled: true,
     },
+    imageService: "compile",
   }),
-  output: "hybrid",
+  output: "static",
   prefetch: true,
   trailingSlash: "always",
   site: "https://rpg.arkanus.app",
@@ -103,7 +103,6 @@ export default defineConfig({
       },
       filter: filterSitemapByDefaultLocale({ defaultLocale }),
     }),
-    svelte(),
     react(),
   ],
 });

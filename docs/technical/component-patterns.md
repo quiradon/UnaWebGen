@@ -1,6 +1,6 @@
 # Component Patterns & Styling
 
-MiniKraken uses a hybrid approach for UI construction, combining static Astro components with interactive React/Svelte islands, and a mix of Bootstrap and Tailwind CSS.
+MiniKraken uses a hybrid approach for UI construction, combining static Astro components with interactive React islands, and a mix of Bootstrap and Tailwind CSS.
 
 ## Styling Systems
 ### 1. Bootstrap (Global Layout)
@@ -17,7 +17,6 @@ MiniKraken uses a hybrid approach for UI construction, combining static Astro co
 ### Astro Islands
 Interactive features are decoupled into frameworks:
 - **React**: Used for the `Handout Builder` (`src/components/handoutbuilder`).
-- **Svelte**: Used for simpler interactive components like counters or specific tool interactions.
 - **Vanilla JS**: Used for global features like the `AuthWidget` and `Dice Roller` to keep the bundle size small.
 
 ### Script Loading

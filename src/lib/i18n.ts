@@ -1,9 +1,20 @@
-import fs from 'node:fs';
-import path from 'node:path';
-
 export type Translations = Record<string, any> & { lang: string };
 
-const I18N_DIR = path.resolve(process.cwd(), 'i18n');
+const translationModules = import.meta.glob<Translations>('/i18n/*.json', {
+  eager: true,
+  import: 'default',
+});
+
+const translationsByLang: Record<string, Translations> = {};
+for (const [file, translations] of Object.entries(translationModules)) {
+  const name = file.split('/').pop();
+  if (!name) continue;
+  const lang = name.replace(/\.json$/, '');
+  if (!lang) continue;
+  translationsByLang[lang] = translations;
+}
+
+const languageList = Object.keys(translationsByLang);
 
 export async function getStaticPaths() {
   const languages = getLanguages();
@@ -13,20 +24,16 @@ export async function getStaticPaths() {
 }
 
 export function getLanguages(): string[] {
-  if (!fs.existsSync(I18N_DIR)) return [];
-  return fs
-    .readdirSync(I18N_DIR)
-    .filter((f) => f.endsWith('.json'))
-    .map((f) => path.basename(f, path.extname(f)));
+  return languageList.slice();
 }
 
 export function loadT(lang: string): Translations {
-  if (!lang) lang = 'en';
-  const file = path.join(I18N_DIR, `${lang}.json`);
-  const raw = fs.readFileSync(file, 'utf-8');
-  const t = JSON.parse(raw) as Translations;
-  t.lang = lang;
-  return t;
+  const resolvedLang = lang || 'en';
+  const base = translationsByLang[resolvedLang];
+  if (!base) {
+    throw new Error(`Missing translations for language "${resolvedLang}".`);
+  }
+  return { ...base, lang: resolvedLang };
 }
 
 export function getValidatedLanguage(astroLocals: any, requestedLang?: string): string {

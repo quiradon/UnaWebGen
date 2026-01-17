@@ -3,7 +3,7 @@ export const prerender = true;
 import Layout from '@layouts/Layout.astro';
 import { loadT } from '@lib/i18n';
 import { CloudSun, Sliders, Shuffle, Snowflake, CloudRain, Sun, RefreshCw, AlertTriangle, Thermometer, Wind, CloudSnow, CloudLightning, CloudDrizzle, CloudFog, CloudHail, BookOpen, Copy, Check } from '@lucide/astro';
-import weatherNarratives from '../../../data/weather-narratives.json';
+import weatherNarratives from '@data/weather-narratives.json';
 import { getLocale } from "astro-i18n-aut";
 const currentLocale = getLocale(Astro.url);
 const t = await loadT(currentLocale);

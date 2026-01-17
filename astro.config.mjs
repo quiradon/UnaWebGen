@@ -48,6 +48,12 @@ export default defineConfig({
     optimizeDeps: {
       include: ["sonner"],
     },
+    // Resolve workerd exports (ex: react-dom/server.edge) for Cloudflare runtime.
+    ssr: {
+      resolve: {
+        conditions: ["workerd", "worker", "browser", "module", "import", "default"],
+      },
+    },
     server: {
       host: true,
       allowedHosts: ['atividade.arkanus.app', 'atividadeapi.arkanus.app'],

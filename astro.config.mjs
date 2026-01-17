@@ -25,7 +25,22 @@ const locales = {
 
 import cloudflare from "@astrojs/cloudflare";
 
-export default defineConfig({
+const baseAliases = {
+  "@": "/src",
+  "@components": "/src/components",
+  "@lib": "/src/lib",
+  "@layouts": "/src/layouts",
+  "@pages": "/src/pages",
+  "@i18n": "/src/i18n",
+  "@static": "",
+  "@data": "/data",
+  "@assets": "/src/assets",
+};
+
+export default defineConfig(({ command }) => {
+  const isProd = command === "build";
+
+  return {
   // output: "hybrid" has been removed/merged into static with adapter
   adapter: cloudflare({
     platformProxy: {
@@ -83,18 +98,17 @@ export default defineConfig({
       }
     },
     resolve: {
-      alias: {
-        '@': '/src',
-        '@components': '/src/components',
-        '@lib': '/src/lib',
-        '@layouts': '/src/layouts',
-        '@pages': '/src/pages',
-        '@i18n': '/src/i18n',
-        '@static': '',
-        '@data': '/data',
-        '@assets': '/src/assets',
-      }
-    }
+      alias: [
+        {
+          find: "react-dom/server",
+          replacement: isProd ? "react-dom/server.edge" : "react-dom/server",
+        },
+        ...Object.entries(baseAliases).map(([find, replacement]) => ({
+          find,
+          replacement,
+        })),
+      ],
+    },
   },
   integrations: [
     i18n({
@@ -111,4 +125,5 @@ export default defineConfig({
     }),
     react(),
   ],
+  };
 });

@@ -47,7 +47,7 @@ export default defineConfig({
     },
     imageService: "compile",
   }),
-  output: "hybrid",
+  output: "static",
   prefetch: true,
   trailingSlash: "always",
   site: "https://rpg.arkanus.app",

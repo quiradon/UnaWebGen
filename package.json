@@ -8,7 +8,8 @@
     "dev:clean": "rimraf node_modules/.vite && bun --bun astro dev --host --port 4321",
     "start": "bun --bun astro preview --host --port 4321",
     "build": "bun install && bun astro build",
-    "pages:dev": "wrangler pages dev dist/",
+    "workers:dev": "wrangler dev",
+    "workers:deploy": "wrangler deploy",
     "clean": "rimraf dist"
   },
   "author": "Quiradon",

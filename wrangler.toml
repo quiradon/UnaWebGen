@@ -1,6 +1,12 @@
 name = "fortuna_website"
+main = "./dist/_worker.js/index.js"
 compatibility_date = "2025-02-11"
 compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+
 [dev]
 port = 3000
 

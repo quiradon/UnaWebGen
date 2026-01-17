@@ -37,10 +37,9 @@ const baseAliases = {
   "@assets": "/src/assets",
 };
 
-export default defineConfig(({ command }) => {
-  const isProd = command === "build";
+const isProd = process.env.NODE_ENV === "production";
 
-  return {
+export default defineConfig({
   // output: "hybrid" has been removed/merged into static with adapter
   adapter: cloudflare({
     platformProxy: {
@@ -125,5 +124,4 @@ export default defineConfig(({ command }) => {
     }),
     react(),
   ],
-  };
 });

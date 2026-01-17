@@ -1,6 +1,6 @@
 name = "krakudoteste"
 main = "./dist/_worker.js/index.js"
-compatibility_date = "2025-02-11"
+compatibility_date = "2025-11-17"
 compatibility_flags = ["nodejs_compat"]
 
 [assets]
@@ -10,3 +10,9 @@ not_found_handling = "404-page"
 
 [dev]
 port = 3000
+
+[placement]
+mode = "smart"
+
+[observability.traces]
+enabled = true

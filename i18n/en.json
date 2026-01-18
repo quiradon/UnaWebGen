@@ -533,11 +533,15 @@
     },
     "new": {
       "0": "Get rid of ads",
-      "1": "%0% gigabytes of storage"
+      "1": "%0% gigabytes of storage",
+      "2": "High-Quality Export",
+      "3": "Personality for your Bot"
     },
     "info": {
       "kc": "Kraken Coins are digital points that can be exchanged for skins, items, and resources within the ecosystem and community.",
-      "storage": "Storage refers to everything registered in the ecosystem, including documents, character photos, adventure covers, and any uploads."
+      "storage": "Storage refers to everything registered in the ecosystem, including documents, character photos, adventure covers, and any uploads.",
+      "quality": "Raise the standard with high-fidelity uploads and maximum resolution exports. An exclusive feature for those who do not compromise on technical and visual excellence in every detail.",
+      "customize_avatar": "Personalize the profile picture, banner, and bot biography so that they reflect your server's unique brand and style."
     }
   },
   "price": {

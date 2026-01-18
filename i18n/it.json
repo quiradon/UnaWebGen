@@ -533,11 +533,15 @@
     },
     "new": {
       "0": "Elimina gli annunci",
-      "1": "%0% GB di archiviazione"
+      "1": "%0% GB di archiviazione",
+      "2": "Esportazione in Alta Qualità",
+      "3": "Personalità al tuo Bot"
     },
     "info": {
       "kc": "Kraken Coins sono punti digitali che possono essere scambiati per skin, oggetti e risorse dell'ecosistema e della comunità",
-      "storage": "L'archiviazione riguarda tutto ciò che viene registrato nell'ecosistema, documenti, foto dei personaggi, copertine delle avventure e qualsiasi caricamento."
+      "storage": "L'archiviazione riguarda tutto ciò che viene registrato nell'ecosistema, documenti, foto dei personaggi, copertine delle avventure e qualsiasi caricamento.",
+      "quality": "Eleva lo standard con caricamenti ad alta fedeltà ed esportazioni in risoluzione massima. Una funzione esclusiva per chi non rinuncia all'eccellenza tecnica e visiva in ogni dettaglio.",
+      "customize_avatar": ""
     }
   },
   "price": {

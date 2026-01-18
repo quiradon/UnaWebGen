@@ -533,11 +533,15 @@
     },
     "new": {
       "0": "Fjern annoncerne.",
-      "1": "%0% gigabyte-lagerkapacitet"
+      "1": "%0% gigabyte-lagerkapacitet",
+      "2": "Eksport i høj kvalitet",
+      "3": "Personlighed til din bot"
     },
     "info": {
       "kc": "Kraken Coins sind digitale Punkte, die gegen Skins, Gegenstände und Ressourcen des Ökosystems und der Gemeinschaft eingetauscht werden können",
-      "storage": "Lagring omfatter alt, hvad der er registreret i økosystemet, herunder dokumenter, billeder af figurer, eventcover og eventuelle uploads."
+      "storage": "Lagring omfatter alt, hvad der er registreret i økosystemet, herunder dokumenter, billeder af figurer, eventcover og eventuelle uploads.",
+      "quality": "Løft standarden med uploads i høj opløsning og eksport i maksimal kvalitet. En eksklusiv funktion for dem, der ikke går på kompromis med teknisk og visuel perfektion i hver detalje.",
+      "customize_avatar": ""
     }
   },
   "price": {

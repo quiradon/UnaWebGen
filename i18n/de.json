@@ -533,11 +533,15 @@
     },
     "new": {
       "0": "Werbung entfernen",
-      "1": "%0% Speicherkapazität in GB"
+      "1": "%0% Speicherkapazität in GB",
+      "2": "Export in hoher Qualität",
+      "3": "Persönlichkeit für Ihren Bot"
     },
     "info": {
       "kc": "Kraken Coins sind digitale Punkte, die gegen Skins, Gegenstände und Ressourcen des Ökosystems und der Gemeinschaft eingetauscht werden können",
-      "storage": "Der Speicher bezieht sich auf alles, was im Ökosystem registriert ist, einschließlich Dokumenten, Charakterfotos, Abenteuermappen und aller Uploads."
+      "storage": "Der Speicher bezieht sich auf alles, was im Ökosystem registriert ist, einschließlich Dokumenten, Charakterfotos, Abenteuermappen und aller Uploads.",
+      "quality": "Steigern Sie den Standard mit Uploads in hoher Wiedergabetreue und Exporten in maximaler Auflösung. Eine exklusive Funktion für diejenigen, die in jedem Detail technische und visuelle Exzellenz nicht missen möchten.",
+      "customize_avatar": ""
     }
   },
   "price": {

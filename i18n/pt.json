@@ -533,11 +533,15 @@
     },
     "new": {
       "0": "Livre-se de Anuncios",
-      "1": "%0% Gigas de armazenamento"
+      "1": "%0% Gigas de armazenamento",
+      "2": "Exportação em Alta Qualidade",
+      "3": "Personalidade ao seu Bot"
     },
     "info": {
-      "kc": "Kraken Coins são pontos digitais que podem ser trocados, por skins, itens e recursos do ecosistema e da comunidade.",
-      "storage": "O Armazenamento diz respeito a tudo que é cadastrado no ecossitema, documentos, fotos de personagens, capas de aventuras e quaisquer uploads."
+      "kc": "Kraken Coins são pontos digitais que podem ser trocados, por skins, itens e recursos do ecossistemae da comunidade.",
+      "storage": "O Armazenamento diz respeito a tudo que é cadastrado no ecossistema, documentos, fotos de personagens, capas de aventuras e quaisquer uploads.",
+      "quality": "Eleve o padrão com uploads de alta fidelidade e exportações em resolução máxima. Um recurso exclusivo para quem não abre mão da excelência técnica e visual em cada detalhe.",
+      "customize_avatar": "Personalize a foto de perfil, o banner e a biografia do bot para que ele reflita a marca e o estilo único do seu servidor."
     }
   },
   "price": {

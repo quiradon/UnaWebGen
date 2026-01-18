@@ -533,11 +533,15 @@
     },
     "new": {
       "0": "Ukloni oglase",
-      "1": "%0% gigabajti pohrane"
+      "1": "%0% gigabajti pohrane",
+      "2": "Izvoz visoke kvalitete",
+      "3": "Osobnost vašeg bota"
     },
     "info": {
       "kc": "Kraken Coins su digitalni bodovi koji se mogu zamijeniti za skinove, predmete i resurse ekosistema i zajednice",
-      "storage": "O armazenamento refere-se a tudo que é registrado no ecossistema, como documentos, fotos de personagens, capas de aventuras e quaisquer uploads."
+      "storage": "O armazenamento refere-se a tudo que é registrado no ecossistema, como documentos, fotos de personagens, capas de aventuras e quaisquer uploads.",
+      "quality": "Podignite standard s prijenosima visoke vjernosti i izvozima u maksimalnoj rezoluciji. Ekskluzivna značajka za one koji ne pristaju na ništa manje od tehničke i vizualne izvrsnosti u svakom detalju.",
+      "customize_avatar": ""
     }
   },
   "price": {

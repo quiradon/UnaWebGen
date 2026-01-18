@@ -533,11 +533,15 @@
     },
     "new": {
       "0": "Szabadulj meg a hirdetésektől!",
-      "1": "%0% gigabájt tárhely"
+      "1": "%0% gigabájt tárhely",
+      "2": "Magas minőségű exportálás",
+      "3": "Személyiség a botodhoz"
     },
     "info": {
       "kc": "A Kraken Coins digitális pontok, amelyeket skinek, tárgyak és erőforrások cseréjére lehet használni az ökoszisztémában és a közösségben",
-      "storage": "A tárolás minden olyan dologra vonatkozik, amit a rendszerben regisztrálnak, például dokumentumokra, karakterképekre, kalandborítókra és bármilyen feltöltésre."
+      "storage": "A tárolás minden olyan dologra vonatkozik, amit a rendszerben regisztrálnak, például dokumentumokra, karakterképekre, kalandborítókra és bármilyen feltöltésre.",
+      "quality": "Emelje a színvonalat nagy hűségű feltöltésekkel és maximális felbontású exportálással. Egy exkluzív funkció azok számára, akik nem kötnek kompromisszumot a technikai és vizuális kiválóság terén minden részletben.",
+      "customize_avatar": ""
     }
   },
   "price": {

@@ -5,10 +5,34 @@
       "old": {
         "description": "Acesse e visualize suas fichas de personagens antigas da Kraken, para recuperar os dados.",
         "title": "Consultar Fichas Antigas"
+      },
+      "files": {
+        "description": "Visualize e gerencie todos os seus arquivos armazenados no R2 da Cloudflare.",
+        "title": "Meus Arquivos"
       }
     },
     "authing": "Verificando autenticação...",
     "loading": "Carregando...",
+    "files": {
+      "title": "Meus Arquivos",
+      "page_title": "Meus Arquivos",
+      "page_description": "Visualize e gerencie todos os seus arquivos armazenados.",
+      "back_to_dashboard": "Voltar ao Dashboard",
+      "empty": "Você ainda não possui nenhum arquivo",
+      "loading": "Carregando arquivos...",
+      "error": "Erro ao carregar arquivos",
+      "total_files": "arquivos",
+      "total_size": "Tamanho total",
+      "download": "Baixar",
+      "view": "Visualizar",
+      "file_type": {
+        "0": "Geral",
+        "1": "Imagem",
+        "2": "Documento",
+        "3": "Áudio",
+        "4": "Vídeo"
+      }
+    },
     "user": {
       "discord": {
         "id": {

@@ -1,5 +1,5 @@
 ---
-import { BookText } from "@lucide/astro";
+import { BookText, HardDrive } from "@lucide/astro";
 import ToolCard from "@components/ToolCard.astro";
 import UserProfileCard from "./UserProfileCard.astro";
 
@@ -14,6 +14,10 @@ const hrefOldSheets = langPrefix
   ? `${langPrefix}/dashboard/old/characters/`
   : "/dashboard/old/characters/";
 
+const hrefFiles = langPrefix
+  ? `${langPrefix}/dashboard/files/`
+  : "/dashboard/files/";
+
 const toolCards = [
   {
     href: hrefOldSheets,
@@ -22,10 +26,10 @@ const toolCards = [
     Icon: BookText,
   },
   {
-    href: hrefOldSheets,
-    title: t.Dashbaord.actions.old.title,
-    description: t.Dashbaord.actions.old.description,
-    Icon: BookText,
+    href: hrefFiles,
+    title: t.Dashbaord.actions.files.title,
+    description: t.Dashbaord.actions.files.description,
+    Icon: HardDrive,
   },
 ];
 ---

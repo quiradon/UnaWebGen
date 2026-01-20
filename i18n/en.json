@@ -5,10 +5,34 @@
       "old": {
         "description": "Access and view your old Kraken character sheets to recover the data.",
         "title": "Consult Old Records"
+      },
+      "files": {
+        "description": "View and manage all your files stored in Cloudflare R2.",
+        "title": "My Files"
       }
     },
     "authing": "Checking authentication...",
     "loading": "Loading...",
+    "files": {
+      "title": "My Files",
+      "page_title": "My Files",
+      "page_description": "View and manage all your stored files.",
+      "back_to_dashboard": "Back to Dashboard",
+      "empty": "You don't have any files yet",
+      "loading": "Loading files...",
+      "error": "Error loading files",
+      "total_files": "files",
+      "total_size": "Total size",
+      "download": "Download",
+      "view": "View",
+      "file_type": {
+        "0": "General",
+        "1": "Image",
+        "2": "Document",
+        "3": "Audio",
+        "4": "Video"
+      }
+    },
     "user": {
       "discord": {
         "id": {

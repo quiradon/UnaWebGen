@@ -1,86 +1,87 @@
-// Minimal markdown to HTML converter adapted for SSR usage
+// Robust markdown to HTML converter using unified/remark ecosystem
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
+import remarkRehype from 'remark-rehype';
+import rehypeStringify from 'rehype-stringify';
+import rehypeRaw from 'rehype-raw';
+import rehypeHighlight from 'rehype-highlight';
+
 export function markdownToHtml(markdown: string): string {
   if (!markdown) return '';
-  let html = markdown;
-  html = processCodeBlocks(html);
-  html = html.replace(/`([^`]+)`/g, '<code class="bg-light text-secondary  px-2 py-1 rounded border">$1</code>');
-  html = processBlockquotes(html);
-  html = processHeaders(html);
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="fw-bold">$1</strong>');
-  html = html.replace(/\*(.*?)\*/g, '<em class="fst-italic text-info">$1</em>');
-  html = processLists(html);
-  html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1<\/a>');
-  html = html.replace(/!\[(.*?)\]\((.*?)\)/g, '<figure class="text-center my-4"><img src="$2" alt="$1" class="img-fluid rounded shadow-sm border"><figcaption class="figure-caption text-muted mt-2">$1<\/figcaption><\/figure>');
-  html = processHorizontalRules(html);
-  html = processParagraphs(html);
+  
+  try {
+    const result = unified()
+      .use(remarkParse) // Parse markdown
+      .use(remarkGfm) // Support GitHub Flavored Markdown (tables, strikethrough, task lists, etc.)
+      .use(remarkRehype, { allowDangerousHtml: true }) // Convert to HTML AST
+      .use(rehypeRaw) // Parse HTML in markdown
+      .use(rehypeHighlight) // Add syntax highlighting to code blocks
+      .use(rehypeStringify) // Serialize to HTML
+      .processSync(markdown);
+    
+    let html = String(result);
+    
+    // Apply Bootstrap classes to maintain the existing styling
+    html = applyBootstrapClasses(html);
+    
+    return html;
+  } catch (error) {
+    console.error('Error processing markdown:', error);
+    return markdown;
+  }
+}
+
+function applyBootstrapClasses(html: string): string {
+  // Headers
+  html = html.replace(/<h1>/g, '<h1 class="display-6 fw-bold text-white mb-4 mt-4">');
+  html = html.replace(/<h2>/g, '<h2 class="h2 fw-semibold text-white mb-3 mt-5">');
+  html = html.replace(/<h3>/g, '<h3 class="h3 fw-semibold text-light mb-3 mt-4">');
+  html = html.replace(/<h4>/g, '<h4 class="h4 fw-normal text-light mb-2 mt-3">');
+  html = html.replace(/<h5>/g, '<h5 class="h5 fw-normal text-light mb-2 mt-3">');
+  html = html.replace(/<h6>/g, '<h6 class="h6 fw-normal text-secondary mb-2 mt-2">');
+  
+  // Paragraphs
+  html = html.replace(/<p>/g, '<p class="lead text-secondary mb-3 lh-lg" style="font-size: 1.1rem;">');
+  
+  // Code blocks - clean styling without colored borders
+  html = html.replace(/<pre>/g, '<pre class="hljs rounded shadow-sm my-4 code-block-custom" style="background: #1e1e1e; overflow-x: auto; padding: 1.25rem; border: 1px solid rgba(255, 255, 255, 0.1);">');
+  
+  // Inline code
+  html = html.replace(/<code(?![^>]*class="language-)/g, '<code class="text-warning px-2 py-1 rounded"');
+  
+  // Blockquotes
+  html = html.replace(/<blockquote>/g, '<blockquote class="blockquote border-start border-info border-3 ps-4 py-3 my-4 bg-dark bg-opacity-50 rounded-end">');
+  
+  // Horizontal rules
+  html = html.replace(/<hr>/g, '<hr class="my-5 border-secondary opacity-25">');
+  
+  // Images with figure wrapper
+  html = html.replace(/<img\s+([^>]*?)src="([^"]*)"([^>]*?)alt="([^"]*)"([^>]*?)>/g, 
+    '<figure class="text-center my-4"><img src="$2" alt="$4" class="img-fluid rounded shadow border border-secondary border-opacity-25 markdown-img-zoomable" style="cursor: zoom-in;"$1$3$5><figcaption class="figure-caption text-muted mt-2 fst-italic">$4</figcaption></figure>');
+  
+  // Lists (unordered)
+  html = html.replace(/<ul>/g, '<ul class="ms-3 mb-3">');
+  
+  // Lists (ordered)
+  html = html.replace(/<ol>/g, '<ol class="ms-3 mb-3">');
+  
+  // List items
+  html = html.replace(/<li>/g, '<li class="mb-2 text-light">');
+  
+  // Links
+  html = html.replace(/<a\s+/g, '<a class="text-info text-decoration-none hover-underline" ');
+  
+  // Tables
+  html = html.replace(/<table>/g, '<table class="table table-dark table-striped table-hover my-4">');
+  html = html.replace(/<thead>/g, '<thead class="table-secondary">');
+  
+  // Strong/bold
+  html = html.replace(/<strong>/g, '<strong class="fw-bold text-white">');
+  
+  // Emphasis/italic
+  html = html.replace(/<em>/g, '<em class="fst-italic text-info">');
+  
   return html;
-}
-
-function processCodeBlocks(text: string): string {
-  const codeBlockRegex = /```([\s\S]*?)```/g;
-  return text.replace(codeBlockRegex, (_m, code) => {
-    return `<pre class="bg-dark text-light p-3 rounded border-start border-primary border-4"><code class="text-info">${escapeHtml(String(code).trim())}</code></pre>`;
-  });
-}
-
-function processBlockquotes(text: string): string {
-  const blockquoteRegex = /^>\s*(.*)$/gm;
-  let processed = text.replace(blockquoteRegex, '<blockquote-line>$1</blockquote-line>');
-  processed = processed.replace(/(<blockquote-line>.*?<\/blockquote-line>\s*)+/gs, (match) => {
-    const content = match.replace(/<blockquote-line>(.*?)<\/blockquote-line>/gs, '$1<br>').replace(/<br>$/, '');
-    return `<blockquote class="blockquote border-start border-primary border-4 ps-4 py-3 bg-light rounded-end mb-4"><p class="mb-0 text-dark fst-italic lead">${content}</p></blockquote>`;
-  });
-  return processed;
-}
-
-function processHeaders(text: string): string {
-  return text
-    .replace(/^# (.*)$/gm, '<h1 class="display-5 fw-bold text-white mb-4 border-bottom border-primary pb-2">$1</h1>')
-    .replace(/^## (.*)$/gm, '<h2 class="h2 fw-semibold text-white mb-3 mt-5">$1</h2>')
-    .replace(/^### (.*)$/gm, '<h3 class="h3 fw-semibold text-white mb-3 mt-4">$1</h3>')
-    .replace(/^#### (.*)$/gm, '<h4 class="h4 fw-normal text-white mb-2 mt-3">$1</h4>')
-    .replace(/^##### (.*)$/gm, '<h5 class="h5 fw-normal text-white  mb-2 mt-3">$1</h5>')
-    .replace(/^###### (.*)$/gm, '<h6 class="h6 fw-normal text-secondary  mb-2 mt-2">$1</h6>');
-}
-
-function processLists(text: string): string {
-  // Simple unordered lists
-  return text.replace(/(^|\n)\* (.*)(?=\n|$)/g, (_m, lead, item) => `${lead}<ul><li>${item}</li></ul>`);
-}
-
-function processHorizontalRules(text: string): string {
-  return text.replace(/^(---|\*\*\*|___)$/gm, '<hr class="my-5 border-primary border-2 opacity-50">');
-}
-
-function processParagraphs(text: string): string {
-  const paragraphs = text.split(/\n\s*\n/);
-  return paragraphs
-    .map((p) => {
-      p = p.trim();
-      if (
-        p &&
-        !p.startsWith('<h') &&
-        !p.startsWith('<ul') &&
-        !p.startsWith('<ol') &&
-        !p.startsWith('<pre') &&
-        !p.startsWith('<hr') &&
-        !p.startsWith('<table') &&
-        !p.startsWith('<figure') &&
-        !p.startsWith('<blockquote')
-      ) {
-        return `<p class="lead text-secondary mb-3">${p}</p>`;
-      }
-      return p;
-    })
-    .join('\n\n');
-}
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
 }
 

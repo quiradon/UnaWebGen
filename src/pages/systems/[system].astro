@@ -43,7 +43,7 @@ const linkReplacer = (str: string) => str.replace(/\[(.*?)\]\((.*?)\)/gm, '<a hr
 ---
 <Layout t={t} title={title} desc={desc} pictureURL={sistema.bg ?? sistema.icon}>
   <section class="container-lg d-flex justify-content-center my-5" style="max-width: 1100px;">
-    <div class="card border-0 shadow-sm w-100">
+    <div class="card border-0 w-100">
       {sistema.bg && (
         <div class="position-relative">
           <img src={sistema.bg} alt={title} class="w-100 rounded px-3" loading="eager" />
@@ -77,4 +77,5 @@ const linkReplacer = (str: string) => str.replace(/\[(.*?)\]\((.*?)\)/gm, '<a hr
       </div>
     </div>
   </section>
+  <script src="../../scripts/image-zoom.ts"></script>
 </Layout>

@@ -6,6 +6,7 @@ import { loadT, getStaticPaths } from "@lib/i18n";
 import { idiomaR } from "@lib/routes";
 import config from "../../config";
 import UserFilesCard from "@components/dashboard/UserFilesCard.astro";
+import FilePreviewModal from "@components/Modal/FilePreviewModal.astro";
 
 export { getStaticPaths };
 
@@ -18,8 +19,12 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
 );
 ---
 
-<Layout t={t} title={t.Dashbaord.files.page_title}>
-  <div
+<Layout t={t} title={t.Dashbaord.files.page_title} useBootstrapJS={true}>
+
+      <!-- File Preview Modal -->
+  <FilePreviewModal />
+
+    <div
     style="display: none;"
     data-api-base={apiBase}
     data-lang-prefix={langPrefix}
@@ -47,34 +52,7 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
     </div>
   </section>
 
-  <!-- Image Modal -->
-  <div id="image-modal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-      <div class="modal-content image-modal-content">
-        <button type="button" class="image-modal-close" data-bs-dismiss="modal" aria-label="Close">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-        <div class="modal-body p-0">
-          <div class="image-container">
-            <img id="modal-image" src="" alt="" class="modal-image" />
-          </div>
-          <div class="image-info">
-            <div class="image-filename" id="modal-filename"></div>
-            <div class="image-actions">
-              <a id="modal-download-btn" href="" download class="btn btn-sm btn-outline-light">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Baixar
-              </a>
-              <a id="modal-open-btn" href="" target="_blank" class="btn btn-sm btn-outline-light">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                Abrir em nova aba
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
   <script>
     import {
@@ -120,36 +98,10 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
         checkAuth();
       }
     });
-
-    // Listen for open image modal event
-    let modalInstance: any = null;
-    
-    window.addEventListener('openImageModal', ((e: CustomEvent) => {
-      const { imageUrl, filename } = e.detail;
-      const modal = document.getElementById('image-modal');
-      const modalImage = document.getElementById('modal-image') as HTMLImageElement;
-      const modalFilename = document.getElementById('modal-filename');
-      const modalDownloadBtn = document.getElementById('modal-download-btn') as HTMLAnchorElement;
-      const modalOpenBtn = document.getElementById('modal-open-btn') as HTMLAnchorElement;
-
-      if (modal && modalImage && modalFilename && modalDownloadBtn && modalOpenBtn) {
-        modalImage.src = imageUrl;
-        modalImage.alt = filename;
-        modalFilename.textContent = filename;
-        modalDownloadBtn.href = imageUrl;
-        modalOpenBtn.href = imageUrl;
-
-        // Use Bootstrap modal
-        if (typeof (window as any).bootstrap !== 'undefined') {
-          modalInstance = new (window as any).bootstrap.Modal(modal);
-          modalInstance.show();
-        }
-      }
-    }) as EventListener);
   </script>
 </Layout>
 
-<style>
+<style is:global>
   .files-page-section {
     min-height: 100vh;
     padding-top: 6rem;
@@ -186,81 +138,6 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
     color: rgba(255, 255, 255, 0.6);
   }
 
-  /* Image Modal Styles */
-  .image-modal-content {
-    background: #0f1219;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .modal-xl {
-    max-width: 90vw;
-  }
-
-  .image-modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(4px);
-    z-index: 10;
-  }
-
-  .image-modal-close:hover {
-    background: rgba(255, 0, 0, 0.7);
-    border-color: red;
-    transform: rotate(90deg);
-  }
-
-  .image-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.5);
-    min-height: 60vh;
-    padding: 2rem;
-  }
-
-  .modal-image {
-    max-width: 100%;
-    max-height: 75vh;
-    object-fit: contain;
-    border-radius: 8px;
-  }
-
-  .image-info {
-    padding: 1.5rem;
-    background: rgba(0, 0, 0, 0.7);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .image-filename {
-    color: white;
-    font-weight: 500;
-    font-size: 1.1rem;
-    flex: 1;
-  }
-
-  .image-actions {
-    display: flex;
-    gap: 0.5rem;
-  }
-
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -287,20 +164,6 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
 
     .page-description {
       font-size: 1rem;
-    }
-
-    .image-info {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .image-actions {
-      width: 100%;
-      flex-direction: column;
-    }
-
-    .image-actions .btn {
-      width: 100%;
     }
   }
 </style>

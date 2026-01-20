@@ -59,6 +59,26 @@ const { t, apiBase = "" } = Astro.props;
       <div id="files-gallery" class="files-gallery">
         <!-- Files will be inserted here -->
       </div>
+
+      <!-- Pagination -->
+      <div id="files-pagination" class="files-pagination mt-4" style="display: none;">
+        <div class="pagination-info">
+          <span id="pagination-info-text">Página 1 de 1</span>
+        </div>
+        <div class="pagination-controls">
+          <button id="pagination-prev" class="btn btn-sm btn-outline-primary" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            Anterior
+          </button>
+          <div id="pagination-pages" class="pagination-pages">
+            <!-- Page buttons will be inserted here -->
+          </div>
+          <button id="pagination-next" class="btn btn-sm btn-outline-primary">
+            Próxima
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </GlassCard>
@@ -89,7 +109,6 @@ const { t, apiBase = "" } = Astro.props;
   }
 
   .user-files-card .gallery-item:hover {
-    transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     border-color: var(--bs-primary);
   }
@@ -126,11 +145,11 @@ const { t, apiBase = "" } = Astro.props;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
     transition: background 0.3s ease;
     z-index: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
-  .user-files-card .gallery-item:hover .gallery-info {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.75) 70%, transparent 100%);
-  }
 
   .user-files-card .gallery-filename {
     font-size: 0.875rem;
@@ -254,6 +273,91 @@ const { t, apiBase = "" } = Astro.props;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
   }
+
+  /* Pagination Styles */
+  .user-files-card .files-pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .user-files-card .pagination-info {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+  }
+
+  .user-files-card .pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .user-files-card .pagination-controls .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .user-files-card .pagination-pages {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .user-files-card .pagination-page-btn {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .user-files-card .pagination-page-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--bs-primary);
+  }
+
+  .user-files-card .pagination-page-btn.active {
+    background: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+  }
+
+  .user-files-card .pagination-page-btn.ellipsis {
+    cursor: default;
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .user-files-card .pagination-page-btn.ellipsis:hover {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  @media (max-width: 576px) {
+    .user-files-card .pagination-controls {
+      width: 100%;
+    }
+
+    .user-files-card .pagination-controls .btn {
+      flex: 1;
+    }
+
+    .user-files-card .pagination-pages {
+      display: none;
+    }
+  }
 </style>
 
 <script>
@@ -265,12 +369,25 @@ const { t, apiBase = "" } = Astro.props;
     url: string;
   }
 
+  interface PaginationData {
+    page: number;
+    limit: number;
+    total_files: number;
+    total_pages: number;
+    has_next: boolean;
+    has_prev: boolean;
+  }
+
   interface FilesResponse {
     success: boolean;
     files: FileData[];
-    total_files: number;
+    pagination: PaginationData;
     total_size: number;
   }
+
+  // State
+  let currentPage = 1;
+  let currentFiles: FileData[] = [];
 
   function formatBytes(bytes: number): string {
     if (bytes === 0) return "0 Bytes";
@@ -296,7 +413,71 @@ const { t, apiBase = "" } = Astro.props;
     return parts[parts.length - 1] || path;
   }
 
-  async function loadUserFiles() {
+  function generatePaginationButtons(pagination: PaginationData): string {
+    const { page, total_pages } = pagination;
+    const buttons: string[] = [];
+    const maxVisible = 5;
+    
+    let startPage = Math.max(1, page - Math.floor(maxVisible / 2));
+    let endPage = Math.min(total_pages, startPage + maxVisible - 1);
+    
+    if (endPage - startPage + 1 < maxVisible) {
+      startPage = Math.max(1, endPage - maxVisible + 1);
+    }
+
+    if (startPage > 1) {
+      buttons.push(`<button class="pagination-page-btn" data-page="1">1</button>`);
+      if (startPage > 2) {
+        buttons.push(`<span class="pagination-page-btn ellipsis">...</span>`);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(`<button class="pagination-page-btn ${i === page ? 'active' : ''}" data-page="${i}">${i}</button>`);
+    }
+
+    if (endPage < total_pages) {
+      if (endPage < total_pages - 1) {
+        buttons.push(`<span class="pagination-page-btn ellipsis">...</span>`);
+      }
+      buttons.push(`<button class="pagination-page-btn" data-page="${total_pages}">${total_pages}</button>`);
+    }
+
+    return buttons.join('');
+  }
+
+  function updatePagination(pagination: PaginationData) {
+    const paginationEl = document.getElementById("files-pagination");
+    const infoTextEl = document.getElementById("pagination-info-text");
+    const prevBtn = document.getElementById("pagination-prev") as HTMLButtonElement;
+    const nextBtn = document.getElementById("pagination-next") as HTMLButtonElement;
+    const pagesEl = document.getElementById("pagination-pages");
+
+    if (!paginationEl || !infoTextEl || !prevBtn || !nextBtn || !pagesEl) return;
+
+    if (pagination.total_pages <= 1) {
+      paginationEl.style.display = "none";
+      return;
+    }
+
+    paginationEl.style.display = "flex";
+    infoTextEl.textContent = `Página ${pagination.page} de ${pagination.total_pages} (${pagination.total_files} arquivos)`;
+    
+    prevBtn.disabled = !pagination.has_prev;
+    nextBtn.disabled = !pagination.has_next;
+
+    pagesEl.innerHTML = generatePaginationButtons(pagination);
+
+    // Add click handlers to page buttons
+    pagesEl.querySelectorAll('.pagination-page-btn[data-page]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = parseInt((btn as HTMLElement).dataset.page || '1');
+        loadUserFiles(page);
+      });
+    });
+  }
+
+  async function loadUserFiles(page: number = 1) {
     const loadingEl = document.getElementById("files-loading");
     const errorEl = document.getElementById("files-error");
     const emptyEl = document.getElementById("files-empty");
@@ -319,7 +500,7 @@ const { t, apiBase = "" } = Astro.props;
         throw new Error("API base URL not configured");
       }
 
-      const response = await fetch(`${apiBase}/rpg/files`, {
+      const response = await fetch(`${apiBase}/rpg/files?page=${page}&limit=25`, {
         credentials: "include",
       });
 
@@ -331,16 +512,20 @@ const { t, apiBase = "" } = Astro.props;
 
       loadingEl.style.display = "none";
 
-      if (data.files.length === 0) {
+      if (data.pagination.total_files === 0) {
         emptyEl.style.display = "block";
         return;
       }
+
+      // Update state
+      currentPage = data.pagination.page;
+      currentFiles = data.files;
 
       // Update stats
       const totalFilesEl = document.getElementById("total-files-count");
       const totalSizeEl = document.getElementById("total-files-size");
 
-      if (totalFilesEl) totalFilesEl.textContent = data.total_files.toString();
+      if (totalFilesEl) totalFilesEl.textContent = data.pagination.total_files.toString();
       if (totalSizeEl) totalSizeEl.textContent = formatBytes(data.total_size);
 
       // Render files in gallery
@@ -389,21 +574,35 @@ const { t, apiBase = "" } = Astro.props;
 
         // Add click handlers to gallery items
         const galleryItems = gallery.querySelectorAll(".gallery-item");
-        galleryItems.forEach((item) => {
+        galleryItems.forEach((item, index) => {
           item.addEventListener("click", (e) => {
             const imageUrl = (item as HTMLElement).dataset.imageUrl;
             const filename = (item as HTMLElement).dataset.filename;
-            if (imageUrl && filename) {
-              // Dispatch custom event to open modal
-              window.dispatchEvent(new CustomEvent('openImageModal', {
-                detail: { imageUrl, filename }
+            const file = currentFiles[index];
+            if (imageUrl && filename && file) {
+              // Dispatch custom event to open file preview modal
+              window.dispatchEvent(new CustomEvent('openFilePreview', {
+                detail: { 
+                  url: imageUrl, 
+                  filename: filename,
+                  type: file.type
+                }
               }));
             }
           });
         });
       }
 
+      // Update pagination
+      updatePagination(data.pagination);
+
       listEl.style.display = "block";
+
+      // Scroll to top of gallery on page change
+      if (page !== 1) {
+        const cardEl = document.querySelector(".user-files-card");
+        cardEl?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     } catch (error) {
       console.error("Error loading files:", error);
       loadingEl.style.display = "none";
@@ -411,15 +610,31 @@ const { t, apiBase = "" } = Astro.props;
     }
   }
 
+  function setupPaginationListeners() {
+    const prevBtn = document.getElementById("pagination-prev");
+    const nextBtn = document.getElementById("pagination-next");
+
+    prevBtn?.addEventListener('click', () => {
+      if (currentPage > 1) {
+        loadUserFiles(currentPage - 1);
+      }
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      loadUserFiles(currentPage + 1);
+    });
+  }
+
   // Load files on page load
   document.addEventListener("DOMContentLoaded", () => {
-    loadUserFiles();
+    loadUserFiles(1);
+    setupPaginationListeners();
 
     // Setup retry button
     const retryBtn = document.getElementById("retry-files-btn");
     if (retryBtn) {
       retryBtn.addEventListener("click", () => {
-        loadUserFiles();
+        loadUserFiles(currentPage);
       });
     }
   });
@@ -427,13 +642,15 @@ const { t, apiBase = "" } = Astro.props;
   // Reload files when navigating with Astro
   document.addEventListener("astro:page-load", () => {
     if (window.location.pathname.includes("/dashboard")) {
-      loadUserFiles();
+      currentPage = 1;
+      loadUserFiles(1);
+      setupPaginationListeners();
 
       // Re-setup retry button
       const retryBtn = document.getElementById("retry-files-btn");
       if (retryBtn) {
         retryBtn.addEventListener("click", () => {
-          loadUserFiles();
+          loadUserFiles(currentPage);
         });
       }
     }

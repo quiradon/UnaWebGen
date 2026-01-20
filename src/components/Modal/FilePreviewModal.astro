@@ -1,0 +1,373 @@
+---
+import Header from "./base/Header.astro";
+import Body from "./base/Body.astro";
+
+interface Props {
+  modalId?: string;
+}
+
+const { modalId = "file_preview_modal" } = Astro.props;
+---
+
+<div
+  id={modalId}
+  class="modal fade file-preview-modal"
+  role="dialog"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="file-preview-modal__header">
+        <h4 class="modal-title" id="file-preview-title">Arquivo</h4>
+        <button
+          class="btn-close"
+          type="button"
+          aria-label="Close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <Body>
+        <div class="file-preview-container">
+          <!-- Image preview -->
+          <div id="image-preview" class="preview-item" style="display: none;">
+            <img id="preview-image" src="" alt="" class="preview-image" />
+          </div>
+          
+          <!-- Audio preview -->
+          <div id="audio-preview" class="preview-item" style="display: none;">
+            <div class="audio-player-container">
+              <audio id="preview-audio" controls class="preview-audio">
+                <source id="audio-source" src="" type="">
+                Seu navegador não suporta o elemento de áudio.
+              </audio>
+            </div>
+          </div>
+
+          <!-- Unsupported type -->
+          <div id="unsupported-preview" class="preview-item text-center" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-3 text-muted">
+              <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+              <polyline points="13 2 13 9 20 9"></polyline>
+            </svg>
+            <p class="text-muted">Tipo de arquivo não suportado para visualização</p>
+          </div>
+        </div>
+
+        <!-- File actions -->
+        <div class="file-actions">
+          <a id="file-download-btn" href="" download class="btn btn-outline-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Baixar
+          </a>
+          <a id="file-open-btn" href="" target="_blank" class="btn btn-outline-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+            Abrir em nova aba
+          </a>
+        </div>
+      </Body>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .file-preview-modal {
+    z-index: 1060 !important;
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .file-preview-modal .modal-dialog {
+    z-index: 1061 !important;
+  }
+
+  .file-preview-modal .modal-content {
+    background: #0f1219;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    position: relative;
+    z-index: 1062 !important;
+  }
+
+  .file-preview-modal .modal-dialog {
+    max-width: 1200px;
+  }
+
+  .file-preview-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(
+      140deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0) 65%
+    );
+    flex-shrink: 0;
+  }
+
+  .file-preview-modal__header .modal-title {
+    font-weight: 700;
+    margin: 0;
+    color: white;
+  }
+
+  .file-preview-modal__header .btn-close {
+    filter: invert(1);
+    opacity: 0.7;
+  }
+
+  .file-preview-modal__header .btn-close:hover {
+    opacity: 1;
+  }
+
+  .file-preview-container {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .preview-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preview-image {
+    max-width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .audio-player-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .preview-audio {
+    width: 100%;
+    height: 54px;
+    filter: invert(0.9) hue-rotate(180deg);
+  }
+
+  .file-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .file-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+  }
+
+  @media (max-width: 992px) {
+    .file-preview-modal .modal-dialog {
+      max-width: 90%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .file-preview-container {
+      min-height: 300px;
+      padding: 1rem;
+    }
+
+    .preview-image {
+      max-height: 50vh;
+    }
+
+    .audio-player-container {
+      padding: 1.5rem;
+    }
+
+    .file-actions {
+      flex-direction: column;
+    }
+
+    .file-actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .file-preview-modal .modal-dialog {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      height: 100vh;
+    }
+
+    .file-preview-modal .modal-content {
+      height: 100%;
+      max-height: 100vh;
+      border-radius: 0;
+    }
+
+    .file-preview-container {
+      min-height: 250px;
+    }
+  }
+</style>
+
+<script>
+
+
+  interface FilePreviewEvent {
+    url: string;
+    filename: string;
+    type: number;
+  }
+
+  // File type mapping
+  const FILE_TYPES = {
+    GENERAL: 0,
+    IMAGE: 1,
+    DOCUMENT: 2,
+    AUDIO: 3,
+    VIDEO: 4,
+  };
+
+  function getFileExtension(filename: string): string {
+    const parts = filename.split('.');
+    return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : '';
+  }
+
+  function getAudioMimeType(extension: string): string {
+    const mimeTypes: Record<string, string> = {
+      mp3: 'audio/mpeg',
+      wav: 'audio/wav',
+      ogg: 'audio/ogg',
+      m4a: 'audio/mp4',
+      flac: 'audio/flac',
+      aac: 'audio/aac',
+    };
+    return mimeTypes[extension] || 'audio/mpeg';
+  }
+
+  function isImageExtension(extension: string): boolean {
+    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico', 'avif'];
+    return imageExtensions.includes(extension);
+  }
+
+  function isAudioExtension(extension: string): boolean {
+    const audioExtensions = ['mp3', 'wav', 'ogg', 'm4a', 'flac', 'aac', 'wma'];
+    return audioExtensions.includes(extension);
+  }
+
+  function detectFileType(filename: string, type: number): number {
+    // Se já tem um tipo definido (1-4), usa ele
+    if (type > 0) return type;
+    
+    // Se tipo é GENERAL (0), tenta detectar pela extensão
+    const extension = getFileExtension(filename);
+    if (isImageExtension(extension)) return FILE_TYPES.IMAGE;
+    if (isAudioExtension(extension)) return FILE_TYPES.AUDIO;
+    
+    return type;
+  }
+
+  function showFilePreview(url: string, filename: string, type: number) {
+    const modal = document.getElementById('file_preview_modal');
+    const titleEl = document.getElementById('file-preview-title');
+    const downloadBtn = document.getElementById('file-download-btn') as HTMLAnchorElement;
+    const openBtn = document.getElementById('file-open-btn') as HTMLAnchorElement;
+
+    // Preview elements
+    const imagePreview = document.getElementById('image-preview');
+    const audioPreview = document.getElementById('audio-preview');
+    const unsupportedPreview = document.getElementById('unsupported-preview');
+
+    if (!modal || !titleEl || !downloadBtn || !openBtn) return;
+
+    // Hide all previews
+    imagePreview?.style.setProperty('display', 'none');
+    audioPreview?.style.setProperty('display', 'none');
+    unsupportedPreview?.style.setProperty('display', 'none');
+
+    // Set title and buttons
+    titleEl.textContent = filename;
+    downloadBtn.href = url;
+    openBtn.href = url;
+
+    // Detect file type from extension if needed
+    const detectedType = detectFileType(filename, type);
+
+    // Show appropriate preview
+    if (detectedType === FILE_TYPES.IMAGE) {
+      const img = document.getElementById('preview-image') as HTMLImageElement;
+      if (img) {
+        img.src = url;
+        img.alt = filename;
+        imagePreview?.style.setProperty('display', 'flex');
+      }
+    } else if (detectedType === FILE_TYPES.AUDIO) {
+      const audio = document.getElementById('preview-audio') as HTMLAudioElement;
+      const audioSource = document.getElementById('audio-source') as HTMLSourceElement;
+      if (audio && audioSource) {
+        const extension = getFileExtension(filename);
+        audioSource.src = url;
+        audioSource.type = getAudioMimeType(extension);
+        audio.load();
+        audioPreview?.style.setProperty('display', 'flex');
+      }
+    } else {
+      unsupportedPreview?.style.setProperty('display', 'flex');
+    }
+
+    // Show modal
+    const bootstrap = (window as any).bootstrap;
+    if (bootstrap && bootstrap.Modal) {
+      const modalInstance = new bootstrap.Modal(modal, {
+        backdrop: false
+      });
+      modalInstance.show();
+    }
+  }
+
+  // Listen for file preview event
+  window.addEventListener('openFilePreview', ((e: CustomEvent<FilePreviewEvent>) => {
+    const { url, filename, type } = e.detail;
+    showFilePreview(url, filename, type);
+  }) as EventListener);
+
+  // Cleanup audio when modal closes
+  document.addEventListener('hidden.bs.modal', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.id === 'file_preview_modal') {
+      const audio = document.getElementById('preview-audio') as HTMLAudioElement;
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    }
+  });
+</script>

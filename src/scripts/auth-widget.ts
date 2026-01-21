@@ -12,6 +12,9 @@ interface WidgetElements {
   logoutButton: HTMLButtonElement | null;
   toggleButton: HTMLElement | null;
   dropdown: HTMLElement | null;
+  langContainer: HTMLElement | null;
+  langToggle: HTMLButtonElement | null;
+  currentLangLabel: HTMLElement | null;
 }
 
 interface KrakenWindow extends Window {
@@ -75,6 +78,9 @@ interface KrakenWindow extends Window {
       logoutButton: null,
       toggleButton: null,
       dropdown: null,
+      langContainer: null,
+      langToggle: null,
+      currentLangLabel: null,
     };
 
     const updateLoginLink = (): void => {
@@ -202,6 +208,15 @@ interface KrakenWindow extends Window {
       elements.logoutButton = null;
       elements.toggleButton = null;
       elements.dropdown = null;
+      elements.langContainer = null;
+      elements.langToggle = null;
+      elements.currentLangLabel = null;
+
+      // Show navbar language selector when logged out
+      const navbarLangInfo = document.getElementById('language-selector-dropdown');
+      if (navbarLangInfo) {
+        navbarLangInfo.style.display = '';
+      }
 
       updateLoginLink();
     };
@@ -254,6 +269,54 @@ interface KrakenWindow extends Window {
       });
     };
 
+    const setupLanguageOptions = (): void => {
+      if (!elements.langContainer) return;
+
+      const navbarLangDropdown = document.getElementById('language-selector-dropdown');
+      if (!navbarLangDropdown) return;
+
+      // Hide the navbar selector
+      navbarLangDropdown.style.display = 'none';
+
+      // Find original options
+      const originalOptions = navbarLangDropdown.querySelectorAll('.lang-option');
+      
+      // Clear container
+      elements.langContainer.innerHTML = '';
+
+      // Get current lang from the navbar toggle button if possible to update our label
+      const navToggle = document.getElementById('lang-selector-toggle');
+      if (navToggle && elements.currentLangLabel) {
+        // Try to find the full name of the current language
+        const currentCode = navToggle.dataset.currentLang;
+        if (currentCode) {
+             const activeOption = Array.from(originalOptions).find(opt => (opt as HTMLElement).dataset.langCode === currentCode);
+             if (activeOption) {
+                 const text = activeOption.textContent?.trim();
+                 if (text) elements.currentLangLabel.textContent = text;
+             }
+        }
+      }
+
+      // Clone and append
+      originalOptions.forEach(opt => {
+        const clone = opt.cloneNode(true) as HTMLElement;
+        elements.langContainer!.appendChild(clone);
+      });
+
+      // Bind toggle click
+      if (elements.langToggle && elements.langContainer) {
+          elements.langToggle.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation(); // Keep main dropdown open
+              
+              const isHidden = elements.langContainer!.hidden;
+              elements.langContainer!.hidden = !isHidden;
+              elements.langToggle!.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+          });
+      }
+    };
+
     const renderUserView = (session: SessionResponse): void => {
       const user = session.user;
       if (!user) return;
@@ -276,6 +339,9 @@ interface KrakenWindow extends Window {
       elements.toggleButton = root.querySelector<HTMLElement>('[data-auth-toggle]');
       elements.dropdown = root.querySelector<HTMLElement>('[data-auth-dropdown]');
       elements.logoutButton = root.querySelector<HTMLButtonElement>('[data-auth-logout]');
+      elements.langContainer = root.querySelector<HTMLElement>('[data-auth-lang-list]');
+      elements.langToggle = root.querySelector<HTMLButtonElement>('[data-auth-lang-toggle]');
+      elements.currentLangLabel = root.querySelector<HTMLElement>('[data-auth-current-lang-label]');
 
       // DESTRUIR todas as referências do login
       elements.loginAnchor = null;
@@ -329,6 +395,9 @@ interface KrakenWindow extends Window {
       // Fechar dropdown inicialmente
       elements.dropdown.hidden = true;
       elements.toggleButton.setAttribute('aria-expanded', 'false');
+
+      // Configurar lista de idiomas
+      setupLanguageOptions();
 
       // Vincular interações do usuário
       bindUserInteractions();

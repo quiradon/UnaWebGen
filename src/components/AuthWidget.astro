@@ -2,6 +2,7 @@
 import type { Translations } from "@lib/i18n";
 import { idiomaR } from "@lib/routes";
 import config from "../config";
+import { Globe, ChevronDown, LayoutDashboard, LogOut, User } from "@lucide/astro";
 
 interface Props {
   t: Translations;
@@ -93,16 +94,38 @@ const avatarSize = variant === "desktop" ? 32 : 40;
     </div>
 
     <div data-auth-dropdown class="auth-widget__dropdown" hidden>
-      <div class="auth-widget__dropdown-header" data-auth-name></div>
-      <a
-        href={`${langPrefix}/dashboard/`}
-        class="auth-widget__dropdown-item auth-widget__dropdown-link"
-      >
-        {loginLabel}
-      </a>
-      <button data-auth-logout class="auth-widget__dropdown-item" type="button">
-        {logoutLabel}
-      </button>
+      <div class="auth-widget__dropdown-header d-flex align-items-center gap-2">
+        <User size={16} />
+        <span data-auth-name></span>
+      </div>
+      <div class="auth-widget__dropdown-scroll-content">
+        <a
+          href={`${langPrefix}/dashboard/`}
+          class="auth-widget__dropdown-item auth-widget__dropdown-link d-flex align-items-center gap-2"
+        >
+          <LayoutDashboard size={16} />
+          {loginLabel}
+        </a>
+        
+        <div class="auth-widget__dropdown-divider"></div>
+        
+        <div class="auth-widget__language-container">
+            <button type="button" class="auth-widget__dropdown-item auth-widget__language-toggle d-flex align-items-center justify-content-between" data-auth-lang-toggle>
+                 <div class="d-flex align-items-center gap-2">
+                    <Globe size={16} />
+                    <span data-auth-current-lang-label>{t.lang.toUpperCase()}</span>
+                 </div>
+                 <ChevronDown size={14} class="auth-widget__lang-chevron" />
+            </button>
+            <div class="auth-widget__language-list" hidden data-auth-lang-list></div>
+        </div>
+
+        <div class="auth-widget__dropdown-divider"></div>
+        <button data-auth-logout class="auth-widget__dropdown-item d-flex align-items-center gap-2" type="button">
+          <LogOut size={16} />
+          {logoutLabel}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -336,5 +359,90 @@ const avatarSize = variant === "desktop" ? 32 : 40;
     background: linear-gradient(45deg, #ffed4a, #ffd700, #ffed4a);
     background-size: 200% 200%;
     color: #000 !important;
+  }
+
+  .auth-widget__dropdown-scroll-content {
+    max-height: 400px; /* Limit height for smaller screens */
+    overflow-y: auto;
+  }
+
+  .auth-widget__dropdown-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0.5rem 0;
+  }
+
+  /* Language Toggle */
+  .auth-widget__language-container {
+    padding: 0;
+  }
+
+  .auth-widget__language-toggle {
+    display: flex !important; /* Override default block */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--bs-light, #fff);
+  }
+  
+  .auth-widget__language-toggle:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .auth-widget__lang-chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .auth-widget__language-toggle[aria-expanded="true"] .auth-widget__lang-chevron {
+    transform: rotate(180deg);
+  }
+
+  .auth-widget__language-list {
+    background: rgba(0, 0, 0, 0.2);
+    /* border-top: 1px solid rgba(255, 255, 255, 0.1); */
+  }
+
+  .auth-widget__language-list[hidden] {
+    display: none;
+  }
+
+  .auth-widget__language-list :global(.lang-option) {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1.5rem; /* Indented */
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+
+  .auth-widget__language-list :global(.lang-option:hover) {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    padding-left: 1.75rem;
+  }
+
+  .auth-widget__language-list :global(.lang-option img) {
+    width: 18px;
+    height: 18px;
+    margin-right: 0.75rem;
+    border-radius: 2px;
+    opacity: 0.8;
+  }
+  
+  .auth-widget__language-list :global(.lang-option:hover img) {
+    opacity: 1;
+  }
+  
+  .auth-widget__language-list :global(.lang-option span) {
+      display: flex;
+      align-items: center;
+      width: 100%;
+  }
+
+  /* Scrollable if too many langs */
+  .auth-widget__dropdown-scroll-content {
+    /* No max height by default, let it grow or set a reasonable max */
+    max-height: 60vh;
   }
 </style>

@@ -1,0 +1,146 @@
+---
+interface Props {
+  modalId?: string;
+}
+
+const { modalId = "file_delete_modal" } = Astro.props;
+---
+
+<div id={modalId} class="modal fade file-delete-modal" role="dialog" tabindex="-1" data-bs-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="file-delete-modal__header">
+        <h5 class="modal-title">Excluir arquivo</h5>
+        <button
+          class="btn-close"
+          type="button"
+          aria-label="Close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="file-delete-modal__text">
+          Tem certeza que deseja excluir este arquivo?
+        </p>
+        <div id="delete-file-name" class="file-delete-modal__filename"></div>
+        <p id="delete-file-error" class="file-delete-modal__error" style="display: none;">
+          Erro ao excluir arquivo. Tente novamente.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-light" type="button" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button id="delete-file-confirm-btn" class="btn btn-danger" type="button">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .file-delete-modal {
+    z-index: 1065 !important;
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .file-delete-modal .modal-dialog {
+    max-width: 520px;
+  }
+
+  .file-delete-modal .modal-content {
+    background: #0f1219;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+  }
+
+  .file-delete-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(
+      140deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0) 65%
+    );
+  }
+
+  .file-delete-modal__header .modal-title {
+    margin: 0;
+    font-weight: 700;
+    color: white;
+  }
+
+  .file-delete-modal__header .btn-close {
+    filter: invert(1);
+    opacity: 0.7;
+  }
+
+  .file-delete-modal__header .btn-close:hover {
+    opacity: 1;
+  }
+
+  .file-delete-modal__text {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.75rem;
+  }
+
+  .file-delete-modal__filename {
+    font-weight: 600;
+    color: white;
+    word-break: break-all;
+  }
+
+  .file-delete-modal__error {
+    margin-top: 0.75rem;
+    color: #dc3545;
+  }
+
+  .file-delete-modal .modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.75rem 1.25rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .file-delete-modal .btn {
+    min-width: 120px;
+  }
+
+  @media (max-width: 576px) {
+    .file-delete-modal .modal-dialog {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      height: 100vh;
+    }
+
+    .file-delete-modal .modal-content {
+      height: 100%;
+      border-radius: 0;
+    }
+  }
+</style>
+
+<script define:vars={{ modalId }}>
+  function moveModal() {
+    const modal = document.getElementById(modalId);
+    if (modal && document.body && modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+  }
+
+  document.addEventListener("astro:page-load", moveModal);
+
+  document.addEventListener("astro:before-swap", () => {
+    const modal = document.getElementById(modalId);
+    if (modal && modal.parentElement === document.body) {
+      modal.remove();
+    }
+  });
+</script>

@@ -7,6 +7,7 @@ import { idiomaR } from "@lib/routes";
 import config from "../../config";
 import UserFilesCard from "@components/dashboard/UserFilesCard.astro";
 import FilePreviewModal from "@components/Modal/FilePreviewModal.astro";
+import DeleteFileModal from "@components/Modal/DeleteFileModal.astro";
 
 export { getStaticPaths };
 
@@ -19,8 +20,9 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(
 );
 ---
 
-<Layout t={t} title={t.Dashbaord.files.page_title} useBootstrapJS={true}>
+<Layout t={t} title="teste" useBootstrapJS={true}>
   <FilePreviewModal />
+  <DeleteFileModal />
     <div
     style="display: none;"
     data-api-base={apiBase}

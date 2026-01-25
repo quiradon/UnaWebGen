@@ -66,14 +66,14 @@ const { t, apiBase = "" } = Astro.props;
           <span id="pagination-info-text">Página 1 de 1</span>
         </div>
         <div class="pagination-controls">
-          <button id="pagination-prev" class="btn btn-sm btn-outline-primary" disabled>
+          <button id="pagination-prev" class="btn btn-sm btn-primary" disabled>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
             Anterior
           </button>
           <div id="pagination-pages" class="pagination-pages">
             <!-- Page buttons will be inserted here -->
           </div>
-          <button id="pagination-next" class="btn btn-sm btn-outline-primary">
+          <button id="pagination-next" class="btn btn-sm btn-primary">
             Próxima
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
           </button>
@@ -198,6 +198,17 @@ const { t, apiBase = "" } = Astro.props;
     color: white;
     transform: scale(1.15);
     box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.4);
+  }
+
+  .user-files-card .gallery-action-btn.gallery-action-delete {
+    border-color: rgba(220, 53, 69, 0.35);
+  }
+
+  .user-files-card .gallery-action-btn.gallery-action-delete:hover {
+    background: #dc3545;
+    border-color: #dc3545;
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
   }
 
   .user-files-card .files-stats {
@@ -379,6 +390,35 @@ const { t, apiBase = "" } = Astro.props;
   // State
   let currentPage = 1;
   let currentFiles: FileData[] = [];
+  let pendingDeleteFile: FileData | null = null;
+  let deleteModalInstance: any | null = null;
+
+  async function downloadFile(url: string, filename: string) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      
+      window.URL.revokeObjectURL(blobUrl);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Download failed:', error);
+      // Fallback
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.target = '_blank';
+      a.click();
+    }
+  }
 
   function formatBytes(bytes: number): string {
     if (bytes === 0) return "0 Bytes";
@@ -468,6 +508,109 @@ const { t, apiBase = "" } = Astro.props;
     });
   }
 
+  function findFileById(fileId: number): FileData | undefined {
+    return currentFiles.find((file) => file.id === fileId);
+  }
+
+  function openDeleteModal(file: FileData) {
+    pendingDeleteFile = file;
+    const nameEl = document.getElementById("delete-file-name");
+    if (nameEl) {
+      nameEl.textContent = getFileName(file.path);
+    }
+
+    const errorEl = document.getElementById("delete-file-error");
+    if (errorEl) {
+      errorEl.style.display = "none";
+    }
+
+    const confirmBtn = document.getElementById("delete-file-confirm-btn") as HTMLButtonElement | null;
+    if (confirmBtn) {
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = "Excluir";
+    }
+
+    const modalEl = document.getElementById("file_delete_modal");
+    const bootstrap = (window as any).bootstrap;
+    if (bootstrap && bootstrap.Modal && modalEl) {
+      deleteModalInstance = bootstrap.Modal.getOrCreateInstance
+        ? bootstrap.Modal.getOrCreateInstance(modalEl)
+        : new bootstrap.Modal(modalEl);
+      deleteModalInstance.show();
+    }
+  }
+
+  async function confirmDelete() {
+    if (!pendingDeleteFile) return;
+
+    const confirmBtn = document.getElementById("delete-file-confirm-btn") as HTMLButtonElement | null;
+    const errorEl = document.getElementById("delete-file-error");
+
+    if (confirmBtn) {
+      confirmBtn.disabled = true;
+      confirmBtn.textContent = "Excluindo...";
+    }
+
+    if (errorEl) {
+      errorEl.style.display = "none";
+    }
+
+    try {
+      const cardEl = document.querySelector(".user-files-card") as HTMLElement | null;
+      const apiBase = cardEl?.dataset.apiBase || "";
+
+      if (!apiBase) {
+        throw new Error("API base URL not configured");
+      }
+
+      const response = await fetch(`${apiBase}/rpg/files/${pendingDeleteFile.id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete file");
+      }
+
+      if (deleteModalInstance) {
+        deleteModalInstance.hide();
+      }
+
+      const nextPage = currentFiles.length <= 1 && currentPage > 1 ? currentPage - 1 : currentPage;
+      pendingDeleteFile = null;
+      await loadUserFiles(nextPage);
+    } catch (error) {
+      console.error("Error deleting file:", error);
+      if (errorEl) {
+        errorEl.textContent = "Erro ao excluir arquivo";
+        errorEl.style.display = "block";
+      }
+    } finally {
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = "Excluir";
+      }
+    }
+  }
+
+  function setupDeleteModalHandlers() {
+    const confirmBtn = document.getElementById("delete-file-confirm-btn") as HTMLButtonElement | null;
+    if (confirmBtn && !confirmBtn.dataset.bound) {
+      confirmBtn.dataset.bound = "true";
+      confirmBtn.addEventListener("click", () => {
+        confirmDelete();
+      });
+    }
+
+    const modalEl = document.getElementById("file_delete_modal");
+    if (modalEl && !modalEl.dataset.bound) {
+      modalEl.dataset.bound = "true";
+      modalEl.addEventListener("hidden.bs.modal", () => {
+        pendingDeleteFile = null;
+      });
+    }
+  }
+
   async function loadUserFiles(page: number = 1) {
     const loadingEl = document.getElementById("files-loading");
     const errorEl = document.getElementById("files-error");
@@ -491,7 +634,7 @@ const { t, apiBase = "" } = Astro.props;
         throw new Error("API base URL not configured");
       }
 
-      const response = await fetch(`${apiBase}/rpg/files?page=${page}&limit=25`, {
+      const response = await fetch(`${apiBase}/rpg/files?page=${page}&limit=15`, {
         credentials: "include",
       });
 
@@ -525,7 +668,7 @@ const { t, apiBase = "" } = Astro.props;
         gallery.innerHTML = data.files
           .map(
             (file) => `
-          <div class="gallery-item" data-image-url="${file.url}" data-filename="${getFileName(file.path)}">
+          <div class="gallery-item" data-image-url="${file.url}" data-filename="${getFileName(file.path)}" data-file-id="${file.id}">
             <div class="gallery-image-container">
               <img 
                 src="${file.url}" 
@@ -541,22 +684,23 @@ const { t, apiBase = "" } = Astro.props;
               </div>
             </div>
             <div class="gallery-actions" onclick="event.stopPropagation()">
-              <a 
-                href="${file.url}" 
-                target="_blank" 
-                class="gallery-action-btn" 
-                title="Abrir em nova aba"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-              </a>
-              <a 
-                href="${file.url}" 
-                download 
-                class="gallery-action-btn" 
+              <button
+                type="button"
+                class="gallery-action-btn gallery-action-download"
+                data-url="${file.url}"
+                data-filename="${getFileName(file.path)}"
                 title="Baixar"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              </a>
+              </button>
+              <button
+                type="button"
+                class="gallery-action-btn gallery-action-delete"
+                data-file-id="${file.id}"
+                title="Excluir"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+              </button>
             </div>
           </div>
         `,
@@ -565,11 +709,12 @@ const { t, apiBase = "" } = Astro.props;
 
         // Add click handlers to gallery items
         const galleryItems = gallery.querySelectorAll(".gallery-item");
-        galleryItems.forEach((item, index) => {
-          item.addEventListener("click", (e) => {
+        galleryItems.forEach((item) => {
+          item.addEventListener("click", () => {
             const imageUrl = (item as HTMLElement).dataset.imageUrl;
             const filename = (item as HTMLElement).dataset.filename;
-            const file = currentFiles[index];
+            const fileId = Number.parseInt((item as HTMLElement).dataset.fileId || "0", 10);
+            const file = Number.isFinite(fileId) ? findFileById(fileId) : undefined;
             if (imageUrl && filename && file) {
               // Dispatch custom event to open file preview modal
               window.dispatchEvent(new CustomEvent('openFilePreview', {
@@ -579,6 +724,32 @@ const { t, apiBase = "" } = Astro.props;
                   type: file.type
                 }
               }));
+            }
+          });
+        });
+
+        const deleteButtons = gallery.querySelectorAll(".gallery-action-delete");
+        deleteButtons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            const fileId = Number.parseInt((button as HTMLElement).dataset.fileId || "0", 10);
+            if (!Number.isFinite(fileId)) return;
+            const file = findFileById(fileId);
+            if (file) {
+              openDeleteModal(file);
+            }
+          });
+        });
+
+        const downloadButtons = gallery.querySelectorAll(".gallery-action-download");
+        downloadButtons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            const btn = button as HTMLElement;
+            const url = btn.dataset.url;
+            const filename = btn.dataset.filename;
+            if (url && filename) {
+              downloadFile(url, filename);
             }
           });
         });
@@ -620,6 +791,7 @@ const { t, apiBase = "" } = Astro.props;
   document.addEventListener("DOMContentLoaded", () => {
     loadUserFiles(1);
     setupPaginationListeners();
+    setupDeleteModalHandlers();
 
     // Setup retry button
     const retryBtn = document.getElementById("retry-files-btn");
@@ -636,6 +808,7 @@ const { t, apiBase = "" } = Astro.props;
       currentPage = 1;
       loadUserFiles(1);
       setupPaginationListeners();
+      setupDeleteModalHandlers();
 
       // Re-setup retry button
       const retryBtn = document.getElementById("retry-files-btn");

@@ -4,6 +4,8 @@ module.exports = {
     "./src/components/sistemaeditor/**/*.{ts,tsx}",
     "./src/components/handoutbuilder/**/*.{ts,tsx}",
     "./src/components/ui/**/*.{ts,tsx}",
+    "./src/components/dashboard/**/*.{ts,tsx}",
+    "./src/components/**/*.{ts,tsx}",
     "./src/components/unique/**/*.{ts,tsx}",
     "./src/pages/tools/editor_de_sistema.astro",
     "./src/pages/tools/handout-builder.astro",

@@ -1,6 +1,7 @@
 ---
-import { FileIcon, Download, Eye, HardDrive } from "@lucide/astro";
+import { FileIcon, Download, Eye, HardDrive, Upload } from "@lucide/astro";
 import GlassCard from "@components/ui-astro/GlassCard.astro";
+import UploadImageModal from "@components/Modal/UploadImageModal.astro";
 
 interface Props {
   t: any;
@@ -11,9 +12,15 @@ const { t, apiBase = "" } = Astro.props;
 ---
 
 <GlassCard class="user-files-card h-100 p-4" data-api-base={apiBase}>
-  <div class="d-flex align-items-center gap-2 mb-4">
-    <HardDrive size={24} class="text-primary" />
-    <h5 class="mb-0 text-white">{t.Dashbaord.files.title}</h5>
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center gap-2">
+      <HardDrive size={24} class="text-primary" />
+      <h5 class="mb-0 text-white">{t.Dashbaord.files.title}</h5>
+    </div>
+    <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-2" data-bs-target="#uploadImageModal">
+      <Upload size={16} />
+      Upload Imagem
+    </button>
   </div>
 
   <div class="files-content">
@@ -82,6 +89,9 @@ const { t, apiBase = "" } = Astro.props;
     </div>
   </div>
 </GlassCard>
+
+<!-- Upload Modal (Using Shared Components) -->
+<UploadImageModal modalId="uploadImageModal" apiBase={apiBase} />
 
 <style is:global>
   .user-files-card {
@@ -800,6 +810,21 @@ const { t, apiBase = "" } = Astro.props;
         loadUserFiles(currentPage);
       });
     }
+
+    // Listen for file upload events
+    window.addEventListener('fileUploaded', () => {
+      loadUserFiles(currentPage);
+      
+      // Close bootstrap modal if open
+      const modalEl = document.getElementById('uploadImageModal');
+      const bootstrap = (window as any).bootstrap;
+      if (modalEl && bootstrap) {
+         const modalInstance = bootstrap.Modal.getInstance(modalEl);
+         if (modalInstance) {
+            modalInstance.hide();
+         }
+      }
+    });
   });
 
   // Reload files when navigating with Astro

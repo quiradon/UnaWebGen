@@ -1,0 +1,121 @@
+---
+export const prerender = true;
+
+import Layout from "@layouts/LayoutNoNavFooter.astro";
+import AuthWidget from "@components/AuthWidget.astro";
+import LanguageSelector from "@components/navbar/LanguageSelector.astro";
+import { loadT } from "@lib/i18n";
+import { idiomaR } from "@lib/routes";
+import { getLocale } from "astro-i18n-aut";
+import HandoutCanvasApp from "@/components/handoutbuilder/HandoutCanvasApp";
+import "@/styles/system-editor.css";
+import "@/styles/handout-builder.css";
+import config from "../../config";
+import "@fontsource/inter";
+import "@fontsource/roboto";
+import "@fontsource/montserrat";
+import "@fontsource/merriweather";
+import "@fontsource/playfair-display";
+import "@fontsource/cinzel";
+import "@fontsource/im-fell-english";
+import "@fontsource/jetbrains-mono";
+
+const currentLocale = getLocale(Astro.url);
+const t = await loadT(currentLocale);
+const langPrefix = idiomaR(t);
+const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(/\/$/, "");
+---
+
+  <Layout
+    t={t}
+    title="Gerador de Handouts"
+    desc="Crie documentos de RPG personalizados e exporte em PNG/PDF"
+    navbarSticky={false}
+  >
+    <div data-handout-auth data-api-base={apiBase} data-lang-prefix={langPrefix}></div>
+    <div data-handout-auth-widget style="display: none;">
+      <AuthWidget t={t} />
+    </div>
+    <div style="display: none;">
+      <ul>
+        <LanguageSelector />
+      </ul>
+    </div>
+    <section class="handout-builder-section">
+      <div class="container-fluid px-0">
+        <div class="system-editor handout-builder">
+        <div id="handout-builder-portal-root"></div>
+        <div class="handout-builder-shell overflow-hidden">
+          <HandoutCanvasApp client:only="react" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .handout-builder-section {
+      min-height: calc(100vh - var(--navbar-offset, 0px));
+      height: calc(100vh - var(--navbar-offset, 0px));
+      display: flex;
+      flex-direction: column;
+      padding: 0 !important;
+    }
+
+    .handout-builder-section > .container-fluid,
+    .handout-builder-section .system-editor,
+    .handout-builder-shell {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .handout-builder-shell {
+      min-height: 0;
+      display: flex;
+    }
+
+    @media (max-width: 768px) {
+      .handout-builder-section {
+        min-height: calc(100svh - var(--navbar-offset, 0px));
+        height: calc(100svh - var(--navbar-offset, 0px));
+      }
+
+      .handout-builder-shell {
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+  <script>
+    import { getSessionCachedFirst } from "../../scripts/session-manager";
+
+    async function ensureHandoutAuth() {
+      const gate = document.querySelector("[data-handout-auth]") as HTMLElement | null;
+      const apiBase = gate?.dataset.apiBase || "";
+      const langPrefix = gate?.dataset.langPrefix || "/";
+
+      if (!apiBase) {
+        window.location.href = langPrefix;
+        return;
+      }
+
+      try {
+        const sessionData = await getSessionCachedFirst(apiBase);
+        if (!sessionData?.authenticated) {
+          const redirect = encodeURIComponent(window.location.href);
+          window.location.href = `${apiBase}/auth/discord?redirect=${redirect}`;
+        }
+      } catch (error) {
+        console.error("Failed to validate session", error);
+        window.location.href = langPrefix;
+      }
+    }
+
+    ensureHandoutAuth();
+    document.addEventListener("astro:page-load", ensureHandoutAuth);
+  </script>
+</Layout>
+
+
+
+

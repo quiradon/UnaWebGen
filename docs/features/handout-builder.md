@@ -15,7 +15,8 @@ A visual editor for creating RPG handouts like letters, scrolls, or official doc
 - **Formatting**: LLMs can help structure the layout using Markdown or HTML hints.
 
 ## Technical Implementation
-- **Page**: `src/pages/tools/handout-builder.astro`
+- **Page**: `src/pages/dashboard/handout-builder.astro`
+- **Templates Gallery (public)**: `src/pages/handouts/index.astro`
 - **Core App**: `src/components/handoutbuilder/HandoutCanvasApp.tsx`
 - **Styles**: `src/styles/handout-builder.css`
 - **Dependency**: `html-to-image` for exporting.

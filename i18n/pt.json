@@ -9,6 +9,10 @@
       "files": {
         "description": "Visualize e gerencie todos os seus arquivos armazenados no R2 da Cloudflare.",
         "title": "Meus Arquivos"
+      },
+      "handout": {
+        "description": "Crie e exporte handouts personalizados.",
+        "title": "Editor de Documentos"
       }
     },
     "authing": "Verificando autenticação...",
@@ -172,6 +176,12 @@
       }
     },
     "logout": "Desconectar"
+  },
+  "handouts": {
+    "title": "Templates de Handouts",
+    "desc": "Escolha um template e abra no editor.",
+    "cta": "Abrir no editor",
+    "note": "É necessário estar logado para editar."
   },
   "default": {
     "desc": "Mini Kraken é um site de RPG que oferece ferramentas, artigos e conteúdo para jogadores e mestres de RPG. Aqui você encontra informações sobre Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling, e outros sistemas de RPG."

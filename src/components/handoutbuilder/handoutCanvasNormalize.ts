@@ -141,6 +141,11 @@ function normalizeLayer(raw: unknown): Layer | null {
   if (type === "image") {
     const src = safeString(raw.src, "");
     if (!src) return null;
+    const svgSource = safeString(raw.svgSource, "") || null;
+    const svgFill = safeString(raw.svgFill, DEFAULT_SHAPE_FILL_COLOR);
+    const svgStroke = safeString(raw.svgStroke, DEFAULT_TEXT_STROKE_COLOR);
+    const svgFillEnabled = safeBoolean(raw.svgFillEnabled, false);
+    const svgStrokeEnabled = safeBoolean(raw.svgStrokeEnabled, false);
 
     const layer: ShapeLayer = {
       ...base,
@@ -157,11 +162,21 @@ function normalizeLayer(raw: unknown): Layer | null {
       imageFit: normalizeImageFit(raw.imageFit),
       imageWidth: safeNumber(raw.imageWidth, 0) || undefined,
       imageHeight: safeNumber(raw.imageHeight, 0) || undefined,
+      svgSource,
+      svgFill: svgSource ? svgFill : undefined,
+      svgStroke: svgSource ? svgStroke : undefined,
+      svgFillEnabled: svgSource ? svgFillEnabled : undefined,
+      svgStrokeEnabled: svgSource ? svgStrokeEnabled : undefined,
     };
     return layer;
   }
 
   if (type === "shape") {
+    const svgSource = safeString(raw.svgSource, "") || null;
+    const svgFill = safeString(raw.svgFill, DEFAULT_SHAPE_FILL_COLOR);
+    const svgStroke = safeString(raw.svgStroke, DEFAULT_TEXT_STROKE_COLOR);
+    const svgFillEnabled = safeBoolean(raw.svgFillEnabled, false);
+    const svgStrokeEnabled = safeBoolean(raw.svgStrokeEnabled, false);
     const layer: ShapeLayer = {
       ...base,
       type: "shape",
@@ -177,6 +192,11 @@ function normalizeLayer(raw: unknown): Layer | null {
       imageFit: normalizeImageFit(raw.imageFit),
       imageWidth: safeNumber(raw.imageWidth, 0) || undefined,
       imageHeight: safeNumber(raw.imageHeight, 0) || undefined,
+      svgSource,
+      svgFill: svgSource ? svgFill : undefined,
+      svgStroke: svgSource ? svgStroke : undefined,
+      svgFillEnabled: svgSource ? svgFillEnabled : undefined,
+      svgStrokeEnabled: svgSource ? svgStrokeEnabled : undefined,
     };
     return layer;
   }

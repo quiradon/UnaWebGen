@@ -5,6 +5,10 @@
       "old": {
         "description": "Pristupite i pregledajte svoje stare Kraken listove likova kako biste dohvatili podatke.",
         "title": "Pregledaj stare zapise"
+      },
+      "handout": {
+        "description": "Create and export custom handouts.",
+        "title": "Document Editor"
       }
     },
     "authing": "Provjeravam autentičnost...",
@@ -148,6 +152,12 @@
       }
     },
     "logout": "Odspoji"
+  },
+  "handouts": {
+    "title": "Handout Templates",
+    "desc": "Choose a template and open it in the editor.",
+    "cta": "Open in editor",
+    "note": "Login is required to edit."
   },
   "default": {
     "desc": "Mini Kraken je RPG web stranica koja nudi alate, članke i sadržaj za igrače i voditelje igara uloga. Ovdje možete pronaći informacije o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling i drugim RPG sustavima.\n"

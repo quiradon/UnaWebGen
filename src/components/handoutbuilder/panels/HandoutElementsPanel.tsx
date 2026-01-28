@@ -1,4 +1,5 @@
-import { Circle, Square, Star, Triangle, Type } from "lucide-react";
+import { useRef } from "react";
+import { Circle, Square, Star, Triangle, Type, Upload } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { ShapeKind } from "@/components/handoutbuilder/handoutCanvasTypes";
@@ -6,9 +7,12 @@ import type { ShapeKind } from "@/components/handoutbuilder/handoutCanvasTypes";
 type HandoutElementsPanelProps = {
   addText: () => void;
   addShape: (kind: ShapeKind) => void;
+  addSvg: (files: FileList) => void;
 };
 
-export function HandoutElementsPanel({ addText, addShape }: HandoutElementsPanelProps) {
+export function HandoutElementsPanel({ addText, addShape, addSvg }: HandoutElementsPanelProps) {
+  const svgFileRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <div className="handout-panel-section">
       <div className="handout-panel-title">Elementos</div>
@@ -51,6 +55,26 @@ export function HandoutElementsPanel({ addText, addShape }: HandoutElementsPanel
           </Button>
         </div>
         <div className="handout-panel-hint">Escolha uma forma e personalize o preenchimento nas propriedades.</div>
+      </div>
+      <div className="handout-panel-card">
+        <div className="handout-panel-subtitle">SVG</div>
+        <Button type="button" variant="outline" onClick={() => svgFileRef.current?.click()} className="w-full gap-2">
+          <Upload className="h-4 w-4" />
+          Enviar SVG
+        </Button>
+        <input
+          ref={svgFileRef}
+          type="file"
+          accept=".svg,image/svg+xml"
+          multiple
+          className="hidden"
+          onChange={(event) => {
+            const files = event.target.files;
+            if (files?.length) addSvg(files);
+            event.currentTarget.value = "";
+          }}
+        />
+        <div className="handout-panel-hint">Envie um SVG para inserir como elemento.</div>
       </div>
     </div>
   );

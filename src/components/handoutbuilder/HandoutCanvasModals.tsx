@@ -2,11 +2,11 @@ import { Button } from "@/components/ui/button";
 import type { AssetItem, CSSVars, HandoutTemplateEntry } from "@/components/handoutbuilder/handoutCanvasTypes";
 
 type HandoutCanvasModalsProps = {
-  pendingTemplateOption: HandoutTemplateEntry | null;
-  pendingTemplatePrimaryText: string[];
-  pendingTemplateVars: CSSVars;
-  confirmTemplateChange: () => void;
-  cancelTemplateChange: () => void;
+  pendingTemplateOption?: HandoutTemplateEntry | null;
+  pendingTemplatePrimaryText?: string[];
+  pendingTemplateVars?: CSSVars;
+  confirmTemplateChange?: () => void;
+  cancelTemplateChange?: () => void;
   pendingAsset: AssetItem | null;
   assetPreviewVars: CSSVars;
   confirmAssetImport: () => void;
@@ -15,11 +15,11 @@ type HandoutCanvasModalsProps = {
 
 export function HandoutCanvasModals(props: HandoutCanvasModalsProps) {
   const {
-    pendingTemplateOption,
-    pendingTemplatePrimaryText,
-    pendingTemplateVars,
-    confirmTemplateChange,
-    cancelTemplateChange,
+    pendingTemplateOption = null,
+    pendingTemplatePrimaryText = [],
+    pendingTemplateVars = {} as CSSVars,
+    confirmTemplateChange = () => {},
+    cancelTemplateChange = () => {},
     pendingAsset,
     assetPreviewVars,
     confirmAssetImport,

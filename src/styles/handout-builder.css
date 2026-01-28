@@ -166,6 +166,34 @@
   box-shadow: inset 0 0 0 1px hsl(var(--primary) / 0.2);
 }
 
+.handout-builder .handout-sidebar-auth {
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.handout-builder .handout-sidebar-auth .auth-widget__root {
+  display: flex;
+  justify-content: center;
+}
+
+.handout-builder .handout-sidebar-auth .auth-widget__toggle-wrapper {
+  justify-content: center;
+}
+
+.handout-builder .handout-sidebar-auth .auth-widget__username,
+.handout-builder .handout-sidebar-auth .auth-widget__support-btn {
+  display: none !important;
+}
+
+.handout-builder .handout-sidebar-auth .auth-widget__dropdown {
+  top: auto;
+  bottom: calc(100% + 0.5rem);
+  left: 0;
+  right: auto;
+}
+
 .handout-builder .handout-sidebar-panel {
   position: absolute;
   top: 0;
@@ -1372,6 +1400,31 @@
 
 .handout-weight-option .handout-weight-preview {
   color: inherit;
+}
+
+.handout-builder .handout-font-select-content {
+  max-height: 320px;
+}
+
+.handout-builder .handout-font-select-search {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: hsl(var(--background));
+  padding: 6px;
+  border-bottom: 1px solid hsl(var(--border));
+  margin: -4px -4px 4px;
+}
+
+.handout-builder .handout-font-select-input {
+  height: 32px;
+  font-size: 0.8rem;
+}
+
+.handout-builder .handout-font-select-empty {
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  color: hsl(var(--muted-foreground));
 }
 
 .handout-builder .handout-blend-trigger {

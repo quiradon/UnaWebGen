@@ -116,6 +116,11 @@ export type ShapeLayer = BaseLayer & {
   imageFit: ShapeImageFit;
   imageWidth?: number;
   imageHeight?: number;
+  svgSource?: string | null;
+  svgFill?: string;
+  svgStroke?: string;
+  svgFillEnabled?: boolean;
+  svgStrokeEnabled?: boolean;
 };
 
 export type Layer = TextLayer | ShapeLayer;

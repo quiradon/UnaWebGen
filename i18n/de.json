@@ -5,6 +5,10 @@
       "old": {
         "description": "Greifen Sie auf Ihre alten Kraken-Charakterbögen zu und sehen Sie diese an, um die Daten wiederherzustellen.",
         "title": "Alte Aufzeichnungen einsehen"
+      },
+      "handout": {
+        "description": "Create and export custom handouts.",
+        "title": "Document Editor"
       }
     },
     "authing": "Authentifizierung wird überprüft...",
@@ -148,6 +152,12 @@
       }
     },
     "logout": "Trennen"
+  },
+  "handouts": {
+    "title": "Handout Templates",
+    "desc": "Choose a template and open it in the editor.",
+    "cta": "Open in editor",
+    "note": "Login is required to edit."
   },
   "default": {
     "desc": "Mini Kraken ist eine RPG-Website, die Tools, Artikel und Inhalte für RPG-Spieler und Spielleiter bietet. Hier finden Sie Informationen zu Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, Storytelling und anderen RPG-Systemen."

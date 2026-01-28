@@ -5,6 +5,10 @@
       "old": {
         "description": "데이터 복구를 위해 Kraken의 오래된 캐릭터 시트에 액세스하여 확인하세요.",
         "title": "이전 기록 조회"
+      },
+      "handout": {
+        "description": "Create and export custom handouts.",
+        "title": "Document Editor"
       }
     },
     "authing": "인증 확인 중...",
@@ -148,6 +152,12 @@
       }
     },
     "logout": "연결 끊기"
+  },
+  "handouts": {
+    "title": "Handout Templates",
+    "desc": "Choose a template and open it in the editor.",
+    "cta": "Open in editor",
+    "note": "Login is required to edit."
   },
   "default": {
     "desc": "Mini Kraken은 RPG 플레이어와 DM을 위한 도구, 기사 및 콘텐츠를 제공하는 RPG 웹사이트입니다. 여기에서 던전 앤 드래곤, 콜 오브 큘툴후, GURPS, FATE, 스토리텔링 및 기타 RPG 시스템에 대한 정보를 찾을 수 있습니다."

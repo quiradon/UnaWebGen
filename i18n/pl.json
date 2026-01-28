@@ -5,6 +5,10 @@
       "old": {
         "description": "Uzyskaj dostęp i przeglądaj swoje stare karty postaci Kraken, aby odzyskać dane.",
         "title": "Przeglądaj stare zapisy"
+      },
+      "handout": {
+        "description": "Create and export custom handouts.",
+        "title": "Document Editor"
       }
     },
     "authing": "Sprawdzanie uwierzytelnienia...",
@@ -148,6 +152,12 @@
       }
     },
     "logout": "Rozłącz"
+  },
+  "handouts": {
+    "title": "Handout Templates",
+    "desc": "Choose a template and open it in the editor.",
+    "cta": "Open in editor",
+    "note": "Login is required to edit."
   },
   "default": {
     "desc": "Mini Kraken to strona RPG oferująca narzędzia, artykuły i treści dla graczy RPG i Mistrzów Gry. Znajdziesz tu informacje o Dungeons and Dragons, Call of Cthulhu, GURPS, FATE, opowiadaniu historii i innych systemach RPG."

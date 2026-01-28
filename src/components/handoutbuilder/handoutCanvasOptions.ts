@@ -6,45 +6,38 @@ import type {
   ShapeImageFit,
   ShapeKind,
 } from "@/components/handoutbuilder/handoutCanvasTypes";
+import fontPresets from "@data/fonts.json";
 
-export const FONT_PRESETS: Record<FontPresetId, { label: string; stack: string }> = {
-  serif: { label: "Serif (Sistema)", stack: 'ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' },
-  sans: {
-    label: "Sans (Sistema)",
-    stack: 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif',
-  },
-  mono: {
-    label: "Mono (Sistema)",
-    stack:
-      'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-  },
-  inter: { label: "Inter", stack: 'Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif' },
-  roboto: { label: "Roboto", stack: 'Roboto, ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif' },
-  montserrat: {
-    label: "Montserrat",
-    stack: 'Montserrat, ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif',
-  },
-  merriweather: {
-    label: "Merriweather",
-    stack: 'Merriweather, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
-  },
-  "playfair-display": {
-    label: "Playfair Display",
-    stack: 'Playfair Display, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
-  },
-  cinzel: { label: "Cinzel", stack: 'Cinzel, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif' },
-  "im-fell-english": {
-    label: "IM Fell English",
-    stack: 'IM Fell English, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
-  },
-  "jetbrains-mono": {
-    label: "JetBrains Mono",
-    stack:
-      'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-  },
+export type FontPresetConfig = {
+  id: FontPresetId;
+  label: string;
+  stack: string;
+  path: string | null;
 };
 
-export const FONT_PRESET_IDS = Object.keys(FONT_PRESETS) as FontPresetId[];
+const rawFontPresets = fontPresets as Array<{
+  id: FontPresetId;
+  label: string;
+  stack: string;
+  path?: string | null;
+}>;
+
+export const FONT_PRESET_LIST: FontPresetConfig[] = rawFontPresets.map((preset) => ({
+  id: preset.id,
+  label: preset.label,
+  stack: preset.stack,
+  path: preset.path ?? null,
+}));
+
+export const FONT_PRESETS = FONT_PRESET_LIST.reduce<Record<FontPresetId, Omit<FontPresetConfig, "id">>>(
+  (acc, preset) => {
+    acc[preset.id] = { label: preset.label, stack: preset.stack, path: preset.path };
+    return acc;
+  },
+  {} as Record<FontPresetId, Omit<FontPresetConfig, "id">>,
+);
+
+export const FONT_PRESET_IDS = FONT_PRESET_LIST.map((preset) => preset.id) as FontPresetId[];
 export const DEFAULT_FONT_PRESET: FontPresetId = "serif";
 export const FONT_WEIGHT_VALUES = [100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
 export const FONT_WEIGHT_OPTIONS: ReadonlyArray<{ value: FontWeight; label: string }> = [

@@ -64,7 +64,14 @@ import {
 } from "@/components/handoutbuilder/handoutCanvasDefaults";
 import { applyAlphaToColor } from "@/components/handoutbuilder/handoutCanvasEffects";
 import { getClosestWeight, getBoldWeight, getRegularWeight } from "@/components/handoutbuilder/handoutCanvasFontUtils";
-import { createId, fileToDataUrl, getImageNaturalSize } from "@/components/handoutbuilder/handoutCanvasHelpers";
+import {
+  buildSvgDataUrl,
+  createId,
+  fileToDataUrl,
+  getImageNaturalSize,
+  isSvgFile,
+  readFileText,
+} from "@/components/handoutbuilder/handoutCanvasHelpers";
 import {
   isObject,
   normalizeDocV1,
@@ -73,13 +80,12 @@ import {
   safeBoolean,
   safeNumber,
 } from "@/components/handoutbuilder/handoutCanvasNormalize";
-import { getPreviewSize, getTemplatePreviewLines, getTemplatePreviewStyle } from "@/components/handoutbuilder/handoutCanvasTemplates";
+import { getPreviewSize } from "@/components/handoutbuilder/handoutCanvasTemplates";
 
 function HandoutCanvasBuilder() {
   type SidebarTab =
     | "elements"
     | "assets"
-    | "templates"
     | "page"
     | "props"
     | "effects"
@@ -87,7 +93,6 @@ function HandoutCanvasBuilder() {
   const [sidebarTab, setSidebarTab] = useState<SidebarTab>("elements");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [doc, setDoc] = useState<HandoutCanvasDocV1>(DEFAULT_DOC);
-  const [pendingTemplateId, setPendingTemplateId] = useState<string | null>(null);
   const [topbarPulse, setTopbarPulse] = useState(false);
   const [colorHistory, setColorHistory] = useState<string[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -135,6 +140,7 @@ function HandoutCanvasBuilder() {
   const groupDragFrameRef = useRef<number | null>(null);
   const groupDragPendingRef = useRef<{ dx: number; dy: number } | null>(null);
   const groupDragAnchorRef = useRef<{ offsetX: number; offsetY: number } | null>(null);
+  const appliedTemplateRef = useRef(false);
   const groupDragRef = useRef<{
     ids: string[];
     startBounds: { x: number; y: number; width: number; height: number };
@@ -295,15 +301,6 @@ function HandoutCanvasBuilder() {
   }, [snapEnabled]);
 
   useEffect(() => {
-    if (!pendingTemplateId) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setPendingTemplateId(null);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [pendingTemplateId]);
-
-  useEffect(() => {
     if (!pendingAsset) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setPendingAsset(null);
@@ -345,23 +342,34 @@ function HandoutCanvasBuilder() {
   const templateLibrary = useMemo(() => normalizeTemplateLibrary(templateLibraryData), []);
   const templateClass = doc.template === "none" ? "" : `handout-template-${doc.template}`;
 
-  const pendingTemplateOption = useMemo(
-    () => templateLibrary.find((option) => option.id === pendingTemplateId) ?? null,
-    [pendingTemplateId, templateLibrary],
-  );
-  const pendingTemplatePreviewLines = useMemo(
-    () => (pendingTemplateOption ? getTemplatePreviewLines(pendingTemplateOption.doc, 1) : []),
-    [pendingTemplateOption],
-  );
-  const pendingTemplatePrimaryText =
-    pendingTemplatePreviewLines.length ? pendingTemplatePreviewLines : ["Sem texto"];
-  const pendingTemplateVars = useMemo(
-    () =>
-      pendingTemplateOption
-        ? getTemplatePreviewStyle(pendingTemplateOption.doc, TEMPLATE_PREVIEW_LARGE_MAX)
-        : derivedPage.vars,
-    [pendingTemplateOption, derivedPage.vars],
-  );
+  useEffect(() => {
+    if (!hasLoaded || appliedTemplateRef.current) return;
+    const params = new URLSearchParams(window.location.search);
+    const templateId = params.get("template");
+    if (!templateId) return;
+    const templateEntry = templateLibrary.find((entry) => entry.id === templateId);
+    if (!templateEntry) return;
+    appliedTemplateRef.current = true;
+    setDoc({
+      ...templateEntry.doc,
+      templateId: templateEntry.id,
+    });
+    clearSelection();
+    setEditingId(null);
+    setManipulatingId(null);
+    editingSnapshotRef.current = "";
+    setContextMenu(null);
+    setPendingAsset(null);
+    setSidebarTab("elements");
+
+    try {
+      const nextUrl = new URL(window.location.href);
+      nextUrl.searchParams.delete("template");
+      window.history.replaceState(window.history.state, "", nextUrl.toString());
+    } catch {
+      // ignore URL cleanup issues
+    }
+  }, [hasLoaded, templateLibrary]);
   const assetPreviewVars = useMemo(() => {
     if (!pendingAsset) return {};
     const size = getPreviewSize(pendingAsset.width, pendingAsset.height, TEMPLATE_PREVIEW_LARGE_MAX);
@@ -490,28 +498,6 @@ function HandoutCanvasBuilder() {
     if (!ids.length) return;
     const primaryId = selectedId ?? ids[0] ?? null;
     openContextMenu(event, ids, primaryId);
-  }
-
-  function requestTemplateChange(id: string) {
-    if (id === doc.templateId) return;
-    setPendingTemplateId(id);
-  }
-
-  function confirmTemplateChange() {
-    if (!pendingTemplateOption) return;
-    setDoc({
-      ...pendingTemplateOption.doc,
-      templateId: pendingTemplateOption.id,
-    });
-    clearSelection();
-    setEditingId(null);
-    setManipulatingId(null);
-    editingSnapshotRef.current = "";
-    setPendingTemplateId(null);
-  }
-
-  function cancelTemplateChange() {
-    setPendingTemplateId(null);
   }
 
   function requestAssetImport(asset: AssetItem) {
@@ -1043,8 +1029,22 @@ function updateShadowEffect(
 
     for (const file of list) {
       try {
-        const src = await fileToDataUrl(file);
-        const layer = await createImageShapeLayerFromSrc(src, file.name);
+        let layer: ShapeLayer | null = null;
+        if (isSvgFile(file)) {
+          const svgText = await readFileText(file);
+          const src = buildSvgDataUrl(svgText);
+          layer = await createImageShapeLayerFromSrc(src, file.name, { imageFit: "fit" });
+          if (layer) {
+            layer.svgSource = svgText;
+            layer.svgFill = DEFAULT_SHAPE_FILL_COLOR;
+            layer.svgStroke = DEFAULT_TEXT_STROKE_COLOR;
+            layer.svgFillEnabled = false;
+            layer.svgStrokeEnabled = false;
+          }
+        } else {
+          const src = await fileToDataUrl(file);
+          layer = await createImageShapeLayerFromSrc(src, file.name);
+        }
         if (layer) created.push(layer);
       } catch (error) {
         console.error(error);
@@ -1057,6 +1057,44 @@ function updateShadowEffect(
     setSelection([created[created.length - 1].id], created[created.length - 1].id);
     setLayersPanelOpen(true);
     toast.success("Imagem(ns) adicionada(s).");
+  }
+
+  async function addSvg(files: FileList) {
+    const list = Array.from(files).filter(
+      (file) => file.type === "image/svg+xml" || file.name.toLowerCase().endsWith(".svg"),
+    );
+    if (!list.length) {
+      toast.error("Selecione arquivos SVG.");
+      return;
+    }
+
+    toast.message(`Carregando ${list.length} SVG(s)...`);
+    const created: ShapeLayer[] = [];
+
+    for (const file of list) {
+      try {
+        const svgText = await readFileText(file);
+        const src = buildSvgDataUrl(svgText);
+        const layer = await createImageShapeLayerFromSrc(src, file.name, { imageFit: "fit" });
+        if (layer) {
+          layer.svgSource = svgText;
+          layer.svgFill = DEFAULT_SHAPE_FILL_COLOR;
+          layer.svgStroke = DEFAULT_TEXT_STROKE_COLOR;
+          layer.svgFillEnabled = false;
+          layer.svgStrokeEnabled = false;
+          created.push(layer);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error(`Falha ao carregar: ${file.name}`);
+      }
+    }
+
+    if (!created.length) return;
+    setDoc((prev) => ({ ...prev, layers: [...prev.layers, ...created] }));
+    setSelection([created[created.length - 1].id], created[created.length - 1].id);
+    setLayersPanelOpen(true);
+    toast.success("SVG(s) adicionados.");
   }
 
   async function createImageShapeLayerFromSrc(
@@ -1130,7 +1168,14 @@ function updateShadowEffect(
 
   async function setShapeFillImage(layerId: string, file: File) {
     try {
-      const src = await fileToDataUrl(file);
+      let src = "";
+      let svgText: string | null = null;
+      if (isSvgFile(file)) {
+        svgText = await readFileText(file);
+        src = buildSvgDataUrl(svgText);
+      } else {
+        src = await fileToDataUrl(file);
+      }
       const natural = await getImageNaturalSize(src);
       updateLayer(layerId, (p) =>
         p.type === "shape"
@@ -1140,6 +1185,12 @@ function updateShadowEffect(
               fillMode: "image",
               imageWidth: natural.width,
               imageHeight: natural.height,
+              imageFit: svgText ? "fit" : p.imageFit,
+              svgSource: svgText,
+              svgFill: svgText ? DEFAULT_SHAPE_FILL_COLOR : undefined,
+              svgStroke: svgText ? DEFAULT_TEXT_STROKE_COLOR : undefined,
+              svgFillEnabled: svgText ? false : undefined,
+              svgStrokeEnabled: svgText ? false : undefined,
             }
           : p,
       );
@@ -1459,7 +1510,7 @@ function updateShadowEffect(
 
   useEffect(() => {
     const onPointerDown = (event: PointerEvent) => {
-      if (sidebarCollapsed || pendingTemplateId || pendingAsset) return;
+      if (sidebarCollapsed || pendingAsset) return;
       const target = event.target as Node | null;
       if (!target) return;
       if (sidebarRef.current?.contains(target)) return;
@@ -1472,7 +1523,7 @@ function updateShadowEffect(
 
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [sidebarCollapsed, pendingTemplateId, pendingAsset]);
+  }, [sidebarCollapsed, pendingAsset]);
 
   const openPropsTab = () => setSidebarTab("props");
 
@@ -1542,7 +1593,7 @@ function updateShadowEffect(
               setSidebarTab={setSidebarTab}
               sidebarCollapsed={sidebarCollapsed}
               setSidebarCollapsed={setSidebarCollapsed}
-              elementsProps={{ addText, addShape }}
+              elementsProps={{ addText, addShape, addSvg }}
               assetsProps={{
                 assetSearch,
                 setAssetSearch,
@@ -1552,11 +1603,6 @@ function updateShadowEffect(
                 collapsedAssetGroups,
                 toggleAssetGroup,
                 requestAssetImport,
-              }}
-              templatesProps={{
-                templateLibrary,
-                activeTemplateId: doc.templateId,
-                requestTemplateChange,
               }}
               pageProps={{
                 doc,
@@ -1647,11 +1693,6 @@ function updateShadowEffect(
             onToggleFlip={toggleFlipSelected}
           />
           <HandoutCanvasModals
-            pendingTemplateOption={pendingTemplateOption}
-            pendingTemplatePrimaryText={pendingTemplatePrimaryText}
-            pendingTemplateVars={pendingTemplateVars}
-            confirmTemplateChange={confirmTemplateChange}
-            cancelTemplateChange={cancelTemplateChange}
             pendingAsset={pendingAsset}
             assetPreviewVars={assetPreviewVars}
             confirmAssetImport={confirmAssetImport}

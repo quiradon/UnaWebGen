@@ -1,0 +1,140 @@
+---
+export const prerender = true;
+
+import Layout from "@layouts/Layout.astro";
+import { getLocale } from "astro-i18n-aut";
+import { loadT, getStaticPaths } from "@lib/i18n";
+import { idiomaR } from "@lib/routes";
+import templateLibraryData from "@data/handout-templates.json";
+import { normalizeTemplateLibrary } from "@/components/handoutbuilder/handoutCanvasNormalize";
+import { getTemplatePreviewLines, getTemplatePreviewStyle } from "@/components/handoutbuilder/handoutCanvasTemplates";
+import { TEMPLATE_PREVIEW_LARGE_MAX } from "@/components/handoutbuilder/handoutCanvasConfig";
+import "@/styles/handout-builder.css";
+
+export { getStaticPaths };
+
+const locale = getLocale(Astro.url);
+const t = await loadT(locale);
+const langPrefix = idiomaR(t);
+const templates = normalizeTemplateLibrary(templateLibraryData);
+const editorBase = langPrefix ? `${langPrefix}/dashboard/handout-builder/` : "/dashboard/handout-builder/";
+---
+
+<Layout t={t} title={t.handouts?.title} desc={t.handouts?.desc}>
+  <section class="handouts-hero">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1 class="display-5 fw-bold text-white mb-3">{t.handouts?.title}</h1>
+          <p class="lead text-secondary mb-2">{t.handouts?.desc}</p>
+          <p class="handouts-note">{t.handouts?.note}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="handouts-gallery">
+    <div class="container">
+      <div class="row g-4">
+        {
+          templates.map((template) => {
+            const previewLines = getTemplatePreviewLines(template.doc, 2);
+            const previewText = previewLines.length ? previewLines : [template.label];
+            const previewVars = getTemplatePreviewStyle(template.doc, TEMPLATE_PREVIEW_LARGE_MAX);
+            const templateClass = template.doc.template === "none" ? "is-base" : `handout-template-${template.doc.template}`;
+            const editorHref = `${editorBase}?template=${encodeURIComponent(template.id)}`;
+
+            return (
+              <div class="col-md-6 col-xl-4">
+                <article class="handout-card h-100">
+                  <div class="handout-card-preview handout-builder">
+                    <div class="handout-template-preview is-large">
+                      <div class={`handout-template-preview-surface ${templateClass}`} style={previewVars}>
+                        <div class="handout-template-preview-text">
+                          {previewText.map((line) => (
+                            <span>{line}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="handout-card-body">
+                    <h3 class="handout-card-title">{template.label}</h3>
+                    <p class="handout-card-desc">{template.description}</p>
+                    <a class="btn btn-primary w-100" href={editorHref}>
+                      {t.handouts?.cta}
+                    </a>
+                  </div>
+                </article>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .handouts-hero {
+    padding: 4rem 0 2rem;
+  }
+
+  .handouts-note {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .handouts-gallery {
+    padding: 1rem 0 4rem;
+  }
+
+  .handout-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(18, 18, 24, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  .handout-card-preview {
+    padding: 20px;
+    background: radial-gradient(circle at 20% 20%, rgba(248, 7, 82, 0.12), transparent 45%),
+      rgba(12, 12, 18, 0.9);
+  }
+
+  .handout-card-body {
+    padding: 16px 18px 20px;
+    display: grid;
+    gap: 10px;
+  }
+
+  .handout-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+  }
+
+  .handout-card-desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+  }
+
+  .handout-card .btn {
+    font-weight: 600;
+  }
+
+  @media (max-width: 576px) {
+    .handouts-hero {
+      padding-top: 3rem;
+    }
+
+    .handout-card-preview {
+      padding: 16px;
+    }
+  }
+</style>

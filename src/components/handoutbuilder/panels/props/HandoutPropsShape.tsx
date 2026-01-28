@@ -10,6 +10,8 @@ import {
   SHAPE_KIND_LABELS,
   SHAPE_KIND_VALUES,
 } from "@/components/handoutbuilder/handoutCanvasOptions";
+import { DEFAULT_SHAPE_FILL_COLOR, DEFAULT_TEXT_STROKE_COLOR } from "@/components/handoutbuilder/handoutCanvasDefaults";
+import { buildSvgImageSrc } from "@/components/handoutbuilder/handoutCanvasHelpers";
 import type { Layer, ShapeFillMode, ShapeImageFit, ShapeKind, ShapeLayer } from "@/components/handoutbuilder/handoutCanvasTypes";
 import { COLOR_SUGGESTIONS } from "@/components/handoutbuilder/handoutCanvasConfig";
 import { clamp } from "@/components/handoutbuilder/handoutCanvasUtils";
@@ -17,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 
 type HandoutPropsShapeProps = {
   selectedLayer: ShapeLayer;
@@ -29,6 +32,29 @@ type HandoutPropsShapeProps = {
 
 export function HandoutPropsShape(props: HandoutPropsShapeProps) {
   const { selectedLayer, updateLayer, recordColor, colorHistory, shapeImageFileRef, setShapeFillImage } = props;
+  const hasSvg = Boolean(selectedLayer.svgSource);
+  const svgFillEnabled = Boolean(selectedLayer.svgFillEnabled);
+  const svgStrokeEnabled = Boolean(selectedLayer.svgStrokeEnabled);
+  const svgFill = selectedLayer.svgFill ?? DEFAULT_SHAPE_FILL_COLOR;
+  const svgStroke = selectedLayer.svgStroke ?? DEFAULT_TEXT_STROKE_COLOR;
+
+  const updateSvgLayer = (
+    patch: Partial<Pick<ShapeLayer, "svgFill" | "svgStroke" | "svgFillEnabled" | "svgStrokeEnabled">>,
+  ) => {
+    updateLayer(selectedLayer.id, (layer) => {
+      if (layer.type !== "shape") return layer;
+      const next = { ...layer, ...patch };
+      const svgSource = next.svgSource;
+      if (!svgSource) return next;
+      const imageSrc = buildSvgImageSrc(svgSource, {
+        fillEnabled: next.svgFillEnabled,
+        fill: next.svgFill,
+        strokeEnabled: next.svgStrokeEnabled,
+        stroke: next.svgStroke,
+      });
+      return { ...next, imageSrc };
+    });
+  };
 
   return (
     <>
@@ -201,6 +227,69 @@ export function HandoutPropsShape(props: HandoutPropsShapeProps) {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+            )}
+
+            {hasSvg && (
+              <div className="grid gap-3 rounded-md border border-input p-3">
+                <div className="text-sm font-medium">SVG</div>
+                <div className="flex items-center justify-between gap-3">
+                  <Label>Preenchimento</Label>
+                  <Switch
+                    checked={svgFillEnabled}
+                    onCheckedChange={(checked) => {
+                      updateSvgLayer({
+                        svgFillEnabled: checked,
+                        svgFill: checked ? svgFill : selectedLayer.svgFill,
+                      });
+                    }}
+                  />
+                </div>
+                {svgFillEnabled && (
+                  <div className="grid gap-2">
+                    <Label>Cor do preenchimento</Label>
+                    <ColorPicker
+                      value={svgFill}
+                      onValueChange={(value) => {
+                        updateSvgLayer({ svgFill: value, svgFillEnabled: true });
+                        recordColor(value);
+                      }}
+                      suggestions={COLOR_SUGGESTIONS}
+                      history={colorHistory}
+                      ariaLabel="Cor do preenchimento"
+                      className="handout-color-inline"
+                    />
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between gap-3">
+                  <Label>Contorno</Label>
+                  <Switch
+                    checked={svgStrokeEnabled}
+                    onCheckedChange={(checked) => {
+                      updateSvgLayer({
+                        svgStrokeEnabled: checked,
+                        svgStroke: checked ? svgStroke : selectedLayer.svgStroke,
+                      });
+                    }}
+                  />
+                </div>
+                {svgStrokeEnabled && (
+                  <div className="grid gap-2">
+                    <Label>Cor do contorno</Label>
+                    <ColorPicker
+                      value={svgStroke}
+                      onValueChange={(value) => {
+                        updateSvgLayer({ svgStroke: value, svgStrokeEnabled: true });
+                        recordColor(value);
+                      }}
+                      suggestions={COLOR_SUGGESTIONS}
+                      history={colorHistory}
+                      ariaLabel="Cor do contorno"
+                      className="handout-color-inline"
+                    />
+                  </div>
+                )}
               </div>
             )}
           </div>

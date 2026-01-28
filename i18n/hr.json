@@ -545,13 +545,17 @@
       "0": "Ukloni oglase",
       "1": "%0% gigabajti pohrane",
       "2": "Izvoz visoke kvalitete",
-      "3": "Osobnost vašeg bota"
+      "3": "Osobnost vašeg bota",
+      "4": "Komercijalna upotreba",
+      "5": "Ekskluzivni modeli letaka",
+      "6": "Rani pristup"
     },
     "info": {
       "kc": "Kraken Coins su digitalni bodovi koji se mogu zamijeniti za skinove, predmete i resurse ekosistema i zajednice",
       "storage": "O armazenamento refere-se a tudo que é registrado no ecossistema, como documentos, fotos de personagens, capas de aventuras e quaisquer uploads.",
       "quality": "Podignite standard s prijenosima visoke vjernosti i izvozima u maksimalnoj rezoluciji. Ekskluzivna značajka za one koji ne pristaju na ništa manje od tehničke i vizualne izvrsnosti u svakom detalju.",
-      "customize_avatar": "Prilagodite profilnu sliku, banner i biografiju bota kako bi odražavali jedinstveni brend i stil vašeg servera."
+      "customize_avatar": "Prilagodite profilnu sliku, banner i biografiju bota kako bi odražavali jedinstveni brend i stil vašeg servera.",
+      "license": "S ovom dozvolom moći ćete prodavati materijale proizvedene pomoću alata dostupnih na web stranici."
     }
   },
   "price": {

@@ -545,13 +545,17 @@
       "0": "Pozbądź się reklam.",
       "1": "%0% Giga bajtów pamięci",
       "2": "Eksport w wysokiej jakości",
-      "3": "Osobowość twojego bota"
+      "3": "Osobowość twojego bota",
+      "4": "Użytek komercyjny",
+      "5": "Ekskluzywne modele materiałów informacyjnych",
+      "6": "Wczesny dostęp"
     },
     "info": {
       "kc": "Kraken Coins to punkty cyfrowe, które można wymieniać na skiny, przedmioty i zasoby ekosystemu oraz społeczności.",
       "storage": "Przechowywanie odnosi się do wszystkiego, co jest zarejestrowane w ekosystemie, dokumentów, zdjęć postaci, okładek przygód i wszelkich przesłanych plików.",
       "quality": "Podnieś standard dzięki przesyłaniu plików o wysokiej wierności i eksportom w maksymalnej rozdzielczości. Funkcja dostępna wyłącznie dla tych, którzy nie rezygnują z doskonałości technicznej i wizualnej w każdym detalu.",
-      "customize_avatar": "Dostosuj zdjęcie profilowe, baner i biografię bota, aby odzwierciedlały markę i unikalny styl Twojego serwera."
+      "customize_avatar": "Dostosuj zdjęcie profilowe, baner i biografię bota, aby odzwierciedlały markę i unikalny styl Twojego serwera.",
+      "license": "Dzięki tej autoryzacji będziesz mógł sprzedawać materiały stworzone za pomocą narzędzi dostępnych na stronie."
     }
   },
   "price": {

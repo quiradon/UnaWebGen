@@ -10,7 +10,9 @@ import {
   Hd,
   Crown,
   VenetianMask,
-  BadgeDollarSign
+  BadgeDollarSign,
+  Scroll,
+  Wheat,
 } from "@lucide/astro";
 import tier1 from "@assets/img/tiers_premium/1.webp";
 import tier2 from "@assets/img/tiers_premium/2.webp";
@@ -38,8 +40,8 @@ const period = isPtBr ? "mês" : "Month";
 
 const price0 = isPtBr ? `R$ 15/${period}` : `$ 5/${period}`;
 const price1 = isPtBr ? `R$ 25/${period}` : `$ 8/${period}`;
-const price2 = isPtBr ? `R$ 30/${period}` : `$ 12/${period}`;
-const price3 = isPtBr ? `R$ 50/${period}` : `$ 16/${period}`;
+const price2 = isPtBr ? `R$ 30/${period}` : `$ 10/${period}`;
+const price3 = isPtBr ? `R$ 50/${period}` : `$ 12/${period}`;
 
 const plans = [
   {
@@ -58,6 +60,7 @@ const plans = [
 
     ],
     secondary: [
+      { Icon: Scroll, text: t.premium.new[5]},
       { Icon: Dices, text: feat?.[0] },
     ],
     accent: "#34DF68",
@@ -81,6 +84,7 @@ const plans = [
 
     ],
     secondary: [
+      { Icon: Scroll, text: t.premium.new[5]},
       { Icon: Dices, text: feat?.[0] },
     ],
     accent: "#FF7B29",
@@ -102,6 +106,7 @@ const plans = [
       { Icon: MessageCircle, text: supportLabel },
     ],
     secondary: [
+      { Icon: Scroll, text: t.premium.new[5]},
       { Icon: Dices, text: feat?.[0] },
     ],
     accent: "#38bdf8",
@@ -120,12 +125,14 @@ const plans = [
       { Icon: Key, text: t.premium.new[0] },
       { Icon: Save, text: t.premium.new[1].replace("%0%", "35"), info: t.premium.info.storage },
       { Icon: Hd, text: t.premium.new[2], info: t.premium.info.quality },
-
       { Icon: MessageCircle, text: supportLabel },
       { Icon: VenetianMask, text: t.premium.new[3], info: t.premium.info.customize_avatar },
-      { Icon: BadgeDollarSign, text: "Uso Comercial", info: "explicação do uso aqui" },
+      { Icon: BadgeDollarSign, text: t.premium.new[4], info: t.premium.info.license },
+      { Icon: Wheat, text: t.premium.new[6], info: t.premium.info.license },
+
     ],
     secondary: [
+      { Icon: Scroll, text: t.premium.new[5]},
       { Icon: Dices, text: feat?.[0] }
     ],
     accent: "#FF0655",

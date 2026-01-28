@@ -545,13 +545,17 @@
       "0": "Singkirkan iklan.",
       "1": "%0% Gigas de armazenamento",
       "2": "Ekspor Berkualitas Tinggi",
-      "3": "Kepribadian untuk Bot Anda"
+      "3": "Kepribadian untuk Bot Anda",
+      "4": "Penggunaan Komersial",
+      "5": "Model Handouts Eksklusif",
+      "6": "Akses Awal"
     },
     "info": {
       "kc": "Kraken Coins são pontos digitais que podem ser trocados por skins, itens e recursos do ecossistema e da comunidade",
       "storage": "O armazenamento refere-se a tudo que é registrado no ecossistema, como documentos, fotos de personagens, capas de aventuras e quaisquer uploads",
       "quality": "Tingkatkan standar dengan unggahan berkualitas tinggi dan ekspor dalam resolusi maksimal. Fitur eksklusif bagi mereka yang tidak mengorbankan keunggulan teknis dan visual di setiap detail.",
-      "customize_avatar": "Sesuaikan foto profil, spanduk, dan biografi bot agar mencerminkan merek dan gaya unik server Anda."
+      "customize_avatar": "Sesuaikan foto profil, spanduk, dan biografi bot agar mencerminkan merek dan gaya unik server Anda.",
+      "license": "Dengan otorisasi ini, Anda dapat memperdagangkan materi yang diproduksi melalui alat yang tersedia di situs."
     }
   },
   "price": {

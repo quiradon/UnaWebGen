@@ -1,0 +1,129 @@
+---
+import GlassCard from "@components/ui-astro/GlassCard.astro";
+import { Crown, Coins, HardDrive } from "@lucide/astro";
+
+interface Props {
+  t: any;
+}
+
+const { t } = Astro.props;
+
+const stats = [
+  {
+    icon: Crown,
+    label: t?.Dashbaord?.stats?.premium || "Premium",
+    value: "Free",
+    id: "user-premium-tier",
+  },
+  {
+    icon: Coins,
+    label: t?.Dashbaord?.stats?.coins || "Kraken Coins",
+    value: "0",
+    id: "user-coins",
+  },
+  {
+    icon: HardDrive,
+    label: t?.Dashbaord?.stats?.storage || "Armazenamento",
+    value: "0 MB",
+    id: "user-storage",
+  },
+];
+---
+
+<GlassCard as="div" class="quick-stats-card p-3">
+  <div class="stats-grid">
+    {
+      stats.map((stat) => (
+        <div class="stat-item">
+          <div class="stat-icon">
+            <stat.icon size={20} />
+          </div>
+          <div class="stat-content">
+            <div class="stat-label">{stat.label}</div>
+            <div class="stat-value" id={stat.id}>
+              {stat.value}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</GlassCard>
+
+<style>
+  .quick-stats-card {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(248, 7, 82, 0.1);
+    color: var(--bs-primary);
+    transition: all 0.3s ease;
+  }
+
+  .stat-item:hover .stat-icon {
+    background: rgba(248, 7, 82, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-value {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  @media (max-width: 576px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .stat-item {
+      flex-direction: row;
+      text-align: left;
+    }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .stat-content {
+      align-items: flex-start;
+    }
+  }
+</style>

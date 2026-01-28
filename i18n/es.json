@@ -545,13 +545,17 @@
       "0": "Elimina los anuncios",
       "1": "%0% Gigas de almacenamiento",
       "2": "Exportación en Alta Calidad",
-      "3": "Personalidad para su Bot"
+      "3": "Personalidad para su Bot",
+      "4": "Uso Comercial",
+      "5": "Modelos de Handouts Exclusivos",
+      "6": "Acceso Anticipado"
     },
     "info": {
       "kc": "Las monedas Kraken son puntos digitales que se pueden canjear por skins, objetos y recursos del ecosistema y de la comunidad",
       "storage": "El almacenamiento se refiere a todo lo que se registra en el ecosistema, documentos, fotos de personajes, portadas de aventuras y cualquier carga.",
       "quality": "Eleva el estándar con cargas de alta fidelidad y exportaciones en resolución máxima. Un recurso exclusivo para quienes no renuncian a la excelencia técnica y visual en cada detalle.",
-      "customize_avatar": "Personaliza la foto de perfil, el banner y la biografía del bot para que reflejen la marca y el estilo único de tu servidor."
+      "customize_avatar": "Personaliza la foto de perfil, el banner y la biografía del bot para que reflejen la marca y el estilo único de tu servidor.",
+      "license": "Con esta autorización, podrá comercializar materiales producidos mediante las herramientas disponibles en el sitio."
     }
   },
   "price": {

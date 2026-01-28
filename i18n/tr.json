@@ -545,13 +545,17 @@
       "0": "Reklamlardan kurtulun.",
       "1": "%0% Giga bajtów pamięci",
       "2": "Yüksek Kalitede İhracat",
-      "3": "Botunuza Kişilik Katın"
+      "3": "Botunuza Kişilik Katın",
+      "4": "Ticari Kullanım",
+      "5": "Özel El İlanı Modelleri",
+      "6": "Erken Erişim"
     },
     "info": {
       "kc": "Kraken Coins dijital puanlardır ve ekosistem ve topluluk içindeki skinler, eşyalar ve kaynaklarla takas edilebilir.",
       "storage": "Depolama, ekosistemde kaydedilen her şeyi ifade eder; belgeler, karakter fotoğrafları, macera kapakları ve herhangi bir yükleme.",
       "quality": "Yüksek sadakatli yüklemeler ve maksimum çözünürlükte dışa aktarımlarla standartları yükseltin. Her detayda teknik ve görsel mükemmellikten ödün vermeyenler için özel bir özellik.",
-      "customize_avatar": "Profil fotoğrafını, afişi ve botun biyografisini, sunucunuzun markasını ve benzersiz tarzını yansıtacak şekilde kişiselleştirin."
+      "customize_avatar": "Profil fotoğrafını, afişi ve botun biyografisini, sunucunuzun markasını ve benzersiz tarzını yansıtacak şekilde kişiselleştirin.",
+      "license": "Bu izinle, sitede bulunan araçlar aracılığıyla üretilen materyalleri ticaretini yapabilirsiniz."
     }
   },
   "price": {

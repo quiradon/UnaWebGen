@@ -545,13 +545,17 @@
       "0": "Elimina gli annunci",
       "1": "%0% GB di archiviazione",
       "2": "Esportazione in Alta Qualità",
-      "3": "Personalità al tuo Bot"
+      "3": "Personalità al tuo Bot",
+      "4": "Uso Commerciale",
+      "5": "Modelli di Handout Esclusivi",
+      "6": "Accesso Anticipato"
     },
     "info": {
       "kc": "Kraken Coins sono punti digitali che possono essere scambiati per skin, oggetti e risorse dell'ecosistema e della comunità",
       "storage": "L'archiviazione riguarda tutto ciò che viene registrato nell'ecosistema, documenti, foto dei personaggi, copertine delle avventure e qualsiasi caricamento.",
       "quality": "Eleva lo standard con caricamenti ad alta fedeltà ed esportazioni in risoluzione massima. Una funzione esclusiva per chi non rinuncia all'eccellenza tecnica e visiva in ogni dettaglio.",
-      "customize_avatar": "Personalizza la foto del profilo, il banner e la biografia del bot in modo che riflettano il marchio e lo stile unico del tuo server."
+      "customize_avatar": "Personalizza la foto del profilo, il banner e la biografia del bot in modo che riflettano il marchio e lo stile unico del tuo server.",
+      "license": "Con questa autorizzazione, potrai commercializzare materiali prodotti tramite gli strumenti disponibili sul sito."
     }
   },
   "price": {

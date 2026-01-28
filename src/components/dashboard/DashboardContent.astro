@@ -2,6 +2,7 @@
 import { BookText, FileText, HardDrive } from "@lucide/astro";
 import ToolCard from "@components/ToolCard.astro";
 import UserProfileCard from "./UserProfileCard.astro";
+import QuickStatsCard from "./QuickStatsCard.astro";
 
 interface Props {
   t: any;
@@ -47,27 +48,30 @@ const toolCards = [
 <section id="dashboard-content" class="dashboard-section">
   <div class="container">
     <div class="row g-4">
-      <div class="col-lg-6 fade-in-up">
+      <!-- User Profile Card -->
+      <div class="col-lg-6 col-xl-6 fade-in-up">
         <UserProfileCard t={t} />
       </div>
 
-      <div class="col-lg-6 fade-in-up" style="animation-delay: 0.1s;">
-        <div class="d-flex flex-column justify-content-between h-100 gap-3">
-          {
-            toolCards.map((card) => (
-              <ToolCard
-                href={card.href}
-                title={card.title}
-                description={card.description}
-                exploreText={t.Dashbaord.actions.explore}
-                hoverLift={false}
-              >
-                <card.Icon size={32} class="tool-icon text-primary" />
-              </ToolCard>
-            ))
-          }
-        </div>
-      </div>
+      <!-- Tool Cards -->
+      {
+        toolCards.map((card, index) => (
+          <div
+            class="col-lg-6 col-xl-6 fade-in-up"
+            style={`animation-delay: ${(index + 1) * 0.1}s;`}
+          >
+            <ToolCard
+              href={card.href}
+              title={card.title}
+              description={card.description}
+              exploreText={t.Dashbaord.actions.explore}
+              hoverLift={true}
+            >
+              <card.Icon size={32} class="tool-icon text-primary" />
+            </ToolCard>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>

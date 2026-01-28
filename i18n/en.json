@@ -49,6 +49,11 @@
       "logout": {
         "label": "Disconnect account"
       }
+    },
+    "stats": {
+      "premium": "Premium",
+      "coins": "Kraken Coins",
+      "storage": "Storage"
     }
   },
   "PageNotFound": {
@@ -569,13 +574,17 @@
       "0": "Get rid of ads",
       "1": "%0% gigabytes of storage",
       "2": "High-Quality Export",
-      "3": "Personality for your Bot"
+      "3": "Personality for your Bot",
+      "4": "Commercial Use",
+      "5": "Exclusive Handout Templates",
+      "6": "Early Access"
     },
     "info": {
       "kc": "Kraken Coins are digital points that can be exchanged for skins, items, and resources within the ecosystem and community.",
       "storage": "Storage refers to everything registered in the ecosystem, including documents, character photos, adventure covers, and any uploads.",
       "quality": "Raise the standard with high-fidelity uploads and maximum resolution exports. An exclusive feature for those who do not compromise on technical and visual excellence in every detail.",
-      "customize_avatar": "Personalize the profile picture, banner, and bot biography so that they reflect your server's unique brand and style."
+      "customize_avatar": "Personalize the profile picture, banner, and bot biography so that they reflect your server's unique brand and style.",
+      "license": "With this authorization, you will be able to commercialize materials produced using the tools available on the site."
     }
   },
   "price": {

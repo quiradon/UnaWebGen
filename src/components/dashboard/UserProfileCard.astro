@@ -12,11 +12,11 @@ const { t } = Astro.props;
 <GlassCard
   as="div"
   id="user-profile-card"
-  class="user-profile-card p-4 h-100"
+  class="user-profile-card p-4 h-100 d-flex flex-column justify-content-center"
   data-loading="true"
   aria-busy="true"
 >
-  <div class="text-center mb-4">
+  <div class="text-center mb-3">
     <div class="avatar-container">
       <div class="avatar-wrapper">
         <div class="avatar-ring user-real-avatar"></div>
@@ -36,38 +36,20 @@ const { t } = Astro.props;
       </div>
     </div>
 
-    <h3 class="text-white mt-3 mb-1 user-real-name" id="user-display-name">-</h3>
-    <p class="text-secondary mb-0 user-real-handle" id="user-username-display">
+    <h3 class="text-white mt-2 mb-1 user-real-name" id="user-display-name" style="font-size: 1.3rem;">-</h3>
+    <p class="text-secondary mb-0 user-real-handle" id="user-username-display" style="font-size: 0.9rem;">
       @-
     </p>
     <Skeleton class="user-skeleton-name" />
     <Skeleton class="user-skeleton-handle" />
   </div>
-
-  <div class="row g-3">
-    <div class="col-12">
-      <div class="user-info-item">
-        <div class="info-label">{t.Dashbaord.user.discord.name.label}</div>
-        <div class="info-value">
-          <span class="user-real-value" id="user-username">-</span>
-          <Skeleton as="span" class="user-skeleton-value" />
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12">
-      <div class="user-info-item">
-        <div class="info-label">{t.Dashbaord.user.discord.id.label}</div>
-        <div class="info-value">
-          <span class="user-real-value" id="user-id">-</span>
-          <Skeleton as="span" class="user-skeleton-value" />
-        </div>
-      </div>
-    </div>
-  </div>
 </GlassCard>
 
 <style>
+  .user-profile-card {
+    min-height: 240px;
+  }
+
   .user-profile-card::before {
     content: "";
     position: absolute;
@@ -94,8 +76,8 @@ const { t } = Astro.props;
 
   .avatar-wrapper {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -131,21 +113,21 @@ const { t } = Astro.props;
   .avatar-img {
     position: relative;
     z-index: 1;
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    border: 4px solid rgba(20, 20, 30, 0.9);
+    border: 3px solid rgba(20, 20, 30, 0.9);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   }
 
   .premium-badge {
     width: auto;
-    height: 45px;
-    max-width: 55px;
+    height: 35px;
+    max-width: 45px;
     object-fit: contain;
     display: none;
     transition: all 0.3s ease;
-    margin-top: -30px;
+    margin-top: -22px;
     z-index: 3;
     position: relative;
   }
@@ -170,7 +152,7 @@ const { t } = Astro.props;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     transition: all 0.3s ease;
   }
 
@@ -181,16 +163,16 @@ const { t } = Astro.props;
   }
 
   .info-label {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
   }
 
   .info-value {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.95);
   }

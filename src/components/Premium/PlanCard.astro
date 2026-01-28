@@ -178,6 +178,12 @@ const monthlyParts = buildPriceParts(priceMonthly);
     border-radius: 16px;
     color: #fff;
     transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 1;
+  }
+
+  .premium-plan-card:has(.premium-plan-card__info:hover),
+  .premium-plan-card:has(.premium-plan-card__info:focus-visible) {
+    z-index: 10;
   }
 
   .premium-plan-card::before {

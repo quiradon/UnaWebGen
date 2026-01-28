@@ -545,13 +545,17 @@
       "0": "Fjern annoncerne.",
       "1": "%0% gigabyte-lagerkapacitet",
       "2": "Eksport i høj kvalitet",
-      "3": "Personlighed til din bot"
+      "3": "Personlighed til din bot",
+      "4": "Kommerciel brug",
+      "5": "Eksklusive håndouts-modeller",
+      "6": "Forhåndsadgang"
     },
     "info": {
       "kc": "Kraken Coins sind digitale Punkte, die gegen Skins, Gegenstände und Ressourcen des Ökosystems und der Gemeinschaft eingetauscht werden können",
       "storage": "Lagring omfatter alt, hvad der er registreret i økosystemet, herunder dokumenter, billeder af figurer, eventcover og eventuelle uploads.",
       "quality": "Løft standarden med uploads i høj opløsning og eksport i maksimal kvalitet. En eksklusiv funktion for dem, der ikke går på kompromis med teknisk og visuel perfektion i hver detalje.",
-      "customize_avatar": "Tilpas botens profilbillede, banner og biografi, så de afspejler dit servermærke og din unikke stil."
+      "customize_avatar": "Tilpas botens profilbillede, banner og biografi, så de afspejler dit servermærke og din unikke stil.",
+      "license": "Med denne tilladelse kan du sælge materialer produceret ved hjælp af de værktøjer, der er tilgængelige på hjemmesiden."
     }
   },
   "price": {

@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "Vizualizirajte i upravljajte svim svojim datotekama pohranjenim na Cloudflare R2.",
+        "title": "Moje datoteke"
       }
     },
     "authing": "Provjeravam autentičnost...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "Odspoji račun"
       }
+    },
+    "files": {
+      "back_to_dashboard": "Povratak na nadzornu ploču",
+      "download": "Preuzmi",
+      "empty": "Još uvijek nemate nijednu datoteku",
+      "error": "Pogreška pri učitavanju datoteka",
+      "file_type": {
+        "0": "Općenito",
+        "1": "Slika",
+        "2": "Dokument",
+        "3": "Zvuk",
+        "4": "Video"
+      },
+      "loading": "Učitavanje datoteka...",
+      "page_description": "Vizualizirajte i upravljajte svim svojim pohranjenim datotekama.",
+      "page_title": "Moje datoteke",
+      "title": "Moje datoteke",
+      "total_files": "datoteke",
+      "total_size": "Ukupna veličina",
+      "view": "Pogledaj"
+    },
+    "stats": {
+      "coins": "Kraken Kovanice",
+      "premium": "Premium",
+      "storage": "Pohrana"
     }
   },
   "PageNotFound": {

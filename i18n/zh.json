@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "可视化并管理您存储在Cloudflare R2中的所有文件。",
+        "title": "我的文件"
       }
     },
     "authing": "正在验证身份...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "断开账户"
       }
+    },
+    "files": {
+      "back_to_dashboard": "返回仪表板",
+      "download": "下载",
+      "empty": "您还没有任何文件",
+      "error": "加载文件时出错",
+      "file_type": {
+        "0": "一般",
+        "1": "图片",
+        "2": "文件",
+        "3": "音频",
+        "4": "视频"
+      },
+      "loading": "正在加载文件...",
+      "page_description": "查看和管理您存储的所有文件。",
+      "page_title": "我的文件",
+      "title": "我的文件",
+      "total_files": "文件",
+      "total_size": "总大小",
+      "view": "查看"
+    },
+    "stats": {
+      "coins": "克拉肯币",
+      "premium": "高级",
+      "storage": "存储"
     }
   },
   "PageNotFound": {

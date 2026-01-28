@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "Просматривайте и управляйте всеми своими файлами, хранящимися в R2 Cloudflare.",
+        "title": "Мои файлы"
       }
     },
     "authing": "Проверка подлинности...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "Отключить аккаунт"
       }
+    },
+    "files": {
+      "back_to_dashboard": "Вернуться на панель управления",
+      "download": "Скачать",
+      "empty": "Вы еще не имеете ни одного файла",
+      "error": "Ошибка при загрузке файлов",
+      "file_type": {
+        "0": "Общий",
+        "1": "Изображение",
+        "2": "Документ",
+        "3": "Аудио",
+        "4": "Видео"
+      },
+      "loading": "Загрузка файлов...",
+      "page_description": "Просматривайте и управляйте всеми вашими сохранёнными файлами.",
+      "page_title": "Мои файлы",
+      "title": "Мои файлы",
+      "total_files": "файлы",
+      "total_size": "Общий размер",
+      "view": "Просмотр"
+    },
+    "stats": {
+      "coins": "Монеты Kraken",
+      "premium": "Премиум",
+      "storage": "Хранение"
     }
   },
   "PageNotFound": {

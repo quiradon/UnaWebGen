@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "R2のCloudflareに保存されているすべてのファイルを表示および管理します。",
+        "title": "私のファイル"
       }
     },
     "authing": "認証を確認中...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "アカウントの接続を解除"
       }
+    },
+    "files": {
+      "back_to_dashboard": "ダッシュボードに戻る",
+      "download": "ダウンロード",
+      "empty": "まだファイルがありません",
+      "error": "ファイルの読み込みエラー",
+      "file_type": {
+        "0": "一般",
+        "1": "画像",
+        "2": "ドキュメント",
+        "3": "オーディオ",
+        "4": "ビデオ"
+      },
+      "loading": "ファイルを読み込み中...",
+      "page_description": "すべての保存されたファイルを表示および管理します。",
+      "page_title": "私のファイル",
+      "title": "私のファイル",
+      "total_files": "ファイル",
+      "total_size": "合計サイズ",
+      "view": "表示する"
+    },
+    "stats": {
+      "coins": "クラケンコイン",
+      "premium": "プレミアム",
+      "storage": "ストレージ"
     }
   },
   "PageNotFound": {

@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "Wyświetlaj i zarządzaj wszystkimi swoimi plikami przechowywanymi w R2 Cloudflare.",
+        "title": "Moje pliki"
       }
     },
     "authing": "Sprawdzanie uwierzytelnienia...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "Odłącz konto"
       }
+    },
+    "files": {
+      "back_to_dashboard": "Wróć do pulpitu nawigacyjnego",
+      "download": "Pobierz",
+      "empty": "Nie masz jeszcze żadnych plików",
+      "error": "Błąd podczas ładowania plików",
+      "file_type": {
+        "0": "Ogólne",
+        "1": "Obraz",
+        "2": "Dokument",
+        "3": "Audio",
+        "4": "Wideo"
+      },
+      "loading": "Ładowanie plików...",
+      "page_description": "Wyświetlaj i zarządzaj wszystkimi swoimi przechowywanymi plikami.",
+      "page_title": "Moje pliki",
+      "title": "Moje pliki",
+      "total_files": "pliki",
+      "total_size": "Całkowity rozmiar",
+      "view": "Wyświetl"
+    },
+    "stats": {
+      "coins": "Monety Kraken",
+      "premium": "Premium",
+      "storage": "Przechowywanie"
     }
   },
   "PageNotFound": {

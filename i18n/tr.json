@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "R2 Cloudflare'da depolanan tüm dosyalarınızı görüntüleyin ve yönetin.",
+        "title": "Dosyalarım"
       }
     },
     "authing": "Kimlik doğrulanıyor...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "Hesabın bağlantısını kes"
       }
+    },
+    "files": {
+      "back_to_dashboard": "Dashboard'a Geri Dön",
+      "download": "İndir",
+      "empty": "Henüz hiç dosyanız yok",
+      "error": "Dosyalar yüklenirken hata oluştu",
+      "file_type": {
+        "0": "Genel",
+        "1": "Resim",
+        "2": "Belge",
+        "3": "Ses",
+        "4": "Video"
+      },
+      "loading": "Dosyalar yükleniyor...",
+      "page_description": "Tüm depolanan dosyalarınızı görüntüleyin ve yönetin.",
+      "page_title": "Dosyalarım",
+      "title": "Dosyalarım",
+      "total_files": "dosyalar",
+      "total_size": "Toplam boyut",
+      "view": "Görünüm"
+    },
+    "stats": {
+      "coins": "Kraken Paraları",
+      "premium": "Premium",
+      "storage": "Depolama"
     }
   },
   "PageNotFound": {

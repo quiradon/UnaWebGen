@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "Tekintse meg és kezelje az összes fájlját, amelyeket a Cloudflare R2 tárol.",
+        "title": "Fájljaim"
       }
     },
     "authing": "Hitelesítés ellenőrzése...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "Fiók leválasztása"
       }
+    },
+    "files": {
+      "back_to_dashboard": "Vissza az irányítópulthoz",
+      "download": "Letöltés",
+      "empty": "Még nincs egyetlen fájlod sem",
+      "error": "Hiba a fájlok betöltésekor",
+      "file_type": {
+        "0": "Általános",
+        "1": "Kép",
+        "2": "Dokumentum",
+        "3": "Hanganyag",
+        "4": "Videó"
+      },
+      "loading": "Fájlok betöltése...",
+      "page_description": "Tekintse meg és kezelje az összes tárolt fájlját.",
+      "page_title": "Fájljaim",
+      "title": "Fájljaim",
+      "total_files": "fájlok",
+      "total_size": "Teljes méret",
+      "view": "Megtekintés"
+    },
+    "stats": {
+      "coins": "Kraken Érmék",
+      "premium": "Prémium",
+      "storage": "Tárolás"
     }
   },
   "PageNotFound": {

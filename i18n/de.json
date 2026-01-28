@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "Visualisieren und verwalten Sie alle Ihre im Cloudflare R2 gespeicherten Dateien.",
+        "title": "Meine Dateien"
       }
     },
     "authing": "Authentifizierung wird überprüft...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "Konto trennen"
       }
+    },
+    "files": {
+      "back_to_dashboard": "Zurück zum Dashboard",
+      "download": "Herunterladen",
+      "empty": "Sie haben noch keine Dateien",
+      "error": "Fehler beim Laden der Dateien",
+      "file_type": {
+        "0": "Allgemein",
+        "1": "Bild",
+        "2": "Dokument",
+        "3": "Audio",
+        "4": "Video"
+      },
+      "loading": "Dateien werden geladen...",
+      "page_description": "Visualisieren und verwalten Sie alle Ihre gespeicherten Dateien.",
+      "page_title": "Meine Dateien",
+      "title": "Meine Dateien",
+      "total_files": "Dateien",
+      "total_size": "Gesamtgröße",
+      "view": "Anzeigen"
+    },
+    "stats": {
+      "coins": "Kraken Münzen",
+      "premium": "Premium",
+      "storage": "Speicherung"
     }
   },
   "PageNotFound": {

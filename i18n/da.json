@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "Visualiser og administrer alle dine filer gemt i Cloudflares R2.",
+        "title": "Mine filer"
       }
     },
     "authing": "Kontrollerer godkendelse...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "Frakobl konto"
       }
+    },
+    "files": {
+      "back_to_dashboard": "Tilbage til Dashboard",
+      "download": "Download",
+      "empty": "Du har endnu ingen filer",
+      "error": "Fejl ved indlæsning af filer",
+      "file_type": {
+        "0": "Generelt",
+        "1": "Billede",
+        "2": "Dokument",
+        "3": "Lyd",
+        "4": "Video"
+      },
+      "loading": "Indlæser filer...",
+      "page_description": "Visualiser og administrer alle dine gemte filer.",
+      "page_title": "Mine filer",
+      "title": "Mine filer",
+      "total_files": "filer",
+      "total_size": "Total størrelse",
+      "view": "Visualisere"
+    },
+    "stats": {
+      "coins": "Kraken Mønter",
+      "premium": "Premium",
+      "storage": "Lagring"
     }
   },
   "PageNotFound": {

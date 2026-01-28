@@ -9,6 +9,10 @@
       "handout": {
         "description": "Create and export custom handouts.",
         "title": "Document Editor"
+      },
+      "files": {
+        "description": "Visualisasikan dan kelola semua file Anda yang disimpan di R2 Cloudflare.",
+        "title": "File Saya"
       }
     },
     "authing": "Memverifikasi autentikasi...",
@@ -25,6 +29,31 @@
       "logout": {
         "label": "Putuskan sambungan akun"
       }
+    },
+    "files": {
+      "back_to_dashboard": "Kembali ke Dashboard",
+      "download": "Unduh",
+      "empty": "Anda belum memiliki file apa pun",
+      "error": "Error saat memuat berkas",
+      "file_type": {
+        "0": "Umum",
+        "1": "Gambar",
+        "2": "Dokumen",
+        "3": "Audio",
+        "4": "Video"
+      },
+      "loading": "Memuat berkas...",
+      "page_description": "Visualisasikan dan kelola semua file yang Anda simpan.",
+      "page_title": "File Saya",
+      "title": "File Saya",
+      "total_files": "berkas",
+      "total_size": "Ukuran total",
+      "view": "Melihat"
+    },
+    "stats": {
+      "coins": "Kraken Koin",
+      "premium": "Premium",
+      "storage": "Penyimpanan"
     }
   },
   "PageNotFound": {

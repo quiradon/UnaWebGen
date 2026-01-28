@@ -556,6 +556,12 @@
       "quality": "Emelje a színvonalat nagy hűségű feltöltésekkel és maximális felbontású exportálással. Egy exkluzív funkció azok számára, akik nem kötnek kompromisszumot a technikai és vizuális kiválóság terén minden részletben.",
       "customize_avatar": "Személyre szabhatod a profilképet, a bannert és a bot életrajzát, hogy tükrözze a szervered márkáját és egyedi stílusát.",
       "license": "Ezzel az engedéllyel kereskedhet az oldalon elérhető eszközökkel előállított anyagokkal."
+    },
+    "plans": {
+      "0": "Láttad a mélységet, és az észrevett téged. Ez az első lépés azok számára, akik mernek igazságokat keresni, amelyeket az emberi elme nem kéne megértsen, biztosítva a kezdeti titkokhoz való hozzáférést a semmiből.",
+      "1": "A nevedéked el van írva az idő által elfeledett nyelveken. Merülj el az őrületben, és férj hozzá tiltott erőforrásokhoz, feláldozva elméleted egy részét egy olyan egyéni hatalomért, amit a közönséges halandók félnek.",
+      "2": "A csillagok összeálltak az elmédben, és a hangok most értelmet nyernek. Fanatikus odaadással szolgálod a Régieket, biztosítva helyed azok között, akik megértik a kozmikus rémület valódi természetét.",
+      "3": "A valóság széttépődött a szemeid előtt. Látod az univerzum lehetetlen geometriáját, és mint egy, aki meghaladta az emberiséget, az akaratod abszolút elsőbbséggel teljesül az árnyak által."
     }
   },
   "price": {

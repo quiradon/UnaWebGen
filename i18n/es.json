@@ -556,6 +556,12 @@
       "quality": "Eleva el estándar con cargas de alta fidelidad y exportaciones en resolución máxima. Un recurso exclusivo para quienes no renuncian a la excelencia técnica y visual en cada detalle.",
       "customize_avatar": "Personaliza la foto de perfil, el banner y la biografía del bot para que reflejen la marca y el estilo único de tu servidor.",
       "license": "Con esta autorización, podrá comercializar materiales producidos mediante las herramientas disponibles en el sitio."
+    },
+    "plans": {
+      "0": "Has vislumbrado el abismo y él te ha notado. Este es el primer paso para aquellos que se atreven a buscar verdades que la mente humana no debería comprender, garantizando acceso a los secretos iniciales del vacío.",
+      "1": "Tu nombre ha sido grabado en lenguas olvidadas por el tiempo. Sumérgete en la locura y accede a recursos prohibidos, intercambiando fracciones de tu cordura por un poder individual que los mortales comunes temen.",
+      "2": "As estrellas se alinearon en su mente y las voces ahora tienen sentido. Sirves a los Antiguos con devoción fanática, asegurando tu lugar entre aquellos que comprenden la verdadera naturaleza del horror cósmico.",
+      "3": "A realidad se desgarró ante tus ojos. Ves la geometría imposible del universo y, como un ser que ha trascendido la humanidad, tus deseos son atendidos con prioridad absoluta por las sombras."
     }
   },
   "price": {

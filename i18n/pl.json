@@ -556,6 +556,12 @@
       "quality": "Podnieś standard dzięki przesyłaniu plików o wysokiej wierności i eksportom w maksymalnej rozdzielczości. Funkcja dostępna wyłącznie dla tych, którzy nie rezygnują z doskonałości technicznej i wizualnej w każdym detalu.",
       "customize_avatar": "Dostosuj zdjęcie profilowe, baner i biografię bota, aby odzwierciedlały markę i unikalny styl Twojego serwera.",
       "license": "Dzięki tej autoryzacji będziesz mógł sprzedawać materiały stworzone za pomocą narzędzi dostępnych na stronie."
+    },
+    "plans": {
+      "0": "Dostrzegłeś przepaść, a ona zauważyła ciebie. To pierwszy krok dla tych, którzy odważają się szukać prawd, których ludzki umysł nie powinien pojmować, zapewniając dostęp do pierwotnych sekretów pustki.",
+      "1": "Twoje imię zostało zapisane w językach zapomnianych przez czas. Zanurz się w szaleństwie i uzyskaj dostęp do zakazanych zasobów, wymieniając ułamki swojej trzeźwości na indywidualną moc, której boją się zwykli śmiertelnicy.",
+      "2": "Gwiazdy ustawiły się w twoim umyśle, a głosy teraz mają sens. Służysz Starożytnym z fanatycznym oddaniem, zapewniając sobie miejsce wśród tych, którzy rozumieją prawdziwą naturę kosmicznego horroru.",
+      "3": "Rzeczywistość rozdarła się przed twoimi oczami. Widzisz niemożliwą geometrię wszechświata i jako istota, która przekroczyła granice człowieczeństwa, twoje pragnienia są spełniane z absolutnym priorytetem przez cienie."
     }
   },
   "price": {

@@ -47,8 +47,7 @@ const plans = [
   {
     title: t.v2.premium.tier[0].name,
     desc:
-      t?.premium?.[0]?.desc ??
-      "Plano para quem joga sozinho e quer recursos basicos.",
+        t.premium.plans[0],
     priceMonthly: price0,
     titleIcon: Crown,
     primary: [
@@ -61,7 +60,6 @@ const plans = [
     ],
     secondary: [
       { Icon: Scroll, text: t.premium.new[5]},
-      { Icon: Dices, text: feat?.[0] },
     ],
     accent: "#34DF68",
     badge: tier1,
@@ -69,8 +67,7 @@ const plans = [
   {
     title: t.v2.premium.tier[1].name,
     desc:
-      t?.premium?.[1]?.desc ??
-      "Beneficios para todo o servidor, com mais recursos.",
+        t.premium.plans[1],
     priceMonthly: price1,
     titleIcon: User,
     primary: [
@@ -85,14 +82,13 @@ const plans = [
     ],
     secondary: [
       { Icon: Scroll, text: t.premium.new[5]},
-      { Icon: Dices, text: feat?.[0] },
     ],
     accent: "#FF7B29",
     badge: tier2,
   },
   {
     title: t.v2.premium.tier[2].name,
-    desc: t?.premium?.[2]?.desc ?? "Para quem quer tudo liberado.",
+    desc:  t.premium.plans[2],
     priceMonthly: price2,
     titleIcon: Crown,
     primary: [
@@ -107,16 +103,13 @@ const plans = [
     ],
     secondary: [
       { Icon: Scroll, text: t.premium.new[5]},
-      { Icon: Dices, text: feat?.[0] },
     ],
     accent: "#38bdf8",
     badge: tier3,
   },
   {
     title: t.v2.premium.tier[3].name,
-    desc:
-      t?.premium?.[3]?.desc ??
-      "Prioridade maxima para servidores grandes.",
+    desc: t.premium.plans[3],
     priceMonthly: price3,
     titleIcon: Crown,
     primary: [
@@ -133,7 +126,6 @@ const plans = [
     ],
     secondary: [
       { Icon: Scroll, text: t.premium.new[5]},
-      { Icon: Dices, text: feat?.[0] }
     ],
     accent: "#FF0655",
     badge: tier4,

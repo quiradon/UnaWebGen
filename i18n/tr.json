@@ -556,6 +556,12 @@
       "quality": "Yüksek sadakatli yüklemeler ve maksimum çözünürlükte dışa aktarımlarla standartları yükseltin. Her detayda teknik ve görsel mükemmellikten ödün vermeyenler için özel bir özellik.",
       "customize_avatar": "Profil fotoğrafını, afişi ve botun biyografisini, sunucunuzun markasını ve benzersiz tarzını yansıtacak şekilde kişiselleştirin.",
       "license": "Bu izinle, sitede bulunan araçlar aracılığıyla üretilen materyalleri ticaretini yapabilirsiniz."
+    },
+    "plans": {
+      "0": "Uçurumu gördün ve o da seni fark etti. Bu, insan zihninin anlamaması gereken gerçekleri aramaya cesaret edenler için ilk adımdır ve boşluğun ilk sırlarına erişim sağlar.",
+      "1": "Adınız zaman tarafından unutulmuş dillerde kaydedildi. Deliliğin derinliklerine inin ve yasak kaynaklara erişin, aklınızın bir kısmını sıradan ölümlülerin korktuğu bireysel bir güçle takas ederek.",
+      "2": "Yıldızlar zihninde hizalandı ve sesler artık anlam kazanıyor. Sen, kozmik dehşetin gerçek doğasını anlayanlar arasında yerini garantileyerek Eski Olanlara fanatik bir bağlılıkla hizmet ediyorsun.",
+      "3": "Gerçeklik gözlerinin önünde yırtıldı. Evrenin imkansız geometrisini görüyorsun ve insanlığı aşmış bir varlık olarak, arzuların gölgeler tarafından mutlak öncelikle karşılanıyor."
     }
   },
   "price": {

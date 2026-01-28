@@ -556,6 +556,12 @@
       "quality": "Podignite standard s prijenosima visoke vjernosti i izvozima u maksimalnoj rezoluciji. Ekskluzivna značajka za one koji ne pristaju na ništa manje od tehničke i vizualne izvrsnosti u svakom detalju.",
       "customize_avatar": "Prilagodite profilnu sliku, banner i biografiju bota kako bi odražavali jedinstveni brend i stil vašeg servera.",
       "license": "S ovom dozvolom moći ćete prodavati materijale proizvedene pomoću alata dostupnih na web stranici."
+    },
+    "plans": {
+      "0": "Pogledao si u ponor i on je primijetio tebe. Ovo je prvi korak za one koji se usuđuju tražiti istine koje ljudski um ne bi trebao razumjeti, osiguravajući pristup početnim tajnama praznine.",
+      "1": "Ime vam je zapisano na jezicima koje je vrijeme zaboravilo. Zaronite u ludilo i pristupite zabranjenim resursima, mijenjajući dijelove svog razuma za moć koju obični smrtnici strahuju.",
+      "2": "Zvijezde su se poravnale u vašem umu i glasovi sada imaju smisla. Služite Starijima s fanatičnom odanošću, osiguravajući svoje mjesto među onima koji razumiju pravu prirodu kozmičkog užasa.",
+      "3": "Stvarnost se rastrgala pred tvojim očima. Vidiš nemoguću geometriju svemira i, kao biće koje je nadmašilo čovječanstvo, tvoje želje se ispunjavaju s apsolutnim prioritetom od strane sjena."
     }
   },
   "price": {

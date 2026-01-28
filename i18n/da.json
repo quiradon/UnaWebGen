@@ -556,6 +556,12 @@
       "quality": "Løft standarden med uploads i høj opløsning og eksport i maksimal kvalitet. En eksklusiv funktion for dem, der ikke går på kompromis med teknisk og visuel perfektion i hver detalje.",
       "customize_avatar": "Tilpas botens profilbillede, banner og biografi, så de afspejler dit servermærke og din unikke stil.",
       "license": "Med denne tilladelse kan du sælge materialer produceret ved hjælp af de værktøjer, der er tilgængelige på hjemmesiden."
+    },
+    "plans": {
+      "0": "Du har skimtet afgrunden, og den har bemærket dig. Dette er det første skridt for dem, der vover at søge sandheder, som det menneskelige sind ikke burde forstå, hvilket sikrer adgang til de oprindelige hemmeligheder i tomrummet.",
+      "1": "Dit navn er indskrevet i sprog glemt af tiden. Dyk ned i vanviddet og få adgang til forbudte ressourcer ved at bytte brudstykker af din forstand for en individuel magt, som almindelige dødelige frygter.",
+      "2": "Stjernerne er faldet på plads i dit sind, og stemmerne giver nu mening. Du tjener de Ældste med fanatisk hengivenhed og sikrer din plads blandt dem, der forstår den sande natur af kosmisk rædsel.",
+      "3": "Virkeligheden rev sig itu foran dine øjne. Du ser universets umulige geometri, og som et væsen, der har overskredet menneskeligheden, bliver dine ønsker opfyldt med absolut prioritet af skyggerne."
     }
   },
   "price": {

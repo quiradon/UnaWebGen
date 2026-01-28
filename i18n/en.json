@@ -585,6 +585,12 @@
       "quality": "Raise the standard with high-fidelity uploads and maximum resolution exports. An exclusive feature for those who do not compromise on technical and visual excellence in every detail.",
       "customize_avatar": "Personalize the profile picture, banner, and bot biography so that they reflect your server's unique brand and style.",
       "license": "With this authorization, you will be able to commercialize materials produced using the tools available on the site."
+    },
+    "plans": {
+      "0": "You have glimpsed the abyss and it noticed you. This is the first step for those who dare to seek truths that the human mind should not comprehend, granting access to the initial secrets of the void.",
+      "1": "Your name has been recorded in tongues forgotten by time. Delve into madness and access forbidden resources, exchanging fractions of your sanity for an individual power that ordinary mortals fear.",
+      "2": "The stars aligned in your mind and the voices now make sense. You serve the Ancients with fanatical devotion, securing your place among those who understand the true nature of cosmic horror.",
+      "3": "Reality tore apart before your eyes. You see the impossible geometry of the universe and, as a being who has transcended humanity, your desires are met with absolute priority by the shadows."
     }
   },
   "price": {

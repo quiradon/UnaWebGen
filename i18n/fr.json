@@ -556,6 +556,12 @@
       "quality": "Élevez le niveau avec des téléchargements en haute fidélité et des exportations en résolution maximale. Une fonctionnalité exclusive pour ceux qui ne transigent pas sur l'excellence technique et visuelle dans chaque détail.",
       "customize_avatar": "Personnalisez la photo de profil, la bannière et la biographie du bot afin qu'ils reflètent la marque et le style unique de votre serveur.",
       "license": "Avec cette autorisation, vous pourrez commercialiser les matériaux produits à l'aide des outils disponibles sur le site."
+    },
+    "plans": {
+      "0": "Vous avez aperçu l'abîme et il vous a remarqué. C'est la première étape pour ceux qui osent chercher des vérités que l'esprit humain ne devrait pas comprendre, garantissant l'accès aux secrets initiaux du vide.",
+      "1": "Votre nom a été gravé dans des langues oubliées par le temps. Plongez dans la folie et accédez à des ressources interdites, échangeant des fragments de votre santé mentale contre un pouvoir individuel que les mortels ordinaires redoutent.",
+      "2": "Les étoiles se sont alignées dans votre esprit et les voix ont maintenant un sens. Vous servez les Anciens avec une dévotion fanatique, assurant votre place parmi ceux qui comprennent la véritable nature de l'horreur cosmique.",
+      "3": "La réalité s'est déchirée devant vos yeux. Vous voyez la géométrie impossible de l'univers et, en tant qu'être ayant transcendé l'humanité, vos volontés sont satisfaites en priorité absolue par les ombres."
     }
   },
   "price": {

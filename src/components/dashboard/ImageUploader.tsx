@@ -5,6 +5,46 @@ import { Button } from '@/components/ui/button'
 import { Upload, X, RotateCw, Crop as CropIcon } from 'lucide-react'
 import { toast } from 'sonner'
 
+/**
+ * ImageUploader - Componente padrão de upload de imagens com crop e conversão WebP
+ * 
+ * Este é o componente PADRÃO para uploads no projeto. Use este componente para garantir
+ * consistência em toda a aplicação.
+ * 
+ * COMO USAR:
+ * 
+ * 1. Em páginas Astro, use o wrapper UploadImageModal.astro:
+ *    ```astro
+ *    import UploadImageModal from "@/components/Modal/UploadImageModal.astro"
+ *    <UploadImageModal modalId="uploadImageModal" apiBase={apiBase} />
+ *    ```
+ * 
+ * 2. Em componentes React, use este componente diretamente com Dialog:
+ *    ```tsx
+ *    import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+ *    import ImageUploader from "@/components/dashboard/ImageUploader"
+ *    
+ *    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+ *      <DialogContent className="sm:max-w-[800px]">
+ *        <DialogHeader>
+ *          <DialogTitle>Enviar Nova Imagem</DialogTitle>
+ *          <DialogDescription>Escolha uma imagem para enviar.</DialogDescription>
+ *        </DialogHeader>
+ *        <ImageUploader 
+ *          apiBase={apiBase} 
+ *          onSuccess={() => { setModalOpen(false); refetch(); }}
+ *          onCancel={() => setModalOpen(false)}
+ *        />
+ *      </DialogContent>
+ *    </Dialog>
+ *    ```
+ * 
+ * OTIMIZAÇÕES:
+ * - Converte imagens para WebP no cliente antes do upload (reduz ~60-80% do tamanho)
+ * - Qualidade 90% mantém excelente qualidade visual com ótima compressão
+ * - Fallback automático para PNG em navegadores antigos (raro, WebP suportado desde 2010)
+ * - Reduz drasticamente o uso de banda e acelera uploads
+ */
 interface ImageUploaderProps {
   apiBase: string
   onCancel?: () => void
@@ -23,11 +63,30 @@ export default function ImageUploader({ apiBase, onCancel, onSuccess, aspect, ci
   const [rotation, setRotation] = useState(0)
   const [loading, setLoading] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
+  const [supportsWebP, setSupportsWebP] = useState(true)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
 
   // Se circular está ativo, força aspect 1:1
   const effectiveAspect = circular ? 1 : aspect
+
+  // Verificar suporte WebP no navegador
+  useEffect(() => {
+    const checkWebPSupport = () => {
+      const elem = document.createElement('canvas')
+      if (elem.getContext && elem.getContext('2d')) {
+        // Era suportado desde 2010, mas vamos verificar
+        return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0
+      }
+      return false
+    }
+    
+    const hasSupport = checkWebPSupport()
+    setSupportsWebP(hasSupport)
+    if (!hasSupport) {
+      console.warn('WebP não é suportado neste navegador, usando PNG como fallback')
+    }
+  }, [])
 
   // Quando a imagem carrega, inicializa o crop
   const onImageLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -210,38 +269,53 @@ export default function ImageUploader({ apiBase, onCancel, onSuccess, aspect, ci
     }
 
     return new Promise((resolve) => {
-      canvas.toBlob((blob) => resolve(blob), 'image/png', 1)
+      // Converte para WebP com qualidade 0.9 (90%) para reduzir tamanho
+      // Fallback para PNG se WebP não for suportado
+      const format = supportsWebP ? 'image/webp' : 'image/png'
+      const quality = supportsWebP ? 0.9 : 1
+      canvas.toBlob((blob) => resolve(blob), format, quality)
     })
   }
 
   const uploadFile = async (fileOrBlob: Blob | File) => {
     const formData = new FormData();
-    const fileName = fileOrBlob instanceof File ? fileOrBlob.name : 'upload.png';
+    const extension = supportsWebP ? '.webp' : '.png'
+    const fileName = fileOrBlob instanceof File ? fileOrBlob.name.replace(/\.[^.]+$/, extension) : `upload${extension}`;
     formData.append('file', fileOrBlob, fileName);
 
     setIsUploading(true);
     try {
-      const response = await fetch(`${apiBase}/rpg/files`, {
+      const response = await fetch(`${apiBase}/upload`, {
         method: 'POST',
         body: formData,
         credentials: 'include',
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Falha no upload');
+        // Exibir mensagem de erro específica da API
+        const errorMessage = data.error || 'Falha no upload';
+        toast.error(errorMessage);
+        return;
       }
 
-      toast.success('Arquivo enviado com sucesso!');
-      if (onSuccess) onSuccess();
-      // Also emit event for global listeners
-      window.dispatchEvent(new CustomEvent('fileUploaded'));
-      
-      // Reset state 
-      setImageSrc(null);
-      setOriginalFile(null);
-      // Reset file input
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
+      if (data.success) {
+        console.log('Upload realizado:', data);
+        toast.success('Arquivo enviado com sucesso!');
+        if (onSuccess) onSuccess();
+        // Also emit event for global listeners
+        window.dispatchEvent(new CustomEvent('fileUploaded'));
+        
+        // Reset state 
+        setImageSrc(null);
+        setOriginalFile(null);
+        // Reset file input
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      } else {
+        toast.error(data.error || 'Erro desconhecido no upload');
       }
     } catch (error) {
       console.error(error);

@@ -135,7 +135,7 @@ export async function getCroppedImgBlobFromImage(
     scale = 1,
     outputWidth,
     outputHeight,
-    fileType = 'image/jpeg',
+    fileType = 'image/webp',
     circular = false,
   } = options
 
@@ -237,6 +237,9 @@ export async function getCroppedImgBlobFromImage(
   }
 
   return new Promise((resolve) => {
-    outputCanvas.toBlob((blob) => resolve(blob), fileType, 1)
+    // Para WebP, usa qualidade 0.9 (90%) para melhor compressão
+    // Para outros formatos, usa qualidade máxima (1)
+    const quality = fileType === 'image/webp' ? 0.9 : 1
+    outputCanvas.toBlob((blob) => resolve(blob), fileType, quality)
   })
 }

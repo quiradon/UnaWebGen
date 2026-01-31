@@ -86,6 +86,7 @@ function HandoutCanvasBuilder() {
   type SidebarTab =
     | "elements"
     | "assets"
+    | "files"
     | "page"
     | "props"
     | "effects"
@@ -118,6 +119,7 @@ function HandoutCanvasBuilder() {
   const [snapGuides, setSnapGuides] = useState<SnapGuide[]>([]);
   const [fontWeightSupport, setFontWeightSupport] = useState<Partial<Record<FontPresetId, FontWeight[]>>>({});
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [apiBase, setApiBase] = useState("");
 
   const pageRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
@@ -160,6 +162,15 @@ function HandoutCanvasBuilder() {
       setHasLoaded(true);
     } catch {
       setHasLoaded(true);
+    }
+  }, []);
+
+  // Ler apiBase do DOM
+  useEffect(() => {
+    const authElement = document.querySelector('[data-handout-auth]');
+    if (authElement) {
+      const api = authElement.getAttribute('data-api-base');
+      if (api) setApiBase(api);
     }
   }, []);
 
@@ -1059,6 +1070,22 @@ function updateShadowEffect(
     toast.success("Imagem(ns) adicionada(s).");
   }
 
+  async function addImageFromUrl(url: string) {
+    try {
+      toast.message("Carregando imagem...");
+      const layer = await createImageShapeLayerFromSrc(url, "Imagem do usuário");
+      if (layer) {
+        setDoc((prev) => ({ ...prev, layers: [...prev.layers, layer] }));
+        setSelection([layer.id], layer.id);
+        setSidebarTab("props");
+        toast.success("Imagem adicionada!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao carregar imagem.");
+    }
+  }
+
   async function addSvg(files: FileList) {
     const list = Array.from(files).filter(
       (file) => file.type === "image/svg+xml" || file.name.toLowerCase().endsWith(".svg"),
@@ -1603,6 +1630,10 @@ function updateShadowEffect(
                 collapsedAssetGroups,
                 toggleAssetGroup,
                 requestAssetImport,
+              }}
+              filesProps={{
+                apiBase,
+                onInsertImage: addImageFromUrl,
               }}
               pageProps={{
                 doc,

@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Upload } from 'lucide-react';
-import ImageUploadModal from '@/components/ImageUploadModal';
-import { toast } from 'sonner';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription
+} from '@/components/ui/dialog';
+import ImageUploader from '@/components/dashboard/ImageUploader';
 import { PortalContainerProvider } from '@/components/ui/portal-context';
 
 interface UserFilesUploadProps {
@@ -11,36 +17,12 @@ interface UserFilesUploadProps {
 
 export default function UserFilesUpload({ apiBase }: UserFilesUploadProps) {
   const [modalOpen, setModalOpen] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
-  const handleUpload = async (blob: Blob) => {
-    setIsUploading(true);
-    const formData = new FormData();
-    // Ensure filename has extension
-    formData.append('file', blob, 'upload.png');
-
-    try {
-      const response = await fetch(`${apiBase}/rpg/files`, {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      });
-
-      if (!response.ok) {
-        throw new Error('Falha no upload');
-      }
-
-      toast.success('Arquivo enviado com sucesso!');
-      // Dispatch event for Astro component to catch
-      window.dispatchEvent(new CustomEvent('fileUploaded'));
-      setModalOpen(false);
-    } catch (error) {
-      console.error(error);
-      toast.error('Erro ao enviar arquivo.');
-    } finally {
-      setIsUploading(false);
-    }
+  const handleSuccess = () => {
+    // Dispatch event for Astro component to catch
+    window.dispatchEvent(new CustomEvent('fileUploaded'));
+    setModalOpen(false);
   };
 
   return (
@@ -50,14 +32,21 @@ export default function UserFilesUpload({ apiBase }: UserFilesUploadProps) {
           <Upload className="w-4 h-4 mr-2" />
           Upload Imagem
         </Button>
-        <ImageUploadModal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          onConfirm={handleUpload}
-          title="Enviar Nova Imagem"
-          description="Escolha uma imagem para enviar para sua galeria."
-          // Default behavior: free crop, no fixed resolution
-        />
+        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+          <DialogContent className="sm:max-w-[800px]">
+            <DialogHeader>
+              <DialogTitle>Enviar Nova Imagem</DialogTitle>
+              <DialogDescription>
+                Escolha uma imagem para enviar para sua galeria.
+              </DialogDescription>
+            </DialogHeader>
+            <ImageUploader 
+              apiBase={apiBase} 
+              onSuccess={handleSuccess}
+              onCancel={() => setModalOpen(false)}
+            />
+          </DialogContent>
+        </Dialog>
       </PortalContainerProvider>
     </div>
   );

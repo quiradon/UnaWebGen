@@ -1,13 +1,14 @@
 import { useEffect } from "react";
-import { Download, Image as ImageIcon, LayoutGrid, SlidersHorizontal, Sparkles, Type } from "lucide-react";
+import { Download, FolderOpen, Image as ImageIcon, LayoutGrid, SlidersHorizontal, Sparkles, Type } from "lucide-react";
 
 import { HandoutAssetsPanel } from "@/components/handoutbuilder/panels/HandoutAssetsPanel";
 import { HandoutElementsPanel } from "@/components/handoutbuilder/panels/HandoutElementsPanel";
 import { HandoutEffectsPanel } from "@/components/handoutbuilder/panels/HandoutEffectsPanel";
 import { HandoutExportPanel } from "@/components/handoutbuilder/panels/HandoutExportPanel";
+import { HandoutFilesPanel } from "@/components/handoutbuilder/panels/HandoutFilesPanel";
 import { HandoutPagePanel } from "@/components/handoutbuilder/panels/HandoutPagePanel";
 import { HandoutPropsPanel } from "@/components/handoutbuilder/panels/props/HandoutPropsPanel";
-type SidebarTab = "elements" | "assets" | "page" | "props" | "effects" | "export";
+type SidebarTab = "elements" | "assets" | "files" | "page" | "props" | "effects" | "export";
 
 type HandoutCanvasSidebarProps = {
   sidebarRef: React.RefObject<HTMLDivElement>;
@@ -17,6 +18,7 @@ type HandoutCanvasSidebarProps = {
   setSidebarCollapsed: (value: boolean) => void;
   elementsProps: React.ComponentProps<typeof HandoutElementsPanel>;
   assetsProps: React.ComponentProps<typeof HandoutAssetsPanel>;
+  filesProps: React.ComponentProps<typeof HandoutFilesPanel>;
   pageProps: React.ComponentProps<typeof HandoutPagePanel>;
   propsProps: React.ComponentProps<typeof HandoutPropsPanel>;
   effectsProps: React.ComponentProps<typeof HandoutEffectsPanel>;
@@ -32,6 +34,7 @@ export function HandoutCanvasSidebar(props: HandoutCanvasSidebarProps) {
     setSidebarCollapsed,
     elementsProps,
     assetsProps,
+    filesProps,
     pageProps,
     propsProps,
     effectsProps,
@@ -134,6 +137,15 @@ export function HandoutCanvasSidebar(props: HandoutCanvasSidebarProps) {
         </button>
         <button
           type="button"
+          className={`handout-sidebar-action ${sidebarTab === "files" ? "is-active" : ""}`}
+          onClick={() => handleTabChange("files")}
+          aria-pressed={sidebarTab === "files"}
+        >
+          <FolderOpen className="h-5 w-5" />
+          <span>Arquivos</span>
+        </button>
+        <button
+          type="button"
           className={`handout-sidebar-action ${sidebarTab === "page" ? "is-active" : ""}`}
           onClick={() => handleTabChange("page")}
           aria-pressed={sidebarTab === "page"}
@@ -175,6 +187,7 @@ export function HandoutCanvasSidebar(props: HandoutCanvasSidebarProps) {
         <div className="handout-sidebar-panel">
           {sidebarTab === "elements" && <HandoutElementsPanel {...elementsProps} />}
           {sidebarTab === "assets" && <HandoutAssetsPanel {...assetsProps} />}
+          {sidebarTab === "files" && <HandoutFilesPanel {...filesProps} />}
           {sidebarTab === "page" && <HandoutPagePanel {...pageProps} />}
           {sidebarTab === "props" && <HandoutPropsPanel {...propsProps} />}
           {sidebarTab === "effects" && <HandoutEffectsPanel {...effectsProps} />}

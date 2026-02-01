@@ -4,6 +4,7 @@ export const prerender = true;
 import Layout from "@layouts/LayoutNoNavFooter.astro";
 import AuthWidget from "@components/AuthWidget.astro";
 import LanguageSelector from "@components/navbar/LanguageSelector.astro";
+import FilePreviewModal from "@components/Modal/FilePreviewModal.astro";
 import { loadT } from "@lib/i18n";
 import { idiomaR } from "@lib/routes";
 import { getLocale } from "astro-i18n-aut";
@@ -51,6 +52,9 @@ const apiBase = (config.api_url ?? "https://api-rpg.arkanus.app").replace(/\/$/,
       </div>
     </div>
   </section>
+
+  <!-- Preview Modal -->
+  <FilePreviewModal />
 
   <style>
     .handout-builder-section {

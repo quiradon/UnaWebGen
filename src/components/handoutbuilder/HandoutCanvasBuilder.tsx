@@ -85,12 +85,10 @@ import { getPreviewSize } from "@/components/handoutbuilder/handoutCanvasTemplat
 function HandoutCanvasBuilder() {
   type SidebarTab =
     | "elements"
-    | "assets"
     | "files"
     | "page"
     | "props"
-    | "effects"
-    | "export";
+    | "effects";
   const [sidebarTab, setSidebarTab] = useState<SidebarTab>("elements");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [doc, setDoc] = useState<HandoutCanvasDocV1>(DEFAULT_DOC);
@@ -1381,31 +1379,84 @@ function updateShadowEffect(
     }
   }
 
+  function downloadBlob(blob: Blob, filename: string) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
   function exportJson() {
     try {
-      const blob = new Blob([JSON.stringify(doc, null, 2)], { type: "application/json" });
+      // Verificar se há dados válidos para exportar
+      if (!doc || !doc.layers) {
+        toast.error("Não há dados para exportar.");
+        return;
+      }
+
+      const exportData = {
+        ...doc,
+        exportedAt: new Date().toISOString(),
+        exportedBy: "Handout Canvas Builder"
+      };
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { 
+        type: "application/json;charset=utf-8" 
+      });
+      
       downloadBlob(blob, "handout.json");
-      toast.success("JSON exportado.");
-    } catch {
-      toast.error("Falha ao exportar JSON.");
+      toast.success("JSON exportado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao exportar JSON:", error);
+      toast.error("Falha ao exportar JSON. Tente novamente.");
     }
   }
 
   async function importJsonFile(file: File) {
     try {
-      const raw = await file.text();
-      const parsed = JSON.parse(raw) as unknown;
-      const normalized = normalizeDocV1(parsed);
-      if (!normalized) {
-        toast.error("Arquivo inválido.");
+      // Verificar se é um arquivo JSON
+      if (!file.name.toLowerCase().endsWith('.json') && file.type !== 'application/json') {
+        toast.error("Por favor, selecione um arquivo JSON válido.");
         return;
       }
+
+      const raw = await file.text();
+      
+      // Verificar se o arquivo não está vazio
+      if (!raw.trim()) {
+        toast.error("O arquivo está vazio.");
+        return;
+      }
+
+      const parsed = JSON.parse(raw) as unknown;
+      const normalized = normalizeDocV1(parsed);
+      
+      if (!normalized) {
+        toast.error("Formato de arquivo inválido. Verifique se é um handout exportado corretamente.");
+        return;
+      }
+      
       setDoc(normalized);
       clearSelection();
-      toast.success("Importado.");
+      setEditingId(null);
+      setManipulatingId(null);
+      editingSnapshotRef.current = "";
+      setContextMenu(null);
+      setPendingAsset(null);
+      
+      toast.success("Handout importado com sucesso!");
     } catch (error) {
-      console.error(error);
-      toast.error("Falha ao importar.");
+      console.error("Erro ao importar JSON:", error);
+      
+      if (error instanceof SyntaxError) {
+        toast.error("Arquivo JSON inválido. Verifique a formatação.");
+      } else {
+        toast.error("Falha ao importar arquivo. Tente novamente.");
+      }
     }
   }
 
@@ -1620,12 +1671,14 @@ function updateShadowEffect(
               setSidebarTab={setSidebarTab}
               sidebarCollapsed={sidebarCollapsed}
               setSidebarCollapsed={setSidebarCollapsed}
-              elementsProps={{ addText, addShape, addSvg }}
-              assetsProps={{
+              elementsAssetsProps={{
+                // Props para elementos
+                addText,
+                addShape,
+                addSvg,
+                // Props para assets
                 assetSearch,
                 setAssetSearch,
-                imageFileRef,
-                addImages,
                 filteredAssetGroups,
                 collapsedAssetGroups,
                 toggleAssetGroup,
@@ -1635,7 +1688,8 @@ function updateShadowEffect(
                 apiBase,
                 onInsertImage: addImageFromUrl,
               }}
-              pageProps={{
+              pageExportProps={{
+                // Props para página
                 doc,
                 setDoc,
                 recordColor,
@@ -1644,6 +1698,12 @@ function updateShadowEffect(
                 setSnapEnabled,
                 snapTolerance,
                 setSnapTolerance,
+                // Props para exportar
+                exportPng,
+                exportJson,
+                importJsonFile,
+                resetAll,
+                jsonFileRef,
               }}
               propsProps={{
                 selectedLayer,
@@ -1669,7 +1729,6 @@ function updateShadowEffect(
                 dropShadowOpacityPercent,
                 innerShadowOpacityPercent,
               }}
-              exportProps={{ exportPng, exportJson, importJsonFile, resetAll, jsonFileRef }}
             />
             <HandoutCanvasStage
               stageRef={stageRef}

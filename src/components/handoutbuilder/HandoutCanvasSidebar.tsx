@@ -1,14 +1,12 @@
 import { useEffect } from "react";
-import { Download, FolderOpen, Image as ImageIcon, LayoutGrid, SlidersHorizontal, Sparkles, Type } from "lucide-react";
+import { Download, FolderOpen, LayoutGrid, SlidersHorizontal, Sparkles } from "lucide-react";
 
-import { HandoutAssetsPanel } from "@/components/handoutbuilder/panels/HandoutAssetsPanel";
-import { HandoutElementsPanel } from "@/components/handoutbuilder/panels/HandoutElementsPanel";
+import { HandoutElementsAssetsPanel } from "@/components/handoutbuilder/panels/HandoutElementsAssetsPanel";
 import { HandoutEffectsPanel } from "@/components/handoutbuilder/panels/HandoutEffectsPanel";
-import { HandoutExportPanel } from "@/components/handoutbuilder/panels/HandoutExportPanel";
 import { HandoutFilesPanel } from "@/components/handoutbuilder/panels/HandoutFilesPanel";
-import { HandoutPagePanel } from "@/components/handoutbuilder/panels/HandoutPagePanel";
+import { HandoutPageExportPanel } from "@/components/handoutbuilder/panels/HandoutPageExportPanel";
 import { HandoutPropsPanel } from "@/components/handoutbuilder/panels/props/HandoutPropsPanel";
-type SidebarTab = "elements" | "assets" | "files" | "page" | "props" | "effects" | "export";
+type SidebarTab = "elements" | "files" | "page" | "props" | "effects";
 
 type HandoutCanvasSidebarProps = {
   sidebarRef: React.RefObject<HTMLDivElement>;
@@ -16,13 +14,11 @@ type HandoutCanvasSidebarProps = {
   setSidebarTab: (tab: SidebarTab) => void;
   sidebarCollapsed: boolean;
   setSidebarCollapsed: (value: boolean) => void;
-  elementsProps: React.ComponentProps<typeof HandoutElementsPanel>;
-  assetsProps: React.ComponentProps<typeof HandoutAssetsPanel>;
+  elementsAssetsProps: React.ComponentProps<typeof HandoutElementsAssetsPanel>;
   filesProps: React.ComponentProps<typeof HandoutFilesPanel>;
-  pageProps: React.ComponentProps<typeof HandoutPagePanel>;
+  pageExportProps: React.ComponentProps<typeof HandoutPageExportPanel>;
   propsProps: React.ComponentProps<typeof HandoutPropsPanel>;
   effectsProps: React.ComponentProps<typeof HandoutEffectsPanel>;
-  exportProps: React.ComponentProps<typeof HandoutExportPanel>;
 };
 
 export function HandoutCanvasSidebar(props: HandoutCanvasSidebarProps) {
@@ -32,13 +28,11 @@ export function HandoutCanvasSidebar(props: HandoutCanvasSidebarProps) {
     setSidebarTab,
     sidebarCollapsed,
     setSidebarCollapsed,
-    elementsProps,
-    assetsProps,
+    elementsAssetsProps,
     filesProps,
-    pageProps,
+    pageExportProps,
     propsProps,
     effectsProps,
-    exportProps,
   } = props;
 
   const closeAuthDropdown = () => {
@@ -123,17 +117,8 @@ export function HandoutCanvasSidebar(props: HandoutCanvasSidebarProps) {
           onClick={() => handleTabChange("elements")}
           aria-pressed={sidebarTab === "elements"}
         >
-          <Type className="h-5 w-5" />
+          <LayoutGrid className="h-5 w-5" />
           <span>Elementos</span>
-        </button>
-        <button
-          type="button"
-          className={`handout-sidebar-action ${sidebarTab === "assets" ? "is-active" : ""}`}
-          onClick={() => handleTabChange("assets")}
-          aria-pressed={sidebarTab === "assets"}
-        >
-          <ImageIcon className="h-5 w-5" />
-          <span>Assets</span>
         </button>
         <button
           type="button"
@@ -151,7 +136,7 @@ export function HandoutCanvasSidebar(props: HandoutCanvasSidebarProps) {
           aria-pressed={sidebarTab === "page"}
         >
           <LayoutGrid className="h-5 w-5" />
-          <span>Pagina</span>
+          <span>Página</span>
         </button>
         <button
           type="button"
@@ -171,27 +156,16 @@ export function HandoutCanvasSidebar(props: HandoutCanvasSidebarProps) {
           <Sparkles className="h-5 w-5" />
           <span>Efeitos</span>
         </button>
-        <button
-          type="button"
-          className={`handout-sidebar-action ${sidebarTab === "export" ? "is-active" : ""}`}
-          onClick={() => handleTabChange("export")}
-          aria-pressed={sidebarTab === "export"}
-        >
-          <Download className="h-5 w-5" />
-          <span>Exportar</span>
-        </button>
         <div className="handout-sidebar-auth" data-handout-auth-slot></div>
       </div>
 
       {!sidebarCollapsed && (
         <div className="handout-sidebar-panel">
-          {sidebarTab === "elements" && <HandoutElementsPanel {...elementsProps} />}
-          {sidebarTab === "assets" && <HandoutAssetsPanel {...assetsProps} />}
+          {sidebarTab === "elements" && <HandoutElementsAssetsPanel {...elementsAssetsProps} />}
           {sidebarTab === "files" && <HandoutFilesPanel {...filesProps} />}
-          {sidebarTab === "page" && <HandoutPagePanel {...pageProps} />}
+          {sidebarTab === "page" && <HandoutPageExportPanel {...pageExportProps} />}
           {sidebarTab === "props" && <HandoutPropsPanel {...propsProps} />}
           {sidebarTab === "effects" && <HandoutEffectsPanel {...effectsProps} />}
-          {sidebarTab === "export" && <HandoutExportPanel {...exportProps} />}
         </div>
       )}
     </aside>

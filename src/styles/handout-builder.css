@@ -220,6 +220,8 @@
   display: grid;
   gap: 14px;
   padding: 0 2px;
+  flex: 1;
+  min-height: 0;
 }
 
 .handout-builder .handout-panel-title {

@@ -252,37 +252,93 @@ function HandoutBuilder() {
 
   function exportJson() {
     try {
-      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      // Verificar se há dados válidos para exportar  
+      if (!state) {
+        toast.error("Não há dados para exportar.");
+        return;
+      }
+
+      const exportData = {
+        ...state,
+        exportedAt: new Date().toISOString(),
+        exportedBy: "Handout Builder App"
+      };
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { 
+        type: "application/json;charset=utf-8" 
+      });
+      
       downloadBlob(blob, `${filenameBase}.json`);
-      toast.success("JSON exportado.");
-    } catch {
-      toast.error("Falha ao exportar JSON.");
+      toast.success("JSON exportado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao exportar JSON:", error);
+      toast.error("Falha ao exportar JSON. Tente novamente.");
     }
   }
 
   async function copyJson() {
     try {
-      await navigator.clipboard.writeText(JSON.stringify(state, null, 2));
-      toast.success("JSON copiado.");
-    } catch {
-      toast.error("Falha ao copiar JSON.");
+      // Verificar se há dados válidos para copiar
+      if (!state) {
+        toast.error("Não há dados para copiar.");
+        return;
+      }
+
+      // Verificar se a API de clipboard está disponível
+      if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        toast.error("Clipboard não disponível neste navegador.");
+        return;
+      }
+
+      const exportData = {
+        ...state,
+        exportedAt: new Date().toISOString(),
+        exportedBy: "Handout Builder App"
+      };
+
+      await navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
+      toast.success("JSON copiado para a área de transferência!");
+    } catch (error) {
+      console.error("Erro ao copiar JSON:", error);
+      toast.error("Falha ao copiar JSON. Tente novamente.");
     }
+  }
   }
 
   async function importJsonFile(file: File) {
     try {
-      const raw = await file.text();
-      const parsed = JSON.parse(raw) as unknown;
-      const normalized = normalizeStateV1(parsed);
-      if (!normalized) {
-        toast.error("Arquivo inválido.");
+      // Verificar se é um arquivo JSON
+      if (!file.name.toLowerCase().endsWith('.json') && file.type !== 'application/json') {
+        toast.error("Por favor, selecione um arquivo JSON válido.");
         return;
       }
+
+      const raw = await file.text();
+      
+      // Verificar se o arquivo não está vazio
+      if (!raw.trim()) {
+        toast.error("O arquivo está vazio.");
+        return;
+      }
+
+      const parsed = JSON.parse(raw) as unknown;
+      const normalized = normalizeStateV1(parsed);
+      
+      if (!normalized) {
+        toast.error("Formato de arquivo inválido. Verifique se é um handout exportado corretamente.");
+        return;
+      }
+      
       setState(normalized);
-      toast.success("Importado.");
+      toast.success("Handout importado com sucesso!");
     } catch (error) {
-      console.error(error);
-      toast.error("Falha ao importar.");
+      console.error("Erro ao importar JSON:", error);
+      
+      if (error instanceof SyntaxError) {
+        toast.error("Arquivo JSON inválido. Verifique a formatação.");
+      } else {
+        toast.error("Falha ao importar arquivo. Tente novamente.");
+      }
     }
   }
 

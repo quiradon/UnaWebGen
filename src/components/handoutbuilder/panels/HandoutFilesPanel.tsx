@@ -318,18 +318,7 @@ export function HandoutFilesPanel({ apiBase, onInsertImage }: HandoutFilesPanelP
   return (
     <div className="handout-panel-section">
       <div className="handout-panel-title">Meus Arquivos</div>
-      
-      <div className="grid gap-1.5">
-        <Label htmlFor="file-search" className="text-xs">Buscar</Label>
-        <Input
-          id="file-search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Buscar arquivos..."
-          className="h-8 text-sm"
-        />
-      </div>
-
+    
       <Button
         type="button"
         variant="outline"

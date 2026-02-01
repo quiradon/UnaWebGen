@@ -31,32 +31,7 @@ export function HandoutAssetsPanel(props: HandoutAssetsPanelProps) {
   return (
     <div className="handout-panel-section">
       <div className="handout-panel-title">Assets</div>
-      <div className="grid gap-2">
-        <Label htmlFor="asset-search">Buscar</Label>
-        <Input
-          id="asset-search"
-          value={assetSearch}
-          onChange={(event) => setAssetSearch(event.target.value)}
-          placeholder="Buscar assets..."
-        />
-      </div>
-      <Button type="button" variant="outline" onClick={() => imageFileRef.current?.click()} className="w-full gap-2">
-        <Upload className="h-4 w-4" />
-        Upload de imagens
-      </Button>
-      <input
-        ref={imageFileRef}
-        type="file"
-        accept="image/*"
-        multiple
-        className="hidden"
-        onChange={(e) => {
-          const files = e.target.files;
-          if (files && files.length) void addImages(files);
-          e.currentTarget.value = "";
-        }}
-      />
-      <div className="handout-panel-hint">Arraste imagens direto para o canvas ou use o botao acima.</div>
+
       {filteredAssetGroups.length > 0 ? (
         <div className="handout-asset-catalog">
           {filteredAssetGroups.map((group) => {

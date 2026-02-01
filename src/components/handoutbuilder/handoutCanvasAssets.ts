@@ -3,18 +3,6 @@ import type { AssetGroup } from "@/components/handoutbuilder/handoutCanvasTypes"
 // Placeholder catalog until the backend assets route is available.
 export const ASSET_GROUPS: AssetGroup[] = [
   {
-    id: "guild-icons",
-    label: "Guilda - Icones",
-    description: "Icones para selos e banners.",
-    kind: "group",
-    items: [
-      { id: "guild-torre", name: "Torre", src: "/img/guilds/icons/torre.webp", width: 512, height: 512 },
-      { id: "guild-ray", name: "Raio", src: "/img/guilds/icons/ray.webp", width: 512, height: 512 },
-      { id: "guild-celeste", name: "Celeste", src: "/img/guilds/icons/celeste.webp", width: 512, height: 512 },
-      { id: "guild-jambo", name: "Jambo", src: "/img/guilds/icons/jambo.webp", width: 512, height: 512 },
-    ],
-  },
-  {
     id: "tarot-cards",
     label: "Tarot - Cartas",
     description: "Colecao de cartas classicas.",

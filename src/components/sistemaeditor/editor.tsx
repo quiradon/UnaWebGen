@@ -15,6 +15,8 @@ import {
   X,
   Globe,
   Smile,
+  Save,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -44,6 +46,7 @@ import { TemplatesModal } from "@/components/unique/TemplatesModal";
 import MultiSelect, { BaseSelectable, LabelLocalization, LabelString, Locale, Localization } from "../ui/multiselect";
 import { EmojiDisplay } from "@/components/unique/EmojiDisplay";
 import config from "@/config";
+import { getSession } from "@/scripts/session-manager";
 
 // =====================
 // Types
@@ -1831,6 +1834,8 @@ export default function RPGSystemBuilder() {
   });
   const [selectedTab, setSelectedTab] = useState<string>("config");
   const [showTemplatesModal, setShowTemplatesModal] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [savingSystem, setSavingSystem] = useState(false);
   const [highlightedItem, setHighlightedItem] = useState<{ type: 'stats' | 'sections', value: number } | null>(null);
   
   const [errors, setErrors] = useState<string[]>(() => validate(system));
@@ -1840,6 +1845,38 @@ export default function RPGSystemBuilder() {
     }, 1000);
     return () => clearTimeout(timer);
   }, [system]);
+
+  // Buscar usuário atual
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const session = await getSession(config.api_url);
+        console.log("Session:", session);
+        if (session.authenticated && session.user?.id) {
+          console.log("Current User ID:", session.user.id);
+          setCurrentUserId(session.user.id);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar sessão:", error);
+      }
+    };
+    fetchCurrentUser();
+  }, []);
+
+  // Debug: logar quando valores de autoria mudarem
+  useEffect(() => {
+    const systemId = (system as any).__systemId;
+    const authorId = (system as any).__authorId;
+    console.log("=== Save Button Debug ===");
+    console.log("systemId:", systemId, "| truthy:", !!systemId);
+    console.log("currentUserId:", currentUserId, "| truthy:", !!currentUserId);
+    console.log("authorId:", authorId);
+    console.log("authorId === currentUserId:", authorId === currentUserId);
+    console.log("String comparison:", String(authorId) === String(currentUserId));
+    console.log("Types - authorId:", typeof authorId, "| currentUserId:", typeof currentUserId);
+    console.log("SHOW BUTTON:", !!(systemId && currentUserId && authorId === currentUserId));
+    console.log("========================");
+  }, [system, currentUserId]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -1853,8 +1890,17 @@ export default function RPGSystemBuilder() {
           if (!response.ok) throw new Error("Falha ao buscar sistema");
           const data = await response.json();
           
+          console.log("Remix data:", data);
+          // author_id está dentro de system_data, não na raiz
+          console.log("Author ID from remix:", data.system_data?.author_id);
+          
           if (data.system_data && data.system_data.sistema) {
-            setSystem(data.system_data.sistema);
+            const systemWithMeta = {
+              ...data.system_data.sistema,
+              __systemId: remixId,
+              __authorId: data.system_data.author_id
+            };
+            setSystem(systemWithMeta);
             toast.success("Sistema carregado com sucesso!");
             window.history.replaceState({}, document.title, window.location.pathname);
           } else {
@@ -1871,6 +1917,9 @@ export default function RPGSystemBuilder() {
 
   const handleLoadTemplate = (newSystem: RPGSystem) => {
     console.log("Loading template:", newSystem);
+    console.log("System ID:", (newSystem as any).__systemId);
+    console.log("Author ID:", (newSystem as any).__authorId);
+    // Sistema já vem com __systemId e __authorId do TemplatesModal
     setSystem(newSystem);
     setSelectedTab("config");
   };
@@ -1930,9 +1979,28 @@ export default function RPGSystemBuilder() {
   const removeSection = (index: number) => { const copy = clone(system); copy.sections.splice(index, 1); setSystem(copy); };
   const moveSection = (index: number, dir: -1 | 1) => { const copy = clone(system); const j = index + dir; if (j < 0 || j >= copy.sections.length) return; const tmp = copy.sections[index]; copy.sections[index] = copy.sections[j]; copy.sections[j] = tmp; setSystem(copy); };
 
-  const exportJson = () => { const text = JSON.stringify(system, null, 2); download(`rpg-system-${system.config.name.default || system.config.id}.json`, text); };
+  const exportJson = () => { 
+    // Remover metadados internos antes de exportar
+    const { __systemId, __authorId, ...cleanSystem } = system as any;
+    const text = JSON.stringify(cleanSystem, null, 2); 
+    download(`rpg-system-${system.config.name.default || system.config.id}.json`, text); 
+  };
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const importJson = (file: File) => { const reader = new FileReader(); reader.onload = () => { try { const parsed = JSON.parse(String(reader.result)); setSystem(parsed); toast.success("Importado com sucesso!"); } catch { toast.error("Falha ao importar JSON"); } }; reader.readAsText(file); };
+  const importJson = (file: File) => { 
+    const reader = new FileReader(); 
+    reader.onload = () => { 
+      try { 
+        const parsed = JSON.parse(String(reader.result)); 
+        // Remover qualquer metadado que possa existir no arquivo importado
+        const { __systemId, __authorId, ...cleanSystem } = parsed;
+        setSystem(cleanSystem); 
+        toast.success("Importado com sucesso!"); 
+      } catch { 
+        toast.error("Falha ao importar JSON"); 
+      } 
+    }; 
+    reader.readAsText(file); 
+  };
   const importFromClipboard = async () => {
     try {
       const text = await navigator.clipboard.readText();
@@ -1941,7 +2009,9 @@ export default function RPGSystemBuilder() {
         return;
       }
       const parsed = JSON.parse(text);
-      setSystem(parsed);
+      // Remover qualquer metadado que possa existir no clipboard
+      const { __systemId, __authorId, ...cleanSystem } = parsed;
+      setSystem(cleanSystem);
       toast.success("Sistema importado do clipboard com sucesso!");
     } catch (err) {
       if (err instanceof SyntaxError) {
@@ -1953,91 +2023,46 @@ export default function RPGSystemBuilder() {
   };
   const copyJson = async () => { try { await navigator.clipboard.writeText(JSON.stringify(system, null, 2)); toast.success("JSON copiado para a área de transferência"); } catch { toast.error("Não foi possível copiar o JSON"); } };
 
+  // Função para salvar o sistema carregado
+  const handleSaveSystem = async () => {
+    const systemId = (system as any).__systemId;
+    if (!systemId) {
+      toast.error("Nenhum sistema carregado para salvar");
+      return;
+    }
+
+    setSavingSystem(true);
+    try {
+      // Remover metadados internos antes de enviar para a API
+      const { __systemId, __authorId, ...cleanSystem } = system as any;
+      
+      const response = await fetch(`${config.api_url}/rpg/systems/${systemId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          sistema: cleanSystem
+        })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Falha ao salvar sistema');
+      }
+
+      toast.success('Sistema salvo com sucesso!');
+    } catch (error) {
+      console.error('Erro ao salvar sistema:', error);
+      toast.error(error instanceof Error ? error.message : 'Erro ao salvar sistema');
+    } finally {
+      setSavingSystem(false);
+    }
+  };
+
   return (
     <div className="flex min-h-[78vh] w-full bg-background overflow-hidden">
-      {/* Barra Lateral */}
-      {/* <aside className="w-64 transition-all duration-300 bg-gradient-to-b from-sidebar to-sidebar/95 border-r border-border flex flex-col relative">
-        <div className="p-6 border-b border-border/50 relative">
-          <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Editor de Sistema</h1>
-          <p className="text-xs text-sidebar-foreground/70 mt-1">Construtor visual de sistemas</p>
-        </div>
-
-        <nav className="flex-1 p-3 space-y-1">
-          <button
-            onClick={() => setSelectedTab("config")}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${selectedTab === "config"
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                : "text-sidebar-foreground hover:bg-sidebar-accent"
-              }`}
-            title="Configuração"
-          >
-            <span className="text-xl">⚙️</span>
-            <span className="font-medium">Configuração</span>
-          </button>
-
-          <button
-            onClick={() => setSelectedTab("stats")}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${selectedTab === "stats"
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                : "text-sidebar-foreground hover:bg-sidebar-accent"
-              }`}
-            title="Stats"
-          >
-            <span className="text-xl">📊</span>
-            <div className="flex-1 text-left">
-              <span className="font-medium block">Stats</span>
-              <span className="text-xs opacity-70">{system.stats.length} itens</span>
-            </div>
-          </button>
-
-          <button
-            onClick={() => setSelectedTab("sections")}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${selectedTab === "sections"
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                : "text-sidebar-foreground hover:bg-sidebar-accent"
-              }`}
-            title="Seções"
-          >
-            <span className="text-xl">📄</span>
-            <div className="flex-1 text-left">
-              <span className="font-medium block">Seções</span>
-              <span className="text-xs opacity-70">{system.sections.length} itens</span>
-            </div>
-          </button>
-
-          <button
-            onClick={() => setSelectedTab("integrations")}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${selectedTab === "integrations"
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                : "text-sidebar-foreground hover:bg-sidebar-accent"
-              }`}
-            title="Integrações"
-          >
-            <span className="text-xl">🔌</span>
-            <span className="font-medium">Integrações</span>
-          </button>
-        </nav>
-
-        <div className="p-3 border-t border-border/50 space-y-2">
-          <Button onClick={exportJson} className="w-full justify-start bg-green-600 hover:bg-green-700 text-white">
-            <Download className="h-4 w-4 mr-2" /> Exportar
-          </Button>
-          <Button variant="outline" onClick={copyJson} className="w-full justify-start">
-            <Copy className="h-4 w-4 mr-2" /> Copiar
-          </Button>
-          <Button variant="outline" onClick={() => setShowTemplatesModal(true)} className="w-full justify-start hover:bg-purple-500/10 hover:text-purple-500 hover:border-purple-500">
-            <Globe className="h-4 w-4 mr-2" /> Sistemas Implementados
-          </Button>
-          <Button variant="outline" onClick={() => fileRef.current?.click()} className="w-full justify-start">
-            <Upload className="h-4 w-4 mr-2" /> Importar Arquivo
-          </Button>
-          <Button variant="outline" onClick={importFromClipboard} className="w-full justify-start hover:bg-blue-500/10 hover:text-blue-500 hover:border-blue-500">
-            <Copy className="h-4 w-4 mr-2" /> Colar do Clipboard
-          </Button>
-        </div>
-
-      </aside> */}
-
       {/* Conteúdo Principal */}
       <main className="flex-1 overflow-auto">
         <div className="p-6 max-w-[1600px] mx-auto">
@@ -2080,6 +2105,25 @@ export default function RPGSystemBuilder() {
                     <Download className="h-4 w-4 sm:mr-2" />
                     <span className="hidden sm:inline">Exportar</span>
                   </Button>
+                  
+                  {/* Botão Salvar - aparece quando sistema foi carregado e usuário é o autor */}
+                  {(system as any).__systemId && currentUserId && (system as any).__authorId && String((system as any).__authorId) === String(currentUserId) && (
+                    <Button 
+                      onClick={handleSaveSystem} 
+                      size="sm"
+                      disabled={savingSystem || errors.length > 0}
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      title={errors.length > 0 ? "Corrija os erros antes de salvar" : "Salvar Sistema"}
+                    >
+                      {savingSystem ? (
+                        <Loader2 className="h-4 w-4 sm:mr-2 animate-spin" />
+                      ) : (
+                        <Save className="h-4 w-4 sm:mr-2" />
+                      )}
+                      <span className="hidden sm:inline">Salvar</span>
+                    </Button>
+                  )}
+                  
                   <Button 
                     variant="outline" 
                     onClick={copyJson} 

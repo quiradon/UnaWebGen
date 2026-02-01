@@ -139,3 +139,35 @@ export function buildSvgImageSrc(svgText: string, options: SvgColorOptions) {
   const nextSvg = applySvgColors(svgText, options);
   return buildSvgDataUrl(nextSvg);
 }
+
+/**
+ * Converte uma URL de imagem externa para data URL usando a API como proxy.
+ * Necessário para evitar problemas de CORS ao exportar imagens.
+ */
+export async function urlToDataUrl(url: string, apiBase: string): Promise<string> {
+  // Se já é um data URL, retorna diretamente
+  if (url.startsWith("data:")) {
+    return url;
+  }
+
+  try {
+    const proxyUrl = `${apiBase}/rpg/image-proxy?url=${encodeURIComponent(url)}`;
+    const response = await fetch(proxyUrl, { credentials: "include" });
+    
+    if (!response.ok) {
+      throw new Error(`Falha ao carregar imagem via proxy: ${response.status}`);
+    }
+    
+    const blob = await response.blob();
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error("Falha ao converter blob para data URL"));
+      reader.onload = () => resolve(String(reader.result || ""));
+      reader.readAsDataURL(blob);
+    });
+  } catch (error) {
+    console.error("[urlToDataUrl] Erro:", error);
+    // Fallback: tenta carregar direto (pode falhar na exportação se CORS)
+    return url;
+  }
+}

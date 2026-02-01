@@ -1351,6 +1351,51 @@ function updateShadowEffect(
     toast.message("Resetado.");
   }
 
+  // Converte uma imagem já carregada para data URL usando canvas
+  async function imageToDataUrl(img: HTMLImageElement): Promise<string | null> {
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth || img.width;
+      canvas.height = img.naturalHeight || img.height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return null;
+      ctx.drawImage(img, 0, 0);
+      return canvas.toDataURL('image/png');
+    } catch (e) {
+      console.warn('Falha ao converter imagem para data URL:', e);
+      return null;
+    }
+  }
+
+  // Pré-processa todas as imagens do node para data URLs
+  async function preprocessImages(node: HTMLElement): Promise<Map<HTMLImageElement, string>> {
+    const originalSrcs = new Map<HTMLImageElement, string>();
+    const images = node.querySelectorAll('img');
+    
+    for (const img of images) {
+      if (img.src && !img.src.startsWith('data:')) {
+        originalSrcs.set(img, img.src);
+        
+        // Se a imagem já está carregada, converter para data URL
+        if (img.complete && img.naturalWidth > 0) {
+          const dataUrl = await imageToDataUrl(img);
+          if (dataUrl) {
+            img.src = dataUrl;
+          }
+        }
+      }
+    }
+    
+    return originalSrcs;
+  }
+
+  // Restaura os srcs originais das imagens
+  function restoreImageSrcs(originalSrcs: Map<HTMLImageElement, string>) {
+    originalSrcs.forEach((src, img) => {
+      img.src = src;
+    });
+  }
+
   async function exportPng() {
     const node = pageRef.current;
     if (!node) return;
@@ -1360,9 +1405,27 @@ function updateShadowEffect(
     clearSelection();
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
     node.dataset.exporting = "true";
+    
+    // Pré-processar imagens para evitar CORS
+    let originalSrcs: Map<HTMLImageElement, string> | null = null;
+    
     try {
       toast.message("Gerando PNG…");
-      const dataUrl = await toPng(node, { cacheBust: true, pixelRatio: 2 });
+      
+      // Converter imagens carregadas para data URLs
+      originalSrcs = await preprocessImages(node);
+      
+      // Aguardar um frame para as mudanças serem aplicadas
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      
+      const dataUrl = await toPng(node, { 
+        cacheBust: false, // Desabilitar cache bust pois já convertemos as imagens
+        pixelRatio: 2,
+        skipFonts: false,
+        // Placeholder transparente para imagens que ainda falharem
+        imagePlaceholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+      });
+      
       const a = document.createElement("a");
       a.href = dataUrl;
       a.download = "handout.png";
@@ -1374,6 +1437,10 @@ function updateShadowEffect(
       console.error(error);
       toast.error("Falha ao exportar PNG.");
     } finally {
+      // Restaurar srcs originais
+      if (originalSrcs) {
+        restoreImageSrcs(originalSrcs);
+      }
       delete node.dataset.exporting;
       setSelection(prevSelectedIds, prevSelected);
     }
